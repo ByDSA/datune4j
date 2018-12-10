@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import diatonic.DiatonicFunction;
 import diatonic.HarmonicFunction;
-import diatonic.Tonality;
 import eventsequences.EventSequence;
 import midi.Duration;
 import midi.Arpegios.Arpegio;
@@ -12,8 +11,9 @@ import midi.Arpegios.ArpegioDefault;
 import midi.Events.EventComplex;
 import midi.Events.KeySignatureEvent;
 import pitch.DiatonicChordMidi;
+import tonality.Tonality;
 
-public class Progression<This extends Progression> implements EventComplex<This> {
+public class Progression<This extends Progression> implements EventComplex {
 
 	protected Tonality tonality;
 	protected int octave;
@@ -32,7 +32,7 @@ public class Progression<This extends Progression> implements EventComplex<This>
 		tonality = s;
 		octave = o;
 	}
-	
+
 	/** Replace Chord
 	 * 
 	 * @param n	Número de corde en el tiempo
@@ -56,7 +56,7 @@ public class Progression<This extends Progression> implements EventComplex<This>
 	}
 
 	/** Añadir acordes **/
-	
+
 	public DiatonicChordMidi add(HarmonicFunction t) {
 		return add(t, 0);
 	}
@@ -75,9 +75,9 @@ public class Progression<This extends Progression> implements EventComplex<This>
 
 		return add(c);
 	}
-	
+
 	/** Añadir acordes de dos notas **/
-/*
+	/*
 	public ChordFunc add(Degree degree, IntervalDiatonic i) {
 		return add(degree, i, 0);
 	}
@@ -92,7 +92,7 @@ public class Progression<This extends Progression> implements EventComplex<This>
 
 		return add(c);
 	}
-*/
+	 */
 	public Progression setTonality(Tonality s) {
 		tonality = s;
 
@@ -201,7 +201,7 @@ public class Progression<This extends Progression> implements EventComplex<This>
 		DiatonicChordMidi nn = nodes.get(n);
 		return nn;
 	}
-	
+
 	public DiatonicChordMidi getChordAtTime(int t) {
 		int duration = 0;
 		for(DiatonicChordMidi n : nodes) {
@@ -210,7 +210,7 @@ public class Progression<This extends Progression> implements EventComplex<This>
 				return n;
 			duration += d;
 		}
-		
+
 		throw new OutOfTimeException(t, duration);
 	}
 
@@ -223,25 +223,20 @@ public class Progression<This extends Progression> implements EventComplex<This>
 	}
 
 	@Override
-	public This duplicate(boolean b) {
+	public This clone() {
 		Progression p = new Progression();
 
 		p.octave = octave;
 
-		if (!b) {
-			p.nodes = nodes;
-			p.tonality = tonality;
-		} else {
-			for(DiatonicChordMidi n : nodes) {
-				p.nodes.add((DiatonicChordMidi)n.duplicate());
-			}
-
-			p.tonality = new Tonality(tonality.getRoot(),tonality.getScale());
+		for(DiatonicChordMidi n : nodes) {
+			p.nodes.add((DiatonicChordMidi)n.clone());
 		}
+
+		p.tonality = Tonality.of(tonality.getRoot(),tonality.getScale());
 
 		return (This)p;
 	}
-	
+
 	static class OutOfTimeException extends RuntimeException {
 		OutOfTimeException(int t, int d) {
 			super(Integer.toString(t) + " " + Integer.toString(d));

@@ -1,5 +1,5 @@
 package pitch;
 
-public interface PitchChromaticableSingle<This> extends PitchSingle<This>, PitchChromaticable<This> {	
+public interface PitchChromaticableSingle extends PitchSingle, PitchChromaticable {	
 	public Chromatic getChromatic();
 }

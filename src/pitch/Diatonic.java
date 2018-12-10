@@ -2,10 +2,10 @@ package pitch;
 
 import diatonic.Degree;
 import diatonic.IntervalDiatonic;
-import diatonic.Tonality;
+import tonality.Tonality;
 
 public enum Diatonic
-		implements PitchDiatonicSingle<Diatonic>, PitchMidiableSingle<Diatonic, DiatonicMidi> {
+		implements PitchDiatonicSingle<Diatonic>, PitchMidiableSingle<DiatonicMidi> {
 	I(0), II(1), III(2), IV(3), V(4), VI(5), VII(6);
 
 	private final int value;
@@ -131,11 +131,6 @@ public enum Diatonic
 		IntervalDiatonic id = IntervalDiatonic.get( d );
 
 		return id;
-	}
-
-	@Override
-	public Diatonic duplicate(boolean b) {
-		return Diatonic.get( value );
 	}
 
 	@Override

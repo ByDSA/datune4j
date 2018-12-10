@@ -1,4 +1,4 @@
-package diatonic;
+package tonality;
 
 import pitch.DiatonicMidi;
 import pitch.PitchChromaticSingle;

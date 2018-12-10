@@ -31,9 +31,10 @@ public class ChannelEvent extends ChunkData {
 		return channel;
 	}
 
-	public ChannelEvent duplicate(boolean b) {
+	@Override
+	public ChannelEvent clone() {
 		ChannelEvent ce = new ChannelEvent();
-		this.duplicate(ce, b);
+		cloneInto(ce);
 		ce.channel = channel;
 		ce.statusBase = statusBase;
 

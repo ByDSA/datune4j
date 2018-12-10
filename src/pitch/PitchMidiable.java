@@ -1,9 +1,9 @@
 package pitch;
 
-import diatonic.Tonality;
 import midi.Settings;
+import tonality.Tonality;
 
-public interface PitchMidiable<This, Target> extends PitchInterface<This> {
+public interface PitchMidiable<Target> extends PitchInterface {
 	public default Target toMidi(Tonality t) {
 		return toMidi(t, Settings.DefaultValues.OCTAVE);
 	}

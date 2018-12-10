@@ -29,4 +29,6 @@ public abstract class Melody implements EventComplex, FigureLength {
 	}
 
 	public abstract Melody shiftOctave(int o);
+	
+	public abstract Melody clone();
 }

@@ -1,10 +1,11 @@
 package pitch;
 
-import diatonic.Tonality;
+import chromaticchord.CustomChromaticChord;
+import tonality.Tonality;
 
-public interface PitchDiatonicableChord<N extends PitchDiatonicableSingle<N>,
+public interface PitchDiatonicableChord<N extends PitchDiatonicableSingle,
 This extends PitchDiatonicableChord<N, This, DistType>,
-DistType> extends PitchChord<N, This, DistType>, PitchDiatonicable<This> {
+DistType> extends PitchChord<N, This, DistType>, PitchDiatonicable {
     public default <Array extends PitchDiatonicableChord<N, Array, DistType>> boolean hasSameNotesOrder(Array notes) {
         if (size() != notes.size())
             return false;
@@ -31,5 +32,5 @@ DistType> extends PitchChord<N, This, DistType>, PitchDiatonicable<This> {
 			add(n);
 	}
 	
-	public ChromaticChord toChromatic(Tonality t);
+	public CustomChromaticChord toChromatic(Tonality t);
 }

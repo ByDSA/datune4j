@@ -1,11 +1,9 @@
 package midi;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Objects;
 
-import diatonic.ChromaticFunction;
+import arrays.ArrayWrapper;
 
 public class Utils {
 	public static String array2Str(int[] array) {
@@ -40,7 +38,7 @@ public class Utils {
 		if ( n <= 127 )
 			return new byte[] {
 				(byte) n
-			};
+		};
 		else {
 			// Contar bits del deltaByte
 			int i = n;
@@ -50,7 +48,7 @@ public class Utils {
 					bits++;
 
 				i >>>= 1;
-				bits++;
+		bits++;
 			}
 			int bytes = (int) Math.ceil( bits / 8.0 );
 
@@ -67,59 +65,6 @@ public class Utils {
 
 			return ret;
 
-		}
-	}
-
-	public static class ArrayWrap<T> {
-		T[] data;
-
-		public ArrayWrap(T... d) {
-			data = d;
-		}
-
-		public T get(int n) {
-			return data[n];
-		}
-
-		@Override
-		public boolean equals(Object o) {
-			if ( o instanceof ArrayWrap ) {
-				ArrayWrap a = (ArrayWrap) o;
-				return Arrays.equals( data, a.data );
-			} else
-				return false;
-		}
-
-		@Override
-		public int hashCode() {
-			return Arrays.hashCode( data );
-		}
-
-		public String toString() {
-			return Arrays.toString( data );
-		}
-	}
-
-	public static class ArrayWrapInteger extends ArrayWrap<Integer> {
-		public ArrayWrapInteger(Integer... d) {
-			data = d;
-		}
-
-		@Override
-		public boolean equals(Object o) {
-			if ( o instanceof ArrayWrap ) {
-				ArrayWrap a = (ArrayWrap) o;
-				return Arrays.equals( data, a.data );
-			} else if ( o instanceof Integer[] ) {
-				Integer[] a = (Integer[]) o;
-				return Arrays.equals( data, a );
-			} else
-				return false;
-		}
-
-		@Override
-		public int hashCode() {
-			return Arrays.hashCode( data );
 		}
 	}
 }

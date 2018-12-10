@@ -7,11 +7,12 @@ import org.junit.Test;
 import diatonic.Degree;
 import diatonic.DiatonicFunction;
 import diatonic.IntervalDiatonic;
-import diatonic.ScaleEnum;
-import diatonic.Tonality;
 import pitch.Chromatic;
 import pitch.DiatonicMidi;
-import pitch.Pitch;
+import pitch.PitchMidi;
+import tonality.ScaleEnum;
+import tonality.Tonality;
+import tonality.TonalityEnum;
 
 public class DiatonicMidiTest {
 	int[]	diffM	= new int[] {
@@ -39,35 +40,35 @@ public class DiatonicMidiTest {
 	
 	@Test
 	public void addNegative() {
-		DiatonicMidi n = new DiatonicMidi( DiatonicFunction.V, Tonality.E, 6 );
+		DiatonicMidi n = new DiatonicMidi( DiatonicFunction.V, TonalityEnum.E, 6 );
 		DiatonicMidi n2 = DiatonicMidi.add(n, -IntervalDiatonic.UNISON.val() );
-		assertEquals( Pitch.B6, n2.getPitchCode() );
+		assertEquals( PitchMidi.B6, n2.getPitchCode() );
 		n2 = DiatonicMidi.add(n, -IntervalDiatonic.SECOND.val() );
-		assertEquals( Pitch.A6, n2.getPitchCode() );
+		assertEquals( PitchMidi.A6, n2.getPitchCode() );
 		n2 = DiatonicMidi.add(n, -IntervalDiatonic.THIRD.val() );
-		assertEquals( Pitch.GG6, n2.getPitchCode() );
+		assertEquals( PitchMidi.GG6, n2.getPitchCode() );
 		n2 = DiatonicMidi.add(n, -IntervalDiatonic.FOURTH.val() );
-		assertEquals( Pitch.FF6, n2.getPitchCode() );
+		assertEquals( PitchMidi.FF6, n2.getPitchCode() );
 		n2 = DiatonicMidi.add(n, -IntervalDiatonic.FIFTH.val() );
-		assertEquals( Pitch.E6, n2.getPitchCode() );
+		assertEquals( PitchMidi.E6, n2.getPitchCode() );
 		n2 = DiatonicMidi.add(n, -IntervalDiatonic.SIXTH.val() );
-		assertEquals( Pitch.DD6, n2.getPitchCode() );
+		assertEquals( PitchMidi.DD6, n2.getPitchCode() );
 		n2 = DiatonicMidi.add(n, -IntervalDiatonic.SEVENTH.val() );
-		assertEquals( Pitch.CC6, n2.getPitchCode() );
+		assertEquals( PitchMidi.CC6, n2.getPitchCode() );
 		n2 = DiatonicMidi.add(n, -IntervalDiatonic.OCTAVE.val() );
-		assertEquals( Pitch.B5, n2.getPitchCode() );
+		assertEquals( PitchMidi.B5, n2.getPitchCode() );
 		n2 = DiatonicMidi.add(n, -IntervalDiatonic.NINTH.val() );
-		assertEquals( Pitch.A5, n2.getPitchCode() );
+		assertEquals( PitchMidi.A5, n2.getPitchCode() );
 		n2 = DiatonicMidi.add(n, -IntervalDiatonic.TENTH.val() );
-		assertEquals( Pitch.GG5, n2.getPitchCode() );
+		assertEquals( PitchMidi.GG5, n2.getPitchCode() );
 		n2 = DiatonicMidi.add(n, -IntervalDiatonic.ELEVENTH.val() );
-		assertEquals( Pitch.FF5, n2.getPitchCode() );
+		assertEquals( PitchMidi.FF5, n2.getPitchCode() );
 		
 	}
 
 	@Test
 	public void add() {
-		Tonality s = new Tonality( Chromatic.FF, ScaleEnum.MIXOLYDIAN );
+		Tonality s = Tonality.of( Chromatic.FF, ScaleEnum.MIXOLYDIAN );
 		DiatonicMidi n = new DiatonicMidi( DiatonicFunction.I, s, 3 );
 		assertEquals( 42, n.getPitchCode().val() );
 		assertEquals( 3, n.getOctave() );
@@ -79,10 +80,10 @@ public class DiatonicMidiTest {
 	
 	@Test
 	public void noteScaleConstructor() {
-		Tonality s = new Tonality( Chromatic.C, ScaleEnum.MAJOR );
+		Tonality s = Tonality.of( Chromatic.C, ScaleEnum.MAJOR );
 		DiatonicMidi n = new DiatonicMidi( IntervalDiatonic.OCTAVE, s, 5 );
 
-		assertEquals( Pitch.C6, n.getPitchCode() );
+		assertEquals( PitchMidi.C6, n.getPitchCode() );
 		assertEquals( 6, n.getOctave() );
 		assertEquals( 6, n.toChromaticMidi().getOctave() );
 
@@ -91,24 +92,24 @@ public class DiatonicMidiTest {
 		assertEquals( Degree.VI, n.getDegree() );
 		assertEquals( Chromatic.A, n.toChromaticMidi().getChromatic() );
 		assertEquals( 5, n.getOctave() );
-		assertEquals( Pitch.getFromCode( 60 + diffM[4] ), n.getPitchCode() );
-		s = new Tonality( Chromatic.FF, ScaleEnum.MINOR );
+		assertEquals( PitchMidi.getFromCode( 60 + diffM[4] ), n.getPitchCode() );
+		s = Tonality.of( Chromatic.FF, ScaleEnum.MINOR );
 		n = new DiatonicMidi( IntervalDiatonic.FIFTH, s, 5 );
 
 		assertEquals( 5, n.getOctave() );
 		assertEquals( 6, n.toChromaticMidi().getOctave() );
-		assertEquals( Pitch.getFromCode( 73 ), n.getPitchCode() );
+		assertEquals( PitchMidi.getFromCode( 73 ), n.getPitchCode() );
 
 		n = new DiatonicMidi( IntervalDiatonic.SIXTH, s, 4 );
 
-		assertEquals( Pitch.getFromCode( 62 ), n.getPitchCode() );
+		assertEquals( PitchMidi.getFromCode( 62 ), n.getPitchCode() );
 		assertEquals( 4, n.getOctave() );
 		assertEquals( 5, n.toChromaticMidi().getOctave() );
 	}
 	
 	@Test
 	public void noteScaleAdd() {
-		Tonality s = new Tonality( Chromatic.C, ScaleEnum.MAJOR );
+		Tonality s = Tonality.of( Chromatic.C, ScaleEnum.MAJOR );
 		DiatonicMidi n = new DiatonicMidi( s );
 
 		for ( int i = 0; i < diffM.length; i++ ) {
@@ -118,7 +119,7 @@ public class DiatonicMidiTest {
 			assertEquals( d2, d1 );
 		}
 
-		s = new Tonality( Chromatic.FF, ScaleEnum.MINOR );
+		s = Tonality.of( Chromatic.FF, ScaleEnum.MINOR );
 		n = new DiatonicMidi( s );
 
 		for ( int i = 0; i < diffm.length; i++ ) {
@@ -148,8 +149,8 @@ public class DiatonicMidiTest {
 	
 	@Test
 	public void equals() {
-		DiatonicMidi dm = new DiatonicMidi( Degree.I, Tonality.C, 5 );
-		DiatonicMidi dm2 = new DiatonicMidi( Degree.I, Tonality.C, 5 );
+		DiatonicMidi dm = new DiatonicMidi( Degree.I, TonalityEnum.C, 5 );
+		DiatonicMidi dm2 = new DiatonicMidi( Degree.I, TonalityEnum.C, 5 );
 		assertEquals(dm2, dm);
 	}
 }

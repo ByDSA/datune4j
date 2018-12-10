@@ -6,7 +6,7 @@ import java.util.List;
 
 import binary.Binary;
 
-public class Chunk<This extends Chunk> implements Event<This> {
+public class Chunk<This extends Chunk> implements Event {
 	protected byte[] type;
 	protected List<Binary> data;
 	protected int length;
@@ -28,7 +28,8 @@ public class Chunk<This extends Chunk> implements Event<This> {
 		data.add( Binary.toBinary( b ) );
 	}
 
-	public This duplicate(boolean b) {
+	@Override
+	public This clone() {
 		Chunk ret = new Chunk(type);
 
 		return (This)this;

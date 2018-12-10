@@ -1,8 +1,8 @@
 package midi.Progressions;
 
 import diatonic.DiatonicFunction;
-import diatonic.Tonality;
 import pitch.DiatonicChordMidi;
+import tonality.Tonality;
 
 public class Cadence extends Progression {
 	public static final int PLAGAL = 0;

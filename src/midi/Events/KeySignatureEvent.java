@@ -1,11 +1,11 @@
 package midi.Events;
 
-import diatonic.Scale;
-import diatonic.ScaleEnum;
-import diatonic.Tonality;
 import eventsequences.Track;
 import pitch.Chromatic;
 import pitch.ChromaticMidi;
+import tonality.Scale;
+import tonality.ScaleEnum;
+import tonality.Tonality;
 
 public class KeySignatureEvent extends MetaEvent {
 	static final byte[] C_MAJOR = new byte[]{0, 0};

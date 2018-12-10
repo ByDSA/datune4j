@@ -5,12 +5,9 @@ import java.util.function.Consumer;
 
 import eventsequences.EventSequence;
 import midi.FigureLength;
-import midi.Events.Duplicable;
-import pitch.Chord;
 import pitch.ChordMidi;
-import pitch.Chromatic;
 
-public class Arpegio implements FigureLength<Arpegio>, Duplicable<Arpegio> {
+public class Arpegio implements FigureLength<Arpegio>, Cloneable {
 	ArrayList<Node> nodes;
 	ChordMidi chord;
 	Consumer<Arpegio> build;
@@ -72,7 +69,7 @@ public class Arpegio implements FigureLength<Arpegio>, Duplicable<Arpegio> {
 		return nodes;
 	}
 
-	public class Node implements Duplicable<Node> {
+	public class Node implements Cloneable {
 		public int	note;
 		public int	time;
 		public int	length;
@@ -88,7 +85,7 @@ public class Arpegio implements FigureLength<Arpegio>, Duplicable<Arpegio> {
 		}
 
 		@Override
-		public Node duplicate(boolean b) {
+		protected Node clone() {
 			Node n = new Node();
 			n.note = note;
 			n.time = time;
@@ -105,13 +102,13 @@ public class Arpegio implements FigureLength<Arpegio>, Duplicable<Arpegio> {
 	}
 
 	@Override
-	public Arpegio duplicate(boolean b) {
+	public Arpegio clone() {
 		Arpegio a = new Arpegio( build );
 		a.length = length;
 		if ( chord != null )
 			a.chord = (ChordMidi) chord;//.duplicate( b );
 		for ( Node n : nodes )
-			a.nodes.add( n.duplicate( b ) );
+			a.nodes.add( n.clone() );
 
 		return a;
 	}

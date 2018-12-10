@@ -26,9 +26,8 @@ public class MetaEvent extends ChunkData {
 	}
 
 	@Override
-	public Event duplicate(boolean b) {
+	public MetaEvent clone() {
 		MetaEvent m = new MetaEvent();
-		this.duplicate(m, b);
 		m.type =  type;
 		return m;
 	}

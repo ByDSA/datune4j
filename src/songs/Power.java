@@ -5,14 +5,12 @@ import java.util.ArrayList;
 import diatonic.ChromaticFunction;
 import diatonic.DiatonicFunction;
 import diatonic.IntervalDiatonic;
-import diatonic.Tonality;
 import eventsequences.Drums;
 import eventsequences.DrumsTrack;
 import eventsequences.Instrument;
 import eventsequences.MelodyByChords;
 import eventsequences.Track;
 import midi.Duration;
-import midi.Sequence;
 import midi.Song;
 import midi.Arpegios.ArpegioAsc;
 import midi.Arpegios.ArpegioDefault;
@@ -23,6 +21,7 @@ import midi.Events.Pan;
 import midi.Events.Volume;
 import midi.Progressions.Progression;
 import pitch.DiatonicChordMidi;
+import tonality.TonalityEnum;
 
 public class Power extends Song {
 	Track channelGuitars1;
@@ -54,7 +53,7 @@ public class Power extends Song {
 
 	public Power() {
 		super("power.mid", 130);
-		tonality = Tonality.E;
+		tonality = TonalityEnum.E;
 
 		channelGuitars1 = createTrack(0, Instrument.get(30));
 		channelGuitars2 = createTrack(1, Instrument.get(30));
@@ -167,7 +166,7 @@ public class Power extends Song {
 	}
 
 	Progression startOrganProgression() {
-		Progression p = ((Progression)startProgression.duplicate())
+		Progression p = ((Progression)startProgression.clone())
 				.setArpegio(new ArpegioDesc(Duration.V1, Duration.V4_3))
 				.setArpegio(new int[]{2, 3, 4, 6}, new ArpegioAsc(Duration.V1, Duration.V4_3))
 				.setArpegio(new int[]{4}, new ArpegioDesc(Duration.V1, Duration.V4_3))
@@ -179,11 +178,11 @@ public class Power extends Song {
 	}
 
 	Progression startPad() {
-		return ((Progression)startProgression.duplicate()).shiftOctave(1);
+		return ((Progression)startProgression.clone()).shiftOctave(1);
 	}
 
 	Progression chorusPad() {
-		return ((Progression)chorusGuitarsProgression().duplicate()).shiftOctave(1);
+		return ((Progression)chorusGuitarsProgression().clone()).shiftOctave(1);
 	}
 
 	int startPattern(int seek) {
@@ -267,7 +266,7 @@ public class Power extends Song {
 
 			}
 
-		Progression cad_pad = (Progression)cad.duplicate();
+		Progression cad_pad = (Progression)cad.clone();
 		cad_pad.setArpegio(new ArpegioDefault(Duration.V1*2))
 		.shiftOctave(2);
 		channelPad.add(seek, cad_pad);
@@ -344,7 +343,7 @@ public class Power extends Song {
 
 		channelPad.add(seek, cad);
 
-		Progression arp = ((Progression)cad.duplicate()).shiftOctave(2);
+		Progression arp = ((Progression)cad.clone()).shiftOctave(2);
 
 		arp.setArpegio(new ArpegioDesc(Duration.V4, Duration.V4_3));
 		channelOrgan.add(seek, arp);
@@ -436,7 +435,7 @@ public class Power extends Song {
 			}
 		}
 
-		Progression arp = ((Progression)cad.duplicate()).shiftOctave(1);
+		Progression arp = ((Progression)cad.clone()).shiftOctave(1);
 		arp.setArpegio(new ArpegioDesc(Duration.V4, Duration.V4_3));
 		channelOrgan.add(seek, arp);
 

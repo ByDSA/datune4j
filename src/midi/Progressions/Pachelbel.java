@@ -1,9 +1,9 @@
 package midi.Progressions;
 
 import diatonic.DiatonicFunction;
-import diatonic.Tonality;
 import midi.Duration;
 import midi.Arpegios.ArpegioAscDesc;
+import tonality.Tonality;
 
 public class Pachelbel extends Progression {
 	public static final int NORMAL = 0;

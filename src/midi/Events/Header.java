@@ -27,7 +27,7 @@ public class Header extends Chunk {
 	}
 
 	@Override
-	public Header duplicate(boolean b) {
-		return new Header(type, tracks, b ? ticks.clone() : ticks);
+	public Header clone() {
+		return new Header(type, tracks, ticks.clone());
 	}
 }

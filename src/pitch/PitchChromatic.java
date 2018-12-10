@@ -1,8 +1,8 @@
 package pitch;
 
-import diatonic.Tonality;
-import diatonic.TonalityException;
+import tonality.Tonality;
+import tonality.TonalityException;
 
-public interface PitchChromatic<This> extends PitchChromaticable<This> {
+public interface PitchChromatic extends PitchChromaticable {
 	public <Diatonic extends PitchDiatonic<Diatonic, ?>> Diatonic toDiatonicChordMidi(Tonality ton) throws TonalityException;
 }

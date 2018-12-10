@@ -1,11 +1,11 @@
 package pitch;
 
 import diatonic.IntervalChromatic;
-import diatonic.Tonality;
 import midi.PitchException;
 import midi.Settings;
+import tonality.Tonality;
 
-public enum Pitch implements PitchChromaticableSingle<Pitch>, PitchOctave<Pitch> {
+public enum PitchMidi implements PitchChromaticableSingle, PitchOctave<PitchMidi> {
 	C0(0), CC0(1), D0(2), DD0(3), E0(4), F0(5), FF0(6), G0(7), GG0(8), A0(9), AA0(10), B0(11),
 	C1(12), CC1(13), D1(14), DD1(15), E1(16), F1(17), FF1(18), G1(19), GG1(20), A1(21), AA1(22), B1(23),
 	C2(0 + 12 * 2), CC2(1 + 12 * 2), D2(2 + 12 * 2), DD2(3 + 12 * 2), E2(4 + 12 * 2), F2(5 + 12 * 2), FF2(6 + 12 * 2), G2(7 + 12 * 2), GG2(8 + 12 * 2), A2(9 + 12 * 2), AA2(10 + 12 * 2), B2(11 + 12 * 2),
@@ -21,11 +21,11 @@ public enum Pitch implements PitchChromaticableSingle<Pitch>, PitchOctave<Pitch>
 
 	private int value;
 
-	private Pitch(int v) {
+	private PitchMidi(int v) {
 		value = v;
 	}
 
-	private Pitch(Pitch p) {
+	private PitchMidi(PitchMidi p) {
 		value = p.value;
 	}
 
@@ -33,11 +33,11 @@ public enum Pitch implements PitchChromaticableSingle<Pitch>, PitchOctave<Pitch>
 		return value;
 	}
 
-	public boolean equals(Pitch p) {
+	public boolean equals(PitchMidi p) {
 		return value == p.value;
 	}
 
-	public static Pitch get(Chromatic c, int o) {
+	public static PitchMidi get(Chromatic c, int o) {
 		switch ( o ) {
 			case 0:
 				switch ( c.val() ) {
@@ -356,11 +356,6 @@ public enum Pitch implements PitchChromaticableSingle<Pitch>, PitchOctave<Pitch>
 	}
 
 	@Override
-	public Pitch duplicate(boolean b) {
-		return this;
-	}
-
-	@Override
 	public Chromatic getChromatic() {
 		if ( value % 12 == 0 )
 			return Chromatic.C;
@@ -391,12 +386,12 @@ public enum Pitch implements PitchChromaticableSingle<Pitch>, PitchOctave<Pitch>
 	}
 
 	@Override
-	public Pitch shiftOctave(int o) {
+	public PitchMidi shiftOctave(int o) {
 		return getFromCode( value + 12 * o );
 	}
 
 	@Override
-	public Pitch setOctave(int o) {
+	public PitchMidi setOctave(int o) {
 		return getFromCode( value % 12 + 12 * o );
 	}
 
@@ -410,15 +405,15 @@ public enum Pitch implements PitchChromaticableSingle<Pitch>, PitchOctave<Pitch>
 		return value;
 	}
 
-	public static Pitch add(Pitch p, int i) {
+	public static PitchMidi add(PitchMidi p, int i) {
 		return getFromCode( p.value + i );
 	}
 
-	public static Pitch add(Pitch p, IntervalChromatic i) {
+	public static PitchMidi add(PitchMidi p, IntervalChromatic i) {
 		return add( p, i.val() );
 	}
 
-	public static Pitch getFromCode(int code) {
+	public static PitchMidi getFromCode(int code) {
 		PitchException.check( code );
 		Chromatic n = Chromatic.get( code % ChromaticMidi.NOTES_PER_OCTAVE );
 		int o = code / 12;

@@ -1,27 +1,30 @@
-package diatonic;
+package tonality;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import Log.String.Logging;
-import arrays.ArrayUtils;
+import chromaticchord.CustomChromaticChord;
+import chromaticchord.GetDiatonicFunctionMajor;
+import chromaticchord.GetDiatonicFunctionMinor;
+import diatonic.ChromaticFunction;
+import diatonic.Degree;
+import diatonic.DiatonicFunction;
+import diatonic.HarmonicFunction;
+import diatonic.IntervalChromatic;
+import diatonic.IntervalDiatonic;
 import pitch.Chromatic;
-import pitch.ChromaticChord;
 import pitch.ChromaticChordMidi;
 import pitch.ChromaticMidi;
 import pitch.Diatonic;
 import pitch.DiatonicChord;
 import pitch.DiatonicChordMidi;
-import pitch.DiatonicMidi;
-import pitch.PitchChromaticSingle;
+import pitch.PitchChromaticChord;
 import pitch.PitchChromaticableChord;
 import pitch.PitchChromaticableSingle;
 
-public enum TonalityEnum implements Tonality<TonalityEnum, CustomTonality> {
+public enum TonalityEnum implements Tonality {
 	C( Chromatic.C, ScaleEnum.MAJOR ),
 	D( Chromatic.D, ScaleEnum.MAJOR ),
 	E( Chromatic.E, ScaleEnum.MAJOR ),
@@ -49,7 +52,7 @@ public enum TonalityEnum implements Tonality<TonalityEnum, CustomTonality> {
 	FFm( Chromatic.FF, ScaleEnum.MINOR ),
 	GGm( Chromatic.GG, ScaleEnum.MINOR ),
 	Bbm( Chromatic.Bb, ScaleEnum.MINOR );
-	
+
 	public static final TonalityEnum[]	MAJOR_TONALITIES	= new TonalityEnum[] {
 		C,
 		Db,
@@ -64,7 +67,7 @@ public enum TonalityEnum implements Tonality<TonalityEnum, CustomTonality> {
 		Bb,
 		B
 	};
-	
+
 	public static final TonalityEnum[]	MINOR_TONALITIES	= new TonalityEnum[] {
 		Cm,
 		CCm,
@@ -80,93 +83,17 @@ public enum TonalityEnum implements Tonality<TonalityEnum, CustomTonality> {
 		Bm
 	};
 
-	private Chromatic				root;
-	private Scale					scale;
+	private final Chromatic				root;
+	private final Scale					scale;
 
 	/** Temp */
-	private Chromatic[]				notes;
-	private Map<Integer, Chromatic>	valChromaticMap;
-
-	// TODO: no usado
-	class ChromaticChordSet {
-		public ChromaticChord	chord;
-		public TonalityEnum			tonality;
-		public HarmonicFunction	function;
-
-		public ChromaticChordSet(ChromaticChord c, TonalityEnum t, HarmonicFunction f) {
-			chord = c;
-			tonality = t;
-			function = f;
-		}
-	}
-
-	// Cache
-	private boolean										useCache;
-	private Set<ChromaticChord>							scaleChords;
-	private Set<ChromaticChord>							outScaleChords;
-	private Set<ChromaticChord>							borrowedChords;
-	private HashMap<DiatonicFunction, ChromaticChord>	functionChordsMap;
-	private HashMap<ChromaticFunction, ChromaticChord>	chromaticChordsMap;
-	public HashMap<ChromaticChord, HarmonicFunction>	chromaticChordFunction;	// TODO: private
-
-	private static final int	SIZE_MIN	= 2;
-	private static final int	SIZE_MAX	= 8;
-
-	private void createCache() {
-		scaleChords = new HashSet();
-		outScaleChords = new HashSet();
-		borrowedChords = new HashSet();
-		chromaticChordFunction = new HashMap();
-
-		functionChordsMap = new HashMap<>();
-		for ( DiatonicFunction f : DiatonicFunction.ALL )
-			functionChordsMap.put( f, get( f ) );
-
-		chromaticChordsMap = new HashMap<>();
-		for ( ChromaticFunction f : ChromaticFunction.ALL )
-			chromaticChordsMap.put( f, get( f ) );
-
-		useCache = true;
-
-		for ( DiatonicFunction f : ArrayUtils
-				.concat( DiatonicFunction.TRIADS, DiatonicFunction.SEVENTH ) ) {
-			ChromaticChord cc = get( f );
-			ChromaticChord[] modalChromaticChords = cc.getModalChords( this );
-			if ( modalChromaticChords == null )
-				continue;
-			for ( ChromaticChord cc2 : modalChromaticChords )
-				if ( !has( cc2 ) ) {
-					borrowedChords.add( cc2 );
-				}
-		}
-		/*
-		 * if ( this.isMajorMinor() ) { Scale otherScale = scale.equals( Scale.MAJOR ) ?
-		 * Scale.MINOR : Scale.MAJOR; Tonality ton = new Tonality( root, otherScale );
-		 * DiatonicFunction[] fs = new DiatonicFunction[] { DiatonicFunction.II,
-		 * DiatonicFunction.III, DiatonicFunction.IV, DiatonicFunction.V,
-		 * DiatonicFunction.VI, DiatonicFunction.VII }; for ( DiatonicFunction cf : fs )
-		 * { DiatonicChordMidi dcm = new DiatonicChordMidi( cf, ton );
-		 * 
-		 * int d = dcm.getDegree().val();
-		 * 
-		 * addCacheOut( dcm.toChromaticChord(), d ); } }
-		 */
-		/*
-		 * for ( ChromaticFunction cf : ChromaticFunction.ALL ) { DiatonicChordMidi dcm
-		 * = new DiatonicChordMidi( cf, this );
-		 * 
-		 * addCacheOut( dcm.toChromaticChord(), 6 ); }
-		 */
-
-		// assert outChords != null;
-	}
+	private final Chromatic[]				notes;
 
 	private TonalityEnum(Chromatic noteBase, Scale scale) {
-		useCache = false;
 		this.root = noteBase;
 		this.scale = scale;
 
-		updateChromaticsFromBase( root );
+		notes = updateChromaticsFromBase();
 
 		if ( notes == null )
 			throw new RuntimeException(
@@ -175,15 +102,8 @@ public enum TonalityEnum implements Tonality<TonalityEnum, CustomTonality> {
 					);
 	}
 
-	private void createCacheIfNeeded() {
-		if ( !useCache )
-			createCache();
-	}
-
-	public ArrayList<ChromaticChord> getAllChords() {
-		createCacheIfNeeded();
-
-		ArrayList<ChromaticChord> ret = new ArrayList<>();
+	public ArrayList<CustomChromaticChord> getAllChords() {
+		ArrayList<CustomChromaticChord> ret = new ArrayList<>();
 
 		ret.addAll( getScaleChords() );
 		ret.addAll( getOutScaleChords() );
@@ -192,12 +112,8 @@ public enum TonalityEnum implements Tonality<TonalityEnum, CustomTonality> {
 		return ret;
 	}
 
-	public Set<ChromaticChord> getBorrowedChords() {
-		createCacheIfNeeded();
-		Set<ChromaticChord> ret = new HashSet();
-		for (ChromaticChord c : borrowedChords)
-			ret.add( c.duplicate( true ) );
-		return ret;
+	public Set<CustomChromaticChord> getBorrowedChords() {
+		return null;
 	}
 
 	public static ArrayList<TonalityEnum> getFromChord(PitchChromaticableChord c) {
@@ -206,7 +122,7 @@ public enum TonalityEnum implements Tonality<TonalityEnum, CustomTonality> {
 
 	public static ArrayList<TonalityEnum> getFromChord(boolean outScale, PitchChromaticableChord c) {
 		ArrayList<TonalityEnum> out = new ArrayList<>();
-		for ( TonalityEnum t : TonalityEnum.all() ) {
+		for ( TonalityEnum t : TonalityEnum.values() ) {
 			if ( t.has( outScale, c ) )
 				out.add( t );
 		}
@@ -259,7 +175,7 @@ public enum TonalityEnum implements Tonality<TonalityEnum, CustomTonality> {
 		for ( ChromaticChordMidi chord : chords ) {
 			if ( chord.size() == 0 )
 				continue;
-			ChromaticChordMidi chordCopy = chord.duplicate( false );
+			ChromaticChordMidi chordCopy = chord.clone();
 
 			ArrayList<Tonality> candidatesPrev = candidates;
 
@@ -317,75 +233,26 @@ public enum TonalityEnum implements Tonality<TonalityEnum, CustomTonality> {
 		return Arrays.equals( notes, t.notes );
 	}
 
-	public ChromaticChord get(DiatonicFunction f) {
-		ChromaticChord cc = null;
-		if ( functionChordsMap != null )
-			cc = functionChordsMap.get( f );
-
-		if ( cc == null ) {
-			DiatonicChord dc = new DiatonicChord( f );
-			assert dc != null : f + " " + this;
-
-			cc = get( dc, f ).rename( this );
-			assert cc.meta.str != null : cc.notesToString();
-			if ( functionChordsMap == null )
-				functionChordsMap = new HashMap();
-			functionChordsMap.put( f, cc );
-
-			if ( scaleChords == null )
-				scaleChords = new HashSet();
-			scaleChords.add( cc );
-
-			if ( chromaticChordFunction == null )
-				chromaticChordFunction = new HashMap();
-			chromaticChordFunction.put( cc, f );
-		}
-
-		cc = cc.duplicate( true );
-
-		return cc;
+	public PitchChromaticChord get(DiatonicFunction f) {
+		PitchChromaticChord ret = GetDiatonicFunctionMajor.get(this, f);
+		if (ret == null)
+			ret = GetDiatonicFunctionMinor.get(this, f);
+		return ret;
 	}
 
-	public ChromaticChord get(ChromaticFunction f) {
-		ChromaticChord cc = null;
-		if ( chromaticChordsMap != null )
-			cc = chromaticChordsMap.get( f );
+	public CustomChromaticChord get(ChromaticFunction f) {
 
-		if ( cc == null ) {
-			cc = new ChromaticChord( f, this );
-			cc.updateWhatIsIt();
-			assert cc != null : f + " " + this.notesToString();
 
-			if ( chromaticChordsMap == null )
-				chromaticChordsMap = new HashMap();
-			chromaticChordsMap.put( f, cc );
-
-			Degree d = null;
-			d = f.getDegree();
-			assert d != null : f;
-			if ( outScaleChords == null )
-				outScaleChords = new HashSet();
-			if (ArrayUtils.contained( f, ChromaticFunction.ALL ))
-				outScaleChords.add( cc );
-
-			if ( chromaticChordFunction == null )
-				chromaticChordFunction = new HashMap();
-			if ( chromaticChordFunction.get( cc ) == null )
-				chromaticChordFunction.put( cc, f );
-		}
-
-		cc = cc.duplicate( true );
-
-		return cc;
+		return null;
 	}
 
-	public ChromaticChord get(DiatonicChord dc, DiatonicFunction df) {
+	public CustomChromaticChord get(DiatonicChord dc, DiatonicFunction df) {
 		return dc.toChromatic( this, df );
 	}
 
-	public ChromaticChord[] getTriadChords() {
+	public PitchChromaticChord[] getTriadChords() {
 		NoDiatonicScaleException.check( scale );
-		ChromaticChord[] ret = new ChromaticChord[7];
+		PitchChromaticChord[] ret = new PitchChromaticChord[7];
 		for ( int i = 0; i < 7; i++ ) {
 			DiatonicFunction f = null;
 			switch ( i ) {
@@ -416,9 +283,9 @@ public enum TonalityEnum implements Tonality<TonalityEnum, CustomTonality> {
 		return ret;
 	}
 
-	public ChromaticChord[] getSeventhChords() {
+	public PitchChromaticChord[] getSeventhChords() {
 		NoDiatonicScaleException.check( scale );
-		ChromaticChord[] ret = new ChromaticChord[7];
+		PitchChromaticChord[] ret = new PitchChromaticChord[7];
 		for ( int i = 0; i < 7; i++ ) {
 			DiatonicFunction f = null;
 			switch ( i ) {
@@ -449,11 +316,11 @@ public enum TonalityEnum implements Tonality<TonalityEnum, CustomTonality> {
 		return ret;
 	}
 
-	public boolean updateChromaticsFromBase(Chromatic noteBase) {
-		Chromatic note = noteBase;
+	private Chromatic[] updateChromaticsFromBase() {
+		Chromatic note = root;
 		int len = length();
-		notes = new Chromatic[len];
-		notes[0] = noteBase;
+		Chromatic[] notes = new Chromatic[len];
+		notes[0] = root;
 		Diatonic noteBaseDiatonic = Diatonic.get( notes[0] );
 		int alt = 0;
 		for ( int i = 1; i < len; i++ ) {
@@ -464,22 +331,11 @@ public enum TonalityEnum implements Tonality<TonalityEnum, CustomTonality> {
 				alt += notes[i].getAlterations();
 			} catch ( Exception e ) {
 				// e.printStackTrace();
-				notes = null;
-				return false;
+				return null;
 			}
 		}
 
-		updateValChromaticMap();
-
-		root = noteBase;
-
-		return true;
-	}
-
-	private void updateValChromaticMap() {
-		valChromaticMap = new HashMap<>();
-		for ( Chromatic c : notes )
-			valChromaticMap.put( c.val(), c );
+		return notes;
 	}
 
 	public int length() {
@@ -537,26 +393,7 @@ public enum TonalityEnum implements Tonality<TonalityEnum, CustomTonality> {
 	}
 
 	public TonalityEnum[] getModes() {
-		TonalityEnum[] ret = new TonalityEnum[length()];
-
-		int j = 0;
-		for ( Scale s : scale.getAllModes() )
-			for ( int i = 0; i < 12; i++ ) {
-				TonalityEnum t = new TonalityEnum( i, s );
-				if ( isModeOf( t ) )
-					ret[j++] = t;
-			}
-
-		return ret;
-	}
-
-	public static ArrayList<TonalityEnum> all() {
-		ArrayList<TonalityEnum> ret = new ArrayList<TonalityEnum>();
-		for ( ScaleEnum mode : ScaleEnum.values() )
-			for ( int i = 0; i < 12; i++ )
-				ret.add( new TonalityEnum( i, mode ) );
-
-		return ret;
+		return null;
 	}
 
 	public Integer getAlteration() {
@@ -611,7 +448,7 @@ public enum TonalityEnum implements Tonality<TonalityEnum, CustomTonality> {
 		return getDegree( note ) != null;
 	}
 
-	public <N extends PitchChromaticableSingle<N>> boolean has(PitchChromaticableChord<N, ?, ?> notes) {
+	public <N extends PitchChromaticableSingle> boolean has(PitchChromaticableChord<N, ?, ?> notes) {
 		for ( N n : notes ) {
 			if ( getDegree( n ) == null )
 				return false;
@@ -629,7 +466,7 @@ public enum TonalityEnum implements Tonality<TonalityEnum, CustomTonality> {
 	 */
 
 	public TonalityEnum getRelativeScaleDiatonic(IntervalDiatonic pos) {
-		return new TonalityEnum( get( pos ), getScale() );
+		return null;
 	}
 
 	public TonalityEnum getRelativeScaleDiatonic(Degree pos) {
@@ -637,13 +474,7 @@ public enum TonalityEnum implements Tonality<TonalityEnum, CustomTonality> {
 	}
 
 	public TonalityEnum getRelativeScaleChromatic(int pos) {
-		return new TonalityEnum( root.add( pos ), getScale() );
-	}
-
-	public TonalityEnum setScale(ScaleEnum t) {
-		scale = t;
-
-		return this;
+		return null;
 	}
 
 	public Scale getScale() {
@@ -655,24 +486,24 @@ public enum TonalityEnum implements Tonality<TonalityEnum, CustomTonality> {
 	}
 
 	public TonalityEnum minor() {
-		TonalityEnum s = new TonalityEnum( root, ScaleEnum.MINOR );
+		TonalityEnum s = TonalityEnum.of( root, ScaleEnum.MINOR );
 		return s;
 	}
 
 	public TonalityEnum major() {
-		TonalityEnum s = new TonalityEnum( root, ScaleEnum.MAJOR );
+		TonalityEnum s = TonalityEnum.of( root, ScaleEnum.MAJOR );
 		return s;
 	}
 
 	public TonalityEnum lydian() {
-		TonalityEnum s = new TonalityEnum( root, ScaleEnum.LYDIAN );
+		TonalityEnum s = TonalityEnum.of( root, ScaleEnum.LYDIAN );
 		return s;
 	}
 
 	public ArrayList<DiatonicChordMidi[]> commonChords(TonalityEnum s) {
 		ArrayList<DiatonicChordMidi[]> ret = new ArrayList<>();
-		for ( DiatonicFunction i : DiatonicFunction.ALL )
-			for ( DiatonicFunction j : DiatonicFunction.ALL ) {
+		for ( DiatonicFunction i : DiatonicFunction.COMMON )
+			for ( DiatonicFunction j : DiatonicFunction.COMMON ) {
 				DiatonicChordMidi c = new DiatonicChordMidi( i, this );
 				DiatonicChordMidi c2 = new DiatonicChordMidi( j, s );
 
@@ -687,20 +518,12 @@ public enum TonalityEnum implements Tonality<TonalityEnum, CustomTonality> {
 		return ret;
 	}
 
-	public Set<ChromaticChord> getScaleChords() {
-		createCacheIfNeeded();
-		Set<ChromaticChord> ret = new HashSet();
-		for (ChromaticChord c : scaleChords)
-			ret.add( c.duplicate( true ) );
-		return ret;
+	public Set<CustomChromaticChord> getScaleChords() {
+		return null;
 	}
 
-	public Set<ChromaticChord> getOutScaleChords() {
-		createCacheIfNeeded();
-		Set<ChromaticChord> ret = new HashSet();
-		for (ChromaticChord c : outScaleChords)
-			ret.add( c.duplicate( true ) );
-		return ret;
+	public Set<CustomChromaticChord> getOutScaleChords() {
+		return null;
 	}
 
 	public String toString() {
@@ -735,49 +558,40 @@ public enum TonalityEnum implements Tonality<TonalityEnum, CustomTonality> {
 		return IntervalChromatic.get( id, n );
 	}
 
-	public HarmonicFunction getFunction(ChromaticChord c) {
+	public HarmonicFunction getFunction(PitchChromaticChord c) {
 		HarmonicFunction hf = getFunction( c, true );
 		if ( hf == null )
 			hf = getFunction( c, false );
 		return hf;
 	}
 
-	public HarmonicFunction getFunction(ChromaticChord c, boolean rename) {
-		createCacheIfNeeded();
-		ChromaticChord c2;
-		if ( rename )
-			try {
-				c2 = c.duplicate( true ).rename( this );
-			} catch ( TonalityException e ) {
-				c2 = c;
-			}
-		else
-			c2 = c;
+	public HarmonicFunction getFunction(PitchChromaticChord c, boolean rename) {
 
-		return chromaticChordFunction.get( c2 );
-	}
-
-	public void showChromaticChordFunction() {
-		createCacheIfNeeded();
-		chromaticChordFunction.forEach( (c, f) -> {
-			System.out.println( f + ":\t" + c + "\t" + c.notesToString() );
-		} );
+		return null;
 	}
 
 	public Chromatic getEnharmonic(Chromatic chromatic) throws TonalityException {
-		Chromatic c = valChromaticMap.get( chromatic.val() );
-		if ( c == null )
-			throw new TonalityException( chromatic, this );
-		return c;
-	}
-
-	@Override
-	public CustomTonality duplicate(boolean b) {
-		return new CustomTonality(getRoot(), getScale());
+		return null;
 	}
 
 	@Override
 	public Chromatic[] getNotes() {
 		return notes;
+	}
+
+	static TonalityEnum of(Chromatic c2, Scale s) {
+		return null;
+	}
+
+	@Override
+	public boolean updateChromaticsFromBase(Chromatic noteBase) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void showChromaticChordFunction() {
+		// TODO Auto-generated method stub
+
 	}
 }

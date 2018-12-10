@@ -38,8 +38,9 @@ public class NoteOff extends ChannelEvent {
 		return "NoteOff " + note;
 	}
 	
-	public NoteOff duplicate(boolean b) {
-		NoteOff r = new NoteOff(note.duplicate(b), 0);
+	@Override
+	public NoteOff clone() {
+		NoteOff r = new NoteOff(note.clone(), 0);
 		r.setData(getData());
 		
 		return r;

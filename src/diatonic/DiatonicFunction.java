@@ -1,9 +1,9 @@
 package diatonic;
 
 import arrays.ArrayUtils;
-import midi.Utils;
-import pitch.ChromaticChord;
 import pitch.DiatonicChordMidi;
+import pitch.PitchChromaticChord;
+import tonality.Tonality;
 
 /**
  * Functiones diatónicas
@@ -109,7 +109,7 @@ public enum DiatonicFunction implements HarmonicFunction {
 	};
 
 	/** Todas */
-	public static final DiatonicFunction[] ALL = ArrayUtils
+	public static final DiatonicFunction[] COMMON = ArrayUtils
 			.concat( TRIADS, SUS2, SUS4, SIXTH, SEVENTH, NINTH, ELEVENTH );
 
 	/** Intervalos */
@@ -517,7 +517,7 @@ public enum DiatonicFunction implements HarmonicFunction {
 		assert c.getTonality() != null;
 		assert c.metaTonality != null;
 		Tonality ton = c.getMetatonality();
-		ChromaticChord c1 = c.toChromaticChord();
+		PitchChromaticChord c1 = c.toChromaticChord();
 		HarmonicFunction hf = ton.getFunction( c1 );
 		if ( hf instanceof DiatonicFunction )
 			return (DiatonicFunction) hf;

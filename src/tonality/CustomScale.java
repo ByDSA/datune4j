@@ -1,4 +1,4 @@
-package diatonic;
+package tonality;
 
 import java.util.Arrays;
 

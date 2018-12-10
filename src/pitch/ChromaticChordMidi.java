@@ -1,15 +1,21 @@
 package pitch;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
+import chromaticchord.CustomChromaticChord;
+import chromaticchord.CustomChromaticChord.ImpossibleChord;
 import diatonic.IntervalChromatic;
-import diatonic.Tonality;
-import diatonic.TonalityException;
+import diatonic.Quality;
 import midi.FigureLength;
 import midi.FigureVelocity;
 import midi.PitchException;
 import midi.Settings;
+import tonality.Tonality;
+import tonality.TonalityException;
 
 public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, ChromaticChordMidi, Integer>
 		implements PitchChromaticChord<ChromaticMidi, ChromaticChordMidi> {
@@ -25,18 +31,18 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, ChromaticChordM
 		add( ns );
 	}
 
-	public ChromaticChordMidi(Pitch... ns) {
-		for ( Pitch n : ns )
+	public ChromaticChordMidi(PitchMidi... ns) {
+		for ( PitchMidi n : ns )
 			addNoReset( n.toMidi() );
 
 		resetRoot();
 	}
 
 	public ChromaticChordMidi(Chromatic... ns) {
-		this( new ChromaticChord( ns ) );
+		this( new CustomChromaticChord( ns ) );
 	}
 
-	public <N extends PitchChromaticableSingle<N>, Array extends PitchChromaticableChord<N, ?, ?>> ChromaticChordMidi(Array ns) {
+	public <N extends PitchChromaticableSingle, Array extends PitchChromaticableChord<N, ?, ?>> ChromaticChordMidi(Array ns) {
 		this(
 			ns,
 			ns instanceof ChordMidi ? ( (ChordMidi) ns ).getOctave()
@@ -47,7 +53,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, ChromaticChordM
 		);
 	}
 
-	public <N extends PitchChromaticableSingle<N>, Array extends PitchChromaticableChord<N, ?, ?>> ChromaticChordMidi(Array ns, int o, int d, int v) {
+	public <N extends PitchChromaticableSingle, Array extends PitchChromaticableChord<N, ?, ?>> ChromaticChordMidi(Array ns, int o, int d, int v) {
 		for ( int i = 0; i < ns.size(); i++ ) {
 			N n = ns.get( i );
 
@@ -78,7 +84,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, ChromaticChordM
 		if ( tonalities.size() == 0 )
 			return new ArrayList<>();
 		
-		ChromaticChordMidi usingChord = this.duplicate( true );
+		ChromaticChordMidi usingChord = this.clone();
 		// usingChord.updateWhatIsItIfNeeded();
 
 		ArrayList<DiatonicChordMidi> out = new ArrayList<>();
@@ -101,7 +107,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, ChromaticChordM
 			n = ns.get( num );
 			n.add( ( note / ns.size() - 1 ) * ChromaticMidi.NOTES_PER_OCTAVE );
 		} else {
-			n = (ChromaticMidi) ns.get( note ).duplicate();
+			n = (ChromaticMidi) ns.get( note ).clone();
 		}
 
 		PitchException.check( n );
@@ -120,18 +126,14 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, ChromaticChordM
 		}
 	}
 
-	public ChromaticChordMidi duplicate() {
-		return duplicate( false );
-	}
-
 	@Override
-	public ChromaticChordMidi duplicate(boolean ref) {
+	public ChromaticChordMidi clone() {
 		ChromaticChordMidi c = new ChromaticChordMidi();
 
 		for ( ChromaticMidi n : this )
-			c.add( n.duplicate( ref ) );
+			c.add( n.clone() );
 
-		c.arpegio = ref && arpegio != null ? arpegio.duplicate() : arpegio;
+		c.arpegio = arpegio.clone();
 		c.length = length;
 
 		return c;
@@ -141,7 +143,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, ChromaticChordM
 		assert b < size();
 		ChromaticChordMidi c = new ChromaticChordMidi();
 		for ( int i = a; i < b; i++ ) {
-			c.add( get( i ).duplicate( true ) );
+			c.add( get( i ).clone() );
 		}
 		return c;
 	}
@@ -169,7 +171,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, ChromaticChordM
 	}
 
 	public String toString() {
-		ChromaticChord ca = new ChromaticChord( this );
+		CustomChromaticChord ca = new CustomChromaticChord( this );
 
 		return ca.toString();
 	}
@@ -183,5 +185,149 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, ChromaticChordM
 	@Override
 	public ChromaticChordMidi newArray() {
 		return new ChromaticChordMidi();
+	}
+
+	@Override
+	public Quality getQuality() {
+		return meta.getQuality();
+	}
+
+	@Override
+	public ChromaticChordMidi over(Chromatic c) throws ImpossibleChord {
+		CustomChromaticChord c2 = new CustomChromaticChord( this.toChromaticChord() );
+		
+		return new ChromaticChordMidi( c2.over( c ) );
+	}
+
+	@Override
+	public boolean addAll(Collection<? extends ChromaticMidi> c) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean addAll(int index, Collection<? extends ChromaticMidi> c) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean contains(Object o) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean containsAll(Collection<?> c) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public ChromaticMidi get(int index) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int indexOf(Object o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Iterator<ChromaticMidi> iterator() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int lastIndexOf(Object o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public ListIterator<ChromaticMidi> listIterator() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ListIterator<ChromaticMidi> listIterator(int index) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean remove(Object o) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean removeAll(Collection<?> c) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean retainAll(Collection<?> c) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public ChromaticMidi set(int index, ChromaticMidi element) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int size() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<ChromaticMidi> subList(int fromIndex, int toIndex) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object[] toArray() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T> T[] toArray(T[] a) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isSus4() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isSus2() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

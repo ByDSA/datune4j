@@ -1,8 +1,13 @@
 package diatonic;
 
+import java.util.Set;
+
 import arrays.ArrayUtils;
-import pitch.ChromaticChord;
+import chromaticchord.CustomChromaticChord;
 import pitch.DiatonicChordMidi;
+import pitch.PitchChromaticChord;
+import tonality.CustomTonality;
+import tonality.Tonality;
 
 /**
  * Funciones cromáticas
@@ -235,10 +240,11 @@ public enum ChromaticFunction implements HarmonicFunction {
 	 * @param t tonality
 	 * @return the chromatic function
 	 */
-	public static ChromaticFunction get(ChromaticChord c, Tonality t) {
+	public static ChromaticFunction get(PitchChromaticChord c, Tonality t) {
 		assert t != null;
 		assert c != null;
-		for ( ChromaticChord c2 : t.getOutScaleChords() ) {
+		Set<CustomChromaticChord> cs = t.getOutScaleChords();
+		for ( CustomChromaticChord c2 : cs ) {
 			if ( c.equalsEnharmonic( c2 ) ) {
 				HarmonicFunction hf = t.getFunction( c2, false );
 				if ( hf instanceof ChromaticFunction )
@@ -257,7 +263,7 @@ public enum ChromaticFunction implements HarmonicFunction {
 	 */
 	public static HarmonicFunction get(DiatonicChordMidi diatonicChordMidi) {
 		return ChromaticFunction
-				.get( diatonicChordMidi.toChromaticChord(), diatonicChordMidi.metaTonality );
+				.get( diatonicChordMidi.toChromaticChord(), new CustomTonality(diatonicChordMidi.metaTonality.getRoot(), diatonicChordMidi.metaTonality.getScale()) );
 	}
 
 	/* (non-Javadoc)

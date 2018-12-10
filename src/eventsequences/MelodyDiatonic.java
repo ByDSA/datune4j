@@ -2,15 +2,17 @@ package eventsequences;
 
 import java.util.ArrayList;
 
+import chromaticchord.ChromaticChordEnum;
 import diatonic.DiatonicFunction;
 import diatonic.Degree;
-import diatonic.Tonality;
 import midi.Duration;
 import midi.FigureLength;
 import midi.Events.Event;
 import midi.Events.KeySignatureEvent;
 import midi.Settings.DefaultValues;
 import pitch.DiatonicMidi;
+import pitch.PitchChromaticChord;
+import tonality.Tonality;
 import pitch.DiatonicChordMidi;
 
 public class MelodyDiatonic extends Melody {
@@ -105,11 +107,12 @@ public class MelodyDiatonic extends Melody {
 	}
 
 	@Override
-	public Event duplicate(boolean b) {
-		MelodyDiatonic md = new MelodyDiatonic(octave, tonality.duplicate());
+	public MelodyDiatonic clone() {
+		MelodyDiatonic md = new MelodyDiatonic(octave, Tonality.of( tonality ));
+		
 		int d = 0;
 		for (DiatonicMidi nd : notesDiatonic) {
-			DiatonicMidi nd2 = (DiatonicMidi)nd.duplicate();
+			DiatonicMidi nd2 = (DiatonicMidi)nd.clone();
 			//md.add(d, nd);
 			md.notesDiatonic.add(nd2);
 			d += nd2.getLength();

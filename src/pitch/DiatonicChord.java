@@ -1,15 +1,22 @@
 package pitch;
 
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
 import arrays.ArrayUtils;
+import chromaticchord.ChromaticChordEnum;
+import chromaticchord.CustomChromaticChord;
 import diatonic.Degree;
 import diatonic.DiatonicFunction;
 import diatonic.IntervalDiatonic;
-import diatonic.Tonality;
 import midi.Utils;
+import tonality.Tonality;
 
 public class DiatonicChord extends Chord<Diatonic, DiatonicChord, IntervalDiatonic>
 		implements PitchDiatonicChord<Diatonic, DiatonicChord>,
-		PitchMidiableChord<DiatonicChord, DiatonicChordMidi> {
+		PitchMidiableChord<DiatonicChordMidi> {
 	private static final DiatonicChord TRIAD = new DiatonicChord(
 		Diatonic.I, Diatonic.III, Diatonic.V
 	);
@@ -89,236 +96,236 @@ public class DiatonicChord extends Chord<Diatonic, DiatonicChord, IntervalDiaton
 		assert f != null;
 		switch ( f ) {
 			case I:
-				return TRIAD.duplicate();
+				return TRIAD.clone();
 			case II:
-				return TRIAD.duplicate().shift( 1 );
+				return TRIAD.clone().shift( 1 );
 			case III:
-				return TRIAD.duplicate().shift( 2 );
+				return TRIAD.clone().shift( 2 );
 			case IV:
-				return TRIAD.duplicate().shift( 3 );
+				return TRIAD.clone().shift( 3 );
 			case V:
-				return TRIAD.duplicate().shift( 4 );
+				return TRIAD.clone().shift( 4 );
 			case VI:
-				return TRIAD.duplicate().shift( 5 );
+				return TRIAD.clone().shift( 5 );
 			case VII:
-				return TRIAD.duplicate().shift( 6 );
+				return TRIAD.clone().shift( 6 );
 
 			case I7:
-				return SEVENTH.duplicate();
+				return SEVENTH.clone();
 			case II7:
-				return SEVENTH.duplicate().shift( 1 );
+				return SEVENTH.clone().shift( 1 );
 			case III7:
-				return SEVENTH.duplicate().shift( 2 );
+				return SEVENTH.clone().shift( 2 );
 			case IV7:
-				return SEVENTH.duplicate().shift( 3 );
+				return SEVENTH.clone().shift( 3 );
 			case V7:
-				return SEVENTH.duplicate().shift( 4 );
+				return SEVENTH.clone().shift( 4 );
 			case VI7:
-				return SEVENTH.duplicate().shift( 5 );
+				return SEVENTH.clone().shift( 5 );
 			case VII7:
-				return SEVENTH.duplicate().shift( 6 );
+				return SEVENTH.clone().shift( 6 );
 
 			case I2:
-				return SUS2.duplicate();
+				return SUS2.clone();
 			case II2:
-				return SUS2.duplicate().shift( 1 );
+				return SUS2.clone().shift( 1 );
 			case III2:
-				return SUS2.duplicate().shift( 2 );
+				return SUS2.clone().shift( 2 );
 			case IV2:
-				return SUS2.duplicate().shift( 3 );
+				return SUS2.clone().shift( 3 );
 			case V2:
-				return SUS2.duplicate().shift( 4 );
+				return SUS2.clone().shift( 4 );
 			case VI2:
-				return SUS2.duplicate().shift( 5 );
+				return SUS2.clone().shift( 5 );
 			case VII2:
-				return SUS2.duplicate().shift( 6 );
+				return SUS2.clone().shift( 6 );
 
 			case I4:
-				return SUS4.duplicate();
+				return SUS4.clone();
 			case II4:
-				return SUS4.duplicate().shift( 1 );
+				return SUS4.clone().shift( 1 );
 			case III4:
-				return SUS4.duplicate().shift( 2 );
+				return SUS4.clone().shift( 2 );
 			case IV4:
-				return SUS4.duplicate().shift( 3 );
+				return SUS4.clone().shift( 3 );
 			case V4:
-				return SUS4.duplicate().shift( 4 );
+				return SUS4.clone().shift( 4 );
 			case VI4:
-				return SUS4.duplicate().shift( 5 );
+				return SUS4.clone().shift( 5 );
 			case VII4:
-				return SUS4.duplicate().shift( 6 );
+				return SUS4.clone().shift( 6 );
 
 			case I6:
-				return SIXTH.duplicate();
+				return SIXTH.clone();
 			case II6:
-				return SIXTH.duplicate().shift( 1 );
+				return SIXTH.clone().shift( 1 );
 			case III6:
-				return SIXTH.duplicate().shift( 2 );
+				return SIXTH.clone().shift( 2 );
 			case IV6:
-				return SIXTH.duplicate().shift( 3 );
+				return SIXTH.clone().shift( 3 );
 			case V6:
-				return SIXTH.duplicate().shift( 4 );
+				return SIXTH.clone().shift( 4 );
 			case VI6:
-				return SIXTH.duplicate().shift( 5 );
+				return SIXTH.clone().shift( 5 );
 			case VII6:
-				return SIXTH.duplicate().shift( 6 );
+				return SIXTH.clone().shift( 6 );
 
 			case I9:
-				return NINTH.duplicate();
+				return NINTH.clone();
 			case II9:
-				return NINTH.duplicate().shift( 1 );
+				return NINTH.clone().shift( 1 );
 			case III9:
-				return NINTH.duplicate().shift( 2 );
+				return NINTH.clone().shift( 2 );
 			case IV9:
-				return NINTH.duplicate().shift( 3 );
+				return NINTH.clone().shift( 3 );
 			case V9:
-				return NINTH.duplicate().shift( 4 );
+				return NINTH.clone().shift( 4 );
 			case VI9:
-				return NINTH.duplicate().shift( 5 );
+				return NINTH.clone().shift( 5 );
 			case VII9:
-				return NINTH.duplicate().shift( 6 );
+				return NINTH.clone().shift( 6 );
 
 			case I11:
-				return ELEVENTH.duplicate();
+				return ELEVENTH.clone();
 			case II11:
-				return ELEVENTH.duplicate().shift( 1 );
+				return ELEVENTH.clone().shift( 1 );
 			case III11:
-				return ELEVENTH.duplicate().shift( 2 );
+				return ELEVENTH.clone().shift( 2 );
 			case IV11:
-				return ELEVENTH.duplicate().shift( 3 );
+				return ELEVENTH.clone().shift( 3 );
 			case V11:
-				return ELEVENTH.duplicate().shift( 4 );
+				return ELEVENTH.clone().shift( 4 );
 			case VI11:
-				return ELEVENTH.duplicate().shift( 5 );
+				return ELEVENTH.clone().shift( 5 );
 			case VII11:
-				return ELEVENTH.duplicate().shift( 6 );
+				return ELEVENTH.clone().shift( 6 );
 
 			case I13:
-				return THIRTEENTH.duplicate();
+				return THIRTEENTH.clone();
 			case II13:
-				return THIRTEENTH.duplicate().shift( 1 );
+				return THIRTEENTH.clone().shift( 1 );
 			case III13:
-				return THIRTEENTH.duplicate().shift( 2 );
+				return THIRTEENTH.clone().shift( 2 );
 			case IV13:
-				return THIRTEENTH.duplicate().shift( 3 );
+				return THIRTEENTH.clone().shift( 3 );
 			case V13:
-				return THIRTEENTH.duplicate().shift( 4 );
+				return THIRTEENTH.clone().shift( 4 );
 			case VI13:
-				return THIRTEENTH.duplicate().shift( 5 );
+				return THIRTEENTH.clone().shift( 5 );
 			case VII13:
-				return THIRTEENTH.duplicate().shift( 6 );
+				return THIRTEENTH.clone().shift( 6 );
 			case I_SECOND:
-				return SUS2_O5.duplicate();
+				return SUS2_O5.clone();
 			case I_FOURTH:
-				return SUS4_O5.duplicate();
+				return SUS4_O5.clone();
 			case I6_O5:
-				return SIXTH_O5.duplicate();
+				return SIXTH_O5.clone();
 			case I7_O3:
-				return SEVENTH_O3.duplicate();
+				return SEVENTH_O3.clone();
 			case I7_O5:
-				return SEVENTH_O5.duplicate();
+				return SEVENTH_O5.clone();
 			case I9_O3_O7:
-				return NINTH_O3_O7.duplicate();
+				return NINTH_O3_O7.clone();
 			case I9_O7:
-				return NINTH_O7.duplicate();
+				return NINTH_O7.clone();
 			case II_SECOND:
-				return SUS2_O5.duplicate().shift( 1 );
+				return SUS2_O5.clone().shift( 1 );
 			case II_FOURTH:
-				return SUS4_O5.duplicate().shift( 1 );
+				return SUS4_O5.clone().shift( 1 );
 			case II6_O5:
-				return SIXTH_O5.duplicate().shift( 1 );
+				return SIXTH_O5.clone().shift( 1 );
 			case II7_O3:
-				return SEVENTH_O3.duplicate().shift( 1 );
+				return SEVENTH_O3.clone().shift( 1 );
 			case II7_O5:
-				return SEVENTH_O5.duplicate().shift( 1 );
+				return SEVENTH_O5.clone().shift( 1 );
 			case II9_O3_O7:
-				return NINTH_O3_O7.duplicate().shift( 1 );
+				return NINTH_O3_O7.clone().shift( 1 );
 			case II9_O7:
-				return NINTH_O7.duplicate().shift( 1 );
+				return NINTH_O7.clone().shift( 1 );
 			case III_SECOND:
-				return SUS2_O5.duplicate().shift( 2 );
+				return SUS2_O5.clone().shift( 2 );
 			case III_FOURTH:
-				return SUS4_O5.duplicate().shift( 2 );
+				return SUS4_O5.clone().shift( 2 );
 			case III6_O5:
-				return SIXTH_O5.duplicate().shift( 2 );
+				return SIXTH_O5.clone().shift( 2 );
 			case III7_O3:
-				return SEVENTH_O3.duplicate().shift( 2 );
+				return SEVENTH_O3.clone().shift( 2 );
 			case III7_O5:
-				return SEVENTH_O5.duplicate().shift( 2 );
+				return SEVENTH_O5.clone().shift( 2 );
 			case III9_O3_O7:
-				return NINTH_O3_O7.duplicate().shift( 2 );
+				return NINTH_O3_O7.clone().shift( 2 );
 			case III9_O7:
-				return NINTH_O7.duplicate().shift( 2 );
+				return NINTH_O7.clone().shift( 2 );
 			case IV_SECOND:
-				return SUS2_O5.duplicate().shift( 3 );
+				return SUS2_O5.clone().shift( 3 );
 			case IV_FOURTH:
-				return SUS4_O5.duplicate().shift( 3 );
+				return SUS4_O5.clone().shift( 3 );
 			case IV6_O5:
-				return SIXTH_O5.duplicate().shift( 3 );
+				return SIXTH_O5.clone().shift( 3 );
 			case IV7_O3:
-				return SEVENTH_O3.duplicate().shift( 3 );
+				return SEVENTH_O3.clone().shift( 3 );
 			case IV7_O5:
-				return SEVENTH_O5.duplicate().shift( 3 );
+				return SEVENTH_O5.clone().shift( 3 );
 			case IV9_O3_O7:
-				return NINTH_O3_O7.duplicate().shift( 3 );
+				return NINTH_O3_O7.clone().shift( 3 );
 			case IV9_O7:
-				return NINTH_O7.duplicate().shift( 3 );
+				return NINTH_O7.clone().shift( 3 );
 			case V_SECOND:
-				return SUS2_O5.duplicate().shift( 4 );
+				return SUS2_O5.clone().shift( 4 );
 			case V_FOURTH:
-				return SUS4_O5.duplicate().shift( 4 );
+				return SUS4_O5.clone().shift( 4 );
 			case V6_O5:
-				return SIXTH_O5.duplicate().shift( 4 );
+				return SIXTH_O5.clone().shift( 4 );
 			case V7_O3:
-				return SEVENTH_O3.duplicate().shift( 4 );
+				return SEVENTH_O3.clone().shift( 4 );
 			case V7_O5:
-				return SEVENTH_O5.duplicate().shift( 4 );
+				return SEVENTH_O5.clone().shift( 4 );
 			case V9_O3_O7:
-				return NINTH_O3_O7.duplicate().shift( 4 );
+				return NINTH_O3_O7.clone().shift( 4 );
 			case V9_O7:
-				return NINTH_O7.duplicate().shift( 4 );
+				return NINTH_O7.clone().shift( 4 );
 			case VI_SECOND:
-				return SUS2_O5.duplicate().shift( 5 );
+				return SUS2_O5.clone().shift( 5 );
 			case VI_FOURTH:
-				return SUS4_O5.duplicate().shift( 5 );
+				return SUS4_O5.clone().shift( 5 );
 			case VI6_O5:
-				return SIXTH_O5.duplicate().shift( 5 );
+				return SIXTH_O5.clone().shift( 5 );
 			case VI7_O3:
-				return SEVENTH_O3.duplicate().shift( 5 );
+				return SEVENTH_O3.clone().shift( 5 );
 			case VI7_O5:
-				return SEVENTH_O5.duplicate().shift( 5 );
+				return SEVENTH_O5.clone().shift( 5 );
 			case VI9_O3_O7:
-				return NINTH_O3_O7.duplicate().shift( 5 );
+				return NINTH_O3_O7.clone().shift( 5 );
 			case VI9_O7:
-				return NINTH_O7.duplicate().shift( 5 );
+				return NINTH_O7.clone().shift( 5 );
 			case VII_SECOND:
-				return SUS2_O5.duplicate().shift( 6 );
+				return SUS2_O5.clone().shift( 6 );
 			case VII_FOURTH:
-				return SUS4_O5.duplicate().shift( 6 );
+				return SUS4_O5.clone().shift( 6 );
 			case VII6_O5:
-				return SIXTH_O5.duplicate().shift( 6 );
+				return SIXTH_O5.clone().shift( 6 );
 			case VII7_O3:
-				return SEVENTH_O3.duplicate().shift( 6 );
+				return SEVENTH_O3.clone().shift( 6 );
 			case VII7_O5:
-				return SEVENTH_O5.duplicate().shift( 6 );
+				return SEVENTH_O5.clone().shift( 6 );
 			case VII9_O3_O7:
-				return NINTH_O3_O7.duplicate().shift( 6 );
+				return NINTH_O3_O7.clone().shift( 6 );
 			case VII9_O7:
-				return NINTH_O7.duplicate().shift( 6 );
+				return NINTH_O7.clone().shift( 6 );
 			case III_THIRD:
-				return THIRD.duplicate().shift( 2 );
+				return THIRD.clone().shift( 2 );
 			case II_THIRD:
-				return THIRD.duplicate().shift( 1 );
+				return THIRD.clone().shift( 1 );
 			case IV_THIRD:
-				return THIRD.duplicate().shift( 3 );
+				return THIRD.clone().shift( 3 );
 			case I_THIRD:
-				return THIRD.duplicate();
+				return THIRD.clone();
 			case VII_THIRD:
-				return THIRD.duplicate().shift( 6 );
+				return THIRD.clone().shift( 6 );
 			case VI_THIRD:
-				return THIRD.duplicate().shift( 5 );
+				return THIRD.clone().shift( 5 );
 			case V_THIRD:
-				return THIRD.duplicate().shift( 4 );
+				return THIRD.clone().shift( 4 );
 		}
 		throw new RuntimeException( " " + f + " " );
 
@@ -355,21 +362,6 @@ public class DiatonicChord extends Chord<Diatonic, DiatonicChord, IntervalDiaton
 		return shift( d.val() );
 	}
 
-	public DiatonicChord duplicate(boolean b) {
-		DiatonicChord ca;
-		if ( b ) {
-			ca = new DiatonicChord();
-			for ( Diatonic d : this )
-				ca.add( d.duplicate() );
-		} else {
-			Diatonic[] a = new Diatonic[size()];
-			a = this.toArray( a );
-
-			ca = new DiatonicChord( a );
-		}
-		return ca;
-	}
-
 	@Override
 	public DiatonicChord newArray() {
 		return new DiatonicChord();
@@ -382,16 +374,16 @@ public class DiatonicChord extends Chord<Diatonic, DiatonicChord, IntervalDiaton
 	}
 
 	@Override
-	public ChromaticChord toChromatic(Tonality t) {
+	public CustomChromaticChord toChromatic(Tonality t) {
 		return toChromatic( t, null );
 	}
 
-	public ChromaticChord toChromatic(Tonality t, DiatonicFunction df) {
-		ChromaticChord cc = new ChromaticChord();
+	public CustomChromaticChord toChromatic(Tonality t, DiatonicFunction df) {
+		CustomChromaticChord cc = new CustomChromaticChord();
 		for ( Diatonic d : this )
 			cc.add( d.toChromatic( t ) );
 
-		ChromaticChord foundChord = null;
+		CustomChromaticChord foundChord = null;
 		if ( df != null )
 			switch ( df ) {
 				case I2:
@@ -401,11 +393,11 @@ public class DiatonicChord extends Chord<Diatonic, DiatonicChord, IntervalDiaton
 				case V2:
 				case VI2:
 				case VII2:
-					for ( ChromaticChord c : ArrayUtils.concat(
-						ChromaticChord.CHORDS_SUS2, ChromaticChord.CHORDS_SUSb2, ChromaticChord.CHORDS_SUSb2b5
+					for ( ChromaticChordEnum c : ArrayUtils.concat(
+						ChromaticChordEnum.CHORDS_SUS2, ChromaticChordEnum.CHORDS_SUSb2, ChromaticChordEnum.CHORDS_SUSb2b5
 					) )
 						if ( cc.equalsEnharmonic( c ) ) {
-							return c.duplicate();
+							return new CustomChromaticChord( c );
 						}
 					break;
 				case I4:
@@ -415,10 +407,10 @@ public class DiatonicChord extends Chord<Diatonic, DiatonicChord, IntervalDiaton
 				case V4:
 				case VI4:
 				case VII4:
-					for ( ChromaticChord c : ArrayUtils
-							.concat( ChromaticChord.CHORDS_SUS4, ChromaticChord.CHORDS_SUSa4 ) )
+					for ( ChromaticChordEnum c : ArrayUtils
+							.concat( ChromaticChordEnum.CHORDS_SUS4, ChromaticChordEnum.CHORDS_SUSa4 ) )
 						if ( cc.equalsEnharmonic( c ) ) {
-							return c.duplicate();
+							return new CustomChromaticChord( c );
 						}
 					break;
 				case I6:
@@ -428,16 +420,16 @@ public class DiatonicChord extends Chord<Diatonic, DiatonicChord, IntervalDiaton
 				case V6:
 				case VI6:
 				case VII6:
-					for ( ChromaticChord c : ArrayUtils
-							.concat( ChromaticChord.CHORDS_6, ChromaticChord.CHORDS_m6 ) )
+					for ( ChromaticChordEnum c : ArrayUtils
+							.concat( ChromaticChordEnum.CHORDS_6, ChromaticChordEnum.CHORDS_m6 ) )
 						if ( cc.equalsEnharmonic( c ) ) {
-							return c.duplicate();
+							return new CustomChromaticChord( c );
 						}
 					break;
 			}
 
 		cc.updateWhatIsIt();
-		assert cc.meta.str != null : "meta.str es null: " + cc.notesToString() + " " + t + " " + df + " " + t.notesToString();
+		//assert cc.meta.str != null : "meta.str es null: " + cc.notesToString() + " [" + t + "] [" + df + "] " + t.notesToString();
 
 		return cc;
 	}
@@ -455,5 +447,125 @@ public class DiatonicChord extends Chord<Diatonic, DiatonicChord, IntervalDiaton
 				dcm.setRoot( dcm.size() - 1 );
 		}
 		return dcm;
+	}
+
+	@Override
+	public boolean addAll(Collection<? extends Diatonic> c) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean addAll(int index, Collection<? extends Diatonic> c) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean contains(Object o) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean containsAll(Collection<?> c) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Diatonic get(int index) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int indexOf(Object o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Iterator<Diatonic> iterator() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int lastIndexOf(Object o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public ListIterator<Diatonic> listIterator() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ListIterator<Diatonic> listIterator(int index) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean remove(Object o) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean removeAll(Collection<?> c) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean retainAll(Collection<?> c) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Diatonic set(int index, Diatonic element) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int size() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<Diatonic> subList(int fromIndex, int toIndex) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object[] toArray() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T> T[] toArray(T[] a) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

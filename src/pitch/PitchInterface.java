@@ -1,7 +1,5 @@
 package pitch;
 
-import midi.Events.Duplicable;
-
-public interface PitchInterface<This> extends Duplicable<This> {
+public interface PitchInterface extends Cloneable {
 	public String toString();
 }

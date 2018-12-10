@@ -2,13 +2,13 @@ package eventsequences;
 
 import java.util.ArrayList;
 
-import diatonic.Tonality;
 import midi.Duration;
 import midi.FigureLength;
 import midi.Events.Event;
 import midi.Events.KeySignatureEvent;
 import pitch.ChromaticMidi;
 import pitch.DiatonicMidi;
+import tonality.Tonality;
 import pitch.DiatonicChordMidi;
 
 public class MelodyByChords extends Melody {
@@ -37,7 +37,7 @@ public class MelodyByChords extends Melody {
 
 	public DiatonicMidi add(int t, int p, int d) {
 		DiatonicChordMidi c = getChord(t);
-		DiatonicMidi n = (DiatonicMidi)c.getFromBase(p).duplicate();
+		DiatonicMidi n = (DiatonicMidi)c.getFromBase(p).clone();
 		n.setLength(d);
 
 		notes.add(t, n);
@@ -71,7 +71,7 @@ public class MelodyByChords extends Melody {
 	}
 
 	@Override
-	public Event duplicate(boolean b) {
+	public MelodyByChords clone() {
 		// TODO Auto-generated method stub
 		return null;
 	}

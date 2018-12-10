@@ -1,11 +1,12 @@
-package diatonic;
+package tonality;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-import datastructures.ArrayWrapper;
+import arrays.ArrayWrapper;
+import diatonic.IntervalChromatic;
 
 public enum ScaleEnum implements Scale {
 	// 7

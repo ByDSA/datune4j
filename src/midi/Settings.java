@@ -1,8 +1,8 @@
 package midi;
 
-import diatonic.ScaleEnum;
-import diatonic.Tonality;
 import pitch.Chromatic;
+import tonality.ScaleEnum;
+import tonality.Tonality;
 
 public class Settings {
 	public static final int VELOCITY_MAX = 127;
@@ -13,6 +13,6 @@ public class Settings {
 		public static final int DURATION_NOTE = Duration.V4;
 		public static final Chromatic CHROMATIC = Chromatic.C;
 		public static final ScaleEnum SCALE = ScaleEnum.MAJOR;
-		public static final Tonality TONALITY = new Tonality(CHROMATIC, SCALE);
+		public static final Tonality TONALITY = Tonality.of(CHROMATIC, SCALE);
 	}
 }

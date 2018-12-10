@@ -13,7 +13,8 @@ public class Pan extends ControlChangeEvent {
 		this(0, v);
 	}
 	
-	public Pan duplicate(boolean b) {
+	@Override
+	public Pan clone() {
 		Pan r = new Pan(0, 0);
 		r.setData(getData());
 		

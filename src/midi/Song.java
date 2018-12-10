@@ -1,7 +1,7 @@
 package midi;
 
-import diatonic.Tonality;
 import eventsequences.Track;
+import tonality.Tonality;
 
 public class Song extends Sequence {
 	protected Tonality tonality;

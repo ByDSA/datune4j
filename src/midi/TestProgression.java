@@ -1,12 +1,12 @@
 package midi;
 
 import diatonic.DiatonicFunction;
-import diatonic.Tonality;
 import eventsequences.Instrument;
 import eventsequences.Melody;
 import eventsequences.Track;
 import midi.Progressions.Progression;
 import pitch.DiatonicChordMidi;
+import tonality.Tonality;
 
 public class TestProgression extends Song {
 	public Progression progression;

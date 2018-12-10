@@ -4,7 +4,6 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Map;
 
-import diatonic.Tonality;
 import midi.Sequence;
 import midi.Events.Event;
 import midi.Events.EventComplex;
@@ -16,6 +15,7 @@ import midi.Events.TempoEvent;
 import midi.Events.TrackChunk;
 import midi.Events.Volume;
 import midi.Progressions.Progression;
+import tonality.Tonality;
 
 public class Track extends EventSequence {
 	int channel;

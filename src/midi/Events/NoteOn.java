@@ -41,8 +41,9 @@ public class NoteOn extends ChannelEvent {
 		return "NoteOn " + note;
 	}
 	
-	public NoteOn duplicate(boolean b) {
-		NoteOn r = new NoteOn(note.duplicate(b));
+	@Override
+	public NoteOn clone() {
+		NoteOn r = new NoteOn(note.clone());
 		r.setData(getData());
 		
 		return r;

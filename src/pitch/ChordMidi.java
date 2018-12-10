@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;
 
+import chromaticchord.CustomChromaticChord;
 import eventsequences.EventSequence;
 import midi.AddedException;
 import midi.FigureLength;
@@ -13,24 +14,27 @@ import midi.Arpegios.Arpegio;
 import midi.Arpegios.ArpegioDefault;
 
 public abstract class ChordMidi<N extends NoteMidi<N, DistType>, This extends ChordMidi<N, This, DistType>, DistType>
-		extends Chord<N, This, DistType>
-		implements FigureLength<This>, PitchOctave<This>,
-		PitchChromaticableChord<N, This, DistType> {
+extends Chord<N, This, DistType>
+implements FigureLength<This>, PitchOctave<This>,
+PitchChromaticableChord<N, This, DistType> {
 	protected Arpegio	arpegio;
 	protected int		length;
 
-	public ChromaticChord meta = null; // TODO: poner private
+	public CustomChromaticChord meta = null; // TODO: poner private
 
-	public ChromaticChord toChromaticChord() {
-		ChromaticChord ns = new ChromaticChord();
-		for ( N n : this ) {
-			ns.addNoReset( n.getChromatic() );
+	public PitchChromaticChord toChromaticChord() {
+		if (getRootPos() != 0) {
+			CustomChromaticChord ns = new CustomChromaticChord();
+			for ( N n : this ) {
+				ns.addNoReset( n.getChromatic() );
 
-			if ( n == root )
-				ns.setRoot( ns.size() - 1 );
-		}
+				if ( n == root )
+					ns.setRoot( ns.size() - 1 );
+			}
 
-		return ns;
+			return ns;
+		} else
+			return PitchChromaticChord.of(this);
 	}
 
 	public <T extends ChordMidi> This assign(T c) {
@@ -109,7 +113,7 @@ public abstract class ChordMidi<N extends NoteMidi<N, DistType>, This extends Ch
 		int arpDuration = arpegio.getLength();
 
 		if ( length != 0 && length > arpDuration ) {
-			aNodes = arpegio.duplicate();
+			aNodes = arpegio.clone();
 			int newArpDuration = arpDuration;
 
 			while ( length > newArpDuration ) {
@@ -126,7 +130,7 @@ public abstract class ChordMidi<N extends NoteMidi<N, DistType>, This extends Ch
 			if ( length != 0 && node.time > length || node.note < 0 )
 				continue;
 
-			N n = (N) get( node.note ).duplicate();
+			N n = (N) get( node.note ).clone();
 
 			if ( length != 0 )
 				n.setLength( Math.min( node.time + node.length, length ) - node.time );
@@ -155,7 +159,7 @@ public abstract class ChordMidi<N extends NoteMidi<N, DistType>, This extends Ch
 	}
 
 	public This setArpegio(Arpegio a) {
-		arpegio = a.duplicate();
+		arpegio = a.clone();
 		arpegio.setChord( this );
 
 		return (This) this;
@@ -244,7 +248,7 @@ public abstract class ChordMidi<N extends NoteMidi<N, DistType>, This extends Ch
 		this.sort(
 			(N n1, N n2) -> ( n1.getPitchCode().val() > n2.getPitchCode().val() ? 1
 					: ( n1.getPitchCode() == n2.getPitchCode() ? 0 : -1 ) )
-		);
+				);
 	}
 
 	public <A extends PitchChord<N, A, DistType>> boolean hasSameNotesOrderSameOctave(A notes) {
@@ -265,8 +269,8 @@ public abstract class ChordMidi<N extends NoteMidi<N, DistType>, This extends Ch
 	}
 
 	@Override
-	public Boolean updateWhatIsIt(BiFunction<ArrayList<ChromaticChord>, PitchChromaticableChord<?, ?, ?>, ChromaticChord> f) {
-		meta = new ChromaticChord( this );
+	public Boolean updateWhatIsIt(BiFunction<ArrayList<CustomChromaticChord>, PitchChromaticableChord<?, ?, ?>, CustomChromaticChord> f) {
+		meta = new CustomChromaticChord( this );
 		assert meta != null;
 		assert f != null;
 		Boolean ret = meta.updateWhatIsIt( f );
@@ -310,7 +314,7 @@ public abstract class ChordMidi<N extends NoteMidi<N, DistType>, This extends Ch
 
 	@Override
 	public ArrayList<This> getAllInversions() {
-		This c = duplicate( true );
+		This c = clone();
 		c.setMinOctave();
 		c.minimize();
 
@@ -328,13 +332,13 @@ public abstract class ChordMidi<N extends NoteMidi<N, DistType>, This extends Ch
 		assert size() > 0;
 
 		if ( first && level == 0 )
-			ret.add( duplicate( true ) );
+			ret.add( clone() );
 
 		try {
 			while ( ( size() > 1 && get( 0 ).getPitchCode().val() < get( 1 ).getPitchCode().val()
 					|| size() == 1 ) ) {
 				if ( !first ) {
-					This d = duplicate( true );
+					This d = clone();
 					ret.add( d );
 				}
 
@@ -342,21 +346,19 @@ public abstract class ChordMidi<N extends NoteMidi<N, DistType>, This extends Ch
 					// Copia acorde desde la segunda a la última nota
 					This subChord = newArray();
 					for ( int j = 1; j < size(); j++ )
-						subChord.add( get( j ).duplicate() );
+						subChord.add( get( j ).clone() );
 
-					ArrayList<This> subCombinations = subChord.duplicate( true )
+					ArrayList<This> subCombinations = subChord.clone()
 							.getAllDispositionsSub( true, level + 1, first );
 					for ( This subCombination : subCombinations ) {
 						// Forma array superChord = [array[0] + subChordcombination]
 						This superChord = newArray();
-						superChord.add( get( 0 ).duplicate() );
-						superChord.add( subCombination.duplicate( true ) );
+						superChord.add( get( 0 ).clone() );
+						superChord.add( subCombination.clone() );
 
 						// Combinaciones de 'número' dentro del array superChord = ['número' +
 						// subChordcombination]
-						ArrayList<This> superCombinations = superChord.duplicate(
-							true
-							)
+						ArrayList<This> superCombinations = superChord.clone()
 								.getAllDispositionsSub( false, level, false );
 						ret.addAll( superCombinations );
 					}
@@ -433,9 +435,11 @@ public abstract class ChordMidi<N extends NoteMidi<N, DistType>, This extends Ch
 
 		return super.equals(cm) && ( arpegio == null && cm.arpegio == null || arpegio.equals( cm.arpegio ) ) && length == cm.length;
 	}
-	
+
 	protected void setArpegioIfNull() {
 		if ( arpegio == null )
 			setArpegio( new ArpegioDefault() );
 	}
+	
+	public abstract This clone();
 }

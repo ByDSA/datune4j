@@ -25,7 +25,8 @@ public class ProgramChange extends ChannelEvent {
 		setData(new byte[]{(byte)(value.val() & 0x7F)});
 	}
 	
-	public ProgramChange duplicate(boolean b) {
+	@Override
+	public ProgramChange clone() {
 		ProgramChange r = new ProgramChange(value);
 		r.setData(getData());
 		

@@ -1,6 +1,8 @@
-package diatonic;
+package tonality;
 
 import java.util.stream.IntStream;
+
+import diatonic.IntervalChromatic;
 
 public class ScaleException extends RuntimeException {
 	public ScaleException(Scale s) {

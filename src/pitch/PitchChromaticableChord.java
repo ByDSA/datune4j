@@ -3,8 +3,10 @@ package pitch;
 import java.util.ArrayList;
 import java.util.function.BiFunction;
 
-public interface PitchChromaticableChord<N extends PitchChromaticableSingle<N>, This extends PitchChromaticableChord<N, This, DistType>, DistType>
-		extends PitchChord<N, This, DistType>, PitchChromaticable<This> {
+import chromaticchord.CustomChromaticChord;
+
+public interface PitchChromaticableChord<N extends PitchChromaticableSingle, This extends PitchChromaticableChord<N, This, DistType>, DistType>
+		extends PitchChord<N, This, DistType>, PitchChromaticable {
 	public default <Array extends PitchChromaticableChord<N, Array, DistType>> boolean hasSameNotesOrder(Array notes) {
 		if ( size() != notes.size() )
 			return false;
@@ -32,7 +34,7 @@ public interface PitchChromaticableChord<N extends PitchChromaticableSingle<N>, 
 
 	public default Boolean updateWhatIsIt() {
 		return updateWhatIsIt(
-			(ArrayList<ChromaticChord> chords, PitchChromaticableChord<?, ?, ?> self) -> {
+			(ArrayList<CustomChromaticChord> chords, PitchChromaticableChord<?, ?, ?> self) -> {
 				return chords.get( 0 );
 			}
 		);
@@ -52,7 +54,7 @@ public interface PitchChromaticableChord<N extends PitchChromaticableSingle<N>, 
 			add( n );
 	}
 
-	public Boolean updateWhatIsIt(BiFunction<ArrayList<ChromaticChord>, PitchChromaticableChord<?, ?, ?>, ChromaticChord> fSelectChord);
+	public Boolean updateWhatIsIt(BiFunction<ArrayList<CustomChromaticChord>, PitchChromaticableChord<?, ?, ?>, CustomChromaticChord> fSelectChord);
 
 	public Boolean updateWhatIsItIfNeeded();
 
@@ -79,7 +81,13 @@ public interface PitchChromaticableChord<N extends PitchChromaticableSingle<N>, 
 	 */
 
 	public default <Array extends PitchChromaticableChord<N, ?, ?>> boolean equalsEnharmonicInv(Array cc) {
-		Array cc2 = (Array) cc.duplicate();
+		Array cc2;
+		try {
+			cc2 = (Array) cc.clone();
+		} catch ( CloneNotSupportedException e ) {
+			e.printStackTrace();
+			cc2 = null;
+		}
 		for ( int i = 0; i < cc2.size(); i++, cc2.inv() ) {
 			if ( this.equalsEnharmonic( cc2 ) )
 				return true;

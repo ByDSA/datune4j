@@ -3,11 +3,11 @@ package pitch;
 import java.util.ArrayList;
 
 import diatonic.Degree;
-import diatonic.Tonality;
-import diatonic.TonalityException;
 import midi.Settings;
+import tonality.Tonality;
+import tonality.TonalityException;
 
-public enum Chromatic implements PitchChromaticSingle<Chromatic> {
+public enum Chromatic implements PitchChromaticSingle {
 	C(0), D(2), E(4), F(5), G(7),A(9), B(11),
 	CC(C.val() + 1), DD(D.val() + 1), EE(E.val() + 1), FF(F.val() + 1), GG(G.val() + 1), AA(A.val() + 1), BB(B.val() + 1),
 	CCC(C.val() + 2), DDD(D.val() + 2), EEE(E.val() + 2), FFF(F.val() + 2), GGG(G.val() + 2), AAA(A.val() + 2), BBB(B.val() + 2),
@@ -328,11 +328,6 @@ public enum Chromatic implements PitchChromaticSingle<Chromatic> {
 	@Override
 	public float getPitchMean() {
 		return val();
-	}
-
-	@Override
-	public Chromatic duplicate(boolean b) {
-		return Chromatic.get(value);
 	}
 
 	public ChromaticMidi toMidi(int octave, int length, int velocity) {

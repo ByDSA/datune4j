@@ -5,30 +5,30 @@ import java.util.List;
 import diatonic.Degree;
 import diatonic.IntervalChromatic;
 import diatonic.IntervalDiatonic;
-import diatonic.Tonality;
-import diatonic.TonalityException;
 import eventsequences.EventSequence;
 import midi.Settings;
 import midi.Events.NoteOff;
 import midi.Events.NoteOn;
+import tonality.Tonality;
+import tonality.TonalityException;
 
 public class ChromaticMidi
-		implements NoteMidi<ChromaticMidi, Integer>, PitchChromaticSingle<ChromaticMidi> {
+		implements NoteMidi<ChromaticMidi, Integer>, PitchChromaticSingle {
 	protected int	velocity;
-	protected Pitch	pitch;
+	protected PitchMidi	pitch;
 	protected int	length;
 
-	public Pitch getPitchCode() {
-		return Pitch.get( pitch.getChromatic(), pitch.getOctave() );
+	public PitchMidi getPitchCode() {
+		return PitchMidi.get( pitch.getChromatic(), pitch.getOctave() );
 	}
 
-	public ChromaticMidi(Pitch p, int d, int v) {
+	public ChromaticMidi(PitchMidi p, int d, int v) {
 		set( d, v );
 		pitch = p;
 	}
 
 	public ChromaticMidi(Chromatic c, int o, int d, int v) {
-		this( Pitch.get( c, o ), d, v );
+		this( PitchMidi.get( c, o ), d, v );
 	}
 
 	public ChromaticMidi(ChromaticMidi n) {
@@ -96,7 +96,7 @@ public class ChromaticMidi
 	}
 
 	public ChromaticMidi add(int i) {
-		pitch = Pitch.add( pitch, i );
+		pitch = PitchMidi.add( pitch, i );
 		return this;
 	}
 
@@ -106,7 +106,7 @@ public class ChromaticMidi
 
 	/* Métodos estáticos */
 	public static ChromaticMidi add(final ChromaticMidi n, int i) {
-		return n.duplicate( true ).add( i );
+		return n.clone().add( i );
 	}
 
 	public static ChromaticMidi add(final ChromaticMidi n, IntervalChromatic i) {
@@ -123,7 +123,7 @@ public class ChromaticMidi
 	}
 
 	@Override
-	public ChromaticMidi duplicate(boolean b) {
+	public ChromaticMidi clone() {
 		return new ChromaticMidi( pitch, length, velocity );
 	}
 	/*
@@ -144,7 +144,7 @@ public class ChromaticMidi
 	}
 
 	public static ChromaticMidi getFromCode(int code, int d, int v) {
-		Pitch p = Pitch.getFromCode( code );
+		PitchMidi p = PitchMidi.getFromCode( code );
 		return new ChromaticMidi( p, d, v );
 	}
 

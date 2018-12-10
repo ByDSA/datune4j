@@ -1,4 +1,4 @@
-package diatonic;
+package tonality;
 
 public class NoDiatonicScaleException extends RuntimeException {
 	public NoDiatonicScaleException(Scale n) {

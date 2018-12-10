@@ -6,9 +6,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import diatonic.CustomScale;
-import diatonic.Scale;
-import diatonic.ScaleEnum;
+import tonality.CustomScale;
+import tonality.Scale;
+import tonality.ScaleEnum;
 
 public class ScaleTest {
 	@Test

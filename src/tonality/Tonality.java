@@ -1,31 +1,31 @@
-package diatonic;
+package tonality;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
 
 import Log.String.Logging;
-import arrays.ArrayUtils;
-import midi.Events.Duplicable;
+import chromaticchord.CustomChromaticChord;
+import diatonic.ChromaticFunction;
+import diatonic.Degree;
+import diatonic.DiatonicFunction;
+import diatonic.HarmonicFunction;
+import diatonic.IntervalChromatic;
+import diatonic.IntervalDiatonic;
 import pitch.Chromatic;
-import pitch.ChromaticChord;
-import pitch.ChromaticChordMidi;
 import pitch.ChromaticMidi;
 import pitch.Diatonic;
 import pitch.DiatonicChord;
 import pitch.DiatonicChordMidi;
-import pitch.DiatonicMidi;
-import pitch.PitchChromaticSingle;
+import pitch.PitchChromaticChord;
 import pitch.PitchChromaticableChord;
 import pitch.PitchChromaticableSingle;
 
-public interface Tonality<T, D> extends Duplicable<D> {
-	public ArrayList<ChromaticChord> getAllChords();
+public interface Tonality extends Cloneable {
+	public ArrayList<CustomChromaticChord> getAllChords();
 
-	public Set<ChromaticChord> getBorrowedChords();
+	public Set<CustomChromaticChord> getBorrowedChords();
 
 	public static ArrayList<Tonality> getFromChord(PitchChromaticableChord c) {
 		return getFromChord( false, c );
@@ -70,23 +70,22 @@ public interface Tonality<T, D> extends Duplicable<D> {
 		return Arrays.equals( getNotes(), t.getNotes() );
 	}
 
-	public ChromaticChord get(DiatonicFunction f);
+	public PitchChromaticChord get(DiatonicFunction f);
 
-	public ChromaticChord get(ChromaticFunction f);
+	public PitchChromaticChord get(ChromaticFunction f);
 
-	default Tonality searchInModeSameRoot(ChromaticChord c) {
-		Tonality[] ts;
-		if ( this.getScale().isDiatonic() )
-			ts = new Tonality[] {
-				new CustomTonality( this.getRoot(), ScaleEnum.MAJOR ),
-				new CustomTonality( this.getRoot(), ScaleEnum.MINOR ),
-				new CustomTonality( this.getRoot(), ScaleEnum.DORIAN ),
-				new CustomTonality( this.getRoot(), ScaleEnum.PHRYGIAN ),
-				new CustomTonality( this.getRoot(), ScaleEnum.LYDIAN ),
-				new CustomTonality( this.getRoot(), ScaleEnum.MIXOLYDIAN ),
-				new CustomTonality( this.getRoot(), ScaleEnum.LOCRIAN )
-		};
-		else
+	default Tonality searchInModeSameRoot(PitchChromaticChord c) {
+		List<Tonality> ts;
+		if ( this.getScale().isDiatonic() ) {
+			ts = new ArrayList<>();
+			ts.add( new CustomTonality( this.getRoot(), ScaleEnum.MAJOR ) );
+			ts.add( new CustomTonality( this.getRoot(), ScaleEnum.MINOR ) );
+			ts.add( new CustomTonality( this.getRoot(), ScaleEnum.DORIAN ) );
+			ts.add( new CustomTonality( this.getRoot(), ScaleEnum.PHRYGIAN ) );
+			ts.add( new CustomTonality( this.getRoot(), ScaleEnum.LYDIAN ) );
+			ts.add( new CustomTonality( this.getRoot(), ScaleEnum.MIXOLYDIAN ) );
+			ts.add( new CustomTonality( this.getRoot(), ScaleEnum.LOCRIAN ) );
+		} else
 			ts = this.getModesSameRoot();
 
 		for ( Tonality t : ts ) {
@@ -101,13 +100,13 @@ public interface Tonality<T, D> extends Duplicable<D> {
 		return null;
 	}
 
-	default ChromaticChord get(DiatonicChord dc, DiatonicFunction df) {
+	default PitchChromaticChord get(DiatonicChord dc, DiatonicFunction df) {
 		return dc.toChromatic( this, df );
 	}
 
-	default ChromaticChord[] getTriadChords() {
+	default PitchChromaticChord[] getTriadChords() {
 		NoDiatonicScaleException.check( getScale() );
-		ChromaticChord[] ret = new ChromaticChord[7];
+		PitchChromaticChord[] ret = new PitchChromaticChord[7];
 		for ( int i = 0; i < 7; i++ ) {
 			DiatonicFunction f = null;
 			switch ( i ) {
@@ -138,9 +137,9 @@ public interface Tonality<T, D> extends Duplicable<D> {
 		return ret;
 	}
 
-	default ChromaticChord[] getSeventhChords() {
+	default PitchChromaticChord[] getSeventhChords() {
 		NoDiatonicScaleException.check( getScale() );
-		ChromaticChord[] ret = new ChromaticChord[7];
+		PitchChromaticChord[] ret = new PitchChromaticChord[7];
 		for ( int i = 0; i < 7; i++ ) {
 			DiatonicFunction f = null;
 			switch ( i ) {
@@ -241,18 +240,17 @@ public interface Tonality<T, D> extends Duplicable<D> {
 		return ret;
 	}
 
-	default Tonality[] getModesSameRoot() {
-		Tonality[] ret = new Tonality[length()];
+	default List<Tonality> getModesSameRoot() {
+		List<Tonality> ret = new ArrayList<>();
 
-		int j = 0;
 		for ( Scale s : getScale().getAllModes() )
 			for ( int i = 0; i < 12; i++ ) {
 				Tonality t = Tonality.of( i, s );
 				if ( isModeOf( t ) ) {
 					t.updateChromaticsFromBase( getRoot() );
 					if (t instanceof CustomTonality)
-					((CustomTonality)t).minimizeAlterations();
-					ret[j++] = t;
+						((CustomTonality)t).minimizeAlterations();
+					ret.add( t );
 				}
 			}
 
@@ -356,7 +354,7 @@ public interface Tonality<T, D> extends Duplicable<D> {
 		return getDegree( note ) != null;
 	}
 
-	default <N extends PitchChromaticableSingle<N>> boolean has(PitchChromaticableChord<N, ?, ?> notes) {
+	default <N extends PitchChromaticableSingle> boolean has(PitchChromaticableChord<N, ?, ?> notes) {
 		for ( N n : notes ) {
 			if ( getDegree( n ) == null )
 				return false;
@@ -385,12 +383,10 @@ public interface Tonality<T, D> extends Duplicable<D> {
 		return Tonality.of( getRoot().add( pos ), getScale() );
 	}
 
-	public Tonality setScale(ScaleEnum t);
-
 	public Scale getScale();
 
 	public Chromatic getRoot();
-	
+
 	public Chromatic[] getNotes();
 
 	default Tonality minor() {
@@ -410,8 +406,8 @@ public interface Tonality<T, D> extends Duplicable<D> {
 
 	default ArrayList<DiatonicChordMidi[]> commonChords(Tonality s) {
 		ArrayList<DiatonicChordMidi[]> ret = new ArrayList<>();
-		for ( DiatonicFunction i : DiatonicFunction.ALL )
-			for ( DiatonicFunction j : DiatonicFunction.ALL ) {
+		for ( DiatonicFunction i : DiatonicFunction.COMMON )
+			for ( DiatonicFunction j : DiatonicFunction.COMMON ) {
 				DiatonicChordMidi c = new DiatonicChordMidi( i, this );
 				DiatonicChordMidi c2 = new DiatonicChordMidi( j, s );
 
@@ -426,9 +422,9 @@ public interface Tonality<T, D> extends Duplicable<D> {
 		return ret;
 	}
 
-	public Set<ChromaticChord> getScaleChords();
+	public Set<CustomChromaticChord> getScaleChords();
 
-	public Set<ChromaticChord> getOutScaleChords();
+	public Set<CustomChromaticChord> getOutScaleChords();
 
 	default void showNotes() {
 		Logging.log( this + ": " + notesToString() );
@@ -453,26 +449,31 @@ public interface Tonality<T, D> extends Duplicable<D> {
 		return IntervalChromatic.get( id, n );
 	}
 
-	default HarmonicFunction getFunction(ChromaticChord c) {
+	default HarmonicFunction getFunction(PitchChromaticChord c) {
 		HarmonicFunction hf = getFunction( c, true );
 		if ( hf == null )
 			hf = getFunction( c, false );
 		return hf;
 	}
 
-	public HarmonicFunction getFunction(ChromaticChord c, boolean rename);
+	public HarmonicFunction getFunction(PitchChromaticChord c, boolean rename);
 
 	public void showChromaticChordFunction();
 
 	public Chromatic getEnharmonic(Chromatic chromatic) throws TonalityException;
-	
+
 	public static Tonality of(Chromatic c, Scale s) {
 		Tonality t = TonalityEnum.of(c, s);
 		if (t == null)
-			return new CustomTonality(c, s);
+			t = new CustomTonality(c, s);
+		return t;
 	}
-	
+
 	public static Tonality of(int i, Scale s) {
 		return of (Chromatic.get( i ), s);
+	}
+	
+	public static Tonality of(Tonality t) {
+		return of(t.getRoot(), t.getScale());
 	}
 }

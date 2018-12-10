@@ -1,21 +1,23 @@
 package pathfinding;
 
-import diatonic.Tonality;
-import eventsequences.Instrument;
-import eventsequences.Track;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
+
+import chromaticchord.ChromaticChordEnum;
+import chromaticchord.CustomChromaticChord;
+import eventsequences.Instrument;
+import eventsequences.Track;
 import midi.Duration;
-import midi.Events.Volume;
 import midi.Midi;
-import midi.Sequence;
 import midi.Song;
+import midi.Events.Volume;
 import pitch.ChordMidi;
-import pitch.ChromaticChord;
 import pitch.ChromaticChordMidi;
 import pitch.ProgressionChromaticChordMidi;
+import tonality.TonalityEnum;
 
 class Main {
 	static Map map;
@@ -32,15 +34,15 @@ class Main {
 		 */
 
 		ProgressionChromaticChordMidi pcm = new ProgressionChromaticChordMidi(
-			ChromaticChord.C,
-			ChromaticChord.Em,
-			ChromaticChord.F,
-			ChromaticChord.B,
-			ChromaticChord.Am,
-			ChromaticChord.D,
-			ChromaticChord.G,
-			ChromaticChord.Bdim,
-			ChromaticChord.C
+			ChromaticChordEnum.C,
+			ChromaticChordEnum.Em,
+			ChromaticChordEnum.F,
+			ChromaticChordEnum.B,
+			ChromaticChordEnum.Am,
+			ChromaticChordEnum.D,
+			ChromaticChordEnum.G,
+			ChromaticChordEnum.Bdim,
+			ChromaticChordEnum.C
 		);
 
 		PathProgression<ChromaticChordMidi> p2 = new PathProgression( pcm );
@@ -51,7 +53,7 @@ class Main {
 			n.object.showNotes();
 		}
 
-		Song p = new Song( "azsxdc", 120, Tonality.FFm );
+		Song p = new Song( "azsxdc", 120, TonalityEnum.FFm );
 		Track strings = new Track( 0, Instrument.get( 48 ) );
 		int l2 = 0;
 		for ( int i = 0; i < pcm.size(); i++ ) {

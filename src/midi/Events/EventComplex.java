@@ -6,10 +6,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 
-import diatonic.Tonality;
 import eventsequences.EventSequence;
+import tonality.Tonality;
 
-public interface EventComplex<This> extends Event<This> {	
+public interface EventComplex extends Event {	
 	public EventSequence getEvents();
 	public default EventSequence getBasicEvents() {
 		EventSequence seq = new EventSequence();

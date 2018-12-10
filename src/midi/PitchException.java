@@ -1,6 +1,6 @@
 package midi;
 
-import pitch.Pitch;
+import pitch.PitchMidi;
 import pitch.PitchCode;
 
 public class PitchException extends RuntimeException {
@@ -13,7 +13,7 @@ public class PitchException extends RuntimeException {
 	}
 
 	public static boolean check(int code) {
-		if ( code > Pitch.MAX.val() || code < Pitch.MIN.val() )
+		if ( code > PitchMidi.MAX.val() || code < PitchMidi.MIN.val() )
 			throw new PitchException( code );
 
 		return true;

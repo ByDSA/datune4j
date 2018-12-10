@@ -21,7 +21,7 @@ import midi.Events.NoteOn;
 import pitch.ChromaticMidi;
 import pitch.ChromaticChordMidi;
 
-public class EventSequence implements FigureLength<EventSequence>, EventComplex<EventSequence> {
+public class EventSequence implements FigureLength<EventSequence>, EventComplex {
 	protected TreeMap<Long, ArrayList<Event>>	map;
 	protected int								duration;
 
@@ -245,10 +245,15 @@ public class EventSequence implements FigureLength<EventSequence>, EventComplex<
 	}
 
 	@Override
-	public EventSequence duplicate(boolean b) {
+	public EventSequence clone() {
 		EventSequence es = new EventSequence();
 		this.forEach( (time, ev) -> {
-			es.add( time, (Event) ev.duplicate( b ) );
+			try {
+				es.add( time, ev.clone() );
+			} catch ( CloneNotSupportedException e ) {
+				es.add( time, ev );
+				e.printStackTrace();
+			}
 
 			return true;
 		} );

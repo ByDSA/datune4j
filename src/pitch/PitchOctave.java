@@ -1,6 +1,6 @@
 package pitch;
 
-public interface PitchOctave<This> extends PitchInterface<This> {
+public interface PitchOctave<This> extends PitchInterface {
 	public static final int MIN = 0;
 	public static final int MAX = 10;
 	public This shiftOctave(int o);

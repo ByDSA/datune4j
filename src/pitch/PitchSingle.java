@@ -1,4 +1,4 @@
 package pitch;
 
-public interface PitchSingle<This> extends PitchInterface<This> {
+public interface PitchSingle extends PitchInterface {
 }
