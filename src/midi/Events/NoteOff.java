@@ -7,7 +7,7 @@ public class NoteOff extends ChannelEvent {
 	public ChromaticMidi note;
 	
 	public NoteOff(int d, ChromaticMidi n, int v) {
-		this(d, n.getPitchCode().val(), v);
+		this(d, n.getCode(), v);
 		
 		note = n;
 	}

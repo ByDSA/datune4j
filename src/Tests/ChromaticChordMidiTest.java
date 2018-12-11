@@ -7,14 +7,14 @@ import org.junit.Test;
 import chromaticchord.ChromaticChordEnum;
 import pitch.Chromatic;
 import pitch.ChromaticChordMidi;
-import pitch.PitchMidi;
+import pitch.PitchMidiEnum;
 
 public class ChromaticChordMidiTest {
 	@Test
 	public void chromaticChordToMidi() {
 		ChromaticChordMidi ccm = new ChromaticChordMidi(ChromaticChordEnum.F5);
-		assertEquals(PitchMidi.F5, ccm.get(0).getPitchCode());
-		assertEquals(PitchMidi.C6, ccm.get(1).getPitchCode());
+		assertEquals(PitchMidiEnum.F5, ccm.get(0).getCode());
+		assertEquals(PitchMidiEnum.C6, ccm.get(1).getCode());
 		assertEquals(0, ccm.getRootPos());
 		assertEquals(Chromatic.F, ccm.get(0).getChromatic());
 		assertEquals(Chromatic.C, ccm.get(1).getChromatic());

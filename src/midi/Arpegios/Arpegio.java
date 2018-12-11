@@ -7,7 +7,7 @@ import eventsequences.EventSequence;
 import midi.FigureLength;
 import pitch.ChordMidi;
 
-public class Arpegio implements FigureLength<Arpegio>, Cloneable {
+public class Arpegio implements FigureLength, Cloneable {
 	ArrayList<Node> nodes;
 	ChordMidi chord;
 	Consumer<Arpegio> build;

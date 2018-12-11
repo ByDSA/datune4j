@@ -20,7 +20,7 @@ import pitch.ChromaticMidi;
 import pitch.Diatonic;
 import pitch.DiatonicChord;
 import pitch.DiatonicChordMidi;
-import pitch.PitchMidi;
+import pitch.PitchMidiEnum;
 import tonality.ScaleEnum;
 import tonality.Tonality;
 import tonality.TonalityEnum;
@@ -33,75 +33,75 @@ public class DiatonicChordMidiTest {
 
 		c = new DiatonicChordMidi( ChromaticFunction.I5, 5, s );
 		assertEquals( 2, c.size() );
-		assertEquals( PitchMidi.C5, c.get( 0 ).getPitchCode() );
-		assertEquals( PitchMidi.G5, c.get( 1 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.C5, c.get( 0 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.G5, c.get( 1 ).getPitchCode() );
 
 		c = new DiatonicChordMidi( ChromaticFunction.II5, 5, s );
 		assertEquals( 2, c.size() );
-		assertEquals( PitchMidi.D5, c.get( 0 ).getPitchCode() );
-		assertEquals( PitchMidi.A5, c.get( 1 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.D5, c.get( 0 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.A5, c.get( 1 ).getPitchCode() );
 
 		c = new DiatonicChordMidi( ChromaticFunction.III5, 5, s );
 		assertEquals( 2, c.size() );
-		assertEquals( PitchMidi.E5, c.get( 0 ).getPitchCode() );
-		assertEquals( PitchMidi.B5, c.get( 1 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.E5, c.get( 0 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.B5, c.get( 1 ).getPitchCode() );
 
 		c = new DiatonicChordMidi( ChromaticFunction.IV5, 5, s );
 		assertEquals( 2, c.size() );
-		assertEquals( PitchMidi.F5, c.get( 0 ).getPitchCode() );
-		assertEquals( PitchMidi.C6, c.get( 1 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.F5, c.get( 0 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.C6, c.get( 1 ).getPitchCode() );
 
 		c = new DiatonicChordMidi( ChromaticFunction.V5, 5, s );
 		assertEquals( 2, c.size() );
-		assertEquals( PitchMidi.G5, c.get( 0 ).getPitchCode() );
-		assertEquals( PitchMidi.D6, c.get( 1 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.G5, c.get( 0 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.D6, c.get( 1 ).getPitchCode() );
 
 		c = new DiatonicChordMidi( ChromaticFunction.VI5, 5, s );
 		assertEquals( 2, c.size() );
-		assertEquals( PitchMidi.A5, c.get( 0 ).getPitchCode() );
-		assertEquals( PitchMidi.E6, c.get( 1 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.A5, c.get( 0 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.E6, c.get( 1 ).getPitchCode() );
 
 		c = new DiatonicChordMidi( ChromaticFunction.VII5, 5, s );
 		assertEquals( 2, c.size() );
-		assertEquals( PitchMidi.B5, c.get( 0 ).getPitchCode() );
-		assertEquals( PitchMidi.FF6, c.get( 1 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.B5, c.get( 0 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.FF6, c.get( 1 ).getPitchCode() );
 
 		s = TonalityEnum.Cm;
 
 		c = new DiatonicChordMidi( ChromaticFunction.I5, 5, s );
 		assertEquals( 2, c.size() );
-		assertEquals( PitchMidi.C5, c.get( 0 ).getPitchCode() );
-		assertEquals( PitchMidi.G5, c.get( 1 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.C5, c.get( 0 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.G5, c.get( 1 ).getPitchCode() );
 
 		c = new DiatonicChordMidi( ChromaticFunction.II5, 5, s );
 		assertEquals( 2, c.size() );
-		assertEquals( PitchMidi.D5, c.get( 0 ).getPitchCode() );
-		assertEquals( PitchMidi.A5, c.get( 1 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.D5, c.get( 0 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.A5, c.get( 1 ).getPitchCode() );
 
 		c = new DiatonicChordMidi( ChromaticFunction.III5, 5, s );
 		assertEquals( 2, c.size() );
-		assertEquals( PitchMidi.DD5, c.get( 0 ).getPitchCode() );
-		assertEquals( PitchMidi.AA5, c.get( 1 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.DD5, c.get( 0 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.AA5, c.get( 1 ).getPitchCode() );
 
 		c = new DiatonicChordMidi( ChromaticFunction.IV5, 5, s );
 		assertEquals( 2, c.size() );
-		assertEquals( PitchMidi.F5, c.get( 0 ).getPitchCode() );
-		assertEquals( PitchMidi.C6, c.get( 1 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.F5, c.get( 0 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.C6, c.get( 1 ).getPitchCode() );
 
 		c = new DiatonicChordMidi( ChromaticFunction.V5, 5, s );
 		assertEquals( 2, c.size() );
-		assertEquals( PitchMidi.G5, c.get( 0 ).getPitchCode() );
-		assertEquals( PitchMidi.D6, c.get( 1 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.G5, c.get( 0 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.D6, c.get( 1 ).getPitchCode() );
 
 		c = new DiatonicChordMidi( ChromaticFunction.VI5, 5, s );
 		assertEquals( 2, c.size() );
-		assertEquals( PitchMidi.GG5, c.get( 0 ).getPitchCode() );
-		assertEquals( PitchMidi.DD6, c.get( 1 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.GG5, c.get( 0 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.DD6, c.get( 1 ).getPitchCode() );
 
 		c = new DiatonicChordMidi( ChromaticFunction.VII5, 5, s );
 		assertEquals( 2, c.size() );
-		assertEquals( PitchMidi.AA5, c.get( 0 ).getPitchCode() );
-		assertEquals( PitchMidi.F6, c.get( 1 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.AA5, c.get( 0 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.F6, c.get( 1 ).getPitchCode() );
 	}
 
 	@Test
@@ -110,89 +110,89 @@ public class DiatonicChordMidiTest {
 		DiatonicChordMidi c;
 		c = new DiatonicChordMidi( DiatonicFunction.I, 5, s );
 		assertEquals( 3, c.size() );
-		assertEquals( PitchMidi.C5, c.get( 0 ).getPitchCode() );
-		assertEquals( PitchMidi.E5, c.get( 1 ).getPitchCode() );
-		assertEquals( PitchMidi.G5, c.get( 2 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.C5, c.get( 0 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.E5, c.get( 1 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.G5, c.get( 2 ).getPitchCode() );
 
 		c = new DiatonicChordMidi( DiatonicFunction.II, 5, s );
 		assertEquals( 3, c.size() );
-		assertEquals( PitchMidi.D5, c.get( 0 ).getPitchCode() );
-		assertEquals( PitchMidi.F5, c.get( 1 ).getPitchCode() );
-		assertEquals( PitchMidi.A5, c.get( 2 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.D5, c.get( 0 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.F5, c.get( 1 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.A5, c.get( 2 ).getPitchCode() );
 
 		c = new DiatonicChordMidi( DiatonicFunction.III, 5, s );
 		assertEquals( 3, c.size() );
-		assertEquals( PitchMidi.E5, c.get( 0 ).getPitchCode() );
-		assertEquals( PitchMidi.G5, c.get( 1 ).getPitchCode() );
-		assertEquals( PitchMidi.B5, c.get( 2 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.E5, c.get( 0 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.G5, c.get( 1 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.B5, c.get( 2 ).getPitchCode() );
 
 		c = new DiatonicChordMidi( DiatonicFunction.IV, 5, s );
 		assertEquals( 3, c.size() );
-		assertEquals( PitchMidi.F5, c.get( 0 ).getPitchCode() );
-		assertEquals( PitchMidi.A5, c.get( 1 ).getPitchCode() );
-		assertEquals( PitchMidi.C6, c.get( 2 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.F5, c.get( 0 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.A5, c.get( 1 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.C6, c.get( 2 ).getPitchCode() );
 
 		c = new DiatonicChordMidi( DiatonicFunction.V, 5, s );
 		assertEquals( 3, c.size() );
-		assertEquals( PitchMidi.G5, c.get( 0 ).getPitchCode() );
-		assertEquals( PitchMidi.B5, c.get( 1 ).getPitchCode() );
-		assertEquals( PitchMidi.D6, c.get( 2 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.G5, c.get( 0 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.B5, c.get( 1 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.D6, c.get( 2 ).getPitchCode() );
 
 		c = new DiatonicChordMidi( DiatonicFunction.VI, 5, s );
 		assertEquals( 3, c.size() );
-		assertEquals( PitchMidi.A5, c.get( 0 ).getPitchCode() );
-		assertEquals( PitchMidi.C6, c.get( 1 ).getPitchCode() );
-		assertEquals( PitchMidi.E6, c.get( 2 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.A5, c.get( 0 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.C6, c.get( 1 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.E6, c.get( 2 ).getPitchCode() );
 
 		c = new DiatonicChordMidi( DiatonicFunction.VII, 5, s );
 		assertEquals( 3, c.size() );
-		assertEquals( PitchMidi.B5, c.get( 0 ).getPitchCode() );
-		assertEquals( PitchMidi.D6, c.get( 1 ).getPitchCode() );
-		assertEquals( PitchMidi.F6, c.get( 2 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.B5, c.get( 0 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.D6, c.get( 1 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.F6, c.get( 2 ).getPitchCode() );
 
 		s = Tonality.of( Chromatic.FF, ScaleEnum.MINOR );
 
 		c = new DiatonicChordMidi( DiatonicFunction.I, 5, s );
 		assertEquals( 3, c.size() );
-		assertEquals( PitchMidi.FF5, c.get( 0 ).getPitchCode() );
-		assertEquals( PitchMidi.A5, c.get( 1 ).getPitchCode() );
-		assertEquals( PitchMidi.CC6, c.get( 2 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.FF5, c.get( 0 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.A5, c.get( 1 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.CC6, c.get( 2 ).getPitchCode() );
 
 		c = new DiatonicChordMidi( DiatonicFunction.II, 5, s );
 		assertEquals( 3, c.size() );
-		assertEquals( PitchMidi.GG5, c.get( 0 ).getPitchCode() );
-		assertEquals( PitchMidi.B5, c.get( 1 ).getPitchCode() );
-		assertEquals( PitchMidi.D6, c.get( 2 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.GG5, c.get( 0 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.B5, c.get( 1 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.D6, c.get( 2 ).getPitchCode() );
 
 		c = new DiatonicChordMidi( DiatonicFunction.III, 5, s );
 		assertEquals( 3, c.size() );
-		assertEquals( PitchMidi.A5, c.get( 0 ).getPitchCode() );
-		assertEquals( PitchMidi.CC6, c.get( 1 ).getPitchCode() );
-		assertEquals( PitchMidi.E6, c.get( 2 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.A5, c.get( 0 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.CC6, c.get( 1 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.E6, c.get( 2 ).getPitchCode() );
 
 		c = new DiatonicChordMidi( DiatonicFunction.IV, 5, s );
 		assertEquals( 3, c.size() );
-		assertEquals( PitchMidi.B5, c.get( 0 ).getPitchCode() );
-		assertEquals( PitchMidi.D6, c.get( 1 ).getPitchCode() );
-		assertEquals( PitchMidi.FF6, c.get( 2 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.B5, c.get( 0 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.D6, c.get( 1 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.FF6, c.get( 2 ).getPitchCode() );
 
 		c = new DiatonicChordMidi( DiatonicFunction.V, 5, s );
 		assertEquals( 3, c.size() );
-		assertEquals( PitchMidi.CC6, c.get( 0 ).getPitchCode() );
-		assertEquals( PitchMidi.E6, c.get( 1 ).getPitchCode() );
-		assertEquals( PitchMidi.GG6, c.get( 2 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.CC6, c.get( 0 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.E6, c.get( 1 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.GG6, c.get( 2 ).getPitchCode() );
 
 		c = new DiatonicChordMidi( DiatonicFunction.VI, 5, s );
 		assertEquals( 3, c.size() );
-		assertEquals( PitchMidi.D6, c.get( 0 ).getPitchCode() );
-		assertEquals( PitchMidi.FF6, c.get( 1 ).getPitchCode() );
-		assertEquals( PitchMidi.A6, c.get( 2 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.D6, c.get( 0 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.FF6, c.get( 1 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.A6, c.get( 2 ).getPitchCode() );
 
 		c = new DiatonicChordMidi( DiatonicFunction.VII, 5, s );
 		assertEquals( 3, c.size() );
-		assertEquals( PitchMidi.E6, c.get( 0 ).getPitchCode() );
-		assertEquals( PitchMidi.GG6, c.get( 1 ).getPitchCode() );
-		assertEquals( PitchMidi.B6, c.get( 2 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.E6, c.get( 0 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.GG6, c.get( 1 ).getPitchCode() );
+		assertEquals( PitchMidiEnum.B6, c.get( 2 ).getPitchCode() );
 	}
 
 	@Test
@@ -409,12 +409,12 @@ public class DiatonicChordMidiTest {
 
 		c = new DiatonicChordMidi( TonalityEnum.C );
 		c2 = new DiatonicChordMidi( TonalityEnum.C );
-		c.add( PitchMidi.C5.toMidi() );
-		c.add( PitchMidi.E5.toMidi() );
-		c.add( PitchMidi.G5.toMidi() );
-		c2.add( PitchMidi.C5.toMidi() );
-		c2.add( PitchMidi.E5.toMidi() );
-		c2.add( PitchMidi.G5.toMidi() );
+		c.add( PitchMidiEnum.C5.toMidi() );
+		c.add( PitchMidiEnum.E5.toMidi() );
+		c.add( PitchMidiEnum.G5.toMidi() );
+		c2.add( PitchMidiEnum.C5.toMidi() );
+		c2.add( PitchMidiEnum.E5.toMidi() );
+		c2.add( PitchMidiEnum.G5.toMidi() );
 		assertEquals( c, c2 );
 
 		c = new DiatonicChordMidi( DiatonicFunction.I, 5, TonalityEnum.Am );

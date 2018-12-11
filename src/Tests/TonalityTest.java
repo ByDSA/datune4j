@@ -14,7 +14,7 @@ import diatonic.ChromaticFunction;
 import diatonic.Degree;
 import diatonic.DiatonicFunction;
 import pitch.Chromatic;
-import pitch.PitchMidi;
+import pitch.PitchMidiEnum;
 import pitch.PitchChromaticChord;
 import tonality.CustomTonality;
 import tonality.Tonality;
@@ -266,9 +266,9 @@ public class TonalityTest {
 	public void getDegree() {
 		Tonality ton = TonalityEnum.C;
 
-		assertEquals( Degree.I, ton.getDegree( PitchMidi.C5 ) );
-		assertEquals( Degree.II, ton.getDegree( PitchMidi.D5 ) );
-		assertEquals( Degree.III, ton.getDegree( PitchMidi.E6 ) );
+		assertEquals( Degree.I, ton.getDegree( PitchMidiEnum.C5 ) );
+		assertEquals( Degree.II, ton.getDegree( PitchMidiEnum.D5 ) );
+		assertEquals( Degree.III, ton.getDegree( PitchMidiEnum.E6 ) );
 		assertEquals( Degree.IV, ton.getDegree( Chromatic.F ) );
 		assertEquals( null, ton.getDegree( Chromatic.EEEE, false ) );
 		assertEquals( Degree.V, ton.getDegree( Chromatic.EEEE ) );

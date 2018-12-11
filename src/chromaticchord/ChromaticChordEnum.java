@@ -15,13 +15,14 @@ import diatonic.ChordNotation;
 import diatonic.Quality;
 import pitch.Chromatic;
 import pitch.PitchChromaticChord;
+import pitch.PitchChromaticable;
 import pitch.PitchChromaticableChord;
 import pitch.PitchChromaticableSingle;
 import pitch.PitchDiatonic;
 import tonality.Tonality;
 import tonality.TonalityException;
 
-public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic, CustomChromaticChord> {
+public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic> {
 	// Quintas
 	C5(Chromatic.C, Chromatic.G),
 	CC5(Chromatic.CC, Chromatic.GG),
@@ -2442,12 +2443,6 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic, CustomC
 	}
 
 	@Override
-	public Boolean updateWhatIsIt(BiFunction<ArrayList<CustomChromaticChord>, PitchChromaticableChord<?, ?, ?>, CustomChromaticChord> fSelectChord) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Boolean updateWhatIsItIfNeeded() {
 		// TODO Auto-generated method stub
 		return null;
@@ -2481,5 +2476,16 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic, CustomC
 	public boolean isSus2() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public Boolean updateWhatIsIt(BiFunction<ArrayList<CustomChromaticChord>, PitchChromaticableChord<?, ?>, CustomChromaticChord> fSelectChord) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ChromaticChordEnum getChromatic() {
+		return this;
 	}
 }

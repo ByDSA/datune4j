@@ -43,8 +43,8 @@ public class Power extends Song {
 				add(DiatonicFunction.VI4).inv(-1);
 				add(DiatonicFunction.IV6);
 				add(DiatonicFunction.I4).inv(1);
-				add(ChromaticFunction.V_V).inv(1).setDuration(Duration.V2);
-				add(DiatonicFunction.V7).inv(-1).setDuration(Duration.V2);
+				add(ChromaticFunction.V_V).inv(1).setLength(Duration.V2);
+				add(DiatonicFunction.V7).inv(-1).setLength(Duration.V2);
 			}
 		};
 
@@ -239,14 +239,14 @@ public class Power extends Song {
 					c1 = add(DiatonicFunction.VI, -1);
 				else
 					c1 = add(DiatonicFunction.VI, -1);
-				c1.setDuration(Duration.V1*2)
+				c1.setLength(Duration.V1*2)
 				.setArpegio(new ArpegioPowerGuitars());
 
 				if (n == 2)
 					c2 = add(DiatonicFunction.V, -1);
 				else
 					c2 = add(DiatonicFunction.V, -1);
-				c2.setDuration(Duration.V1*2)
+				c2.setLength(Duration.V1*2)
 				.setArpegio(new ArpegioDefault(Duration.V1*2));
 			}
 		};
@@ -327,17 +327,17 @@ public class Power extends Song {
 	int a(int seek) {
 		Progression cad = new Progression(tonality, 4) {
 			{				
-				add(DiatonicFunction.I).inv(1).setDuration(Duration.V1);
-				add(DiatonicFunction.IV).setDuration(Duration.V2);
-				add(DiatonicFunction.V).setDuration(Duration.V2);
-				add(DiatonicFunction.VI).setDuration(Duration.V1);
-				add(DiatonicFunction.V).inv(-1).setDuration(Duration.V1);
+				add(DiatonicFunction.I).inv(1).setLength(Duration.V1);
+				add(DiatonicFunction.IV).setLength(Duration.V2);
+				add(DiatonicFunction.V).setLength(Duration.V2);
+				add(DiatonicFunction.VI).setLength(Duration.V1);
+				add(DiatonicFunction.V).inv(-1).setLength(Duration.V1);
 
-				add(DiatonicFunction.I).setDuration(Duration.V1);
-				add(DiatonicFunction.IV).inv(-1).setDuration(Duration.V2);
-				add(DiatonicFunction.V).inv(-1).setDuration(Duration.V2);
-				add(DiatonicFunction.VI).inv(-1).setDuration(Duration.V1);
-				add(DiatonicFunction.VII).inv(-1).setDuration(Duration.V1);
+				add(DiatonicFunction.I).setLength(Duration.V1);
+				add(DiatonicFunction.IV).inv(-1).setLength(Duration.V2);
+				add(DiatonicFunction.V).inv(-1).setLength(Duration.V2);
+				add(DiatonicFunction.VI).inv(-1).setLength(Duration.V1);
+				add(DiatonicFunction.VII).inv(-1).setLength(Duration.V1);
 			}
 		};
 
@@ -398,17 +398,17 @@ public class Power extends Song {
 	int b(int seek) {
 		Progression cad = new Progression(tonality, 5) {
 			{
-				add(DiatonicFunction.VI,-1).setDuration(Duration.V1);
-				add(DiatonicFunction.V).setDuration(Duration.V2);
-				add(DiatonicFunction.IV).setDuration(Duration.V2);
-				add(DiatonicFunction.III).setDuration(Duration.V1);
-				add(DiatonicFunction.IV).setDuration(Duration.V1);
+				add(DiatonicFunction.VI,-1).setLength(Duration.V1);
+				add(DiatonicFunction.V).setLength(Duration.V2);
+				add(DiatonicFunction.IV).setLength(Duration.V2);
+				add(DiatonicFunction.III).setLength(Duration.V1);
+				add(DiatonicFunction.IV).setLength(Duration.V1);
 
-				add(DiatonicFunction.VI,-1).setDuration(Duration.V1);
-				add(DiatonicFunction.V).setDuration(Duration.V1);
-				add(DiatonicFunction.IV).setDuration(Duration.V2);
-				add(DiatonicFunction.III).setDuration(Duration.V2);
-				add(DiatonicFunction.VII,-1).setDuration(Duration.V1);
+				add(DiatonicFunction.VI,-1).setLength(Duration.V1);
+				add(DiatonicFunction.V).setLength(Duration.V1);
+				add(DiatonicFunction.IV).setLength(Duration.V2);
+				add(DiatonicFunction.III).setLength(Duration.V2);
+				add(DiatonicFunction.VII,-1).setLength(Duration.V1);
 			}
 		};
 

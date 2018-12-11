@@ -14,7 +14,7 @@ import diatonic.IntervalDiatonic;
 import midi.Utils;
 import tonality.Tonality;
 
-public class DiatonicChord extends Chord<Diatonic, DiatonicChord, IntervalDiatonic>
+public class DiatonicChord extends Chord<Diatonic, IntervalDiatonic>
 		implements PitchDiatonicChord<Diatonic, DiatonicChord>,
 		PitchMidiableChord<DiatonicChordMidi> {
 	private static final DiatonicChord TRIAD = new DiatonicChord(
@@ -567,5 +567,10 @@ public class DiatonicChord extends Chord<Diatonic, DiatonicChord, IntervalDiaton
 	public <T> T[] toArray(T[] a) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public DiatonicChord clone() {
+		return (DiatonicChord) super.clone();
 	}
 }

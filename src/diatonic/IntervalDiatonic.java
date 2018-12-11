@@ -21,7 +21,7 @@ public enum IntervalDiatonic {
         return value;
     }
 
-    public static IntervalDiatonic get(int n) {
+    public static IntervalDiatonic of(int n) {
     	n = n < 0 ? -n : n;
     	
         switch (n) {

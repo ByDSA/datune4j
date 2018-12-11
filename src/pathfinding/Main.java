@@ -65,7 +65,7 @@ class Main {
 				l = Duration.V2;
 			}
 
-			c.setDuration( l );
+			c.setLength( l );
 			strings.add( l2, c );
 			l2 += l;
 

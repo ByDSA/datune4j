@@ -678,7 +678,7 @@ public class CustomTonality implements Tonality {
 		return getDegree( note ) != null;
 	}
 
-	public <N extends PitchChromaticableSingle> boolean has(PitchChromaticableChord<N, ?, ?> notes) {
+	public <N extends PitchChromaticableSingle> boolean has(PitchChromaticableChord<N, ?> notes) {
 		for ( N n : notes ) {
 			if ( getDegree( n ) == null )
 				return false;

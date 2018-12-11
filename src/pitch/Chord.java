@@ -5,10 +5,10 @@ import java.util.List;
 
 import chromaticchord.CustomChromaticChord;
 import midi.AddedException;
-import midi.PitchException;
+import midi.PitchMidiException;
 
-abstract public class Chord<N extends PitchSingle, This extends Chord<N, This, DistType>, DistType>
-implements Cloneable, PitchChord<N, This, DistType>, List<N> {
+abstract public class Chord<N extends PitchSingle, DistType>
+implements Cloneable, PitchChord<N, DistType>, List<N> {
 	protected N root;
 	protected List<N> notes = new ArrayList();
 
@@ -19,7 +19,7 @@ implements Cloneable, PitchChord<N, This, DistType>, List<N> {
 		add( cs );
 	}
 
-	public Chord(Chord<N, ?, DistType> cs) throws AddedException {
+	public Chord(Chord<N, DistType> cs) throws AddedException {
 		add( cs );
 	}
 
@@ -47,7 +47,7 @@ implements Cloneable, PitchChord<N, This, DistType>, List<N> {
 		return true;
 	}
 	
-	public boolean add(PitchChord<N, ?, DistType> cs) throws AddedException {
+	public boolean add(PitchChord<N, DistType> cs) throws AddedException {
 		if ( cs.size() == 0 )
 			return false;
 
@@ -83,16 +83,16 @@ implements Cloneable, PitchChord<N, This, DistType>, List<N> {
 		return r;
 	}
 
-	public ArrayList<This> getAllInversions() {
-		ArrayList<This> ret = new ArrayList<>();
+	public <T extends Chord<N, DistType>> ArrayList<T> getAllInversions() {
+		ArrayList<T> ret = new ArrayList<>();
 
-		ret.add( this.clone() );
+		ret.add( (T) this.clone() );
 
-		This last = ret.get( 0 );
+		T last = ret.get( 0 );
 		for ( int i = 1; i < size(); i++ ) {
 			try {
 				last = last.clone().inv();
-			} catch ( PitchException e ) {
+			} catch ( PitchMidiException e ) {
 				last = last.clone().inv( -size() + 1 );
 			}
 			ret.add( last );
@@ -139,13 +139,13 @@ implements Cloneable, PitchChord<N, This, DistType>, List<N> {
 		return ( size() - getRootPos() ) % size();
 	}
 
-	final public This inv() {
+	public <T extends Chord<? extends N, ? extends DistType>> T inv() {
 		return inv( 1 );
 	}
 
-	public This inv(int n) {
+	public <T extends Chord<? extends N, ? extends DistType>> T inv(int n) {
 		if ( size() < 2 || n == 0 )
-			return (This) this;
+			return (T) this;
 
 		for ( int i = 0; i < n; i++ ) {
 			boolean updateRoot = getRootPos() == 0;
@@ -167,7 +167,7 @@ implements Cloneable, PitchChord<N, This, DistType>, List<N> {
 			}
 		}
 
-		return (This) this;
+		return (T) this;
 	}
 
 	public String toString() {
@@ -232,9 +232,9 @@ implements Cloneable, PitchChord<N, This, DistType>, List<N> {
 	}
 	
 	@Override
-    public This clone() {
+    public Chord<N, DistType> clone() {
         try {
-			return (This) super.clone();
+			return (Chord) super.clone();
 		} catch ( CloneNotSupportedException e ) {
 			e.printStackTrace();
 			return null;

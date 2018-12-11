@@ -21,7 +21,7 @@ import midi.Events.NoteOn;
 import pitch.ChromaticMidi;
 import pitch.ChromaticChordMidi;
 
-public class EventSequence implements FigureLength<EventSequence>, EventComplex {
+public class EventSequence implements FigureLength, EventComplex {
 	protected TreeMap<Long, ArrayList<Event>>	map;
 	protected int								duration;
 
@@ -135,7 +135,7 @@ public class EventSequence implements FigureLength<EventSequence>, EventComplex 
 		this.forEach( (time, ev) -> {
 			float tf = time / (float) Duration.V1;
 			if ( ev instanceof NoteOn ) {
-				int nc = ( (NoteOn) ev ).note.getPitchCode().val();
+				int nc = ( (NoteOn) ev ).note.getCode();
 				assert nc >= 0;
 				if ( notesOn.get( nc ) == null ) {
 					Queue<Long> q1 = new LinkedList<Long>();
@@ -151,7 +151,7 @@ public class EventSequence implements FigureLength<EventSequence>, EventComplex 
 
 				assert notesOn.get( nc ) != null;
 			} else if ( ev instanceof NoteOff ) {
-				int nc = ( (NoteOff) ev ).note.getPitchCode().val();
+				int nc = ( (NoteOff) ev ).note.getCode();
 				assert nc >= 0;
 
 				Queue<NoteOn> evOnQueue = notesOnEvent.get( nc );
@@ -278,10 +278,10 @@ public class EventSequence implements FigureLength<EventSequence>, EventComplex 
 					lastTime.set(time);
 					if (ev instanceof NoteOn) {
 						NoteOn n = (NoteOn) ev;
-						Midi.mChannels[0].noteOn(n.note.getPitchCode().val(), n.note.getVelocity());
+						Midi.mChannels[0].noteOn(n.note.getCode(), n.note.getVelocity());
 					} else if (ev instanceof NoteOff) {
 						NoteOff n = (NoteOff) ev;
-						Midi.mChannels[0].noteOff(n.note.getPitchCode().val());
+						Midi.mChannels[0].noteOff(n.note.getCode());
 					}
 
 					return true;

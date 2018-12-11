@@ -5,42 +5,42 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import pitch.Chromatic;
-import pitch.ChromaticMidi;
-import pitch.PitchMidi;
+import pitch.PitchMidiEnum;
+import pitch.PitchMidiSingle;
 
 public class PitchTests {
 	@Test
 	public void add() {
-		assertEquals( 60, PitchMidi.C5.val() );
-		PitchMidi p = PitchMidi.add( PitchMidi.C5, 4 );
-		assertEquals( PitchMidi.E5, p );
-		assertEquals( 60, PitchMidi.C5.val() );
+		assertEquals( 60, PitchMidiEnum.C5.getCode() );
+		PitchMidiEnum p = PitchMidiEnum.C5.addMidi( 4 );
+		assertEquals( PitchMidiEnum.E5, p );
+		assertEquals( 60, PitchMidiEnum.C5.getCode() );
 	}
 
 	@Test
 	public void setOctave() {
-		assertEquals( 60, PitchMidi.C5.val() );
-		PitchMidi p = PitchMidi.C5.setOctave( 4 );
-		assertEquals( PitchMidi.C4, p );
-		assertEquals( 60, PitchMidi.C5.val() );
+		assertEquals( 60, PitchMidiEnum.C5.getCode() );
+		PitchMidiEnum p = PitchMidiEnum.C5.setOctave( 4 );
+		assertEquals( PitchMidiEnum.C4, p );
+		assertEquals( 60, PitchMidiEnum.C5.getCode() );
 	}
 
 	@Test
 	public void shiftOctave() {
-		assertEquals( 60, PitchMidi.C5.val() );
-		PitchMidi p = PitchMidi.C5.shiftOctave( 1 );
-		assertEquals( PitchMidi.C6, p );
-		assertEquals( 60, PitchMidi.C5.val() );
+		assertEquals( 60, PitchMidiEnum.C5.getCode() );
+		PitchMidiEnum p = PitchMidiEnum.C5.shiftOctave( 1 );
+		assertEquals( PitchMidiEnum.C6, p );
+		assertEquals( 60, PitchMidiEnum.C5.getCode() );
 	}
 
 	@Test
 	public void get() {
-		assertEquals( PitchMidi.GG5, PitchMidi.get( Chromatic.GG, 5 ) );
-		assertEquals( 5, PitchMidi.GG5.getOctave() );
-		assertEquals( PitchMidi.GG5, PitchMidi.get( Chromatic.GG, PitchMidi.GG5.getOctave() ) );
-		assertEquals( Chromatic.GG, PitchMidi.GG5.getChromatic() );
-		assertEquals( PitchMidi.GG5, PitchMidi.get( PitchMidi.GG5.getChromatic(), 5 ) );
-		assertEquals( PitchMidi.GG5, PitchMidi.get( PitchMidi.GG5.getChromatic(), PitchMidi.GG5.getOctave() ) );
-		assertEquals( PitchMidi.GG5, PitchMidi.GG5.toMidi().getPitchCode() );
+		assertEquals( PitchMidiEnum.GG5, PitchMidiSingle.of( Chromatic.GG, 5 ) );
+		assertEquals( 5, PitchMidiEnum.GG5.getOctave() );
+		assertEquals( PitchMidiEnum.GG5, PitchMidiSingle.of( Chromatic.GG, PitchMidiEnum.GG5.getOctave() ) );
+		assertEquals( Chromatic.GG, PitchMidiEnum.GG5.getChromatic() );
+		assertEquals( PitchMidiEnum.GG5, PitchMidiSingle.of( PitchMidiEnum.GG5.getChromatic(), 5 ) );
+		assertEquals( PitchMidiEnum.GG5, PitchMidiSingle.of( PitchMidiEnum.GG5.getChromatic(), PitchMidiEnum.GG5.getOctave() ) );
+		assertEquals( PitchMidiEnum.GG5, PitchMidiEnum.GG5.toMidi().getCode() );
 	}
 }

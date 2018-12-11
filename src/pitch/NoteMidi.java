@@ -3,21 +3,22 @@ package pitch;
 import midi.FigureLength;
 import midi.FigureVelocity;
 import midi.Events.EventComplex;
+import others.Codeable;
 
-public interface NoteMidi<This extends NoteMidi<This, DistType>, DistType> extends
-PitchChromaticableSingle, PitchOctave<This>, PitchCode<This, DistType>, FigureLength<This>, FigureVelocity<This>, EventComplex {
-	public static final int NOTES_PER_OCTAVE = 12;
-	
-	public default This set(int d, int v) {
+public interface NoteMidi extends PitchChromaticableSingle, PitchOctave, FigureLength, FigureVelocity, EventComplex, PitchMidiSingle {	
+	public default <T extends NoteMidi> T set(int d, int v) {
 		setVelocity(v);
 		
 		return setLength(d);
 	}
 	
-	@Override
-	public default float getPitchMean() {
-		return getPitchCode().val();
+	public default NoteMidi clone() {
+		return this.clone();
 	}
 	
-	This clone();
+
+	@Override
+	public default float getPitchMean() {
+		return getCode();
+	}
 }

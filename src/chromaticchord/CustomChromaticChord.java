@@ -27,14 +27,15 @@ import pitch.DiatonicChord;
 import pitch.DiatonicChordMidi;
 import pitch.DiatonicMidi;
 import pitch.PitchChromaticChord;
+import pitch.PitchChromaticable;
 import pitch.PitchChromaticableChord;
 import pitch.PitchChromaticableSingle;
 import tonality.ScaleEnum;
 import tonality.Tonality;
 import tonality.TonalityException;
 
-public class CustomChromaticChord extends Chord<Chromatic, CustomChromaticChord, Integer>
-implements PitchChromaticChord<Chromatic, CustomChromaticChord> {
+public class CustomChromaticChord extends Chord<Chromatic, Integer>
+implements PitchChromaticChord<Chromatic> {
 	public ChromaticChordMeta meta = new ChromaticChordMeta(); // TODO: protected
 
 	public static final HashMap<ArrayWrapperInteger, ArrayList<CustomChromaticChord>> sameOrderChromatics = new HashMap();
@@ -313,7 +314,7 @@ implements PitchChromaticChord<Chromatic, CustomChromaticChord> {
 	}
 
 	@Override
-	public Boolean updateWhatIsIt(BiFunction<ArrayList<CustomChromaticChord>, PitchChromaticableChord<?, ?, ?>, CustomChromaticChord> fSelectChord) {
+	public Boolean updateWhatIsIt(BiFunction<ArrayList<CustomChromaticChord>, PitchChromaticableChord<?, ?>, CustomChromaticChord> fSelectChord) {
 		ArrayWrapperInteger a = new ArrayWrapperInteger( this.toIntegerChromatics() );
 		assert CustomChromaticChord.sameOrderChromatics != null;
 		ArrayList<CustomChromaticChord> foundChords = CustomChromaticChord.sameOrderChromatics.get( a );
@@ -342,7 +343,7 @@ implements PitchChromaticChord<Chromatic, CustomChromaticChord> {
 
 	public Boolean updateWhatIsIt() {
 		return updateWhatIsIt(
-			(ArrayList<CustomChromaticChord> chords, PitchChromaticableChord<?, ?, ?> self) -> {
+			(ArrayList<CustomChromaticChord> chords, PitchChromaticableChord<?, ?> self) -> {
 				return chords.get( 0 );
 			}
 				);
@@ -436,7 +437,7 @@ implements PitchChromaticChord<Chromatic, CustomChromaticChord> {
 			meta.str = null;
 	}
 
-	public <A extends Chord<Chromatic, CustomChromaticChord, ?>> boolean hasSameNotesOrder(A notes) {
+	public <A extends Chord<Chromatic, ?>> boolean hasSameNotesOrder(A notes) {
 		if ( size() != notes.size() || size() == 0 )
 			return false;
 
@@ -564,6 +565,11 @@ implements PitchChromaticChord<Chromatic, CustomChromaticChord> {
 
 		throw new ImpossibleChord();
 	}
+	
+	@Override
+    public CustomChromaticChord clone() {
+		return (CustomChromaticChord)super.clone();
+	}
 
 	public static class ImpossibleChord extends RuntimeException {
 		public ImpossibleChord() {
@@ -689,5 +695,20 @@ implements PitchChromaticChord<Chromatic, CustomChromaticChord> {
 	public <T> T[] toArray(T[] a) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public CustomChromaticChord inv() {
+		return super.inv();
+	}
+
+	@Override
+	public CustomChromaticChord inv(int n) {
+		return super.inv( n );
+	}
+
+	@Override
+	public CustomChromaticChord getChromatic() {
+		return this;
 	}
 }

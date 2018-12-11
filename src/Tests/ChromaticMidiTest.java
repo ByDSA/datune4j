@@ -7,7 +7,8 @@ import org.junit.Test;
 import pitch.Chromatic;
 import pitch.ChromaticMidi;
 import pitch.DiatonicMidi;
-import pitch.PitchMidi;
+import pitch.PitchMidiEnum;
+import pitch.PitchMidiSingle;
 import tonality.TonalityEnum;
 
 public class ChromaticMidiTest {
@@ -15,17 +16,17 @@ public class ChromaticMidiTest {
 	public void noteConstructor() {
 		ChromaticMidi n = Chromatic.C.toMidi( 5 );
 
-		assertEquals( PitchMidi.C5, n.getPitchCode() );
+		assertEquals( PitchMidiEnum.C5, n.getCode() );
 		assertEquals( 5, n.getOctave() );
 
 		n = Chromatic.C.add( 5 ).toMidi( 5 );
 
-		assertEquals( PitchMidi.getFromCode( 60 + 5 ), n.getPitchCode() );
+		assertEquals( PitchMidiSingle.of( 60 + 5 ), n.getCode() );
 		assertEquals( 5, n.getOctave() );
 
 		n = Chromatic.C.add( 12 ).toMidi( 5 );
 
-		assertEquals( PitchMidi.C5, n.getPitchCode() );
+		assertEquals( PitchMidiEnum.C5, n.getCode() );
 		assertEquals( 5, n.getOctave() );
 	}
 	
@@ -41,7 +42,7 @@ public class ChromaticMidiTest {
 	
 	@Test
 	public void equals() {
-		ChromaticMidi cm = PitchMidi.C5.toMidi();
+		ChromaticMidi cm = PitchMidiEnum.C5.toMidi();
 		ChromaticMidi cm2 = cm.clone();
 		
 		assertEquals(cm, cm2);

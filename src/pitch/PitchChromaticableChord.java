@@ -5,9 +5,9 @@ import java.util.function.BiFunction;
 
 import chromaticchord.CustomChromaticChord;
 
-public interface PitchChromaticableChord<N extends PitchChromaticableSingle, This extends PitchChromaticableChord<N, This, DistType>, DistType>
-		extends PitchChord<N, This, DistType>, PitchChromaticable {
-	public default <Array extends PitchChromaticableChord<N, Array, DistType>> boolean hasSameNotesOrder(Array notes) {
+public interface PitchChromaticableChord<N extends PitchChromaticableSingle, DistType>
+		extends PitchChord<N, DistType>, PitchChromaticable {
+	public default <Array extends PitchChromaticableChord<N, DistType>> boolean hasSameNotesOrder(Array notes) {
 		if ( size() != notes.size() )
 			return false;
 
@@ -19,7 +19,7 @@ public interface PitchChromaticableChord<N extends PitchChromaticableSingle, Thi
 		return true;
 	}
 
-	public default boolean equalsEnharmonic(PitchChromaticableChord<? extends PitchChromaticableSingle, ?, ?> ca) {
+	public default boolean equalsEnharmonic(PitchChromaticableChord<? extends PitchChromaticableSingle, ?> ca) {
 		if ( size() != ca.size() )
 			return false;
 		for ( int i = 0; i < size(); i++ )
@@ -34,14 +34,14 @@ public interface PitchChromaticableChord<N extends PitchChromaticableSingle, Thi
 
 	public default Boolean updateWhatIsIt() {
 		return updateWhatIsIt(
-			(ArrayList<CustomChromaticChord> chords, PitchChromaticableChord<?, ?, ?> self) -> {
+			(ArrayList<CustomChromaticChord> chords, PitchChromaticableChord<?, ?> self) -> {
 				return chords.get( 0 );
 			}
 		);
 	}
 
 	public default void removeHigherDuplicates() {
-		This out = this.newArray();
+		PitchChromaticableChord<N, DistType> out = this.newArray();
 		for ( N n : this ) {
 			boolean found = false;
 
@@ -54,7 +54,7 @@ public interface PitchChromaticableChord<N extends PitchChromaticableSingle, Thi
 			add( n );
 	}
 
-	public Boolean updateWhatIsIt(BiFunction<ArrayList<CustomChromaticChord>, PitchChromaticableChord<?, ?, ?>, CustomChromaticChord> fSelectChord);
+	public Boolean updateWhatIsIt(BiFunction<ArrayList<CustomChromaticChord>, PitchChromaticableChord<?, ?>, CustomChromaticChord> fSelectChord);
 
 	public Boolean updateWhatIsItIfNeeded();
 
@@ -68,9 +68,9 @@ public interface PitchChromaticableChord<N extends PitchChromaticableSingle, Thi
 
 	public int getInversionNumber();
 
-	public This inv();
+	public <T extends PitchChromaticableChord<N, DistType>> T inv();
 
-	public This inv(int n);
+	public <T extends PitchChromaticableChord<N, DistType>> T inv(int n);
 
 	/*
 	 * public boolean equalsEnharmonic(ChromaticChord cc); public boolean
@@ -80,7 +80,7 @@ public interface PitchChromaticableChord<N extends PitchChromaticableSingle, Thi
 	 * equalsArray(ChromaticChord[] cc);
 	 */
 
-	public default <Array extends PitchChromaticableChord<N, ?, ?>> boolean equalsEnharmonicInv(Array cc) {
+	public default <Array extends PitchChromaticableChord<N, ?>> boolean equalsEnharmonicInv(Array cc) {
 		Array cc2;
 		try {
 			cc2 = (Array) cc.clone();
@@ -96,7 +96,7 @@ public interface PitchChromaticableChord<N extends PitchChromaticableSingle, Thi
 		return false;
 	}
 
-	public default <Array extends PitchChromaticableChord<N, ?, ?>> boolean equalsEnharmonicInvArray(Array[] ccs) {
+	public default <Array extends PitchChromaticableChord<N, ?>> boolean equalsEnharmonicInvArray(Array[] ccs) {
 		for ( Array cc : ccs ) {
 			if ( this.equalsEnharmonicInv( cc ) )
 				return true;
@@ -105,14 +105,14 @@ public interface PitchChromaticableChord<N extends PitchChromaticableSingle, Thi
 		return false;
 	}
 
-	public default <Array extends PitchChromaticableChord<N, ?, ?>> boolean equalsEnharmonicArray(Array[] ccs) {
+	public default <Array extends PitchChromaticableChord<N, ?>> boolean equalsEnharmonicArray(Array[] ccs) {
 		for ( Array c : ccs )
 			if ( equalsEnharmonic( c ) )
 				return true;
 		return false;
 	}
 
-	public default <Array extends PitchChromaticableChord<N, ?, ?>> boolean equalsArray(Array[] ccs) {
+	public default <Array extends PitchChromaticableChord<N, ?>> boolean equalsArray(Array[] ccs) {
 		for ( Array c : ccs )
 			if ( equals( c ) )
 				return true;

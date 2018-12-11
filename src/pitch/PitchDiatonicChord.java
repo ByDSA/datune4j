@@ -3,7 +3,7 @@ package pitch;
 import diatonic.IntervalDiatonic;
 
 public interface PitchDiatonicChord<N extends PitchDiatonicSingle<N>, This extends PitchDiatonicChord<N, This>>
-		extends PitchChord<N, This, IntervalDiatonic>, PitchDiatonicableChord<N, This, IntervalDiatonic>, Iterable<N> {
+		extends PitchChord<N, IntervalDiatonic>, PitchDiatonicableChord<N, This, IntervalDiatonic>, Iterable<N> {
 	public default IntervalDiatonic[] integerNotationFromRoot() {
 		assert size() > 0;
 

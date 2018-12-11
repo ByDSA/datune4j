@@ -128,7 +128,7 @@ public enum Diatonic
 
 	public IntervalDiatonic dist(Diatonic n2) {
 		int d = n2.getDegree().val() - getDegree().val();
-		IntervalDiatonic id = IntervalDiatonic.get( d );
+		IntervalDiatonic id = IntervalDiatonic.of( d );
 
 		return id;
 	}

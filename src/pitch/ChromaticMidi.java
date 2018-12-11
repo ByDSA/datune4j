@@ -12,23 +12,18 @@ import midi.Events.NoteOn;
 import tonality.Tonality;
 import tonality.TonalityException;
 
-public class ChromaticMidi
-		implements NoteMidi<ChromaticMidi, Integer>, PitchChromaticSingle {
+public class ChromaticMidi implements NoteMidi, PitchChromaticSingle {
 	protected int	velocity;
-	protected PitchMidi	pitch;
+	protected PitchMidiEnum	pitch;
 	protected int	length;
 
-	public PitchMidi getPitchCode() {
-		return PitchMidi.get( pitch.getChromatic(), pitch.getOctave() );
-	}
-
-	public ChromaticMidi(PitchMidi p, int d, int v) {
+	public ChromaticMidi(PitchMidiEnum p, int d, int v) {
 		set( d, v );
 		pitch = p;
 	}
 
 	public ChromaticMidi(Chromatic c, int o, int d, int v) {
-		this( PitchMidi.get( c, o ), d, v );
+		this( PitchMidiSingle.of( c, o ), d, v );
 	}
 
 	public ChromaticMidi(ChromaticMidi n) {
@@ -95,18 +90,19 @@ public class ChromaticMidi
 		return n.toString();
 	}
 
-	public ChromaticMidi add(int i) {
-		pitch = PitchMidi.add( pitch, i );
+	@Override
+	public ChromaticMidi addMidi(int i) {
+		pitch = (PitchMidiEnum) pitch.addMidi( i );
 		return this;
 	}
 
 	public ChromaticMidi add(IntervalDiatonic i) {
-		return add( i.val() );
+		return addMidi( i.val() );
 	}
 
 	/* Métodos estáticos */
 	public static ChromaticMidi add(final ChromaticMidi n, int i) {
-		return n.clone().add( i );
+		return n.clone().addMidi( i );
 	}
 
 	public static ChromaticMidi add(final ChromaticMidi n, IntervalChromatic i) {
@@ -144,7 +140,7 @@ public class ChromaticMidi
 	}
 
 	public static ChromaticMidi getFromCode(int code, int d, int v) {
-		PitchMidi p = PitchMidi.getFromCode( code );
+		PitchMidiEnum p = PitchMidiSingle.of( code );
 		return new ChromaticMidi( p, d, v );
 	}
 
@@ -182,12 +178,12 @@ public class ChromaticMidi
 	}
 
 	public ChromaticMidi shiftOctave(int o) {
-		pitch = pitch.shiftOctave( o );
+		pitch = (PitchMidiEnum) pitch.shiftOctave( o );
 		return this;
 	}
 
 	public ChromaticMidi setOctave(int o) {
-		pitch = pitch.setOctave( o );
+		pitch = (PitchMidiEnum) pitch.setOctave( o );
 		return this;
 	}
 
@@ -212,5 +208,10 @@ public class ChromaticMidi
 			return false;
 		
 		return true;
+	}
+
+	@Override
+	public int getCode() {
+		return pitch.getCode();
 	}
 }

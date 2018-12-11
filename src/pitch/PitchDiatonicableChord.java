@@ -5,7 +5,7 @@ import tonality.Tonality;
 
 public interface PitchDiatonicableChord<N extends PitchDiatonicableSingle,
 This extends PitchDiatonicableChord<N, This, DistType>,
-DistType> extends PitchChord<N, This, DistType>, PitchDiatonicable {
+DistType> extends PitchChord<N, DistType>, PitchDiatonicable {
     public default <Array extends PitchDiatonicableChord<N, Array, DistType>> boolean hasSameNotesOrder(Array notes) {
         if (size() != notes.size())
             return false;

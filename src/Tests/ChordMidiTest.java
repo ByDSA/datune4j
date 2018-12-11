@@ -6,13 +6,9 @@ import static org.junit.Assert.assertNotEquals;
 import org.junit.Test;
 
 import chromaticchord.ChromaticChordEnum;
-import chromaticchord.CustomChromaticChord;
-import pitch.ChordMidi;
 import pitch.ChromaticChordMidi;
 import pitch.ChromaticMidi;
-import pitch.DiatonicChordMidi;
-import pitch.PitchOctave;
-import tonality.TonalityEnum;
+import pitch.PitchMidi;
 
 public class ChordMidiTest {
 	@Test
@@ -20,7 +16,7 @@ public class ChordMidiTest {
 		ChromaticChordMidi ccm = new ChromaticChordMidi(ChromaticChordEnum.C5);
 		assertEquals(5, ccm.getOctave());
 		ccm.setMinOctave();
-		assertEquals(PitchOctave.MIN, ccm.getOctave());
+		assertEquals(PitchMidi.MIN_OCTAVE, ccm.getOctave());
 	}
 	
 	@Test
@@ -38,7 +34,7 @@ public class ChordMidiTest {
 		ccm.shiftOctave(-1);
 		assertEquals(4, ccm.getOctave());
 		ccm.setMinOctave();
-		assertEquals(PitchOctave.MIN, ccm.getOctave());
+		assertEquals(PitchMidi.MIN_OCTAVE, ccm.getOctave());
 		ccm.shiftOctave(1);
 		assertEquals(1, ccm.getOctave());
 	}

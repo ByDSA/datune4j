@@ -354,7 +354,7 @@ public interface Tonality extends Cloneable {
 		return getDegree( note ) != null;
 	}
 
-	default <N extends PitchChromaticableSingle> boolean has(PitchChromaticableChord<N, ?, ?> notes) {
+	default <N extends PitchChromaticableSingle> boolean has(PitchChromaticableChord<N, ?> notes) {
 		for ( N n : notes ) {
 			if ( getDegree( n ) == null )
 				return false;

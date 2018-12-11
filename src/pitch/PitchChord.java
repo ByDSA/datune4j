@@ -3,10 +3,10 @@ package pitch;
 import java.util.Arrays;
 import java.util.List;
 
-public interface PitchChord<N extends PitchSingle, This, Ret> extends List<N> {
+public interface PitchChord<N extends PitchSingle, Ret> extends List<N> {
 	public Ret[] integerNotationFromRoot();
 	
-	public This newArray();
+	public <T extends PitchChord<N, Ret>> T newArray();
 	
 	public String notesToString();
 

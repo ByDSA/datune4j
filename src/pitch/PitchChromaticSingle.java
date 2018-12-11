@@ -12,7 +12,7 @@ public interface PitchChromaticSingle extends PitchChromaticableSingle, PitchChr
 		return d;
 	}
 	
-	public default <P extends PitchChromaticSingle> boolean equalsEnharmonic(P c) {
+	public default boolean equalsEnharmonic(PitchChromaticSingle c) {
 		return val() == c.val();
 	}
 }

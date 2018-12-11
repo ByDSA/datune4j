@@ -7,7 +7,7 @@ public class NoteOn extends ChannelEvent {
 	public ChromaticMidi note; // para toString
 	
 	public NoteOn(int d, ChromaticMidi n, int v) {
-		this(d, n.getPitchCode().val(), v);
+		this(d, n.getCode(), v);
 		note = n;
 	}
 	

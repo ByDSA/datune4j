@@ -12,13 +12,13 @@ import diatonic.IntervalChromatic;
 import diatonic.Quality;
 import midi.FigureLength;
 import midi.FigureVelocity;
-import midi.PitchException;
+import midi.PitchMidiException;
 import midi.Settings;
 import tonality.Tonality;
 import tonality.TonalityException;
 
-public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, ChromaticChordMidi, Integer>
-		implements PitchChromaticChord<ChromaticMidi, ChromaticChordMidi> {
+public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, Integer>
+		implements PitchChromaticChord<ChromaticMidi> {
 
 	public ChromaticChordMidi() {
 	}
@@ -31,8 +31,8 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, ChromaticChordM
 		add( ns );
 	}
 
-	public ChromaticChordMidi(PitchMidi... ns) {
-		for ( PitchMidi n : ns )
+	public ChromaticChordMidi(PitchMidiEnum... ns) {
+		for ( PitchMidiEnum n : ns )
 			addNoReset( n.toMidi() );
 
 		resetRoot();
@@ -42,7 +42,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, ChromaticChordM
 		this( new CustomChromaticChord( ns ) );
 	}
 
-	public <N extends PitchChromaticableSingle, Array extends PitchChromaticableChord<N, ?, ?>> ChromaticChordMidi(Array ns) {
+	public <N extends PitchChromaticableSingle, Array extends PitchChromaticableChord<N, ?>> ChromaticChordMidi(Array ns) {
 		this(
 			ns,
 			ns instanceof ChordMidi ? ( (ChordMidi) ns ).getOctave()
@@ -53,7 +53,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, ChromaticChordM
 		);
 	}
 
-	public <N extends PitchChromaticableSingle, Array extends PitchChromaticableChord<N, ?, ?>> ChromaticChordMidi(Array ns, int o, int d, int v) {
+	public <N extends PitchChromaticableSingle, Array extends PitchChromaticableChord<N, ?>> ChromaticChordMidi(Array ns, int o, int d, int v) {
 		for ( int i = 0; i < ns.size(); i++ ) {
 			N n = ns.get( i );
 
@@ -101,16 +101,16 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, ChromaticChordM
 		ChromaticMidi n;
 		if ( note >= ns.size() ) {
 			n = ns.get( note % ns.size() );
-			n.add( note / ns.size() * ChromaticMidi.NOTES_PER_OCTAVE );
+			n.addMidi( note / ns.size() * ChromaticMidi.NOTES_PER_OCTAVE );
 		} else if ( note < 0 ) {
 			int num = Math.abs( ns.size() + note % ns.size() );
 			n = ns.get( num );
-			n.add( ( note / ns.size() - 1 ) * ChromaticMidi.NOTES_PER_OCTAVE );
+			n.addMidi( ( note / ns.size() - 1 ) * ChromaticMidi.NOTES_PER_OCTAVE );
 		} else {
 			n = (ChromaticMidi) ns.get( note ).clone();
 		}
 
-		PitchException.check( n );
+		PitchMidiException.check( n );
 
 		return n;
 	}
@@ -329,5 +329,17 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, ChromaticChordM
 	public boolean isSus2() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public ChromaticChordMidi inv() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PitchChromaticChord getChromatic() {
+		// TODO Auto-generated method stub
+		return this.toChromaticChord();
 	}
 }

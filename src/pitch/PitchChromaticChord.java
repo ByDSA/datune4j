@@ -6,9 +6,9 @@ import chromaticchord.CustomChromaticChord.ImpossibleChord;
 import diatonic.IntervalChromatic;
 import diatonic.Quality;
 
-public interface PitchChromaticChord<N extends PitchChromaticSingle, This extends PitchChromaticChord<N, This>>
-		extends PitchChord<N, This, Integer>, PitchChromatic,
-		PitchChromaticableChord<N, This, Integer>, Iterable<N> {
+public interface PitchChromaticChord<N extends PitchChromaticSingle>
+		extends PitchChord<N, Integer>, PitchChromatic,
+		PitchChromaticableChord<N, Integer>, Iterable<N> {
 	public default Integer[] integerNotationFromRoot() {
 		assert size() > 0;
 
@@ -27,7 +27,7 @@ public interface PitchChromaticChord<N extends PitchChromaticSingle, This extend
 	}
 	
 	Quality getQuality();
-	This over(Chromatic c) throws ImpossibleChord;
+	<T extends PitchChromaticChord> T over(Chromatic c) throws ImpossibleChord;
 
 	public static PitchChromaticChord of(PitchChromaticableSingle... chord) {
 		PitchChromaticChord c = ChromaticChordEnum.of(chord);

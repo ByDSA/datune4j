@@ -65,17 +65,17 @@ public class Main {
 		MelodyDiatonic m = new MelodyDiatonic( 6, tonality );
 
 		for ( int i = 0; i < 1; i++ ) {
-			p.add( DiatonicFunction.I ).setDuration( Duration.V2 ).inv( -1 );
-			p.add( DiatonicFunction.I ).setDuration( Duration.V2 ).inv( -1 );
-			p.add( DiatonicFunction.I ).setDuration( Duration.V4 ).inv( -1 );
-			p.add( DiatonicFunction.I ).setDuration( Duration.V4 ).inv( -1 );
-			p.add( DiatonicFunction.V, -1 ).setDuration( Duration.V2 ).inv( 0 );
-			p.add( DiatonicFunction.I ).setDuration( Duration.V4 ).inv( -1 );
-			p.add( DiatonicFunction.V, -1 ).setDuration( Duration.V4 ).inv( 0 );
-			p.add( DiatonicFunction.I ).setDuration( Duration.V2 ).inv( -1 );
-			p.add( DiatonicFunction.VI7, -1 ).setDuration( Duration.V4 ).inv( 0 );
-			p.add( ChromaticFunction.V7_V ).setDuration( Duration.V4 ).inv( 0 );
-			p.add( DiatonicFunction.V ).setDuration( Duration.V2 ).inv( 0 );
+			p.add( DiatonicFunction.I ).setLength( Duration.V2 ).inv( -1 );
+			p.add( DiatonicFunction.I ).setLength( Duration.V2 ).inv( -1 );
+			p.add( DiatonicFunction.I ).setLength( Duration.V4 ).inv( -1 );
+			p.add( DiatonicFunction.I ).setLength( Duration.V4 ).inv( -1 );
+			p.add( DiatonicFunction.V, -1 ).setLength( Duration.V2 ).inv( 0 );
+			p.add( DiatonicFunction.I ).setLength( Duration.V4 ).inv( -1 );
+			p.add( DiatonicFunction.V, -1 ).setLength( Duration.V4 ).inv( 0 );
+			p.add( DiatonicFunction.I ).setLength( Duration.V2 ).inv( -1 );
+			p.add( DiatonicFunction.VI7, -1 ).setLength( Duration.V4 ).inv( 0 );
+			p.add( ChromaticFunction.V7_V ).setLength( Duration.V4 ).inv( 0 );
+			p.add( DiatonicFunction.V ).setLength( Duration.V2 ).inv( 0 );
 
 			m.add( Degree.I, Duration.V4 );
 			m.add( Degree.V, Duration.V4, -1 );
@@ -109,16 +109,16 @@ public class Main {
 		}
 
 		for ( int i = 0; i < 1; i++ ) {
-			p.add( DiatonicFunction.I ).setDuration( Duration.V2 ).inv( -1 );
-			p.add( DiatonicFunction.V, -1 ).setDuration( Duration.V2 ).inv( 0 );
-			p.add( DiatonicFunction.I ).setDuration( Duration.V2 ).inv( -1 );
-			p.add( DiatonicFunction.V, -1 ).setDuration( Duration.V2 ).inv( 0 );
-			p.add( DiatonicFunction.I ).setDuration( Duration.V4 ).inv( -1 );
-			p.add( DiatonicFunction.V, -1 ).setDuration( Duration.V4 ).inv( 0 );
-			p.add( DiatonicFunction.I ).setDuration( Duration.V2 ).inv( -1 );
-			p.add( DiatonicFunction.I ).setDuration( Duration.V4 ).inv( -1 );
-			p.add( DiatonicFunction.V, -1 ).setDuration( Duration.V4 ).inv( 0 );
-			p.add( DiatonicFunction.I ).setDuration( Duration.V2 ).inv( -1 );
+			p.add( DiatonicFunction.I ).setLength( Duration.V2 ).inv( -1 );
+			p.add( DiatonicFunction.V, -1 ).setLength( Duration.V2 ).inv( 0 );
+			p.add( DiatonicFunction.I ).setLength( Duration.V2 ).inv( -1 );
+			p.add( DiatonicFunction.V, -1 ).setLength( Duration.V2 ).inv( 0 );
+			p.add( DiatonicFunction.I ).setLength( Duration.V4 ).inv( -1 );
+			p.add( DiatonicFunction.V, -1 ).setLength( Duration.V4 ).inv( 0 );
+			p.add( DiatonicFunction.I ).setLength( Duration.V2 ).inv( -1 );
+			p.add( DiatonicFunction.I ).setLength( Duration.V4 ).inv( -1 );
+			p.add( DiatonicFunction.V, -1 ).setLength( Duration.V4 ).inv( 0 );
+			p.add( DiatonicFunction.I ).setLength( Duration.V2 ).inv( -1 );
 
 			m.add( Degree.V, Duration.V4 );
 			m.add( Degree.III, Duration.V8 + Duration.V16 );
@@ -211,10 +211,10 @@ public class Main {
 		MelodyDiatonic m = new MelodyDiatonic( 5, tonality );
 
 		for ( int i = 0; i < 2; i++ ) {
-			p.add( DiatonicFunction.I ).setDuration( Duration.V1 );
-			p.add( DiatonicFunction.VI ).setDuration( Duration.V1 ).shiftOctave( -1 );
-			p.add( DiatonicFunction.III ).setDuration( Duration.V1 ).inv( -1 );
-			p.add( DiatonicFunction.VII ).setDuration( Duration.V1 ).shiftOctave( -1 );
+			p.add( DiatonicFunction.I ).setLength( Duration.V1 );
+			p.add( DiatonicFunction.VI ).setLength( Duration.V1 ).shiftOctave( -1 );
+			p.add( DiatonicFunction.III ).setLength( Duration.V1 ).inv( -1 );
+			p.add( DiatonicFunction.VII ).setLength( Duration.V1 ).shiftOctave( -1 );
 
 			m.add( Degree.I, Duration.V8 );
 			m.addSilence( Duration.V8 );
@@ -311,18 +311,18 @@ public class Main {
 
 		for ( int i = 0; i < 1; i++ ) {
 			/*
-			 * p.add(ChordFunction.I).setDuration(Duration.V1);
-			 * p.add(ChordFunction.V).setDuration(Duration.V1).inv(-2);
-			 * p.add(ChordFunction.VI).setDuration(Duration.V1).inv(-2);
-			 * p.add(ChordFunction.IV).setDuration(Duration.V1).inv(-1);
+			 * p.add(ChordFunction.I).setLength(Duration.V1);
+			 * p.add(ChordFunction.V).setLength(Duration.V1).inv(-2);
+			 * p.add(ChordFunction.VI).setLength(Duration.V1).inv(-2);
+			 * p.add(ChordFunction.IV).setLength(Duration.V1).inv(-1);
 			 */
-			p.add( DiatonicFunction.I ).setDuration( Duration.V1 );
-			p.add( DiatonicFunction.VI ).setDuration( Duration.V1 ).inv( 1 )
+			p.add( DiatonicFunction.I ).setLength( Duration.V1 );
+			p.add( DiatonicFunction.VI ).setLength( Duration.V1 ).inv( 1 )
 			.shiftOctave( -1 );
-			p.add( DiatonicFunction.IV ).setDuration( Duration.V1 ).inv( 2 )
+			p.add( DiatonicFunction.IV ).setLength( Duration.V1 ).inv( 2 )
 			.shiftOctave( -1 );
-			p.add( DiatonicFunction.VII ).setDuration( Duration.V2 ).shiftOctave( -1 );
-			p.add( DiatonicFunction.VII ).setDuration( Duration.V2 ).setScaleMajor()
+			p.add( DiatonicFunction.VII ).setLength( Duration.V2 ).shiftOctave( -1 );
+			p.add( DiatonicFunction.VII ).setLength( Duration.V2 ).setScaleMajor()
 			.shiftOctave( -1 );
 		}
 
@@ -379,26 +379,26 @@ public class Main {
 
 		for ( int i = 0; i < 1; i++ ) {
 			DiatonicChordMidi c;
-			c = p.add( DiatonicFunction.I ).setDuration( Duration.V4 * 3 ).inv( 0 )
+			c = p.add( DiatonicFunction.I ).setLength( Duration.V4 * 3 ).inv( 0 )
 					.shiftOctave( 0 );
 			c.add( c.get( 1 ).clone().shiftOctave( 1 ) );
-			c = p.add( DiatonicFunction.VII ).setDuration( Duration.V4 * 3 ).inv( 2 )
+			c = p.add( DiatonicFunction.VII ).setLength( Duration.V4 * 3 ).inv( 2 )
 					.shiftOctave( -1 );
-			c = p.add( DiatonicFunction.IV2 ).setDuration( (int) ( Duration.V4 * 3.25 ) )
+			c = p.add( DiatonicFunction.IV2 ).setLength( (int) ( Duration.V4 * 3.25 ) )
 					.inv( 0 );
-			c = p.add( DiatonicFunction.I ).setDuration( (int) ( Duration.V4 * 3.25 ) )
+			c = p.add( DiatonicFunction.I ).setLength( (int) ( Duration.V4 * 3.25 ) )
 					.inv( 1 );
-			p.add( DiatonicFunction.I ).setDuration( Duration.V4 * 3 ).inv( 0 )
+			p.add( DiatonicFunction.I ).setLength( Duration.V4 * 3 ).inv( 0 )
 			.shiftOctave( 0 );
-			p.add( DiatonicFunction.VII ).setDuration( Duration.V4 * 3 ).inv( 2 )
+			p.add( DiatonicFunction.VII ).setLength( Duration.V4 * 3 ).inv( 2 )
 			.shiftOctave( -1 );
 			DiatonicChordMidi c1 = p.add( DiatonicFunction.I7 )
-					.setDuration( Duration.V4 * 3 ).inv( 0 ).shiftOctave( 0 );
+					.setLength( Duration.V4 * 3 ).inv( 0 ).shiftOctave( 0 );
 			c1.get( 2 ).shiftOctave( -1 );
 			DiatonicChordMidi c2 = p.add( DiatonicFunction.VII_THIRD )
-					.setDuration( Duration.V4 * 3 ).setScaleMajor().shiftOctave( -1 );
+					.setLength( Duration.V4 * 3 ).setScaleMajor().shiftOctave( -1 );
 			c2.add( c2.get( 0 ).clone().shiftOctave( 1 ) );
-			p.add( DiatonicFunction.I ).inv( -1 ).setDuration( Duration.V1 );
+			p.add( DiatonicFunction.I ).inv( -1 ).setLength( Duration.V1 );
 		}
 
 		// p.setArpegio(new ArpegioDesc(Duration.V1, Duration.V16));
@@ -712,7 +712,7 @@ public class Main {
 		/*
 		 * EventSequence e = new EventSequence(); int t = 0; for(ChordFunc c :
 		 * TonalityEnum.C.getAllChords()) { System.out.println(c);
-		 * c.setDuration(Duration.V8); e.add(t++*Duration.V4, c); }
+		 * c.setLength(Duration.V8); e.add(t++*Duration.V4, c); }
 		 */
 
 		/*
@@ -824,8 +824,8 @@ public class Main {
 		 * -1).setScaleMajor().inv(2).show(); add(ChordFunction.VI, -1).inv(1).show();
 		 * add(ChordFunction.I).show(); add(ChordFunction.VI, -1).inv(1).show();
 		 * add(ChordFunction.VI, -1).setScaleMajor().inv(1).show();
-		 * add(ChordFunction.VII, -1).setDuration(Duration.V2).inv(1).show(); Chord c =
-		 * add(ChordFunction.VII, -1).setScaleMajor().setDuration(Duration.V2).show();
+		 * add(ChordFunction.VII, -1).setLength(Duration.V2).inv(1).show(); Chord c =
+		 * add(ChordFunction.VII, -1).setScaleMajor().setLength(Duration.V2).show();
 		 * 
 		 * progression.setArpegio(a);
 		 * 
@@ -868,23 +868,23 @@ public class Main {
 		 * channel = new Track(0, 0); strings = new Track(1, 48);
 		 * 
 		 * Progression p = new Progression(scale, 4) { { addChord(Chord.I) .inv(-2)
-		 * .setDuration(Note.V1);
+		 * .setLength(Note.V1);
 		 * 
-		 * addChord(Chord.III) .inv(-1) .setDuration(Note.V1);
+		 * addChord(Chord.III) .inv(-1) .setLength(Note.V1);
 		 * 
-		 * addChord(Chord.VI) .setDuration(Note.V1);
+		 * addChord(Chord.VI) .setLength(Note.V1);
 		 * 
-		 * addChord(Chord.V7_V) .setDuration(Note.V1);
+		 * addChord(Chord.V7_V) .setLength(Note.V1);
 		 * 
-		 * addChord(Chord.IV) .setDuration(Note.V1);
+		 * addChord(Chord.IV) .setLength(Note.V1);
 		 * 
-		 * addChord(Chord.I) .inv(-2) .setDuration(Note.V1);
+		 * addChord(Chord.I) .inv(-2) .setLength(Note.V1);
 		 * 
-		 * addChord(Chord.V7_V) .setDuration(Note.V1);
+		 * addChord(Chord.V7_V) .setLength(Note.V1);
 		 * 
-		 * addChord(Chord.IV) .setDuration(Note.V2);
+		 * addChord(Chord.IV) .setLength(Note.V2);
 		 * 
-		 * addChord(Chord.V) .setDuration(Note.V2); } }; p.setChordArpegio( new
+		 * addChord(Chord.V) .setLength(Note.V2); } }; p.setChordArpegio( new
 		 * ArpegioV4() );
 		 * 
 		 * channel.add(p); sequence.add(channel); } };
@@ -899,59 +899,59 @@ public class Main {
 		 * 
 		 * Progression p = new Progression(scale, 5);
 		 * 
-		 * p.addNote(4, -1).setDuration(Note.V4);
+		 * p.addNote(4, -1).setLength(Note.V4);
 		 * 
-		 * p.addNote(0).setDuration(Note.V2); p.addNote(1).setDuration(Note.V4D);
-		 * p.addNote(2).setDuration(Note.V16); p.addNote(3).setDuration(Note.V16);
+		 * p.addNote(0).setLength(Note.V2); p.addNote(1).setLength(Note.V4D);
+		 * p.addNote(2).setLength(Note.V16); p.addNote(3).setLength(Note.V16);
 		 * 
-		 * p.addNote(2).setDuration(Note.V2); p.addNote(4, -1).setDuration(Note.V4D);
-		 * p.addNote(4, -1).setDuration(Note.V8);
+		 * p.addNote(2).setLength(Note.V2); p.addNote(4, -1).setLength(Note.V4D);
+		 * p.addNote(4, -1).setLength(Note.V8);
 		 * 
-		 * p.addNote(0).setDuration(Note.V4D); p.addNote(1).setDuration(Note.V8);
-		 * p.addNote(2).setDuration(Note.V8); p.addNote(4, -1).setDuration(Note.V8);
-		 * p.addNote(2).setDuration(Note.V4_3); p.addNote(0).setDuration(Note.V4_3);
-		 * p.addNote(4).setDuration(Note.V4_3);
+		 * p.addNote(0).setLength(Note.V4D); p.addNote(1).setLength(Note.V8);
+		 * p.addNote(2).setLength(Note.V8); p.addNote(4, -1).setLength(Note.V8);
+		 * p.addNote(2).setLength(Note.V4_3); p.addNote(0).setLength(Note.V4_3);
+		 * p.addNote(4).setLength(Note.V4_3);
 		 * 
-		 * p.addNote(3).setDuration(Note.V2D); p.addNote(4, -1).setDuration(Note.V4);
+		 * p.addNote(3).setLength(Note.V2D); p.addNote(4, -1).setLength(Note.V4);
 		 * 
 		 * 
-		 * p.addNote(0).setDuration(Note.V4D); p.addNote(1).setDuration(Note.V8);
-		 * p.addNote(2).setDuration(Note.V8D); p.addNote(4,-1).setDuration(Note.V16);
-		 * p.addNote(4).setDuration(Note.V8D); p.addNote(2).setDuration(Note.V16);
+		 * p.addNote(0).setLength(Note.V4D); p.addNote(1).setLength(Note.V8);
+		 * p.addNote(2).setLength(Note.V8D); p.addNote(4,-1).setLength(Note.V16);
+		 * p.addNote(4).setLength(Note.V8D); p.addNote(2).setLength(Note.V16);
 		 * 
-		 * p.addNote(0, 1).setDuration(Note.V2); p.addNote(0).setDuration(Note.V4);
-		 * p.addNote(2).setDuration(Note.V4_3); p.addNote(1).setDuration(Note.V4_3);
-		 * p.addNote(0).setDuration(Note.V4_3);
+		 * p.addNote(0, 1).setLength(Note.V2); p.addNote(0).setLength(Note.V4);
+		 * p.addNote(2).setLength(Note.V4_3); p.addNote(1).setLength(Note.V4_3);
+		 * p.addNote(0).setLength(Note.V4_3);
 		 * 
-		 * p.addNote(4).setDuration(Note.V4D); p.addNote(2).setDuration(Note.V16);
-		 * p.addNote(0).setDuration(Note.V16);
+		 * p.addNote(4).setLength(Note.V4D); p.addNote(2).setLength(Note.V16);
+		 * p.addNote(0).setLength(Note.V16);
 		 * 
-		 * p.addNote(4,-1).setDuration(Note.V4);
+		 * p.addNote(4,-1).setLength(Note.V4);
 		 * 
-		 * p.addNote(4,-1).setDuration(Note.V8D); p.addNote(4,-1).setDuration(Note.V16);
+		 * p.addNote(4,-1).setLength(Note.V8D); p.addNote(4,-1).setLength(Note.V16);
 		 * 
-		 * p.addNote(0).setDuration(Note.V2D);
+		 * p.addNote(0).setLength(Note.V2D);
 		 * 
 		 * Progression p2 = new Progression(scale, 5);
-		 * p2.addChord(Chord.I).setDuration(Note.V2);
-		 * p2.addChord(Chord.V).inv(2).setDuration(Note.V2);
+		 * p2.addChord(Chord.I).setLength(Note.V2);
+		 * p2.addChord(Chord.V).inv(2).setLength(Note.V2);
 		 * 
-		 * p2.addChord(Chord.I).inv(-1).setDuration(Note.V2);
-		 * p2.addChord(Chord.V).inv(1).setDuration(Note.V2);
+		 * p2.addChord(Chord.I).inv(-1).setLength(Note.V2);
+		 * p2.addChord(Chord.V).inv(1).setLength(Note.V2);
 		 * 
-		 * p2.addChord(Chord.I).inv(-1).setDuration(Note.V2);
-		 * p2.addChord(Chord.III).setDuration(Note.V2);
+		 * p2.addChord(Chord.I).inv(-1).setLength(Note.V2);
+		 * p2.addChord(Chord.III).setLength(Note.V2);
 		 * 
-		 * p2.addChord(Chord.IV).setDuration(Note.V1);
+		 * p2.addChord(Chord.IV).setLength(Note.V1);
 		 * 
-		 * p2.addChord(Chord.I).inv(-1).setDuration(Note.V2);
-		 * p2.addChord(Chord.III).setDuration(Note.V2);
+		 * p2.addChord(Chord.I).inv(-1).setLength(Note.V2);
+		 * p2.addChord(Chord.III).setLength(Note.V2);
 		 * 
-		 * p2.addChord(Chord.I).inv(-1).setDuration(Note.V1);
+		 * p2.addChord(Chord.I).inv(-1).setLength(Note.V1);
 		 * 
-		 * p2.addChord(Chord.V).inv(1).setDuration(Note.V1);
+		 * p2.addChord(Chord.V).inv(1).setLength(Note.V1);
 		 * 
-		 * p2.addChord(Chord.I).inv(-1).setDuration(Note.V1);
+		 * p2.addChord(Chord.I).inv(-1).setLength(Note.V1);
 		 * 
 		 * //p2.setChordArpegio(new ArpegioAscDesc(Note.V2, Note.V8));
 		 * 
@@ -1041,9 +1041,9 @@ public class Main {
  * 
  * add(Chord.IV).inv(); // F# B D I IV VI IV 1ª inv
  * 
- * add(Chord.VII, -1).setDuration(Note.V2); // E G# B VII II IV VII
+ * add(Chord.VII, -1).setLength(Note.V2); // E G# B VII II IV VII
  * 
- * add(Chord.VII, -1, s.major()).setDuration(Note.V2); // F G# B 3ªm 5ªº } };
+ * add(Chord.VII, -1, s.major()).setLength(Note.V2); // F G# B 3ªm 5ªº } };
  * c.add(Note.V1*4*i, l);
  * 
  * c2.setScale(s); int pre = Note.V1*4*i + Note.V4 + Note.V8; c2.add(pre, new
@@ -1079,9 +1079,9 @@ public class Main {
  * 
  * add(Chord.IV) .inv(); // F# B D I IV VI IV 1ª inv
  * 
- * add(Chord.VII, -1) .setDuration(Note.V2); // E G# B VII II IV VII
+ * add(Chord.VII, -1) .setLength(Note.V2); // E G# B VII II IV VII
  * 
- * add(Chord.VII, -1, s.major()) .setDuration(Note.V2); // F G# B 3ªm 5ªº
+ * add(Chord.VII, -1, s.major()) .setLength(Note.V2); // F G# B 3ªm 5ªº
  * 
  * setChordArpegio(new ArpegioAscDesc(3, Note.V1, Note.V16)); setChordArpegio(3,
  * new ArpegioAscDesc(3, Note.V1, Note.V16)); setChordArpegio(4, new
@@ -1108,9 +1108,9 @@ public class Main {
  * 
  * add(Chord.II).inv(1);
  * 
- * add(Chord.V, 0) .inv(2) .setDuration(Note.V2);
+ * add(Chord.V, 0) .inv(2) .setLength(Note.V2);
  * 
- * add(Chord.VII, 0, s.major()) .inv(2) .setDuration(Note.V2);
+ * add(Chord.VII, 0, s.major()) .inv(2) .setLength(Note.V2);
  * 
  * add(Chord.I, 1) .inv(2);
  * 
