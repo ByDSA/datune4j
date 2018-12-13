@@ -33,7 +33,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, Integer>
 
 	public ChromaticChordMidi(PitchMidiEnum... ns) {
 		for ( PitchMidiEnum n : ns )
-			addNoReset( n.toMidi() );
+			addList( n.toMidi() );
 
 		resetRoot();
 	}
@@ -72,7 +72,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, Integer>
 				cm.shiftOctave( 1 );
 			}
 
-			addNoReset( cm );
+			addList( cm );
 		}
 
 		resetRoot();
@@ -198,127 +198,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, Integer>
 		
 		return new ChromaticChordMidi( c2.over( c ) );
 	}
-
-	@Override
-	public boolean addAll(Collection<? extends ChromaticMidi> c) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean addAll(int index, Collection<? extends ChromaticMidi> c) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void clear() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean contains(Object o) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean containsAll(Collection<?> c) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public ChromaticMidi get(int index) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int indexOf(Object o) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Iterator<ChromaticMidi> iterator() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int lastIndexOf(Object o) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public ListIterator<ChromaticMidi> listIterator() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ListIterator<ChromaticMidi> listIterator(int index) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean remove(Object o) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean removeAll(Collection<?> c) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean retainAll(Collection<?> c) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public ChromaticMidi set(int index, ChromaticMidi element) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public List<ChromaticMidi> subList(int fromIndex, int toIndex) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Object[] toArray() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <T> T[] toArray(T[] a) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	@Override
 	public boolean isSus4() {
 		// TODO Auto-generated method stub
@@ -333,13 +213,22 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, Integer>
 
 	@Override
 	public ChromaticChordMidi inv() {
-		// TODO Auto-generated method stub
-		return null;
+		return super.inv();
+	}
+	
+	@Override
+	public ChromaticChordMidi inv(int n) {
+		return (ChromaticChordMidi) super.inv(n);
 	}
 
 	@Override
 	public PitchChromaticChord getChromatic() {
 		// TODO Auto-generated method stub
 		return this.toChromaticChord();
+	}
+
+	@Override
+	public ChromaticChordMidi resetRoot() {
+		return super.resetRoot();
 	}
 }

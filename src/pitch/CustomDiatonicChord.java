@@ -1,9 +1,11 @@
 package pitch;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.function.BiFunction;
 
 import arrays.ArrayUtils;
 import chromaticchord.ChromaticChordEnum;
@@ -14,85 +16,85 @@ import diatonic.IntervalDiatonic;
 import midi.Utils;
 import tonality.Tonality;
 
-public class DiatonicChord extends Chord<Diatonic, IntervalDiatonic>
-		implements PitchDiatonicChord<Diatonic, DiatonicChord>,
-		PitchMidiableChord<DiatonicChordMidi> {
-	private static final DiatonicChord TRIAD = new DiatonicChord(
+public class CustomDiatonicChord extends Chord<Diatonic, IntervalDiatonic>
+		implements PitchDiatonicChord<Diatonic, CustomDiatonicChord>,
+		PitchMidiableChord<DiatonicChordMidi>, PitchChordMutable<Diatonic, IntervalDiatonic> {
+	private static final CustomDiatonicChord TRIAD = new CustomDiatonicChord(
 		Diatonic.I, Diatonic.III, Diatonic.V
 	);
 
-	private static final DiatonicChord THIRD = new DiatonicChord(
+	private static final CustomDiatonicChord THIRD = new CustomDiatonicChord(
 		Diatonic.I, Diatonic.III
 	);
 
-	private static final DiatonicChord SUS2 = new DiatonicChord(
+	private static final CustomDiatonicChord SUS2 = new CustomDiatonicChord(
 		Diatonic.I, Diatonic.II, Diatonic.V
 	);
 
-	private static final DiatonicChord SUS2_O5 = new DiatonicChord(
+	private static final CustomDiatonicChord SUS2_O5 = new CustomDiatonicChord(
 		Diatonic.I, Diatonic.II
 	);
 
-	private static final DiatonicChord SUS4 = new DiatonicChord(
+	private static final CustomDiatonicChord SUS4 = new CustomDiatonicChord(
 		Diatonic.I, Diatonic.IV, Diatonic.V
 	);
 
-	private static final DiatonicChord SUS4_O5 = new DiatonicChord(
+	private static final CustomDiatonicChord SUS4_O5 = new CustomDiatonicChord(
 		Diatonic.I, Diatonic.IV
 	);
 
-	private static final DiatonicChord SIXTH = new DiatonicChord(
+	private static final CustomDiatonicChord SIXTH = new CustomDiatonicChord(
 		Diatonic.I, Diatonic.III, Diatonic.V, Diatonic.VI
 	);
 
-	private static final DiatonicChord SIXTH_O5 = new DiatonicChord(
+	private static final CustomDiatonicChord SIXTH_O5 = new CustomDiatonicChord(
 		Diatonic.I, Diatonic.III, Diatonic.VI
 	);
 
-	private static final DiatonicChord SEVENTH = new DiatonicChord(
+	private static final CustomDiatonicChord SEVENTH = new CustomDiatonicChord(
 		Diatonic.I, Diatonic.III, Diatonic.V, Diatonic.VII
 	);
 
-	private static final DiatonicChord SEVENTH_O3 = new DiatonicChord(
+	private static final CustomDiatonicChord SEVENTH_O3 = new CustomDiatonicChord(
 		Diatonic.I, Diatonic.V, Diatonic.VII
 	);
 
-	private static final DiatonicChord SEVENTH_O5 = new DiatonicChord(
+	private static final CustomDiatonicChord SEVENTH_O5 = new CustomDiatonicChord(
 		Diatonic.I, Diatonic.III, Diatonic.VII
 	);
 
-	private static final DiatonicChord NINTH = new DiatonicChord(
+	private static final CustomDiatonicChord NINTH = new CustomDiatonicChord(
 		Diatonic.I, Diatonic.III, Diatonic.V, Diatonic.VII, Diatonic.II
 	);
 
-	private static final DiatonicChord NINTH_O7 = new DiatonicChord(
+	private static final CustomDiatonicChord NINTH_O7 = new CustomDiatonicChord(
 		Diatonic.I, Diatonic.III, Diatonic.V, Diatonic.II
 	);
 
-	private static final DiatonicChord NINTH_O3_O7 = new DiatonicChord(
+	private static final CustomDiatonicChord NINTH_O3_O7 = new CustomDiatonicChord(
 		Diatonic.I, Diatonic.V, Diatonic.II
 	);
 
-	private static final DiatonicChord ELEVENTH = new DiatonicChord(
+	private static final CustomDiatonicChord ELEVENTH = new CustomDiatonicChord(
 		Diatonic.I, Diatonic.III, Diatonic.V, Diatonic.VII, Diatonic.II, Diatonic.IV
 	);
 
-	private static final DiatonicChord THIRTEENTH = new DiatonicChord(
+	private static final CustomDiatonicChord THIRTEENTH = new CustomDiatonicChord(
 		Diatonic.I, Diatonic.III, Diatonic.V, Diatonic.VII, Diatonic.II, Diatonic.IV, Diatonic.VI
 	);
 
-	public DiatonicChord(DiatonicFunction f) {
+	public CustomDiatonicChord(DiatonicFunction f) {
 		add( get( f ) );
 	}
 
-	public boolean add(DiatonicChord dc) {
+	public boolean add(CustomDiatonicChord dc) {
 		for ( Diatonic d : dc )
 			add( d );
 
 		return true;
 	}
 
-	private static DiatonicChord get(DiatonicFunction f) {
+	private static CustomDiatonicChord get(DiatonicFunction f) {
 		assert f != null;
 		switch ( f ) {
 			case I:
@@ -332,7 +334,7 @@ public class DiatonicChord extends Chord<Diatonic, IntervalDiatonic>
 		// return null;
 	}
 
-	public DiatonicChord(PitchDiatonicableSingle... cs) {
+	public CustomDiatonicChord(PitchDiatonicableSingle... cs) {
 		assert cs != null;
 		for ( int i = 0; i < cs.length; i++ ) {
 			assert cs[i] != null;
@@ -341,7 +343,7 @@ public class DiatonicChord extends Chord<Diatonic, IntervalDiatonic>
 		}
 	}
 
-	public DiatonicChord(PitchDiatonicableChord<?, ?, ?> cs) {
+	public CustomDiatonicChord(PitchDiatonicableChord<?, ?, ?> cs) {
 		assert cs != null;
 		for ( int i = 0; i < cs.size(); i++ ) {
 			assert cs.get( i ) != null;
@@ -350,7 +352,7 @@ public class DiatonicChord extends Chord<Diatonic, IntervalDiatonic>
 		}
 	}
 
-	public DiatonicChord shift(int n) {
+	public CustomDiatonicChord shift(int n) {
 		for ( int i = 0; i < size(); i++ ) {
 			set( i, get( i ).add( n ) );
 		}
@@ -358,13 +360,13 @@ public class DiatonicChord extends Chord<Diatonic, IntervalDiatonic>
 		return this;
 	}
 
-	public DiatonicChord shift(Degree d) {
+	public CustomDiatonicChord shift(Degree d) {
 		return shift( d.val() );
 	}
 
 	@Override
-	public DiatonicChord newArray() {
-		return new DiatonicChord();
+	public CustomDiatonicChord newArray() {
+		return new CustomDiatonicChord();
 	}
 
 	@Override
@@ -442,7 +444,7 @@ public class DiatonicChord extends Chord<Diatonic, IntervalDiatonic>
 			if ( dcm.size() > 0
 					&& dcm.get( dcm.size() - 1 ).getDegree().val() >= d.getDegree().val() )
 				octave++;
-			dcm.addNoReset( d.toMidi( t, octave, length, velocity ) );
+			dcm.add( d.toMidi( t, octave, length, velocity ) );
 			if ( d == root )
 				dcm.setRoot( dcm.size() - 1 );
 		}
@@ -450,127 +452,19 @@ public class DiatonicChord extends Chord<Diatonic, IntervalDiatonic>
 	}
 
 	@Override
-	public boolean addAll(Collection<? extends Diatonic> c) {
-		// TODO Auto-generated method stub
-		return false;
+	public CustomDiatonicChord clone() {
+		return (CustomDiatonicChord) super.clone();
 	}
 
 	@Override
-	public boolean addAll(int index, Collection<? extends Diatonic> c) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void clear() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean contains(Object o) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean containsAll(Collection<?> c) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Diatonic get(int index) {
+	public Boolean updateWhatIsIt(BiFunction<List<CustomChromaticChord>, PitchChord<?, ?>, CustomChromaticChord> fSelectChord) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int indexOf(Object o) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Iterator<Diatonic> iterator() {
+	public Boolean updateWhatIsItIfNeeded() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public int lastIndexOf(Object o) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public ListIterator<Diatonic> listIterator() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ListIterator<Diatonic> listIterator(int index) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean remove(Object o) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean removeAll(Collection<?> c) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean retainAll(Collection<?> c) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Diatonic set(int index, Diatonic element) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public List<Diatonic> subList(int fromIndex, int toIndex) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Object[] toArray() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <T> T[] toArray(T[] a) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
-	public DiatonicChord clone() {
-		return (DiatonicChord) super.clone();
 	}
 }

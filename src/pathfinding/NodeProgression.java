@@ -1,11 +1,11 @@
 package pathfinding;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import pitch.ChordMidi;
 
 public class NodeProgression extends Node<ChordMidi, NodeProgression> {
-	protected ArrayList<NodeProgression> next;
+	protected List<NodeProgression> next;
 	
 	public NodeProgression(ChordMidi o) {
 		super(o);
@@ -16,11 +16,11 @@ public class NodeProgression extends Node<ChordMidi, NodeProgression> {
 		return new NodeProgression(c);
 	}
 	
-	public void setNextNodes(ArrayList<NodeProgression> a) {
+	public void setNextNodes(List<NodeProgression> a) {
 		next = a;
 	}
 	
-	public ArrayList<NodeProgression> getNextNodes() {
+	public List<NodeProgression> getNextNodes() {
 		assert next != null;
 		return next;
 	}

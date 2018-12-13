@@ -2,6 +2,7 @@ package chromaticchord;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -13,9 +14,10 @@ import arrays.ArrayWrapperInteger;
 import chromaticchord.CustomChromaticChord.ImpossibleChord;
 import diatonic.ChordNotation;
 import diatonic.Quality;
+import midi.AddedException;
 import pitch.Chromatic;
+import pitch.PitchChord;
 import pitch.PitchChromaticChord;
-import pitch.PitchChromaticable;
 import pitch.PitchChromaticableChord;
 import pitch.PitchChromaticableSingle;
 import pitch.PitchDiatonic;
@@ -2219,12 +2221,16 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic> {
 	}
 
 	/** Variables */
-	private final Chromatic[] notes;
+	private final List<Chromatic> notes;
 	private final ChromaticChordMeta meta;
 
 	private ChromaticChordEnum(Chromatic... cs) {
-		assert cs != null;
-		notes = cs;
+		assert cs != null;		
+		List<Chromatic> notesMutatable = new ArrayList();
+		for (Chromatic c : cs)
+			notesMutatable.add( c );
+		notes = Collections.unmodifiableList( notesMutatable );
+		
 		meta = initializeMeta();
 	}
 
@@ -2277,23 +2283,17 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic> {
 
 	@Override
 	public int size() {
-		return notes.length;
-	}
-
-	@Override
-	public CustomChromaticChord inv(int n) {
-		CustomChromaticChord c = new CustomChromaticChord(this);
-		return c.inv( n );
+		return notes.size();
 	}
 
 	@Override
 	public Chromatic get(int index) {
-		return notes[index];
+		return notes.get( index );
 	}
 
 	@Override
 	public Chromatic getRoot() {
-		return notes[getRootPos()];
+		return notes.get( getRootPos() );
 	}
 
 	@Override
@@ -2347,86 +2347,72 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic> {
 
 	@Override
 	public boolean add(Chromatic e) {
-		// TODO Auto-generated method stub
-		return false;
+		return notes.add( e );
 	}
 
 	@Override
 	public void add(int index, Chromatic element) {
-		// TODO Auto-generated method stub
-		
+		notes.add( index, element );
 	}
 
 	@Override
 	public boolean addAll(Collection<? extends Chromatic> c) {
-		// TODO Auto-generated method stub
-		return false;
+		return notes.addAll( c );
 	}
 
 	@Override
 	public boolean addAll(int index, Collection<? extends Chromatic> c) {
-		// TODO Auto-generated method stub
-		return false;
+		return notes.addAll( index, c );
 	}
 
 	@Override
 	public boolean contains(Object o) {
-		// TODO Auto-generated method stub
-		return false;
+		return notes.contains( o );
 	}
 
 	@Override
 	public boolean containsAll(Collection<?> c) {
-		// TODO Auto-generated method stub
-		return false;
+		return notes.containsAll( c );
 	}
 
 	@Override
 	public int indexOf(Object o) {
-		// TODO Auto-generated method stub
-		return 0;
+		return notes.indexOf( o );
 	}
 
 	@Override
 	public Iterator<Chromatic> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		return notes.iterator();
 	}
 
 	@Override
 	public int lastIndexOf(Object o) {
-		// TODO Auto-generated method stub
-		return 0;
+		return notes.lastIndexOf( o );
 	}
 
 	@Override
 	public ListIterator<Chromatic> listIterator() {
-		// TODO Auto-generated method stub
-		return null;
+		return notes.listIterator();
 	}
 
 	@Override
 	public ListIterator<Chromatic> listIterator(int index) {
-		// TODO Auto-generated method stub
-		return null;
+		return notes.listIterator(index);
 	}
 
 	@Override
 	public List<Chromatic> subList(int fromIndex, int toIndex) {
-		// TODO Auto-generated method stub
-		return null;
+		return notes.subList( fromIndex, toIndex );
 	}
 
 	@Override
 	public Object[] toArray() {
-		// TODO Auto-generated method stub
-		return null;
+		return notes.toArray();
 	}
 
 	@Override
 	public <T> T[] toArray(T[] a) {
-		// TODO Auto-generated method stub
-		return null;
+		return notes.toArray( a );
 	}
 
 	@Override
@@ -2443,30 +2429,6 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic> {
 	}
 
 	@Override
-	public Boolean updateWhatIsItIfNeeded() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean resetRoot() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean setRoot(int n) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public CustomChromaticChord inv() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public boolean isSus4() {
 		// TODO Auto-generated method stub
 		return false;
@@ -2478,14 +2440,36 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic> {
 		return false;
 	}
 
+
 	@Override
-	public Boolean updateWhatIsIt(BiFunction<ArrayList<CustomChromaticChord>, PitchChromaticableChord<?, ?>, CustomChromaticChord> fSelectChord) {
+	public ChromaticChordEnum getChromatic() {
+		return this;
+	}
+
+	@Override
+	public <T extends PitchChord<Chromatic, Integer>> List<T> getAllInversions() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ChromaticChordEnum getChromatic() {
-		return this;
+	public CustomChromaticChord inv() {
+		return new CustomChromaticChord(this).inv();
+	}
+	
+
+	@Override
+	public CustomChromaticChord inv(int n) {
+		return new CustomChromaticChord(this).inv(n);
+	}
+
+	@Override
+	public CustomChromaticChord resetRoot() {
+		return new CustomChromaticChord(this).resetRoot();
+	}
+
+	@Override
+	public CustomChromaticChord setRoot(int n) {
+		return new CustomChromaticChord(this).setRoot(n);
 	}
 }

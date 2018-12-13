@@ -1,13 +1,14 @@
 package pathfinding;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class PathSpace extends Path<NodeMap> {
 	Map map;
 
-	protected final Function<NodeMap, ArrayList<NodeMap>> sucesores_f = (NodeMap n) -> {
+	protected final Function<NodeMap, List<NodeMap>> sucesores_f = (NodeMap n) -> {
 		ArrayList<NodeMap> sucesores = new ArrayList<>();
 		if ( n.object.x+1 < map.width ) {
 			NodeMap nm = map.nodes[n.object.x+1][n.object.y];
@@ -55,7 +56,7 @@ public class PathSpace extends Path<NodeMap> {
 	}
 
 
-	public ArrayList<NodeMap> aStar() {
+	public List<NodeMap> aStar() {
 		return aStar(h_default, g_default, sucesores_f);
 	}
 }

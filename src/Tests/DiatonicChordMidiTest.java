@@ -18,7 +18,7 @@ import pitch.Chromatic;
 import pitch.ChromaticChordMidi;
 import pitch.ChromaticMidi;
 import pitch.Diatonic;
-import pitch.DiatonicChord;
+import pitch.CustomDiatonicChord;
 import pitch.DiatonicChordMidi;
 import pitch.PitchMidiEnum;
 import tonality.ScaleEnum;
@@ -351,14 +351,14 @@ public class DiatonicChordMidiTest {
 		assertEquals( ChromaticChordEnum.FFm, dcm.toChromaticChord() );
 
 		assertEquals(
-			new DiatonicChord( Diatonic.II, Diatonic.IV, Diatonic.VI ), new DiatonicChord( DiatonicFunction.II )
+			new CustomDiatonicChord( Diatonic.II, Diatonic.IV, Diatonic.VI ), new CustomDiatonicChord( DiatonicFunction.II )
 		);
 		assertEquals(
-			ChromaticChordEnum.GGdim, new DiatonicChord( DiatonicFunction.II ).toChromatic( TonalityEnum.FFm )
+			ChromaticChordEnum.GGdim, new CustomDiatonicChord( DiatonicFunction.II ).toChromatic( TonalityEnum.FFm )
 		);
 
 		assertEquals(
-			ChromaticChordEnum.GGdim, new DiatonicChord( DiatonicFunction.II ).toChromatic( TonalityEnum.FFm ).toMidi().toChromaticChord()
+			ChromaticChordEnum.GGdim, new CustomDiatonicChord( DiatonicFunction.II ).toChromatic( TonalityEnum.FFm ).toMidi().toChromaticChord()
 		);
 		assertEquals( Chromatic.GG, TonalityEnum.FFm.get( Degree.II ) );
 

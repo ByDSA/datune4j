@@ -1,18 +1,17 @@
 package pathfinding;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import pitch.ChordMidi;
-import pitch.PitchChromaticableChord;
 
 public class PathProgression<N extends ChordMidi> extends Path<NodeProgression> {
-	ArrayList<ArrayList<NodeProgression>> nodes;
+	List<List<NodeProgression>> nodes;
 
-	protected final Function<NodeProgression, ArrayList<NodeProgression>> sucesores_f = (NodeProgression n) -> {
-		ArrayList<NodeProgression> a = n.getNextNodes();
+	protected final Function<NodeProgression, List<NodeProgression>> sucesores_f = (NodeProgression n) -> {
+		List<NodeProgression> a = n.getNextNodes();
 		return a;
 	};
 
@@ -23,11 +22,11 @@ public class PathProgression<N extends ChordMidi> extends Path<NodeProgression> 
 	public <A extends ArrayList<ChordMidi>> PathProgression(A array) {
 		super(new NodeProgression(array.get(0)), new NodeProgression(array.get(array.size()-1)));
 		assert array.size() > 2;
-		nodes = new ArrayList<ArrayList<NodeProgression>>();
+		nodes = new ArrayList();
 
 		for (int i = 1; i < array.size()-1; i++) {
-			ArrayList<ChordMidi> cs = array.get(i).getAllDispositionsWithInv();
-			ArrayList<NodeProgression> ns = new ArrayList<>();
+			List<ChordMidi> cs = array.get(i).getAllDispositionsWithInv();
+			List<NodeProgression> ns = new ArrayList<>();
 			for (ChordMidi c : cs) {
 				ns.add( new NodeProgression(c) );
 			}
@@ -35,14 +34,14 @@ public class PathProgression<N extends ChordMidi> extends Path<NodeProgression> 
 			if (i == 1)
 				ini.setNextNodes(ns);
 			else if (i == array.size()-2) {
-				ArrayList<NodeProgression> ns2 = new ArrayList<NodeProgression>();
+				List<NodeProgression> ns2 = new ArrayList<NodeProgression>();
 				ns2.add(end);
 				for (NodeProgression n : ns)
 					n.setNextNodes(ns2);
 			}
 
 			if (i != 1) {
-				ArrayList<NodeProgression> ns2 = nodes.get(i-2);
+				List<NodeProgression> ns2 = nodes.get(i-2);
 				for (NodeProgression n : ns2)
 					n.setNextNodes(ns);
 			}
@@ -51,7 +50,7 @@ public class PathProgression<N extends ChordMidi> extends Path<NodeProgression> 
 		}
 	}
 
-	public ArrayList<NodeProgression> aStar() {
+	public List<NodeProgression> aStar() {
 		return aStar(h_default, g_default, sucesores_f);
 	}
 }

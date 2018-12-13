@@ -21,7 +21,7 @@ import pitch.Chromatic;
 import pitch.ChromaticChordMidi;
 import pitch.ChromaticMidi;
 import pitch.Diatonic;
-import pitch.DiatonicChord;
+import pitch.CustomDiatonicChord;
 import pitch.DiatonicChordMidi;
 import pitch.PitchChromaticChord;
 import pitch.PitchChromaticableChord;
@@ -306,7 +306,7 @@ public class CustomTonality implements Tonality {
 			cc = functionChordsMap.get( f );
 
 		if ( cc == null ) {
-			DiatonicChord dc = new DiatonicChord( f );
+			CustomDiatonicChord dc = new CustomDiatonicChord( f );
 			assert dc != null : f + " " + this;
 
 			cc = get( dc, f ).rename( this );
@@ -389,7 +389,7 @@ public class CustomTonality implements Tonality {
 		return null;
 	}*/
 
-	public CustomChromaticChord get(DiatonicChord dc, DiatonicFunction df) {
+	public CustomChromaticChord get(CustomDiatonicChord dc, DiatonicFunction df) {
 		return dc.toChromatic( this, df );
 	}
 

@@ -32,14 +32,6 @@ public interface PitchChromaticableChord<N extends PitchChromaticableSingle, Dis
 		return true;
 	}
 
-	public default Boolean updateWhatIsIt() {
-		return updateWhatIsIt(
-			(ArrayList<CustomChromaticChord> chords, PitchChromaticableChord<?, ?> self) -> {
-				return chords.get( 0 );
-			}
-		);
-	}
-
 	public default void removeHigherDuplicates() {
 		PitchChromaticableChord<N, DistType> out = this.newArray();
 		for ( N n : this ) {
@@ -53,24 +45,17 @@ public interface PitchChromaticableChord<N extends PitchChromaticableSingle, Dis
 		for ( N n : out )
 			add( n );
 	}
+/*
 
-	public Boolean updateWhatIsIt(BiFunction<ArrayList<CustomChromaticChord>, PitchChromaticableChord<?, ?>, CustomChromaticChord> fSelectChord);
+	
 
-	public Boolean updateWhatIsItIfNeeded();
-
-	public boolean resetRoot();
-
-	public boolean setRoot(int n);
+*/
 
 	public N getRoot();
 
 	public int getRootPos();
 
 	public int getInversionNumber();
-
-	public <T extends PitchChromaticableChord<N, DistType>> T inv();
-
-	public <T extends PitchChromaticableChord<N, DistType>> T inv(int n);
 
 	/*
 	 * public boolean equalsEnharmonic(ChromaticChord cc); public boolean
@@ -81,13 +66,7 @@ public interface PitchChromaticableChord<N extends PitchChromaticableSingle, Dis
 	 */
 
 	public default <Array extends PitchChromaticableChord<N, ?>> boolean equalsEnharmonicInv(Array cc) {
-		Array cc2;
-		try {
-			cc2 = (Array) cc.clone();
-		} catch ( CloneNotSupportedException e ) {
-			e.printStackTrace();
-			cc2 = null;
-		}
+		CustomChromaticChord cc2 = new CustomChromaticChord( cc );
 		for ( int i = 0; i < cc2.size(); i++, cc2.inv() ) {
 			if ( this.equalsEnharmonic( cc2 ) )
 				return true;

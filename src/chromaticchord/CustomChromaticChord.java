@@ -1,11 +1,8 @@
 package chromaticchord;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.function.BiFunction;
 
 import arrays.ArrayUtils;
@@ -23,21 +20,19 @@ import pitch.Chord;
 import pitch.Chromatic;
 import pitch.ChromaticChordMidi;
 import pitch.ChromaticMidi;
-import pitch.DiatonicChord;
+import pitch.CustomDiatonicChord;
 import pitch.DiatonicChordMidi;
 import pitch.DiatonicMidi;
+import pitch.PitchChord;
+import pitch.PitchChordMutable;
 import pitch.PitchChromaticChord;
-import pitch.PitchChromaticable;
-import pitch.PitchChromaticableChord;
 import pitch.PitchChromaticableSingle;
 import tonality.ScaleEnum;
 import tonality.Tonality;
 import tonality.TonalityException;
 
-public class CustomChromaticChord extends Chord<Chromatic, Integer>
-implements PitchChromaticChord<Chromatic> {
+public class CustomChromaticChord extends Chord<Chromatic, Integer> implements PitchChromaticChord<Chromatic>, PitchChordMutable<Chromatic, Integer> {
 	public ChromaticChordMeta meta = new ChromaticChordMeta(); // TODO: protected
-
 	public static final HashMap<ArrayWrapperInteger, ArrayList<CustomChromaticChord>> sameOrderChromatics = new HashMap();
 
 	static {
@@ -279,7 +274,7 @@ implements PitchChromaticChord<Chromatic> {
 					break; // Ya se ha corregido la escala
 			}
 
-			DiatonicChord dc = new DiatonicChord( f2 );
+			CustomDiatonicChord dc = new CustomDiatonicChord( f2 );
 			CustomChromaticChord cc = dc.toChromatic( t );
 			add( cc );
 		}
@@ -314,10 +309,10 @@ implements PitchChromaticChord<Chromatic> {
 	}
 
 	@Override
-	public Boolean updateWhatIsIt(BiFunction<ArrayList<CustomChromaticChord>, PitchChromaticableChord<?, ?>, CustomChromaticChord> fSelectChord) {
+	public Boolean updateWhatIsIt(BiFunction<List<CustomChromaticChord>, PitchChord<?, ?>, CustomChromaticChord> fSelectChord) {
 		ArrayWrapperInteger a = new ArrayWrapperInteger( this.toIntegerChromatics() );
 		assert CustomChromaticChord.sameOrderChromatics != null;
-		ArrayList<CustomChromaticChord> foundChords = CustomChromaticChord.sameOrderChromatics.get( a );
+		List<CustomChromaticChord> foundChords = CustomChromaticChord.sameOrderChromatics.get( a );
 
 		if ( foundChords == null ) {
 			assert meta != null;
@@ -343,7 +338,7 @@ implements PitchChromaticChord<Chromatic> {
 
 	public Boolean updateWhatIsIt() {
 		return updateWhatIsIt(
-			(ArrayList<CustomChromaticChord> chords, PitchChromaticableChord<?, ?> self) -> {
+			(List<CustomChromaticChord> chords, PitchChord<?, ?> self) -> {
 				return chords.get( 0 );
 			}
 				);
@@ -565,9 +560,9 @@ implements PitchChromaticChord<Chromatic> {
 
 		throw new ImpossibleChord();
 	}
-	
+
 	@Override
-    public CustomChromaticChord clone() {
+	public CustomChromaticChord clone() {
 		return (CustomChromaticChord)super.clone();
 	}
 
@@ -578,123 +573,13 @@ implements PitchChromaticChord<Chromatic> {
 	}
 
 	@Override
-	public boolean addAll(Collection<? extends Chromatic> c) {
-		// TODO Auto-generated method stub
-		return false;
+	public CustomChromaticChord getChromatic() {
+		return this;
 	}
 
 	@Override
-	public boolean addAll(int index, Collection<? extends Chromatic> c) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void clear() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean contains(Object o) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean containsAll(Collection<?> c) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Chromatic get(int index) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int indexOf(Object o) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Iterator<Chromatic> iterator() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int lastIndexOf(Object o) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public ListIterator<Chromatic> listIterator() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ListIterator<Chromatic> listIterator(int index) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean remove(Object o) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean removeAll(Collection<?> c) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean retainAll(Collection<?> c) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Chromatic set(int index, Chromatic element) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public List<Chromatic> subList(int fromIndex, int toIndex) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Object[] toArray() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <T> T[] toArray(T[] a) {
-		// TODO Auto-generated method stub
-		return null;
+	public CustomChromaticChord setRoot(int n) {
+		return (CustomChromaticChord)super.setRoot( n );
 	}
 
 	@Override
@@ -704,11 +589,11 @@ implements PitchChromaticChord<Chromatic> {
 
 	@Override
 	public CustomChromaticChord inv(int n) {
-		return super.inv( n );
+		return super.inv(n);
 	}
 
 	@Override
-	public CustomChromaticChord getChromatic() {
-		return this;
+	public CustomChromaticChord resetRoot() {
+		return super.resetRoot();
 	}
 }

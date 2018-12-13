@@ -18,7 +18,7 @@ import pitch.Chromatic;
 import pitch.ChromaticChordMidi;
 import pitch.ChromaticMidi;
 import pitch.Diatonic;
-import pitch.DiatonicChord;
+import pitch.CustomDiatonicChord;
 import pitch.DiatonicChordMidi;
 import pitch.PitchChromaticChord;
 import pitch.PitchChromaticableChord;
@@ -246,7 +246,7 @@ public enum TonalityEnum implements Tonality {
 		return null;
 	}
 
-	public CustomChromaticChord get(DiatonicChord dc, DiatonicFunction df) {
+	public CustomChromaticChord get(CustomDiatonicChord dc, DiatonicFunction df) {
 		return dc.toChromatic( this, df );
 	}
 

@@ -1,14 +1,16 @@
 package pitch;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import chromaticchord.CustomChromaticChord;
 import midi.AddedException;
 import midi.PitchMidiException;
 
-abstract public class Chord<N extends PitchSingle, DistType>
-implements Cloneable, PitchChord<N, DistType>, List<N> {
+public abstract class Chord<N extends PitchSingle, DistType> implements PitchChordMutable<N, DistType> {
 	protected N root;
 	protected List<N> notes = new ArrayList();
 
@@ -23,6 +25,7 @@ implements Cloneable, PitchChord<N, DistType>, List<N> {
 		add( cs );
 	}
 
+	@Override
 	public boolean add(N note) throws AddedException {
 		assert note != null;
 		notes.add( note );
@@ -30,29 +33,31 @@ implements Cloneable, PitchChord<N, DistType>, List<N> {
 		return true;
 	}
 
-	protected boolean addNoReset(N note) throws AddedException {
+	protected boolean addList(N note) throws AddedException {
 		assert note != null;
 		return notes.add( note );
 	}
 
+	@Override
 	public boolean add(N... cs) throws AddedException {
 		if ( cs.length == 0 )
 			return false;
 
 		for ( N c : cs )
-			addNoReset( c );
+			addList( c );
 
 		resetRootIfNeeded();
 
 		return true;
 	}
 	
-	public boolean add(PitchChord<N, DistType> cs) throws AddedException {
+	@Override
+	public <T extends PitchChord<N, DistType>> boolean add(T cs) throws AddedException {
 		if ( cs.size() == 0 )
 			return false;
 
 		for ( N c : cs )
-			addNoReset( c );
+			addList( c );
 
 		resetRootIfNeeded();
 
@@ -65,6 +70,7 @@ implements Cloneable, PitchChord<N, DistType>, List<N> {
 		resetRootIfNeeded();
 	}
 
+	@Override
 	public void add(int pos, N... ns) throws AddedException {
 		if ( ns.length == 0 )
 			return;
@@ -83,17 +89,18 @@ implements Cloneable, PitchChord<N, DistType>, List<N> {
 		return r;
 	}
 
-	public <T extends Chord<N, DistType>> ArrayList<T> getAllInversions() {
-		ArrayList<T> ret = new ArrayList<>();
+	@Override
+	public <T extends PitchChord<N, DistType>> List<T> getAllInversions() {
+		List<T> ret = new ArrayList<>();
 
 		ret.add( (T) this.clone() );
 
 		T last = ret.get( 0 );
 		for ( int i = 1; i < size(); i++ ) {
 			try {
-				last = last.clone().inv();
+				last = last.inv();
 			} catch ( PitchMidiException e ) {
-				last = last.clone().inv( -size() + 1 );
+				last = last.inv( -size() + 1 );
 			}
 			ret.add( last );
 		}
@@ -107,27 +114,21 @@ implements Cloneable, PitchChord<N, DistType>, List<N> {
 		}
 	}
 
-	public boolean resetRoot() {
-		if ( size() == 0 )
-			return false;
-
-		setRoot( 0 );
-
-		return true;
-	}
-
-	public boolean setRoot(int n) {
+	@Override
+	public Chord setRoot(int n) {
 		assert n < size();
 
 		root = get( n );
 
-		return true;
+		return this;
 	}
 
+	@Override
 	public N getRoot() {
 		return root;
 	}
 
+	@Override
 	public int getRootPos() {
 		resetRootIfNeeded();
 		int pos = this.indexOf( root );
@@ -135,41 +136,35 @@ implements Cloneable, PitchChord<N, DistType>, List<N> {
 		return pos;
 	}
 
-	public int getInversionNumber() {
-		return ( size() - getRootPos() ) % size();
-	}
+	@Override
+	public boolean equals(Object o) {
+		if ( !( o instanceof Chord ) )
+			return false;
 
-	public <T extends Chord<? extends N, ? extends DistType>> T inv() {
-		return inv( 1 );
-	}
+		Chord c = (Chord) o;
+		if ( c.size() != size() )
+			return false;
 
-	public <T extends Chord<? extends N, ? extends DistType>> T inv(int n) {
-		if ( size() < 2 || n == 0 )
-			return (T) this;
-
-		for ( int i = 0; i < n; i++ ) {
-			boolean updateRoot = getRootPos() == 0;
-			add( remove( 0 ) );
-
-			if ( updateRoot )
-				setRoot( size() - 1 );
+		for ( int i = 0; i < size(); i++ ) {
+			if ( !get( i ).equals( c.get( i ) ) )
+				return false;
 		}
 
-		if ( n < 0 ) {
-			int lastIndex = size() - 1;
-
-			for ( int i = 0; i > n; i-- ) {
-				boolean updateRoot = getRootPos() == lastIndex;
-				add( 0, remove( lastIndex ) );
-
-				if ( updateRoot )
-					setRoot( 0 );
-			}
-		}
-
-		return (T) this;
+		return root.equals( c.root );
 	}
-
+	
+	@Override
+    public Chord<N, DistType> clone() {
+        try {
+			return (Chord) super.clone();
+		} catch ( CloneNotSupportedException e ) {
+			e.printStackTrace();
+			return null;
+		}
+    }
+	
+	
+	/** Show */
 	public String toString() {
 		return notesToString();
 	}
@@ -215,29 +210,102 @@ implements Cloneable, PitchChord<N, DistType>, List<N> {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if ( !( o instanceof Chord ) )
-			return false;
-
-		Chord c = (Chord) o;
-		if ( c.size() != size() )
-			return false;
-
-		for ( int i = 0; i < size(); i++ ) {
-			if ( !get( i ).equals( c.get( i ) ) )
-				return false;
-		}
-
-		return root.equals( c.root );
+	public boolean addAll(Collection<? extends N> c) {
+		return notes.addAll( c );
 	}
-	
+
 	@Override
-    public Chord<N, DistType> clone() {
-        try {
-			return (Chord) super.clone();
-		} catch ( CloneNotSupportedException e ) {
-			e.printStackTrace();
-			return null;
-		}
-    }
+	public boolean addAll(int index, Collection<? extends N> c) {
+		return notes.addAll( index, c );
+	}
+
+	@Override
+	public void clear() {
+		notes.clear();
+	}
+
+	@Override
+	public boolean contains(Object o) {
+		return notes.contains( o );
+	}
+
+	@Override
+	public boolean containsAll(Collection<?> c) {
+		return notes.containsAll( c );
+	}
+
+	@Override
+	public N get(int index) {
+		return notes.get( index );
+	}
+
+	@Override
+	public int indexOf(Object o) {
+		return notes.indexOf( o );
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return notes.isEmpty();
+	}
+
+	@Override
+	public Iterator<N> iterator() {
+		return notes.iterator();
+	}
+
+	@Override
+	public int lastIndexOf(Object o) {
+		return notes.lastIndexOf( o );
+	}
+
+	@Override
+	public ListIterator<N> listIterator() {
+		return notes.listIterator();
+	}
+
+	@Override
+	public ListIterator<N> listIterator(int index) {
+		return notes.listIterator( index );
+	}
+
+	@Override
+	public boolean remove(Object o) {
+		return notes.remove( o );
+	}
+
+	@Override
+	public boolean removeAll(Collection<?> c) {
+		return notes.removeAll( c );
+	}
+
+	@Override
+	public boolean retainAll(Collection<?> c) {
+		return notes.retainAll( c );
+	}
+
+	@Override
+	public N set(int index, N element) {
+		return notes.set( index, element );
+	}
+
+	@Override
+	public int size() {
+		return notes.size();
+	}
+
+	@Override
+	public List<N> subList(int fromIndex, int toIndex) {
+		return notes.subList( fromIndex, toIndex );
+	}
+
+	@Override
+	public Object[] toArray() {
+		return notes.toArray();
+	}
+
+	@Override
+	public <T> T[] toArray(T[] a) {
+		return notes.toArray( a );
+	}
 }

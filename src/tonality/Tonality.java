@@ -16,7 +16,7 @@ import diatonic.IntervalDiatonic;
 import pitch.Chromatic;
 import pitch.ChromaticMidi;
 import pitch.Diatonic;
-import pitch.DiatonicChord;
+import pitch.CustomDiatonicChord;
 import pitch.DiatonicChordMidi;
 import pitch.PitchChromaticChord;
 import pitch.PitchChromaticableChord;
@@ -100,7 +100,7 @@ public interface Tonality extends Cloneable {
 		return null;
 	}
 
-	default PitchChromaticChord get(DiatonicChord dc, DiatonicFunction df) {
+	default PitchChromaticChord get(CustomDiatonicChord dc, DiatonicFunction df) {
 		return dc.toChromatic( this, df );
 	}
 

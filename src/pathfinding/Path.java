@@ -2,6 +2,7 @@ package pathfinding;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -31,7 +32,7 @@ class Path<N extends Node<?, N>> {
 
 	void reset() { }
 
-	public ArrayList<N> aStar(BiFunction<N, N, Float> dist_h, BiFunction<N, N, Float> dist_g, Function<N, ArrayList<N>> sucesores_f) {
+	public List<N> aStar(BiFunction<N, N, Float> dist_h, BiFunction<N, N, Float> dist_g, Function<N, List<N>> sucesores_f) {
 		// Estado inicial
 		reset();
 		N n;
@@ -55,7 +56,7 @@ class Path<N extends Node<?, N>> {
 			// 5: Detectar si se ha llegado al final
 			if (n == end) {
 				// Formar el camino hacia atrás
-				ArrayList<N> ret = new ArrayList<N>();
+				List<N> ret = new ArrayList<N>();
 				for (N n_temp = n; n_temp != null; n_temp = n_temp.parent)
 					ret.add(n_temp);
 
@@ -64,9 +65,9 @@ class Path<N extends Node<?, N>> {
 				return ret;
 			}
 
-			ArrayList<N> sucesores = new ArrayList<N>();
+			List<N> sucesores = new ArrayList<N>();
 			// 6 : generar sucesores. Inserta todos y luego quita los que son antecedentes de N
-			ArrayList<N> ss = sucesores_f.apply(n);
+			List<N> ss = sucesores_f.apply(n);
 			sucesores.addAll(ss);
 
 			// Descarte de sucesores (también se podría poner un IF antes de añadir cada sucesor)

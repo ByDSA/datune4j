@@ -1,13 +1,12 @@
 package pathfinding;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 
 import chromaticchord.ChromaticChordEnum;
-import chromaticchord.CustomChromaticChord;
 import eventsequences.Instrument;
 import eventsequences.Track;
 import midi.Duration;
@@ -46,7 +45,7 @@ class Main {
 		);
 
 		PathProgression<ChromaticChordMidi> p2 = new PathProgression( pcm );
-		ArrayList<NodeProgression> nodes = p2.aStar();
+		List<NodeProgression> nodes = p2.aStar();
 		for ( int i = 0; i < nodes.size(); i++ ) {
 			NodeProgression n = nodes.get( i );
 			pcm.set( i, (ChromaticChordMidi)n.object );

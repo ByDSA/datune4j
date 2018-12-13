@@ -2,6 +2,7 @@ package pitch;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.BiFunction;
 
@@ -15,7 +16,7 @@ import midi.Arpegios.ArpegioDefault;
 
 public abstract class ChordMidi<N extends NoteMidi, DistType>
 extends Chord<N, DistType>
-implements FigureLength, PitchOctave, PitchChromaticableChord<N, DistType>, PitchMidi {
+implements FigureLength, PitchOctave, PitchChromaticableChord<N, DistType>, PitchChordMutable<N, DistType>, PitchMidi {
 	protected Arpegio	arpegio;
 	protected int		length;
 
@@ -25,7 +26,7 @@ implements FigureLength, PitchOctave, PitchChromaticableChord<N, DistType>, Pitc
 		if (getRootPos() != 0) {
 			CustomChromaticChord ns = new CustomChromaticChord();
 			for ( N n : this ) {
-				ns.addNoReset( n.getChromatic() );
+				ns.addList( n.getChromatic() );
 
 				if ( n == root )
 					ns.setRoot( ns.size() - 1 );
@@ -33,7 +34,7 @@ implements FigureLength, PitchOctave, PitchChromaticableChord<N, DistType>, Pitc
 
 			return ns;
 		} else
-			return PitchChromaticChord.of(this);
+			return PitchChromaticChord.copyOf(this);
 	}
 
 	public <T extends ChordMidi> T assign(T c) {
@@ -261,7 +262,7 @@ implements FigureLength, PitchOctave, PitchChromaticableChord<N, DistType>, Pitc
 	}
 
 	@Override
-	public Boolean updateWhatIsIt(BiFunction<ArrayList<CustomChromaticChord>, PitchChromaticableChord<?, ?>, CustomChromaticChord> f) {
+	public Boolean updateWhatIsIt(BiFunction<List<CustomChromaticChord>, PitchChord<?, ?>, CustomChromaticChord> f) {
 		meta = new CustomChromaticChord( this );
 		assert meta != null;
 		assert f != null;
@@ -294,19 +295,19 @@ implements FigureLength, PitchOctave, PitchChromaticableChord<N, DistType>, Pitc
 		return ( (float) sum ) / size();
 	}
 
-	public ArrayList<ChordMidi<N, DistType>> getAllDispositionsWithInv() {
-		ArrayList<ChordMidi<N, DistType>> ret = new ArrayList<>();
-		ArrayList<ChordMidi<N, DistType>> bases = super.getAllInversions();
-		for ( ChordMidi<N, DistType> c : bases ) {
-			ret.addAll( c.getAllInversions() );
+	public <T extends ChordMidi<N, DistType>> List<T> getAllDispositionsWithInv() {
+		List<T> ret = new ArrayList<>();
+		List<T> bases = super.getAllInversions();
+		for ( T c : bases ) {
+			ret.addAll( (List<T>) c.getAllInversions() );
 		}
 
 		return ret;
 	}
 
 	@Override
-	public ArrayList<ChordMidi<N, DistType>> getAllInversions() {
-		ChordMidi<N, DistType> c = clone();
+	public List<ChordMidi<N, DistType>> getAllInversions() {
+		ChordMidi<N, DistType> c =  clone();
 		c.setMinOctave();
 		c.minimize();
 
@@ -319,38 +320,38 @@ implements FigureLength, PitchOctave, PitchChromaticableChord<N, DistType>, Pitc
 		System.out.println( "" );
 	}
 
-	protected ArrayList<ChordMidi<N, DistType>> getAllDispositionsSub(boolean sub, int level, boolean first) {
-		ArrayList<ChordMidi<N, DistType>> ret = new ArrayList<>();
+	protected <T extends ChordMidi<N, DistType>> List<T> getAllDispositionsSub(boolean sub, int level, boolean first) {
+		ArrayList<T> ret = new ArrayList<>();
 		assert size() > 0;
 
 		if ( first && level == 0 )
-			ret.add( clone() );
+			ret.add( (T) clone() );
 
 		try {
 			while ( ( size() > 1 && get( 0 ).getCode() < get( 1 ).getCode()
 					|| size() == 1 ) ) {
 				if ( !first ) {
-					ChordMidi<N, DistType> d = clone();
+					T d = (T) clone();
 					ret.add( d );
 				}
 
 				if ( sub && size() > 1 ) {
 					// Copia acorde desde la segunda a la última nota
-					ChordMidi<N, DistType> subChord = newArray();
+					T subChord = newArray();
 					for ( int j = 1; j < size(); j++ )
 						subChord.add( (N)get( j ).clone() );
 
-					ArrayList<ChordMidi<N, DistType>> subCombinations = subChord.clone()
+					List<T> subCombinations = subChord.clone()
 							.getAllDispositionsSub( true, level + 1, first );
-					for ( ChordMidi<N, DistType> subCombination : subCombinations ) {
+					for ( T subCombination : subCombinations ) {
 						// Forma array superChord = [array[0] + subChordcombination]
-						ChordMidi<N, DistType> superChord = newArray();
+						T superChord = newArray();
 						superChord.add( (N)get( 0 ).clone() );
 						superChord.add( subCombination.clone() );
 
 						// Combinaciones de 'número' dentro del array superChord = ['número' +
 						// subChordcombination]
-						ArrayList<ChordMidi<N, DistType>> superCombinations = superChord.clone()
+						List<T> superCombinations = superChord.clone()
 								.getAllDispositionsSub( false, level, false );
 						ret.addAll( superCombinations );
 					}
@@ -377,7 +378,7 @@ implements FigureLength, PitchOctave, PitchChromaticableChord<N, DistType>, Pitc
 
 	public void minimizeDistanceTo(ChordMidi cIn) {
 		assert cIn != null;
-		ArrayList<ChordMidi<N, DistType>> ret = getAllDispositionsWithInv();
+		List<ChordMidi<N, DistType>> ret = getAllDispositionsWithInv();
 		int minDist = 9999;
 		ChordMidi<N, DistType> minDistChord = null;
 		for ( ChordMidi<N, DistType> c : ret ) {
@@ -436,5 +437,11 @@ implements FigureLength, PitchOctave, PitchChromaticableChord<N, DistType>, Pitc
 	@Override
 	public ChordMidi<N, DistType> clone() {
 		return (ChordMidi<N, DistType>)super.clone();
+	}
+
+	@Override
+	public void removeHigherDuplicates() {
+		// TODO Auto-generated method stub
+		
 	}
 }

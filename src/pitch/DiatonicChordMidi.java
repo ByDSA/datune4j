@@ -49,7 +49,7 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 		add( ns );
 	}
 
-	public DiatonicChordMidi(Tonality t, DiatonicChord ns) {
+	public DiatonicChordMidi(Tonality t, CustomDiatonicChord ns) {
 		this( t );
 		add( ns.toMidi( t ) );
 	}
@@ -57,13 +57,13 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 	public DiatonicChordMidi(Tonality t, PitchMidiEnum... ns) {
 		this( t );
 		for ( PitchMidiEnum n : ns )
-			addNoReset( n.toMidi().toDiatonicChordMidi( t ) );
+			addList( n.toMidi().toDiatonicChordMidi( t ) );
 
 		resetRoot();
 	}
 
 	public DiatonicChordMidi(Tonality t, Diatonic... ns) {
-		this( t, new DiatonicChord( ns ) );
+		this( t, new CustomDiatonicChord( ns ) );
 	}
 
 	public <N extends PitchChromaticableSingle, Array extends PitchChromaticableChord<N, ?>> DiatonicChordMidi(Array ns, Tonality t) {
@@ -92,7 +92,7 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 				cm.shiftOctave( 1 );
 			}
 
-			addNoReset( cm );
+			addList( cm );
 		}
 
 		resetRoot();
@@ -121,21 +121,6 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 		} else if ( f instanceof DiatonicFunction )
 			diatonicFunctionProcess( (DiatonicFunction) f, o );
 		setArpegioIfNull();
-	}
-	
-	@Override
-	public DiatonicChordMidi inv() {
-		return (DiatonicChordMidi) super.inv();
-	}
-	
-	@Override
-	public DiatonicChordMidi inv(int i) {
-		return (DiatonicChordMidi) super.inv(i);
-	}
-	
-	@Override
-	public DiatonicChordMidi setLength(int i) {
-		return (DiatonicChordMidi) super.setLength( i );
 	}
 
 	public boolean hasTonality(Tonality t) {
@@ -575,7 +560,7 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 
 	private void diatonicFunctionProcess(DiatonicFunction t, int octave) {
 		assert t != null;
-		DiatonicChord dt = new DiatonicChord( t );
+		CustomDiatonicChord dt = new CustomDiatonicChord( t );
 
 		add( dt, octave );
 		root = get( 0 );
@@ -583,7 +568,7 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 		sort();
 	}
 
-	public void add(DiatonicChord dt, int octave) {
+	public void add(CustomDiatonicChord dt, int octave) {
 		add( dt.toMidi( tonality ) );
 		if ( octave != Settings.DefaultValues.OCTAVE )
 			setOctave( octave );
@@ -873,7 +858,7 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 	public boolean add(ChromaticMidi... ns) throws AddedException, TonalityException {
 		assert tonality != null;
 		for ( ChromaticMidi n : ns )
-			addNoReset( n.toDiatonicChordMidi( tonality ) );
+			addList( n.toDiatonicChordMidi( tonality ) );
 
 		resetRootIfNeeded();
 
@@ -882,13 +867,13 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 
 	protected boolean addNoReset(ChromaticMidi note) throws AddedException {
 		assert tonality != null;
-		return super.addNoReset( note.toDiatonicChordMidi( tonality ) );
+		return super.addList( note.toDiatonicChordMidi( tonality ) );
 	}
 
 	@Override
 	public boolean add(DiatonicMidi... ns) throws AddedException, TonalityException {
 		for ( DiatonicMidi n : ns )
-			addNoReset( n );
+			addList( n );
 
 		resetRootIfNeeded();
 
@@ -1230,7 +1215,7 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 	@Override
 	public Boolean updateWhatIsIt() {
 		return updateWhatIsIt(
-			(ArrayList<CustomChromaticChord> chords, PitchChromaticableChord<?, ?> self) -> {
+			(List<CustomChromaticChord> chords, PitchChord<?, ?> self) -> {
 				updateFunctionIfNull();
 				CustomChromaticChord ret = null;
 				if ( function instanceof DiatonicFunction )
@@ -1281,127 +1266,25 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 	}
 
 	@Override
-	public boolean addAll(Collection<? extends DiatonicMidi> c) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean addAll(int index, Collection<? extends DiatonicMidi> c) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void clear() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean contains(Object o) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean containsAll(Collection<?> c) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public DiatonicMidi get(int index) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int indexOf(Object o) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Iterator<DiatonicMidi> iterator() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int lastIndexOf(Object o) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public ListIterator<DiatonicMidi> listIterator() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ListIterator<DiatonicMidi> listIterator(int index) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean remove(Object o) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean removeAll(Collection<?> c) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean retainAll(Collection<?> c) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public DiatonicMidi set(int index, DiatonicMidi element) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public List<DiatonicMidi> subList(int fromIndex, int toIndex) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Object[] toArray() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <T> T[] toArray(T[] a) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public ChromaticChordMidi getChromatic() {
 		return this.toChromaticChordMidi();
+	}
+
+	@Override
+	public int getInversionNumber() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public <T extends PitchChord<? extends DiatonicMidi, ? extends IntervalChromatic>> T inv() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T extends PitchChord<? extends DiatonicMidi, ? extends IntervalChromatic>> T resetRoot() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
