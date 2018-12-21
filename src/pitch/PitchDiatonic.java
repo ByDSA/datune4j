@@ -1,8 +1,7 @@
 package pitch;
 
-import diatonic.Degree;
+import diatonic.DiatonicDegree;
 
-public interface PitchDiatonic<This extends PitchDiatonic<This, DistType>, DistType> extends PitchDiatonicable {
-	public Degree getDegree();
-	public DistType dist(This n2);
+public interface PitchDiatonic {
+	public DiatonicDegree getDegree();
 }

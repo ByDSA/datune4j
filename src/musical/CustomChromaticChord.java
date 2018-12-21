@@ -1,97 +1,91 @@
-package chromaticchord;
+package musical;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.BiFunction;
 
-import arrays.ArrayUtils;
 import arrays.ArrayWrapperInteger;
 import diatonic.ChordNotation;
 import diatonic.ChromaticFunction;
-import diatonic.Degree;
+import diatonic.DiatonicDegree;
 import diatonic.DiatonicFunction;
 import diatonic.HarmonicFunction;
 import diatonic.IntervalChromatic;
 import diatonic.IntervalDiatonic;
 import diatonic.Quality;
 import midi.Settings;
+import pitch.ChordInterface;
 import pitch.Chord;
-import pitch.Chromatic;
 import pitch.ChromaticChordMidi;
-import pitch.ChromaticMidi;
-import pitch.CustomDiatonicChord;
 import pitch.DiatonicChordMidi;
 import pitch.DiatonicMidi;
-import pitch.PitchChord;
-import pitch.PitchChordMutable;
+import pitch.ChordMutableInterface;
 import pitch.PitchChromaticChord;
-import pitch.PitchChromaticableSingle;
+import pitch.PitchChromaticSingle;
 import tonality.ScaleEnum;
 import tonality.Tonality;
-import tonality.TonalityException;
 
-public class CustomChromaticChord extends Chord<Chromatic, Integer> implements PitchChromaticChord<Chromatic>, PitchChordMutable<Chromatic, Integer> {
-	public ChromaticChordMeta meta = new ChromaticChordMeta(); // TODO: protected
+public class CustomChromaticChord extends Chord<Chromatic> implements PitchChromaticChord<Chromatic>, ChordMutableInterface<Chromatic> {
+	protected ChromaticChordMeta meta = new ChromaticChordMeta();
 	public static final HashMap<ArrayWrapperInteger, ArrayList<CustomChromaticChord>> sameOrderChromatics = new HashMap();
 
 	static {
-		for ( ChromaticChordEnum[] group : ArrayUtils.concat( ChromaticChordEnum.COMMON_CHORDS_GROUP, ChromaticChordEnum.UNUSUAL_CHORDS_GROUPS ) )
-			for ( ChromaticChordEnum c : group ) {
-				//m.updated = true;
-				for ( int i = 0; i < c.size(); i++ ) {
-					CustomChromaticChord c2 = new CustomChromaticChord( c );
-					if ( i > 0 )
-						c2.inv( i );
-					ArrayWrapperInteger array = new ArrayWrapperInteger( c2.toIntegerChromatics() );
-					// System.out.println(Arrays.toString(array) + c2);
-					ArrayList<CustomChromaticChord> arrayListChords = sameOrderChromatics.get( array );
-					if ( arrayListChords == null )
-						arrayListChords = new ArrayList<>();
+		for ( ChromaticChordEnum c : ChromaticChordEnum.values() ) {
+			//m.updated = true;
+			for ( int i = 0; i < c.size(); i++ ) {
+				CustomChromaticChord c2 = new CustomChromaticChord();
+				c2.add( c );
+				if ( i > 0 )
+					c2.inv( i );
+				ArrayWrapperInteger array = new ArrayWrapperInteger( c2.toIntegerChromatics() );
+				// System.out.println(Arrays.toString(array) + c2);
+				ArrayList<CustomChromaticChord> arrayListChords = sameOrderChromatics.get( array );
+				if ( arrayListChords == null )
+					arrayListChords = new ArrayList<>();
 
-					//assert c2.meta.str != null : c2.notesToString();
-					arrayListChords.add( c2 );
-					sameOrderChromatics.put( array, arrayListChords );
-				}
+				//assert c2.meta.str != null : c2.notesToString();
+				arrayListChords.add( c2 );
+				sameOrderChromatics.put( array, arrayListChords );
 			}
+		}
 	}
+	
+	protected CustomChromaticChord() { }
 
-	public CustomChromaticChord(PitchChromaticableSingle... cs) {
+	public <T extends PitchChromaticSingle> void add(Iterable<T> cs) {
 		assert cs != null;
-		for ( int i = 0; i < cs.length; i++ ) {
-			assert cs[i] != null;
-			Chromatic c = cs[i].getChromatic();
+		for ( T cc : cs ) {
+			assert cc != null;
+			Chromatic c = cc.getChromatic();
 			add( c );
 		}
 	}
-
-	public CustomChromaticChord(List<? extends PitchChromaticableSingle> cs) {
-		assert cs != null;
-		for ( int i = 0; i < cs.size(); i++ ) {
-			assert cs.get( i ) != null;
-			Chromatic c = cs.get( i ).getChromatic();
-			add( c );
-		}
+	
+	public <T extends PitchChromaticSingle> void add(T... cs) {
+		add( Arrays.asList( cs ) );
 	}
 
 	public CustomChromaticChord(ChromaticFunction f, Tonality t) {
 		if ( f == ChromaticFunction.I || f == ChromaticFunction.II || f == ChromaticFunction.III
 				|| f == ChromaticFunction.IV || f == ChromaticFunction.V
 				|| f == ChromaticFunction.VI || f == ChromaticFunction.VII ) {
-			int index = t.get( f.getDegree() ).val();
-			add( ChromaticChordEnum.CHORDS_MAJOR[index] );
+			Chromatic r = t.get( f.getDegree() );
+			add( ChromaticChordEnum.whichRootIs( r, ChromaticChordEnum.CHORDS_MAJOR ) );
 		} else if ( f == ChromaticFunction.i || f == ChromaticFunction.ii
 				|| f == ChromaticFunction.iii
 				|| f == ChromaticFunction.iv || f == ChromaticFunction.v
 				|| f == ChromaticFunction.vi || f == ChromaticFunction.vii ) {
-			int index = t.get( f.getDegree() ).val();
-			add( ChromaticChordEnum.CHORDS_MINOR[index] );
+			Chromatic r = t.get( f.getDegree() );
+			add( ChromaticChordEnum.whichRootIs( r, ChromaticChordEnum.CHORDS_MINOR ) );
 		} else if ( f == ChromaticFunction.I0 || f == ChromaticFunction.I0
 				|| f == ChromaticFunction.II0 || f == ChromaticFunction.III0
 				|| f == ChromaticFunction.IV0 || f == ChromaticFunction.V0
 				|| f == ChromaticFunction.VI0 || f == ChromaticFunction.VII0 ) {
-			int index = t.get( f.getDegree() ).val();
-			add( ChromaticChordEnum.CHORDS_DIMINISHED[index] );
+			Chromatic r = t.get( f.getDegree() );
+			add( ChromaticChordEnum.whichRootIs( r, ChromaticChordEnum.CHORDS_DIMINISHED ) );
 		} else if ( f == ChromaticFunction.N6 ) {
 			Chromatic base = t.get( 0 );
 
@@ -104,7 +98,7 @@ public class CustomChromaticChord extends Chord<Chromatic, Integer> implements P
 				|| f == ChromaticFunction.III5 || f == ChromaticFunction.IV5
 				|| f == ChromaticFunction.V5 || f == ChromaticFunction.VI5
 				|| f == ChromaticFunction.VII5 ) {
-			Degree d = f.getDegree();
+			DiatonicDegree d = f.getDegree();
 
 			Chromatic n = t.get( d );
 			add( n );
@@ -196,7 +190,7 @@ public class CustomChromaticChord extends Chord<Chromatic, Integer> implements P
 				case SUBV7:
 					DiatonicChordMidi c = new DiatonicChordMidi( DiatonicFunction.V7, t );
 					t = Tonality.of(
-						c.get( 0 ).toChromaticMidi().getChromatic().add( 6 ), ScaleEnum.LYDIAN_b7
+						c.get( 0 ).getChromatic().getChromatic().add( 6 ), ScaleEnum.LYDIAN_b7
 							);
 					break;
 				case SUBV7_II:
@@ -204,7 +198,7 @@ public class CustomChromaticChord extends Chord<Chromatic, Integer> implements P
 						ChromaticFunction.V7_II, t
 							);
 					t = Tonality.of(
-						c2.get( 0 ).toChromaticMidi().getChromatic().add( 6 ), ScaleEnum.LYDIAN_b7
+						c2.get( 0 ).getChromatic().getChromatic().add( 6 ), ScaleEnum.LYDIAN_b7
 							);
 					break;
 				case SUBV7_III:
@@ -212,7 +206,7 @@ public class CustomChromaticChord extends Chord<Chromatic, Integer> implements P
 						ChromaticFunction.V7_III, t
 							);
 					t = Tonality.of(
-						c3.get( 0 ).toChromaticMidi().getChromatic().add( 6 ), ScaleEnum.LYDIAN_b7
+						c3.get( 0 ).getChromatic().getChromatic().add( 6 ), ScaleEnum.LYDIAN_b7
 							);
 					break;
 				case SUBV7_IV:
@@ -220,7 +214,7 @@ public class CustomChromaticChord extends Chord<Chromatic, Integer> implements P
 						ChromaticFunction.V7_IV, t
 							);
 					t = Tonality.of(
-						c4.get( 0 ).toChromaticMidi().getChromatic().add( 6 ), ScaleEnum.LYDIAN_b7
+						c4.get( 0 ).getChromatic().getChromatic().add( 6 ), ScaleEnum.LYDIAN_b7
 							);
 					break;
 				case SUBV7_V:
@@ -228,7 +222,7 @@ public class CustomChromaticChord extends Chord<Chromatic, Integer> implements P
 						ChromaticFunction.V7_V, t
 							);
 					t = Tonality.of(
-						c5.get( 0 ).toChromaticMidi().getChromatic().add( 6 ), ScaleEnum.LYDIAN_b7
+						c5.get( 0 ).getChromatic().getChromatic().add( 6 ), ScaleEnum.LYDIAN_b7
 							);
 					break;
 				case SUBV7_VI:
@@ -236,7 +230,7 @@ public class CustomChromaticChord extends Chord<Chromatic, Integer> implements P
 						ChromaticFunction.V7_VI, t
 							);
 					t = Tonality.of(
-						c6.get( 0 ).toChromaticMidi().getChromatic().add( 6 ), ScaleEnum.LYDIAN_b7
+						c6.get( 0 ).getChromatic().getChromatic().add( 6 ), ScaleEnum.LYDIAN_b7
 							);
 					break;
 				case V7ALT:
@@ -244,7 +238,7 @@ public class CustomChromaticChord extends Chord<Chromatic, Integer> implements P
 						DiatonicFunction.V7, t
 							);
 					t = Tonality.of(
-						calt.get( 0 ).toChromaticMidi().getChromatic(), ScaleEnum.SUPERLOCRIAN
+						calt.get( 0 ).getChromatic().getChromatic(), ScaleEnum.SUPERLOCRIAN
 							);
 					break;
 			}
@@ -275,17 +269,14 @@ public class CustomChromaticChord extends Chord<Chromatic, Integer> implements P
 			}
 
 			CustomDiatonicChord dc = new CustomDiatonicChord( f2 );
-			CustomChromaticChord cc = dc.toChromatic( t );
+			PitchChromaticChord<Chromatic> cc = dc.toChromaticChord( t );
 			add( cc );
 		}
-
 	}
 
 	public CustomChromaticChord clone(boolean b) {
-		Chromatic[] a = new Chromatic[size()];
-		a = this.toArray( a );
-
-		CustomChromaticChord ca = new CustomChromaticChord( a );
+		CustomChromaticChord ca = new CustomChromaticChord();
+		ca.add( this );
 		ca.assignMeta( this );
 		return ca;
 	}
@@ -301,15 +292,14 @@ public class CustomChromaticChord extends Chord<Chromatic, Integer> implements P
 
 	public CustomChromaticChord assignMeta(CustomChromaticChord c) {
 		setRoot( c.getRootPos() );
-		this.meta.quality = c.meta.quality;
-		this.meta.str = c.meta.str;
+		this.meta = new ChromaticChordMeta( c.meta.quality, c.meta.str );
 		this.meta.updated = c.meta.updated;
 
 		return this;
 	}
 
 	@Override
-	public Boolean updateWhatIsIt(BiFunction<List<CustomChromaticChord>, PitchChord<?, ?>, CustomChromaticChord> fSelectChord) {
+	public Boolean updateWhatIsIt(BiFunction<List<CustomChromaticChord>, ChordInterface<?>, CustomChromaticChord> fSelectChord) {
 		ArrayWrapperInteger a = new ArrayWrapperInteger( this.toIntegerChromatics() );
 		assert CustomChromaticChord.sameOrderChromatics != null;
 		List<CustomChromaticChord> foundChords = CustomChromaticChord.sameOrderChromatics.get( a );
@@ -338,13 +328,14 @@ public class CustomChromaticChord extends Chord<Chromatic, Integer> implements P
 
 	public Boolean updateWhatIsIt() {
 		return updateWhatIsIt(
-			(List<CustomChromaticChord> chords, PitchChord<?, ?> self) -> {
+			(List<CustomChromaticChord> chords, ChordInterface<?> self) -> {
 				return chords.get( 0 );
 			}
 				);
 	}
 
 	public Boolean updateWhatIsItIfNeeded() {
+		assert meta != null;
 		if ( !meta.updated )
 			return updateWhatIsIt();
 
@@ -363,6 +354,8 @@ public class CustomChromaticChord extends Chord<Chromatic, Integer> implements P
 		if ( size() == 0 )
 			return ChordNotation.EMPTY_CHORD;
 
+		if (true)
+			return notesToString();
 		updateWhatIsItIfNeeded();
 
 		//assert meta.str != null : "meta.str es null: " + notesToString();
@@ -371,68 +364,68 @@ public class CustomChromaticChord extends Chord<Chromatic, Integer> implements P
 	}
 
 	public void autoName() {
-		Integer[] array = this.integerNotationFromRoot();
+		List<Integer> array = this.integerNotationFromRoot();
 
 		meta.str = "";
-		if ( array.length >= 3 )
-			if ( array[1] == IntervalChromatic.DIMINISHED_THIRD.val()
-			&& array[2] == IntervalChromatic.DIMINISHED_FIFTH.val() )
+		if ( array.size() >= 3 )
+			if (array.get(1) == IntervalChromatic.DIMINISHED_THIRD.val()
+			&&array.get(2) == IntervalChromatic.DIMINISHED_FIFTH.val() )
 				meta.str += ChordNotation.DIMINISHED;
-			else if ( array[1] == IntervalChromatic.DIMINISHED_THIRD.val()
-					&& array[2] == IntervalChromatic.PERFECT_FIFTH.val() )
+			else if (array.get(1) == IntervalChromatic.DIMINISHED_THIRD.val()
+					&&array.get(2) == IntervalChromatic.PERFECT_FIFTH.val() )
 				meta.str += ChordNotation.MINOR;
 			else {
-				if ( array[1] == IntervalChromatic.MINOR_SECOND.val() )
+				if (array.get(1) == IntervalChromatic.MINOR_SECOND.val() )
 					meta.str += ChordNotation.SUSb2;
-				else if ( array[1] == IntervalChromatic.MAJOR_SECOND.val() )
+				else if (array.get(1) == IntervalChromatic.MAJOR_SECOND.val() )
 					meta.str += ChordNotation.SUS2;
 
-				if ( array[1] == IntervalChromatic.DIMINISHED_FOURTH.val() )
+				if (array.get(1) == IntervalChromatic.DIMINISHED_FOURTH.val() )
 					meta.str += ChordNotation.SUSb4;
-				else if ( array[1] == IntervalChromatic.AUGMENTED_FOURTH.val() )
+				else if (array.get(1) == IntervalChromatic.AUGMENTED_FOURTH.val() )
 					meta.str += ChordNotation.SUSa4;
 
-				if ( array[1] == IntervalChromatic.DIMINISHED_FIFTH.val() )
+				if (array.get(1) == IntervalChromatic.DIMINISHED_FIFTH.val() )
 					meta.str += ChordNotation.b5;
 			}
 
-		if ( array.length >= 4 )
-			if ( array[3] == IntervalChromatic.MINOR_SEVENTH.val() )
+		if ( array.size() >= 4 )
+			if (array.get(3) == IntervalChromatic.MINOR_SEVENTH.val() )
 				meta.str += ChordNotation.SEVENTH;
-			else if ( array[3] == IntervalChromatic.MAJOR_SEVENTH.val() )
+			else if (array.get(3) == IntervalChromatic.MAJOR_SEVENTH.val() )
 				meta.str += ChordNotation.MAJOR2 + ChordNotation.SEVENTH;
-			else if ( array[3] == IntervalChromatic.DIMINISHED_SEVENTH.val() )
+			else if (array.get(3) == IntervalChromatic.DIMINISHED_SEVENTH.val() )
 				meta.str += ChordNotation.DIMINISHED2 + ChordNotation.SEVENTH;
 
-		if ( array.length >= 5 )
-			if ( array[4] == IntervalChromatic.MAJOR_NINTH.val() )
+		if ( array.size() >= 5 )
+			if ( array.get(4) == IntervalChromatic.MAJOR_NINTH.val() )
 				meta.str += ChordNotation.NINTH;
-			else if ( array[4] == IntervalChromatic.AUGMENTED_NINTH.val() )
+			else if ( array.get(4) == IntervalChromatic.AUGMENTED_NINTH.val() )
 				meta.str += ChordNotation.MAJOR2 + ChordNotation.NINTH;
-			else if ( array[4] == IntervalChromatic.MINOR_NINTH.val() )
+			else if ( array.get(4) == IntervalChromatic.MINOR_NINTH.val() )
 				meta.str += ChordNotation.DIMINISHED2 + ChordNotation.NINTH;
 
-		if ( array.length >= 6 )
-			if ( array[5] == IntervalChromatic.PERFECT_ELEVENTH.val() )
+		if ( array.size() >= 6 )
+			if ( array.get(5) == IntervalChromatic.PERFECT_ELEVENTH.val() )
 				meta.str += ChordNotation.ELEVENTH;
-			else if ( array[5] == IntervalChromatic.AUGMENTED_ELEVENTH.val() )
+			else if ( array.get(5) == IntervalChromatic.AUGMENTED_ELEVENTH.val() )
 				meta.str += ChordNotation.MAJOR2 + ChordNotation.ELEVENTH;
-			else if ( array[5] == IntervalChromatic.DIMINISHED_ELEVENTH.val() )
+			else if ( array.get(5) == IntervalChromatic.DIMINISHED_ELEVENTH.val() )
 				meta.str += ChordNotation.DIMINISHED2 + ChordNotation.ELEVENTH;
 
-		if ( array.length >= 7 )
-			if ( array[5] == IntervalChromatic.MINOR_THIRTEENTH.val() )
+		if ( array.size() >= 7 )
+			if ( array.get(5) == IntervalChromatic.MINOR_THIRTEENTH.val() )
 				meta.str += ChordNotation.THIRTEEN;
-			else if ( array[5] == IntervalChromatic.MAJOR_THIRTEENTH.val() )
+			else if ( array.get(5) == IntervalChromatic.MAJOR_THIRTEENTH.val() )
 				meta.str += ChordNotation.MAJOR2 + ChordNotation.THIRTEEN;
-			else if ( array[5] == IntervalChromatic.DIMINISHED_THIRTEENTH.val() )
+			else if ( array.get(5) == IntervalChromatic.DIMINISHED_THIRTEENTH.val() )
 				meta.str += ChordNotation.DIMINISHED2 + ChordNotation.THIRTEEN;
 
 		if ( meta.str.equals( "" ) )
 			meta.str = null;
 	}
 
-	public <A extends Chord<Chromatic, ?>> boolean hasSameNotesOrder(A notes) {
+	public <A extends Chord<Chromatic>> boolean hasSameNotesOrder(A notes) {
 		if ( size() != notes.size() || size() == 0 )
 			return false;
 
@@ -467,34 +460,16 @@ public class CustomChromaticChord extends Chord<Chromatic, Integer> implements P
 
 		int i = 0;
 		CustomChromaticChord[] ret = new CustomChromaticChord[t.length()];
-		for ( Tonality t2 : ts )
-			ret[i++] = new CustomChromaticChord( t2.get( fCasted ) );
+		for ( Tonality t2 : ts ) {
+			CustomChromaticChord c = new CustomChromaticChord( );
+			c.add( t2.get( fCasted ) );
+			ret[i++] = c;
+		}
 
 		return ret;
 	}
 
-	@Override
-	public CustomChromaticChord newArray() {
-		return new CustomChromaticChord();
-	}
-
-	@Override
-	public float getPitchMean() {
-		int sum = 0, oct = 0;
-		Chromatic last = null;
-		for ( Chromatic c : this ) {
-			if ( last != null && c.val() <= last.val() )
-				oct++;
-			sum += oct * ChromaticMidi.NOTES_PER_OCTAVE + c.val();
-		}
-		return ( (float) sum ) / size();
-	}
-
-	@Override
-	public DiatonicChordMidi toDiatonicChordMidi(Tonality ton) throws TonalityException {
-		return this.toMidi().toDiatonicChordMidi( ton );
-	}
-
+	/*
 	@Override
 	public boolean isSus4() {
 		return this.equalsEnharmonicInvArray( ChromaticChordEnum.CHORDS_SUS4 )
@@ -507,16 +482,10 @@ public class CustomChromaticChord extends Chord<Chromatic, Integer> implements P
 			ChromaticChordEnum.CHORDS_SUSb2
 				) || this.equalsEnharmonicInvArray( ChromaticChordEnum.CHORDS_SUSb2b5 );
 	}
-
-	@Override
-	public void removeHigherDuplicates() {
-		// TODO Auto-generated method stub
-
-	}
-
+	 */
 	public ChromaticChordMidi toMidi(int octave, int length, int velocity) {
 		resetRootIfNeeded();
-		ChromaticChordMidi ccm = new ChromaticChordMidi(this, octave, length, velocity);
+		ChromaticChordMidi ccm = ChromaticChordMidi.of(this, octave, length, velocity);
 
 		return ccm;
 	}
@@ -573,27 +542,94 @@ public class CustomChromaticChord extends Chord<Chromatic, Integer> implements P
 	}
 
 	@Override
-	public CustomChromaticChord getChromatic() {
-		return this;
-	}
-
-	@Override
 	public CustomChromaticChord setRoot(int n) {
 		return (CustomChromaticChord)super.setRoot( n );
 	}
 
 	@Override
-	public CustomChromaticChord inv() {
-		return super.inv();
-	}
-
-	@Override
 	public CustomChromaticChord inv(int n) {
-		return super.inv(n);
+		return (CustomChromaticChord)super.inv(n);
 	}
 
 	@Override
 	public CustomChromaticChord resetRoot() {
 		return super.resetRoot();
+	}
+
+	public String javaNotes() {
+		StringBuilder sb = new StringBuilder();
+		if (this instanceof CustomChromaticChord)
+			sb.append( "new ChromaticChord(" );
+		boolean first = true;
+		for ( Chromatic n : this ) {
+			if ( first ) {
+				first = false;
+			} else
+				sb.append( ", " );
+			if (this instanceof CustomChromaticChord)
+				sb.append( "Chromatic." + n );
+		}
+		sb.append( " );" );
+
+		return sb.toString();
+	}
+
+	@Override
+	public int getInversionNumber() {
+		// TODO Auto-generated method stub
+		return -1;
+	}
+
+	@Override
+	public boolean isSus4() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isSus2() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public static <T extends PitchChromaticSingle> CustomChromaticChord copyOf(Iterable<T> chord) {
+		CustomChromaticChord c = new CustomChromaticChord();
+		c.add( chord );
+		return c;
+	}
+
+	public static <T extends PitchChromaticSingle> CustomChromaticChord copyOf(T... cc) {
+		CustomChromaticChord c = new CustomChromaticChord();
+		c.add( cc );
+		return c;
+	}
+
+	@Override
+	public <T extends ChordInterface<Chromatic>> T removeHigherDuplicates() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean hasSameNotes(PitchChromaticChord<Chromatic> chord) {
+		EnumSet<Chromatic> e = EnumSet.noneOf( Chromatic.class );
+		for (Chromatic c : this)
+			e.add( c );
+		
+		EnumSet<Chromatic> ee = EnumSet.noneOf( Chromatic.class );
+		for (Chromatic c :chord)
+			ee.add( c );
+		
+		return e.equals( ee );
+	}
+
+	@Override
+	public List integerNotationFromRoot() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static CustomChromaticChord noneOf() {
+		return new CustomChromaticChord();
 	}
 }

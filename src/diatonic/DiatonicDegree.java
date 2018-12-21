@@ -3,12 +3,12 @@ package diatonic;
 /**
  * Grado
  */
-public enum Degree {
+public enum DiatonicDegree {
 	I(0), II(1), III(2), IV(3), V(4), VI(5), VII(6);
 
 	private int value;
 
-	private Degree(int v) {
+	private DiatonicDegree(int v) {
 		value = v;
 	}
 
@@ -27,7 +27,7 @@ public enum Degree {
 	 * @param n the added degrees
 	 * @return the new degree
 	 */
-	public Degree add(int n) {
+	public DiatonicDegree add(int n) {
 		return get( value + n );
 	}
 
@@ -37,7 +37,7 @@ public enum Degree {
 	 * @param id the id
 	 * @return the degree
 	 */
-	public Degree add(IntervalDiatonic id) {
+	public DiatonicDegree add(IntervalDiatonic id) {
 		return add( id.val() );
 	}
 
@@ -47,7 +47,7 @@ public enum Degree {
 	 * @param n the n
 	 * @return the degree
 	 */
-	public static Degree get(int n) {
+	public static DiatonicDegree get(int n) {
 		n = n % IntervalDiatonic.OCTAVE.val();
 		if ( n < 0 )
 			n += IntervalDiatonic.OCTAVE.val();

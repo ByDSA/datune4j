@@ -5,84 +5,82 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.function.BiFunction;
 
-import chromaticchord.CustomChromaticChord;
 import midi.AddedException;
 import midi.PitchMidiException;
+import musical.CustomChromaticChord;
 
-public abstract class Chord<N extends PitchSingle, DistType> implements PitchChordMutable<N, DistType> {
-	protected N root;
-	protected List<N> notes = new ArrayList();
-
-	public Chord() {
+public abstract class Chord<N extends PitchSingle> extends ArrayList<N> implements ChordMutableInterface<N> {
+	protected int root = -1;
+/*
+	public Chord(N... cs) {
+		for (N n : cs)
+			super.add( n );
+		resetRoot();
 	}
 
-	public Chord(N... cs) throws AddedException {
-		add( cs );
-	}
-
-	public Chord(Chord<N, DistType> cs) throws AddedException {
-		add( cs );
-	}
+	public <C extends Chord<N>> Chord(C cs) {
+		addAll( cs );
+		resetRoot();
+	}*/
 
 	@Override
-	public boolean add(N note) throws AddedException {
+	public boolean add(N note) {
 		assert note != null;
-		notes.add( note );
+		super.add( note );
 		resetRootIfNeeded();
 		return true;
 	}
 
-	protected boolean addList(N note) throws AddedException {
-		assert note != null;
-		return notes.add( note );
-	}
-
 	@Override
-	public boolean add(N... cs) throws AddedException {
+	public <T extends ChordInterface<N>> T add(N... cs) {
 		if ( cs.length == 0 )
-			return false;
+			return (T)this;
 
-		for ( N c : cs )
-			addList( c );
+		for ( PitchSingle c : cs )
+			super.add( (N)c );
 
 		resetRootIfNeeded();
 
-		return true;
+		return (T)this;
 	}
-	
+
 	@Override
-	public <T extends PitchChord<N, DistType>> boolean add(T cs) throws AddedException {
+	public <T extends ChordInterface<N>> T add(ChordInterface<N> cs) {
 		if ( cs.size() == 0 )
-			return false;
+			return (T)this;
 
 		for ( N c : cs )
-			addList( c );
+			super.add( c );
 
 		resetRootIfNeeded();
 
-		return true;
+		return (T)this;
 	}
 
 	@Override
 	public void add(int n, N note) throws AddedException {
-		notes.add( n, note );
+		super.add( n, note );
 		resetRootIfNeeded();
 	}
 
 	@Override
-	public void add(int pos, N... ns) throws AddedException {
+	public <T extends ChordInterface<N>> T add(int pos, N... ns) {
 		if ( ns.length == 0 )
-			return;
+			return (T)this;
 
-		for ( N n : ns )
-			notes.add( pos++, n );
+		for ( PitchSingle n : ns )
+			super.add( pos++,(N) n );
 		resetRootIfNeeded();
+
+		return (T)this;
 	}
 
 	@Override
 	public N remove(int n) {
-		N r = notes.remove( n );
+		N root = getRoot();
+		N r = super.remove( n );
 		if ( r == root )
 			resetRoot();
 
@@ -90,7 +88,7 @@ public abstract class Chord<N extends PitchSingle, DistType> implements PitchCho
 	}
 
 	@Override
-	public <T extends PitchChord<N, DistType>> List<T> getAllInversions() {
+	public <T extends ChordInterface<N>> List<T> getAllInversions() {
 		List<T> ret = new ArrayList<>();
 
 		ret.add( (T) this.clone() );
@@ -109,31 +107,30 @@ public abstract class Chord<N extends PitchSingle, DistType> implements PitchCho
 	}
 
 	protected void resetRootIfNeeded() {
-		if ( root == null || indexOf( root ) == -1 ) {
+		if ( root == -1 || root >= size() ) {
 			resetRoot();
 		}
 	}
 
 	@Override
 	public Chord setRoot(int n) {
-		assert n < size();
+		if ( n >= size())
+			throw new ArrayIndexOutOfBoundsException();
 
-		root = get( n );
+		root = n;
 
 		return this;
 	}
 
 	@Override
 	public N getRoot() {
-		return root;
+		return get(root);
 	}
 
 	@Override
 	public int getRootPos() {
 		resetRootIfNeeded();
-		int pos = this.indexOf( root );
-		assert pos != -1;
-		return pos;
+		return root;
 	}
 
 	@Override
@@ -150,162 +147,41 @@ public abstract class Chord<N extends PitchSingle, DistType> implements PitchCho
 				return false;
 		}
 
-		return root.equals( c.root );
+		return getRoot().equals( c.getRoot() );
 	}
-	
+
 	@Override
-    public Chord<N, DistType> clone() {
-        try {
-			return (Chord) super.clone();
-		} catch ( CloneNotSupportedException e ) {
-			e.printStackTrace();
-			return null;
-		}
-    }
-	
-	
+	public Chord<N> clone() {
+		return (Chord) super.clone();
+	}
+
 	/** Show */
 	public String toString() {
 		return notesToString();
 	}
 
-	public String notesToString() {
-		StringBuilder sb = new StringBuilder();
-		boolean first = true;
-		for ( N n : this ) {
-			if ( first ) {
-				first = false;
-			} else
-				sb.append( ", " );
-			sb.append( n );
-		}
-
-		return sb.toString();
-	}
-
+	//TODO: quitar
 	public String javaNotes() {
 		StringBuilder sb = new StringBuilder();
-		if (this instanceof CustomChromaticChord)
-			sb.append( "new ChromaticChord(" );
 		boolean first = true;
 		for ( N n : this ) {
 			if ( first ) {
 				first = false;
 			} else
 				sb.append( ", " );
-			if (this instanceof CustomChromaticChord)
-				sb.append( "Chromatic." + n );
 		}
 		sb.append( " );" );
 
 		return sb.toString();
 	}
 
+	// TODO: quitar
 	public final void showNotes() {
 		System.out.println( this.notesToString() );
 	}
 
+	// TODO: quitar
 	public final void show() {
 		System.out.println( this );
-	}
-
-	@Override
-	public boolean addAll(Collection<? extends N> c) {
-		return notes.addAll( c );
-	}
-
-	@Override
-	public boolean addAll(int index, Collection<? extends N> c) {
-		return notes.addAll( index, c );
-	}
-
-	@Override
-	public void clear() {
-		notes.clear();
-	}
-
-	@Override
-	public boolean contains(Object o) {
-		return notes.contains( o );
-	}
-
-	@Override
-	public boolean containsAll(Collection<?> c) {
-		return notes.containsAll( c );
-	}
-
-	@Override
-	public N get(int index) {
-		return notes.get( index );
-	}
-
-	@Override
-	public int indexOf(Object o) {
-		return notes.indexOf( o );
-	}
-
-	@Override
-	public boolean isEmpty() {
-		return notes.isEmpty();
-	}
-
-	@Override
-	public Iterator<N> iterator() {
-		return notes.iterator();
-	}
-
-	@Override
-	public int lastIndexOf(Object o) {
-		return notes.lastIndexOf( o );
-	}
-
-	@Override
-	public ListIterator<N> listIterator() {
-		return notes.listIterator();
-	}
-
-	@Override
-	public ListIterator<N> listIterator(int index) {
-		return notes.listIterator( index );
-	}
-
-	@Override
-	public boolean remove(Object o) {
-		return notes.remove( o );
-	}
-
-	@Override
-	public boolean removeAll(Collection<?> c) {
-		return notes.removeAll( c );
-	}
-
-	@Override
-	public boolean retainAll(Collection<?> c) {
-		return notes.retainAll( c );
-	}
-
-	@Override
-	public N set(int index, N element) {
-		return notes.set( index, element );
-	}
-
-	@Override
-	public int size() {
-		return notes.size();
-	}
-
-	@Override
-	public List<N> subList(int fromIndex, int toIndex) {
-		return notes.subList( fromIndex, toIndex );
-	}
-
-	@Override
-	public Object[] toArray() {
-		return notes.toArray();
-	}
-
-	@Override
-	public <T> T[] toArray(T[] a) {
-		return notes.toArray( a );
 	}
 }

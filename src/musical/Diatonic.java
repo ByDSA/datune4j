@@ -1,17 +1,17 @@
-package pitch;
+package musical;
 
-import diatonic.Degree;
+import diatonic.DiatonicDegree;
 import diatonic.IntervalDiatonic;
+import pitch.PitchDiatonicSingle;
 import tonality.Tonality;
 
-public enum Diatonic
-		implements PitchDiatonicSingle<Diatonic>, PitchMidiableSingle<DiatonicMidi> {
+public enum Diatonic implements PitchDiatonicSingle {
 	I(0), II(1), III(2), IV(3), V(4), VI(5), VII(6);
 
 	private final int value;
 
 	private Diatonic(int value) {
-		this.value = ( value + 12 ) % 12;
+		this.value = ( value + 7 ) % 7;
 	}
 
 	public int val() {
@@ -47,7 +47,7 @@ public enum Diatonic
 		return null;
 	}
 
-	public static Diatonic get(Degree d) {
+	public static Diatonic get(DiatonicDegree d) {
 		return get( d.val() );
 	}
 
@@ -122,8 +122,8 @@ public enum Diatonic
 	}
 
 	@Override
-	public Degree getDegree() {
-		return Degree.get( value );
+	public DiatonicDegree getDegree() {
+		return DiatonicDegree.get( value );
 	}
 
 	public IntervalDiatonic dist(Diatonic n2) {
@@ -305,10 +305,8 @@ public enum Diatonic
 			"No se pudo convertir de nota diatónica (" + this + ", " + cn + ") a cromática."
 		);
 	}
-
-	@Override
-	public DiatonicMidi toMidi(Tonality t, int octave, int length, int velocity) {
-		DiatonicMidi dm = new DiatonicMidi( getDegree(), t, octave, length, velocity );
-		return dm;
+	
+	public static int notesPerOctave() {
+		return 7;
 	}
 }

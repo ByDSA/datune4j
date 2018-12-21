@@ -2,38 +2,40 @@ package pitch;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 import arrays.ArrayUtils;
-import chromaticchord.CustomChromaticChord;
 import diatonic.ChordNotation;
 import diatonic.ChromaticFunction;
-import diatonic.Degree;
+import diatonic.DiatonicDegree;
 import diatonic.DiatonicFunction;
 import diatonic.HarmonicFunction;
 import diatonic.IntervalChromatic;
 import diatonic.IntervalDiatonic;
+import diatonic.Quality;
 import midi.AddedException;
 import midi.Settings;
+import midi.Settings.DefaultValues;
+import musical.Chromatic;
+import musical.CustomChromaticChord;
+import musical.CustomDiatonicChord;
+import musical.CustomChromaticChord.ImpossibleChord;
 import tonality.CustomTonality;
 import tonality.ScaleEnum;
 import tonality.Tonality;
 import tonality.TonalityException;
 
-public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalChromatic>
-implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
+public class DiatonicChordMidi extends ChordMidi<DiatonicMidi>
+implements PitchDiatonic {
 	protected HarmonicFunction	function	= null;
 	public Tonality				metaTonality;
 
 	protected Tonality tonality;
 
-	public DiatonicChordMidi() {
+	protected DiatonicChordMidi() {
 	}
 
 	public DiatonicChordMidi(Tonality t) {
@@ -48,7 +50,7 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 
 		add( ns );
 	}
-
+/*
 	public DiatonicChordMidi(Tonality t, CustomDiatonicChord ns) {
 		this( t );
 		add( ns.toMidi( t ) );
@@ -65,8 +67,8 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 	public DiatonicChordMidi(Tonality t, Diatonic... ns) {
 		this( t, new CustomDiatonicChord( ns ) );
 	}
-
-	public <N extends PitchChromaticableSingle, Array extends PitchChromaticableChord<N, ?>> DiatonicChordMidi(Array ns, Tonality t) {
+*/
+	public <N extends PitchChromaticSingle, Array extends PitchChromaticChord<N>> DiatonicChordMidi(Array ns, Tonality t) {
 		this(
 			ns,
 			t,
@@ -74,7 +76,7 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 				);
 	}
 
-	public <N extends PitchChromaticableSingle, Array extends PitchChromaticableChord<N, ?>> DiatonicChordMidi(Array ns, Tonality t, int o) {
+	public <N extends PitchChromaticSingle, Array extends PitchChromaticChord<N>> DiatonicChordMidi(Array ns, Tonality t, int o) {
 		this(
 			ns,
 			t,
@@ -84,18 +86,16 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 				);
 	}
 
-	public <N extends PitchChromaticableSingle, Array extends PitchChromaticableChord<N, ?>> DiatonicChordMidi(Array ns, Tonality t, int o, int d, int v) {
+	public <N extends PitchChromaticSingle, Array extends PitchChromaticChord<N>> DiatonicChordMidi(Array ns, Tonality t, int o, int d, int v) {
 		for ( N n : ns ) {
-			DiatonicMidi cm = new DiatonicMidi( t.getDegree( n ), t, o, d, v );
+			DiatonicMidi cm = DiatonicMidi.of( t.getDegree( n ), t, o, d, v );
 			if ( size() > 0 && cm.getChromatic().val() <= get( size() - 1 ).getChromatic().val() ) {
 				o++;
 				cm.shiftOctave( 1 );
 			}
 
-			addList( cm );
+			add( cm );
 		}
-
-		resetRoot();
 	}
 
 	public DiatonicChordMidi(HarmonicFunction t, Tonality s) {
@@ -242,7 +242,7 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 
 	public boolean isSubdominant() {
 		for ( DiatonicMidi n : this )
-			if ( n.getDegree() == Degree.IV )
+			if ( n.getDegree() == DiatonicDegree.IV )
 				return true;
 		return false;
 	}
@@ -252,7 +252,7 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 		return function == DiatonicFunction.V || function == DiatonicFunction.VII;
 	}
 
-	public <N extends PitchChromaticableSingle, Array extends PitchChromaticableChord<N, ?>> DiatonicChordMidi(Tonality ton, Array ns) {
+	public <N extends PitchChromaticSingle, Array extends PitchChromaticChord<N>> DiatonicChordMidi(Tonality ton, Array ns) {
 		tonality = ton;
 		metaTonality = ton;
 
@@ -260,7 +260,7 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 			meta = ( (ChordMidi) ns ).meta;
 
 		try {
-			ChromaticChordMidi n = new ChromaticChordMidi( ns );
+			ChromaticChordMidi n = ChromaticChordMidi.copyOf( ns );
 			add( n );
 		} catch ( TonalityException e ) {
 			clear();
@@ -274,7 +274,7 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 				}
 			assert c != null : "Acorde " + ns + " no reconocido en tonalidad " + tonality + ": "
 					+ ns.notesToString() + " "
-					+ Arrays.toString( ns.integerNotationFromRoot() );
+					+ Arrays.toString( ns.integerNotationFromRoot().toArray() );
 
 			function = ton.getFunction( c );
 			if ( function == null ) {
@@ -292,7 +292,7 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 		Chord c = ( (Chord) ns );
 		setRoot( c.getRootPos() );
 
-		root = get( ns.getRootPos() );
+		root = ns.getRootPos();
 
 		if ( ns instanceof ChordMidi ) {
 			arpegio = ( (ChordMidi) ns ).arpegio;
@@ -302,12 +302,12 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 		setArpegioIfNull();
 	}
 
-	public Degree getDegree() {
-		Degree d = null;
+	public DiatonicDegree getDegree() {
+		DiatonicDegree d = null;
 		if ( function instanceof ChromaticFunction )
 			d = ( (ChromaticFunction) function ).getDegree();
 		if ( d == null ) {
-			Chromatic c = root.getChromatic();
+			Chromatic c = getRoot().getChromatic();
 			d = metaTonality.getDegree( c );
 		}
 		return d;
@@ -355,20 +355,19 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 
 			add( cc.toMidi() );
 		} else if ( ArrayUtils.contained( t, ChromaticFunction.POWER_CHORDS ) ) {
-			Degree d = t.getDegree();
+			DiatonicDegree d = t.getDegree();
 
 			IntervalChromatic ic = tonality.getInterval( d, IntervalDiatonic.FIFTH );
 
 			if ( !ic.equals( IntervalChromatic.PERFECT_FIFTH ) ) {
 				tonality = Tonality.of( tonality.get( d ), ScaleEnum.MAJOR );
-				d = Degree.I;
+				d = DiatonicDegree.I;
 			}
 
 			ChromaticMidi n = tonality.get( d ).toMidi( octave );
-			addNoReset( n );
-			ChromaticMidi n2 = ChromaticMidi
-					.add( n.clone(), IntervalChromatic.PERFECT_FIFTH.val() );
-			assert !n.equalsEnharmonic( n2 ) : n2;
+			add( n );
+			ChromaticMidi n2 = n.clone().shift( IntervalChromatic.PERFECT_FIFTH );
+			//assert !n.equalsEnharmonic( n2 ) : n2;
 			add( n2 );
 		} else if ( ArrayUtils.contained( t, ChromaticFunction.TENSIONS ) ) {
 			DiatonicMidi n = null;
@@ -456,7 +455,7 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 				case SUBV7:
 					DiatonicChordMidi c = new DiatonicChordMidi( DiatonicFunction.V7, tonality );
 					tonality = Tonality.of(
-						c.get( 0 ).toChromaticMidi().getChromatic().add( 6 ), ScaleEnum.LYDIAN_b7
+						c.get( 0 ).getChromatic().getChromatic().add( 6 ), ScaleEnum.LYDIAN_b7
 							);
 					break;
 				case SUBV7_II:
@@ -464,7 +463,7 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 						ChromaticFunction.V7_II, tonality
 							);
 					tonality = Tonality.of(
-						c2.get( 0 ).toChromaticMidi().getChromatic().add( 6 ), ScaleEnum.LYDIAN_b7
+						c2.get( 0 ).getChromatic().getChromatic().add( 6 ), ScaleEnum.LYDIAN_b7
 							);
 					break;
 				case SUBV7_III:
@@ -472,7 +471,7 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 						ChromaticFunction.V7_III, tonality
 							);
 					tonality = Tonality.of(
-						c3.get( 0 ).toChromaticMidi().getChromatic().add( 6 ), ScaleEnum.LYDIAN_b7
+						c3.get( 0 ).getChromatic().getChromatic().add( 6 ), ScaleEnum.LYDIAN_b7
 							);
 					break;
 				case SUBV7_IV:
@@ -480,7 +479,7 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 						ChromaticFunction.V7_IV, tonality
 							);
 					tonality = Tonality.of(
-						c4.get( 0 ).toChromaticMidi().getChromatic().add( 6 ), ScaleEnum.LYDIAN_b7
+						c4.get( 0 ).getChromatic().getChromatic().add( 6 ), ScaleEnum.LYDIAN_b7
 							);
 					break;
 				case SUBV7_V:
@@ -488,7 +487,7 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 						ChromaticFunction.V7_V, tonality
 							);
 					tonality = Tonality.of(
-						c5.get( 0 ).toChromaticMidi().getChromatic().add( 6 ), ScaleEnum.LYDIAN_b7
+						c5.get( 0 ).getChromatic().getChromatic().add( 6 ), ScaleEnum.LYDIAN_b7
 							);
 					break;
 				case SUBV7_VI:
@@ -496,7 +495,7 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 						ChromaticFunction.V7_VI, tonality
 							);
 					tonality = Tonality.of(
-						c6.get( 0 ).toChromaticMidi().getChromatic().add( 6 ), ScaleEnum.LYDIAN_b7
+						c6.get( 0 ).getChromatic().getChromatic().add( 6 ), ScaleEnum.LYDIAN_b7
 							);
 					break;
 				case V7ALT:
@@ -504,7 +503,7 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 						DiatonicFunction.V7, tonality
 							);
 					tonality = Tonality.of(
-						calt.get( 0 ).toChromaticMidi().getChromatic(), ScaleEnum.SUPERLOCRIAN
+						calt.get( 0 ).getChromatic().getChromatic(), ScaleEnum.SUPERLOCRIAN
 							);
 					break;
 			}
@@ -542,7 +541,7 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 			}
 		} else {
 			CustomChromaticChord cc = new CustomChromaticChord( t, tonality );
-			ChromaticChordMidi ccm = new ChromaticChordMidi( cc );
+			ChromaticChordMidi ccm = ChromaticChordMidi.copyOf( cc );
 			if ( tonality.has( cc ) )
 				add( ccm );
 			else {
@@ -563,15 +562,13 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 		CustomDiatonicChord dt = new CustomDiatonicChord( t );
 
 		add( dt, octave );
-		root = get( 0 );
+		root = 0;
 
 		sort();
 	}
 
 	public void add(CustomDiatonicChord dt, int octave) {
-		add( dt.toMidi( tonality ) );
-		if ( octave != Settings.DefaultValues.OCTAVE )
-			setOctave( octave );
+		add( dt.getDiatonicMidi( tonality, octave ) );
 	}
 
 	public Boolean isOmitByInterval(IntervalDiatonic i) {
@@ -857,38 +854,20 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 
 	public boolean add(ChromaticMidi... ns) throws AddedException, TonalityException {
 		assert tonality != null;
+		assert ns != null;
 		for ( ChromaticMidi n : ns )
-			addList( n.toDiatonicChordMidi( tonality ) );
-
-		resetRootIfNeeded();
+			add( n.getDiatonicMidi( tonality ) );
 
 		return true;
 	}
 
-	protected boolean addNoReset(ChromaticMidi note) throws AddedException {
-		assert tonality != null;
-		return super.addList( note.toDiatonicChordMidi( tonality ) );
-	}
-
-	@Override
-	public boolean add(DiatonicMidi... ns) throws AddedException, TonalityException {
-		for ( DiatonicMidi n : ns )
-			addList( n );
-
-		resetRootIfNeeded();
-
-		return true;
-	}
-
-	public DiatonicChordMidi add(PitchChromaticableChord<ChromaticMidi, ?> ns)
+	public DiatonicChordMidi add(PitchChromaticChord<? extends ChromaticMidi> ns)
 			throws AddedException {
 		for ( int i = 0; i < ns.size(); i++ ) {
 			ChromaticMidi n = ns.get( i );
 			assert n != null;
-			addNoReset( n );
+			add( n );
 		}
-
-		resetRootIfNeeded();
 
 		return this;
 	}
@@ -959,8 +938,7 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 		for ( DiatonicMidi n : this )
 			c.add( n.clone() );
 
-		int pos = getRootPos();
-		c.root = get( pos );
+		c.root = getRootPos();
 
 		return c;
 	}
@@ -973,9 +951,9 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 		ArrayList<ChromaticMidi> ret = new ArrayList<ChromaticMidi>();
 
 		for ( DiatonicMidi nscale1 : this ) {
-			ChromaticMidi n1 = nscale1.toChromaticMidi();
+			ChromaticMidi n1 = nscale1;
 			for ( DiatonicMidi nscale2 : c ) {
-				ChromaticMidi n2 = nscale2.toChromaticMidi();
+				ChromaticMidi n2 = nscale2;
 
 				if ( n1.getCode() == n2.getCode() )
 					ret.add( n2 );
@@ -1066,13 +1044,13 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 	}
 
 	public DiatonicChordMidi addInterval(IntervalDiatonic interval) throws AddedException {
-		return add( root.getDegree().add( interval.val() ) );
+		return add( getRoot().getDegree().add( interval.val() ) );
 	}
 
-	public DiatonicChordMidi add(Degree pos) throws AddedException {
+	public DiatonicChordMidi add(DiatonicDegree pos) throws AddedException {
 		Integer octave = getOctave();
-		DiatonicMidi ns = new DiatonicMidi(
-			pos, tonality, octave == null ? Settings.DefaultValues.OCTAVE : octave
+		DiatonicMidi ns = DiatonicMidi.of(
+			pos, tonality, octave == null ? Settings.DefaultValues.OCTAVE : octave, DefaultValues.DURATION_CHORD, DefaultValues.VELOCITY
 				);
 		add( ns );
 		setRoot( 0 );
@@ -1112,10 +1090,10 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 	public ChromaticChordMidi toChromaticChordMidi() {
 		ChromaticChordMidi c = new ChromaticChordMidi();
 		for ( DiatonicMidi n : this )
-			c.add( n.toChromaticMidi() );
+			c.add( n );
 		c.arpegio = arpegio;
 		c.length = length;
-		c.root = c.get( getRootPos() );
+		c.root = getRootPos();
 
 		return c;
 	}
@@ -1156,7 +1134,7 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 	public Integer[] toChromaticArrayValues() {
 		Integer[] out = new Integer[size()];
 		for ( int i = 0; i < size(); i++ ) {
-			out[i] = get( i ).toChromaticMidi().getChromatic().val();
+			out[i] = get( i ).getChromatic().getChromatic().val();
 		}
 
 		return out;
@@ -1180,18 +1158,18 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 	}
 
 	@Override
-	public IntervalChromatic[] integerNotationFromRoot() {
-		IntervalChromatic[] distancesAbsolute = null;
+	public List integerNotationFromRoot() {
+		List<IntervalChromatic> distancesAbsolute = null;
 
 		if ( size() > 0 ) {
 			try {
-				distancesAbsolute = new IntervalChromatic[size() - 1];
+				distancesAbsolute = new ArrayList();
 
 				for ( int i = 1; i < size(); i++ ) {
 					DiatonicMidi n1 = get( 0 );
 					DiatonicMidi n2 = get( i );
-					IntervalChromatic d = n1.dist( n2 );
-					distancesAbsolute[i - 1] = d;
+					IntervalChromatic d = n1.distInterval( n2 );
+					distancesAbsolute.set( i - 1, d );
 				}
 			} catch ( Exception e ) {
 				e.printStackTrace();
@@ -1202,42 +1180,30 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 	}
 
 	@Override
-	public void removeHigherDuplicates() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public DiatonicChordMidi newArray() {
-		return new DiatonicChordMidi();
-	}
-
-	@Override
 	public Boolean updateWhatIsIt() {
 		return updateWhatIsIt(
-			(List<CustomChromaticChord> chords, PitchChord<?, ?> self) -> {
+			(List<CustomChromaticChord> chords, ChordInterface<?> self) -> {
 				updateFunctionIfNull();
-				CustomChromaticChord ret = null;
+				CustomChromaticChord ret = CustomChromaticChord.noneOf();
 				if ( function instanceof DiatonicFunction )
-					ret = new CustomChromaticChord( tonality.get( (DiatonicFunction) function ) );
+					ret.add( tonality.get( (DiatonicFunction) function ) );
 				else
-					ret = new CustomChromaticChord( tonality.get( (ChromaticFunction) function ) );
+					ret.add( tonality.get( (ChromaticFunction) function ) );
 
 				assert this.size() == ret.size();
 
 				if ( getRootPos() != 0 )
 					ret = ret.clone( true ).inv( ret.size() - getRootPos() );
 
-				assert ret.meta.str != null : " " + ( function instanceof DiatonicFunction );
+				//assert ret.meta.str != null : " " + ( function instanceof DiatonicFunction );
 
 				return ret;
 			}
 				);
 	}
 
-	@Override
-	public IntervalChromatic dist(DiatonicChordMidi n) {
-		int d = Math.round( n.getPitchMean() - getPitchMean() );
+	public IntervalChromatic distInterval(DiatonicChordMidi n) {
+		int d = (int) Math.round( n.getPitchMean() - getPitchMean() );
 
 		int dDia = n.getDegree().val() - getDegree().val();
 		IntervalDiatonic id = IntervalDiatonic.of( dDia );
@@ -1265,26 +1231,58 @@ implements PitchDiatonic<DiatonicChordMidi, IntervalChromatic> {
 		return this.toChromaticChord().isSus2();
 	}
 
-	@Override
-	public ChromaticChordMidi getChromatic() {
+	public ChromaticChordMidi getChromaticChordMidi() {
 		return this.toChromaticChordMidi();
 	}
 
 	@Override
 	public int getInversionNumber() {
 		// TODO Auto-generated method stub
-		return 0;
+		return -1;
 	}
 
 	@Override
-	public <T extends PitchChord<? extends DiatonicMidi, ? extends IntervalChromatic>> T inv() {
+	public Quality getQuality() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public <T extends PitchChord<? extends DiatonicMidi, ? extends IntervalChromatic>> T resetRoot() {
+	public <T extends PitchChromaticChord> T over(Chromatic c) throws ImpossibleChord {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public <T extends ChordInterface<DiatonicMidi>> T resetRoot() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public DiatonicChordMidi setLength(int d) {
+		return (DiatonicChordMidi)super.setLength( d );
+	}
+	
+	@Override
+	public DiatonicChordMidi inv(int o) {
+		return (DiatonicChordMidi)super.inv( o );
+	}
+
+	@Override
+	public <T extends ChordInterface<DiatonicMidi>> T removeHigherDuplicates() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected DiatonicChordMidi newChord() {
+		return new DiatonicChordMidi();
+	}
+
+	@Override
+	public boolean hasSameNotes(PitchChromaticChord<DiatonicMidi> chord) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

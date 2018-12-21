@@ -1,13 +1,12 @@
 package midi.Events;
 
-import midi.Settings;
-import pitch.ChromaticMidi;
+import pitch.NoteMidiReal;
 
 public class NoteOff extends ChannelEvent {
-	public ChromaticMidi note;
+	public NoteMidiReal note;
 	
-	public NoteOff(int d, ChromaticMidi n, int v) {
-		this(d, n.getCode(), v);
+	public NoteOff(NoteMidiReal n) {
+		this(0, n.getCode(), n.getVelocity());
 		
 		note = n;
 	}
@@ -26,21 +25,13 @@ public class NoteOff extends ChannelEvent {
 		this(0, code, v);
 	}
 	
-	public NoteOff(ChromaticMidi n) {
-		this(0, n, Settings.DefaultValues.VELOCITY);
-	}
-	
-	public NoteOff(ChromaticMidi n, int v) {
-		this(0, n, v);
-	}
-	
 	public String toString() {
 		return "NoteOff " + note;
 	}
 	
 	@Override
 	public NoteOff clone() {
-		NoteOff r = new NoteOff(note.clone(), 0);
+		NoteOff r = new NoteOff(note.clone());
 		r.setData(getData());
 		
 		return r;

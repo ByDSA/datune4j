@@ -2,14 +2,14 @@ package eventsequences;
 
 import java.util.ArrayList;
 
-import chromaticchord.ChromaticChordEnum;
 import diatonic.DiatonicFunction;
-import diatonic.Degree;
+import diatonic.DiatonicDegree;
 import midi.Duration;
 import midi.FigureLength;
 import midi.Events.Event;
 import midi.Events.KeySignatureEvent;
 import midi.Settings.DefaultValues;
+import musical.ChromaticChordEnum;
 import pitch.DiatonicMidi;
 import pitch.PitchChromaticChord;
 import tonality.Tonality;
@@ -42,9 +42,8 @@ public class MelodyDiatonic extends Melody {
 		return note;
 	}
 
-	public DiatonicMidi add(Degree degree, int duration, int octaveShift) {
-		DiatonicMidi nd = new DiatonicMidi(degree, tonality, octave + octaveShift);
-		nd.setLength(duration);
+	public DiatonicMidi add(DiatonicDegree degree, int duration, int octaveShift, int vel) {
+		DiatonicMidi nd = DiatonicMidi.of(degree, tonality, octave + octaveShift, duration, vel);
 		return add(nd);
 	}
 
@@ -52,12 +51,16 @@ public class MelodyDiatonic extends Melody {
 		notesDiatonic.forEach((Event e) -> {System.out.println(e);});
 	}
 
-	public DiatonicMidi add(Degree degree, int duration) {
-		return add(degree, duration, 0);
+	public DiatonicMidi add(DiatonicDegree degree, int duration, int vel) {
+		return add(degree, duration, 0, vel);
+	}
+	
+	public DiatonicMidi add(DiatonicDegree degree, int duration) {
+		return add(degree, duration, 0, DefaultValues.VELOCITY);
 	}
 
-	public DiatonicMidi add(Degree degree) {
-		return add(degree, DefaultValues.OCTAVE);
+	public DiatonicMidi add(DiatonicDegree degree) {
+		return add(degree, DefaultValues.DURATION_NOTE, DefaultValues.VELOCITY);
 	}
 
 	public Melody setTonality(Tonality t) {

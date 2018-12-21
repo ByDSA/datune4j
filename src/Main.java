@@ -25,9 +25,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import arrays.ArrayUtils;
-import chromaticchord.CustomChromaticChord;
 import diatonic.ChromaticFunction;
-import diatonic.Degree;
+import diatonic.DiatonicDegree;
 import diatonic.DiatonicFunction;
 import eventsequences.EventSequence;
 import eventsequences.Instrument;
@@ -41,7 +40,8 @@ import midi.Events.NoteOff;
 import midi.Events.NoteOn;
 import midi.Events.Volume;
 import midi.Progressions.Progression;
-import pitch.Chromatic;
+import musical.Chromatic;
+import musical.CustomChromaticChord;
 import pitch.ChromaticChordMidi;
 import pitch.DiatonicChordMidi;
 import pitch.DiatonicMidi;
@@ -77,35 +77,35 @@ public class Main {
 			p.add( ChromaticFunction.V7_V ).setLength( Duration.V4 ).inv( 0 );
 			p.add( DiatonicFunction.V ).setLength( Duration.V2 ).inv( 0 );
 
-			m.add( Degree.I, Duration.V4 );
-			m.add( Degree.V, Duration.V4, -1 );
+			m.add( DiatonicDegree.I, Duration.V4 );
+			m.add( DiatonicDegree.V, Duration.V4, -1 );
 
-			m.add( Degree.III, Duration.V4 );
-			m.add( Degree.I, Duration.V8 );
-			m.add( Degree.V, Duration.V8 );
+			m.add( DiatonicDegree.III, Duration.V4 );
+			m.add( DiatonicDegree.I, Duration.V8 );
+			m.add( DiatonicDegree.V, Duration.V8 );
 
-			m.add( Degree.IV, Duration.V8 );
-			m.add( Degree.III, Duration.V8 );
-			m.add( Degree.II, Duration.V8 );
-			m.add( Degree.I, Duration.V8 );
+			m.add( DiatonicDegree.IV, Duration.V8 );
+			m.add( DiatonicDegree.III, Duration.V8 );
+			m.add( DiatonicDegree.II, Duration.V8 );
+			m.add( DiatonicDegree.I, Duration.V8 );
 
-			m.add( Degree.I, Duration.V8 );
-			m.add( Degree.VII, Duration.V8, -1 );
-			m.add( Degree.VI, Duration.V8, -1 );
-			m.add( Degree.V, Duration.V8, -1 );
+			m.add( DiatonicDegree.I, Duration.V8 );
+			m.add( DiatonicDegree.VII, Duration.V8, -1 );
+			m.add( DiatonicDegree.VI, Duration.V8, -1 );
+			m.add( DiatonicDegree.V, Duration.V8, -1 );
 
-			m.add( Degree.I, Duration.V4 );
-			m.add( Degree.II, Duration.V4 );
+			m.add( DiatonicDegree.I, Duration.V4 );
+			m.add( DiatonicDegree.II, Duration.V4 );
 
-			m.add( Degree.III, Duration.V4 + Duration.V8 );
-			m.add( Degree.V, Duration.V8 );
+			m.add( DiatonicDegree.III, Duration.V4 + Duration.V8 );
+			m.add( DiatonicDegree.V, Duration.V8 );
 
-			m.add( Degree.IV, Duration.V8 );
-			m.add( Degree.III, Duration.V8 );
-			m.add( Degree.II, Duration.V8 );
-			m.add( Degree.I, Duration.V8 );
+			m.add( DiatonicDegree.IV, Duration.V8 );
+			m.add( DiatonicDegree.III, Duration.V8 );
+			m.add( DiatonicDegree.II, Duration.V8 );
+			m.add( DiatonicDegree.I, Duration.V8 );
 
-			m.add( Degree.V, Duration.V2 );
+			m.add( DiatonicDegree.V, Duration.V2 );
 		}
 
 		for ( int i = 0; i < 1; i++ ) {
@@ -120,34 +120,34 @@ public class Main {
 			p.add( DiatonicFunction.V, -1 ).setLength( Duration.V4 ).inv( 0 );
 			p.add( DiatonicFunction.I ).setLength( Duration.V2 ).inv( -1 );
 
-			m.add( Degree.V, Duration.V4 );
-			m.add( Degree.III, Duration.V8 + Duration.V16 );
-			m.add( Degree.V, Duration.V16 );
+			m.add( DiatonicDegree.V, Duration.V4 );
+			m.add( DiatonicDegree.III, Duration.V8 + Duration.V16 );
+			m.add( DiatonicDegree.V, Duration.V16 );
 
-			m.add( Degree.IV, Duration.V4 );
-			m.add( Degree.II, Duration.V8 + Duration.V16 );
-			m.add( Degree.IV, Duration.V16 );
+			m.add( DiatonicDegree.IV, Duration.V4 );
+			m.add( DiatonicDegree.II, Duration.V8 + Duration.V16 );
+			m.add( DiatonicDegree.IV, Duration.V16 );
 
-			m.add( Degree.III, Duration.V4 );
-			m.add( Degree.I, Duration.V8 + Duration.V16 );
-			m.add( Degree.III, Duration.V16 );
+			m.add( DiatonicDegree.III, Duration.V4 );
+			m.add( DiatonicDegree.I, Duration.V8 + Duration.V16 );
+			m.add( DiatonicDegree.III, Duration.V16 );
 
-			m.add( Degree.II, Duration.V8 );
-			m.add( Degree.V, Duration.V8, -1 );
-			m.add( Degree.VI, Duration.V8, -1 );
-			m.add( Degree.VII, Duration.V8, -1 );
+			m.add( DiatonicDegree.II, Duration.V8 );
+			m.add( DiatonicDegree.V, Duration.V8, -1 );
+			m.add( DiatonicDegree.VI, Duration.V8, -1 );
+			m.add( DiatonicDegree.VII, Duration.V8, -1 );
 
-			m.add( Degree.I, Duration.V4 );
-			m.add( Degree.II, Duration.V4 );
+			m.add( DiatonicDegree.I, Duration.V4 );
+			m.add( DiatonicDegree.II, Duration.V4 );
 
-			m.add( Degree.III, Duration.V8 + Duration.V16 );
-			m.add( Degree.IV, Duration.V16 );
-			m.add( Degree.V, Duration.V8 );
-			m.add( Degree.IV, Duration.V8 );
+			m.add( DiatonicDegree.III, Duration.V8 + Duration.V16 );
+			m.add( DiatonicDegree.IV, Duration.V16 );
+			m.add( DiatonicDegree.V, Duration.V8 );
+			m.add( DiatonicDegree.IV, Duration.V8 );
 
-			m.add( Degree.III, Duration.V4 );
-			m.add( Degree.II, Duration.V4 );
-			m.add( Degree.I, Duration.V2 );
+			m.add( DiatonicDegree.III, Duration.V4 );
+			m.add( DiatonicDegree.II, Duration.V4 );
+			m.add( DiatonicDegree.I, Duration.V2 );
 		}
 
 		for ( int j = 0; j < 7; j++ ) {
@@ -216,45 +216,45 @@ public class Main {
 			p.add( DiatonicFunction.III ).setLength( Duration.V1 ).inv( -1 );
 			p.add( DiatonicFunction.VII ).setLength( Duration.V1 ).shiftOctave( -1 );
 
-			m.add( Degree.I, Duration.V8 );
+			m.add( DiatonicDegree.I, Duration.V8 );
 			m.addSilence( Duration.V8 );
-			m.add( Degree.III, Duration.V8 );
-			m.add( Degree.V, Duration.V8 );
-			m.add( Degree.III, Duration.V8, 1 );
+			m.add( DiatonicDegree.III, Duration.V8 );
+			m.add( DiatonicDegree.V, Duration.V8 );
+			m.add( DiatonicDegree.III, Duration.V8, 1 );
 			m.addSilence( Duration.V8 );
-			m.add( Degree.II, Duration.V16, 1 );
-			m.add( Degree.I, Duration.V16, 1 );
-			m.add( Degree.VII, Duration.V16 );
-			m.add( Degree.I, Duration.V8, 1 );
+			m.add( DiatonicDegree.II, Duration.V16, 1 );
+			m.add( DiatonicDegree.I, Duration.V16, 1 );
+			m.add( DiatonicDegree.VII, Duration.V16 );
+			m.add( DiatonicDegree.I, Duration.V8, 1 );
 			m.addSilence( Duration.V8 + Duration.V16 );
 
-			m.add( Degree.III, Duration.V16, 1 );
+			m.add( DiatonicDegree.III, Duration.V16, 1 );
 			m.addSilence( Duration.V16 );
-			m.add( Degree.I, Duration.V16, 1 );
+			m.add( DiatonicDegree.I, Duration.V16, 1 );
 			m.addSilence( Duration.V16 );
-			m.add( Degree.VI, Duration.V8 );
+			m.add( DiatonicDegree.VI, Duration.V8 );
 			m.addSilence( Duration.V8 + Duration.V4 );
 
-			m.add( Degree.V, Duration.V16 );
+			m.add( DiatonicDegree.V, Duration.V16 );
 			m.addSilence( Duration.V16 * 3 );
-			m.add( Degree.V, Duration.V16 );
+			m.add( DiatonicDegree.V, Duration.V16 );
 			m.addSilence( Duration.V16 );
-			m.add( Degree.IV, Duration.V16 );
+			m.add( DiatonicDegree.IV, Duration.V16 );
 			m.addSilence( Duration.V16 );
-			m.add( Degree.III, Duration.V16 );
+			m.add( DiatonicDegree.III, Duration.V16 );
 			m.addSilence( Duration.V16 * 3 );
-			m.add( Degree.I, Duration.V16, 1 );
-			m.add( Degree.VI, Duration.V16 );
-			m.add( Degree.V, Duration.V16 );
-			m.add( Degree.III, Duration.V16 );
+			m.add( DiatonicDegree.I, Duration.V16, 1 );
+			m.add( DiatonicDegree.VI, Duration.V16 );
+			m.add( DiatonicDegree.V, Duration.V16 );
+			m.add( DiatonicDegree.III, Duration.V16 );
 
-			m.add( Degree.IV, Duration.V16 );
+			m.add( DiatonicDegree.IV, Duration.V16 );
 			m.addSilence( Duration.V16 * 3 );
-			m.add( Degree.IV, Duration.V16 );
+			m.add( DiatonicDegree.IV, Duration.V16 );
 			m.addSilence( Duration.V16 );
-			m.add( Degree.V, Duration.V16 );
+			m.add( DiatonicDegree.V, Duration.V16 );
 			m.addSilence( Duration.V16 );
-			m.add( Degree.II, Duration.V8 );
+			m.add( DiatonicDegree.II, Duration.V8 );
 			m.addSilence( i == 0 ? ( Duration.V8 * 3 ) : ( Duration.V8 * 2 ) );
 
 			/*
@@ -281,8 +281,8 @@ public class Main {
 			 */
 		}
 
-		m.add( Degree.VII, Duration.V8, -1 );
-		m.add( Degree.I, Duration.V4 + Duration.V8 );
+		m.add( DiatonicDegree.VII, Duration.V8, -1 );
+		m.add( DiatonicDegree.I, Duration.V4 + Duration.V8 );
 
 		m.show();
 
@@ -476,7 +476,7 @@ public class Main {
 			ArrayList<CustomChromaticChord> cs = ton.getAllChords();
 			for ( CustomChromaticChord c1 : cs ) {
 				c1.showNotes();
-				DiatonicChordMidi c = c1.toMidi().toDiatonicChordMidi( ton );
+				DiatonicChordMidi c = c1.toMidi().getDiatonicChordMidi( ton );
 				System.out.println( c.getFunction()  + " " + (c.getFunction() instanceof DiatonicFunction) + " " + c.metaTonality + " " + c.getTonality());
 				assert c.getFunction() != null : c;
 				if ( (c.getFunction() instanceof DiatonicFunction
@@ -496,36 +496,36 @@ public class Main {
 				JButton b = new JButton(
 					c.toString() + ( c.getMetatonality() != ton ? " " + c.getMetatonality() : "" )
 						);
-				Degree degree = c.getDegree();
+				DiatonicDegree degree = c.getDegree();
 				if ( c.getFunction() instanceof ChromaticFunction )
 					switch ( (ChromaticFunction) c.getFunction() ) {
 						case SUBV7:
-							degree = Degree.I;
+							degree = DiatonicDegree.I;
 							break;
 						case V_II:
 						case V7_II:
 						case SUBV7_II:
-							degree = Degree.II;
+							degree = DiatonicDegree.II;
 							break;
 						case V_III:
 						case V7_III:
 						case SUBV7_III:
-							degree = Degree.III;
+							degree = DiatonicDegree.III;
 							break;
 						case V_IV:
 						case V7_IV:
 						case SUBV7_IV:
-							degree = Degree.IV;
+							degree = DiatonicDegree.IV;
 							break;
 						case V_V:
 						case V7_V:
 						case SUBV7_V:
-							degree = Degree.V;
+							degree = DiatonicDegree.V;
 							break;
 						case V_VI:
 						case V7_VI:
 						case SUBV7_VI:
-							degree = Degree.VI;
+							degree = DiatonicDegree.VI;
 							break;
 					}
 				assert degree != null : c + " " + c.getFunction();
@@ -561,13 +561,13 @@ public class Main {
 
 								EventSequence es = new EventSequence();
 								for ( DiatonicMidi n : c )
-									es.add( 0, new NoteOn( n.toChromaticMidi() ) );
+									es.add( 0, new NoteOn( n ) );
 								es.play();
 								System.out.println( "Press " + c + " " + c.notesToString() );
 							} else {
 								EventSequence es = new EventSequence();
 								for ( DiatonicMidi n : c )
-									es.add( 0, new NoteOff( n.toChromaticMidi() ) );
+									es.add( 0, new NoteOff( n ) );
 								es.play();
 								// System.out.println("Release " + c);
 							}

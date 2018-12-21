@@ -1,7 +1,10 @@
 package pitch;
 
-import diatonic.IntervalDiatonic;
+import musical.Chromatic;
+import musical.Diatonic;
+import tonality.Tonality;
 
-public interface PitchDiatonicSingle<This extends PitchDiatonicSingle<This>> extends PitchDiatonic<This, IntervalDiatonic>, PitchDiatonicableSingle {
-
+public interface PitchDiatonicSingle extends PitchDiatonic, PitchSingle {
+	public Diatonic getDiatonic();
+	public Chromatic toChromatic(Tonality t);
 }

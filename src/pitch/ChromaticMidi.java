@@ -2,34 +2,32 @@ package pitch;
 
 import java.util.List;
 
-import diatonic.Degree;
+import diatonic.DiatonicDegree;
 import diatonic.IntervalChromatic;
-import diatonic.IntervalDiatonic;
 import eventsequences.EventSequence;
 import midi.Settings;
 import midi.Events.NoteOff;
 import midi.Events.NoteOn;
+import musical.Chromatic;
+import musical.Diatonic;
 import tonality.Tonality;
 import tonality.TonalityException;
 
-public class ChromaticMidi implements NoteMidi, PitchChromaticSingle {
-	protected int	velocity;
-	protected PitchMidiEnum	pitch;
-	protected int	length;
+public class ChromaticMidi extends NoteMidiReal implements PitchChromaticSingle {
 
-	public ChromaticMidi(PitchMidiEnum p, int d, int v) {
-		set( d, v );
-		pitch = p;
+	public ChromaticMidi(NoteMidi p, int d, int v) {
+		super(p, d, v);
 	}
 
 	public ChromaticMidi(Chromatic c, int o, int d, int v) {
-		this( PitchMidiSingle.of( c, o ), d, v );
+		this( NoteMidi.of( c, o ), d, v );
 	}
 
 	public ChromaticMidi(ChromaticMidi n) {
 		this( n.pitch, n.length, n.velocity );
 	}
 
+	@Override
 	public Chromatic getChromatic() {
 		return pitch.getChromatic();
 	}
@@ -47,16 +45,15 @@ public class ChromaticMidi implements NoteMidi, PitchChromaticSingle {
 		return ns;
 	}
 
-	@Override
-	public DiatonicMidi toDiatonicChordMidi(Tonality ton) throws TonalityException {
+	public DiatonicMidi getDiatonicMidi(Tonality ton) throws TonalityException {
 		assert ton != null;
-		Degree pos = ton.getDegree( getChromatic() );
+		DiatonicDegree pos = ton.getDegree( getChromatic() );
 		if ( pos == null )
 			throw new TonalityException( this, ton );
 		else {
 			int octaveNote = getOctave();
-			DiatonicMidi ns = new DiatonicMidi( pos, ton, pitch.getOctave(), length, velocity );
-			int octaveNoteScaleNote = ns.toChromaticMidi().getOctave();
+			DiatonicMidi ns = DiatonicMidi.of( pos, ton, pitch.getOctave(), length, velocity );
+			int octaveNoteScaleNote = ns.pitch.getOctave();
 			ns.shiftOctave( octaveNote - octaveNoteScaleNote );
 
 			return ns;
@@ -82,7 +79,7 @@ public class ChromaticMidi implements NoteMidi, PitchChromaticSingle {
 
 	public static String literal(Chromatic n, Tonality s) {
 		if ( s != null ) {
-			Degree pos = s.getDegree( n );
+			DiatonicDegree pos = s.getDegree( n );
 			if ( pos != null )
 				n = s.get( pos );
 		}
@@ -90,30 +87,13 @@ public class ChromaticMidi implements NoteMidi, PitchChromaticSingle {
 		return n.toString();
 	}
 
-	@Override
-	public ChromaticMidi addMidi(int i) {
-		pitch = (PitchMidiEnum) pitch.addMidi( i );
-		return this;
-	}
-
-	public ChromaticMidi add(IntervalDiatonic i) {
-		return addMidi( i.val() );
-	}
-
 	/* Métodos estáticos */
-	public static ChromaticMidi add(final ChromaticMidi n, int i) {
-		return n.clone().addMidi( i );
-	}
-
-	public static ChromaticMidi add(final ChromaticMidi n, IntervalChromatic i) {
-		return add( n, i.val() );
-	}
 
 	@Override
 	public EventSequence getEvents() {
 		EventSequence es = new EventSequence();
-		es.add( 0, new NoteOn( this, 100 ) );
-		es.add( length, new NoteOff( this, 100 ) );
+		es.add( 0, new NoteOn( this ) );
+		es.add( length, new NoteOff( this ) );
 
 		return es;
 	}
@@ -140,7 +120,7 @@ public class ChromaticMidi implements NoteMidi, PitchChromaticSingle {
 	}
 
 	public static ChromaticMidi getFromCode(int code, int d, int v) {
-		PitchMidiEnum p = PitchMidiSingle.of( code );
+		NoteMidi p = NoteMidi.of( code );
 		return new ChromaticMidi( p, d, v );
 	}
 
@@ -152,11 +132,6 @@ public class ChromaticMidi implements NoteMidi, PitchChromaticSingle {
 		return getFromCode(
 			code, Settings.DefaultValues.DURATION_NOTE, Settings.DefaultValues.VELOCITY
 		);
-	}
-
-	@Override
-	public int val() {
-		return pitch.getChromatic().val();
 	}
 
 	public ChromaticMidi setVelocity(int v) {
@@ -178,12 +153,12 @@ public class ChromaticMidi implements NoteMidi, PitchChromaticSingle {
 	}
 
 	public ChromaticMidi shiftOctave(int o) {
-		pitch = (PitchMidiEnum) pitch.shiftOctave( o );
+		pitch = (NoteMidi) pitch.shiftOctave( o );
 		return this;
 	}
 
 	public ChromaticMidi setOctave(int o) {
-		pitch = (PitchMidiEnum) pitch.setOctave( o );
+		pitch = (NoteMidi) pitch.setOctave( o );
 		return this;
 	}
 
@@ -213,5 +188,25 @@ public class ChromaticMidi implements NoteMidi, PitchChromaticSingle {
 	@Override
 	public int getCode() {
 		return pitch.getCode();
+	}
+
+	@Override
+	public Diatonic getDiatonic(Tonality ton) throws TonalityException {
+		DiatonicDegree degree = ton.getDegree( getChromatic() );
+		return Diatonic.get( degree );
+	}
+
+	public ChromaticMidi shift(IntervalChromatic i) {
+		pitch = pitch.shift( i );
+		return this;
+	}
+
+	@Override
+	public double getFrequency() {
+		return pitch.getFrequency();
+	}
+
+	public int dist(ChromaticMidi cm) {
+		return cm.getCode() - getCode();
 	}
 }

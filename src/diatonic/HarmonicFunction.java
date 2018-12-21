@@ -4,7 +4,7 @@ import pitch.DiatonicChordMidi;
 import tonality.TonalityEnum;
 
 public interface HarmonicFunction {
-	public Degree getDegree();
+	public DiatonicDegree getDegree();
 
 	public static HarmonicFunction get(DiatonicChordMidi diatonicChordMidi) {
 		HarmonicFunction hf = ChromaticFunction.get( diatonicChordMidi );

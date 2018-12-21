@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import pitch.Chromatic;
+import musical.Chromatic;
 
 public class ChromaticTest {
 
@@ -76,11 +76,5 @@ public class ChromaticTest {
 		assertEquals((Integer)11, Chromatic.C.dist(Chromatic.B));
 		assertEquals((Integer)11, Chromatic.CC.dist(Chromatic.C));
 		assertEquals((Integer)11, Chromatic.B.dist(Chromatic.Bb));
-	}
-	
-	@Test
-	public void mean() {
-		assertEquals(Chromatic.C.val(), (int)Chromatic.C.getPitchMean());
-		assertEquals(Chromatic.G.val(), (int)Chromatic.G.getPitchMean());
 	}
 }

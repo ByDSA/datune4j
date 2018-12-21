@@ -6,32 +6,31 @@ import java.util.List;
 import java.util.Set;
 
 import Log.String.Logging;
-import chromaticchord.CustomChromaticChord;
 import diatonic.ChromaticFunction;
-import diatonic.Degree;
+import diatonic.DiatonicDegree;
 import diatonic.DiatonicFunction;
 import diatonic.HarmonicFunction;
 import diatonic.IntervalChromatic;
 import diatonic.IntervalDiatonic;
-import pitch.Chromatic;
+import musical.Chromatic;
+import musical.CustomChromaticChord;
+import musical.CustomDiatonicChord;
+import musical.Diatonic;
 import pitch.ChromaticMidi;
-import pitch.Diatonic;
-import pitch.CustomDiatonicChord;
 import pitch.DiatonicChordMidi;
 import pitch.PitchChromaticChord;
-import pitch.PitchChromaticableChord;
-import pitch.PitchChromaticableSingle;
+import pitch.PitchChromaticSingle;
 
 public interface Tonality extends Cloneable {
 	public ArrayList<CustomChromaticChord> getAllChords();
 
 	public Set<CustomChromaticChord> getBorrowedChords();
 
-	public static ArrayList<Tonality> getFromChord(PitchChromaticableChord c) {
+	public static ArrayList<Tonality> getFromChord(PitchChromaticChord c) {
 		return getFromChord( false, c );
 	}
 
-	public static ArrayList<Tonality> getFromChord(boolean outScale, PitchChromaticableChord c) {
+	public static ArrayList<Tonality> getFromChord(boolean outScale, PitchChromaticChord c) {
 		ArrayList<Tonality> out = new ArrayList<>();
 		for ( Tonality t : Tonality.all() ) {
 			if ( t.has( outScale, c ) )
@@ -41,7 +40,7 @@ public interface Tonality extends Cloneable {
 		return out;
 	}
 
-	public boolean has(boolean outScale, PitchChromaticableChord c);
+	public boolean has(boolean outScale, PitchChromaticChord c);
 
 	default boolean isMajorMinor() {
 		return ( getScale().equals( ScaleEnum.MAJOR ) || getScale().equals( ScaleEnum.MINOR ) );
@@ -187,7 +186,7 @@ public interface Tonality extends Cloneable {
 		return get( n.val() );
 	}
 
-	default Chromatic get(Degree n) {
+	default Chromatic get(DiatonicDegree n) {
 		assert n != null;
 		return get( n.val() );
 	}
@@ -282,7 +281,7 @@ public interface Tonality extends Cloneable {
 
 		Chromatic[] notesChord = new Chromatic[c.size()];
 		for ( int i = 0; i < c.size(); i++ )
-			notesChord[i] = c.get( i ).toChromaticMidi().getChromatic();
+			notesChord[i] = c.get( i ).getChromatic().getChromatic();
 
 		int posChordCorrector = 7 - c.get( 0 ).getDegree().val();
 
@@ -290,7 +289,7 @@ public interface Tonality extends Cloneable {
 		Integer posBaseCorrector = ( Diatonic.get( notesChord[0] ).val()
 				- Diatonic.get( base.getRoot() ).val() + 7 ) % 7;
 		if ( posBaseCorrector == null )
-			throw new TonalityException( c.get( 0 ).toChromaticMidi(), base );
+			throw new TonalityException( c.get( 0 ).getChromatic(), base );
 
 		Chromatic[] tonalityNotes = new Chromatic[7];
 		for ( int i = 0; i < 7; i++ ) {
@@ -328,18 +327,18 @@ public interface Tonality extends Cloneable {
 		return Scale.of( ton );
 	}
 
-	default Degree getDegree(PitchChromaticableSingle note) {
+	default DiatonicDegree getDegree(PitchChromaticSingle note) {
 		assert note != null : "No se ha especificado nota";
 		return getDegree( note, true );
 	}
 
-	default Degree getDegree(PitchChromaticableSingle note, boolean enharmonic) {
+	default DiatonicDegree getDegree(PitchChromaticSingle note, boolean enharmonic) {
 		assert note != null : "No se ha especificado nota";
 
 		for ( int i = 0; i < length(); i++ )
 			if ( !enharmonic && get( i ).equals( note.getChromatic() )
 					|| enharmonic && get( i ).val() == note.getChromatic().val() )
-				return Degree.get( i );
+				return DiatonicDegree.get( i );
 
 		return null;
 	}
@@ -350,11 +349,11 @@ public interface Tonality extends Cloneable {
 	 * return null; }
 	 */
 
-	default boolean has(PitchChromaticableSingle note) {
+	default boolean has(PitchChromaticSingle note) {
 		return getDegree( note ) != null;
 	}
 
-	default <N extends PitchChromaticableSingle> boolean has(PitchChromaticableChord<N, ?> notes) {
+	default <N extends PitchChromaticSingle> boolean has(PitchChromaticChord<N> notes) {
 		for ( N n : notes ) {
 			if ( getDegree( n ) == null )
 				return false;
@@ -375,7 +374,7 @@ public interface Tonality extends Cloneable {
 		return Tonality.of( get( pos ), getScale() );
 	}
 
-	default Tonality getRelativeScaleDiatonic(Degree pos) {
+	default Tonality getRelativeScaleDiatonic(DiatonicDegree pos) {
 		return getRelativeScaleDiatonic( IntervalDiatonic.get( pos ) );
 	}
 
@@ -439,7 +438,7 @@ public interface Tonality extends Cloneable {
 		return sb.toString();
 	}
 
-	default IntervalChromatic getInterval(Degree d2, IntervalDiatonic id) {
+	default IntervalChromatic getInterval(DiatonicDegree d2, IntervalDiatonic id) {
 		int idInt = id.val();
 
 		int n = get( d2.val() + idInt ).val() - get( d2 ).val();

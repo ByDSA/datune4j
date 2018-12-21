@@ -5,25 +5,25 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import chromaticchord.ChromaticChordEnum;
 import diatonic.ChordNotation;
 import diatonic.ChromaticFunction;
-import diatonic.Degree;
+import diatonic.DiatonicDegree;
 import diatonic.DiatonicFunction;
 import diatonic.IntervalDiatonic;
 import midi.AddedException;
-import pitch.Chromatic;
+import musical.Chromatic;
+import musical.ChromaticChordEnum;
+import musical.Diatonic;
 import pitch.ChromaticChordMidi;
 import pitch.ChromaticMidi;
-import pitch.Diatonic;
 import pitch.DiatonicChordMidi;
 import pitch.DiatonicMidi;
-import pitch.PitchMidiEnum;
-import pitch.PitchMidiSingle;
+import pitch.NoteMidi;
 import tonality.ScaleEnum;
 import tonality.Tonality;
 import tonality.TonalityEnum;
@@ -44,18 +44,18 @@ public class Tests {
 
 	@Test
 	public void pitchGet() {
-		PitchMidiEnum p = PitchMidiSingle.of( Chromatic.C, 5 );
-		assertEquals( PitchMidiEnum.C5, p );
+		NoteMidi p = NoteMidi.of( Chromatic.C, 5 );
+		assertEquals( NoteMidi.C5, p );
 
-		p = PitchMidiSingle.of( Chromatic.C, 0 );
-		assertEquals( true, p.equals( PitchMidiEnum.MIN ) );
+		p = NoteMidi.of( Chromatic.C, 0 );
+		assertEquals( true, p.equals( NoteMidi.MIN ) );
 
-		p = PitchMidiSingle.of( Chromatic.G, 10 );
-		assertEquals( true, p.equals( PitchMidiEnum.MAX ) );
+		p = NoteMidi.of( Chromatic.G, 10 );
+		assertEquals( true, p.equals( NoteMidi.MAX ) );
 
 		ChromaticMidi n = Chromatic.C.toMidi( 5 );
 
-		assertEquals( PitchMidiEnum.C5, n.getCode() );
+		assertEquals( NoteMidi.C5, n.getCode() );
 	}
 
 	@Test
@@ -65,28 +65,28 @@ public class Tests {
 
 	@Test
 	public void dist() {
-		ChromaticChordMidi notes = new ChromaticChordMidi(
+		ChromaticChordMidi notes = ChromaticChordMidi.of(
 			Chromatic.FF, Chromatic.A, Chromatic.CC
 		);
 
-		assertEquals( PitchMidiEnum.FF5, notes.get( 0 ).getCode() );
+		assertEquals( NoteMidi.FF5, notes.get( 0 ).getCode() );
 
-		Integer[] n = notes.integerNotationFromRoot();
+		List<Integer> n = notes.integerNotationFromRoot();
 
 		assertArrayEquals(
 			new Integer[] {
 				0,
 				3,
 				7
-			}, n
+			}, n.toArray()
 		);
 	}
 
 	@Test
 	public void chordSameNote() {
-		DiatonicMidi n1 = new DiatonicMidi( DiatonicFunction.I, TonalityEnum.C, 5 );
-		DiatonicMidi n2 = new DiatonicMidi( DiatonicFunction.II, TonalityEnum.C, 5 );
-		DiatonicMidi n3 = new DiatonicMidi( DiatonicFunction.III, TonalityEnum.C, 5 );
+		DiatonicMidi n1 = DiatonicMidi.of( DiatonicFunction.I, TonalityEnum.C, 5 );
+		DiatonicMidi n2 = DiatonicMidi.of( DiatonicFunction.II, TonalityEnum.C, 5 );
+		DiatonicMidi n3 = DiatonicMidi.of( DiatonicFunction.III, TonalityEnum.C, 5 );
 
 		boolean error = false;
 		DiatonicChordMidi c2 = new DiatonicChordMidi( n2, n3 );
@@ -112,18 +112,18 @@ public class Tests {
 	@Test
 	public void chordInv() {
 		DiatonicChordMidi c = new DiatonicChordMidi( ChromaticFunction.I5, 5, TonalityEnum.C );
-		assertEquals( PitchMidiEnum.G5, c.get( 1 ).getPitchCode() );
-		assertEquals( PitchMidiEnum.C5, c.get( 0 ).getPitchCode() );
+		assertEquals( NoteMidi.G5, c.get( 1 ).getCode() );
+		assertEquals( NoteMidi.C5, c.get( 0 ).getCode() );
 
 		c = new DiatonicChordMidi( DiatonicFunction.I, 5, TonalityEnum.C );
-		assertEquals( PitchMidiEnum.G5, c.get( 2 ).getPitchCode() );
-		assertEquals( PitchMidiEnum.E5, c.get( 1 ).getPitchCode() );
-		assertEquals( PitchMidiEnum.C5, c.get( 0 ).getPitchCode() );
+		assertEquals( NoteMidi.G5, c.get( 2 ).getCode() );
+		assertEquals( NoteMidi.E5, c.get( 1 ).getCode() );
+		assertEquals( NoteMidi.C5, c.get( 0 ).getCode() );
 		c.inv();
 
-		assertEquals( PitchMidiEnum.C6, c.get( 2 ).getPitchCode() );
-		assertEquals( PitchMidiEnum.G5, c.get( 1 ).getPitchCode() );
-		assertEquals( PitchMidiEnum.E5, c.get( 0 ).getPitchCode() );
+		assertEquals( NoteMidi.C6, c.get( 2 ).getCode() );
+		assertEquals( NoteMidi.G5, c.get( 1 ).getCode() );
+		assertEquals( NoteMidi.E5, c.get( 0 ).getCode() );
 	}
 
 	@Test
@@ -151,8 +151,8 @@ public class Tests {
 		DiatonicChordMidi c1 = new DiatonicChordMidi( DiatonicFunction.I, o, s );
 		DiatonicChordMidi c2 = new DiatonicChordMidi( DiatonicFunction.II, o, s );
 
-		assertEquals( PitchMidiEnum.B5, c1.get( 0 ).getPitchCode() );
-		assertEquals( PitchMidiEnum.CC6, c2.get( 0 ).getPitchCode() );
+		assertEquals( NoteMidi.B5, c1.get( 0 ).getCode() );
+		assertEquals( NoteMidi.CC6, c2.get( 0 ).getCode() );
 	}
 
 	@Test
@@ -219,7 +219,7 @@ public class Tests {
 
 		ChromaticChordMidi notes = new ChromaticChordMidi();
 		for ( DiatonicMidi n : c )
-			notes.add( n.toChromaticMidi() );
+			notes.add( n );
 
 		ArrayList<DiatonicChordMidi> chords = notes.toDiatonicChordMidi( false );
 		assert ( chords.size() > 0 );
@@ -245,7 +245,7 @@ public class Tests {
 	@Test
 	public void addDuplicateChord() {
 		DiatonicChordMidi c = new DiatonicChordMidi( DiatonicFunction.VI_THIRD, TonalityEnum.Gm );
-		assertEquals( PitchMidiEnum.DD6, c.get( 0 ).getPitchCode() );
+		assertEquals( NoteMidi.DD6, c.get( 0 ).getCode() );
 		c.addDuplicate( 1 );
 	}
 
@@ -266,40 +266,40 @@ public class Tests {
 
 	@Test
 	public void getCode() {
-		PitchMidiEnum p = PitchMidiSingle.of( 60 );
-		assertEquals( PitchMidiEnum.C5, p );
-		p = PitchMidiSingle.of( Chromatic.C, 5 );
-		assertEquals( PitchMidiEnum.C5, p );
+		NoteMidi p = NoteMidi.of( 60 );
+		assertEquals( NoteMidi.C5, p );
+		p = NoteMidi.of( Chromatic.C, 5 );
+		assertEquals( NoteMidi.C5, p );
 		ChromaticMidi n = Chromatic.C.toMidi( 5 );
-		assertEquals( PitchMidiEnum.C5, n.getCode() );
+		assertEquals( NoteMidi.C5, n.getCode() );
 
 		n = Chromatic.B.toMidi( 5 );
-		assertEquals( PitchMidiEnum.B5, n.getCode() );
+		assertEquals( NoteMidi.B5, n.getCode() );
 
-		DiatonicMidi n2 = new DiatonicMidi( DiatonicFunction.I, TonalityEnum.C, 5 );
-		assertEquals( PitchMidiEnum.C5, n2.getPitchCode() );
-		n2 = new DiatonicMidi( DiatonicFunction.VII, TonalityEnum.C, 5 );
-		assertEquals( PitchMidiEnum.B5, n2.getPitchCode() );
+		DiatonicMidi n2 = DiatonicMidi.of( DiatonicFunction.I, TonalityEnum.C, 5 );
+		assertEquals( NoteMidi.C5, n2.getCode() );
+		n2 = DiatonicMidi.of( DiatonicFunction.VII, TonalityEnum.C, 5 );
+		assertEquals( NoteMidi.B5, n2.getCode() );
 	}
 
 	@Test
 	public void getDegree() {
-		DiatonicMidi n2 = new DiatonicMidi( DiatonicFunction.I, TonalityEnum.C, 5 );
-		assertEquals( Degree.I, n2.getDegree() );
-		n2 = new DiatonicMidi( DiatonicFunction.VII, TonalityEnum.C, 5 );
-		assertEquals( Degree.VII, n2.getDegree() );
+		DiatonicMidi n2 = DiatonicMidi.of( DiatonicFunction.I, TonalityEnum.C, 5 );
+		assertEquals( DiatonicDegree.I, n2.getDegree() );
+		n2 = DiatonicMidi.of( DiatonicFunction.VII, TonalityEnum.C, 5 );
+		assertEquals( DiatonicDegree.VII, n2.getDegree() );
 	}
 
 	@Test
 	public void addDuplicate() {
 		DiatonicChordMidi c = new DiatonicChordMidi( DiatonicFunction.II_THIRD, 6, TonalityEnum.Gm );
 		assertEquals( 2, c.size() );
-		assertEquals( PitchMidiEnum.A6, c.get( 0 ).getPitchCode() );
-		assertEquals( PitchMidiEnum.C7, c.get( 1 ).getPitchCode() );
+		assertEquals( NoteMidi.A6, c.get( 0 ).getCode() );
+		assertEquals( NoteMidi.C7, c.get( 1 ).getCode() );
 		c.addDuplicate( 1 );
 		assertEquals( 4, c.size() );
-		assertEquals( PitchMidiEnum.A7, c.get( 2 ).getPitchCode() );
-		assertEquals( PitchMidiEnum.C8, c.get( 3 ).getPitchCode() );
+		assertEquals( NoteMidi.A7, c.get( 2 ).getCode() );
+		assertEquals( NoteMidi.C8, c.get( 3 ).getCode() );
 	}
 
 	@Test
@@ -322,7 +322,7 @@ public class Tests {
 					0,
 					4,
 					7
-				}, c.integerNotationFromRoot()
+				}, c.integerNotationFromRoot().toArray()
 			);
 		for ( ChromaticChordEnum c : ChromaticChordEnum.CHORDS_MINOR )
 			Assert.assertArrayEquals(
@@ -330,7 +330,7 @@ public class Tests {
 					0,
 					3,
 					7
-				}, c.integerNotationFromRoot()
+				}, c.integerNotationFromRoot().toArray()
 			);
 		for ( ChromaticChordEnum c : ChromaticChordEnum.CHORDS_DIMINISHED )
 			Assert.assertArrayEquals(
@@ -338,7 +338,7 @@ public class Tests {
 					0,
 					3,
 					6
-				}, c.integerNotationFromRoot()
+				}, c.integerNotationFromRoot().toArray()
 			);
 		for ( ChromaticChordEnum c : ChromaticChordEnum.CHORDS_AUGMENTED )
 			Assert.assertArrayEquals(
@@ -346,7 +346,7 @@ public class Tests {
 					0,
 					4,
 					8
-				}, c.integerNotationFromRoot()
+				}, c.integerNotationFromRoot().toArray()
 			);
 		for ( ChromaticChordEnum c : ChromaticChordEnum.CHORDS_SUS4 )
 			Assert.assertArrayEquals(
@@ -354,7 +354,7 @@ public class Tests {
 					0,
 					5,
 					7
-				}, c.integerNotationFromRoot()
+				}, c.integerNotationFromRoot().toArray()
 			);
 		for ( ChromaticChordEnum c : ChromaticChordEnum.CHORDS_SUS2 )
 			Assert.assertArrayEquals(
@@ -362,7 +362,7 @@ public class Tests {
 					0,
 					2,
 					7
-				}, c.integerNotationFromRoot()
+				}, c.integerNotationFromRoot().toArray()
 			);
 		for ( ChromaticChordEnum c : ChromaticChordEnum.CHORDS_7 )
 			Assert.assertArrayEquals(
@@ -371,7 +371,7 @@ public class Tests {
 					4,
 					7,
 					10
-				}, c.integerNotationFromRoot()
+				}, c.integerNotationFromRoot().toArray()
 			);
 		for ( ChromaticChordEnum c : ChromaticChordEnum.CHORDS_7b5 )
 			Assert.assertArrayEquals(
@@ -380,7 +380,7 @@ public class Tests {
 					4,
 					6,
 					10
-				}, c.integerNotationFromRoot()
+				}, c.integerNotationFromRoot().toArray()
 			);
 		for ( ChromaticChordEnum c : ChromaticChordEnum.CHORDS_7a5 )
 			Assert.assertArrayEquals(
@@ -389,7 +389,7 @@ public class Tests {
 					4,
 					8,
 					10
-				}, c.integerNotationFromRoot()
+				}, c.integerNotationFromRoot().toArray()
 			);
 		for ( ChromaticChordEnum c : ChromaticChordEnum.CHORDS_Maj7 )
 			Assert.assertArrayEquals(
@@ -398,7 +398,7 @@ public class Tests {
 					4,
 					7,
 					11
-				}, c.integerNotationFromRoot()
+				}, c.integerNotationFromRoot().toArray()
 			);
 		for ( ChromaticChordEnum c : ChromaticChordEnum.CHORDS_mMaj7 )
 			Assert.assertArrayEquals(
@@ -407,7 +407,7 @@ public class Tests {
 					3,
 					7,
 					11
-				}, c.integerNotationFromRoot()
+				}, c.integerNotationFromRoot().toArray()
 			);
 		for ( ChromaticChordEnum c : ChromaticChordEnum.CHORDS_m7 )
 			Assert.assertArrayEquals(
@@ -416,7 +416,7 @@ public class Tests {
 					3,
 					7,
 					10
-				}, c.integerNotationFromRoot()
+				}, c.integerNotationFromRoot().toArray()
 			);
 		for ( ChromaticChordEnum c : ChromaticChordEnum.CHORDS_m7a5 )
 			Assert.assertArrayEquals(
@@ -425,7 +425,7 @@ public class Tests {
 					3,
 					8,
 					10
-				}, c.integerNotationFromRoot()
+				}, c.integerNotationFromRoot().toArray()
 			);
 		for ( ChromaticChordEnum c : ChromaticChordEnum.CHORDS_m7b5 )
 			Assert.assertArrayEquals(
@@ -434,7 +434,7 @@ public class Tests {
 					3,
 					6,
 					10
-				}, c.integerNotationFromRoot()
+				}, c.integerNotationFromRoot().toArray()
 			);
 	}
 }

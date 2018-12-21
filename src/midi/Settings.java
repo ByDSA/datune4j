@@ -1,6 +1,6 @@
 package midi;
 
-import pitch.Chromatic;
+import musical.Chromatic;
 import tonality.ScaleEnum;
 import tonality.Tonality;
 

@@ -177,7 +177,7 @@ public enum DiatonicFunction implements HarmonicFunction {
 		VII9_O3_O7,
 	};
 
-	public Degree getDegree() {
+	public DiatonicDegree getDegree() {
 		switch ( this ) {
 			case I:
 			case I2:
@@ -194,7 +194,8 @@ public enum DiatonicFunction implements HarmonicFunction {
 			case I9_O7:
 			case I9_O3_O7:
 			case I11:
-				return Degree.I;
+			case I13:
+				return DiatonicDegree.I;
 			case II:
 			case II2:
 			case II4:
@@ -210,7 +211,8 @@ public enum DiatonicFunction implements HarmonicFunction {
 			case II7_O3:
 			case II9_O7:
 			case II9_O3_O7:
-				return Degree.II;
+			case II13:
+				return DiatonicDegree.II;
 			case III:
 			case III2:
 			case III4:
@@ -226,7 +228,8 @@ public enum DiatonicFunction implements HarmonicFunction {
 			case III7_O3:
 			case III9_O7:
 			case III9_O3_O7:
-				return Degree.III;
+			case III13:
+				return DiatonicDegree.III;
 			case IV:
 			case IV2:
 			case IV4:
@@ -242,7 +245,8 @@ public enum DiatonicFunction implements HarmonicFunction {
 			case IV7_O3:
 			case IV9_O7:
 			case IV9_O3_O7:
-				return Degree.IV;
+			case IV13:
+				return DiatonicDegree.IV;
 			case V:
 			case V2:
 			case V4:
@@ -258,7 +262,8 @@ public enum DiatonicFunction implements HarmonicFunction {
 			case V7_O3:
 			case V9_O7:
 			case V9_O3_O7:
-				return Degree.V;
+			case V13:
+				return DiatonicDegree.V;
 			case VI:
 			case VI2:
 			case VI4:
@@ -274,7 +279,8 @@ public enum DiatonicFunction implements HarmonicFunction {
 			case VI7_O3:
 			case VI9_O7:
 			case VI9_O3_O7:
-				return Degree.VI;
+			case VI13:
+				return DiatonicDegree.VI;
 			case VII:
 			case VII2:
 			case VII4:
@@ -290,7 +296,8 @@ public enum DiatonicFunction implements HarmonicFunction {
 			case VII7_O3:
 			case VII9_O7:
 			case VII9_O3_O7:
-				return Degree.VII;
+			case VII13:
+				return DiatonicDegree.VII;
 			default:
 				return null;
 		}
@@ -304,7 +311,7 @@ public enum DiatonicFunction implements HarmonicFunction {
 		return ArrayUtils.contained( this, SUS4 );
 	}
 
-	public static DiatonicFunction get(Degree d) {
+	public static DiatonicFunction get(DiatonicDegree d) {
 		assert d != null;
 		switch ( d ) {
 			case I:

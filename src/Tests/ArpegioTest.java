@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import chromaticchord.ChromaticChordEnum;
 import midi.Arpegios.Arpegio;
+import musical.ChromaticChordEnum;
 
 public class ArpegioTest {
 	/*@Test

@@ -1,7 +1,7 @@
 package midi.Events;
 
 import eventsequences.Track;
-import pitch.Chromatic;
+import musical.Chromatic;
 import pitch.ChromaticMidi;
 import tonality.Scale;
 import tonality.ScaleEnum;

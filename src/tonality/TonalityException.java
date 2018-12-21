@@ -1,18 +1,18 @@
 package tonality;
 
 import pitch.DiatonicMidi;
-import pitch.PitchChromaticSingle;
-import pitch.PitchChromaticableChord;
+import pitch.PitchChromaticChord;
+import pitch.PitchSingle;
 
 public class TonalityException extends RuntimeException {
-	public TonalityException(PitchChromaticSingle n, Tonality s) {
+	public TonalityException(PitchSingle n, Tonality s) {
 		super(
 			"La nota " + n + " no pertenece a la tonalidad " + s + ": "
 					+ s.notesToString() + "."
 				);
 	}
 
-	public TonalityException(PitchChromaticableChord n, Tonality s) {
+	public TonalityException(PitchChromaticChord n, Tonality s) {
 		super(
 			"El acorde a añadir " + n + " de notas " + n.notesToString()
 			+ " no pertenece a la escala " + s + ": "

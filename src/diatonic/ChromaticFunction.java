@@ -3,7 +3,7 @@ package diatonic;
 import java.util.Set;
 
 import arrays.ArrayUtils;
-import chromaticchord.CustomChromaticChord;
+import musical.CustomChromaticChord;
 import pitch.DiatonicChordMidi;
 import pitch.PitchChromaticChord;
 import tonality.CustomTonality;
@@ -269,67 +269,67 @@ public enum ChromaticFunction implements HarmonicFunction {
 	/* (non-Javadoc)
 	 * @see diatonic.HarmonicFunction#getDegree()
 	 */
-	public Degree getDegree() {
+	public DiatonicDegree getDegree() {
 		switch ( this ) {
 			case I:
 			case I5:
 			case i:
 			case I0:
-				return Degree.I;
+				return DiatonicDegree.I;
 			case II:
 			case II5:
 			case ii:
 			case II0:
 			case N6:
-				return Degree.II;
+				return DiatonicDegree.II;
 			case III:
 			case III5:
 			case iii:
 			case III0:
-				return Degree.III;
+				return DiatonicDegree.III;
 			case IV:
 			case IV5:
 			case iv:
 			case IV0:
-				return Degree.IV;
+				return DiatonicDegree.IV;
 			case V:
 			case V5:
 			case v:
 			case V0:
-				return Degree.V;
+				return DiatonicDegree.V;
 			case VI:
 			case VI5:
 			case vi:
 			case VI0:
-				return Degree.VI;
+				return DiatonicDegree.VI;
 			case VII:
 			case VII5:
 			case vii:
 			case VII0:
-				return Degree.VII;
+				return DiatonicDegree.VII;
 			case SUBV7:
 			case V7ALT:
-				return Degree.I;
+				return DiatonicDegree.I;
 			case SUBV7_II:
 			case V7_II:
 			case V_II:
-				return Degree.II;
+				return DiatonicDegree.II;
 			case SUBV7_III:
 			case V7_III:
 			case V_III:
-				return Degree.III;
+				return DiatonicDegree.III;
 			case SUBV7_IV:
 			case V7_IV:
 			case V_IV:
-				return Degree.IV;
+				return DiatonicDegree.IV;
 			case SUBV7_V:
 			case V_V:
 			case V7_V:
-				return Degree.V;
+				return DiatonicDegree.V;
 			case SUBV7_VI:
 			case V7_VI:
 			case V_VI:
-				return Degree.VI;
+				return DiatonicDegree.VI;
 		}
 
 		return null;

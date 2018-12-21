@@ -8,13 +8,13 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import chromaticchord.ChromaticChordEnum;
-import chromaticchord.CustomChromaticChord;
 import diatonic.ChromaticFunction;
-import diatonic.Degree;
+import diatonic.DiatonicDegree;
 import diatonic.DiatonicFunction;
-import pitch.Chromatic;
-import pitch.PitchMidiEnum;
+import musical.Chromatic;
+import musical.ChromaticChordEnum;
+import musical.CustomChromaticChord;
+import pitch.NoteMidi;
 import pitch.PitchChromaticChord;
 import tonality.CustomTonality;
 import tonality.Tonality;
@@ -266,12 +266,12 @@ public class TonalityTest {
 	public void getDegree() {
 		Tonality ton = TonalityEnum.C;
 
-		assertEquals( Degree.I, ton.getDegree( PitchMidiEnum.C5 ) );
-		assertEquals( Degree.II, ton.getDegree( PitchMidiEnum.D5 ) );
-		assertEquals( Degree.III, ton.getDegree( PitchMidiEnum.E6 ) );
-		assertEquals( Degree.IV, ton.getDegree( Chromatic.F ) );
+		assertEquals( DiatonicDegree.I, ton.getDegree( NoteMidi.C5 ) );
+		assertEquals( DiatonicDegree.II, ton.getDegree( NoteMidi.D5 ) );
+		assertEquals( DiatonicDegree.III, ton.getDegree( NoteMidi.E6 ) );
+		assertEquals( DiatonicDegree.IV, ton.getDegree( Chromatic.F ) );
 		assertEquals( null, ton.getDegree( Chromatic.EEEE, false ) );
-		assertEquals( Degree.V, ton.getDegree( Chromatic.EEEE ) );
+		assertEquals( DiatonicDegree.V, ton.getDegree( Chromatic.EEEE ) );
 	}
 
 	@Test
@@ -430,6 +430,6 @@ public class TonalityTest {
 		 * );
 		 */
 		ton = TonalityEnum.Cm;		
-		assertEquals( DiatonicFunction.VII7, ton.getFunction( new CustomChromaticChord( ChromaticChordEnum.AA7 ).rename(ton) ) );
+		assertEquals( DiatonicFunction.VII7, ton.getFunction( CustomChromaticChord.copyOf( ChromaticChordEnum.AA7 ).rename(ton) ) );
 	}
 }

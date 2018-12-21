@@ -6,17 +6,16 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.BiFunction;
 
-import chromaticchord.CustomChromaticChord;
 import eventsequences.EventSequence;
 import midi.AddedException;
 import midi.FigureLength;
 import midi.PitchMidiException;
 import midi.Arpegios.Arpegio;
 import midi.Arpegios.ArpegioDefault;
+import musical.CustomChromaticChord;
 
-public abstract class ChordMidi<N extends NoteMidi, DistType>
-extends Chord<N, DistType>
-implements FigureLength, PitchOctave, PitchChromaticableChord<N, DistType>, PitchChordMutable<N, DistType>, PitchMidi {
+public abstract class ChordMidi<N extends NoteMidiReal> extends Chord<N>
+implements FigureLength, PitchOctave, PitchChromaticChord<N>, PitchMidi {
 	protected Arpegio	arpegio;
 	protected int		length;
 
@@ -24,17 +23,17 @@ implements FigureLength, PitchOctave, PitchChromaticableChord<N, DistType>, Pitc
 
 	public PitchChromaticChord toChromaticChord() {
 		if (getRootPos() != 0) {
-			CustomChromaticChord ns = new CustomChromaticChord();
+			CustomChromaticChord ns = CustomChromaticChord.noneOf();
 			for ( N n : this ) {
-				ns.addList( n.getChromatic() );
+				ns.add( n.getChromatic() );
 
-				if ( n == root )
+				if ( n == getRoot() )
 					ns.setRoot( ns.size() - 1 );
 			}
 
 			return ns;
 		} else
-			return PitchChromaticChord.copyOf(this);
+			return PitchChromaticChord.of(this);
 	}
 
 	public <T extends ChordMidi> T assign(T c) {
@@ -49,9 +48,9 @@ implements FigureLength, PitchOctave, PitchChromaticableChord<N, DistType>, Pitc
 		return (T) this;
 	}
 
-	public ChordMidi<N, DistType> inv(int n) {
+	public ChordMidi<N> inv(int n) {
 		if ( size() == 0 )
-			return (ChordMidi<N, DistType>) this;
+			return (ChordMidi<N>) this;
 
 		if ( n < 0 ) {
 			int lastIndex = size() - 1;
@@ -92,10 +91,10 @@ implements FigureLength, PitchOctave, PitchChromaticableChord<N, DistType>, Pitc
 
 		// meta.setRoot(getRootPos());
 
-		return (ChordMidi<N, DistType>) this;
+		return (ChordMidi<N>) this;
 	}
 
-	public abstract N get(int note, List<N> ns);
+	//public abstract N get(int note, List<N> ns);
 
 	@Override
 	public EventSequence getEvents() {
@@ -152,7 +151,7 @@ implements FigureLength, PitchOctave, PitchChromaticableChord<N, DistType>, Pitc
 		return arpegio;
 	}
 
-	public <T extends ChordMidi<N, DistType>> T setArpegio(Arpegio a) {
+	public <T extends ChordMidi<N>> T setArpegio(Arpegio a) {
 		arpegio = a.clone();
 		arpegio.setChord( this );
 
@@ -215,19 +214,19 @@ implements FigureLength, PitchOctave, PitchChromaticableChord<N, DistType>, Pitc
 	}
 
 	@Override
-	public ChordMidi<N, DistType> setLength(int d) {
+	public ChordMidi<N> setLength(int d) {
 		length = d;
-		return (ChordMidi<N, DistType>) this;
+		return (ChordMidi<N>) this;
 	}
 
 	@Override
-	public ChordMidi<N, DistType> shiftOctave(int o) {
+	public ChordMidi<N> shiftOctave(int o) {
 		for ( N n : this )
 			n.shiftOctave( o );
 		return this;
 	}
 	
-	public ChordMidi<N, DistType> setOctave(int o) {
+	public ChordMidi<N> setOctave(int o) {
 		int diff = o - getOctave();
 		shiftOctave( diff );
 		return this;
@@ -244,7 +243,7 @@ implements FigureLength, PitchOctave, PitchChromaticableChord<N, DistType>, Pitc
 				);
 	}
 
-	public <A extends PitchChord<N, DistType>> boolean hasSameNotesOrderSameOctave(A notes) {
+	public <A extends ChordInterface<N>> boolean hasSameNotesOrderSameOctave(A notes) {
 		if ( size() != notes.size() || size() == 0 )
 			return false;
 
@@ -256,18 +255,17 @@ implements FigureLength, PitchOctave, PitchChromaticableChord<N, DistType>, Pitc
 		return true;
 	}
 
-	public <A extends PitchChromaticableChord<N, DistType>> boolean hasSameNotesOrder(boolean sameOctave, A notes) {
+	public <A extends PitchChromaticChord<N>> boolean hasSameNotesOrder(boolean sameOctave, A notes) {
 		return sameOctave && hasSameNotesOrderSameOctave( notes )
 				|| !sameOctave && hasSameNotesOrder( notes );
 	}
 
 	@Override
-	public Boolean updateWhatIsIt(BiFunction<List<CustomChromaticChord>, PitchChord<?, ?>, CustomChromaticChord> f) {
-		meta = new CustomChromaticChord( this );
-		assert meta != null;
+	public Boolean updateWhatIsIt(BiFunction<List<CustomChromaticChord>, ChordInterface<?>, CustomChromaticChord> f) {
+		meta = CustomChromaticChord.copyOf( this );
 		assert f != null;
 		Boolean ret = meta.updateWhatIsIt( f );
-		root = get( meta.getRootPos() );
+		root = meta.getRootPos();
 		return ret;
 	}
 
@@ -285,17 +283,16 @@ implements FigureLength, PitchOctave, PitchChromaticableChord<N, DistType>, Pitc
 		return ret;
 	}
 
-	@Override
-	public float getPitchMean() {
+	public double getPitchMean() {
 		int sum = 0, oct = 0;
-		PitchMidiSingle last = null;
-		for ( PitchMidiSingle c : this ) {
-			sum += c.getCode();
+		ChromaticMidi last = null;
+		for ( N c : this ) {
+			sum += c.getFrequency();
 		}
-		return ( (float) sum ) / size();
+		return ( (double) sum ) / size();
 	}
 
-	public <T extends ChordMidi<N, DistType>> List<T> getAllDispositionsWithInv() {
+	public <T extends ChordMidi<N>> List<T> getAllDispositionsWithInv() {
 		List<T> ret = new ArrayList<>();
 		List<T> bases = super.getAllInversions();
 		for ( T c : bases ) {
@@ -306,8 +303,8 @@ implements FigureLength, PitchOctave, PitchChromaticableChord<N, DistType>, Pitc
 	}
 
 	@Override
-	public List<ChordMidi<N, DistType>> getAllInversions() {
-		ChordMidi<N, DistType> c =  clone();
+	public List<ChordMidi<N>> getAllInversions() {
+		ChordMidi<N> c =  clone();
 		c.setMinOctave();
 		c.minimize();
 
@@ -319,8 +316,10 @@ implements FigureLength, PitchOctave, PitchChromaticableChord<N, DistType>, Pitc
 			System.out.print( n.getOctave() + " " );
 		System.out.println( "" );
 	}
+	
+	protected abstract <T extends ChordMidi<N>> T newChord();
 
-	protected <T extends ChordMidi<N, DistType>> List<T> getAllDispositionsSub(boolean sub, int level, boolean first) {
+	protected <T extends ChordMidi<N>> List<T> getAllDispositionsSub(boolean sub, int level, boolean first) {
 		ArrayList<T> ret = new ArrayList<>();
 		assert size() > 0;
 
@@ -337,7 +336,7 @@ implements FigureLength, PitchOctave, PitchChromaticableChord<N, DistType>, Pitc
 
 				if ( sub && size() > 1 ) {
 					// Copia acorde desde la segunda a la última nota
-					T subChord = newArray();
+					T subChord = newChord();
 					for ( int j = 1; j < size(); j++ )
 						subChord.add( (N)get( j ).clone() );
 
@@ -345,7 +344,7 @@ implements FigureLength, PitchOctave, PitchChromaticableChord<N, DistType>, Pitc
 							.getAllDispositionsSub( true, level + 1, first );
 					for ( T subCombination : subCombinations ) {
 						// Forma array superChord = [array[0] + subChordcombination]
-						T superChord = newArray();
+						T superChord = newChord();
 						superChord.add( (N)get( 0 ).clone() );
 						superChord.add( subCombination.clone() );
 
@@ -378,10 +377,10 @@ implements FigureLength, PitchOctave, PitchChromaticableChord<N, DistType>, Pitc
 
 	public void minimizeDistanceTo(ChordMidi cIn) {
 		assert cIn != null;
-		List<ChordMidi<N, DistType>> ret = getAllDispositionsWithInv();
+		List<ChordMidi<N>> ret = getAllDispositionsWithInv();
 		int minDist = 9999;
-		ChordMidi<N, DistType> minDistChord = null;
-		for ( ChordMidi<N, DistType> c : ret ) {
+		ChordMidi<N> minDistChord = null;
+		for ( ChordMidi<N> c : ret ) {
 			int d = (int) Math.abs( cIn.dist( c ) );
 			if ( d < minDist ) {
 				minDist = d;
@@ -391,11 +390,11 @@ implements FigureLength, PitchOctave, PitchChromaticableChord<N, DistType>, Pitc
 		assign( minDistChord );
 	}
 
-	public int dist(ChordMidi<N, ?> n) {
+	public int dist(ChordMidi<N> n) {
 		return dist( n, true );
 	}
 
-	protected int dist(ChordMidi<N, ?> n, boolean bidirectional) {
+	protected int dist(ChordMidi<N> n, boolean bidirectional) {
 		int d = 0;
 
 		for ( N i : this ) {
@@ -435,13 +434,7 @@ implements FigureLength, PitchOctave, PitchChromaticableChord<N, DistType>, Pitc
 	}
 	
 	@Override
-	public ChordMidi<N, DistType> clone() {
-		return (ChordMidi<N, DistType>)super.clone();
-	}
-
-	@Override
-	public void removeHigherDuplicates() {
-		// TODO Auto-generated method stub
-		
+	public ChordMidi<N> clone() {
+		return (ChordMidi<N>)super.clone();
 	}
 }

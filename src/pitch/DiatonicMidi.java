@@ -1,81 +1,49 @@
 package pitch;
 
-import diatonic.Degree;
+import diatonic.DiatonicDegree;
 import diatonic.DiatonicFunction;
 import diatonic.IntervalChromatic;
 import diatonic.IntervalDiatonic;
-import eventsequences.EventSequence;
-import midi.Settings;
 import midi.Settings.DefaultValues;
+import musical.Diatonic;
 import tonality.Tonality;
+import tonality.TonalityEnum;
 import tonality.TonalityException;
 
-public class DiatonicMidi implements NoteMidi, PitchDiatonic<DiatonicMidi, IntervalChromatic> {
-	protected Degree	degree;
+public class DiatonicMidi extends ChromaticMidi implements PitchDiatonic {
+	protected DiatonicDegree	degree;
 	protected int		octave;
-	
 	protected Tonality	tonality;
-	protected int		velocity;
-	protected int		length;
 
 	/* Constructores */
-	public DiatonicMidi(Degree degree, Tonality tonality, int octave, int duration, int vel) {
-		assert degree != null;
-
-		set( duration, vel );
-		int d = degree.val();
-		this.octave = octave +
-				( d < 0 && d % tonality.getScale().length() != 0 ? -1 : 0 );
-		this.tonality = tonality;
-		setDegree( degree );
-	}
-
-	public DiatonicMidi(Degree degree, Tonality tonality, int octave, int duration) {
-		this( degree, tonality, octave, duration, DefaultValues.VELOCITY );
-	}
-
-	public DiatonicMidi(Degree degree, Tonality tonality, int octave) {
-		this( degree, tonality, octave, DefaultValues.DURATION_NOTE );
-	}
-
-	public DiatonicMidi(DiatonicFunction f, Tonality tonality, int octave, int duration, int velocity) {
-		this( f.getDegree(), tonality, octave, duration, velocity );
-	}
-
-	public DiatonicMidi(IntervalDiatonic id, Tonality tonality, int octave, int duration, int velocity) {
-		this(
-			Degree.get( id.val() ), tonality, octave + id.val() / IntervalDiatonic.OCTAVE.val(), duration, velocity
-		);
-	}
-
-	public DiatonicMidi(DiatonicFunction f, Tonality tonality, int octave, int duration) {
-		this( f, tonality, octave, duration, Settings.DefaultValues.VELOCITY );
-	}
-
-	public DiatonicMidi(IntervalDiatonic id, Tonality tonality, int octave, int duration) {
-		this( id, tonality, octave, duration, Settings.DefaultValues.VELOCITY );
-	}
-
-	public DiatonicMidi(DiatonicFunction f, Tonality tonality, int octave) {
-		this( f, tonality, octave, Settings.DefaultValues.DURATION_NOTE );
-	}
-
-	public DiatonicMidi(IntervalDiatonic id, Tonality tonality, int octave) {
-		this( id, tonality, octave, Settings.DefaultValues.DURATION_NOTE );
-	}
-
-	public DiatonicMidi(Tonality tonality, int octave, int d) {
-		this( Degree.I, tonality, octave, d );
-	}
-
-	public DiatonicMidi(Tonality tonality, int octave) {
-		this( tonality, octave, Settings.DefaultValues.DURATION_NOTE );
-	}
-
-	public DiatonicMidi(Tonality tonality) {
-		this( tonality, Settings.DefaultValues.OCTAVE );
+	protected DiatonicMidi(NoteMidi p, int d, int v) {
+		super(p, d, v);
 	}
 	
+	public static DiatonicMidi of(DiatonicDegree d, Tonality t, int o, int duration, int vel) {
+		assert d != null;
+
+		int dv = d.val();
+		int octave = o +
+				( dv < 0 && dv % t.getScale().length() != 0 ? -1 : 0 );
+		
+		NoteMidi n = NoteMidi.of( d, t, octave );
+		DiatonicMidi dm = new DiatonicMidi(n, duration, vel);
+		dm.setDegree( d );
+		dm.octave = octave;
+		dm.tonality = t;
+		
+		return dm;
+	}
+	
+	public static DiatonicMidi of(DiatonicFunction i, Tonality c, int o) {
+		return of(i.getDegree(), c, o, DefaultValues.DURATION_NOTE, DefaultValues.VELOCITY);
+	}
+	
+	public static DiatonicMidi of(DiatonicDegree d, Tonality c, int o) {
+		return of(d, c, o, DefaultValues.DURATION_NOTE, DefaultValues.VELOCITY);
+	}
+
 	public DiatonicMidi sub(IntervalDiatonic i) {
 		return _add(-i.val());
 	}
@@ -85,7 +53,7 @@ public class DiatonicMidi implements NoteMidi, PitchDiatonic<DiatonicMidi, Inter
 		int o = ( degreeInt ) / IntervalDiatonic.OCTAVE.val();
 		if ( degreeInt < 0 )
 			o--;
-		Degree degree = Degree.get( degreeInt );
+		DiatonicDegree degree = DiatonicDegree.get( degreeInt );
 		assert degree != null : getDegree().val() + " " + i;
 
 		DiatonicMidi dm = clone();
@@ -107,16 +75,16 @@ public class DiatonicMidi implements NoteMidi, PitchDiatonic<DiatonicMidi, Inter
 
 	@Override
 	public DiatonicMidi clone() {
-		return new DiatonicMidi( degree, Tonality.of( tonality ), octave, length, velocity );
+		return DiatonicMidi.of( degree, Tonality.of( tonality ), octave, length, velocity );
 	}
 
 	public DiatonicMidi setDegree(int p) {
-		degree = Degree.get( tonality.getScale().trim( p ) );
+		degree = DiatonicDegree.get( tonality.getScale().trim( p ) );
 
 		return this;
 	}
 
-	public DiatonicMidi setDegree(Degree d) {
+	public DiatonicMidi setDegree(DiatonicDegree d) {
 		return setDegree( d.val() );
 	}
 
@@ -124,7 +92,7 @@ public class DiatonicMidi implements NoteMidi, PitchDiatonic<DiatonicMidi, Inter
 		return setDegree( getDegree().val() + p );
 	}
 
-	public IntervalChromatic dist(DiatonicMidi n) throws TonalityException {
+	public IntervalChromatic distInterval(DiatonicMidi n) throws TonalityException {
 		if ( !n.tonality.equals( tonality ) )
 			throw new TonalityException( this, n );
 
@@ -134,19 +102,11 @@ public class DiatonicMidi implements NoteMidi, PitchDiatonic<DiatonicMidi, Inter
 			n.getOctave() * tonalityLength + n.getDegree().val()
 					- ( getOctave() * tonalityLength + getDegree().val() )
 		);
-		int diffSemi = n.getPitchCode().getCode() - getPitchCode().getCode();
+		int diffSemi = n.getCode() - getCode();
 		return IntervalChromatic.get( id, diffSemi );
 	}
 
-	public PitchMidiEnum getPitchCode() {
-		int note = tonality.get( degree ).val() + octave * 12;
-		if ( tonality.get( degree ).val() < tonality.getRoot().val() )
-			note += 12;
-
-		return PitchMidiSingle.of( note );
-	}
-
-	public Degree getDegree() {
+	public DiatonicDegree getDegree() {
 		return degree;
 	}
 
@@ -156,29 +116,12 @@ public class DiatonicMidi implements NoteMidi, PitchDiatonic<DiatonicMidi, Inter
 
 	@Override
 	public String toString() {
-		return toChromaticMidi().toString( tonality ) + " (" + degree + ")";
-	}
-
-	public ChromaticMidi toChromaticMidi() {
-		int n = getPitchCode().getCode();
-		ChromaticMidi note = ChromaticMidi.getFromCode( n, length, velocity );
-		return note;
-	}
-
-	@Override
-	public EventSequence getEvents() {
-		ChromaticMidi n = toChromaticMidi();
-		return n.getEvents();
+		return toString( tonality ) + " (" + degree + ")";
 	}
 
 	public String toStringFull() {
 		return degree.toString() + " " + tonality.toString() + " Octava " + octave + " Duración: "
 				+ length + " Velocity: " + velocity;
-	}
-
-	@Override
-	public Chromatic getChromatic() {
-		return toChromaticMidi().getChromatic();
 	}
 
 	@Override
@@ -206,12 +149,18 @@ public class DiatonicMidi implements NoteMidi, PitchDiatonic<DiatonicMidi, Inter
 	@Override
 	public DiatonicMidi shiftOctave(int o) {
 		octave += o;
+		updatePitch();
 		return this;
+	}
+	
+	protected void updatePitch() {
+		pitch = NoteMidi.of( degree, tonality, octave );
 	}
 
 	@Override
 	public DiatonicMidi setOctave(int o) {
 		octave = o;
+		updatePitch();
 		return this;
 	}
 
@@ -228,12 +177,12 @@ public class DiatonicMidi implements NoteMidi, PitchDiatonic<DiatonicMidi, Inter
 		return degree.equals( dm.degree ) && tonality.equals( dm.tonality ) && octave == dm.octave && length == dm.length && velocity == dm.velocity;
 	}
 
-	public boolean equalsEnharmonic(PitchChromaticableSingle c) {
+	public boolean equalsEnharmonic(PitchChromaticSingle c) {
 		return this.getChromatic().equalsEnharmonic( c.getChromatic() );
 	}
 
 	@Override
-	public int getCode() {
-		return this.toChromaticMidi().getCode();
+	public Diatonic getDiatonic(Tonality ton) throws TonalityException {
+		return Diatonic.get( degree );
 	}
 }

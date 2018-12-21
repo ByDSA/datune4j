@@ -1,20 +1,21 @@
 package Tests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import chromaticchord.ChromaticChordEnum;
-import pitch.Chromatic;
+import musical.Chromatic;
+import musical.ChromaticChordEnum;
 import pitch.ChromaticChordMidi;
-import pitch.PitchMidiEnum;
+import pitch.NoteMidi;
 
 public class ChromaticChordMidiTest {
 	@Test
 	public void chromaticChordToMidi() {
-		ChromaticChordMidi ccm = new ChromaticChordMidi(ChromaticChordEnum.F5);
-		assertEquals(PitchMidiEnum.F5, ccm.get(0).getCode());
-		assertEquals(PitchMidiEnum.C6, ccm.get(1).getCode());
+		ChromaticChordMidi ccm = ChromaticChordMidi.copyOf(ChromaticChordEnum.F5);
+		assertTrue(NoteMidi.F5.equals( ccm.get(0) ));
+		assertTrue(NoteMidi.C6.equals( ccm.get(1) ));
 		assertEquals(0, ccm.getRootPos());
 		assertEquals(Chromatic.F, ccm.get(0).getChromatic());
 		assertEquals(Chromatic.C, ccm.get(1).getChromatic());
@@ -24,7 +25,7 @@ public class ChromaticChordMidiTest {
 	public void names() {
 		assertEquals("C", ChromaticChordEnum.C.toString());
 		
-		ChromaticChordMidi ccm = new ChromaticChordMidi(Chromatic.C, Chromatic.E, Chromatic.G);
+		ChromaticChordMidi ccm = ChromaticChordMidi.of(Chromatic.C, Chromatic.E, Chromatic.G);
 		
 		assertEquals("C", ccm.toString());
 		

@@ -1,18 +1,11 @@
 package pitch;
 
-import diatonic.IntervalChromatic;
+import musical.Chromatic;
+import musical.Diatonic;
+import tonality.Tonality;
+import tonality.TonalityException;
 
-public interface PitchChromaticSingle extends PitchChromaticableSingle, PitchChromatic {
-	public int val();
-	public default Integer dist(PitchChromaticSingle n2) {
-		int d = n2.val() - val();
-		while (d < 0)
-			d += IntervalChromatic.PERFECT_OCTAVE.val();
-		
-		return d;
-	}
-	
-	public default boolean equalsEnharmonic(PitchChromaticSingle c) {
-		return val() == c.val();
-	}
+public interface PitchChromaticSingle extends PitchSingle {
+	public Chromatic getChromatic();
+	public Diatonic getDiatonic(Tonality ton) throws TonalityException;
 }

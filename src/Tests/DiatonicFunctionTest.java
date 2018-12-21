@@ -30,7 +30,7 @@ public class DiatonicFunctionTest {
 	@Test
 	public void getDregreeNotNull() {
 		for (DiatonicFunction df : DiatonicFunction.values()) {
-			assertNotNull( df.getDegree() );
+			assertNotNull( df.toString(), df.getDegree() );
 		}
 	}
 }

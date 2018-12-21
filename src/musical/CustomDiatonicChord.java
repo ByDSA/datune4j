@@ -1,24 +1,24 @@
-package pitch;
+package musical;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.function.BiFunction;
 
-import arrays.ArrayUtils;
-import chromaticchord.ChromaticChordEnum;
-import chromaticchord.CustomChromaticChord;
-import diatonic.Degree;
+import datastructures.SetUtils;
+import diatonic.DiatonicDegree;
 import diatonic.DiatonicFunction;
-import diatonic.IntervalDiatonic;
-import midi.Utils;
+import midi.AddedException;
+import pitch.ChordInterface;
+import pitch.Chord;
+import pitch.ChromaticMidi;
+import pitch.ChordMutableInterface;
+import pitch.PitchChromaticChord;
+import pitch.PitchDiatonicChord;
+import pitch.PitchDiatonicSingle;
 import tonality.Tonality;
 
-public class CustomDiatonicChord extends Chord<Diatonic, IntervalDiatonic>
-		implements PitchDiatonicChord<Diatonic, CustomDiatonicChord>,
-		PitchMidiableChord<DiatonicChordMidi>, PitchChordMutable<Diatonic, IntervalDiatonic> {
+public class CustomDiatonicChord extends Chord<Diatonic>
+		implements PitchDiatonicChord<Diatonic>,
+		ChordMutableInterface<Diatonic> {
 	private static final CustomDiatonicChord TRIAD = new CustomDiatonicChord(
 		Diatonic.I, Diatonic.III, Diatonic.V
 	);
@@ -334,7 +334,7 @@ public class CustomDiatonicChord extends Chord<Diatonic, IntervalDiatonic>
 		// return null;
 	}
 
-	public CustomDiatonicChord(PitchDiatonicableSingle... cs) {
+	public CustomDiatonicChord(PitchDiatonicSingle... cs) {
 		assert cs != null;
 		for ( int i = 0; i < cs.length; i++ ) {
 			assert cs[i] != null;
@@ -343,13 +343,17 @@ public class CustomDiatonicChord extends Chord<Diatonic, IntervalDiatonic>
 		}
 	}
 
-	public CustomDiatonicChord(PitchDiatonicableChord<?, ?, ?> cs) {
+	public CustomDiatonicChord(PitchDiatonicChord<?> cs) {
 		assert cs != null;
 		for ( int i = 0; i < cs.size(); i++ ) {
 			assert cs.get( i ) != null;
 			Diatonic c = cs.get( i ).getDiatonic();
 			add( c );
 		}
+	}
+	
+	public CustomDiatonicChord setRoot(int n) {
+		return (CustomDiatonicChord) super.setRoot( n );
 	}
 
 	public CustomDiatonicChord shift(int n) {
@@ -359,33 +363,29 @@ public class CustomDiatonicChord extends Chord<Diatonic, IntervalDiatonic>
 
 		return this;
 	}
+	
+	public CustomDiatonicChord inv(int n) {
+		return (CustomDiatonicChord) super.inv( n );
+	}
+	
+	public CustomDiatonicChord inv() {
+		return (CustomDiatonicChord) super.inv();
+	}
 
-	public CustomDiatonicChord shift(Degree d) {
+	public CustomDiatonicChord shift(DiatonicDegree d) {
 		return shift( d.val() );
 	}
 
 	@Override
-	public CustomDiatonicChord newArray() {
-		return new CustomDiatonicChord();
-	}
-
-	@Override
-	public void removeHigherDuplicates() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public CustomChromaticChord toChromatic(Tonality t) {
+	public PitchChromaticChord<Chromatic> toChromaticChord(Tonality t) {
 		return toChromatic( t, null );
 	}
 
-	public CustomChromaticChord toChromatic(Tonality t, DiatonicFunction df) {
+	public PitchChromaticChord<Chromatic> toChromatic(Tonality t, DiatonicFunction df) {
 		CustomChromaticChord cc = new CustomChromaticChord();
 		for ( Diatonic d : this )
 			cc.add( d.toChromatic( t ) );
 
-		CustomChromaticChord foundChord = null;
 		if ( df != null )
 			switch ( df ) {
 				case I2:
@@ -395,11 +395,9 @@ public class CustomDiatonicChord extends Chord<Diatonic, IntervalDiatonic>
 				case V2:
 				case VI2:
 				case VII2:
-					for ( ChromaticChordEnum c : ArrayUtils.concat(
-						ChromaticChordEnum.CHORDS_SUS2, ChromaticChordEnum.CHORDS_SUSb2, ChromaticChordEnum.CHORDS_SUSb2b5
-					) )
+					for ( ChromaticChordEnum c : SetUtils.of( ChromaticChordEnum.CHORDS_SUS2, ChromaticChordEnum.CHORDS_SUSb2, ChromaticChordEnum.CHORDS_SUSb2b5 ) )
 						if ( cc.equalsEnharmonic( c ) ) {
-							return new CustomChromaticChord( c );
+							return c;
 						}
 					break;
 				case I4:
@@ -409,10 +407,9 @@ public class CustomDiatonicChord extends Chord<Diatonic, IntervalDiatonic>
 				case V4:
 				case VI4:
 				case VII4:
-					for ( ChromaticChordEnum c : ArrayUtils
-							.concat( ChromaticChordEnum.CHORDS_SUS4, ChromaticChordEnum.CHORDS_SUSa4 ) )
+					for ( ChromaticChordEnum c : SetUtils.of( ChromaticChordEnum.CHORDS_SUS4, ChromaticChordEnum.CHORDS_SUSa4 ) )
 						if ( cc.equalsEnharmonic( c ) ) {
-							return new CustomChromaticChord( c );
+							return c;
 						}
 					break;
 				case I6:
@@ -422,10 +419,9 @@ public class CustomDiatonicChord extends Chord<Diatonic, IntervalDiatonic>
 				case V6:
 				case VI6:
 				case VII6:
-					for ( ChromaticChordEnum c : ArrayUtils
-							.concat( ChromaticChordEnum.CHORDS_6, ChromaticChordEnum.CHORDS_m6 ) )
+					for ( ChromaticChordEnum c : SetUtils.of( ChromaticChordEnum.CHORDS_6, ChromaticChordEnum.CHORDS_m6 ) )
 						if ( cc.equalsEnharmonic( c ) ) {
-							return new CustomChromaticChord( c );
+							return c;
 						}
 					break;
 			}
@@ -437,33 +433,44 @@ public class CustomDiatonicChord extends Chord<Diatonic, IntervalDiatonic>
 	}
 
 	@Override
-	public DiatonicChordMidi toMidi(Tonality t, int octave, int length, int velocity) {
-		resetRootIfNeeded();
-		DiatonicChordMidi dcm = new DiatonicChordMidi( t );
-		for ( Diatonic d : this ) {
-			if ( dcm.size() > 0
-					&& dcm.get( dcm.size() - 1 ).getDegree().val() >= d.getDegree().val() )
-				octave++;
-			dcm.add( d.toMidi( t, octave, length, velocity ) );
-			if ( d == root )
-				dcm.setRoot( dcm.size() - 1 );
-		}
-		return dcm;
-	}
-
-	@Override
 	public CustomDiatonicChord clone() {
 		return (CustomDiatonicChord) super.clone();
 	}
 
 	@Override
-	public Boolean updateWhatIsIt(BiFunction<List<CustomChromaticChord>, PitchChord<?, ?>, CustomChromaticChord> fSelectChord) {
+	public Boolean updateWhatIsIt(BiFunction<List<CustomChromaticChord>, ChordInterface<?>, CustomChromaticChord> fSelectChord) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Boolean updateWhatIsItIfNeeded() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CustomDiatonicChord resetRoot() {
+		return (CustomDiatonicChord)super.resetRoot();
+	}
+
+	public CustomDiatonicChord add(Diatonic... cs) throws AddedException {
+		for (Diatonic d : cs)
+			add(d);
+		return this;
+	}
+
+	@Override
+	public CustomDiatonicChord add(int pos, Diatonic... ns) throws AddedException {
+		return (CustomDiatonicChord)super.add( pos, ns );
+	}
+
+	@Override
+	public CustomDiatonicChord removeHigherDuplicates() {
+		return (CustomDiatonicChord)super.removeHigherDuplicates();
+	}
+
+	public ChromaticMidi getDiatonicMidi(Tonality tonality, int octave) {
 		// TODO Auto-generated method stub
 		return null;
 	}

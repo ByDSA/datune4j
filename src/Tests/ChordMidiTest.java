@@ -5,7 +5,7 @@ import static org.junit.Assert.assertNotEquals;
 
 import org.junit.Test;
 
-import chromaticchord.ChromaticChordEnum;
+import musical.ChromaticChordEnum;
 import pitch.ChromaticChordMidi;
 import pitch.ChromaticMidi;
 import pitch.PitchMidi;
@@ -13,7 +13,7 @@ import pitch.PitchMidi;
 public class ChordMidiTest {
 	@Test
 	public void setMinOctave() {
-		ChromaticChordMidi ccm = new ChromaticChordMidi(ChromaticChordEnum.C5);
+		ChromaticChordMidi ccm = ChromaticChordMidi.copyOf(ChromaticChordEnum.C5);
 		assertEquals(5, ccm.getOctave());
 		ccm.setMinOctave();
 		assertEquals(PitchMidi.MIN_OCTAVE, ccm.getOctave());
@@ -21,7 +21,7 @@ public class ChordMidiTest {
 	
 	@Test
 	public void setOctave() {
-		ChromaticChordMidi ccm = new ChromaticChordMidi(ChromaticChordEnum.C5);
+		ChromaticChordMidi ccm = ChromaticChordMidi.copyOf(ChromaticChordEnum.C5);
 		assertEquals(5, ccm.getOctave());
 		ccm.setOctave(4);
 		assertEquals(4, ccm.getOctave());
@@ -29,7 +29,7 @@ public class ChordMidiTest {
 	
 	@Test
 	public void shiftOctave() {
-		ChromaticChordMidi ccm = new ChromaticChordMidi(ChromaticChordEnum.C5);
+		ChromaticChordMidi ccm = ChromaticChordMidi.copyOf(ChromaticChordEnum.C5);
 		assertEquals(5, ccm.getOctave());
 		ccm.shiftOctave(-1);
 		assertEquals(4, ccm.getOctave());
@@ -41,8 +41,8 @@ public class ChordMidiTest {
 	
 	@Test
 	public void dist() {
-		ChromaticChordMidi ccm = new ChromaticChordMidi(ChromaticChordEnum.C);
-		ChromaticChordMidi ccm2 = new ChromaticChordMidi(ChromaticChordEnum.D);
+		ChromaticChordMidi ccm = ChromaticChordMidi.copyOf(ChromaticChordEnum.C);
+		ChromaticChordMidi ccm2 = ChromaticChordMidi.copyOf(ChromaticChordEnum.D);
 		assertEquals(0.0f, ccm.dist(ccm), 0);
 		assertEquals(ccm2.dist(ccm), ccm.dist(ccm2), 0);
 		assertNotEquals(0, ccm.dist(ccm2));
@@ -52,8 +52,8 @@ public class ChordMidiTest {
 	
 	@Test
 	public void dist2() {
-		ChromaticChordMidi ccm = new ChromaticChordMidi(ChromaticMidi.getFromCode(67), ChromaticMidi.getFromCode(69), ChromaticMidi.getFromCode(74));
-		ChromaticChordMidi ccm2 = new ChromaticChordMidi(ChromaticMidi.getFromCode(4), ChromaticMidi.getFromCode(69), ChromaticMidi.getFromCode(74));
+		ChromaticChordMidi ccm = ChromaticChordMidi.of(ChromaticMidi.getFromCode(67), ChromaticMidi.getFromCode(69), ChromaticMidi.getFromCode(74));
+		ChromaticChordMidi ccm2 = ChromaticChordMidi.of(ChromaticMidi.getFromCode(4), ChromaticMidi.getFromCode(69), ChromaticMidi.getFromCode(74));
 		assertEquals(ccm2.dist(ccm), ccm.dist(ccm2));
 		assertEquals(63, ccm.dist(ccm2));
 		assertEquals(true, ccm.dist(ccm2) > 2);

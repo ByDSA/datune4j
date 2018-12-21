@@ -9,51 +9,51 @@ import java.util.Set;
 import org.junit.Test;
 
 import diatonic.ChromaticFunction;
-import diatonic.Degree;
+import diatonic.DiatonicDegree;
 
 public class DegreeTest {
 	@Test
 	public void values() {
-		assertEquals( 0, Degree.I.val() );
-		assertEquals( 1, Degree.II.val() );
-		assertEquals( 2, Degree.III.val() );
-		assertEquals( 3, Degree.IV.val() );
-		assertEquals( 4, Degree.V.val() );
-		assertEquals( 5, Degree.VI.val() );
-		assertEquals( 6, Degree.VII.val() );
+		assertEquals( 0, DiatonicDegree.I.val() );
+		assertEquals( 1, DiatonicDegree.II.val() );
+		assertEquals( 2, DiatonicDegree.III.val() );
+		assertEquals( 3, DiatonicDegree.IV.val() );
+		assertEquals( 4, DiatonicDegree.V.val() );
+		assertEquals( 5, DiatonicDegree.VI.val() );
+		assertEquals( 6, DiatonicDegree.VII.val() );
 	}
 	
 	@Test
 	public void get() {
-		assertEquals( Degree.I, Degree.get(-7) );
-		assertEquals( Degree.II, Degree.get(-6) );
-		assertEquals( Degree.III, Degree.get(-5) );
-		assertEquals( Degree.IV, Degree.get(-4) );
-		assertEquals( Degree.V, Degree.get(-3) );
-		assertEquals( Degree.VI, Degree.get(-2) );
-		assertEquals( Degree.VII, Degree.get(-1) );
-		assertEquals( Degree.I, Degree.get(0) );
-		assertEquals( Degree.II, Degree.get(1) );
-		assertEquals( Degree.III, Degree.get(2) );
-		assertEquals( Degree.IV, Degree.get(3) );
-		assertEquals( Degree.V, Degree.get(4) );
-		assertEquals( Degree.VI, Degree.get(5) );
-		assertEquals( Degree.VII, Degree.get(6) );
-		assertEquals( Degree.I, Degree.get(7) );
-		assertEquals( Degree.II, Degree.get(8) );
-		assertEquals( Degree.III, Degree.get(9) );
-		assertEquals( Degree.IV, Degree.get(10) );
-		assertEquals( Degree.V, Degree.get(11) );
-		assertEquals( Degree.VI, Degree.get(12) );
-		assertEquals( Degree.VII, Degree.get(13) );
+		assertEquals( DiatonicDegree.I, DiatonicDegree.get(-7) );
+		assertEquals( DiatonicDegree.II, DiatonicDegree.get(-6) );
+		assertEquals( DiatonicDegree.III, DiatonicDegree.get(-5) );
+		assertEquals( DiatonicDegree.IV, DiatonicDegree.get(-4) );
+		assertEquals( DiatonicDegree.V, DiatonicDegree.get(-3) );
+		assertEquals( DiatonicDegree.VI, DiatonicDegree.get(-2) );
+		assertEquals( DiatonicDegree.VII, DiatonicDegree.get(-1) );
+		assertEquals( DiatonicDegree.I, DiatonicDegree.get(0) );
+		assertEquals( DiatonicDegree.II, DiatonicDegree.get(1) );
+		assertEquals( DiatonicDegree.III, DiatonicDegree.get(2) );
+		assertEquals( DiatonicDegree.IV, DiatonicDegree.get(3) );
+		assertEquals( DiatonicDegree.V, DiatonicDegree.get(4) );
+		assertEquals( DiatonicDegree.VI, DiatonicDegree.get(5) );
+		assertEquals( DiatonicDegree.VII, DiatonicDegree.get(6) );
+		assertEquals( DiatonicDegree.I, DiatonicDegree.get(7) );
+		assertEquals( DiatonicDegree.II, DiatonicDegree.get(8) );
+		assertEquals( DiatonicDegree.III, DiatonicDegree.get(9) );
+		assertEquals( DiatonicDegree.IV, DiatonicDegree.get(10) );
+		assertEquals( DiatonicDegree.V, DiatonicDegree.get(11) );
+		assertEquals( DiatonicDegree.VI, DiatonicDegree.get(12) );
+		assertEquals( DiatonicDegree.VII, DiatonicDegree.get(13) );
 	}
 	
 	@Test
 	public void differentsValues() {
 		Set<Integer> set = new HashSet();
-		for(Degree d : Degree.values())
+		for(DiatonicDegree d : DiatonicDegree.values())
 			set.add( d.val() );
-		assertEquals(Degree.values().length, set.size());
+		assertEquals(DiatonicDegree.values().length, set.size());
 	}
 	
 	@Test

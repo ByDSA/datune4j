@@ -6,13 +6,13 @@ import java.util.List;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 
-import chromaticchord.ChromaticChordEnum;
 import eventsequences.Instrument;
 import eventsequences.Track;
 import midi.Duration;
 import midi.Midi;
 import midi.Song;
 import midi.Events.Volume;
+import musical.ChromaticChordEnum;
 import pitch.ChordMidi;
 import pitch.ChromaticChordMidi;
 import pitch.ProgressionChromaticChordMidi;

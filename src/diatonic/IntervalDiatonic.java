@@ -60,7 +60,7 @@ public enum IntervalDiatonic {
         }
     }
 
-    public static IntervalDiatonic get(Degree d) {
+    public static IntervalDiatonic get(DiatonicDegree d) {
         switch (d) {
             case I:
                 return UNISON;

@@ -4,16 +4,17 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import chromaticchord.ChromaticChordEnum;
+import musical.ChromaticChordEnum;
 import pitch.Chord;
 import pitch.DiatonicChordMidi;
+import pitch.ChordInterface;
 import tonality.TonalityEnum;
 
 public class ChordTest {
 	/*@Test
 	public void equals() {
-		Chord cm = ChromaticChordEnum.C.toMidi();
-		Chord cm2 = (Chord) cm.duplicate();
+		PitchChord cm = ChromaticChordEnum.C;
+		PitchChord cm2 = cm.clone();
 
 		assertEquals(true, cm instanceof Chord);
 		assertEquals(true, cm2 instanceof Chord);
@@ -24,7 +25,7 @@ public class ChordTest {
 		}
 
 		cm = new DiatonicChordMidi( TonalityEnum.C, ChromaticChordEnum.C );
-		cm2 = (Chord) cm.duplicate();
+		cm2 = cm.clone();
 
 		assertEquals(true, cm instanceof Chord);
 		assertEquals(true, cm2 instanceof Chord);

@@ -1,9 +1,14 @@
-package pitch;
+package musical;
 
 import java.util.ArrayList;
 
-import diatonic.Degree;
+import diatonic.DiatonicDegree;
+import diatonic.IntervalChromatic;
+import diatonic.IntervalDiatonic;
 import midi.Settings;
+import pitch.ChromaticMidi;
+import pitch.PitchChromaticSingle;
+import pitch.PitchSingle;
 import tonality.Tonality;
 import tonality.TonalityException;
 
@@ -31,6 +36,116 @@ public enum Chromatic implements PitchChromaticSingle {
 
 	public Chromatic add(int n) {
 		return get(this.val() + n);
+	}
+	
+	public Chromatic addSemi() {
+		switch(this) {
+			case A: 	return AA;
+			case AA: 	return AAA;
+			case AAA: 	return AAAA;
+			case AAAA: 	return AAAAA;
+			case Ab: 	return A;
+			case Abb:	return Ab;
+			case Abbb:	return Abb;
+			case B:		return BB;
+			case BB:	return BBB;
+			case BBB:	return BBBB;
+			case BBBB:	return BBBBB;
+			case Bb:	return B;
+			case Bbb:	return Bb;
+			case Bbbb:	return Bbb;
+			case C:		return CC;
+			case CC:	return CCC;
+			case CCC:	return CCCC;
+			case CCCC:	return CCCCC;
+			case Cb:	return C;
+			case Cbb:	return Cb;
+			case Cbbb:	return Cbb;
+			case D:		return DD;
+			case DD:	return DDD;
+			case DDD:	return DDDD;
+			case DDDD:	return DDDDD;
+			case Db:	return D;
+			case Dbb:	return Db;
+			case Dbbb:	return Dbb;
+			case E:		return EE;
+			case EE:	return EEE;
+			case EEE:	return EEEE;
+			case EEEE:	return EEEEE;
+			case Eb:	return E;
+			case Ebb:	return Eb;
+			case Ebbb:	return Ebb;
+			case F:		return FF;
+			case FF:	return FFF;
+			case FFF:	return FFFF;
+			case FFFF:	return FFFFF;
+			case Fb:	return F;
+			case Fbb:	return Fb;
+			case Fbbb:	return Fbb;
+			case G:		return GG;
+			case GG:	return GGG;
+			case GGG:	return GGGG;
+			case GGGG:	return GGGGG;
+			case Gb:	return G;
+			case Gbb:	return Gb;
+			case Gbbb:	return Gbb;
+			default:	throw new AlterationException();
+		}
+	}
+	
+	public Chromatic subSemi() {
+		switch(this) {
+			case A: 	return Ab;
+			case AA: 	return A;
+			case AAA: 	return AA;
+			case AAAA: 	return AAA;
+			case AAAAA:	return AAAA;
+			case Ab: 	return Abb;
+			case Abb:	return Abbb;
+			case B:		return Bb;
+			case BB:	return B;
+			case BBB:	return BB;
+			case BBBB:	return BBB;
+			case BBBBB:	return BBBB;
+			case Bb:	return Bbb;
+			case Bbb:	return Bbbb;
+			case C:		return Cb;
+			case CC:	return C;
+			case CCC:	return CC;
+			case CCCC:	return CCC;
+			case CCCCC:	return CCCC;
+			case Cb:	return Cbb;
+			case Cbb:	return Cbbb;
+			case D:		return Db;
+			case DD:	return D;
+			case DDD:	return DD;
+			case DDDD:	return DDD;
+			case DDDDD:	return DDDD;
+			case Db:	return Dbb;
+			case Dbb:	return Dbbb;
+			case E:		return Eb;
+			case EE:	return E;
+			case EEE:	return EE;
+			case EEEE:	return EEE;
+			case EEEEE:	return EEEE;
+			case Eb:	return Ebb;
+			case Ebb:	return Ebbb;
+			case F:		return Fb;
+			case FF:	return F;
+			case FFF:	return FF;
+			case FFFF:	return FFF;
+			case FFFFF:	return FFFF;
+			case Fb:	return Fbb;
+			case Fbb:	return Fbbb;
+			case G:		return Gb;
+			case GG:	return G;
+			case GGG:	return GG;
+			case GGGG:	return GGG;
+			case GGGGG:	return GGGG;
+			case Gb:	return Gbb;
+			case Gbb:	return Gbbb;
+			default:	throw new AlterationException();
+		}
 	}
 
 	public Chromatic[] getEnharmonics() {
@@ -153,7 +268,7 @@ public enum Chromatic implements PitchChromaticSingle {
 		}
 	}
 
-	private Chromatic removeAlterations() {
+	public Chromatic removeAlterations() {
 		switch(this) {
 		case C:
 		case CC:
@@ -294,40 +409,22 @@ public enum Chromatic implements PitchChromaticSingle {
 		}
 	}
 
-	public float dist(PitchChromaticable n) {
-		float d = n.getPitchMean() - getPitchMean();
-		d %= 12;
-
-		float a = Math.abs(d);
-		float b = Math.abs(d+12);
-		float c = Math.abs(d-12);
-		float min = Math.min(a, Math.min(b, c));
-		if (min == a)
-			return d;
-		else if (min == b)
-			return d+12;
-		else
-			return d-12;
+	public IntervalChromatic dist(Chromatic n, IntervalDiatonic i) {
+		int d = n.getChromatic().val() - this.val();
+		return IntervalChromatic.get( i, d );
 	}
 
-	@Override
 	public Chromatic getChromatic() {
 		return this;
 	}
 
-	@Override
-	public Diatonic toDiatonicChordMidi(Tonality ton) throws TonalityException {
-		Degree pos = ton.getDegree(getChromatic());
+	public Diatonic getDiatonic(Tonality ton) throws TonalityException {
+		DiatonicDegree pos = ton.getDegree(getChromatic());
 		if (pos == null)
 			throw new TonalityException(this, ton);
 		else {
 			return Diatonic.get(pos);
 		}
-	}
-
-	@Override
-	public float getPitchMean() {
-		return val();
 	}
 
 	public ChromaticMidi toMidi(int octave, int length, int velocity) {
@@ -349,5 +446,83 @@ public enum Chromatic implements PitchChromaticSingle {
 
 	public Chromatic rename(Tonality ton) {
 		return ton.getEnharmonic(this);
+	}
+	
+	public boolean equalsEnharmonic(Chromatic c) {
+		return val() == c.val();
+	}
+	
+	public Integer dist(Chromatic n2) {
+		int d = n2.getChromatic().val() - getChromatic().val();
+		while (d < 0)
+			d += IntervalChromatic.PERFECT_OCTAVE.val();
+		
+		return d;
+	}
+
+	public Chromatic next() {
+		switch(this) {
+			case A: 	return B;
+			case AA: 	return BB;
+			case AAA: 	return BBB;
+			case AAAA: 	return BBBB;
+			case AAAAA:	return BBBBB;
+			case Ab:	return Bb;
+			case Abb:	return Bbb;
+			case Abbb:	return Bbbb;
+			case B:		return C;
+			case BB:	return CC;
+			case BBB:	return CCC;
+			case BBBB:	return CCCC;
+			case BBBBB:	return CCCCC;
+			case Bb:	return Cb;
+			case Bbb:	return Cbb;
+			case Bbbb:	return Cbbb;
+			case C:		return D;
+			case CC:	return DD;
+			case CCC:	return DDD;
+			case CCCC:	return DDDD;
+			case CCCCC:	return DDDDD;
+			case Cb:	return Db;
+			case Cbb:	return Dbb;
+			case Cbbb:	return Dbbb;
+			case D:		return E;
+			case DD:	return EE;
+			case DDD:	return EEE;
+			case DDDD:	return EEEE;
+			case DDDDD:	return EEEEE;
+			case Db:	return Eb;
+			case Dbb:	return Ebb;
+			case Dbbb:	return Ebbb;
+			case E:		return F;
+			case EE:	return FF;
+			case EEE:	return FFF;
+			case EEEE:	return FFFF;
+			case EEEEE:	return FFFFF;
+			case Eb:	return Fb;
+			case Ebb:	return Fbb;
+			case Ebbb:	return Fbbb;
+			case F:		return G;
+			case FF:	return GG;
+			case FFF:	return GGG;
+			case FFFF:	return GGGG;
+			case FFFFF:	return GGGGG;
+			case Fb:	return Gb;
+			case Fbb:	return Gbb;
+			case Fbbb:	return Gbbb;
+			case G:		return A;
+			case GG:	return AA;
+			case GGG:	return AAA;
+			case GGGG:	return AAAA;
+			case GGGGG:	return AAAAA;
+			case Gb:	return Ab;
+			case Gbb:	return Abb;
+			case Gbbb:	return Abbb;
+			default:	throw new AlterationException();
+		}
+	}
+	
+	public static int notesPerOctave() {
+		return 12;
 	}
 }

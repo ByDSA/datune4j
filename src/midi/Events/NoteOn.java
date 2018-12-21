@@ -1,26 +1,18 @@
 package midi.Events;
 
 import midi.Settings;
-import pitch.ChromaticMidi;
+import pitch.NoteMidiReal;
 
 public class NoteOn extends ChannelEvent {
-	public ChromaticMidi note; // para toString
+	public NoteMidiReal note; // para toString
 	
-	public NoteOn(int d, ChromaticMidi n, int v) {
-		this(d, n.getCode(), v);
+	public NoteOn(NoteMidiReal n) {
+		this(0, n.getCode(), n.getVelocity());
 		note = n;
 	}
 	
-	public NoteOn(ChromaticMidi n, int v) {
-		this(0, n, v);
-	}
-	
-	public NoteOn(ChromaticMidi n) {
-		this(0, n, Settings.DefaultValues.VELOCITY);
-	}
-	
-	public NoteOn(int d, int key, int vel) {
-		super(d, (byte)(0x90));
+	public NoteOn(int delta, int key, int vel) {
+		super(delta, (byte)(0x90));
 		
 		byte code = (byte)key;
 		byte velocity = (byte)vel;
