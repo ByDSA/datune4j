@@ -1,0 +1,33 @@
+plugins {
+    id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+sourceCompatibility = 1.8
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    //implementation 'com.gitlab.danisales:datis4j:-SNAPSHOT'
+    implementation 'com.github.ByDSA:datils4j:master-SNAPSHOT'
+}
+
+jar {
+    manifest {
+        attributes('Implementation-Title': project.name,
+                'Implementation-Version': project.version)
+    }
+
+    baseName project.name
+}
+
+tasks.jar.dependsOn("test")
+
+// in order to ensure Gradle always picks up the 'freshest' version of the build
+// https://github.com/jitpack/jitpack.io
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}

@@ -1,0 +1,49 @@
+[----Pitch----]
+
+SymbolicPitch
+	PitchChromaticSingle: necesario para NoteMidi y Chromatic
+		Chromatic [A]
+		ChromaticMidi [M]
+			DiatonicMidi [M]
+
+PitchDiatonicSingle
+	Diatonic [A]
+ChromaticChord [A]
+DiatonicChord [A]
+Tonality [A]
+
+
+
+ChordCommon
+	PitchChromaticChord
+	PitchDiatonicChord
+		DiatonicChordEnum
+	ChordMutableInterface
+		Chord [A]
+			CustomChromaticChord
+			CustomDiatonicChord
+	
+
+Pitch
+
+ChromaticMidi [S]
+DiatonicMidi [S]
+ChromaticChordMidi [S]
+ChromaticChordMidi [S]
+
+
+
+SymbolicPitch: pitch simbolico. Depende de un Tuning para tener un pitch concreto. Ej: C5, A4, C, A
+SymbolicDuration: duración simbólica. Depende de un Tempo para tener una duración concreta.
+Note: conjunto de SymbolicPitch y SymbolicDuration
+Scale: conjunto de notas ordenadas por pitch simbólico (ascendente o descendente) pero sin tener un pitch concreto asignado. Normalmente equivale/duran a la octava.
+	Algunas escalas dependen de la nota anterior (si es ascendente o descendente): escala menor melódica.
+	
+	Escala cromática: 12 semitonos. tono, semitono.
+	
+	
+	
+Tuning: asocia SymbolicPitch con un Pitch.
+Pitch: devuelve una frecuencia double exacta. Ej: PitchEnum.A440
+Temperamento: distancias relativas (pitch) respecto a una nota base dentro de una escala. ordenado por pitch. Forma de calcular el tuning de un conjunto de notas.
+Tonality: funciones de las notas y acordes de una escala.
