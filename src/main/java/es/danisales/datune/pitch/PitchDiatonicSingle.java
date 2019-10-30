@@ -6,5 +6,4 @@ import es.danisales.datune.tonality.Tonality;
 
 public interface PitchDiatonicSingle extends PitchDiatonic, SymbolicPitch {
 	Diatonic getDiatonic();
-	Chromatic toChromatic(Tonality t);
 }

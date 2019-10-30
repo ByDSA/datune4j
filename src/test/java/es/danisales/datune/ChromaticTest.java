@@ -3,6 +3,8 @@ package es.danisales.datune;
 import es.danisales.datune.musical.Chromatic;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class ChromaticTest {
@@ -11,21 +13,21 @@ public class ChromaticTest {
 	public void noteName() {
 		Chromatic note = Chromatic.C;
 
-		assertEquals( 0, note.val() );
+		assertEquals( 0, note.intValue() );
 
 		note = Chromatic.A;
 
-		assertEquals( 9, note.val() );
+		assertEquals( 9, note.intValue() );
 	}
 	@Test
 	public void add() {
-		Chromatic c = Chromatic.C.add(2);
+		Chromatic c = Chromatic.C.addSemi(2);
 		assertEquals(Chromatic.D, c);
 		
-		c = Chromatic.B.add(2);
+		c = Chromatic.B.addSemi(2);
 		assertEquals(Chromatic.CC, c);
 		
-		c = Chromatic.C.add(-2);
+		c = Chromatic.C.addSemi(-2);
 		assertEquals(Chromatic.AA, c);
 	}
 	
@@ -53,18 +55,18 @@ public class ChromaticTest {
 	
 	@Test
 	public void getEnharmonics() {
-		Chromatic[] cs = Chromatic.C.getEnharmonics();
-		assertEquals(4, cs.length);
+		List<Chromatic> cs = Chromatic.C.getEnharmonics();
+		assertEquals(4, cs.size());
 	}
 	
 	@Test
 	public void delimit() {
-		assertEquals(Chromatic.C, Chromatic.get(0));
-		assertEquals(Chromatic.C, Chromatic.get(12));
-		assertEquals(Chromatic.C, Chromatic.get(24));
-		assertEquals(Chromatic.B, Chromatic.get(-1));
-		assertEquals(Chromatic.B, Chromatic.get(-13));
-		assertEquals(Chromatic.B, Chromatic.get(-25));
+		assertEquals(Chromatic.C, Chromatic.from(0));
+		assertEquals(Chromatic.C, Chromatic.from(12));
+		assertEquals(Chromatic.C, Chromatic.from(24));
+		assertEquals(Chromatic.B, Chromatic.from(-1));
+		assertEquals(Chromatic.B, Chromatic.from(-13));
+		assertEquals(Chromatic.B, Chromatic.from(-25));
 	}
 	
 	@Test

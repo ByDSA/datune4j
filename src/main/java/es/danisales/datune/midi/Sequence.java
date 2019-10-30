@@ -51,7 +51,7 @@ public class Sequence extends BinaryFile {
 			e.printStackTrace();
 		} 
 
-		//get and load default instrument and channel lists
+		//calculateFrom and load default instrument and channel lists
 		instr = midiSynth.getDefaultSoundbank().getInstruments();
 		mChannels = midiSynth.getChannels();
 
@@ -82,7 +82,7 @@ public class Sequence extends BinaryFile {
 	}
 	/*
 	public void ready(int type) {
-		events.add(0, new TempoEvent(tempo));
+		events.addSemi(0, new TempoEvent(tempo));
 
 		for(Track c : channels) {
 			//mChannels[c.midiChannel].programChange(instr[c.midiInstrument].getPatch().getProgram());
@@ -105,7 +105,7 @@ public class Sequence extends BinaryFile {
 						ms = key;
 					else
 						ms = -1;
-					events.add(ms, ev);
+					events.addSemi(ms, ev);
 
 				}
 			}
@@ -132,7 +132,7 @@ public class Sequence extends BinaryFile {
 			while(true) {
 				Iterator<Map.Entry<Long, ArrayList<Event>>> it = events.getMap().entrySet().iterator();
 				if (it.hasNext() ) {
-					Map.Entry<Long, ArrayList<Event>> entry = it.next();
+					Map.Entry<Long, ArrayList<Event>> entry = it.nextDiatonic();
 					Long key = entry.getKey();
 					ArrayList<Event> value = entry.getValue();
 					if (key > ms)

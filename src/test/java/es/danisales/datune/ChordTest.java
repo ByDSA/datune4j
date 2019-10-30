@@ -11,7 +11,7 @@ public class ChordTest {
 		assertEquals( cm.size(), cm2.size() );
 		assertEquals( cm.getRoot(), cm2.getRoot() );
 		for ( int i = 0; i < cm.size(); i++ ) {
-			assertEquals( cm.get( i ), cm2.get( i ) );
+			assertEquals( cm.calculateFrom( i ), cm2.calculateFrom( i ) );
 		}
 
 		cm = new DiatonicChordMidi( TonalityEnum.C, ChromaticChordEnum.C );
@@ -22,7 +22,7 @@ public class ChordTest {
 		assertEquals( cm.size(), cm2.size() );
 		assertEquals( cm.getRoot(), cm2.getRoot() );
 		for ( int i = 0; i < cm.size(); i++ ) {
-			assertEquals( cm.get( i ), cm2.get( i ) );
+			assertEquals( cm.calculateFrom( i ), cm2.calculateFrom( i ) );
 		}
 	}*/
 }

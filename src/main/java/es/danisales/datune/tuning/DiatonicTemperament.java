@@ -2,7 +2,7 @@ package es.danisales.datune.tuning;
 
 import es.danisales.datune.musical.AlterationException;
 import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.pitch.Pitch;
+import es.danisales.datune.musical.transformations.AlterationsCalculator;
 
 public abstract class DiatonicTemperament extends Temperament<Chromatic> {
 	public abstract double semi();
@@ -21,8 +21,8 @@ public abstract class DiatonicTemperament extends Temperament<Chromatic> {
 		addFlat( dOct, note, freq );
 		addSharp( dOct, note, freq );
 
-		Chromatic simpleNote = note.removeAlterations();
-		note = note.next(); 
+		Chromatic simpleNote = AlterationsCalculator.removeAlterationsFrom(note);
+		note = note.nextDiatonic();
 		switch(simpleNote) {
 			case A:
 			case C:

@@ -7,8 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 import es.danisales.datune.midi.PitchMidi;
-import es.danisales.datune.musical.AlterationException;
 import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.musical.transformations.AlterationsCalculator;
+import es.danisales.datune.musical.transformations.ChromaticAdapter;
 
 public class Tuning {	
 	public final static double MIN_FREQUENCY = 20;
@@ -36,10 +37,10 @@ public class Tuning {
 			/*addFlat( note, freq );
 			addSharp( note, freq );*/
 
-			Chromatic simpleNote = note.note.removeAlterations();
+			Chromatic simpleNote = AlterationsCalculator.removeAlterationsFrom(note.note);
 			NoteTuning prev = note;
 			note = prev.clone();
-			note.note = note.note.next(); 
+			note.note = note.note.nextDiatonic();
 			switch(simpleNote) {
 				case A:
 				case C:
@@ -64,7 +65,8 @@ public class Tuning {
 	}
 	
 	public double get(PitchMidi n) {
-		return get( n.getChromatic(), n.getOctave() );
+		Chromatic chromatic = ChromaticAdapter.from(n);
+		return get(chromatic, n.getOctave() );
 	}
 
 	private void addPrevious(final NoteTuning n, double freq) {

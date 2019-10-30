@@ -8,6 +8,7 @@ import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.midi.AddedException;
 import es.danisales.datune.midi.ChromaticMidi;
+import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.pitch.Chord;
 import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.ChordMutableInterface;
@@ -68,8 +69,10 @@ public class CustomDiatonicChord extends Chord<Diatonic>
 
 	public PitchChromaticChord<Chromatic> toChromatic(Tonality t, DiatonicFunction df) {
 		CustomChromaticChord cc = new CustomChromaticChord();
-		for ( Diatonic d : this )
-			cc.add( d.toChromatic( t ) );
+		for ( Diatonic d : this ) {
+			Chromatic chromatic = ChromaticAdapter.from(d, t);
+			cc.add(chromatic);
+		}
 
 		if ( df != null )
 			switch ( df ) {

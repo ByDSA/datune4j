@@ -3,13 +3,16 @@ package es.danisales.datune.midi;
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.Quality;
 import es.danisales.datune.midi.Settings.DefaultValues;
+import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.CustomChromaticChord;
 import es.danisales.datune.musical.CustomChromaticChord.ImpossibleChord;
+import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.pitch.PitchOctave;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,42 +20,70 @@ import java.util.List;
 public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements PitchChromaticChord<ChromaticMidi> {
 	protected ChromaticChordMidi() { }
 
-	public static ChromaticChordMidi of(ChromaticChordMidi ns) {
+	public static ChromaticChordMidi newEmpty() {
+		return new ChromaticChordMidi();
+	}
+
+	public static @NonNull ChromaticChordMidi from(@NonNull ChromaticChordMidi ns) {
 		ChromaticChordMidi ccm = new ChromaticChordMidi();
 		ccm.add( ns );
 
 		return ccm;
 	}
 
-	public static ChromaticChordMidi of(ChromaticMidi... ns) {
+	public static @NonNull ChromaticChordMidi from(@NonNull Chromatic... cs) {
+		ChromaticChordMidi ns = new ChromaticChordMidi();
+		for ( int i = 0; i < cs.length; i++ ) {
+			ChromaticMidi chromaticMidi = ChromaticMidi.builder()
+                    .pitch(cs[i])
+                    .build();
+			if ( i > 0 ) {
+				int lastElementOctave = ns.get(ns.size()-1).getOctave();
+				if (new Chromatic.Comparator().compare(cs[i], cs[i - 1]) < 0)
+					chromaticMidi.setOctave(lastElementOctave + 1);
+				else
+					chromaticMidi.setOctave(lastElementOctave);
+			}
+			ns.add( chromaticMidi );
+		}
+		return ns;
+	}
+
+	public static @NonNull ChromaticChordMidi from(@NonNull ChromaticMidi... ns) {
 		ChromaticChordMidi ccm = new ChromaticChordMidi();
 		ccm.add( ns );
 
 		return ccm;
 	}
-	
-	public static <N extends PitchChromaticSingle> ChromaticChordMidi of(PitchChromaticChord<N> ns) {
+
+	public static <N extends PitchChromaticSingle> @NonNull ChromaticChordMidi from(@NonNull PitchChromaticChord<N> ns) {
 		ChromaticChordMidi ccm = new ChromaticChordMidi();
 		for (N n : ns) {
-			ChromaticMidi cm = ChromaticMidi.of( n.getChromatic(), DefaultValues.OCTAVE, DefaultValues.DURATION_CHORD, DefaultValues.VELOCITY );
+			Chromatic chromatic = ChromaticAdapter.from(n);
+			ChromaticMidi cm = ChromaticMidi.builder()
+					.pitch(chromatic)
+					.build();
 			ccm.add( cm );
 		}
 
 		return ccm;
 	}
-	
+
 
 	public static ChromaticChordMidi of(PitchChromaticSingle... ns) {
 		ChromaticChordMidi ccm = new ChromaticChordMidi();
 		for (PitchChromaticSingle n : ns) {
-			ChromaticMidi cm = ChromaticMidi.of( n.getChromatic(), DefaultValues.OCTAVE, DefaultValues.DURATION_CHORD, DefaultValues.VELOCITY );
+			Chromatic chromatic = ChromaticAdapter.from(n);
+			ChromaticMidi cm = ChromaticMidi.builder()
+					.pitch(chromatic)
+					.build();
 			ccm.add( cm );
 		}
 
 		return ccm;
 	}
 
-	public static <N extends PitchChromaticSingle, Array extends PitchChromaticChord<N>> ChromaticChordMidi of(Array ns, int o, int d, int v) {
+	public static <N extends PitchChromaticSingle, Array extends PitchChromaticChord<N>> ChromaticChordMidi from(Array ns, int o, int d, int v) {
 		ChromaticChordMidi This = new ChromaticChordMidi();
 
 		for ( int i = 0; i < ns.size(); i++ ) {
@@ -67,8 +98,15 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 			if ( n instanceof VelocityNote )
 				v = ( (VelocityNote) n ).getVelocity();
 
-			ChromaticMidi cm = ChromaticMidi.of( n.getChromatic(), o, d, v );
-			if ( !(n instanceof PitchOctave) && This.size() > 0 && cm.getChromatic().val() <= This.get( This.size() - 1 ).getChromatic().val() ) {
+			Chromatic chromaticN = ChromaticAdapter.from(n);
+			ChromaticMidi cm = ChromaticMidi.builder()
+					.pitch(chromaticN, o)
+					.length(d)
+					.velocity(v)
+					.build();
+			Chromatic chromaticCm = ChromaticAdapter.from(cm);
+			Chromatic prevChromatic = ChromaticAdapter.from( This.get( This.size() - 1 ) );
+			if ( !(n instanceof PitchOctave) && This.size() > 0 && chromaticCm.intValue() <= prevChromatic.intValue() ) {
 				o++;
 				cm.shiftOctave( 1 );
 			}
@@ -95,20 +133,20 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 		return out;
 	}
 	/*
-	public ChromaticMidi get(int note, List<ChromaticMidi> ns) {
+	public ChromaticMidi calculateFrom(int note, List<ChromaticMidi> ns) {
 		if ( ns.size() == 0 )
 			return null;
 
 		ChromaticMidi n;
 		if ( note >= ns.size() ) {
-			n = ns.get( note % ns.size() );
-			n.addMidi( note / ns.size() * ChromaticMidi.NOTES_PER_OCTAVE );
+			n = ns.calculateFrom( note % ns.size() );
+			n.addMidi( note / ns.size() * ChromaticMidi.N );
 		} else if ( note < 0 ) {
 			int num = Math.abs( ns.size() + note % ns.size() );
-			n = ns.get( num );
-			n.addMidi( ( note / ns.size() - 1 ) * ChromaticMidi.NOTES_PER_OCTAVE );
+			n = ns.calculateFrom( num );
+			n.addMidi( ( note / ns.size() - 1 ) * ChromaticMidi.N );
 		} else {
-			n = (ChromaticMidi) ns.get( note ).clone();
+			n = (ChromaticMidi) ns.calculateFrom( note ).clone();
 		}
 
 		PitchMidiException.check( n );
@@ -121,7 +159,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 			int dist = this.get( i - 1 ).dist( this.get( i ) );
 			assert dist != 0 : "Se reptite alguna nota " + dist;
 			assert dist > 0 : "Las notas no est�n ordenadas " + this.get( i - 1 ) + " "
-			+ this.get( i );
+					+ this.get( i );
 			if ( dist > IntervalChromatic.PERFECT_OCTAVE.val() )
 				this.get( i ).shiftOctave( -dist / IntervalChromatic.PERFECT_OCTAVE.val() );
 		}
@@ -134,7 +172,8 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 		for ( ChromaticMidi n : this )
 			c.add( n.clone() );
 
-		c.arpegio = arpegio.clone();
+		if (arpegio != null)
+			c.arpegio = arpegio.clone();
 		c.length = length;
 
 		return c;
@@ -157,7 +196,9 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 		for ( ChromaticMidi n : this ) {
 			boolean found = false;
 			for ( ChromaticMidi n2 : out ) {
-				if ( n2.getChromatic().val() == n.getChromatic().val() ) {
+				Chromatic chromaticN2 = ChromaticAdapter.from(n2);
+				Chromatic chromaticN = ChromaticAdapter.from(n);
+				if ( chromaticN2.intValue() == chromaticN.intValue() ) {
 					found = true;
 					break;
 				}

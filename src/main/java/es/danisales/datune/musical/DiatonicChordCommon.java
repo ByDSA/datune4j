@@ -51,8 +51,7 @@ public interface DiatonicChordCommon<N extends PitchDiatonicSingle> extends Chor
 		}
 
 		this.clear();
-		for(N n : out)
-			add(n);
+		this.addAll(out);
 		
 		return out;
 	}

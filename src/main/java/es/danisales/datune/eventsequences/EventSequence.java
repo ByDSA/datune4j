@@ -11,11 +11,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import es.danisales.datune.midi.ChromaticChordMidi;
-import es.danisales.datune.midi.ChromaticMidi;
-import es.danisales.datune.midi.Duration;
-import es.danisales.datune.midi.Durable;
-import es.danisales.datune.midi.Midi;
+import es.danisales.datune.midi.*;
 import es.danisales.datune.midi.Events.Event;
 import es.danisales.datune.midi.Events.EventComplex;
 import es.danisales.datune.midi.Events.NoteOff;
@@ -36,8 +32,8 @@ public class EventSequence implements Durable, EventComplex {
 	/*
 	 * public void addFunction(long t, Class cl, Function f, long length) {
 	 * Constructor con; try { con = cl.getConstructor(Integer.TYPE, Integer.TYPE);
-	 * int step = Note.V64; for(int i = 0; i < length; i += step) { add(t+i,
-	 * (Event)con.newInstance((int)(t+i), (int)( f.get(((double)i)/length) ) ) ); }
+	 * int step = Note.V64; for(int i = 0; i < length; i += step) { addSemi(t+i,
+	 * (Event)con.newInstance((int)(t+i), (int)( f.calculateFrom(((double)i)/length) ) ) ); }
 	 * } catch (NoSuchMethodException | SecurityException | InstantiationException |
 	 * IllegalAccessException | IllegalArgumentException | InvocationTargetException
 	 * e) { // TODO Auto-generated catch block e.printStackTrace(); } }
@@ -105,7 +101,7 @@ public class EventSequence implements Durable, EventComplex {
 
 	public static ChromaticChordMidi whatNotesArePlaying(EventSequence es, long time) {
 		assert time < es.getDuration();
-		ChromaticChordMidi notes = ChromaticChordMidi.of();
+		ChromaticChordMidi notes = ChromaticChordMidi.newEmpty();
 
 		es.forEach( (Long t, Event ev) -> {
 			if ( t > time )
@@ -158,8 +154,11 @@ public class EventSequence implements Durable, EventComplex {
 				if ( evOnQueue != null && onTimeQueue != null ) {
 					NoteOn evOn = evOnQueue.poll();
 					Long onTime = onTimeQueue.poll();
-					ChromaticMidi n = ChromaticMidi
-							.of( nc, (int) ( time - onTime ), evOn.note.getVelocity() );
+					ChromaticMidi n = ChromaticMidi.builder()
+							.pitch( PitchMidi.of(nc) )
+							.length( (int) ( time - onTime ) )
+							.velocity( evOn.note.getVelocity() )
+							.build();
 					es.add( onTime, n );
 
 					if ( evOnQueue.size() == 0 )
@@ -264,13 +263,13 @@ public class EventSequence implements Durable, EventComplex {
 	public EventSequence getEvents() {
 		return this;
 	}
-	
+
 	public void play() {
 		Thread r = new Thread() {
 			public void run() {
 				AtomicLong lastTime = new AtomicLong(0);
 				EventSequence s2 = getBasicEvents();
-				s2.forEach((Long time, Event ev) -> {						
+				s2.forEach((Long time, Event ev) -> {
 					long diff = time - lastTime.get();
 					if (diff > 0)
 						try { Thread.sleep(diff);

@@ -5,11 +5,6 @@ public enum IntervalDiatonic {
     OCTAVE(7), NINTH(8), TENTH(9), ELEVENTH(10), TWELFTH(11), THIRTEENTH(12), FOURTEENTH(13),
     FIFTEENTH(14);
 
-    public static final IntervalDiatonic[] INTERVALS = new IntervalDiatonic[] {
-        UNISON, SECOND, THIRD, FOURTH, FIFTH, SIXTH, SEVENTH,
-        OCTAVE, NINTH, TENTH, ELEVENTH, TWELFTH, THIRTEENTH, FOURTEENTH, FIFTEENTH
-    };
-
     private final int value;
 
     IntervalDiatonic(

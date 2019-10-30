@@ -753,7 +753,7 @@ public class Main {
 		for (CustomTonality t : ts ) {
 			sb.append( "case " + t + ": switch(f) {\n" );
 			for (DiatonicFunction f : DiatonicFunction.values()) {
-				ChromaticChord c = t.get(f);
+				ChromaticChord c = t.from(f);
 				String cStr = c.toString();
 				boolean cont = false;
 				try {

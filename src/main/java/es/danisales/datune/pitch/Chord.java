@@ -12,7 +12,7 @@ public abstract class Chord<N extends SymbolicPitch> extends ArrayList<N> implem
 /*
 	public Chord(N... cs) {
 		for (N n : cs)
-			super.add( n );
+			super.addSemi( n );
 		resetRoot();
 	}
 

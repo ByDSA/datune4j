@@ -13,7 +13,7 @@ public interface ChordMutableInterface<N extends SymbolicPitch> extends ChordCom
 
 		for ( int i = 0; i < n; i++ ) {
 			boolean updateRoot = getRootPos() == 0;
-			add( remove( 0 ) );
+			addSemi( remove( 0 ) );
 
 			if ( updateRoot )
 				setRootPos( size() - 1 );
@@ -24,7 +24,7 @@ public interface ChordMutableInterface<N extends SymbolicPitch> extends ChordCom
 
 			for ( int i = 0; i > n; i-- ) {
 				boolean updateRoot = getRootPos() == lastIndex;
-				add( 0, remove( lastIndex ) );
+				addSemi( 0, remove( lastIndex ) );
 
 				if ( updateRoot )
 					setRootPos( 0 );

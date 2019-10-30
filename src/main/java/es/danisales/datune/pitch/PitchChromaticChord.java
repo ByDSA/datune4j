@@ -1,34 +1,40 @@
 package es.danisales.datune.pitch;
 
-import java.util.Arrays;
-
 import es.danisales.datune.diatonic.Quality;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChordEnum;
 import es.danisales.datune.musical.CustomChromaticChord;
 import es.danisales.datune.musical.CustomChromaticChord.ImpossibleChord;
+import es.danisales.datune.musical.transformations.ChromaticAdapter;
+
+import java.util.Arrays;
 
 public interface PitchChromaticChord<N extends PitchChromaticSingle> extends ChordCommon<N> {	
 	boolean hasSameNotes(PitchChromaticChord<N> chord);
 
-	public default <Array extends PitchChromaticChord<N>> boolean hasSameNotesOrder(Array notes) {
+	default <Array extends PitchChromaticChord<N>> boolean hasSameNotesOrder(Array notes) {
 		if ( size() != notes.size() )
 			return false;
 
 		for ( int i = 0; i < size(); i++ ) {
-			if ( get( i ).getChromatic().val() != notes.get( i ).getChromatic().val() )
+			Chromatic chromatic = ChromaticAdapter.from( get(i) );
+			Chromatic chromaticOther = ChromaticAdapter.from( notes.get(i) );
+			if ( chromatic.intValue() != chromaticOther.intValue() )
 				return false;
 		}
 
 		return true;
 	}
 
-	public default boolean equalsEnharmonic(PitchChromaticChord<?> ca) {
+	default boolean equalsEnharmonic(PitchChromaticChord<?> ca) {
 		if ( size() != ca.size() )
 			return false;
-		for ( int i = 0; i < size(); i++ )
-			if ( !get( i ).getChromatic().equalsEnharmonic( ca.get( i ).getChromatic() ) )
+		for ( int i = 0; i < size(); i++ ) {
+			Chromatic chromatic = ChromaticAdapter.from( get(i) );
+			Chromatic chromaticOther = ChromaticAdapter.from( ca.get(i) );
+			if (!chromatic.equalsEnharmonic(chromaticOther))
 				return false;
+		}
 
 		if ( getRootPos() != ca.getRootPos() )
 			return false;
@@ -81,8 +87,10 @@ public interface PitchChromaticChord<N extends PitchChromaticSingle> extends Cho
 	
 	default <T extends PitchChromaticChord> T over(PitchChromaticSingle c) throws ImpossibleChord {
 		T dup = (T) of(this);
+		Chromatic chromaticOther = ChromaticAdapter.from( c );
+		Chromatic firstChromatic = ChromaticAdapter.from( get(0) );
 		for(int i = 0; i < size(); i++) {
-			if ( get(0).getChromatic().equals( c.getChromatic() ) )
+			if ( firstChromatic.equals( chromaticOther ) )
 				return dup;
 			if (i < size()-1)
 				dup.inv();
@@ -91,11 +99,11 @@ public interface PitchChromaticChord<N extends PitchChromaticSingle> extends Cho
 		throw new ImpossibleChord();
 	}
 
-	public static PitchChromaticChord of(PitchChromaticSingle... chord) {
+	static PitchChromaticChord of(PitchChromaticSingle... chord) {
 		return of( Arrays.asList( chord ));
 	}
 
-	public static <T extends PitchChromaticSingle> PitchChromaticChord<Chromatic> of(Iterable<T> chord) {
+	static <T extends PitchChromaticSingle> PitchChromaticChord<Chromatic> of(Iterable<T> chord) {
 		PitchChromaticChord<Chromatic> c = ChromaticChordEnum.of(chord);
 		if (c == null) {
 			c = CustomChromaticChord.copyOf( chord );

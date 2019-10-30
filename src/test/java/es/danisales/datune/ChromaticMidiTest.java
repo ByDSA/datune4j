@@ -4,6 +4,7 @@ import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.midi.PitchMidi;
 import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.tonality.TonalityEnum;
 import org.junit.Test;
 
@@ -12,17 +13,17 @@ import static org.junit.Assert.assertEquals;
 public class ChromaticMidiTest {
 	@Test
 	public void noteConstructor() {
-		ChromaticMidi n = Chromatic.C.toMidi( 5 );
+		ChromaticMidi n = ChromaticMidi.builder().pitch(Chromatic.C, 5).build();
 
 		assertEquals( PitchMidi.C5.getCode(), n.getCode() );
 		assertEquals( 5, n.getOctave() );
 
-		n = Chromatic.C.add( 5 ).toMidi( 5 );
+		n = ChromaticMidi.builder().pitch(Chromatic.C.addSemi(5), 5).build();
 
 		assertEquals( PitchMidi.of( 60 + 5 ).getCode(), n.getCode() );
 		assertEquals( 5, n.getOctave() );
 
-		n = Chromatic.C.add( 12 ).toMidi( 5 );
+		n = ChromaticMidi.builder().pitch(Chromatic.C.addSemi(12), 5).build();
 
 		assertEquals( PitchMidi.C5.getCode(), n.getCode() );
 		assertEquals( 5, n.getOctave() );
@@ -30,12 +31,14 @@ public class ChromaticMidiTest {
 	
 	@Test
 	public void toDiatonic() {
-		ChromaticMidi cm = Chromatic.F.toMidi();
+		ChromaticMidi cm = ChromaticMidi.builder().pitch(Chromatic.F).build();
 		DiatonicMidi dm = cm.getDiatonicMidi(TonalityEnum.C);
-		assertEquals(Chromatic.F, dm.getChromatic().getChromatic());
-		cm = Chromatic.C.toMidi();
+		Chromatic chromaticDm = ChromaticAdapter.from(dm);
+		assertEquals(Chromatic.F, chromaticDm);
+		cm = ChromaticMidi.builder().pitch(Chromatic.C).build();
 		dm = cm.getDiatonicMidi(TonalityEnum.C);
-		assertEquals(Chromatic.C, dm.getChromatic().getChromatic());
+		chromaticDm = ChromaticAdapter.from(dm);
+		assertEquals(Chromatic.C, chromaticDm);
 	}
 	
 	@Test

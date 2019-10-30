@@ -38,8 +38,8 @@ public class TestProgression extends Song {
 		track.add(0, progression);
 	}
 	/*
-	public ChordFunc add(Degree degree, IntervalDiatonic i) {
-		return progression.add(degree, i);
+	public ChordFunc addSemi(Degree degree, IntervalDiatonic i) {
+		return progression.addSemi(degree, i);
 	}
 	*/
 	public Melody add(Melody m) {

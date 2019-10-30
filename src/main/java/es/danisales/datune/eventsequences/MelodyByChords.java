@@ -55,9 +55,9 @@ public class MelodyByChords extends Melody {
 		for(Chord n : chords) {
 			Tonality s = n.getTonality();
 			if (duration % Duration.V1 == 0)
-				es.add(duration, new KeySignatureEvent(s));
+				es.addSemi(duration, new KeySignatureEvent(s));
 
-			es.add(duration, n);
+			es.addSemi(duration, n);
 			duration += n.getDuration();
 		}
 		

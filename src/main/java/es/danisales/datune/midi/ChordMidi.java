@@ -4,8 +4,10 @@ import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.midi.Arpegios.Arpegio;
 import es.danisales.datune.midi.Arpegios.ArpegioDefault;
 import es.danisales.datune.midi.Events.EventComplex;
+import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.CustomChromaticChord;
 import es.danisales.datune.musical.CustomChromaticChord.ImpossibleChord;
+import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.pitch.Chord;
 import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.PitchChromaticChord;
@@ -26,7 +28,8 @@ implements Durable, PitchChromaticChord<N>, PitchOctaveMidi, EventComplex {
 		if (getRootPos() != 0) {
 			CustomChromaticChord ns = CustomChromaticChord.noneOf();
 			for ( N n : this ) {
-				ns.add( n.getChromatic() );
+				Chromatic chromatic = ChromaticAdapter.from(n);
+				ns.add( chromatic );
 
 				if ( n == getRoot() )
 					ns.setRootPos( ns.size() - 1 );
@@ -63,13 +66,13 @@ implements Durable, PitchChromaticChord<N>, PitchOctaveMidi, EventComplex {
 			for ( int i = 0; i > n; i-- ) {
 				boolean updateRoot = getRootPos() == lastIndex;
 
-				final N last = get( lastIndex );
-				final N first = get( 0 );
+				final N last = calculateFrom( lastIndex );
+				final N first = calculateFrom( 0 );
 				do {
 					last.shiftOctave( -1 );
 				} while ( last.getCode() >= first.getCode() );
 
-				add( 0, remove( lastIndex ) );
+				addSemi( 0, remove( lastIndex ) );
 
 				if ( updateRoot )
 					setRootPos( 0 );
@@ -80,14 +83,14 @@ implements Durable, PitchChromaticChord<N>, PitchOctaveMidi, EventComplex {
 			boolean updateRoot = getRootPos() == 0;
 
 			int firstIndex = 0;
-			final N first = get( firstIndex );
+			final N first = calculateFrom( firstIndex );
 
-			final N last = get( size() - 1 );
+			final N last = calculateFrom( size() - 1 );
 			do {
 				first.shiftOctave( 1 );
 			} while ( first.getCode() <= last.getCode() );
 
-			add( remove( firstIndex ) );
+			addSemi( remove( firstIndex ) );
 
 			if ( updateRoot )
 				setRootPos( size() - 1 );
@@ -100,7 +103,7 @@ implements Durable, PitchChromaticChord<N>, PitchOctaveMidi, EventComplex {
 		return (ChordMidi<N>) this;
 	}*/
 
-	//public abstract N get(int note, List<N> ns);
+	//public abstract N calculateFrom(int note, List<N> ns);
 
 	@Override
 	public EventSequence getEvents() {
@@ -349,12 +352,12 @@ implements Durable, PitchChromaticChord<N>, PitchOctaveMidi, EventComplex {
 					List<T> subCombinations = subChord.clone()
 							.getAllDispositionsSub( true, level + 1, first );
 					for ( T subCombination : subCombinations ) {
-						// Forma array superChord = [array[0] + subChordcombination]
+						// Forma listOf superChord = [listOf[0] + subChordcombination]
 						T superChord = newChord();
 						superChord.add( (N)get( 0 ).clone() );
 						superChord.add( subCombination.clone() );
 
-						// Combinaciones de 'n�mero' dentro del array superChord = ['n�mero' +
+						// Combinaciones de 'n�mero' dentro del listOf superChord = ['n�mero' +
 						// subChordcombination]
 						List<T> superCombinations = superChord.clone()
 								.getAllDispositionsSub( false, level, false );

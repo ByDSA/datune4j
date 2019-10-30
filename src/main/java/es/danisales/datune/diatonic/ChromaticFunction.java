@@ -1,13 +1,13 @@
 package es.danisales.datune.diatonic;
 
-import java.util.Set;
-
 import es.danisales.arrays.ArrayUtils;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.musical.CustomChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.tonality.CustomTonality;
 import es.danisales.datune.tonality.Tonality;
+
+import java.util.Set;
 
 /**
  * Funciones crom�ticas

@@ -2,6 +2,7 @@ package es.danisales.datune;
 
 import es.danisales.datune.midi.PitchMidi;
 import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -36,9 +37,9 @@ public class PitchTests {
 		assertEquals( PitchMidi.GG5, PitchMidi.of( Chromatic.GG, 5 ) );
 		assertEquals( 5, PitchMidi.GG5.getOctave() );
 		assertEquals( PitchMidi.GG5, PitchMidi.of( Chromatic.GG, PitchMidi.GG5.getOctave() ) );
-		assertEquals( Chromatic.GG, PitchMidi.GG5.getChromatic() );
-		assertEquals( PitchMidi.GG5, PitchMidi.of( PitchMidi.GG5.getChromatic(), 5 ) );
-		assertEquals( PitchMidi.GG5, PitchMidi.of( PitchMidi.GG5.getChromatic(), PitchMidi.GG5.getOctave() ) );
+		assertEquals( Chromatic.GG, ChromaticAdapter.from( PitchMidi.GG5 ) );
+		assertEquals( PitchMidi.GG5, PitchMidi.of( ChromaticAdapter.from( PitchMidi.GG5 ), 5 ) );
+		assertEquals( PitchMidi.GG5, PitchMidi.of( ChromaticAdapter.from( PitchMidi.GG5 ), PitchMidi.GG5.getOctave() ) );
 		assertEquals( PitchMidi.GG5.getCode(), PitchMidi.GG5.getCode() );
 	}
 }

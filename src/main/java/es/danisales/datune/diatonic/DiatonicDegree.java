@@ -8,7 +8,7 @@ public enum DiatonicDegree {
 
 	private int value;
 
-	private DiatonicDegree(int v) {
+	DiatonicDegree(int v) {
 		value = v;
 	}
 

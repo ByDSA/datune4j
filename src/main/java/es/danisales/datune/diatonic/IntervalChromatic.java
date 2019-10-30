@@ -46,11 +46,11 @@ public enum IntervalChromatic {
     }
     
     public boolean isCompound() {
-    	return (this == DIMINISHED_NINTH || this.val() > 12);
+    	return (this.val() > 12 || this == DIMINISHED_NINTH);
     }
 
-    public static IntervalChromatic get(IntervalDiatonic i, int semitones) {
-        switch (i) {
+    public static IntervalChromatic from(IntervalDiatonic intervalDiatonic, int semitones) {
+        switch (intervalDiatonic) {
             case UNISON:
                 switch (semitones) {
                     case 0:

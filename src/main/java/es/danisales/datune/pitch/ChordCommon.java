@@ -17,7 +17,7 @@ public interface ChordCommon<N extends SymbolicPitch> extends List<N>, Cloneable
 	/*
 	public default void initialize(N... cs) {
 		for(N c : cs)
-			add(c);
+			addSemi(c);
 	}*/
 
 	/** Show */
@@ -90,9 +90,9 @@ public interface ChordCommon<N extends SymbolicPitch> extends List<N>, Cloneable
 		List<DistChordType> distancesAbsolute = new ArrayList();
 
 		for ( int i = 1; i < size(); i++ ) {
-			N n1 = get( 0 );
-			N n2 = get( i );
-			distancesAbsolute.add( (DistChordType)n1.dist( n2 ) );
+			N n1 = calculateFrom( 0 );
+			N n2 = calculateFrom( i );
+			distancesAbsolute.addSemi( (DistChordType)n1.dist( n2 ) );
 		}
 
 		return distancesAbsolute;

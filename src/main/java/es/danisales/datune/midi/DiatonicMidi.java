@@ -5,7 +5,8 @@ import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.midi.Settings.DefaultValues;
-import es.danisales.datune.musical.Diatonic;
+import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.pitch.PitchDiatonic;
 import es.danisales.datune.tonality.Tonality;
@@ -102,7 +103,7 @@ public class DiatonicMidi extends ChromaticMidi implements PitchDiatonic {
 					- ( getOctave() * tonalityLength + getDegree().val() )
 		);
 		int diffSemi = n.getCode() - getCode();
-		return IntervalChromatic.get( id, diffSemi );
+		return IntervalChromatic.from( id, diffSemi );
 	}
 
 	public DiatonicDegree getDegree() {
@@ -177,11 +178,8 @@ public class DiatonicMidi extends ChromaticMidi implements PitchDiatonic {
 	}
 
 	public boolean equalsEnharmonic(PitchChromaticSingle c) {
-		return this.getChromatic().equalsEnharmonic( c.getChromatic() );
-	}
-
-	@Override
-	public Diatonic getDiatonic(Tonality ton) throws TonalityException {
-		return Diatonic.get( degree );
+		Chromatic c1 = ChromaticAdapter.from(this);
+		Chromatic c2 = ChromaticAdapter.from(c);
+		return c1.equalsEnharmonic(c2);
 	}
 }

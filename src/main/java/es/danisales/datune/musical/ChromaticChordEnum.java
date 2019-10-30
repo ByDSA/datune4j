@@ -8,9 +8,11 @@ import es.danisales.datastructures.SetUtils;
 import es.danisales.datune.diatonic.Quality;
 import es.danisales.datune.midi.AddedException;
 import es.danisales.datune.musical.CustomChromaticChord.ImpossibleChord;
+import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticSingle;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic> {
 	// Quintas
@@ -1986,11 +1988,10 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic> {
 	private final List<Chromatic> notes;
 	private final ChromaticChordMeta meta;
 
-	private ChromaticChordEnum(ChromaticChordMeta m, Chromatic... cs) {
-		assert cs != null;
-		List<Chromatic> notesMutatable = new ArrayList();
-		for (Chromatic c : cs)
-			notesMutatable.add( c );
+	private ChromaticChordEnum(ChromaticChordMeta m, @NonNull Chromatic... cs) {
+		Objects.requireNonNull(cs);
+
+		List<Chromatic> notesMutatable = new ArrayList<>(Arrays.asList(cs));
 		notes = Collections.unmodifiableList( notesMutatable );
 
 		meta = m;
@@ -2066,9 +2067,11 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic> {
 	}
 
 	public static <T extends PitchChromaticSingle> ChromaticChordEnum of(Iterable<T> chord) {
-		List<Chromatic> notes = new ArrayList();
-		for (T t : chord)
-			notes.add( t.getChromatic() );
+		List<Chromatic> notes = new ArrayList<>();
+		for (T t : chord) {
+			Chromatic chromatic = ChromaticAdapter.from(t);
+			notes.add(chromatic);
+		}
 		EnumTreeSet<Chromatic, ChromaticChordEnum> node = ChromaticChordEnum.chordTree.getNode( notes );
 		if (node == null)
 			return null;
@@ -2090,12 +2093,12 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic> {
 	}
 
 	@Override
-	public boolean addAll(Collection<? extends Chromatic> c) {
+	public boolean addAll(@NonNull Collection<? extends Chromatic> c) {
 		return notes.addAll( c );
 	}
 
 	@Override
-	public boolean addAll(int index, Collection<? extends Chromatic> c) {
+	public boolean addAll(int index, @NonNull Collection<? extends Chromatic> c) {
 		return notes.addAll( index, c );
 	}
 
@@ -2105,7 +2108,7 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic> {
 	}
 
 	@Override
-	public boolean containsAll(Collection<?> c) {
+	public boolean containsAll(@NonNull Collection<?> c) {
 		return notes.containsAll( c );
 	}
 
@@ -2135,9 +2138,9 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic> {
 	}
 
 	@Override
+	@NonNull
 	public PitchChromaticChord<Chromatic> subList(int fromIndex, int toIndex) {
-		PitchChromaticChord<Chromatic> c = PitchChromaticChord.of( notes.subList( fromIndex, toIndex ) );
-		return c;
+		return PitchChromaticChord.of( notes.subList( fromIndex, toIndex ) );
 	}
 
 	@Override
@@ -2146,7 +2149,7 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic> {
 	}
 
 	@Override
-	public <T> T[] toArray(T[] a) {
+	public <T> T[] toArray(@NonNull T[] a) {
 		return notes.toArray( a );
 	}
 

@@ -4,6 +4,9 @@ import es.danisales.arrays.ArrayUtils;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.tonality.Tonality;
+import org.checkerframework.checker.nullness.qual.NonNull;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * Functiones diat�nicas
@@ -311,7 +314,7 @@ public enum DiatonicFunction implements HarmonicFunction {
 		return ArrayUtils.contains( this, SUS4 );
 	}
 
-	public static DiatonicFunction get(DiatonicDegree d) {
+	public static DiatonicFunction from(DiatonicDegree d) {
 		assert d != null;
 		switch ( d ) {
 			case I:
@@ -520,9 +523,9 @@ public enum DiatonicFunction implements HarmonicFunction {
 	 * @param c diatonic chord midi
 	 * @return the diatonic function
 	 */
-	public static DiatonicFunction get(DiatonicChordMidi c) {
-		assert c.getTonality() != null;
-		assert c.metaTonality != null;
+	public static DiatonicFunction from(@NonNull DiatonicChordMidi c) {
+		checkArgument(c.getTonality() != null);
+		checkArgument(c.metaTonality!= null);
 		Tonality ton = c.getMetatonality();
 		PitchChromaticChord c1 = c.toChromaticChord();
 		HarmonicFunction hf = ton.getFunction( c1 );

@@ -6,9 +6,11 @@ import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.midi.Settings;
+import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.pitch.*;
 import es.danisales.datune.tonality.ScaleEnum;
 import es.danisales.datune.tonality.Tonality;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -29,7 +31,7 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 				if ( i > 0 )
 					c2.inv( i );
 				ArrayWrapperInteger array = new ArrayWrapperInteger( c2.toIntegerChromatics() );
-				// System.out.println(Arrays.toString(array) + c2);
+				// System.out.println(Arrays.toString(listOf) + c2);
 				ArrayList<CustomChromaticChord> arrayListChords = sameOrderChromatics.get( array );
 				if ( arrayListChords == null )
 					arrayListChords = new ArrayList<>();
@@ -43,18 +45,20 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 
 	protected CustomChromaticChord() { }
 	/*
-        public <T extends PitchChromaticSingle> void add(Iterable<T> cs) {
+        public <T extends PitchChromaticSingle> void addSemi(Iterable<T> cs) {
             assert cs != null;
             for ( T cc : cs ) {
                 assert cc != null;
                 Chromatic c = cc.getChromatic();
-                add( c );
+                addSemi( c );
             }
         }
     */
-	public <T extends PitchChromaticSingle> void add(T... cs) {
-		for (T t : cs)
-			add(t);
+	public <T extends PitchChromaticSingle> void add(@NonNull T... cs) {
+		for (T t : cs) {
+			Chromatic chromatic = ChromaticAdapter.from(t);
+			add(chromatic);
+		}
 	}
 
 	public CustomChromaticChord(ChromaticFunction f, Tonality t) {
@@ -78,9 +82,9 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 		} else if ( f == ChromaticFunction.N6 ) {
 			Chromatic base = t.get( 0 );
 
-			Chromatic n1 = base.add( 1 );
-			Chromatic n2 = base.add( 5 );
-			Chromatic n3 = base.add( 8 );
+			Chromatic n1 = base.addSemi( 1 );
+			Chromatic n2 = base.addSemi( 5 );
+			Chromatic n3 = base.addSemi( 8 );
 
 			add( n2, n3, n1 ); // Primera inversi�n
 		} else if ( f == ChromaticFunction.I5 || f == ChromaticFunction.II5
@@ -91,7 +95,7 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 
 			Chromatic n = t.get( d );
 			add( n );
-			Chromatic n2 = n.add( IntervalChromatic.PERFECT_FIFTH.val() );
+			Chromatic n2 = n.addSemi( IntervalChromatic.PERFECT_FIFTH.val() );
 			add( n2 );
 		} else {
 			DiatonicMidi n = null;
@@ -178,56 +182,63 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 					break;
 				case SUBV7:
 					DiatonicChordMidi c = new DiatonicChordMidi( DiatonicFunction.V7, t );
+					Chromatic chromatic = ChromaticAdapter.from(c.get( 0 ));
 					t = Tonality.of(
-							c.get( 0 ).getChromatic().getChromatic().add( 6 ), ScaleEnum.LYDIAN_b7
+							chromatic.addSemi( 6 ), ScaleEnum.LYDIAN_b7
 					);
 					break;
 				case SUBV7_II:
 					DiatonicChordMidi c2 = new DiatonicChordMidi(
 							ChromaticFunction.V7_II, t
 					);
+					Chromatic chromatic2 = ChromaticAdapter.from(c2.get( 0 ));
 					t = Tonality.of(
-							c2.get( 0 ).getChromatic().getChromatic().add( 6 ), ScaleEnum.LYDIAN_b7
+							chromatic2.addSemi( 6 ), ScaleEnum.LYDIAN_b7
 					);
 					break;
 				case SUBV7_III:
 					DiatonicChordMidi c3 = new DiatonicChordMidi(
 							ChromaticFunction.V7_III, t
 					);
+					Chromatic chromatic3 = ChromaticAdapter.from(c3.get( 0 ));
 					t = Tonality.of(
-							c3.get( 0 ).getChromatic().getChromatic().add( 6 ), ScaleEnum.LYDIAN_b7
+							chromatic3.addSemi( 6 ), ScaleEnum.LYDIAN_b7
 					);
 					break;
 				case SUBV7_IV:
 					DiatonicChordMidi c4 = new DiatonicChordMidi(
 							ChromaticFunction.V7_IV, t
 					);
+					Chromatic chromatic4 = ChromaticAdapter.from(c4.get( 0 ));
 					t = Tonality.of(
-							c4.get( 0 ).getChromatic().getChromatic().add( 6 ), ScaleEnum.LYDIAN_b7
+							chromatic4.addSemi( 6 ), ScaleEnum.LYDIAN_b7
 					);
 					break;
 				case SUBV7_V:
 					DiatonicChordMidi c5 = new DiatonicChordMidi(
 							ChromaticFunction.V7_V, t
 					);
+					Chromatic chromatic5 = ChromaticAdapter.from(c5.get( 0 ));
 					t = Tonality.of(
-							c5.get( 0 ).getChromatic().getChromatic().add( 6 ), ScaleEnum.LYDIAN_b7
+							chromatic5.addSemi( 6 ), ScaleEnum.LYDIAN_b7
 					);
 					break;
 				case SUBV7_VI:
 					DiatonicChordMidi c6 = new DiatonicChordMidi(
 							ChromaticFunction.V7_VI, t
 					);
+					Chromatic chromatic6 = ChromaticAdapter.from(c6.get( 0 ));
 					t = Tonality.of(
-							c6.get( 0 ).getChromatic().getChromatic().add( 6 ), ScaleEnum.LYDIAN_b7
+							chromatic6.addSemi( 6 ), ScaleEnum.LYDIAN_b7
 					);
 					break;
 				case V7ALT:
 					DiatonicChordMidi calt = new DiatonicChordMidi(
 							DiatonicFunction.V7, t
 					);
+					Chromatic chromaticAlt = ChromaticAdapter.from(calt.get( 0 ));
 					t = Tonality.of(
-							calt.get( 0 ).getChromatic().getChromatic(), ScaleEnum.SUPERLOCRIAN
+							chromaticAlt, ScaleEnum.SUPERLOCRIAN
 					);
 					break;
 			}
@@ -273,7 +284,7 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 	public Integer[] toIntegerChromatics() {
 		Integer[] out = new Integer[size()];
 		for ( int i = 0; i < size(); i++ ) {
-			out[i] = get( i ).val();
+			out[i] = get( i ).intValue();
 		}
 
 		return out;
@@ -419,7 +430,7 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 			return false;
 
 		for ( int i = 0; i < size(); i++ ) {
-			if ( get( i ).val() != notes.get( i ).val() )
+			if ( get( i ).intValue() != notes.get( i ).intValue() )
 				return false;
 		}
 
@@ -474,7 +485,7 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 	 */
 	public ChromaticChordMidi toMidi(int octave, int length, int velocity) {
 		resetRootIfNeeded();
-		ChromaticChordMidi ccm = ChromaticChordMidi.of(this, octave, length, velocity);
+		ChromaticChordMidi ccm = ChromaticChordMidi.from(this, octave, length, velocity);
 
 		return ccm;
 	}
@@ -510,7 +521,7 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 	public CustomChromaticChord over(Chromatic c) throws ImpossibleChord {
 		CustomChromaticChord dup = clone();
 		for(int i = 0; i < size(); i++) {
-			if ( get(0).val() == c.val() )
+			if ( get(0).intValue() == c.intValue() )
 				return dup;
 			if (i < size()-1)
 				dup.inv();

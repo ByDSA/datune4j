@@ -53,7 +53,7 @@ public class ChromaticChordTest {
 		assertEquals( "Cm", ChromaticChordEnum.Cm.toString() );
 		assertEquals( "C7", ChromaticChordEnum.C7.toString() );
 		assertEquals(
-			"C/E (I)", new DiatonicChordMidi( DiatonicFunction.I, TonalityEnum.C ).inv().toString()
+			"C/E (C)", new DiatonicChordMidi( DiatonicFunction.I, TonalityEnum.C ).inv().toString()
 		);
 		assertEquals( "C/E", ChromaticChordEnum.C.inv().toString() );
 		assertEquals( "C/G", ChromaticChordEnum.C.inv( 2 ).toString() );
@@ -69,7 +69,7 @@ public class ChromaticChordTest {
 /*
 	@Test
 	public void mean() {
-		assertEquals( Chromatic.E.val(), Math.round( ChromaticChordEnum.C.getPitchMean() ) );
+		assertEquals( Chromatic.E.intValue(), Math.round( ChromaticChordEnum.C.getPitchMean() ) );
 	}
 
 	@Test

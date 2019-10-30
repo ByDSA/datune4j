@@ -88,7 +88,7 @@ public class Progression<This extends Progression> implements EventComplex {
 
 		c = new ChordFunc(tonality, o);
 		c.add(degree);
-		c.add( NoteDiatonic.add(c.get(0), i) );
+		c.add( NoteDiatonic.add(c.from(0), i) );
 
 		return add(c);
 	}

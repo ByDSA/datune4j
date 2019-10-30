@@ -1,6 +1,9 @@
 package es.danisales.datune.midi;
 
 public class Duration {
+	private Duration() {
+	}
+
 	public final static int V256 = 15;
 	public final static int V128 = 2*V256;
 	public final static int V64 = 2*V128;

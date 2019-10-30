@@ -263,12 +263,12 @@ public interface DiatonicChord extends DiatonicChordCommon<Diatonic> {
 		// return null;
 	}
 	
-	public default boolean hasSameNotesOrder(DiatonicChord notes) {
+	default boolean hasSameNotesOrder(DiatonicChord notes) {
         if (size() != notes.size())
             return false;
          
         for (int i = 0; i < size(); i++) {
-            if (get(i).getDiatonic().val() != notes.get(i).getDiatonic().val())
+            if (get(i).getDiatonic().intValue() != notes.get(i).getDiatonic().intValue())
                 return false;
         }
  
@@ -288,8 +288,7 @@ public interface DiatonicChord extends DiatonicChordCommon<Diatonic> {
 		}
 
 		this.clear();
-		for(Diatonic n : out)
-			add(n);
+		this.addAll(out);
 		
 		return out;
 	}
@@ -303,7 +302,7 @@ public interface DiatonicChord extends DiatonicChordCommon<Diatonic> {
 				throw new TonalityException( this, tonality );
 			else {
 				int octaveNote = getOctave();
-				DiatonicMidi ns = DiatonicMidi.of( pos, tonality, pitch.getOctave(), length, velocity );
+				DiatonicMidi ns = DiatonicMidi.from( pos, tonality, pitch.getOctave(), length, velocity );
 				int octaveNoteScaleNote = ns.getPitch().getOctave();
 				ns.shiftOctave( octaveNote - octaveNoteScaleNote );
 

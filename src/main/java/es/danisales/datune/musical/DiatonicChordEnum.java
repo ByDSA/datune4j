@@ -1,43 +1,39 @@
 package es.danisales.datune.musical;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.midi.AddedException;
+import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.tonality.Tonality;
+import org.checkerframework.checker.nullness.qual.NonNull;
+
+import java.util.*;
 
 public enum DiatonicChordEnum implements DiatonicChord {
-	TRIAD(Diatonic.I, Diatonic.III, Diatonic.V),
-	THIRD(Diatonic.I, Diatonic.III),
-	SUS2(Diatonic.I, Diatonic.II, Diatonic.V),
-	SUS2_O5(Diatonic.I, Diatonic.II),
-	SUS4(Diatonic.I, Diatonic.IV, Diatonic.V),
-	SUS4_O5(Diatonic.I, Diatonic.IV),
-	SIXTH(Diatonic.I, Diatonic.III, Diatonic.V, Diatonic.VI),
-	SIXTH_O5(Diatonic.I, Diatonic.III, Diatonic.VI),
-	SEVENTH(Diatonic.I, Diatonic.III, Diatonic.V, Diatonic.VII),
-	SEVENTH_O3(Diatonic.I, Diatonic.V, Diatonic.VII),
-	SEVENTH_O5(Diatonic.I, Diatonic.III, Diatonic.VII),
-	NINTH(Diatonic.I, Diatonic.III, Diatonic.V, Diatonic.VII, Diatonic.II),
-	NINTH_O7(Diatonic.I, Diatonic.III, Diatonic.V, Diatonic.II),
-	NINTH_O3_O7(Diatonic.I, Diatonic.V, Diatonic.II),
-	ELEVENTH(Diatonic.I, Diatonic.III, Diatonic.V, Diatonic.VII, Diatonic.II, Diatonic.IV),
-	THIRTEENTH(Diatonic.I, Diatonic.III, Diatonic.V, Diatonic.VII, Diatonic.II, Diatonic.IV, Diatonic.VI);
+	TRIAD(Diatonic.C, Diatonic.E, Diatonic.G),
+	THIRD(Diatonic.C, Diatonic.E),
+	SUS2(Diatonic.C, Diatonic.D, Diatonic.G),
+	SUS2_O5(Diatonic.C, Diatonic.D),
+	SUS4(Diatonic.C, Diatonic.F, Diatonic.G),
+	SUS4_O5(Diatonic.C, Diatonic.F),
+	SIXTH(Diatonic.C, Diatonic.E, Diatonic.G, Diatonic.A),
+	SIXTH_O5(Diatonic.C, Diatonic.E, Diatonic.A),
+	SEVENTH(Diatonic.C, Diatonic.E, Diatonic.G, Diatonic.B),
+	SEVENTH_O3(Diatonic.C, Diatonic.G, Diatonic.B),
+	SEVENTH_O5(Diatonic.C, Diatonic.E, Diatonic.B),
+	NINTH(Diatonic.C, Diatonic.E, Diatonic.G, Diatonic.B, Diatonic.D),
+	NINTH_O7(Diatonic.C, Diatonic.E, Diatonic.G, Diatonic.D),
+	NINTH_O3_O7(Diatonic.C, Diatonic.G, Diatonic.D),
+	ELEVENTH(Diatonic.C, Diatonic.E, Diatonic.G, Diatonic.B, Diatonic.D, Diatonic.F),
+	THIRTEENTH(Diatonic.C, Diatonic.E, Diatonic.G, Diatonic.B, Diatonic.D, Diatonic.F, Diatonic.A);
 
 	private final List<Diatonic> notes;
 
 	DiatonicChordEnum(Diatonic... cs) {
 		assert cs != null;		
 		List<Diatonic> notesMutatable = new ArrayList<>();
-		for (Diatonic c : cs)
-			notesMutatable.add( c );
+		notesMutatable.addAll(Arrays.asList(cs));
 		notes = Collections.unmodifiableList( notesMutatable );
 	}
 
@@ -89,12 +85,12 @@ public enum DiatonicChordEnum implements DiatonicChord {
 	}
 
 	@Override
-	public boolean addAll(Collection<? extends Diatonic> c) {
+	public boolean addAll(@NonNull Collection<? extends Diatonic> c) {
 		return notes.addAll( c );
 	}
 
 	@Override
-	public boolean addAll(int index, Collection<? extends Diatonic> c) {
+	public boolean addAll(int index, @NonNull Collection<? extends Diatonic> c) {
 		return notes.addAll(c);
 	}
 
@@ -109,7 +105,7 @@ public enum DiatonicChordEnum implements DiatonicChord {
 	}
 
 	@Override
-	public boolean containsAll(Collection<?> c) {
+	public boolean containsAll(@NonNull Collection<?> c) {
 		return notes.containsAll( c );
 	}
 
@@ -189,15 +185,17 @@ public enum DiatonicChordEnum implements DiatonicChord {
 	}
 
 	@Override
-	public <T> T[] toArray(T[] a) {
+	public <T> T[] toArray(@NonNull T[] a) {
 		return notes.toArray( a );
 	}
 
 	@Override
 	public PitchChromaticChord<Chromatic> toChromaticChord(Tonality t) {
 		CustomChromaticChord c = new CustomChromaticChord();
-		for (Diatonic d : notes)
-			c.add( d.toChromatic( t ) );
+		for (Diatonic d : notes) {
+			Chromatic chromatic = ChromaticAdapter.from(d, t);
+			c.add(chromatic);
+		}
 		return PitchChromaticChord.of( c );
 	}
 

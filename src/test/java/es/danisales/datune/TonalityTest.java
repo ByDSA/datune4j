@@ -290,23 +290,23 @@ public class TonalityTest {
 		assertEquals( ChromaticChordEnum.Fsus2, ton.get( DiatonicFunction.IV2 ) );
 		assertEquals( ChromaticChordEnum.Gsus2, ton.get( DiatonicFunction.V2 ) );
 		assertEquals( ChromaticChordEnum.Asus2, ton.get( DiatonicFunction.VI2 ) );
-		// assertEquals( DiatonicFunction.VII2, ton.get( ChromaticChord.Bdim ) );
+		// assertEquals( DiatonicFunction.VII2, ton.calculateFrom( ChromaticChord.Bdim ) );
 
 		assertEquals( ChromaticChordEnum.Csus4, ton.get( DiatonicFunction.I4 ) );
 		assertEquals( ChromaticChordEnum.Dsus4, ton.get( DiatonicFunction.II4 ) );
 		assertEquals( ChromaticChordEnum.Esus4, ton.get( DiatonicFunction.III4 ) );
-		// assertEquals( DiatonicFunction.IV4, ton.get( ChromaticChord.F ) );
+		// assertEquals( DiatonicFunction.IV4, ton.calculateFrom( ChromaticChord.F ) );
 		assertEquals( ChromaticChordEnum.Gsus4, ton.get( DiatonicFunction.V4 ) );
 		assertEquals( ChromaticChordEnum.Asus4, ton.get( DiatonicFunction.VI4 ) );
-		// assertEquals( DiatonicFunction.VII4, ton.get( ChromaticChord.Bdim ) );
+		// assertEquals( DiatonicFunction.VII4, ton.calculateFrom( ChromaticChord.Bdim ) );
 
 		assertEquals( ChromaticChordEnum.C6, ton.get( DiatonicFunction.I6 ) );
 		assertEquals( ChromaticChordEnum.Dm6, ton.get( DiatonicFunction.II6 ) );
-		// assertEquals( DiatonicFunction.III6, ton.get( ChromaticChord.Em ) );
+		// assertEquals( DiatonicFunction.III6, ton.calculateFrom( ChromaticChord.Em ) );
 		assertEquals( ChromaticChordEnum.F6, ton.get( DiatonicFunction.IV6 ) );
 		assertEquals( ChromaticChordEnum.G6, ton.get( DiatonicFunction.V6 ) );
-		// assertEquals( DiatonicFunction.VI6, ton.get( ChromaticChord.Am ) );
-		// assertEquals( DiatonicFunction.VII6, ton.get( ChromaticChord.Bdim ) );
+		// assertEquals( DiatonicFunction.VI6, ton.calculateFrom( ChromaticChord.Am ) );
+		// assertEquals( DiatonicFunction.VII6, ton.calculateFrom( ChromaticChord.Bdim ) );
 
 		assertEquals( ChromaticChordEnum.CMaj7, ton.get( DiatonicFunction.I7 ) );
 		assertEquals( ChromaticChordEnum.Dm7, ton.get( DiatonicFunction.II7 ) );

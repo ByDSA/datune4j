@@ -14,11 +14,11 @@ public class ArpegioTest {
 		assertEquals( a.getNodes().size(), a2.getNodes().size() );
 
 		for ( int i = 0; i < a.getChord().size(); i++ ) {
-			assertEquals( a.getChord().get( i ), a2.getChord().get( i ) );
+			assertEquals( a.getChord().calculateFrom( i ), a2.getChord().calculateFrom( i ) );
 		}
 
 		for ( int i = 0; i < a.getNodes().size(); i++ )
-			assertEquals( a.getNodes().get( i ), a2.getNodes().get( i ) );
+			assertEquals( a.getNodes().calculateFrom( i ), a2.getNodes().calculateFrom( i ) );
 
 		assertEquals( true, a.equals( a2 ) );
 	}*/

@@ -219,9 +219,9 @@ public class Power extends Song {
 		Progression chorusGuitars = chorusGuitarsProgression();
 		channelGuitars2.add(seek, chorusGuitars);
 
-		//channelGuitars1.add(seek, startProgression());
+		//channelGuitars1.addSemi(seek, startProgression());
 
-		//channelOrgan.add(seek, startOrganProgression());
+		//channelOrgan.addSemi(seek, startOrganProgression());
 
 		channelPad.add(seek, chorusPad());
 
@@ -350,8 +350,8 @@ public class Power extends Song {
 		/*
 		for(int i = 0; i < cad.getNodes().size()-1; i++) {
 			Chord ch = cad.getChord(i);
-			ch.add(Interval.OCTAVE)
-			.add(Interval.TENTH)
+			ch.addSemi(Interval.OCTAVE)
+			.addSemi(Interval.TENTH)
 			.inv(2)
 			.setArpegio(new ArpegioDefault());
 
@@ -417,7 +417,7 @@ public class Power extends Song {
 		for(int i = 0; i < cad.getChords().size(); i++) {
 			DiatonicChordMidi c = (DiatonicChordMidi) cad.getChords().get(i);
 
-			//c.add(Interval.OCTAVE).add(Interval.TENTH);
+			//c.addSemi(Interval.OCTAVE).addSemi(Interval.TENTH);
 
 			c.setArpegio( new ArpegioDefault() );
 
