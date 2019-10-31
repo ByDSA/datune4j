@@ -113,7 +113,7 @@ public class Track extends EventSequence {
 					{
 						0x00, (byte)0xFF, 0x58, 0x04,
 						0x04, // numerator
-						0x02, // denominator (2==4, because it's a power of 2)
+						0x02, // denominator (2==4, because it's a power fromIndex 2)
 						0x18, // ticks per click (not used)
 						0x08  // 32nd notes per crotchet 
 					};

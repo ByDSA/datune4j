@@ -1,5 +1,12 @@
 package es.danisales.datune.diatonic;
 
+import es.danisales.datune.musical.transformations.Namer;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
+
+import java.util.HashSet;
+import java.util.Set;
+
 public enum IntervalChromatic {
     PERFECT_UNISON(0, Quality.PERFECT), DIMINISHED_SECOND(0, Quality.DIMINISHED),
     MINOR_SECOND(1, Quality.MINOR), AUGMENTED_UNISON(1, Quality.AUGMENTED),
@@ -28,28 +35,119 @@ public enum IntervalChromatic {
     PERFECT_FIFTEENTH(24, Quality.PERFECT), AUGMENTED_FOURTEENTH(24, Quality.AUGMENTED),
     AUGMENTED_FIFTEENTH(25, Quality.AUGMENTED);
 
-
-
-    private final int     value;
+    private final int semitones;
     private final Quality quality;
 
-    IntervalChromatic(
-            int value,
-            Quality q) {
-        this.value = value;
-
-        quality = q;
+    IntervalChromatic(int semitones, Quality quality) {
+        this.semitones = semitones;
+        this.quality = quality;
     }
 
-    public int val() {
-        return value;
+    public int getSemitones() {
+        return semitones;
     }
-    
+
+    public Quality getQuality() {
+        return quality;
+    }
+
     public boolean isCompound() {
-    	return (this.val() > 12 || this == DIMINISHED_NINTH);
+        return (this.getSemitones() > 12 || this == DIMINISHED_NINTH);
     }
 
-    public static IntervalChromatic from(IntervalDiatonic intervalDiatonic, int semitones) {
+    public static @NonNull Set<IntervalChromatic> from(@NonNull IntervalDiatonic intervalDiatonic) {
+        Set<IntervalChromatic> ret = new HashSet<>();
+        switch(intervalDiatonic) {
+            case UNISON:
+                ret.add(PERFECT_UNISON);
+                ret.add(AUGMENTED_UNISON);
+                break;
+            case SECOND:
+                ret.add(DIMINISHED_SECOND);
+                ret.add(MINOR_SECOND);
+                ret.add(MAJOR_SECOND);
+                ret.add(AUGMENTED_SECOND);
+                break;
+            case THIRD:
+                ret.add(DIMINISHED_THIRD);
+                ret.add(MINOR_THIRD);
+                ret.add(MAJOR_THIRD);
+                ret.add(AUGMENTED_THIRD);
+                break;
+            case FOURTH:
+                ret.add(DIMINISHED_FOURTH);
+                ret.add(PERFECT_FOURTH);
+                ret.add(AUGMENTED_FOURTH);
+                break;
+            case FIFTH:
+                ret.add(DIMINISHED_FIFTH);
+                ret.add(PERFECT_FIFTH);
+                ret.add(AUGMENTED_FIFTH);
+                break;
+            case SIXTH:
+                ret.add(DIMINISHED_SIXTH);
+                ret.add(MINOR_SIXTH);
+                ret.add(MAJOR_SIXTH);
+                ret.add(AUGMENTED_SIXTH);
+                break;
+            case SEVENTH:
+                ret.add(DIMINISHED_SEVENTH);
+                ret.add(MINOR_SEVENTH);
+                ret.add(MAJOR_SEVENTH);
+                ret.add(AUGMENTED_SEVENTH);
+                break;
+            case OCTAVE:
+                ret.add(DIMINISHED_OCTAVE);
+                ret.add(PERFECT_OCTAVE);
+                ret.add(AUGMENTED_OCTAVE);
+                break;
+            case NINTH:
+                ret.add(DIMINISHED_NINTH);
+                ret.add(MINOR_NINTH);
+                ret.add(MAJOR_NINTH);
+                ret.add(AUGMENTED_NINTH);
+                break;
+            case TENTH:
+                ret.add(DIMINISHED_TENTH);
+                ret.add(MINOR_TENTH);
+                ret.add(MAJOR_TENTH);
+                ret.add(AUGMENTED_TENTH);
+                break;
+            case ELEVENTH:
+                ret.add(DIMINISHED_ELEVENTH);
+                ret.add(PERFECT_ELEVENTH);
+                ret.add(AUGMENTED_ELEVENTH);
+                break;
+            case TWELFTH:
+                ret.add(DIMINISHED_TWELFTH);
+                ret.add(PERFECT_TWELFTH);
+                ret.add(AUGMENTED_TWELFTH);
+                break;
+            case THIRTEENTH:
+                ret.add(DIMINISHED_THIRTEENTH);
+                ret.add(MINOR_THIRTEENTH);
+                ret.add(MAJOR_THIRTEENTH);
+                ret.add(AUGMENTED_THIRTEENTH);
+                break;
+            case FOURTEENTH:
+                ret.add(DIMINISHED_FOURTEENTH);
+                ret.add(MINOR_FOURTEENTH);
+                ret.add(MAJOR_FOURTEENTH);
+                ret.add(AUGMENTED_FOURTEENTH);
+                break;
+            case FIFTEENTH:
+                ret.add(DIMINISHED_FIFTEENTH);
+                ret.add(PERFECT_FIFTEENTH);
+                ret.add(AUGMENTED_FIFTEENTH);
+                break;
+            default:
+                throw new RuntimeException("Impossible");
+        }
+
+        return ret;
+    }
+
+    public static @Nullable IntervalChromatic from(@NonNull IntervalDiatonic intervalDiatonic, int semitones) {
         switch (intervalDiatonic) {
             case UNISON:
                 switch (semitones) {
@@ -134,220 +232,95 @@ public enum IntervalChromatic {
                     case 12:
                         return PERFECT_OCTAVE;
                     case 13:
-                    	return AUGMENTED_OCTAVE;
+                        return AUGMENTED_OCTAVE;
                 }
                 break;
             case NINTH:
-            	switch (semitones) {
-            		case 12:
-            			return DIMINISHED_NINTH;
-            		case 13:
-            			return MINOR_NINTH;
-            		case 14:
-            			return MAJOR_NINTH;
-            		case 15:
-            			return AUGMENTED_NINTH;
-            	}
-            	break;
+                switch (semitones) {
+                    case 12:
+                        return DIMINISHED_NINTH;
+                    case 13:
+                        return MINOR_NINTH;
+                    case 14:
+                        return MAJOR_NINTH;
+                    case 15:
+                        return AUGMENTED_NINTH;
+                }
+                break;
             case TENTH:
-            	switch (semitones) {
-            		case 14:
-            			return DIMINISHED_TENTH;
-            		case 15:
-            			return MINOR_TENTH;
-            		case 16:
-            			return MAJOR_TENTH;
-            		case 17:
-            			return AUGMENTED_TENTH;
-            	}
-            	break;
+                switch (semitones) {
+                    case 14:
+                        return DIMINISHED_TENTH;
+                    case 15:
+                        return MINOR_TENTH;
+                    case 16:
+                        return MAJOR_TENTH;
+                    case 17:
+                        return AUGMENTED_TENTH;
+                }
+                break;
             case ELEVENTH:
-            	switch (semitones) {
-            		case 16:
-            			return DIMINISHED_ELEVENTH;
-            		case 17:
-            			return PERFECT_ELEVENTH;
-            		case 18:
-            			return AUGMENTED_ELEVENTH;
-            	}
-            	break;
+                switch (semitones) {
+                    case 16:
+                        return DIMINISHED_ELEVENTH;
+                    case 17:
+                        return PERFECT_ELEVENTH;
+                    case 18:
+                        return AUGMENTED_ELEVENTH;
+                }
+                break;
             case TWELFTH:
-            	switch (semitones) {
-            		case 18:
-            			return DIMINISHED_TWELFTH;
-            		case 19:
-            			return PERFECT_TWELFTH;
-            		case 20:
-            			return AUGMENTED_TWELFTH;
-            	}
-            	break;
+                switch (semitones) {
+                    case 18:
+                        return DIMINISHED_TWELFTH;
+                    case 19:
+                        return PERFECT_TWELFTH;
+                    case 20:
+                        return AUGMENTED_TWELFTH;
+                }
+                break;
             case THIRTEENTH:
-            	switch (semitones) {
-            		case 19:
-            			return DIMINISHED_THIRTEENTH;
-            		case 20:
-            			return MINOR_THIRTEENTH;
-            		case 21:
-            			return MAJOR_THIRTEENTH;
-            		case 22:
-            			return AUGMENTED_THIRTEENTH;
-            	}
-            	break;
+                switch (semitones) {
+                    case 19:
+                        return DIMINISHED_THIRTEENTH;
+                    case 20:
+                        return MINOR_THIRTEENTH;
+                    case 21:
+                        return MAJOR_THIRTEENTH;
+                    case 22:
+                        return AUGMENTED_THIRTEENTH;
+                }
+                break;
             case FOURTEENTH:
-            	switch (semitones) {
-            		case 21:
-            			return DIMINISHED_FOURTEENTH;
-            		case 22:
-            			return MINOR_FOURTEENTH;
-            		case 23:
-            			return MAJOR_FOURTEENTH;
-            		case 24:
-            			return AUGMENTED_FOURTEENTH;
-            	}
-            	break;
+                switch (semitones) {
+                    case 21:
+                        return DIMINISHED_FOURTEENTH;
+                    case 22:
+                        return MINOR_FOURTEENTH;
+                    case 23:
+                        return MAJOR_FOURTEENTH;
+                    case 24:
+                        return AUGMENTED_FOURTEENTH;
+                }
+                break;
             case FIFTEENTH:
-            	switch (semitones) {
-            		case 23:
-            			return DIMINISHED_FIFTEENTH;
-            		case 24:
-            			return PERFECT_FIFTEENTH;
-            		case 25:
-            			return AUGMENTED_FIFTEENTH;
-            	}
-            	break;
+                switch (semitones) {
+                    case 23:
+                        return DIMINISHED_FIFTEENTH;
+                    case 24:
+                        return PERFECT_FIFTEENTH;
+                    case 25:
+                        return AUGMENTED_FIFTEENTH;
+                }
+                break;
             default: return null;
         }
 
         return null;
     }
 
-    public IntervalDiatonic toDiatonic() {
-        switch (this) {
-            case AUGMENTED_UNISON:
-            case PERFECT_UNISON:
-                return IntervalDiatonic.UNISON;
-            case AUGMENTED_SECOND:
-            case DIMINISHED_SECOND:
-            case MAJOR_SECOND:
-            case MINOR_SECOND:
-                return IntervalDiatonic.SECOND;
-            case AUGMENTED_THIRD:
-            case DIMINISHED_THIRD:
-            case MAJOR_THIRD:
-            case MINOR_THIRD:
-                return IntervalDiatonic.THIRD;
-            case AUGMENTED_FOURTH:
-            case DIMINISHED_FOURTH:
-            case PERFECT_FOURTH:
-                return IntervalDiatonic.FOURTH;
-            case AUGMENTED_FIFTH:
-            case DIMINISHED_FIFTH:
-            case PERFECT_FIFTH:
-                return IntervalDiatonic.FIFTH;
-            case AUGMENTED_SIXTH:
-            case DIMINISHED_SIXTH:
-            case MAJOR_SIXTH:
-            case MINOR_SIXTH:
-                return IntervalDiatonic.SIXTH;
-            case AUGMENTED_SEVENTH:
-            case DIMINISHED_SEVENTH:
-            case MAJOR_SEVENTH:
-            case MINOR_SEVENTH:
-                return IntervalDiatonic.SEVENTH;
-            case DIMINISHED_OCTAVE:
-            case PERFECT_OCTAVE:
-            case AUGMENTED_OCTAVE:
-                return IntervalDiatonic.OCTAVE;
-            case AUGMENTED_NINTH:
-            case DIMINISHED_NINTH:
-            case MAJOR_NINTH:
-            case MINOR_NINTH:
-            	return IntervalDiatonic.NINTH;
-            case AUGMENTED_TENTH:
-            case DIMINISHED_TENTH:
-            case MAJOR_TENTH:
-            case MINOR_TENTH:
-            	return IntervalDiatonic.TENTH;
-            case AUGMENTED_ELEVENTH:
-            case DIMINISHED_ELEVENTH:
-            case PERFECT_ELEVENTH:
-            	return IntervalDiatonic.ELEVENTH;
-            case AUGMENTED_TWELFTH:
-            case DIMINISHED_TWELFTH:
-            case PERFECT_TWELFTH:
-            	return IntervalDiatonic.TWELFTH;
-            case AUGMENTED_THIRTEENTH:
-            case DIMINISHED_THIRTEENTH:
-            case MAJOR_THIRTEENTH:
-            case MINOR_THIRTEENTH:
-            	return IntervalDiatonic.THIRTEENTH;
-            case AUGMENTED_FOURTEENTH:
-            case DIMINISHED_FOURTEENTH:
-            case MAJOR_FOURTEENTH:
-            case MINOR_FOURTEENTH:
-            	return IntervalDiatonic.FOURTEENTH;
-            case DIMINISHED_FIFTEENTH:
-            case PERFECT_FIFTEENTH:
-            case AUGMENTED_FIFTEENTH:
-            	return IntervalDiatonic.FIFTEENTH;
-        }
-        
-        assert false;
-        return null;
-    }
-
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        switch (quality) {
-            case DIMINISHED:
-                sb.append( "d" );
-                break;
-            case AUGMENTED:
-                sb.append( "A" );
-                break;
-            case MAJOR:
-                sb.append( "M" );
-                break;
-            case MINOR:
-                sb.append( "m" );
-                break;
-            case PERFECT:
-                sb.append( "P" );
-                break;
-            default:
-                return null;
-        }
-
-        sb.append( this.toDiatonic().val() + 1 );
-
-        return sb.toString();
-    }
-
-    public String literalLong() {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append( this.toDiatonic() + " " );
-
-        switch (quality) {
-            case DIMINISHED:
-                sb.append( "disminuida" );
-                break;
-            case AUGMENTED:
-                sb.append( "aumentada" );
-                break;
-            case MAJOR:
-                sb.append( "mayor" );
-                break;
-            case MINOR:
-                sb.append( "menor" );
-                break;
-            case PERFECT:
-                sb.append( "P" );
-                break;
-            default:
-                return null;
-        }
-
-        return sb.toString();
+        return Namer.fromLong(this);
     }
 }

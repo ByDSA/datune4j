@@ -89,7 +89,7 @@ public class CustomTonality implements Tonality {
 		 * DiatonicFunction.A, DiatonicFunction.B }; for ( DiatonicFunction cf : fs )
 		 * { DiatonicChordMidi dcm = new DiatonicChordMidi( cf, ton );
 		 * 
-		 * int d = dcm.getDegree().intValue();
+		 * int d = dcm.getDegreeFrom().intValue();
 		 * 
 		 * addCacheOut( dcm.toChromaticChord(), d ); } }
 		 */
@@ -489,26 +489,6 @@ public class CustomTonality implements Tonality {
 		this( Chromatic.calculateFrom( noteBase ), scale );
 	}*/
 
-	public int length() {
-		return scale.length();
-	}
-
-	public Chromatic get(int pos) {
-		int i = scale.trim( pos );
-		Chromatic note = notes[i];
-
-		return note;
-	}
-
-	public Chromatic get(IntervalDiatonic n) {
-		return get( n.val() );
-	}
-
-	public Chromatic get(DiatonicDegree n) {
-		assert n != null;
-		return get( n.val() );
-	}
-
 	public CustomTonality getRelativeMinor() {
 		CustomTonality[] rel = getModes();
 		for ( CustomTonality s : rel )
@@ -604,7 +584,7 @@ public class CustomTonality implements Tonality {
 
 		int posChordCorrector = 7 - c.get( 0 ).getDegree().val();
 
-		// Integer posBaseCorrector = base.getDegree(notesChord[0]);
+		// Integer posBaseCorrector = base.getDegreeFrom(notesChord[0]);
 		Integer posBaseCorrector = ( Diatonic.from( notesChord[0] ).ordinal()
 				- Diatonic.from( base.root ).ordinal() + 7 ) % 7;
 		if ( posBaseCorrector == null ) {
@@ -648,58 +628,50 @@ public class CustomTonality implements Tonality {
 		return Scale.of( ton );
 	}
 
-	public DiatonicDegree getDegree(PitchChromaticSingle note) {
+	public DiatonicDegree getDegreeFrom(PitchChromaticSingle note) {
 		assert note != null : "No se ha especificado nota";
-		return getDegree( note, true );
+		return getDegreeFrom( note, true );
 	}
 
-	public DiatonicDegree getDegree(PitchChromaticSingle note, boolean enharmonic) {
+	public DiatonicDegree getDegreeFrom(PitchChromaticSingle note, boolean enharmonic) {
 		assert note != null : "No se ha especificado nota";
 
 		for ( int i = 0; i < length(); i++ ) {
 			Chromatic chromatic = ChromaticAdapter.from(note);
 			if (!enharmonic && get(i).equals(chromatic)
 					|| enharmonic && get(i).intValue() == chromatic.intValue())
-				return DiatonicDegree.get(i);
+				return DiatonicDegree.fromIndex(i);
 		}
 
 		return null;
 	}
 	/*
-	 * public Integer getDegree(int note) { for ( int i = 0; i < length(); i++ ) if
+	 * public Integer getDegreeFrom(int note) { for ( int i = 0; i < length(); i++ ) if
 	 * ( calculateFrom( i ).intValue() == note ) return i;
 	 * 
 	 * return null; }
 	 */
 
 	public boolean has(PitchChromaticSingle note) {
-		return getDegree( note ) != null;
+		return getDegreeFrom( note ) != null;
 	}
 
 	public <N extends PitchChromaticSingle> boolean has(PitchChromaticChord<N> notes) {
 		for ( N n : notes ) {
-			if ( getDegree( n ) == null )
+			if ( getDegreeFrom( n ) == null )
 				return false;
 		}
 
 		return true;
 	}
 	/*
-	 * public boolean has(int note) { return getDegree( note ) != null; }
+	 * public boolean has(int note) { return getDegreeFrom( note ) != null; }
 	 * 
-	 * public boolean has(int[] notes) { for ( int n : notes ) if ( getDegree( n )
+	 * public boolean has(int[] notes) { for ( int n : notes ) if ( getDegreeFrom( n )
 	 * == null ) return false;
 	 * 
 	 * return true; }
 	 */
-
-	public CustomTonality getRelativeScaleDiatonic(IntervalDiatonic pos) {
-		return new CustomTonality( get( pos ), getScale() );
-	}
-
-	public CustomTonality getRelativeScaleDiatonic(DiatonicDegree pos) {
-		return getRelativeScaleDiatonic( IntervalDiatonic.get( pos ) );
-	}
 
 	public CustomTonality getRelativeScaleChromatic(int pos) {
 		return new CustomTonality( root.addSemi( pos ), getScale() );
@@ -791,12 +763,12 @@ public class CustomTonality implements Tonality {
 	}
 
 	public IntervalChromatic getInterval(DiatonicDegree d2, IntervalDiatonic id) {
-		int idInt = id.val();
+		int idInt = id.ordinal();
 
 		int n = get( d2.val() + idInt ).intValue() - get( d2 ).intValue();
 		if ( n < 0 )
-			n += IntervalChromatic.PERFECT_OCTAVE.val();
-		n += idInt / IntervalChromatic.PERFECT_OCTAVE.val();
+			n += IntervalChromatic.PERFECT_OCTAVE.getSemitones();
+		n += idInt / IntervalChromatic.PERFECT_OCTAVE.getSemitones();
 		return IntervalChromatic.from( id, n );
 	}
 

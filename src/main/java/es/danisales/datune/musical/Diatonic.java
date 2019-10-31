@@ -34,13 +34,13 @@ public enum Diatonic implements PitchDiatonicSingle {
 
 	@Override
 	public DiatonicDegree getDegree() {
-		return DiatonicDegree.get( ordinal() );
+		return DiatonicDegree.fromIndex( ordinal() );
 	}
 
 	public IntervalDiatonic dist(Diatonic n2) {
 		int d = n2.getDegree().val() - getDegree().val();
 
-		return IntervalDiatonic.of( d );
+		return IntervalDiatonic.fromIndex( d );
 	}
 
 	@Override

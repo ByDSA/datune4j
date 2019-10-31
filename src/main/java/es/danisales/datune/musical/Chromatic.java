@@ -2,9 +2,6 @@ package es.danisales.datune.musical;
 
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.IntervalDiatonic;
-import es.danisales.datune.midi.ChromaticMidi;
-import es.danisales.datune.midi.Settings;
-import es.danisales.datune.midi.Settings.DefaultValues;
 import es.danisales.datune.musical.transformations.*;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.tonality.Tonality;
@@ -106,7 +103,7 @@ public enum Chromatic implements PitchChromaticSingle {
 	public Integer dist(Chromatic n2) {
 		int d = n2.intValue() - intValue();
 		while (d < 0)
-			d += IntervalChromatic.PERFECT_OCTAVE.val();
+			d += IntervalChromatic.PERFECT_OCTAVE.getSemitones();
 
 		return d;
 	}

@@ -1,115 +1,98 @@
 package es.danisales.datune.diatonic;
 
+import es.danisales.datune.musical.transformations.Namer;
+import org.checkerframework.checker.nullness.qual.NonNull;
+
 public enum IntervalDiatonic {
-    UNISON(0), SECOND(1), THIRD(2), FOURTH(3), FIFTH(4), SIXTH(5), SEVENTH(6),
-    OCTAVE(7), NINTH(8), TENTH(9), ELEVENTH(10), TWELFTH(11), THIRTEENTH(12), FOURTEENTH(13),
-    FIFTEENTH(14);
+    UNISON, SECOND, THIRD, FOURTH, FIFTH, SIXTH, SEVENTH,
+    OCTAVE, NINTH, TENTH, ELEVENTH, TWELFTH, THIRTEENTH, FOURTEENTH,
+    FIFTEENTH;
 
-    private final int value;
+    public static @NonNull IntervalDiatonic fromIndex(int n) {
+    	n = trimToValidValue(n);
 
-    IntervalDiatonic(
-            int value) {
-        this.value = value;
+    	return IntervalDiatonic.values()[n];
     }
 
-    public int val() {
-        return value;
+    private static int trimToValidValue(int n) {
+        return (n < 0 ? -n : n) % (IntervalDiatonic.values().length - 1);
     }
 
-    public static IntervalDiatonic of(int n) {
-    	n = n < 0 ? -n : n;
-    	
-        switch (n) {
-            case 0:
-                return UNISON;
-            case 1:
-                return SECOND;
-            case 2:
-                return THIRD;
-            case 3:
-                return FOURTH;
-            case 4:
-                return FIFTH;
-            case 5:
-                return SIXTH;
-            case 6:
-                return SEVENTH;
-            case 7:
-                return OCTAVE;
-            case 8:
-                return NINTH;
-            case 9:
-                return TENTH;
-            case 10:
-                return ELEVENTH;
-            case 11:
-                return TWELFTH;
-            case 12:
-                return THIRTEENTH;
-            case 13:
-                return FOURTEENTH;
-            case 14:
-                return FIFTEENTH;
-            default:
-                return null;
+    public static @NonNull IntervalDiatonic from(@NonNull IntervalChromatic intervalChromatic) {
+        switch (intervalChromatic) {
+            case AUGMENTED_UNISON:
+            case PERFECT_UNISON:
+                return IntervalDiatonic.UNISON;
+            case AUGMENTED_SECOND:
+            case DIMINISHED_SECOND:
+            case MAJOR_SECOND:
+            case MINOR_SECOND:
+                return IntervalDiatonic.SECOND;
+            case AUGMENTED_THIRD:
+            case DIMINISHED_THIRD:
+            case MAJOR_THIRD:
+            case MINOR_THIRD:
+                return IntervalDiatonic.THIRD;
+            case AUGMENTED_FOURTH:
+            case DIMINISHED_FOURTH:
+            case PERFECT_FOURTH:
+                return IntervalDiatonic.FOURTH;
+            case AUGMENTED_FIFTH:
+            case DIMINISHED_FIFTH:
+            case PERFECT_FIFTH:
+                return IntervalDiatonic.FIFTH;
+            case AUGMENTED_SIXTH:
+            case DIMINISHED_SIXTH:
+            case MAJOR_SIXTH:
+            case MINOR_SIXTH:
+                return IntervalDiatonic.SIXTH;
+            case AUGMENTED_SEVENTH:
+            case DIMINISHED_SEVENTH:
+            case MAJOR_SEVENTH:
+            case MINOR_SEVENTH:
+                return IntervalDiatonic.SEVENTH;
+            case DIMINISHED_OCTAVE:
+            case PERFECT_OCTAVE:
+            case AUGMENTED_OCTAVE:
+                return IntervalDiatonic.OCTAVE;
+            case AUGMENTED_NINTH:
+            case DIMINISHED_NINTH:
+            case MAJOR_NINTH:
+            case MINOR_NINTH:
+                return IntervalDiatonic.NINTH;
+            case AUGMENTED_TENTH:
+            case DIMINISHED_TENTH:
+            case MAJOR_TENTH:
+            case MINOR_TENTH:
+                return IntervalDiatonic.TENTH;
+            case AUGMENTED_ELEVENTH:
+            case DIMINISHED_ELEVENTH:
+            case PERFECT_ELEVENTH:
+                return IntervalDiatonic.ELEVENTH;
+            case AUGMENTED_TWELFTH:
+            case DIMINISHED_TWELFTH:
+            case PERFECT_TWELFTH:
+                return IntervalDiatonic.TWELFTH;
+            case AUGMENTED_THIRTEENTH:
+            case DIMINISHED_THIRTEENTH:
+            case MAJOR_THIRTEENTH:
+            case MINOR_THIRTEENTH:
+                return IntervalDiatonic.THIRTEENTH;
+            case AUGMENTED_FOURTEENTH:
+            case DIMINISHED_FOURTEENTH:
+            case MAJOR_FOURTEENTH:
+            case MINOR_FOURTEENTH:
+                return IntervalDiatonic.FOURTEENTH;
+            case DIMINISHED_FIFTEENTH:
+            case PERFECT_FIFTEENTH:
+            case AUGMENTED_FIFTEENTH:
+                return IntervalDiatonic.FIFTEENTH;
         }
-    }
 
-    public static IntervalDiatonic get(DiatonicDegree d) {
-        switch (d) {
-            case I:
-                return UNISON;
-            case II:
-                return SECOND;
-            case III:
-                return THIRD;
-            case IV:
-                return FOURTH;
-            case V:
-                return FIFTH;
-            case VI:
-                return SIXTH;
-            case VII:
-                return SEVENTH;
-            default:
-                return null;
-        }
+        throw new RuntimeException("Impossible");
     }
 
     public String toString() {
-        switch (this) {
-            case UNISON:
-                return "Un�sono";
-            case SECOND:
-                return "Segunda";
-            case THIRD:
-                return "Tercera";
-            case FOURTH:
-                return "Cuarta";
-            case FIFTH:
-                return "Quinta";
-            case SIXTH:
-                return "Sexta";
-            case SEVENTH:
-                return "S�ptima";
-            case OCTAVE:
-                return "Octava";
-            case NINTH:
-                return "Novena";
-            case TENTH:
-                return "D�cima";
-            case ELEVENTH:
-                return "Onceava";
-            case TWELFTH:
-                return "Doceava";
-            case THIRTEENTH:
-                return "Treceava";
-            case FOURTEENTH:
-                return "Catorceava";
-            case FIFTEENTH:
-                return "Quinceava";
-        }
-
-        return null;
+        return "Intervalo de " + Namer.from(this);
     }
 }

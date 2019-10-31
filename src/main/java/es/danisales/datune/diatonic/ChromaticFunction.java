@@ -6,7 +6,10 @@ import es.danisales.datune.musical.CustomChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.tonality.CustomTonality;
 import es.danisales.datune.tonality.Tonality;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
+import java.lang.annotation.Native;
 import java.util.Set;
 
 /**
@@ -234,15 +237,13 @@ public enum ChromaticFunction implements HarmonicFunction {
 	}
 
 	/**
-	 * Gets the chromatic function from a chromatic chord and a tonality
+	 * Gets the chromatic function fromIndex a chromatic chord and a tonality
 	 *
 	 * @param c chromatic chord
 	 * @param t tonality
 	 * @return the chromatic function
 	 */
-	public static ChromaticFunction get(PitchChromaticChord c, Tonality t) {
-		assert t != null;
-		assert c != null;
+	public static @Nullable ChromaticFunction from(@NonNull PitchChromaticChord c, @NonNull Tonality t) {
 		Set<CustomChromaticChord> cs = t.getOutScaleChords();
 		for ( CustomChromaticChord c2 : cs ) {
 			if ( c.equalsEnharmonic( c2 ) ) {
@@ -256,82 +257,21 @@ public enum ChromaticFunction implements HarmonicFunction {
 	}
 
 	/**
-	 * Gets the harmonic function from a diatonic chord with a tonality
+	 * Gets the harmonic function fromIndex a diatonic chord with a tonality
 	 *
 	 * @param diatonicChordMidi the diatonic chord midi
 	 * @return the harmonic function
 	 */
-	public static HarmonicFunction get(DiatonicChordMidi diatonicChordMidi) {
+	public static HarmonicFunction from(DiatonicChordMidi diatonicChordMidi) {
 		return ChromaticFunction
-				.get( diatonicChordMidi.toChromaticChord(), new CustomTonality(diatonicChordMidi.metaTonality.getRoot(), diatonicChordMidi.metaTonality.getScale()) );
+				.from( diatonicChordMidi.toChromaticChord(), new CustomTonality(diatonicChordMidi.metaTonality.getRoot(), diatonicChordMidi.metaTonality.getScale()) );
 	}
 
 	/* (non-Javadoc)
-	 * @see diatonic.HarmonicFunction#getDegree()
+	 * @see diatonic.HarmonicFunction#getDegreeFrom()
 	 */
+	@Deprecated
 	public DiatonicDegree getDegree() {
-		switch ( this ) {
-			case I:
-			case I5:
-			case i:
-			case I0:
-				return DiatonicDegree.I;
-			case II:
-			case II5:
-			case ii:
-			case II0:
-			case N6:
-				return DiatonicDegree.II;
-			case III:
-			case III5:
-			case iii:
-			case III0:
-				return DiatonicDegree.III;
-			case IV:
-			case IV5:
-			case iv:
-			case IV0:
-				return DiatonicDegree.IV;
-			case V:
-			case V5:
-			case v:
-			case V0:
-				return DiatonicDegree.V;
-			case VI:
-			case VI5:
-			case vi:
-			case VI0:
-				return DiatonicDegree.VI;
-			case VII:
-			case VII5:
-			case vii:
-			case VII0:
-				return DiatonicDegree.VII;
-			case SUBV7:
-			case V7ALT:
-				return DiatonicDegree.I;
-			case SUBV7_II:
-			case V7_II:
-			case V_II:
-				return DiatonicDegree.II;
-			case SUBV7_III:
-			case V7_III:
-			case V_III:
-				return DiatonicDegree.III;
-			case SUBV7_IV:
-			case V7_IV:
-			case V_IV:
-				return DiatonicDegree.IV;
-			case SUBV7_V:
-			case V_V:
-			case V7_V:
-				return DiatonicDegree.V;
-			case SUBV7_VI:
-			case V7_VI:
-			case V_VI:
-				return DiatonicDegree.VI;
-		}
-
-		return null;
+		return DiatonicDegree.from(this);
 	}
 }

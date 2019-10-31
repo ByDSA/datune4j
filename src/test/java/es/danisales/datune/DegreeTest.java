@@ -24,27 +24,27 @@ public class DegreeTest {
 	
 	@Test
 	public void get() {
-		assertEquals( DiatonicDegree.I, DiatonicDegree.get(-7) );
-		assertEquals( DiatonicDegree.II, DiatonicDegree.get(-6) );
-		assertEquals( DiatonicDegree.III, DiatonicDegree.get(-5) );
-		assertEquals( DiatonicDegree.IV, DiatonicDegree.get(-4) );
-		assertEquals( DiatonicDegree.V, DiatonicDegree.get(-3) );
-		assertEquals( DiatonicDegree.VI, DiatonicDegree.get(-2) );
-		assertEquals( DiatonicDegree.VII, DiatonicDegree.get(-1) );
-		assertEquals( DiatonicDegree.I, DiatonicDegree.get(0) );
-		assertEquals( DiatonicDegree.II, DiatonicDegree.get(1) );
-		assertEquals( DiatonicDegree.III, DiatonicDegree.get(2) );
-		assertEquals( DiatonicDegree.IV, DiatonicDegree.get(3) );
-		assertEquals( DiatonicDegree.V, DiatonicDegree.get(4) );
-		assertEquals( DiatonicDegree.VI, DiatonicDegree.get(5) );
-		assertEquals( DiatonicDegree.VII, DiatonicDegree.get(6) );
-		assertEquals( DiatonicDegree.I, DiatonicDegree.get(7) );
-		assertEquals( DiatonicDegree.II, DiatonicDegree.get(8) );
-		assertEquals( DiatonicDegree.III, DiatonicDegree.get(9) );
-		assertEquals( DiatonicDegree.IV, DiatonicDegree.get(10) );
-		assertEquals( DiatonicDegree.V, DiatonicDegree.get(11) );
-		assertEquals( DiatonicDegree.VI, DiatonicDegree.get(12) );
-		assertEquals( DiatonicDegree.VII, DiatonicDegree.get(13) );
+		assertEquals( DiatonicDegree.I, DiatonicDegree.fromIndex(-7) );
+		assertEquals( DiatonicDegree.II, DiatonicDegree.fromIndex(-6) );
+		assertEquals( DiatonicDegree.III, DiatonicDegree.fromIndex(-5) );
+		assertEquals( DiatonicDegree.IV, DiatonicDegree.fromIndex(-4) );
+		assertEquals( DiatonicDegree.V, DiatonicDegree.fromIndex(-3) );
+		assertEquals( DiatonicDegree.VI, DiatonicDegree.fromIndex(-2) );
+		assertEquals( DiatonicDegree.VII, DiatonicDegree.fromIndex(-1) );
+		assertEquals( DiatonicDegree.I, DiatonicDegree.fromIndex(0) );
+		assertEquals( DiatonicDegree.II, DiatonicDegree.fromIndex(1) );
+		assertEquals( DiatonicDegree.III, DiatonicDegree.fromIndex(2) );
+		assertEquals( DiatonicDegree.IV, DiatonicDegree.fromIndex(3) );
+		assertEquals( DiatonicDegree.V, DiatonicDegree.fromIndex(4) );
+		assertEquals( DiatonicDegree.VI, DiatonicDegree.fromIndex(5) );
+		assertEquals( DiatonicDegree.VII, DiatonicDegree.fromIndex(6) );
+		assertEquals( DiatonicDegree.I, DiatonicDegree.fromIndex(7) );
+		assertEquals( DiatonicDegree.II, DiatonicDegree.fromIndex(8) );
+		assertEquals( DiatonicDegree.III, DiatonicDegree.fromIndex(9) );
+		assertEquals( DiatonicDegree.IV, DiatonicDegree.fromIndex(10) );
+		assertEquals( DiatonicDegree.V, DiatonicDegree.fromIndex(11) );
+		assertEquals( DiatonicDegree.VI, DiatonicDegree.fromIndex(12) );
+		assertEquals( DiatonicDegree.VII, DiatonicDegree.fromIndex(13) );
 	}
 	
 	@Test

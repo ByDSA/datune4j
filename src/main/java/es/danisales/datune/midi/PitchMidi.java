@@ -387,7 +387,7 @@ public enum PitchMidi implements PitchChromaticSingle, PitchOctaveMidi, Codeable
 	}
 
 	public PitchMidi shift(IntervalChromatic i) {
-		return shift( i.val() );
+		return shift( i.getSemitones() );
 	}
 	
 	public static PitchMidi of(DiatonicDegree degree, Tonality tonality, int octave) {

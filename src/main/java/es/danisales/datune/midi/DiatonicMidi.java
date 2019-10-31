@@ -45,15 +45,15 @@ public class DiatonicMidi extends ChromaticMidi implements PitchDiatonic {
 	}
 
 	public DiatonicMidi sub(IntervalDiatonic i) {
-		return _add(-i.val());
+		return _add(-i.ordinal());
 	}
 	
 	private DiatonicMidi _add(int i) {
 		int degreeInt = getDegree().val() + i;
-		int o = ( degreeInt ) / IntervalDiatonic.OCTAVE.val();
+		int o = ( degreeInt ) / IntervalDiatonic.OCTAVE.ordinal();
 		if ( degreeInt < 0 )
 			o--;
-		DiatonicDegree degree = DiatonicDegree.get( degreeInt );
+		DiatonicDegree degree = DiatonicDegree.fromIndex( degreeInt );
 		assert degree != null : getDegree().val() + " " + i;
 
 		DiatonicMidi dm = clone();
@@ -63,7 +63,7 @@ public class DiatonicMidi extends ChromaticMidi implements PitchDiatonic {
 	}
 
 	public DiatonicMidi add(IntervalDiatonic i) {
-		return _add(i.val());
+		return _add(i.ordinal());
 	}
 
 	public DiatonicMidi setTonality(Tonality s) {
@@ -79,7 +79,7 @@ public class DiatonicMidi extends ChromaticMidi implements PitchDiatonic {
 	}
 
 	public DiatonicMidi setDegree(int p) {
-		degree = DiatonicDegree.get( tonality.getScale().trim( p ) );
+		degree = DiatonicDegree.fromIndex( tonality.getScale().trim( p ) );
 
 		return this;
 	}
@@ -98,7 +98,7 @@ public class DiatonicMidi extends ChromaticMidi implements PitchDiatonic {
 
 		int tonalityLength = n.getTonality().length();
 
-		IntervalDiatonic id = IntervalDiatonic.of(
+		IntervalDiatonic id = IntervalDiatonic.fromIndex(
 			n.getOctave() * tonalityLength + n.getDegree().val()
 					- ( getOctave() * tonalityLength + getDegree().val() )
 		);

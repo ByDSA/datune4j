@@ -91,7 +91,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
 
     public <N extends PitchChromaticSingle, Array extends PitchChromaticChord<N>> DiatonicChordMidi(Array ns, Tonality t, int o, int d, int v) {
         for ( N n : ns ) {
-            DiatonicMidi cm = DiatonicMidi.of( t.getDegree( n ), t, o, d, v );
+            DiatonicMidi cm = DiatonicMidi.of( t.getDegreeFrom( n ), t, o, d, v );
             Chromatic chromaticCm = ChromaticAdapter.from(cm);
             Chromatic lastChromatic = ChromaticAdapter.from( get( size() - 1 ) );
             if ( size() > 0 && chromaticCm.intValue() <= lastChromatic.intValue() ) {
@@ -320,7 +320,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
             d = ( (ChromaticFunction) function ).getDegree();
         if ( d == null ) {
             Chromatic c = ChromaticAdapter.from( getRoot() );
-            d = metaTonality.getDegree( c );
+            d = metaTonality.getDegreeFrom( c );
         }
         return d;
     }
@@ -391,7 +391,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
                     tonality = Tonality.createFromChord(
                             new DiatonicChordMidi(
                                     DiatonicFunction.V, tonality
-                                    .getRelativeScaleDiatonic( IntervalDiatonic.SECOND )
+                                    .getRelativeScaleDiatonic( DiatonicDegree.II )
                             ), tonality
                     );
                     break;
@@ -399,7 +399,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
                     tonality = Tonality.createFromChord(
                             new DiatonicChordMidi(
                                     DiatonicFunction.V7, tonality
-                                    .getRelativeScaleDiatonic( IntervalDiatonic.SECOND )
+                                    .getRelativeScaleDiatonic( DiatonicDegree.II )
                             ), tonality
                     );
                     break;
@@ -407,7 +407,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
                     tonality = Tonality.createFromChord(
                             new DiatonicChordMidi(
                                     DiatonicFunction.V, tonality
-                                    .getRelativeScaleDiatonic( IntervalDiatonic.THIRD )
+                                    .getRelativeScaleDiatonic( DiatonicDegree.III )
                             ), tonality
                     );
                     break;
@@ -415,7 +415,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
                     tonality = Tonality.createFromChord(
                             new DiatonicChordMidi(
                                     DiatonicFunction.V7, tonality
-                                    .getRelativeScaleDiatonic( IntervalDiatonic.THIRD )
+                                    .getRelativeScaleDiatonic( DiatonicDegree.III )
                             ), tonality
                     );
                     break;
@@ -423,7 +423,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
                     tonality = Tonality.createFromChord(
                             new DiatonicChordMidi(
                                     DiatonicFunction.V, tonality
-                                    .getRelativeScaleDiatonic( IntervalDiatonic.FOURTH )
+                                    .getRelativeScaleDiatonic( DiatonicDegree.IV )
                             ), tonality
                     );
                     break;
@@ -431,7 +431,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
                     tonality = Tonality.createFromChord(
                             new DiatonicChordMidi(
                                     DiatonicFunction.V7, tonality
-                                    .getRelativeScaleDiatonic( IntervalDiatonic.FOURTH )
+                                    .getRelativeScaleDiatonic( DiatonicDegree.IV )
                             ), tonality
                     );
                     break;
@@ -439,7 +439,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
                     tonality = Tonality.createFromChord(
                             new DiatonicChordMidi(
                                     DiatonicFunction.V, tonality
-                                    .getRelativeScaleDiatonic( IntervalDiatonic.FIFTH )
+                                    .getRelativeScaleDiatonic( DiatonicDegree.V )
                             ), tonality
                     );
                     break;
@@ -447,7 +447,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
                     tonality = Tonality.createFromChord(
                             new DiatonicChordMidi(
                                     DiatonicFunction.V7, tonality
-                                    .getRelativeScaleDiatonic( IntervalDiatonic.FIFTH )
+                                    .getRelativeScaleDiatonic( DiatonicDegree.V )
                             ), tonality
                     );
                     break;
@@ -455,7 +455,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
                     tonality = Tonality.createFromChord(
                             new DiatonicChordMidi(
                                     DiatonicFunction.V, tonality
-                                    .getRelativeScaleDiatonic( IntervalDiatonic.SIXTH )
+                                    .getRelativeScaleDiatonic( DiatonicDegree.VI )
                             ), tonality
                     );
                     break;
@@ -463,7 +463,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
                     tonality = Tonality.createFromChord(
                             new DiatonicChordMidi(
                                     DiatonicFunction.V7, tonality
-                                    .getRelativeScaleDiatonic( IntervalDiatonic.SIXTH )
+                                    .getRelativeScaleDiatonic( DiatonicDegree.VI )
                             ), tonality
                     );
                     break;
@@ -937,15 +937,15 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
         DiatonicMidi n;
         if ( note >= ns.size() ) {
             n = ns.get( note % ns.size() );
-            IntervalDiatonic i = IntervalDiatonic.of( note / ns.size() * IntervalDiatonic.OCTAVE.val() );
+            IntervalDiatonic i = IntervalDiatonic.fromIndex( note / ns.size() * IntervalDiatonic.OCTAVE.ordinal() );
             n.add( i );
         } else if ( note < 0 ) {
             int num = Math.abs( ns.size() + note % ns.size() );
             n = ns.get( num );
-            IntervalDiatonic i = IntervalDiatonic.of( ( note / ns.size() - 1 ) * IntervalDiatonic.OCTAVE.val() );
+            IntervalDiatonic i = IntervalDiatonic.fromIndex( ( note / ns.size() - 1 ) * IntervalDiatonic.OCTAVE.ordinal() );
             n.add( i );
         } else {
-            n = (DiatonicMidi) ns.get( note ).clone();
+            n = ns.get( note ).clone();
         }
 
         return n;
@@ -1078,7 +1078,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
     }
 
     public DiatonicChordMidi addInterval(IntervalDiatonic interval) throws AddedException {
-        return add( getRoot().getDegree().add( interval.val() ) );
+        return add( DiatonicDegree.add( getRoot().getDegree(), interval ) );
     }
 
     public DiatonicChordMidi add(DiatonicDegree pos) throws AddedException {

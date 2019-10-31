@@ -105,9 +105,9 @@ public enum ScaleEnum implements Scale {
 
 	private ScaleEnum(int... i) throws ScaleException {
 		value = i;
-		if (IntStream.of( i ).sum() != IntervalChromatic.PERFECT_OCTAVE.val()) {
+		if (IntStream.of( i ).sum() != IntervalChromatic.PERFECT_OCTAVE.getSemitones()) {
 			System.out.println( IntStream.of( i ).sum() );
-			System.out.println( IntervalChromatic.PERFECT_OCTAVE.val() );
+			System.out.println( IntervalChromatic.PERFECT_OCTAVE.getSemitones() );
 			throw new ScaleException( this );
 		}
 	}

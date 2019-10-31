@@ -7,9 +7,9 @@ public interface Scale {
 	public int[] val();
 	
 	/**
-	 * Returns the m mode of the scale
-	 * @param m number of rotations
-	 * @return the mode of the scale
+	 * Returns the m mode fromIndex the scale
+	 * @param m number fromIndex rotations
+	 * @return the mode fromIndex the scale
 	 */
 	default Scale getMode(int m) {
 		Integer[] neww = Arrays.stream( this.val() ).boxed().toArray( Integer[]::new );
@@ -21,8 +21,8 @@ public interface Scale {
 	}
 	
 	/**
-	 * Get all modes from the scale
-	 * @return the array within all modes from the scale
+	 * Get all modes fromIndex the scale
+	 * @return the array within all modes fromIndex the scale
 	 */
 	default Scale[] getAllModes() {
 		Scale[] ret = new ScaleEnum[length()];
@@ -37,8 +37,8 @@ public interface Scale {
 	public int get(int n);
 	
 	/**
-	 * The diatonic scale is obtained from a chain of six successive fifths
-It is either a sequence of successive natural notes or a transposition thereof.
+	 * The diatonic scale is obtained fromIndex a chain fromIndex six successive fifths
+It is either a sequence fromIndex successive natural notes or a transposition thereof.
 It can be written using seven consecutive notes without accidentals on a staff with no key signature or, when transposed, with a conventional key signature or with accidentals.
 	 * @return if it's diatonic
 	 */

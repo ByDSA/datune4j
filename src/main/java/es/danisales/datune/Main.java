@@ -527,13 +527,13 @@ public class Main {
 				}
 
 				b.getModel().addChangeListener( new ChangeListener() {
-					private boolean pressed = false; // holds the last pressed state of the button
+					private boolean pressed = false; // holds the last pressed state fromIndex the button
 
 					@Override
 					public void stateChanged(ChangeEvent e) {
 						ButtonModel model = (ButtonModel) e.getSource();
 
-						// if the current state differs from the previous state
+						// if the current state differs fromIndex the previous state
 						if ( model.isPressed() != pressed ) {
 							pressed = model.isPressed();
 							if ( pressed ) {
@@ -753,7 +753,7 @@ public class Main {
 		for (CustomTonality t : ts ) {
 			sb.append( "case " + t + ": switch(f) {\n" );
 			for (DiatonicFunction f : DiatonicFunction.values()) {
-				ChromaticChord c = t.from(f);
+				ChromaticChord c = t.fromIndex(f);
 				String cStr = c.toString();
 				boolean cont = false;
 				try {

@@ -83,7 +83,7 @@ public class DiatonicMidiTest {
 		DiatonicMidi n = DiatonicMidi.of( DiatonicFunction.I, s, 4 );
 
 		for ( int i = 0; i < diffM.length; i++ ) {
-			IntervalDiatonic id = IntervalDiatonic.of( i+1 );
+			IntervalDiatonic id = IntervalDiatonic.fromIndex( i+1 );
 			DiatonicMidi n2 = n.clone().add( id );
 			int d1 = n2.getCode() - n.getCode();
 			int d2 = diffM[i];
@@ -94,7 +94,7 @@ public class DiatonicMidiTest {
 		n = DiatonicMidi.of( DiatonicFunction.I, s, 4 );
 
 		for ( int i = 0; i < diffm.length; i++ ) {
-			IntervalDiatonic id = IntervalDiatonic.of( i+1 );
+			IntervalDiatonic id = IntervalDiatonic.fromIndex( i+1 );
 			DiatonicMidi n2 = n.clone().add( id );
 			int d1 = n2.getCode() - n.getCode();
 			int d2 = diffm[i];
@@ -113,7 +113,7 @@ public class DiatonicMidiTest {
 			74
 		};
 		for ( int i = 0; i < r.length; i++ ) {
-			IntervalDiatonic id = IntervalDiatonic.of( i );
+			IntervalDiatonic id = IntervalDiatonic.fromIndex( i );
 			DiatonicMidi n2 = n.clone().add( id );
 			int d1 = n2.getCode();
 			assertEquals( "Error al a�adir " + i + " posiciones a " + n, r[i], d1 );

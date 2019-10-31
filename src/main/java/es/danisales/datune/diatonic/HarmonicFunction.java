@@ -7,7 +7,7 @@ public interface HarmonicFunction {
 	DiatonicDegree getDegree();
 
 	static HarmonicFunction get(DiatonicChordMidi diatonicChordMidi) {
-		HarmonicFunction hf = ChromaticFunction.get( diatonicChordMidi );
+		HarmonicFunction hf = ChromaticFunction.from( diatonicChordMidi );
 		if ( hf == null )
 			hf = DiatonicFunction.from( diatonicChordMidi );
 		assert hf != null : diatonicChordMidi.notesToString() + " " + diatonicChordMidi.getMetatonality() + " " + TonalityEnum.Cm.get(DiatonicFunction.VII7).notesToString();

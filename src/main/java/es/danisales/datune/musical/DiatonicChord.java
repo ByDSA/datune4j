@@ -297,12 +297,12 @@ public interface DiatonicChord extends DiatonicChordCommon<Diatonic> {
 /*
 	default ChromaticMidi toMidi(Tonality tonality, int octave) {
 			assert tonality != null;
-			DiatonicDegree pos = tonality.getDegree( getChromatic() );
+			DiatonicDegree pos = tonality.getDegreeFrom( getChromatic() );
 			if ( pos == null )
 				throw new TonalityException( this, tonality );
 			else {
 				int octaveNote = getOctave();
-				DiatonicMidi ns = DiatonicMidi.from( pos, tonality, pitch.getOctave(), length, velocity );
+				DiatonicMidi ns = DiatonicMidi.fromIndex( pos, tonality, pitch.getOctave(), length, velocity );
 				int octaveNoteScaleNote = ns.getPitch().getOctave();
 				ns.shiftOctave( octaveNote - octaveNoteScaleNote );
 

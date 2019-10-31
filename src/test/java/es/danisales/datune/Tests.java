@@ -220,7 +220,7 @@ public class Tests {
 
 	@Test
 	public void scaleRelative() {
-		Tonality scale = TonalityEnum.E.getRelativeScaleDiatonic( IntervalDiatonic.FIFTH );
+		Tonality scale = TonalityEnum.E.getRelativeScaleDiatonic( DiatonicDegree.V );
 		assertEquals( Chromatic.B, scale.getRoot() );
 		assertEquals( Tonality.of( Chromatic.B, ScaleEnum.MAJOR ).getScale(), scale.getScale() );
 	}

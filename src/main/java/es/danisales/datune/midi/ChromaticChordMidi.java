@@ -2,7 +2,6 @@ package es.danisales.datune.midi;
 
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.Quality;
-import es.danisales.datune.midi.Settings.DefaultValues;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.CustomChromaticChord;
 import es.danisales.datune.musical.CustomChromaticChord.ImpossibleChord;
@@ -160,8 +159,8 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 			assert dist != 0 : "Se reptite alguna nota " + dist;
 			assert dist > 0 : "Las notas no est�n ordenadas " + this.get( i - 1 ) + " "
 					+ this.get( i );
-			if ( dist > IntervalChromatic.PERFECT_OCTAVE.val() )
-				this.get( i ).shiftOctave( -dist / IntervalChromatic.PERFECT_OCTAVE.val() );
+			if ( dist > IntervalChromatic.PERFECT_OCTAVE.getSemitones() )
+				this.get( i ).shiftOctave( -dist / IntervalChromatic.PERFECT_OCTAVE.getSemitones() );
 		}
 	}
 

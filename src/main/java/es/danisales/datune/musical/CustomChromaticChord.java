@@ -95,7 +95,7 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 
 			Chromatic n = t.get( d );
 			add( n );
-			Chromatic n2 = n.addSemi( IntervalChromatic.PERFECT_FIFTH.val() );
+			Chromatic n2 = n.addSemi( IntervalChromatic.PERFECT_FIFTH.getSemitones() );
 			add( n2 );
 		} else {
 			DiatonicMidi n = null;
@@ -104,7 +104,7 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 					t = Tonality.createFromChord(
 							new DiatonicChordMidi(
 									DiatonicFunction.V, t
-									.getRelativeScaleDiatonic( IntervalDiatonic.SECOND )
+									.getRelativeScaleDiatonic( DiatonicDegree.II )
 							), t
 					);
 					break;
@@ -112,7 +112,7 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 					t = Tonality.createFromChord(
 							new DiatonicChordMidi(
 									DiatonicFunction.V7, t
-									.getRelativeScaleDiatonic( IntervalDiatonic.SECOND )
+									.getRelativeScaleDiatonic( DiatonicDegree.II )
 							), t
 					);
 					break;
@@ -120,7 +120,7 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 					t = Tonality.createFromChord(
 							new DiatonicChordMidi(
 									DiatonicFunction.V, t
-									.getRelativeScaleDiatonic( IntervalDiatonic.THIRD )
+									.getRelativeScaleDiatonic( DiatonicDegree.III )
 							), t
 					);
 					break;
@@ -128,7 +128,7 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 					t = Tonality.createFromChord(
 							new DiatonicChordMidi(
 									DiatonicFunction.V7, t
-									.getRelativeScaleDiatonic( IntervalDiatonic.THIRD )
+									.getRelativeScaleDiatonic( DiatonicDegree.III )
 							), t
 					);
 					break;
@@ -136,7 +136,7 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 					t = Tonality.createFromChord(
 							new DiatonicChordMidi(
 									DiatonicFunction.V, t
-									.getRelativeScaleDiatonic( IntervalDiatonic.FOURTH )
+									.getRelativeScaleDiatonic( DiatonicDegree.IV )
 							), t
 					);
 					break;
@@ -144,7 +144,7 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 					t = Tonality.createFromChord(
 							new DiatonicChordMidi(
 									DiatonicFunction.V7, t
-									.getRelativeScaleDiatonic( IntervalDiatonic.FOURTH )
+									.getRelativeScaleDiatonic( DiatonicDegree.IV )
 							), t
 					);
 					break;
@@ -152,7 +152,7 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 					t = Tonality.createFromChord(
 							new DiatonicChordMidi(
 									DiatonicFunction.V, t
-									.getRelativeScaleDiatonic( IntervalDiatonic.FIFTH )
+									.getRelativeScaleDiatonic( DiatonicDegree.V )
 							), t
 					);
 					break;
@@ -160,7 +160,7 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 					t = Tonality.createFromChord(
 							new DiatonicChordMidi(
 									DiatonicFunction.V7, t
-									.getRelativeScaleDiatonic( IntervalDiatonic.FIFTH )
+									.getRelativeScaleDiatonic( DiatonicDegree.V )
 							), t
 					);
 					break;
@@ -168,7 +168,7 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 					t = Tonality.createFromChord(
 							new DiatonicChordMidi(
 									DiatonicFunction.V, t
-									.getRelativeScaleDiatonic( IntervalDiatonic.SIXTH )
+									.getRelativeScaleDiatonic( DiatonicDegree.VI )
 							), t
 					);
 					break;
@@ -176,7 +176,7 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 					t = Tonality.createFromChord(
 							new DiatonicChordMidi(
 									DiatonicFunction.V7, t
-									.getRelativeScaleDiatonic( IntervalDiatonic.SIXTH )
+									.getRelativeScaleDiatonic( DiatonicDegree.VI )
 							), t
 					);
 					break;
@@ -368,57 +368,57 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 
 		meta.str = "";
 		if ( array.size() >= 3 )
-			if (array.get(1) == IntervalChromatic.DIMINISHED_THIRD.val()
-					&&array.get(2) == IntervalChromatic.DIMINISHED_FIFTH.val() )
+			if (array.get(1) == IntervalChromatic.DIMINISHED_THIRD.getSemitones()
+					&&array.get(2) == IntervalChromatic.DIMINISHED_FIFTH.getSemitones() )
 				meta.str += ChordNotation.DIMINISHED;
-			else if (array.get(1) == IntervalChromatic.DIMINISHED_THIRD.val()
-					&&array.get(2) == IntervalChromatic.PERFECT_FIFTH.val() )
+			else if (array.get(1) == IntervalChromatic.DIMINISHED_THIRD.getSemitones()
+					&&array.get(2) == IntervalChromatic.PERFECT_FIFTH.getSemitones() )
 				meta.str += ChordNotation.MINOR;
 			else {
-				if (array.get(1) == IntervalChromatic.MINOR_SECOND.val() )
+				if (array.get(1) == IntervalChromatic.MINOR_SECOND.getSemitones() )
 					meta.str += ChordNotation.SUSb2;
-				else if (array.get(1) == IntervalChromatic.MAJOR_SECOND.val() )
+				else if (array.get(1) == IntervalChromatic.MAJOR_SECOND.getSemitones() )
 					meta.str += ChordNotation.SUS2;
 
-				if (array.get(1) == IntervalChromatic.DIMINISHED_FOURTH.val() )
+				if (array.get(1) == IntervalChromatic.DIMINISHED_FOURTH.getSemitones() )
 					meta.str += ChordNotation.SUSb4;
-				else if (array.get(1) == IntervalChromatic.AUGMENTED_FOURTH.val() )
+				else if (array.get(1) == IntervalChromatic.AUGMENTED_FOURTH.getSemitones() )
 					meta.str += ChordNotation.SUSa4;
 
-				if (array.get(1) == IntervalChromatic.DIMINISHED_FIFTH.val() )
+				if (array.get(1) == IntervalChromatic.DIMINISHED_FIFTH.getSemitones() )
 					meta.str += ChordNotation.b5;
 			}
 
 		if ( array.size() >= 4 )
-			if (array.get(3) == IntervalChromatic.MINOR_SEVENTH.val() )
+			if (array.get(3) == IntervalChromatic.MINOR_SEVENTH.getSemitones() )
 				meta.str += ChordNotation.SEVENTH;
-			else if (array.get(3) == IntervalChromatic.MAJOR_SEVENTH.val() )
+			else if (array.get(3) == IntervalChromatic.MAJOR_SEVENTH.getSemitones() )
 				meta.str += ChordNotation.MAJOR2 + ChordNotation.SEVENTH;
-			else if (array.get(3) == IntervalChromatic.DIMINISHED_SEVENTH.val() )
+			else if (array.get(3) == IntervalChromatic.DIMINISHED_SEVENTH.getSemitones() )
 				meta.str += ChordNotation.DIMINISHED2 + ChordNotation.SEVENTH;
 
 		if ( array.size() >= 5 )
-			if ( array.get(4) == IntervalChromatic.MAJOR_NINTH.val() )
+			if ( array.get(4) == IntervalChromatic.MAJOR_NINTH.getSemitones() )
 				meta.str += ChordNotation.NINTH;
-			else if ( array.get(4) == IntervalChromatic.AUGMENTED_NINTH.val() )
+			else if ( array.get(4) == IntervalChromatic.AUGMENTED_NINTH.getSemitones() )
 				meta.str += ChordNotation.MAJOR2 + ChordNotation.NINTH;
-			else if ( array.get(4) == IntervalChromatic.MINOR_NINTH.val() )
+			else if ( array.get(4) == IntervalChromatic.MINOR_NINTH.getSemitones() )
 				meta.str += ChordNotation.DIMINISHED2 + ChordNotation.NINTH;
 
 		if ( array.size() >= 6 )
-			if ( array.get(5) == IntervalChromatic.PERFECT_ELEVENTH.val() )
+			if ( array.get(5) == IntervalChromatic.PERFECT_ELEVENTH.getSemitones() )
 				meta.str += ChordNotation.ELEVENTH;
-			else if ( array.get(5) == IntervalChromatic.AUGMENTED_ELEVENTH.val() )
+			else if ( array.get(5) == IntervalChromatic.AUGMENTED_ELEVENTH.getSemitones() )
 				meta.str += ChordNotation.MAJOR2 + ChordNotation.ELEVENTH;
-			else if ( array.get(5) == IntervalChromatic.DIMINISHED_ELEVENTH.val() )
+			else if ( array.get(5) == IntervalChromatic.DIMINISHED_ELEVENTH.getSemitones() )
 				meta.str += ChordNotation.DIMINISHED2 + ChordNotation.ELEVENTH;
 
 		if ( array.size() >= 7 )
-			if ( array.get(5) == IntervalChromatic.MINOR_THIRTEENTH.val() )
+			if ( array.get(5) == IntervalChromatic.MINOR_THIRTEENTH.getSemitones() )
 				meta.str += ChordNotation.THIRTEEN;
-			else if ( array.get(5) == IntervalChromatic.MAJOR_THIRTEENTH.val() )
+			else if ( array.get(5) == IntervalChromatic.MAJOR_THIRTEENTH.getSemitones() )
 				meta.str += ChordNotation.MAJOR2 + ChordNotation.THIRTEEN;
-			else if ( array.get(5) == IntervalChromatic.DIMINISHED_THIRTEENTH.val() )
+			else if ( array.get(5) == IntervalChromatic.DIMINISHED_THIRTEENTH.getSemitones() )
 				meta.str += ChordNotation.DIMINISHED2 + ChordNotation.THIRTEEN;
 
 		if ( meta.str.equals( "" ) )

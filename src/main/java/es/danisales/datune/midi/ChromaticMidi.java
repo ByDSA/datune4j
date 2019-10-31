@@ -54,7 +54,7 @@ public class ChromaticMidi implements PitchOctaveMidi, Codeable, EventComplex, P
 
 	public DiatonicMidi getDiatonicMidi(Tonality ton) throws TonalityException {
 		assert ton != null;
-		DiatonicDegree pos = ton.getDegree( ChromaticAdapter.from(this) );
+		DiatonicDegree pos = ton.getDegreeFrom( ChromaticAdapter.from(this) );
 		if ( pos == null )
 			throw new TonalityException( this, ton );
 		else {
@@ -133,7 +133,7 @@ public class ChromaticMidi implements PitchOctaveMidi, Codeable, EventComplex, P
 
 	public static String literal(Chromatic chromatic, Tonality tonality) {
 		if ( tonality != null ) {
-			DiatonicDegree pos = tonality.getDegree( chromatic );
+			DiatonicDegree pos = tonality.getDegreeFrom( chromatic );
 			if ( pos != null )
 				chromatic = tonality.get( pos );
 		}

@@ -18,19 +18,19 @@ public class ChromaticFunctionTest {
 	public void degree() {
 		Tonality ton = TonalityEnum.C;
 		CustomChromaticChord cc = new CustomChromaticChord( ChromaticFunction.I, ton );
-		assertEquals( DiatonicDegree.I, ton.getDegree( cc.get( 0 ) ) );
+		assertEquals( DiatonicDegree.I, ton.getDegreeFrom( cc.get( 0 ) ) );
 		cc = new CustomChromaticChord( ChromaticFunction.II, ton );
-		assertEquals( DiatonicDegree.II, ton.getDegree( cc.get( 0 ) ) );
+		assertEquals( DiatonicDegree.II, ton.getDegreeFrom( cc.get( 0 ) ) );
 		cc = new CustomChromaticChord( ChromaticFunction.III, ton );
-		assertEquals( DiatonicDegree.III, ton.getDegree( cc.get( 0 ) ) );
+		assertEquals( DiatonicDegree.III, ton.getDegreeFrom( cc.get( 0 ) ) );
 		cc = new CustomChromaticChord( ChromaticFunction.IV, ton );
-		assertEquals( DiatonicDegree.IV, ton.getDegree( cc.get( 0 ) ) );
+		assertEquals( DiatonicDegree.IV, ton.getDegreeFrom( cc.get( 0 ) ) );
 		cc = new CustomChromaticChord( ChromaticFunction.V, ton );
-		assertEquals( DiatonicDegree.V, ton.getDegree( cc.get( 0 ) ) );
+		assertEquals( DiatonicDegree.V, ton.getDegreeFrom( cc.get( 0 ) ) );
 		cc = new CustomChromaticChord( ChromaticFunction.VI, ton );
-		assertEquals( DiatonicDegree.VI, ton.getDegree( cc.get( 0 ) ) );
+		assertEquals( DiatonicDegree.VI, ton.getDegreeFrom( cc.get( 0 ) ) );
 		cc = new CustomChromaticChord( ChromaticFunction.VII, ton );
-		assertEquals( DiatonicDegree.VII, ton.getDegree( cc.get( 0 ) ) );
+		assertEquals( DiatonicDegree.VII, ton.getDegreeFrom( cc.get( 0 ) ) );
 
 		DiatonicChordMidi dc = new CustomChromaticChord( ChromaticFunction.I, ton )
 				.toMidi()
@@ -38,7 +38,7 @@ public class ChromaticFunctionTest {
 		assertEquals( DiatonicDegree.I, dc.getDegree() );
 		dc = new CustomChromaticChord( ChromaticFunction.ii, ton ).toMidi().getDiatonicChordMidi( ton );
 		Chromatic c = ChromaticAdapter.from( dc.getRoot() );
-		DiatonicDegree d = ton.getDegree( c );
+		DiatonicDegree d = ton.getDegreeFrom( c );
 		assertEquals( DiatonicDegree.II, d );
 		assertEquals( DiatonicDegree.II, dc.getDegree() );
 		dc = new CustomChromaticChord( ChromaticFunction.iii, ton ).toMidi().getDiatonicChordMidi( ton );

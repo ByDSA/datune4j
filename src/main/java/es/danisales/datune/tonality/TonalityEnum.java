@@ -9,6 +9,8 @@ import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.log.string.Logging;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -330,26 +332,6 @@ public enum TonalityEnum implements Tonality {
 		return notes;
 	}
 
-	public int length() {
-		return scale.length();
-	}
-
-	public Chromatic get(int pos) {
-		int i = scale.trim( pos );
-		Chromatic note = notes[i];
-
-		return note;
-	}
-
-	public Chromatic get(IntervalDiatonic n) {
-		return get( n.val() );
-	}
-
-	public Chromatic get(DiatonicDegree n) {
-		assert n != null;
-		return get( n.val() );
-	}
-
 	public TonalityEnum getRelativeMinor() {
 		TonalityEnum[] rel = getModes();
 		for ( TonalityEnum s : rel )
@@ -414,58 +396,52 @@ public enum TonalityEnum implements Tonality {
 		return Scale.of( ton );
 	}
 
-	public DiatonicDegree getDegree(PitchChromaticSingle note) {
+	public DiatonicDegree getDegreeFrom(PitchChromaticSingle note) {
 		assert note != null : "No se ha especificado nota";
-		return getDegree( note, true );
+		return getDegreeFrom( note, true );
 	}
 
-	public DiatonicDegree getDegree(PitchChromaticSingle note, boolean enharmonic) {
-		assert note != null : "No se ha especificado nota";
-
+	public @Nullable DiatonicDegree getDegreeFrom(@NonNull PitchChromaticSingle note, boolean enharmonic) {
 		for ( int i = 0; i < length(); i++ ) {
 			Chromatic chromatic = ChromaticAdapter.from(note);
-			if (!enharmonic && get(i).equals(chromatic)
-					|| enharmonic && get(i).intValue() == chromatic.intValue())
-				return DiatonicDegree.get(i);
+			if (equalEnharmonic(get(i), chromatic, enharmonic))
+				return DiatonicDegree.fromIndex(i);
 		}
 
 		return null;
 	}
+
+	private boolean equalEnharmonic(Chromatic chromatic1, Chromatic chromatic2, boolean enharmonic) {
+		return !enharmonic && chromatic1.equals(chromatic2)
+				|| enharmonic && chromatic1.intValue() == chromatic2.intValue();
+	}
 	/*
-	 * public Integer getDegree(int note) { for ( int i = 0; i < length(); i++ ) if
+	 * public Integer getDegreeFrom(int note) { for ( int i = 0; i < length(); i++ ) if
 	 * ( calculateFrom( i ).intValue() == note ) return i;
 	 * 
 	 * return null; }
 	 */
 
 	public boolean has(PitchChromaticSingle note) {
-		return getDegree( note ) != null;
+		return getDegreeFrom( note ) != null;
 	}
 
 	public <N extends PitchChromaticSingle> boolean has(PitchChromaticChord<N> notes) {
 		for ( N n : notes ) {
-			if ( getDegree( n ) == null )
+			if ( getDegreeFrom( n ) == null )
 				return false;
 		}
 
 		return true;
 	}
 	/*
-	 * public boolean has(int note) { return getDegree( note ) != null; }
+	 * public boolean has(int note) { return getDegreeFrom( note ) != null; }
 	 * 
-	 * public boolean has(int[] notes) { for ( int n : notes ) if ( getDegree( n )
+	 * public boolean has(int[] notes) { for ( int n : notes ) if ( getDegreeFrom( n )
 	 * == null ) return false;
 	 * 
 	 * return true; }
 	 */
-
-	public TonalityEnum getRelativeScaleDiatonic(IntervalDiatonic pos) {
-		return null;
-	}
-
-	public TonalityEnum getRelativeScaleDiatonic(DiatonicDegree pos) {
-		return getRelativeScaleDiatonic( IntervalDiatonic.get( pos ) );
-	}
 
 	public TonalityEnum getRelativeScaleChromatic(int pos) {
 		return null;
@@ -543,12 +519,12 @@ public enum TonalityEnum implements Tonality {
 	}
 
 	public IntervalChromatic getInterval(DiatonicDegree d2, IntervalDiatonic id) {
-		int idInt = id.val();
+		int idInt = id.ordinal();
 
 		int n = get( d2.val() + idInt ).intValue() - get( d2 ).intValue();
 		if ( n < 0 )
-			n += IntervalChromatic.PERFECT_OCTAVE.val();
-		n += idInt / IntervalChromatic.PERFECT_OCTAVE.val();
+			n += IntervalChromatic.PERFECT_OCTAVE.getSemitones();
+		n += idInt / IntervalChromatic.PERFECT_OCTAVE.getSemitones();
 		return IntervalChromatic.from( id, n );
 	}
 

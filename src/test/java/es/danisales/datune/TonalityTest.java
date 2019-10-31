@@ -265,12 +265,12 @@ public class TonalityTest {
 	public void getDegree() {
 		Tonality ton = TonalityEnum.C;
 
-		assertEquals( DiatonicDegree.I, ton.getDegree( PitchMidi.C5 ) );
-		assertEquals( DiatonicDegree.II, ton.getDegree( PitchMidi.D5 ) );
-		assertEquals( DiatonicDegree.III, ton.getDegree( PitchMidi.E6 ) );
-		assertEquals( DiatonicDegree.IV, ton.getDegree( Chromatic.F ) );
-		assertEquals( null, ton.getDegree( Chromatic.EEEE, false ) );
-		assertEquals( DiatonicDegree.V, ton.getDegree( Chromatic.EEEE ) );
+		assertEquals( DiatonicDegree.I, ton.getDegreeFrom( PitchMidi.C5 ) );
+		assertEquals( DiatonicDegree.II, ton.getDegreeFrom( PitchMidi.D5 ) );
+		assertEquals( DiatonicDegree.III, ton.getDegreeFrom( PitchMidi.E6 ) );
+		assertEquals( DiatonicDegree.IV, ton.getDegreeFrom( Chromatic.F ) );
+		assertEquals( null, ton.getDegreeFrom( Chromatic.EEEE, false ) );
+		assertEquals( DiatonicDegree.V, ton.getDegreeFrom( Chromatic.EEEE ) );
 	}
 
 	@Test
