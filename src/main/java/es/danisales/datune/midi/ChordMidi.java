@@ -271,7 +271,7 @@ implements Durable, PitchChromaticChord<N>, PitchOctaveMidi, EventComplex {
 
 	@Override
 	public Boolean updateWhatIsIt(BiFunction<List<CustomChromaticChord>, ChordCommon<?>, CustomChromaticChord> f) {
-		meta = CustomChromaticChord.copyOf( this );
+		meta = CustomChromaticChord.from( this );
 		assert f != null;
 		Boolean ret = meta.updateWhatIsIt( f );
 		root = meta.getRootPos();

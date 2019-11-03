@@ -24,7 +24,7 @@ public interface DiatonicChord extends DiatonicChordCommon<Diatonic> {
 		return distancesAbsolute;
 	}
 	
-	static DiatonicChord of(DiatonicFunction f) {
+	static DiatonicChord from(DiatonicFunction f) {
 		assert f != null;
 		switch ( f ) {
 			case I:

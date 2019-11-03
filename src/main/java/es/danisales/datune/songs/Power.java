@@ -21,6 +21,7 @@ import es.danisales.datune.midi.Events.EventComplex;
 import es.danisales.datune.midi.Events.Pan;
 import es.danisales.datune.midi.Events.Volume;
 import es.danisales.datune.midi.Progressions.Progression;
+import es.danisales.datune.musical.DiatonicChord;
 import es.danisales.datune.tonality.TonalityEnum;
 
 public class Power extends Song {
@@ -43,8 +44,12 @@ public class Power extends Song {
 				add(DiatonicFunction.VI4).inv(-1);
 				add(DiatonicFunction.IV6);
 				add(DiatonicFunction.I4).inv(1);
-				add(ChromaticFunction.V_V).inv(1).setDuration(Duration.V2);
-				add(DiatonicFunction.V7).inv(-1).setDuration(Duration.V2);
+				DiatonicChordMidi dc = add(ChromaticFunction.V_V);
+				dc.inv(1);
+				dc.setDuration(Duration.V2);
+				dc = add(DiatonicFunction.V7);
+				dc.inv(-1);
+				dc.setDuration(Duration.V2);
 			}
 		};
 
@@ -326,18 +331,34 @@ public class Power extends Song {
 
 	int a(int seek) {
 		Progression cad = new Progression(tonality, 4) {
-			{				
-				add(DiatonicFunction.I).inv(1).setDuration(Duration.V1);
+			{
+				DiatonicChordMidi dcm = add(DiatonicFunction.I);
+				dcm.inv(1);
+				dcm.setDuration(Duration.V1);
 				add(DiatonicFunction.IV).setDuration(Duration.V2);
 				add(DiatonicFunction.V).setDuration(Duration.V2);
 				add(DiatonicFunction.VI).setDuration(Duration.V1);
-				add(DiatonicFunction.V).inv(-1).setDuration(Duration.V1);
+				dcm = add(DiatonicFunction.V);
+				dcm.inv(-1);
+				dcm.setDuration(Duration.V1);
 
 				add(DiatonicFunction.I).setDuration(Duration.V1);
-				add(DiatonicFunction.IV).inv(-1).setDuration(Duration.V2);
-				add(DiatonicFunction.V).inv(-1).setDuration(Duration.V2);
-				add(DiatonicFunction.VI).inv(-1).setDuration(Duration.V1);
-				add(DiatonicFunction.VII).inv(-1).setDuration(Duration.V1);
+
+				dcm = add(DiatonicFunction.IV);
+				dcm.inv(-1);
+				dcm.setDuration(Duration.V2);
+
+				dcm = add(DiatonicFunction.V);
+				dcm.inv(-1);
+				dcm.setDuration(Duration.V2);
+
+				dcm = add(DiatonicFunction.VI);
+				dcm.inv(-1);
+				dcm.setDuration(Duration.V1);
+
+				dcm = add(DiatonicFunction.VII);
+				dcm.inv(-1);
+				dcm.setDuration(Duration.V1);
 			}
 		};
 
@@ -423,12 +444,12 @@ public class Power extends Song {
 
 			switch(i) {
 				case 0: c.inv(2); break;
-				case 1: c.inv(2).shiftOctave(-1); break;
-				case 2: c.inv(1).shiftOctave(-1); break;
-				case 3: c.inv(2).shiftOctave(-1); break;
-				case 4: c.inv(2).shiftOctave(-1); break;
+				case 1: c.inv(2); c.shiftOctave(-1); break;
+				case 2: c.inv(1); c.shiftOctave(-1); break;
+				case 3: c.inv(2); c.shiftOctave(-1); break;
+				case 4: c.inv(2); c.shiftOctave(-1); break;
 				case 5: c.inv(0); break;
-				case 6: c.inv(1).shiftOctave(-1); break;
+				case 6: c.inv(1); c.shiftOctave(-1); break;
 				case 7: c.shiftOctave(-1); break;
 				case 8: c.shiftOctave(-1); break;
 				case 9: c.inv(0); break;

@@ -242,25 +242,25 @@ public class Main {
 			m.addSilence( i == 0 ? ( Duration.V8 * 3 ) : ( Duration.V8 * 2 ) );
 
 			/*
-			 * 
+			 *
 			 * m.add(Degree.I, Duration.V4); m.add(Degree.V, Duration.V4, -1);
-			 * 
+			 *
 			 * m.add(Degree.III, Duration.V4); m.add(Degree.I, Duration.V8); m.add(Degree.V,
 			 * Duration.V8);
-			 * 
+			 *
 			 * m.add(Degree.IV, Duration.V8); m.add(Degree.III, Duration.V8);
 			 * m.add(Degree.II, Duration.V8); m.add(Degree.I, Duration.V8);
-			 * 
+			 *
 			 * m.add(Degree.I, Duration.V8); m.add(Degree.VII, Duration.V8, -1);
 			 * m.add(Degree.VI, Duration.V8, -1); m.add(Degree.V, Duration.V8, -1);
-			 * 
+			 *
 			 * m.add(Degree.I, Duration.V4); m.add(Degree.II, Duration.V4);
-			 * 
+			 *
 			 * m.add(Degree.III, Duration.V4 + Duration.V8); m.add(Degree.V, Duration.V8);
-			 * 
+			 *
 			 * m.add(Degree.IV, Duration.V8); m.add(Degree.III, Duration.V8);
 			 * m.add(Degree.II, Duration.V8); m.add(Degree.I, Duration.V8);
-			 * 
+			 *
 			 * m.add(Degree.V, Duration.V2);
 			 */
 		}
@@ -301,13 +301,15 @@ public class Main {
 			 * p.add(ChordFunction.IV).setLength(Duration.V1).inv(-1);
 			 */
 			p.add( DiatonicFunction.I ).setDuration( Duration.V1 );
-			p.add( DiatonicFunction.VI ).setDuration( Duration.V1 ).inv( 1 )
-			.shiftOctave( -1 );
-			p.add( DiatonicFunction.IV ).setDuration( Duration.V1 ).inv( 2 )
-			.shiftOctave( -1 );
+			DiatonicChordMidi dcm = p.add( DiatonicFunction.VI ).setDuration( Duration.V1 );
+			dcm.inv( 1 );
+			dcm.shiftOctave( -1 );
+			dcm = p.add( DiatonicFunction.IV ).setDuration( Duration.V1 );
+			dcm.inv( 2 );
+			dcm.shiftOctave( -1 );
 			p.add( DiatonicFunction.VII ).setDuration( Duration.V2 ).shiftOctave( -1 );
 			p.add( DiatonicFunction.VII ).setDuration( Duration.V2 ).setScaleMajor()
-			.shiftOctave( -1 );
+					.shiftOctave( -1 );
 		}
 
 		SecureRandom sr = new SecureRandom();
@@ -316,8 +318,8 @@ public class Main {
 		int max = p.getDuration();
 		for ( int i = 0; i < max; i += next ) {
 			int[] durs = new int[] {
-				Duration.V8,
-				Duration.V4
+					Duration.V8,
+					Duration.V4
 			};
 			next = durs[sr.nextInt( durs.length )];
 			next = Math.min( max - i, next );
@@ -363,26 +365,34 @@ public class Main {
 
 		for ( int i = 0; i < 1; i++ ) {
 			DiatonicChordMidi c;
-			c = p.add( DiatonicFunction.I ).setDuration( Duration.V4 * 3 ).inv( 0 )
-					.shiftOctave( 0 );
+			c = p.add( DiatonicFunction.I ).setDuration( Duration.V4 * 3 );
+			c.inv( 0 );
+			c.shiftOctave( 0 );
 			c.add( c.get( 1 ).clone().shiftOctave( 1 ) );
-			c = p.add( DiatonicFunction.VII ).setDuration( Duration.V4 * 3 ).inv( 2 )
-					.shiftOctave( -1 );
-			c = p.add( DiatonicFunction.IV2 ).setDuration( (int) ( Duration.V4 * 3.25 ) )
-					.inv( 0 );
-			c = p.add( DiatonicFunction.I ).setDuration( (int) ( Duration.V4 * 3.25 ) )
-					.inv( 1 );
-			p.add( DiatonicFunction.I ).setDuration( Duration.V4 * 3 ).inv( 0 )
-			.shiftOctave( 0 );
-			p.add( DiatonicFunction.VII ).setDuration( Duration.V4 * 3 ).inv( 2 )
-			.shiftOctave( -1 );
+			c = p.add( DiatonicFunction.VII ).setDuration( Duration.V4 * 3 );
+			c.inv( 2 );
+			c.shiftOctave( -1 );
+			c = p.add( DiatonicFunction.IV2 ).setDuration( (int) ( Duration.V4 * 3.25 ) );
+			c.inv( 0 );
+			c = p.add( DiatonicFunction.I ).setDuration( (int) ( Duration.V4 * 3.25 ) );
+			c.inv( 1 );
+			c = p.add( DiatonicFunction.I ).setDuration( Duration.V4 * 3 );
+			c.inv( 0 );
+			c.shiftOctave( 0 );
+			c = p.add( DiatonicFunction.VII ).setDuration( Duration.V4 * 3 );
+			c.inv( 2 );
+			c.shiftOctave( -1 );
 			DiatonicChordMidi c1 = p.add( DiatonicFunction.I7 )
-					.setDuration( Duration.V4 * 3 ).inv( 0 ).shiftOctave( 0 );
+					.setDuration( Duration.V4 * 3 );
+			c1.inv( 0 );
+			c1.shiftOctave( 0 );
 			c1.get( 2 ).shiftOctave( -1 );
 			DiatonicChordMidi c2 = p.add( DiatonicFunction.VII_THIRD )
 					.setDuration( Duration.V4 * 3 ).setScaleMajor().shiftOctave( -1 );
 			c2.add( c2.get( 0 ).clone().shiftOctave( 1 ) );
-			p.add( DiatonicFunction.I ).inv( -1 ).setDuration( Duration.V1 );
+			c2 = p.add( DiatonicFunction.I );
+			c2.inv( -1 );
+			c2.setDuration( Duration.V1 );
 		}
 
 		// p.setArpegio(new ArpegioDesc(Duration.V1, Duration.V16));
@@ -413,8 +423,8 @@ public class Main {
 		ArrayList<ChromaticChordMidi> css = new ArrayList<ChromaticChordMidi>();
 		for ( int i = 0; i < N; i++ ) {
 			ChromaticChordMidi notes = EventSequence.whatNotesArePlaying(
-				es, (int) ( Duration.V1 * ( i * 0.5 + offset ) + Duration.V16 )
-					);
+					es, (int) ( Duration.V1 * ( i * 0.5 + offset ) + Duration.V16 )
+			);
 			notes.removeHigherDuplicates();
 			css.add( notes );
 		}
@@ -465,7 +475,7 @@ public class Main {
 				assert c.getFunction() != null : c;
 				if ( (c.getFunction() instanceof DiatonicFunction
 						&& ( ( (DiatonicFunction) c.getFunction() ).isSus2()
-								|| ( (DiatonicFunction) c.getFunction() ).isSus4() )
+						|| ( (DiatonicFunction) c.getFunction() ).isSus4() )
 						|| c.isSus2() || c.isSus4()) && !sus24 )
 					continue;
 
@@ -478,8 +488,8 @@ public class Main {
 
 
 				JButton b = new JButton(
-					c.toString() + ( c.getMetatonality() != ton ? " " + c.getMetatonality() : "" )
-						);
+						c.toString() + ( c.getMetatonality() != ton ? " " + c.getMetatonality() : "" )
+				);
 				DiatonicDegree degree = c.getDegree();
 				if ( c.getFunction() instanceof ChromaticFunction )
 					switch ( (ChromaticFunction) c.getFunction() ) {
@@ -567,7 +577,7 @@ public class Main {
 		F() {
 			try {
 				javax.swing.UIManager
-				.setLookAndFeel( "com.sun.java.swing.plaf.windows.WindowsLookAndFeel" );
+						.setLookAndFeel( "com.sun.java.swing.plaf.windows.WindowsLookAndFeel" );
 			} catch ( Exception ex ) {
 			}
 
@@ -662,8 +672,8 @@ public class Main {
 					subChord[i - 1] = array[i];
 
 				ArrayList<int[]> subChordCombinations = getAllDispositionsSub(
-					subChord.clone(), true, level + 1, first
-						);
+						subChord.clone(), true, level + 1, first
+				);
 				for ( int[] subChordcombination : subChordCombinations ) {
 					// Forma array superChord = [array[0] + subChordcombination]
 					int[] superChord = new int[array.length];
@@ -674,8 +684,8 @@ public class Main {
 					// Combinaciones de 'n�mero' dentro del array superChord = ['n�mero' +
 					// subChordcombination]
 					ArrayList<int[]> superCombinations = getAllDispositionsSub(
-						superChord.clone(), false, level, false
-							);
+							superChord.clone(), false, level, false
+					);
 					for ( int[] a : superCombinations )
 						ret.add( a );
 				}
@@ -703,14 +713,14 @@ public class Main {
 		 * int[] a1 = new int[] {0}; int[] a2 = new int[] {0, 7}; int[] a3 = new int[]
 		 * {0, 4, 7}; int[] a4 = new int[] {0, 4, 7, 10}; int[] a3_2 = new int[] {4, 7,
 		 * 12};
-		 * 
+		 *
 		 * int[] array = a4;
-		 * 
+		 *
 		 * ArrayList<int[]> ret = getAllDispositionsSub(array.clone(), true, 0, true);
 		 * System.out.println(ret.size() + " combinaciones."); for(int[] a : ret)
 		 * showOctaves(a);
-		 * 
-		 * 
+		 *
+		 *
 		 * ChromaticChordMidi ccm = new ChromaticChordMidi(ChromaticChord.C5);
 		 * ArrayList<ChromaticChordMidi> cs = ccm.getAllDispositionsWithInv();
 		 * System.out.println(cs.size() + " combinaciones."); for (ChromaticChordMidi c
@@ -728,8 +738,8 @@ public class Main {
 			// chord.show();
 			// chord.showNotes();
 		}*/
-		
-		
+
+
 		for (DiatonicFunction f : DiatonicFunction.values() ) {
 			System.out.println( f.name() + " " + TonalityEnum.C.get( f ) );
 		}
@@ -795,9 +805,9 @@ public class Main {
 
 		/*
 		 * TestProgression p = generate(ChordFunction.I, Scale.FFm);
-		 * 
+		 *
 		 * p.progression.setArpegio(new ArpegioAscDesc(Duration.V1, Duration.V8));
-		 * 
+		 *
 		 * for(Chord c : p.progression.getChords()) c.show();
 		 */
 
@@ -810,9 +820,9 @@ public class Main {
 		 * add(ChordFunction.VI, -1).setScaleMajor().inv(1).show();
 		 * add(ChordFunction.VII, -1).setLength(Duration.V2).inv(1).show(); Chord c =
 		 * add(ChordFunction.VII, -1).setScaleMajor().setLength(Duration.V2).show();
-		 * 
+		 *
 		 * progression.setArpegio(a);
-		 * 
+		 *
 		 * ArrayList<Chord> chords = Chord.whatIsIt(c); for(Chord cc : chords) if
 		 * (cc.meta.type == ChordFunction.VII) cc.show(); } };
 		 */
@@ -827,7 +837,7 @@ public class Main {
 		/*
 		 * ArrayList<Note> notes = new ArrayList<Note>(); notes.add( new Note(Note.E) );
 		 * notes.add( new Note(Note.GG) ); notes.add( (Note)new Note(Note.B) );
-		 * 
+		 *
 		 * ArrayList<Chord> chords = Chord.whatIsIt(notes);
 		 * System.out.println("Encontrados " + chords.size() + " acordes!"); for(Chord
 		 * cc : chords) System.out.println(cc);
@@ -836,110 +846,110 @@ public class Main {
 		/*
 		 * for(int i = 0; i < 12; i++) { for(int j = 0; j < 12; j++) { Scale scale1 =
 		 * new Scale(i, Mode.LYDIAN); Scale scale2 = new Scale(j, Mode.LOCRIAN);
-		 * 
+		 *
 		 * ArrayList<Chord[]> chords = scale1.commonChords(scale2); for(Chord[] cs :
 		 * chords) { if (cs[0].size() >= 4) continue; System.out.println(cs[0]);
 		 * System.out.println(cs[1]); System.out.println("----"); } } }
-		 * 
+		 *
 		 * System.out.println("End!");
 		 */
 
 		/*
 		 * Song p = new Song("zxcv") { Track channel; Track strings;
-		 * 
+		 *
 		 * @Override public void init() { sequence = new Sequence(90);
-		 * 
+		 *
 		 * channel = new Track(0, 0); strings = new Track(1, 48);
-		 * 
+		 *
 		 * Progression p = new Progression(scale, 4) { { addChord(Chord.I) .inv(-2)
 		 * .setLength(Note.V1);
-		 * 
+		 *
 		 * addChord(Chord.III) .inv(-1) .setLength(Note.V1);
-		 * 
+		 *
 		 * addChord(Chord.VI) .setLength(Note.V1);
-		 * 
+		 *
 		 * addChord(Chord.V7_V) .setLength(Note.V1);
-		 * 
+		 *
 		 * addChord(Chord.IV) .setLength(Note.V1);
-		 * 
+		 *
 		 * addChord(Chord.I) .inv(-2) .setLength(Note.V1);
-		 * 
+		 *
 		 * addChord(Chord.V7_V) .setLength(Note.V1);
-		 * 
+		 *
 		 * addChord(Chord.IV) .setLength(Note.V2);
-		 * 
+		 *
 		 * addChord(Chord.V) .setLength(Note.V2); } }; p.setChordArpegio( new
 		 * ArpegioV4() );
-		 * 
+		 *
 		 * channel.add(p); sequence.add(channel); } };
 		 */
 
 		/*
 		 * Song p = new Song("zxcv") { Track channel; Track strings;
-		 * 
+		 *
 		 * @Override public void init() { sequence = new Sequence(120);
-		 * 
+		 *
 		 * channel = new Track(0, 40); strings = new Track(1, 48);
-		 * 
+		 *
 		 * Progression p = new Progression(scale, 5);
-		 * 
+		 *
 		 * p.addNote(4, -1).setLength(Note.V4);
-		 * 
+		 *
 		 * p.addNote(0).setLength(Note.V2); p.addNote(1).setLength(Note.V4D);
 		 * p.addNote(2).setLength(Note.V16); p.addNote(3).setLength(Note.V16);
-		 * 
+		 *
 		 * p.addNote(2).setLength(Note.V2); p.addNote(4, -1).setLength(Note.V4D);
 		 * p.addNote(4, -1).setLength(Note.V8);
-		 * 
+		 *
 		 * p.addNote(0).setLength(Note.V4D); p.addNote(1).setLength(Note.V8);
 		 * p.addNote(2).setLength(Note.V8); p.addNote(4, -1).setLength(Note.V8);
 		 * p.addNote(2).setLength(Note.V4_3); p.addNote(0).setLength(Note.V4_3);
 		 * p.addNote(4).setLength(Note.V4_3);
-		 * 
+		 *
 		 * p.addNote(3).setLength(Note.V2D); p.addNote(4, -1).setLength(Note.V4);
-		 * 
-		 * 
+		 *
+		 *
 		 * p.addNote(0).setLength(Note.V4D); p.addNote(1).setLength(Note.V8);
 		 * p.addNote(2).setLength(Note.V8D); p.addNote(4,-1).setLength(Note.V16);
 		 * p.addNote(4).setLength(Note.V8D); p.addNote(2).setLength(Note.V16);
-		 * 
+		 *
 		 * p.addNote(0, 1).setLength(Note.V2); p.addNote(0).setLength(Note.V4);
 		 * p.addNote(2).setLength(Note.V4_3); p.addNote(1).setLength(Note.V4_3);
 		 * p.addNote(0).setLength(Note.V4_3);
-		 * 
+		 *
 		 * p.addNote(4).setLength(Note.V4D); p.addNote(2).setLength(Note.V16);
 		 * p.addNote(0).setLength(Note.V16);
-		 * 
+		 *
 		 * p.addNote(4,-1).setLength(Note.V4);
-		 * 
+		 *
 		 * p.addNote(4,-1).setLength(Note.V8D); p.addNote(4,-1).setLength(Note.V16);
-		 * 
+		 *
 		 * p.addNote(0).setLength(Note.V2D);
-		 * 
+		 *
 		 * Progression p2 = new Progression(scale, 5);
 		 * p2.addChord(Chord.I).setLength(Note.V2);
 		 * p2.addChord(Chord.V).inv(2).setLength(Note.V2);
-		 * 
+		 *
 		 * p2.addChord(Chord.I).inv(-1).setLength(Note.V2);
 		 * p2.addChord(Chord.V).inv(1).setLength(Note.V2);
-		 * 
+		 *
 		 * p2.addChord(Chord.I).inv(-1).setLength(Note.V2);
 		 * p2.addChord(Chord.III).setLength(Note.V2);
-		 * 
+		 *
 		 * p2.addChord(Chord.IV).setLength(Note.V1);
-		 * 
+		 *
 		 * p2.addChord(Chord.I).inv(-1).setLength(Note.V2);
 		 * p2.addChord(Chord.III).setLength(Note.V2);
-		 * 
+		 *
 		 * p2.addChord(Chord.I).inv(-1).setLength(Note.V1);
-		 * 
+		 *
 		 * p2.addChord(Chord.V).inv(1).setLength(Note.V1);
-		 * 
+		 *
 		 * p2.addChord(Chord.I).inv(-1).setLength(Note.V1);
-		 * 
+		 *
 		 * //p2.setChordArpegio(new ArpegioAscDesc(Note.V2, Note.V8));
-		 * 
-		 * 
+		 *
+		 *
 		 * for(int j = 0; j < 7; j++) { int[] tonality = null; switch(j) { case 0:
 		 * tonality = TonalityEnum.LYDIAN; break; // IV case 1: tonality = TonalityEnum.MAJOR;
 		 * break; // I case 2: tonality = TonalityEnum.MIXOLYDIAN; break; // V case 3:
@@ -947,15 +957,15 @@ public class Main {
 		 * break; // VI case 5: tonality = TonalityEnum.PHRYGIAN; break; // III case 6:
 		 * tonality = TonalityEnum.LOCRIAN; break; // VII } scale = new Scale(Note.E,
 		 * tonality);
-		 * 
+		 *
 		 * Progression pp = ((Progression)p.duplicate()).setScale(scale);
-		 * 
+		 *
 		 * channel.add(j*pp.getDuration(), pp);
-		 * 
+		 *
 		 * Progression p2p = ((Progression)p2.duplicate()).setScale(scale);
-		 * 
+		 *
 		 * strings.add(Note.V4 + j*p2p.getDuration(), p2p); } strings.setVolume(100);
-		 * 
+		 *
 		 * sequence.add(channel); sequence.add(strings); } };
 		 */
 
@@ -969,34 +979,34 @@ public class Main {
 
 /*
  * int octave = 5;
- * 
+ *
  * Sequence seq = new Sequence(180); Track c = new Track(0, 50); Track c2 = new
  * Track(1, 2); Track c3 = new Track(2, 10); Track c4 = new Track(3, 61);
- * 
+ *
  * seq.add(c); c.setVolume(Volume.MAX); seq.add(c2); c2.setVolume(Volume.MAX);
  * c3.setPan((Pan.LEFT*2+Pan.MID)/3); seq.add(c3);
  * c3.setPan((Pan.RIGHT*2+Pan.MID)/3); seq.add(c4); int end = 7; for(int i = 0;
  * i < end; i++) { if (Note.D+i == 12) octave++;
- * 
+ *
  * Scale s = new Scale(Note.D+i, TonalityEnum.MAJOR); c.setScale(8*i*Note.V1, s);
  * Progression l = new Pachelbel(s, octave-1, Pachelbel.NORMAL);
  * c.add(8*i*Note.V1, l); if (i == end-1) c.addFunction(8*i*Note.V1,
  * Volume.class, new LinealFunction(Volume.MAX, Volume.MIN), Note.V1*8); if (i >
  * 1 && i < end-2) { Progression ll;
- * 
+ *
  * if (i == 2) { c4.addFunction(8*i*Note.V1, Pan.class, new
  * CosFunction(Note.V1*2, Note.V1*8), Note.V1*8); c4.addFunction(8*i*Note.V1,
  * Volume.class, new LinealFunction(Volume.MAX/2, Volume.MAX), Note.V1*8); ll =
  * new Pachelbel(s, octave-1, Pachelbel.NORMAL); } else { ll = new Pachelbel(s,
  * octave+1, Pachelbel.NORMAL); c4.addFunction(8*i*Note.V1, Pan.class, new
  * CosFunction(Note.V1, Note.V1*8), Note.V1*8); }
- * 
+ *
  * ll.setChordArpegio(new ArpegioV2_3(3)); c4.add(8*i*Note.V1, ll); }
- * 
- * 
+ *
+ *
  * if (i > 0 && i < end-1) { Progression l2 = new Pachelbel(s, octave,
  * Pachelbel.ARPEGIO); c2.add(8*i*Note.V1, l2); }
- * 
+ *
  * if (i > 1 && i < end-3) { Progression l3 = new Pachelbel(s, octave+2,
  * Pachelbel.NORMAL); l3.setChordArpegio(new ArpegioAscDescV8(3, 8));
  * c3.add(8*i*Note.V1, l3); } }
@@ -1006,13 +1016,13 @@ public class Main {
  * Scale s = new Scale(Note.D, TonalityEnum.MAJOR); Progression l = new
  * Progression(s, 5) { { add(Chord.I); add(Chord.vi); add(Chord.iii);
  * add(Chord.V); add(Chord.I);
- * 
+ *
  * setChordArpegio(new ArpegioV2_3(3)); setChordArpegio(4, new
  * ArpegioDefault(3)); } }; c.add(0, l);
  */
 /*
  * int octave = 5; int note = Note.A;
- * 
+ *
  * Sequence seq = new Sequence(120); Track c = new Track(0, 50); Track c2 = new
  * Track(2, 62); Track c3 = new Track(1, 19); c3.setVolume(Volume.MAX);
  * c.setPan((Pan.LEFT*3+Pan.MID)/4); c3.setPan((Pan.RIGHT*3+Pan.MID)/4);
@@ -1020,33 +1030,33 @@ public class Main {
  * TonalityEnum.MINOR); for(int i = 0; i < 4; i++) { Progression l = new
  * Progression(s, octave-1) { { // F# G# A B C# D E F# G# A# B C# D# F
  * add(Chord.I); // F# A C# I III V
- * 
+ *
  * add(Chord.VI).inv(2); // F# A D I-III-VI VI 2� inv
- * 
+ *
  * add(Chord.IV).inv(); // F# B D I IV VI IV 1� inv
- * 
+ *
  * add(Chord.VII, -1).setLength(Note.V2); // E G# B VII II IV VII
- * 
+ *
  * add(Chord.VII, -1, s.major()).setLength(Note.V2); // F G# B 3�m 5�� } };
  * c.add(Note.V1*4*i, l);
- * 
+ *
  * c2.setScale(s); int pre = Note.V1*4*i + Note.V4 + Note.V8; c2.add(pre, new
  * NoteScale(4, octave, s, Note.V16)); c2.add(pre + Note.V16, new NoteScale(3,
  * octave, s, Note.V16)); c2.add(pre + Note.V8, new NoteScale(4, octave, s,
  * Note.V4)); c2.add(pre + Note.V8 + Note.V4, new NoteScale(0, octave, s,
  * Note.V4));
- * 
+ *
  * c2.add(pre + Note.V1, new NoteScale(5, octave, s, Note.V16)); c2.add(pre +
  * Note.V1 + Note.V16, new NoteScale(4, octave, s, Note.V16)); c2.add(pre +
  * Note.V1 + Note.V8, new NoteScale(5, octave, s, Note.V8)); c2.add(pre +
  * Note.V1 + Note.V8*2, new NoteScale(4, octave, s, Note.V8)); c2.add(pre +
  * Note.V1 + Note.V8*3, new NoteScale(3, octave, s, Note.V4+Note.V8));
- * 
+ *
  * c2.add(pre + Note.V1*2, new NoteScale(5, octave, s, Note.V16)); c2.add(pre +
  * Note.V1*2 + Note.V16, new NoteScale(4, octave, s, Note.V16)); c2.add(pre +
  * Note.V1*2 + Note.V8, new NoteScale(5, octave, s, Note.V4)); c2.add(pre +
  * Note.V1*2 + Note.V8 + Note.V4, new NoteScale(0, octave, s, Note.V4));
- * 
+ *
  * c2.add(pre + Note.V1*3, new NoteScale(3, octave, s, Note.V16)); c2.add(pre +
  * Note.V1*3 + Note.V16, new NoteScale(2, octave, s, Note.V16)); c2.add(pre +
  * Note.V1*3 + Note.V8, new NoteScale(3, octave, s, Note.V8)); c2.add(pre +
@@ -1055,49 +1065,49 @@ public class Main {
  * Note.V8)); c2.add(pre + Note.V1*3 + Note.V8 + Note.V8*3, new NoteScale(3,
  * octave, s, Note.V8)); c2.add(pre + Note.V1*3 + Note.V8 + Note.V8*4, new
  * NoteScale(2, octave, s, Note.V4));
- * 
+ *
  * Progression l2 = new Progression(s, octave-1) { { // F# G# A B C# D E F# G#
  * A# B C# D# F add(Chord.I); // F# A C# I III V
- * 
+ *
  * add(Chord.VI) .inv(2); // F# A D I-III-VI VI 2� inv
- * 
+ *
  * add(Chord.IV) .inv(); // F# B D I IV VI IV 1� inv
- * 
+ *
  * add(Chord.VII, -1) .setLength(Note.V2); // E G# B VII II IV VII
- * 
+ *
  * add(Chord.VII, -1, s.major()) .setLength(Note.V2); // F G# B 3�m 5��
- * 
+ *
  * setChordArpegio(new ArpegioAscDesc(3, Note.V1, Note.V16)); setChordArpegio(3,
  * new ArpegioAscDesc(3, Note.V1, Note.V16)); setChordArpegio(4, new
  * ArpegioAscDesc(3, Note.V1, Note.V16));
- * 
+ *
  * } }; c3.add(Note.V1*4*i, l2);
- * 
- * 
- * 
+ *
+ *
+ *
  * }
  */
 
 /*
  * for(int i = 0; i < 4; i++) { Progression l = new Progression(s, octave) { {
  * add(Chord.I);
- * 
+ *
  * add(Chord.IV).inv(1);
- * 
+ *
  * add(Chord.VII).inv(2);
- * 
+ *
  * add(Chord.III).inv(1);
- * 
+ *
  * add(Chord.VI).inv(2);
- * 
+ *
  * add(Chord.II).inv(1);
- * 
+ *
  * add(Chord.V, 0) .inv(2) .setLength(Note.V2);
- * 
+ *
  * add(Chord.VII, 0, s.major()) .inv(2) .setLength(Note.V2);
- * 
+ *
  * add(Chord.I, 1) .inv(2);
- * 
+ *
  * setChordArpegio(new ArpegioAscDesc(3, Note.V1, Note.V16)); } };
  * c.add(Note.V1*8*i, l); }
  */
@@ -1106,31 +1116,31 @@ public class Main {
  * Progression l = new Progression(s, octave) { { int[] primary = new
  * int[]{Chord.I, Chord.IV, Chord.V}; int[] secondary = new int[]{Chord.II,
  * Chord.III, Chord.VI};
- * 
+ *
  * add(primary[0]); for (int i = 0; i < 10; i++) { int rnd = new
  * SecureRandom().nextInt(primary.length); add(primary[rnd]); rnd = new
  * SecureRandom().nextInt(secondary.length); add(secondary[rnd]); rnd = new
  * SecureRandom().nextInt(primary.length); add(primary[rnd]);
  * add(Chord.VII).inv(2); }
- * 
+ *
  * setChordArpegio(new ArpegioAscDesc(3, Note.V1, Note.V16)); } }; c.add(0, l);
  */
 
 /*
  * add(Chord.I);
- * 
+ *
  * add(Chord.V).inv(2);
- * 
+ *
  * add(Chord.VI).inv(2);
- * 
+ *
  * add(Chord.IV).inv(1);
- * 
+ *
  * add(Chord.I).inv(1);
- * 
+ *
  * add(Chord.IV).inv(2);
- * 
+ *
  * add(Chord.VI).inv(2);
- * 
+ *
  * add(Chord.V).inv(2);
  */
 

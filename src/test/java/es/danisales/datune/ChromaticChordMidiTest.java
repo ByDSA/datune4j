@@ -33,14 +33,14 @@ public class ChromaticChordMidiTest {
 		
 		assertEquals("Cm", ChromaticChordEnum.Cm.toString());
 		assertEquals("C7", ChromaticChordEnum.C7.toString());
-		assertEquals("C/E", ChromaticChordEnum.C.inv().toString());
-		assertEquals("C/G", ChromaticChordEnum.C.inv(2).toString());
-		assertEquals("C", ChromaticChordEnum.C.inv(3).toString());
+		assertEquals("C/E", ChromaticChordEnum.C.getInv().toString());
+		assertEquals("C/G", ChromaticChordEnum.C.getInv(2).toString());
+		assertEquals("C", ChromaticChordEnum.C.getInv(3).toString());
 		assertEquals("F5", ChromaticChordEnum.F5.toString());
-		assertEquals("F5/C", ChromaticChordEnum.F5.inv().toString());
+		assertEquals("F5/C", ChromaticChordEnum.F5.getInv().toString());
 		
 		assertEquals("Csus2", ChromaticChordEnum.Csus2.toString());
 		assertEquals("Gsus4", ChromaticChordEnum.Gsus4.toString());
-		assertEquals("Gsus4/C", ChromaticChordEnum.Gsus4.inv().toString());
+		assertEquals("Gsus4/C", ChromaticChordEnum.Gsus4.getInv().toString());
 	}
 }

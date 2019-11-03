@@ -37,10 +37,6 @@ public class CustomDiatonicChord extends Chord<Diatonic>
 			add( c );
 		}
 	}
-	
-	public CustomDiatonicChord setRoot(int n) {
-		return (CustomDiatonicChord) super.setRootPos( n );
-	}
 
 	public CustomDiatonicChord shift(int n) {
 		for ( int i = 0; i < size(); i++ ) {
@@ -48,14 +44,6 @@ public class CustomDiatonicChord extends Chord<Diatonic>
 		}
 
 		return this;
-	}
-	
-	public CustomDiatonicChord inv(int n) {
-		return (CustomDiatonicChord) super.inv( n );
-	}
-	
-	public CustomDiatonicChord inv() {
-		return (CustomDiatonicChord) super.inv();
 	}
 
 	public CustomDiatonicChord shift(DiatonicDegree d) {
@@ -137,11 +125,6 @@ public class CustomDiatonicChord extends Chord<Diatonic>
 		return null;
 	}
 
-	@Override
-	public CustomDiatonicChord resetRoot() {
-		return (CustomDiatonicChord)super.resetRoot();
-	}
-
 	public CustomDiatonicChord add(Diatonic... cs) throws AddedException {
 		for (Diatonic d : cs)
 			add(d);
@@ -167,5 +150,12 @@ public class CustomDiatonicChord extends Chord<Diatonic>
 	public DiatonicDegree getDegree() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public CustomDiatonicChord getInv(int n) {
+		CustomDiatonicChord copy = new CustomDiatonicChord(this);
+		copy.inv(n);
+		return copy;
 	}
 }

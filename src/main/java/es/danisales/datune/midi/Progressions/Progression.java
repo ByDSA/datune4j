@@ -14,7 +14,6 @@ import es.danisales.datune.midi.Events.KeySignatureEvent;
 import es.danisales.datune.tonality.Tonality;
 
 public class Progression<This extends Progression> implements EventComplex {
-
 	protected Tonality tonality;
 	protected int octave;
 
@@ -34,7 +33,7 @@ public class Progression<This extends Progression> implements EventComplex {
 	}
 
 	/** Replace Chord
-	 * 
+	 *
 	 * @param n	N�mero de corde en el tiempo
 	 * @param t	Grado del acorde
 	 * @param o	Desplazamiento de octava
@@ -68,7 +67,7 @@ public class Progression<This extends Progression> implements EventComplex {
 	}
 
 	public DiatonicChordMidi add(HarmonicFunction t, int o) {
-		DiatonicChordMidi c = null;
+		DiatonicChordMidi c;
 		o += octave;
 
 		c = new DiatonicChordMidi(t, o, tonality);

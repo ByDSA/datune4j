@@ -104,9 +104,9 @@ public abstract class Chord<N extends SymbolicPitch> extends ArrayList<N> implem
 		T last = ret.get( 0 );
 		for ( int i = 1; i < size(); i++ ) {
 			try {
-				last = last.inv();
+				last = last.getInv();
 			} catch ( PitchMidiException e ) {
-				last = last.inv( -size() + 1 );
+				last = last.getInv( -size() + 1 );
 			}
 			ret.add( last );
 		}
@@ -121,13 +121,11 @@ public abstract class Chord<N extends SymbolicPitch> extends ArrayList<N> implem
 	}
 
 	@Override
-	public Chord setRootPos(int n) {
+	public void setRootPos(int n) {
 		if ( n >= size())
 			throw new ArrayIndexOutOfBoundsException();
 
 		root = n;
-
-		return this;
 	}
 
 	@Override

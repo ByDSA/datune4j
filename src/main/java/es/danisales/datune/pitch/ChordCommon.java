@@ -43,45 +43,12 @@ public interface ChordCommon<N extends SymbolicPitch> extends List<N>, Cloneable
 	}
 	*/
 	// Custom
-	default <T extends ChordCommon<N>> T inv() {
-		return inv( 1 );
+	default <T extends ChordCommon<N>> T getInv() {
+		return getInv(1);
 	}
-	default <T extends ChordCommon<N>> T inv(int n) {
-		if ( size() < 2 || n == 0 )
-			return (T)this;
 
-		for ( int i = 0; i < n; i++ ) {
-			boolean updateRoot = getRootPos() == 0;
-			add( remove( 0 ) );
+	<T extends ChordCommon<N>> T getInv(int n);
 
-			if ( updateRoot )
-				setRootPos( size() - 1 );
-		}
-
-		if ( n < 0 ) {
-			int lastIndex = size() - 1;
-
-			for ( int i = 0; i > n; i-- ) {
-				boolean updateRoot = getRootPos() == lastIndex;
-				add( 0, remove( lastIndex ) );
-
-				if ( updateRoot )
-					setRootPos( 0 );
-			}
-		}
-
-		return (T)this;
-	}
-	<T extends ChordCommon<N>> T resetRoot();
-	<T extends ChordCommon<N>> T setRootPos(int n);
-	<T extends ChordCommon<N>> T removeHigherDuplicates();
-	default <T extends ChordCommon<N>> T add(N... cs) throws AddedException {
-		for (N d : cs)
-			add(d);
-		return (T) this;
-	}
-	<T extends ChordCommon<N>> T add(ChordCommon<N> cs) throws AddedException;
-	<T extends ChordCommon<N>> T add(int pos, N... ns) throws AddedException;
 	
 	/*
 	public default List<DistChordType> distances() {

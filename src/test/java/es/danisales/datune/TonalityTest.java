@@ -357,7 +357,7 @@ public class TonalityTest {
 								true, ton.get( ChromaticFunction.SUBV7_VI ).equalsEnharmonic( ChromaticChordEnum.AA7 ) );
 
 								assertEquals(
-									ChromaticChordEnum.CC.inv(), ton
+										ChromaticChordEnum.CC.getInv(), ton
 											.get( ChromaticFunction.N6 )
 									);
 
@@ -429,6 +429,6 @@ public class TonalityTest {
 		 * );
 		 */
 		ton = TonalityEnum.Cm;		
-		assertEquals( DiatonicFunction.VII7, ton.getFunction( CustomChromaticChord.copyOf( ChromaticChordEnum.AA7 ).rename(ton) ) );
+		assertEquals( DiatonicFunction.VII7, ton.getFunction( CustomChromaticChord.from( ChromaticChordEnum.AA7 ).rename(ton) ) );
 	}
 }

@@ -165,7 +165,7 @@ public class Tests {
 	@Test
 	public void toChordUnfunc() {
 		DiatonicChordMidi c = ( new DiatonicChordMidi( DiatonicFunction.IV6, 5, TonalityEnum.C ) )
-				.inv( 3 );
+				.getInv( 3 );
 
 		ChromaticChordMidi cc = c.toChromaticChordMidi();
 	}
@@ -173,7 +173,7 @@ public class Tests {
 	@Test
 	public void toChordFunc() {
 		DiatonicChordMidi c = ( new DiatonicChordMidi( DiatonicFunction.IV6, 5, TonalityEnum.C ) )
-				.inv( 3 );
+				.getInv( 3 );
 
 		ArrayList<DiatonicChordMidi> chords = c.toChromaticChordMidi().toDiatonicChordMidi( false );
 	}
@@ -181,7 +181,7 @@ public class Tests {
 	@Test
 	public void whatIsIt() {
 		DiatonicChordMidi c = ( new DiatonicChordMidi( DiatonicFunction.IV6, 5, TonalityEnum.C ) )
-				.inv( 3 );
+				.getInv( 3 );
 
 		ArrayList<DiatonicChordMidi> chords = c.toChromaticChordMidi().toDiatonicChordMidi( false );
 

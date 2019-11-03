@@ -14,6 +14,8 @@ import es.danisales.datune.tonality.TonalityException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements PitchChromaticChord<ChromaticMidi> {
@@ -34,8 +36,8 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 		ChromaticChordMidi ns = new ChromaticChordMidi();
 		for ( int i = 0; i < cs.length; i++ ) {
 			ChromaticMidi chromaticMidi = ChromaticMidi.builder()
-                    .pitch(cs[i])
-                    .build();
+					.pitch(cs[i])
+					.build();
 			if ( i > 0 ) {
 				int lastElementOctave = ns.get(ns.size()-1).getOctave();
 				if (new Chromatic.Comparator().compare(cs[i], cs[i - 1]) < 0)
@@ -215,7 +217,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 	}
 
 	public String toString() {
-		CustomChromaticChord ca = CustomChromaticChord.copyOf( this );
+		CustomChromaticChord ca = CustomChromaticChord.from( this );
 
 		return ca.toString();
 	}
@@ -252,16 +254,6 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 		return false;
 	}
 
-	@Override
-	public ChromaticChordMidi inv() {
-		return super.inv();
-	}
-
-	@Override
-	public ChromaticChordMidi inv(int n) {
-		return (ChromaticChordMidi) super.inv(n);
-	}
-
 	public PitchChromaticChord getChromaticChord() {
 		return this.toChromaticChord();
 	}
@@ -287,5 +279,105 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 	public List integerNotationFromRoot() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public ChromaticChordMidi getInv(int n) {
+		ChromaticChordMidi copy = ChromaticChordMidi.from(this);
+		copy.inv(n);
+		return copy;
+	}
+
+	public static Builder builder() {
+		return new Builder();
+	}
+
+	public static class Builder extends es.danisales.utils.building.Builder<ChromaticChordMidi.Builder, ChromaticChordMidi> {
+		private List<Chromatic> fromChromatic;
+		private List<ChromaticMidi> fromChromaticMidi;
+		private int _octave;
+		private int _length;
+		private int _velocity;
+
+		private Builder() {
+
+		}
+
+		public ChromaticChordMidi.Builder fromChromatic(@NonNull Chromatic... cs) {
+			fromChromatic = Arrays.asList(cs);
+
+			return self();
+		}
+
+		public ChromaticChordMidi.Builder fromChromaticMidi(@NonNull ChromaticMidi... cs) {
+			fromChromaticMidi = Arrays.asList(cs);
+
+			return self();
+		}
+
+		public ChromaticChordMidi.Builder fromChromatic(@NonNull Iterable<Chromatic> cs) {
+			fromChromatic = new ArrayList<>();
+			for (Chromatic c : cs)
+				fromChromatic.add(c);
+
+			return self();
+		}
+
+		public ChromaticChordMidi.Builder fromChromaticMidi(@NonNull Iterable<ChromaticMidi> cs) {
+			fromChromaticMidi = new ArrayList<>();
+			for (ChromaticMidi c : cs)
+				fromChromaticMidi.add(c);
+
+			return self();
+		}
+
+		public ChromaticChordMidi.Builder octaveBase(int octave) {
+			this._octave = octave;
+
+			return self();
+		}
+
+		public ChromaticChordMidi.Builder length(int length) {
+			this._length = length;
+
+			return self();
+		}
+
+		public ChromaticChordMidi.Builder velocity(int velocity) {
+			this._velocity = velocity;
+
+			return self();
+		}
+
+		@NonNull
+		@Override
+		public ChromaticChordMidi build() {
+			ChromaticChordMidi ns = new ChromaticChordMidi();
+			if (fromChromatic != null) {
+				for (int i = 0; i < fromChromatic.size(); i++) {
+					ChromaticMidi chromaticMidi = ChromaticMidi.builder()
+							.pitch(fromChromatic.get(i))
+							.build();
+					if (i > 0) {
+						int lastElementOctave = ns.get(ns.size() - 1).getOctave();
+						if (new Chromatic.Comparator().compare(fromChromatic.get(i), fromChromatic.get(i - 1)) < 0)
+							chromaticMidi.setOctave(lastElementOctave + 1);
+						else
+							chromaticMidi.setOctave(lastElementOctave);
+					}
+					ns.add(chromaticMidi);
+				}
+			} else if (fromChromaticMidi != null) {
+
+			}
+
+			return ns;
+		}
+
+
+		@Override
+		protected ChromaticChordMidi.Builder self() {
+			return this;
+		}
 	}
 }

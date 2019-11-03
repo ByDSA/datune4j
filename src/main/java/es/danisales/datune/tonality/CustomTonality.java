@@ -12,10 +12,7 @@ import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
-import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.musical.CustomChromaticChord;
-import es.danisales.datune.musical.CustomDiatonicChord;
-import es.danisales.datune.musical.Diatonic;
+import es.danisales.datune.musical.*;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticSingle;
@@ -302,7 +299,7 @@ public class CustomTonality implements Tonality {
 			/*CustomDiatonicChord dc = new CustomDiatonicChord( f );
 			assert dc != null : f + " " + this;
 
-			cc = CustomChromaticChord.copyOf( calculateFrom( dc, f ) );
+			cc = CustomChromaticChord.from( calculateFrom( dc, f ) );
 			cc.rename( this );
 			//assert cc.meta.str != null : cc.notesToString();
 			if ( functionChordsMap == null )
@@ -329,7 +326,7 @@ public class CustomTonality implements Tonality {
 			cc = chromaticChordsMap.get( f );
 
 		if ( cc == null ) {
-			cc = new CustomChromaticChord( f, this );
+			cc = (CustomChromaticChord)ChromaticChord.from( f, this );
 			cc.updateWhatIsIt();
 			assert cc != null : f + " " + this.notesToString();
 
@@ -782,7 +779,7 @@ public class CustomTonality implements Tonality {
 	public HarmonicFunction getFunction(PitchChromaticChord c, boolean rename) {
 		createCacheIfNeeded();
 		CustomChromaticChord c2;
-		c2 = CustomChromaticChord.copyOf( c );
+		c2 = CustomChromaticChord.from( c );
 		if ( rename )
 			c2.rename( this );
 

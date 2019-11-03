@@ -3,6 +3,7 @@ package es.danisales.datune.musical;
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.midi.AddedException;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
+import es.danisales.datune.pitch.Chord;
 import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.tonality.Tonality;
@@ -55,23 +56,21 @@ public enum DiatonicChordEnum implements DiatonicChord {
 	}
 
 	@Override
-	public CustomDiatonicChord inv(int n) {
-		return new CustomDiatonicChord(this).inv( n );
+	public CustomDiatonicChord getInv(int n) {
+		CustomDiatonicChord copy = new CustomDiatonicChord(this);
+		copy.inv(n);
+		return copy;
 	}
 
-	@Override
-	public DiatonicChordEnum resetRoot() {
-		return this;
+
+	public static Chord<Diatonic> setRootPos(DiatonicChordEnum diatonicChordEnum, int n) {
+		CustomDiatonicChord customDiatonicChord = new CustomDiatonicChord(diatonicChordEnum);
+		customDiatonicChord.setRootPos( n );
+		return customDiatonicChord;
 	}
 
-	@Override
-	public CustomDiatonicChord setRootPos(int n) {
-		return (CustomDiatonicChord) new CustomDiatonicChord(this).setRootPos( n );
-	}
-
-	@Override
-	public CustomDiatonicChord add(int pos, Diatonic... ns) throws AddedException {
-		return new CustomDiatonicChord(this).add( pos, ns );
+	public static CustomDiatonicChord add(DiatonicChordEnum diatonicChordEnum, int pos, Diatonic... ns) throws AddedException {
+		return new CustomDiatonicChord(diatonicChordEnum).add( pos, ns );
 	}
 
 	@Override
@@ -199,14 +198,12 @@ public enum DiatonicChordEnum implements DiatonicChord {
 		return PitchChromaticChord.of( c );
 	}
 
-	@Override
-	public CustomDiatonicChord add(Diatonic... cs) throws AddedException {
-		return new CustomDiatonicChord(this).add( cs );
+	public static CustomDiatonicChord add(DiatonicChordEnum diatonicChordEnum, Diatonic... cs) throws AddedException {
+		return new CustomDiatonicChord(diatonicChordEnum).add( cs );
 	}
 
-	@Override
-	public <T extends ChordCommon<Diatonic>> T add(ChordCommon<Diatonic> cs) throws AddedException {
-		return new CustomDiatonicChord(this).add( cs );
+	public static <T extends ChordCommon<Diatonic>> T add(DiatonicChordEnum diatonicChordEnum, ChordCommon<Diatonic> cs) throws AddedException {
+		return new CustomDiatonicChord(diatonicChordEnum).add( cs );
 	}
 
 	@Override

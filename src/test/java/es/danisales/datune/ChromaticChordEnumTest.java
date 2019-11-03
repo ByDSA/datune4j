@@ -23,7 +23,7 @@ public class ChromaticChordEnumTest {
 
 		assertEquals( Chromatic.E, c.get( 0 ) );
 
-		assertEquals( ChromaticChordEnum.C.inv(), c );
+		assertEquals( ChromaticChordEnum.C.getInv(), c );
 	}
 
 	@Test(expected = CustomChromaticChord.ImpossibleChord.class)

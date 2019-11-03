@@ -3,6 +3,7 @@ package es.danisales.datune.pitch;
 import es.danisales.datune.midi.AddedException;
 import es.danisales.datune.musical.CustomChromaticChord;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiFunction;
 
@@ -36,13 +37,45 @@ public interface ChordMutableInterface<N extends SymbolicPitch> extends ChordCom
 	
 	ChordMutableInterface<N> clone();
 	
-	default <T extends ChordCommon<N>> T resetRoot() {
-		if ( size() == 0 )
-			return null;
+	default void resetRoot() {
+		if ( isEmpty() )
+			return;
 
 		setRootPos( 0 );
+	}
 
-		return (T)this;
+	void setRootPos(int pos);
+
+	default void inv() {
+		inv( 1 );
+	}
+	default void inv(int n) {
+		if ( size() < 2 || n == 0 )
+			return;
+
+		for ( int i = 0; i < n; i++ ) {
+			boolean updateRoot = getRootPos() == 0;
+			add( remove( 0 ) );
+
+			if ( updateRoot )
+				setRootPos( size() - 1 );
+		}
+
+		if ( n < 0 ) {
+			int lastIndex = size() - 1;
+
+			for ( int i = 0; i > n; i-- ) {
+				boolean updateRoot = getRootPos() == lastIndex;
+				add( 0, remove( lastIndex ) );
+
+				if ( updateRoot )
+					setRootPos( 0 );
+			}
+		}
+	}
+	default <T extends ChordCommon<N>> T add(N... cs) throws AddedException {
+		this.addAll(Arrays.asList(cs));
+		return (T) this;
 	}
 	
 	default <T extends ChordCommon<N>> T removeHigherDuplicates() {
@@ -55,25 +88,20 @@ public interface ChordMutableInterface<N extends SymbolicPitch> extends ChordCom
 		}
 
 		this.clear();
-		for ( N n : out )
-			add( n );
+		this.addAll(out);
 		
 		return (T)out;
 	}
 	
-	public default Boolean updateWhatIsIt() {
+	default Boolean updateWhatIsIt() {
 		return updateWhatIsIt(
-			(List<CustomChromaticChord> chords, ChordCommon<?> self) -> {
-				return chords.get( 0 );
-			}
+			(List<CustomChromaticChord> chords, ChordCommon<?> self) -> chords.get( 0 )
 				);
 	}
 
-	public Boolean updateWhatIsIt(BiFunction<List<CustomChromaticChord>, ChordCommon<?>, CustomChromaticChord> fSelectChord);
+	Boolean updateWhatIsIt(BiFunction<List<CustomChromaticChord>, ChordCommon<?>, CustomChromaticChord> fSelectChord);
 
-	public Boolean updateWhatIsItIfNeeded();
-	
-	public <T extends ChordCommon<N>> T setRootPos(int n);
-	public <T extends ChordCommon<N>> T add(ChordCommon<N> cs) throws AddedException;
-	public <T extends ChordCommon<N>> T add(int pos, N... ns) throws AddedException;
+	Boolean updateWhatIsItIfNeeded();
+	<T extends ChordCommon<N>> T add(ChordCommon<N> cs) throws AddedException;
+	<T extends ChordCommon<N>> T add(int pos, N... ns) throws AddedException;
 }

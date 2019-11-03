@@ -51,7 +51,7 @@ public interface PitchChromaticChord<N extends PitchChromaticSingle> extends Cho
 	 */
 /*
 	default <Array extends PitchChromaticChord<?>> boolean equalsEnharmonicInv(Array cc) {
-		CustomChromaticChord cc2 = CustomChromaticChord.copyOf( cc );
+		CustomChromaticChord cc2 = CustomChromaticChord.from( cc );
 		for ( int i = 0; i < cc2.size(); i++, cc2.inv() ) {
 			if ( this.equalsEnharmonic( cc2 ) )
 				return true;
@@ -93,7 +93,7 @@ public interface PitchChromaticChord<N extends PitchChromaticSingle> extends Cho
 			if ( firstChromatic.equals( chromaticOther ) )
 				return dup;
 			if (i < size()-1)
-				dup.inv();
+				dup = (T)dup.getInv();
 		}
 
 		throw new ImpossibleChord();
@@ -106,7 +106,7 @@ public interface PitchChromaticChord<N extends PitchChromaticSingle> extends Cho
 	static <T extends PitchChromaticSingle> PitchChromaticChord<Chromatic> of(Iterable<T> chord) {
 		PitchChromaticChord<Chromatic> c = ChromaticChordEnum.of(chord);
 		if (c == null) {
-			c = CustomChromaticChord.copyOf( chord );
+			c = CustomChromaticChord.from( chord );
 		}
 		return c;
 	}

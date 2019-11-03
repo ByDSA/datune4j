@@ -8,6 +8,7 @@ public enum IntervalDiatonic {
     OCTAVE, NINTH, TENTH, ELEVENTH, TWELFTH, THIRTEENTH, FOURTEENTH,
     FIFTEENTH;
 
+    @Deprecated
     public static @NonNull IntervalDiatonic fromIndex(int n) {
     	n = trimToValidValue(n);
 
@@ -15,7 +16,7 @@ public enum IntervalDiatonic {
     }
 
     private static int trimToValidValue(int n) {
-        return (n < 0 ? -n : n) % (IntervalDiatonic.values().length - 1);
+        return (n < 0 ? -n : n) % (IntervalDiatonic.values().length);
     }
 
     public static @NonNull IntervalDiatonic from(@NonNull IntervalChromatic intervalChromatic) {

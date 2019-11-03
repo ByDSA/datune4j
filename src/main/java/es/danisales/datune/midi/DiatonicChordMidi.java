@@ -18,6 +18,7 @@ import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.diatonic.Quality;
 import es.danisales.datune.midi.Settings.DefaultValues;
 import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.CustomChromaticChord;
 import es.danisales.datune.musical.DiatonicChord;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
@@ -361,11 +362,17 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
 
     private void chromaticFunctionProcess(ChromaticFunction t, int octave) {
         if ( t == ChromaticFunction.N6 ) {
-            CustomChromaticChord cc = new CustomChromaticChord( t, tonality );
+            ChromaticChord cc = ChromaticChord.from( t, tonality );
 
             tonality = Tonality.getFromChord( cc ).get( 0 );
 
-            add( cc.toMidi() );
+            ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder()
+                    .fromChromatic (cc)
+                    .octaveBase(octave)
+                    .length(length)
+                    .build();
+
+            add( chromaticChordMidi );
         } else if ( ArrayUtils.contains( t, ChromaticFunction.POWER_CHORDS ) ) {
             DiatonicDegree d = t.getDegree();
 
@@ -562,7 +569,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
                 System.out.println( t );
             }
         } else {
-            CustomChromaticChord cc = new CustomChromaticChord( t, tonality );
+            ChromaticChord cc = ChromaticChord.from( t, tonality );
 
             ChromaticMidi[] ccmArray = new ChromaticMidi[cc.size()];
             int i = 0;
@@ -592,7 +599,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
 
     private void diatonicFunctionProcess(DiatonicFunction t, int octave) {
         assert t != null;
-        DiatonicChord dt = DiatonicChord.of( t );
+        DiatonicChord dt = DiatonicChord.from( t );
 
         add( dt, octave );
         root = 0;
@@ -1215,6 +1222,13 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
     }
 
     @Override
+    public DiatonicChordMidi getInv(int n) {
+        DiatonicChordMidi copy = this.clone();
+        copy.inv(n);
+        return copy;
+    }
+
+    @Override
     public Boolean updateWhatIsIt() {
         return updateWhatIsIt(
                 (List<CustomChromaticChord> chords, ChordCommon<?> self) -> {
@@ -1227,8 +1241,10 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
 
                     assert this.size() == ret.size();
 
-                    if ( getRootPos() != 0 )
-                        ret = ret.clone( true ).inv( ret.size() - getRootPos() );
+                    if ( getRootPos() != 0 ) {
+                        ret = ret.clone(true);
+                        ret.inv(ret.size() - getRootPos());
+                    }
 
                     //assert ret.meta.str != null : " " + ( function instanceof DiatonicFunction );
 
@@ -1271,21 +1287,9 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
         // TODO Auto-generated method stub
         return null;
     }
-
-    @Override
-    public <T extends ChordCommon<DiatonicMidi>> T resetRoot() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
     @Override
     public DiatonicChordMidi setDuration(int d) {
         return (DiatonicChordMidi)super.setDuration( d );
-    }
-
-    @Override
-    public DiatonicChordMidi inv(int o) {
-        return (DiatonicChordMidi)super.inv( o );
     }
 
     @Override
