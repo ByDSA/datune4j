@@ -13,11 +13,11 @@ public class ChromaticTest {
 	public void noteName() {
 		Chromatic note = Chromatic.C;
 
-		assertEquals( 0, note.intValue() );
+		assertEquals( 0, note.distSemitonesFromC() );
 
 		note = Chromatic.A;
 
-		assertEquals( 9, note.intValue() );
+		assertEquals( 9, note.distSemitonesFromC() );
 	}
 	@Test
 	public void add() {
@@ -46,11 +46,11 @@ public class ChromaticTest {
 	
 	@Test
 	public void equalsEnharmonics() {
-		assertTrue(Chromatic.Bb.equalsEnharmonic(Chromatic.AA));
-		assertTrue(Chromatic.Eb.equalsEnharmonic(Chromatic.DD));
-		assertTrue(Chromatic.C.equalsEnharmonic(Chromatic.BB));
-		assertTrue(Chromatic.CCC.equalsEnharmonic(Chromatic.D));
-		assertTrue(Chromatic.CCCC.equalsEnharmonic(Chromatic.DD));
+		assertTrue(Chromatic.Bb.compareEnharmonicTo(Chromatic.AA) == 0);
+		assertTrue(Chromatic.Eb.compareEnharmonicTo(Chromatic.DD) == 0);
+		assertTrue(Chromatic.C.compareEnharmonicTo(Chromatic.BB) == 0);
+		assertTrue(Chromatic.CCC.compareEnharmonicTo(Chromatic.D) == 0);
+		assertTrue(Chromatic.CCCC.compareEnharmonicTo(Chromatic.DD) == 0);
 	}
 	
 	@Test
@@ -71,9 +71,9 @@ public class ChromaticTest {
 	
 	@Test
 	public void dist() {
-		assertEquals((Integer)1, Chromatic.B.dist(Chromatic.C));
-		assertEquals((Integer)11, Chromatic.C.dist(Chromatic.B));
-		assertEquals((Integer)11, Chromatic.CC.dist(Chromatic.C));
-		assertEquals((Integer)11, Chromatic.B.dist(Chromatic.Bb));
+		assertEquals(1, Chromatic.B.distSemitonesTo(Chromatic.C));
+		assertEquals(11, Chromatic.C.distSemitonesTo(Chromatic.B));
+		assertEquals(11, Chromatic.CC.distSemitonesTo(Chromatic.C));
+		assertEquals(11, Chromatic.B.distSemitonesTo(Chromatic.Bb));
 	}
 }

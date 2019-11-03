@@ -321,6 +321,6 @@ public enum IntervalChromatic {
 
     @Override
     public String toString() {
-        return Namer.fromLong(this);
+        return Namer.longFrom(this);
     }
 }

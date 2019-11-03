@@ -26,20 +26,20 @@ public class Tests {
 		assertEquals( Diatonic.B, Diatonic.from( c ) );
 
 		Diatonic d = Diatonic.B;
-		assertEquals( Chromatic.BB, ChromaticAdapter.from(d, Chromatic.C.intValue() ) );
+		assertEquals( Chromatic.BB, ChromaticAdapter.from(d, Chromatic.C.distSemitonesFromC() ) );
 		d = Diatonic.C;
-		assertEquals( Chromatic.C, ChromaticAdapter.from(d, Chromatic.BB.intValue() ) );
+		assertEquals( Chromatic.C, ChromaticAdapter.from(d, Chromatic.BB.distSemitonesFromC() ) );
 	}
 
 	@Test
 	public void pitchGet() {
-		PitchMidi p = PitchMidi.of( Chromatic.C, 5 );
+		PitchMidi p = PitchMidi.from( Chromatic.C, 5 );
 		assertEquals( PitchMidi.C5, p );
 
-		p = PitchMidi.of( Chromatic.C, 0 );
+		p = PitchMidi.from( Chromatic.C, 0 );
 		assertEquals( true, p.equals( PitchMidi.MIN ) );
 
-		p = PitchMidi.of( Chromatic.G, 10 );
+		p = PitchMidi.from( Chromatic.G, 10 );
 		assertEquals( true, p.equals( PitchMidi.MAX ) );
 
 		ChromaticMidi n = ChromaticMidi.builder()
@@ -259,9 +259,9 @@ public class Tests {
 
 	@Test
 	public void getCode() {
-		PitchMidi p = PitchMidi.of( 60 );
+		PitchMidi p = PitchMidi.from( 60 );
 		assertEquals( PitchMidi.C5, p );
-		p = PitchMidi.of( Chromatic.C, 5 );
+		p = PitchMidi.from( Chromatic.C, 5 );
 		assertEquals( PitchMidi.C5, p );
 		ChromaticMidi n = ChromaticMidi.builder().pitch(Chromatic.C, 5 ).build();
 		assertEquals( PitchMidi.C5, n.getCode() );

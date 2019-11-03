@@ -15,7 +15,6 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements PitchChromaticChord<ChromaticMidi> {
@@ -40,7 +39,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 					.build();
 			if ( i > 0 ) {
 				int lastElementOctave = ns.get(ns.size()-1).getOctave();
-				if (new Chromatic.Comparator().compare(cs[i], cs[i - 1]) < 0)
+				if (cs[i].compareEnharmonicTo(cs[i - 1]) < 0)
 					chromaticMidi.setOctave(lastElementOctave + 1);
 				else
 					chromaticMidi.setOctave(lastElementOctave);
@@ -107,7 +106,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 					.build();
 			Chromatic chromaticCm = ChromaticAdapter.from(cm);
 			Chromatic prevChromatic = ChromaticAdapter.from( This.get( This.size() - 1 ) );
-			if ( !(n instanceof PitchOctave) && This.size() > 0 && chromaticCm.intValue() <= prevChromatic.intValue() ) {
+			if ( !(n instanceof PitchOctave) && This.size() > 0 && chromaticCm.compareEnharmonicTo(prevChromatic) <= 0 ) {
 				o++;
 				cm.shiftOctave( 1 );
 			}
@@ -199,7 +198,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 			for ( ChromaticMidi n2 : out ) {
 				Chromatic chromaticN2 = ChromaticAdapter.from(n2);
 				Chromatic chromaticN = ChromaticAdapter.from(n);
-				if ( chromaticN2.intValue() == chromaticN.intValue() ) {
+				if ( chromaticN2.compareEnharmonicTo(chromaticN) == 0 ) {
 					found = true;
 					break;
 				}
@@ -360,7 +359,9 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 							.build();
 					if (i > 0) {
 						int lastElementOctave = ns.get(ns.size() - 1).getOctave();
-						if (new Chromatic.Comparator().compare(fromChromatic.get(i), fromChromatic.get(i - 1)) < 0)
+						Chromatic current = fromChromatic.get(i);
+						Chromatic previous = fromChromatic.get(i - 1);
+						if (current.compareEnharmonicTo(previous) < 0)
 							chromaticMidi.setOctave(lastElementOctave + 1);
 						else
 							chromaticMidi.setOctave(lastElementOctave);

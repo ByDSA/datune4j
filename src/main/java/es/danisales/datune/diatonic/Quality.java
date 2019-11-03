@@ -7,6 +7,6 @@ public enum Quality {
 
     @Override
     public String toString() {
-        return Namer.fromLong(this);
+        return Namer.longFrom(this);
     }
 }

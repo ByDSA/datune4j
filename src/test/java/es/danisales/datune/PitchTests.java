@@ -34,12 +34,12 @@ public class PitchTests {
 
 	@Test
 	public void get() {
-		assertEquals( PitchMidi.GG5, PitchMidi.of( Chromatic.GG, 5 ) );
+		assertEquals( PitchMidi.GG5, PitchMidi.from( Chromatic.GG, 5 ) );
 		assertEquals( 5, PitchMidi.GG5.getOctave() );
-		assertEquals( PitchMidi.GG5, PitchMidi.of( Chromatic.GG, PitchMidi.GG5.getOctave() ) );
+		assertEquals( PitchMidi.GG5, PitchMidi.from( Chromatic.GG, PitchMidi.GG5.getOctave() ) );
 		assertEquals( Chromatic.GG, ChromaticAdapter.from( PitchMidi.GG5 ) );
-		assertEquals( PitchMidi.GG5, PitchMidi.of( ChromaticAdapter.from( PitchMidi.GG5 ), 5 ) );
-		assertEquals( PitchMidi.GG5, PitchMidi.of( ChromaticAdapter.from( PitchMidi.GG5 ), PitchMidi.GG5.getOctave() ) );
+		assertEquals( PitchMidi.GG5, PitchMidi.from( ChromaticAdapter.from( PitchMidi.GG5 ), 5 ) );
+		assertEquals( PitchMidi.GG5, PitchMidi.from( ChromaticAdapter.from( PitchMidi.GG5 ), PitchMidi.GG5.getOctave() ) );
 		assertEquals( PitchMidi.GG5.getCode(), PitchMidi.GG5.getCode() );
 	}
 }

@@ -20,7 +20,7 @@ public class ChromaticMidiTest {
 
 		n = ChromaticMidi.builder().pitch(Chromatic.C.addSemi(5), 5).build();
 
-		assertEquals( PitchMidi.of( 60 + 5 ).getCode(), n.getCode() );
+		assertEquals( PitchMidi.from( 60 + 5 ).getCode(), n.getCode() );
 		assertEquals( 5, n.getOctave() );
 
 		n = ChromaticMidi.builder().pitch(Chromatic.C.addSemi(12), 5).build();

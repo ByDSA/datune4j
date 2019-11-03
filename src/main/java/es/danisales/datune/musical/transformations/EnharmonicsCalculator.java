@@ -15,13 +15,9 @@ public class EnharmonicsCalculator {
         Chromatic[] values = Chromatic.class.getEnumConstants();
 
         for(Chromatic c : values)
-            if (c.isEnharmonicFrom(chromatic))
+            if (chromatic.compareEnharmonicTo(chromatic) == 0)
                 tmp.add(c);
 
         return tmp;
-    }
-
-    public static boolean equals(Chromatic chromatic1, Chromatic chromatic2) {
-        return chromatic1.intValue() == chromatic2.intValue();
     }
 }

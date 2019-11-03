@@ -6,12 +6,12 @@ import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.musical.Chromatic;
 
 public class DistanceCalculator {
-    public static IntervalChromatic calculateDistance(Chromatic from, Chromatic to, IntervalDiatonic intervalDiatonic) {
-        int d = to.intValue() - from.intValue();
+    public static IntervalChromatic calculareInterval(Chromatic from, Chromatic to, IntervalDiatonic intervalDiatonic) {
+        int d = from.distSemitonesTo(to);
         return IntervalChromatic.from( intervalDiatonic, d );
     }
 
-    public static int calculateDistance(ChromaticMidi from, ChromaticMidi to) {
+    public static int calculateDistanceInSemitones(ChromaticMidi from, ChromaticMidi to) {
         return to.getCode() - from.getCode();
     }
 }

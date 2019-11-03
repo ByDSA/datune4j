@@ -34,12 +34,12 @@ public enum PitchMidi implements PitchChromaticSingle, PitchOctaveMidi, Codeable
 
 	@Override
 	public PitchMidi shiftOctave(int o) {
-		return of( getCode() + Chromatic.N * o );
+		return from( getCode() + Chromatic.N * o );
 	}
 
 	@Override
 	public PitchMidi setOctave(int o) {
-		return of( getCode() % Chromatic.N + Chromatic.N * o );
+		return from( getCode() % Chromatic.N + Chromatic.N * o );
 	}
 
 	@Override
@@ -56,346 +56,353 @@ public enum PitchMidi implements PitchChromaticSingle, PitchOctaveMidi, Codeable
 		return value / Chromatic.N;
 	}
 
-	public static PitchMidi of(int code) {
+	public static PitchMidi from(int code) {
 		PitchMidiException.check( code );
 		Chromatic n = Chromatic.from( code % Chromatic.N);
 		int o = code / Chromatic.N;
-		return of( n, o );
+		return from( n, o );
 	}
 
-	public static PitchMidi of(Chromatic chromatic, int octave) {
-		Chromatic chromaticWithoutAlterations = AlterationsCalculator.minAlterationsFrom(chromatic);
+	public static PitchMidi from(Chromatic chromatic, int octave) {
+		Chromatic chromaticMinAlterations = AlterationsCalculator.minAlterationsFrom(chromatic);
 		switch ( octave ) {
 			case 0:
-				switch ( chromatic.intValue() ) {
-					case 0:
+				switch ( chromaticMinAlterations ) {
+					case C:
 						return PitchMidi.C0;
-					case 1:
+					case CC:
 						return PitchMidi.CC0;
-					case 2:
+					case D:
 						return PitchMidi.D0;
-					case 3:
+					case DD:
 						return PitchMidi.DD0;
-					case 4:
+					case E:
 						return PitchMidi.E0;
-					case 5:
+					case F:
 						return PitchMidi.F0;
-					case 6:
+					case FF:
 						return PitchMidi.FF0;
-					case 7:
+					case G:
 						return PitchMidi.G0;
-					case 8:
+					case GG:
 						return PitchMidi.GG0;
-					case 9:
+					case A:
 						return PitchMidi.A0;
-					case 10:
+					case AA:
 						return PitchMidi.AA0;
-					case 11:
+					case B:
 						return PitchMidi.B0;
 					default:
 						return null;
 				}
 			case 1:
-				switch ( chromatic.intValue() ) {
-					case 0:
+				switch ( chromaticMinAlterations ) {
+					case C:
 						return PitchMidi.C1;
-					case 1:
+					case CC:
 						return PitchMidi.CC1;
-					case 2:
+					case D:
 						return PitchMidi.D1;
-					case 3:
+					case DD:
 						return PitchMidi.DD1;
-					case 4:
+					case E:
 						return PitchMidi.E1;
-					case 5:
+					case F:
 						return PitchMidi.F1;
-					case 6:
+					case FF:
 						return PitchMidi.FF1;
-					case 7:
+					case G:
 						return PitchMidi.G1;
-					case 8:
+					case GG:
 						return PitchMidi.GG1;
-					case 9:
+					case A:
 						return PitchMidi.A1;
-					case 10:
+					case AA:
 						return PitchMidi.AA1;
-					case 11:
+					case B:
 						return PitchMidi.B1;
 					default:
 						return null;
 				}
 			case 2:
-				switch ( chromatic.intValue() ) {
-					case 0:
+				switch ( chromaticMinAlterations ) {
+					case C:
 						return PitchMidi.C2;
-					case 1:
+					case CC:
 						return PitchMidi.CC2;
-					case 2:
+					case D:
 						return PitchMidi.D2;
-					case 3:
+					case DD:
 						return PitchMidi.DD2;
-					case 4:
+					case E:
 						return PitchMidi.E2;
-					case 5:
+					case F:
 						return PitchMidi.F2;
-					case 6:
+					case FF:
 						return PitchMidi.FF2;
-					case 7:
+					case G:
 						return PitchMidi.G2;
-					case 8:
+					case GG:
 						return PitchMidi.GG2;
-					case 9:
+					case A:
 						return PitchMidi.A2;
-					case 10:
+					case AA:
 						return PitchMidi.AA2;
-					case 11:
+					case B:
 						return PitchMidi.B2;
 					default:
 						return null;
 				}
 			case 3:
-				switch ( chromatic.intValue() ) {
-					case 0:
+				switch ( chromaticMinAlterations ) {
+					case C:
 						return PitchMidi.C3;
-					case 1:
+					case CC:
 						return PitchMidi.CC3;
-					case 2:
+					case D:
 						return PitchMidi.D3;
-					case 3:
+					case DD:
 						return PitchMidi.DD3;
-					case 4:
+					case E:
 						return PitchMidi.E3;
-					case 5:
+					case F:
 						return PitchMidi.F3;
-					case 6:
+					case FF:
 						return PitchMidi.FF3;
-					case 7:
+					case G:
 						return PitchMidi.G3;
-					case 8:
+					case GG:
 						return PitchMidi.GG3;
-					case 9:
+					case A:
 						return PitchMidi.A3;
-					case 10:
+					case AA:
 						return PitchMidi.AA3;
-					case 11:
+					case B:
 						return PitchMidi.B3;
 					default:
 						return null;
 				}
 			case 4:
-				switch ( chromatic.intValue() ) {
-					case 0:
+				switch ( chromaticMinAlterations ) {
+					case C:
 						return PitchMidi.C4;
-					case 1:
+					case CC:
 						return PitchMidi.CC4;
-					case 2:
+					case D:
 						return PitchMidi.D4;
-					case 3:
+					case DD:
 						return PitchMidi.DD4;
-					case 4:
+					case E:
 						return PitchMidi.E4;
-					case 5:
+					case F:
 						return PitchMidi.F4;
-					case 6:
+					case FF:
 						return PitchMidi.FF4;
-					case 7:
+					case G:
 						return PitchMidi.G4;
-					case 8:
+					case GG:
 						return PitchMidi.GG4;
-					case 9:
+					case A:
 						return PitchMidi.A4;
-					case 10:
+					case AA:
 						return PitchMidi.AA4;
-					case 11:
+					case B:
 						return PitchMidi.B4;
 					default:
 						return null;
 				}
 			case 5:
-				switch ( chromatic.intValue() ) {
-					case 0:
+				switch ( chromaticMinAlterations ) {
+					case C:
 						return PitchMidi.C5;
-					case 1:
+					case CC:
 						return PitchMidi.CC5;
-					case 2:
+					case D:
 						return PitchMidi.D5;
-					case 3:
+					case DD:
 						return PitchMidi.DD5;
-					case 4:
+					case E:
 						return PitchMidi.E5;
-					case 5:
+					case F:
 						return PitchMidi.F5;
-					case 6:
+					case FF:
 						return PitchMidi.FF5;
-					case 7:
+					case G:
 						return PitchMidi.G5;
-					case 8:
+					case GG:
 						return PitchMidi.GG5;
-					case 9:
+					case A:
 						return PitchMidi.A5;
-					case 10:
+					case AA:
 						return PitchMidi.AA5;
-					case 11:
+					case B:
 						return PitchMidi.B5;
 					default:
 						return null;
 				}
 			case 6:
-				switch ( chromatic.intValue() ) {
-					case 0:
+				switch ( chromaticMinAlterations ) {
+					case C:
 						return PitchMidi.C6;
-					case 1:
+					case CC:
 						return PitchMidi.CC6;
-					case 2:
+					case D:
 						return PitchMidi.D6;
-					case 3:
+					case DD:
 						return PitchMidi.DD6;
-					case 4:
+					case E:
 						return PitchMidi.E6;
-					case 5:
+					case F:
 						return PitchMidi.F6;
-					case 6:
+					case FF:
 						return PitchMidi.FF6;
-					case 7:
+					case G:
 						return PitchMidi.G6;
-					case 8:
+					case GG:
 						return PitchMidi.GG6;
-					case 9:
+					case A:
 						return PitchMidi.A6;
-					case 10:
+					case AA:
 						return PitchMidi.AA6;
-					case 11:
+					case B:
 						return PitchMidi.B6;
 					default:
 						return null;
 				}
 			case 7:
-				switch ( chromatic.intValue() ) {
-					case 0:
+				switch ( chromaticMinAlterations ) {
+					case C:
 						return PitchMidi.C7;
-					case 1:
+					case CC:
 						return PitchMidi.CC7;
-					case 2:
+					case D:
 						return PitchMidi.D7;
-					case 3:
+					case DD:
 						return PitchMidi.DD7;
-					case 4:
+					case E:
 						return PitchMidi.E7;
-					case 5:
+					case F:
 						return PitchMidi.F7;
-					case 6:
+					case FF:
 						return PitchMidi.FF7;
-					case 7:
+					case G:
 						return PitchMidi.G7;
-					case 8:
+					case GG:
 						return PitchMidi.GG7;
-					case 9:
+					case A:
 						return PitchMidi.A7;
-					case 10:
+					case AA:
 						return PitchMidi.AA7;
-					case 11:
+					case B:
 						return PitchMidi.B7;
 					default:
 						return null;
 				}
 			case 8:
-				switch ( chromatic.intValue() ) {
-					case 0:
+				switch ( chromaticMinAlterations ) {
+					case C:
 						return PitchMidi.C8;
-					case 1:
+					case CC:
 						return PitchMidi.CC8;
-					case 2:
+					case D:
 						return PitchMidi.D8;
-					case 3:
+					case DD:
 						return PitchMidi.DD8;
-					case 4:
+					case E:
 						return PitchMidi.E8;
-					case 5:
+					case F:
 						return PitchMidi.F8;
-					case 6:
+					case FF:
 						return PitchMidi.FF8;
-					case 7:
+					case G:
 						return PitchMidi.G8;
-					case 8:
+					case GG:
 						return PitchMidi.GG8;
-					case 9:
+					case A:
 						return PitchMidi.A8;
-					case 10:
+					case AA:
 						return PitchMidi.AA8;
-					case 11:
+					case B:
 						return PitchMidi.B8;
 					default:
 						return null;
 				}
 			case 9:
-				switch ( chromatic.intValue() ) {
-					case 0:
+				switch ( chromaticMinAlterations ) {
+					case C:
 						return PitchMidi.C9;
-					case 1:
+					case CC:
 						return PitchMidi.CC9;
-					case 2:
+					case D:
 						return PitchMidi.D9;
-					case 3:
+					case DD:
 						return PitchMidi.DD9;
-					case 4:
+					case E:
 						return PitchMidi.E9;
-					case 5:
+					case F:
 						return PitchMidi.F9;
-					case 6:
+					case FF:
 						return PitchMidi.FF9;
-					case 7:
+					case G:
 						return PitchMidi.G9;
-					case 8:
+					case GG:
 						return PitchMidi.GG9;
-					case 9:
+					case A:
 						return PitchMidi.A9;
-					case 10:
+					case AA:
 						return PitchMidi.AA9;
-					case 11:
+					case B:
 						return PitchMidi.B9;
 					default:
 						return null;
 				}
 			case 10:
-				switch ( chromatic.intValue() ) {
-					case 0:
+				switch ( chromaticMinAlterations ) {
+					case C:
 						return PitchMidi.C10;
-					case 1:
+					case CC:
 						return PitchMidi.CC10;
-					case 2:
+					case D:
 						return PitchMidi.D10;
-					case 3:
+					case DD:
 						return PitchMidi.DD10;
-					case 4:
+					case E:
 						return PitchMidi.E10;
-					case 5:
+					case F:
 						return PitchMidi.F10;
-					case 6:
+					case FF:
 						return PitchMidi.FF10;
-					case 7:
+					case G:
 						return PitchMidi.G10;
 					default:
 						return null;
 				}
 			default:
-				throw new PitchMidiException( octave * Chromatic.N + chromatic.intValue() );
+				int code = getCodeFrom(chromaticMinAlterations, octave);
+				throw new PitchMidiException(code);
 		}
 	}
 
 	public PitchMidi shift(int i) {
-		return PitchMidi.of(getCode() + i);
+		return PitchMidi.from(getCode() + i);
 	}
 
 	public PitchMidi shift(IntervalChromatic i) {
 		return shift( i.getSemitones() );
 	}
+
+	public static int getCodeFrom(Chromatic chromatic, int octave) {
+		return Chromatic.C.distSemitonesTo(chromatic) + octave * Chromatic.N;
+	}
 	
-	public static PitchMidi of(DiatonicDegree degree, Tonality tonality, int octave) {
-		int code = tonality.get( degree ).intValue() + octave * Chromatic.N;
-		if ( tonality.get( degree ).intValue() < tonality.getRoot().intValue() )
+	public static PitchMidi from(DiatonicDegree degree, Tonality tonality, int octave) {
+		int code = getCodeFrom( tonality.get( degree ), + octave);
+		Chromatic root = tonality.getRoot();
+		Chromatic degreeChromatic = tonality.get(degree);
+		if ( degreeChromatic.compareEnharmonicTo(root) < 0 )
 			code += Chromatic.N;
 
-		return of( code );
+		return from( code );
 	}
 
 	public ChromaticMidi toMidi() {

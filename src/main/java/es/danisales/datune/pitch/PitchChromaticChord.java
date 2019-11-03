@@ -19,7 +19,7 @@ public interface PitchChromaticChord<N extends PitchChromaticSingle> extends Cho
 		for ( int i = 0; i < size(); i++ ) {
 			Chromatic chromatic = ChromaticAdapter.from( get(i) );
 			Chromatic chromaticOther = ChromaticAdapter.from( notes.get(i) );
-			if ( chromatic.intValue() != chromaticOther.intValue() )
+			if ( chromatic.compareEnharmonicTo(chromaticOther) != 0 )
 				return false;
 		}
 
@@ -32,7 +32,7 @@ public interface PitchChromaticChord<N extends PitchChromaticSingle> extends Cho
 		for ( int i = 0; i < size(); i++ ) {
 			Chromatic chromatic = ChromaticAdapter.from( get(i) );
 			Chromatic chromaticOther = ChromaticAdapter.from( ca.get(i) );
-			if (!chromatic.equalsEnharmonic(chromaticOther))
+			if (chromatic.compareEnharmonicTo(chromaticOther) != 0)
 				return false;
 		}
 

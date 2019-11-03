@@ -1,5 +1,6 @@
 package es.danisales.datune.tonality;
 
+import java.nio.file.DirectoryStream;
 import java.util.*;
 
 import es.danisales.datune.diatonic.ChromaticFunction;
@@ -15,6 +16,7 @@ import es.danisales.datune.musical.CustomChromaticChord;
 import es.danisales.datune.musical.CustomDiatonicChord;
 import es.danisales.datune.musical.Diatonic;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
+import es.danisales.datune.musical.transformations.DistanceCalculator;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.log.string.Logging;
@@ -55,10 +57,6 @@ public interface Tonality extends Cloneable {
 		assert getRoot() != null;
 		assert t.getRoot() != null;
 		return getRoot().equals( t.getRoot() );
-	}
-
-	default boolean sameRootEnharmonics(Tonality t) {
-		return getRoot().equalsEnharmonic( t.getRoot() );
 	}
 
 	default boolean sameScale(Tonality t) {
@@ -305,11 +303,13 @@ public interface Tonality extends Cloneable {
 		return Tonality.of( notesChord[0], notes2scale( tonalityNotes ) );
 	}
 
-	public static Scale notes2scale(Chromatic[] notes) {
+	static Scale notes2scale(Chromatic[] notes) {
 		int[] ton = new int[notes.length];
 		int sum = 0;
 		for ( int i = 0; i < notes.length - 1; i++ ) {
-			ton[i] = notes[i + 1].intValue() - notes[i].intValue();
+			Chromatic current = notes[i];
+			Chromatic next = notes[i + 1];
+			ton[i] = current.distSemitonesTo(next);
 			while ( ton[i] < 0 )
 				ton[i] += 12;
 			sum += ton[i];
@@ -333,7 +333,7 @@ public interface Tonality extends Cloneable {
 		for ( int i = 0; i < length(); i++ ) {
 			Chromatic chromatic = ChromaticAdapter.from(note);
 			if (!enharmonic && get(i).equals(chromatic)
-					|| enharmonic && get(i).intValue() == chromatic.intValue())
+					|| enharmonic && get(i).compareEnharmonicTo(chromatic) == 0)
 				return DiatonicDegree.fromIndex(i);
 		}
 
@@ -431,14 +431,16 @@ public interface Tonality extends Cloneable {
 		return sb.toString();
 	}
 
-	default IntervalChromatic getInterval(DiatonicDegree d2, IntervalDiatonic id) {
+	default IntervalChromatic getInterval(DiatonicDegree from, IntervalDiatonic id) {
 		int idInt = id.ordinal();
-
-		int n = get( d2.val() + idInt ).intValue() - get( d2 ).intValue();
-		if ( n < 0 )
-			n += IntervalChromatic.PERFECT_OCTAVE.getSemitones();
-		n += idInt / IntervalChromatic.PERFECT_OCTAVE.getSemitones();
-		return IntervalChromatic.from( id, n );
+		DiatonicDegree toDiatonicDegree = DiatonicDegree.add(from, id);
+		Chromatic toChromatic = get (toDiatonicDegree);
+		Chromatic fromChromatic = get(from);
+		int distSemitones = fromChromatic.distSemitonesTo(toChromatic);
+		if ( distSemitones < 0 )
+			distSemitones += IntervalChromatic.PERFECT_OCTAVE.getSemitones();
+		distSemitones += idInt / IntervalChromatic.PERFECT_OCTAVE.getSemitones();
+		return IntervalChromatic.from( id, distSemitones );
 	}
 
 	default HarmonicFunction getFunction(PitchChromaticChord c) {
@@ -448,7 +450,7 @@ public interface Tonality extends Cloneable {
 		return hf;
 	}
 
-	public HarmonicFunction getFunction(PitchChromaticChord c, boolean rename);
+	HarmonicFunction getFunction(PitchChromaticChord c, boolean rename);
 
 	public void showChromaticChordFunction();
 

@@ -132,7 +132,7 @@ public class Namer {
         throw new RuntimeException("Impossible");
     }
 
-    public static @NonNull String fromShort(@NonNull Quality quality) {
+    public static @NonNull String shortFrom(@NonNull Quality quality) {
         switch (quality) {
             case DIMINISHED:
                 return "d";
@@ -151,7 +151,7 @@ public class Namer {
         throw new RuntimeException("Impossible");
     }
 
-    public static @NonNull String fromLong(@NonNull Quality quality) {
+    public static @NonNull String longFrom(@NonNull Quality quality) {
         switch (quality) {
             case DIMINISHED:
                 return "disminuida";
@@ -170,9 +170,9 @@ public class Namer {
         throw new RuntimeException("Impossible");
     }
 
-    public static @NonNull String fromShort(IntervalChromatic intervalChromatic) {
+    public static @NonNull String shortFrom(IntervalChromatic intervalChromatic) {
         StringBuilder sb = new StringBuilder();
-        sb.append( Namer.fromShort(intervalChromatic.getQuality()) );
+        sb.append( Namer.shortFrom(intervalChromatic.getQuality()) );
 
         IntervalDiatonic intervalDiatonic = IntervalDiatonic.from(intervalChromatic);
         sb.append( intervalDiatonic.ordinal() + 1 );
@@ -180,13 +180,13 @@ public class Namer {
         return sb.toString();
     }
 
-    public static @NonNull String fromLong(IntervalChromatic intervalChromatic) {
+    public static @NonNull String longFrom(IntervalChromatic intervalChromatic) {
         StringBuilder sb = new StringBuilder();
 
         IntervalDiatonic intervalDiatonic = IntervalDiatonic.from(intervalChromatic);
         sb.append( Namer.from(intervalDiatonic) );
         sb.append(" ");
-        sb.append( Namer.fromLong(intervalChromatic.getQuality()) );
+        sb.append( Namer.longFrom(intervalChromatic.getQuality()) );
 
         return sb.toString();
     }

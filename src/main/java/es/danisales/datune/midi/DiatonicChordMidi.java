@@ -95,7 +95,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
             DiatonicMidi cm = DiatonicMidi.of( t.getDegreeFrom( n ), t, o, d, v );
             Chromatic chromaticCm = ChromaticAdapter.from(cm);
             Chromatic lastChromatic = ChromaticAdapter.from( get( size() - 1 ) );
-            if ( size() > 0 && chromaticCm.intValue() <= lastChromatic.intValue() ) {
+            if ( size() > 0 && chromaticCm.compareEnharmonicTo(lastChromatic) <= 0 ) {
                 o++;
                 cm.shiftOctave( 1 );
             }
@@ -123,7 +123,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
         if ( f instanceof ChromaticFunction ) {
             chromaticFunctionProcess( (ChromaticFunction) f, o );
             Chromatic firstChromatic = ChromaticAdapter.from( get( 0 ) );
-            if ( firstChromatic.intValue() < metaTonality.get( 0 ).intValue() )
+            if ( firstChromatic.compareEnharmonicTo( metaTonality.get( 0 ) ) < 0 )
                 shiftOctave( 1 );
         } else if ( f instanceof DiatonicFunction )
             diatonicFunctionProcess( (DiatonicFunction) f, o );
@@ -1176,7 +1176,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
         Integer[] out = new Integer[size()];
         for ( int i = 0; i < size(); i++ ) {
             Chromatic chromatic = ChromaticAdapter.from( get(i) );
-            out[i] = chromatic.intValue();
+            out[i] = chromatic.distSemitonesFromC();
         }
 
         return out;

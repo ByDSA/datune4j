@@ -31,7 +31,7 @@ public class DiatonicMidi extends ChromaticMidi implements PitchDiatonic {
 		dm.tonality = t;
 		dm.octave = octave;
 		dm.degree = d;
-		dm.pitch = PitchMidi.of( d, t, octave );
+		dm.pitch = PitchMidi.from( d, t, octave );
 		
 		return dm;
 	}
@@ -154,7 +154,7 @@ public class DiatonicMidi extends ChromaticMidi implements PitchDiatonic {
 	}
 	
 	protected void updatePitch() {
-		pitch = PitchMidi.of( degree, tonality, octave );
+		pitch = PitchMidi.from( degree, tonality, octave );
 	}
 
 	@Override
@@ -175,11 +175,5 @@ public class DiatonicMidi extends ChromaticMidi implements PitchDiatonic {
 			return false;
 		DiatonicMidi dm = (DiatonicMidi) obj;
 		return degree.equals( dm.degree ) && tonality.equals( dm.tonality ) && octave == dm.octave && length == dm.length && velocity == dm.velocity;
-	}
-
-	public boolean equalsEnharmonic(PitchChromaticSingle c) {
-		Chromatic c1 = ChromaticAdapter.from(this);
-		Chromatic c2 = ChromaticAdapter.from(c);
-		return c1.equalsEnharmonic(c2);
 	}
 }

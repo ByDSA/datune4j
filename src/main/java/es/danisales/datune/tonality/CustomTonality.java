@@ -274,10 +274,6 @@ public class CustomTonality implements Tonality {
 		return root.equals( t.root );
 	}
 
-	public boolean sameRootEnharmonics(CustomTonality t) {
-		return root.equalsEnharmonic( t.root );
-	}
-
 	public boolean sameScale(CustomTonality t) {
 		return scale.equals( t.scale );
 	}
@@ -460,7 +456,7 @@ public class CustomTonality implements Tonality {
 			note = note.addSemi( scale.get( i - 1 ) );
 			try {
 				noteBaseDiatonic = noteBaseDiatonic.shift( 1 );
-				notes[i] = ChromaticAdapter.from( noteBaseDiatonic, note.intValue() );
+				notes[i] = ChromaticAdapter.from( noteBaseDiatonic, note.distSemitonesFromC() );
 				alt += notes[i].getAlterations();
 			} catch ( Exception e ) {
 				// e.printStackTrace();
@@ -479,7 +475,7 @@ public class CustomTonality implements Tonality {
 	private void updateValChromaticMap() {
 		valChromaticMap = new HashMap<>();
 		for ( Chromatic c : notes )
-			valChromaticMap.put( c.intValue(), c );
+			valChromaticMap.put( c.distSemitonesFromC(), c );
 	}
 	/*
 	public CustomTonality(int noteBase, Scale scale) {
@@ -612,7 +608,9 @@ public class CustomTonality implements Tonality {
 		int[] ton = new int[notes.length];
 		int sum = 0;
 		for ( int i = 0; i < notes.length - 1; i++ ) {
-			ton[i] = notes[i + 1].intValue() - notes[i].intValue();
+			Chromatic current = notes[i];
+			Chromatic next = notes[i + 1];
+			ton[i] = current.distSemitonesTo(next);
 			while ( ton[i] < 0 )
 				ton[i] += 12;
 			sum += ton[i];
@@ -636,7 +634,7 @@ public class CustomTonality implements Tonality {
 		for ( int i = 0; i < length(); i++ ) {
 			Chromatic chromatic = ChromaticAdapter.from(note);
 			if (!enharmonic && get(i).equals(chromatic)
-					|| enharmonic && get(i).intValue() == chromatic.intValue())
+					|| enharmonic && get(i).compareEnharmonicTo(chromatic) == 0)
 				return DiatonicDegree.fromIndex(i);
 		}
 
@@ -737,6 +735,7 @@ public class CustomTonality implements Tonality {
 		return ret;
 	}
 
+	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append( ChromaticMidi.literal( root, this ) + " " );
@@ -746,29 +745,6 @@ public class CustomTonality implements Tonality {
 		return sb.toString();
 	}
 
-	public void showNotes() {
-		Logging.log( this + ": " + notesToString() );
-	}
-
-	public String notesToString() {
-		StringBuilder sb = new StringBuilder();
-		for ( int i = 0; i < length(); i++ ) {
-			sb.append( ChromaticMidi.literal( get( i ), this ) + " " );
-		}
-
-		return sb.toString();
-	}
-
-	public IntervalChromatic getInterval(DiatonicDegree d2, IntervalDiatonic id) {
-		int idInt = id.ordinal();
-
-		int n = get( d2.val() + idInt ).intValue() - get( d2 ).intValue();
-		if ( n < 0 )
-			n += IntervalChromatic.PERFECT_OCTAVE.getSemitones();
-		n += idInt / IntervalChromatic.PERFECT_OCTAVE.getSemitones();
-		return IntervalChromatic.from( id, n );
-	}
-
 	public HarmonicFunction getFunction(CustomChromaticChord c) {
 		HarmonicFunction hf = getFunction( c, true );
 		if ( hf == null )
@@ -776,6 +752,7 @@ public class CustomTonality implements Tonality {
 		return hf;
 	}
 
+	@Override
 	public HarmonicFunction getFunction(PitchChromaticChord c, boolean rename) {
 		createCacheIfNeeded();
 		CustomChromaticChord c2;
@@ -794,7 +771,7 @@ public class CustomTonality implements Tonality {
 	}
 
 	public Chromatic getEnharmonic(Chromatic chromatic) throws TonalityException {
-		Chromatic c = valChromaticMap.get( chromatic.intValue() );
+		Chromatic c = valChromaticMap.get( chromatic.distSemitonesFromC() );
 		if ( c == null )
 			throw new TonalityException( chromatic, this );
 		return c;

@@ -8,14 +8,13 @@ import es.danisales.datune.midi.Events.NoteOff;
 import es.danisales.datune.midi.Events.NoteOn;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
+import es.danisales.datune.musical.transformations.DistanceCalculator;
 import es.danisales.datune.musical.transformations.Namer;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
 import es.danisales.others.Codeable;
 import org.checkerframework.checker.nullness.qual.NonNull;
-
-import static es.danisales.datune.musical.transformations.DistanceCalculator.calculateDistance;
 
 public class ChromaticMidi implements PitchOctaveMidi, Codeable, EventComplex, PitchChromaticSingle {
 	protected PitchMidi	pitch;
@@ -34,7 +33,7 @@ public class ChromaticMidi implements PitchOctaveMidi, Codeable, EventComplex, P
 	}
 
 	public int dist(ChromaticMidi cm) {
-		return calculateDistance(this, cm);
+		return DistanceCalculator.calculateDistanceInSemitones(this, cm);
 	}
 
 	@Override
@@ -159,15 +158,15 @@ public class ChromaticMidi implements PitchOctaveMidi, Codeable, EventComplex, P
         }
 
         public Builder pitch(int code) {
-            return pitch( PitchMidi.of(code) );
+            return pitch( PitchMidi.from(code) );
         }
 
         public Builder pitch(Chromatic chromatic, int octave) {
-            return pitch( PitchMidi.of(chromatic, octave) );
+            return pitch( PitchMidi.from(chromatic, octave) );
         }
 
         public Builder pitch(Chromatic chromatic) {
-            _pitch = PitchMidi.of(chromatic, Settings.DefaultValues.OCTAVE);
+            _pitch = PitchMidi.from(chromatic, Settings.DefaultValues.OCTAVE);
 
             return self();
         }

@@ -213,10 +213,6 @@ public enum TonalityEnum implements Tonality {
 		return root.equals( t.root );
 	}
 
-	public boolean sameRootEnharmonics(TonalityEnum t) {
-		return root.equalsEnharmonic( t.root );
-	}
-
 	public boolean sameScale(TonalityEnum t) {
 		return scale.equals( t.scale );
 	}
@@ -321,7 +317,7 @@ public enum TonalityEnum implements Tonality {
 			chromatic = chromatic.addSemi( scale.get( i - 1 ) );
 			try {
 				noteBaseDiatonic = noteBaseDiatonic.shift( 1 );
-				notes[i] = ChromaticAdapter.from(noteBaseDiatonic, chromatic.intValue() );
+				notes[i] = ChromaticAdapter.from(noteBaseDiatonic, chromatic.distSemitonesFromC() );
 				alt += notes[i].getAlterations();
 			} catch ( Exception e ) {
 				// e.printStackTrace();
@@ -383,7 +379,9 @@ public enum TonalityEnum implements Tonality {
 		int[] ton = new int[notes.length];
 		int sum = 0;
 		for ( int i = 0; i < notes.length - 1; i++ ) {
-			ton[i] = notes[i + 1].intValue() - notes[i].intValue();
+			Chromatic current = notes[i];
+			Chromatic next = notes[i + 1];
+			ton[i] = current.distSemitonesTo(next);
 			while ( ton[i] < 0 )
 				ton[i] += 12;
 			sum += ton[i];
@@ -413,7 +411,7 @@ public enum TonalityEnum implements Tonality {
 
 	private boolean equalEnharmonic(Chromatic chromatic1, Chromatic chromatic2, boolean enharmonic) {
 		return !enharmonic && chromatic1.equals(chromatic2)
-				|| enharmonic && chromatic1.intValue() == chromatic2.intValue();
+				|| enharmonic && chromatic1.compareEnharmonicTo(chromatic2) == 0;
 	}
 	/*
 	 * public Integer getDegreeFrom(int note) { for ( int i = 0; i < length(); i++ ) if
@@ -516,16 +514,6 @@ public enum TonalityEnum implements Tonality {
 		}
 
 		return sb.toString();
-	}
-
-	public IntervalChromatic getInterval(DiatonicDegree d2, IntervalDiatonic id) {
-		int idInt = id.ordinal();
-
-		int n = get( d2.val() + idInt ).intValue() - get( d2 ).intValue();
-		if ( n < 0 )
-			n += IntervalChromatic.PERFECT_OCTAVE.getSemitones();
-		n += idInt / IntervalChromatic.PERFECT_OCTAVE.getSemitones();
-		return IntervalChromatic.from( id, n );
 	}
 
 	public HarmonicFunction getFunction(PitchChromaticChord c) {

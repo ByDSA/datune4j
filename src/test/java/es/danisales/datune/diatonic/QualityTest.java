@@ -9,14 +9,14 @@ public class QualityTest {
     @Test
     public void longNameTest() {
         for (Quality quality : Quality.values()) {
-            assertNotNull( Namer.fromLong( quality ) );
+            assertNotNull( Namer.longFrom( quality ) );
         }
     }
 
     @Test
     public void shortNameTest() {
         for (Quality quality : Quality.values()) {
-            assertNotNull( Namer.fromShort( quality ) );
+            assertNotNull( Namer.shortFrom( quality ) );
         }
     }
 }

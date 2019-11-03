@@ -27,11 +27,11 @@ public enum Chromatic implements PitchChromaticSingle {
 		this.value = delimit(value);
 	}
 
-	public int intValue() {
+	int intValue() {
 		return value;
 	}
 
-	public boolean isEnharmonicFrom(Chromatic chromatic) {
+	private boolean isEnharmonicFrom(Chromatic chromatic) {
 		return value == chromatic.value;
 	}
 
@@ -89,23 +89,23 @@ public enum Chromatic implements PitchChromaticSingle {
 	}
 
 	public IntervalChromatic dist(Chromatic n, IntervalDiatonic i) {
-		return DistanceCalculator.calculateDistance(this, n, i);
+		return DistanceCalculator.calculareInterval(this, n, i);
 	}
 
 	public Chromatic rename(Tonality ton) {
 		return ton.getEnharmonic(this);
 	}
 
-	public boolean equalsEnharmonic(Chromatic chromatic) {
-		return EnharmonicsCalculator.equals(this, chromatic);
-	}
-
-	public Integer dist(Chromatic n2) {
+	public int distSemitonesTo(Chromatic n2) {
 		int d = n2.intValue() - intValue();
 		while (d < 0)
 			d += IntervalChromatic.PERFECT_OCTAVE.getSemitones();
 
 		return d;
+	}
+
+	public int distSemitonesFromC() {
+		return Chromatic.C.distSemitonesTo(this);
 	}
 
 	public Chromatic nextDiatonic() {
@@ -172,10 +172,14 @@ public enum Chromatic implements PitchChromaticSingle {
 
 	/** Comparator **/
 
-	public static class Comparator implements java.util.Comparator<Chromatic> {
+	private static class EnharmonicComparator implements java.util.Comparator<Chromatic> {
 		@Override
 		public int compare(Chromatic o1, Chromatic o2) {
 			return Integer.compare(o1.intValue(), o2.intValue());
 		}
+	}
+
+	public int compareEnharmonicTo(Chromatic otherChromatic) {
+		return new EnharmonicComparator().compare(this, otherChromatic);
 	}
 }
