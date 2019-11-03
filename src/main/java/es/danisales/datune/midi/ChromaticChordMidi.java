@@ -140,11 +140,11 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 		ChromaticMidi n;
 		if ( note >= ns.size() ) {
 			n = ns.calculateFrom( note % ns.size() );
-			n.addMidi( note / ns.size() * ChromaticMidi.N );
+			n.addMidi( note / ns.size() * ChromaticMidi.NUMBER );
 		} else if ( note < 0 ) {
 			int num = Math.abs( ns.size() + note % ns.size() );
 			n = ns.calculateFrom( num );
-			n.addMidi( ( note / ns.size() - 1 ) * ChromaticMidi.N );
+			n.addMidi( ( note / ns.size() - 1 ) * ChromaticMidi.NUMBER );
 		} else {
 			n = (ChromaticMidi) ns.calculateFrom( note ).clone();
 		}

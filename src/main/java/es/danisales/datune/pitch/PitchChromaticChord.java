@@ -60,7 +60,7 @@ public interface PitchChromaticChord<N extends PitchChromaticSingle> extends Cho
 		return false;
 	}
 
-	default <Array extends PitchChromaticChord<N>> boolean equalsEnharmonicInvArray(Array[] ccs) {
+	default <Array extends PitchChromaticChord<NUMBER>> boolean equalsEnharmonicInvArray(Array[] ccs) {
 		for ( Array cc : ccs ) {
 			if ( this.equalsEnharmonicInv( cc ) )
 				return true;

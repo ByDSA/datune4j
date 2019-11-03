@@ -57,17 +57,17 @@ implements Durable, PitchChromaticChord<N>, PitchOctaveMidi, EventComplex {
 		return (T) this;
 	}
 /*
-	public ChordMidi<N> inv(int n) {
+	public ChordMidi<NUMBER> inv(int n) {
 		if ( size() == 0 )
-			return (ChordMidi<N>) this;
+			return (ChordMidi<NUMBER>) this;
 
 		if ( n < 0 ) {
 			int lastIndex = size() - 1;
 			for ( int i = 0; i > n; i-- ) {
 				boolean updateRoot = getRootPos() == lastIndex;
 
-				final N last = calculateFrom( lastIndex );
-				final N first = calculateFrom( 0 );
+				final NUMBER last = calculateFrom( lastIndex );
+				final NUMBER first = calculateFrom( 0 );
 				do {
 					last.shiftOctave( -1 );
 				} while ( last.getCode() >= first.getCode() );
@@ -83,9 +83,9 @@ implements Durable, PitchChromaticChord<N>, PitchOctaveMidi, EventComplex {
 			boolean updateRoot = getRootPos() == 0;
 
 			int firstIndex = 0;
-			final N first = calculateFrom( firstIndex );
+			final NUMBER first = calculateFrom( firstIndex );
 
-			final N last = calculateFrom( size() - 1 );
+			final NUMBER last = calculateFrom( size() - 1 );
 			do {
 				first.shiftOctave( 1 );
 			} while ( first.getCode() <= last.getCode() );
@@ -100,10 +100,10 @@ implements Durable, PitchChromaticChord<N>, PitchOctaveMidi, EventComplex {
 
 		// meta.setRoot(getRootPos());
 
-		return (ChordMidi<N>) this;
+		return (ChordMidi<NUMBER>) this;
 	}*/
 
-	//public abstract N calculateFrom(int note, List<N> ns);
+	//public abstract NUMBER calculateFrom(int note, List<NUMBER> ns);
 
 	@Override
 	public EventSequence getEvents() {
@@ -295,7 +295,7 @@ implements Durable, PitchChromaticChord<N>, PitchOctaveMidi, EventComplex {
 	public double getPitchMean() {
 		int sum = 0, oct = 0;
 		ChromaticMidi last = null;
-		for ( N c : this ) {
+		for ( NUMBER c : this ) {
 			sum += c.getFrequency();
 		}
 		return ( (double) sum ) / size();

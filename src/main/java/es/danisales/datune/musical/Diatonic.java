@@ -20,8 +20,8 @@ public enum Diatonic implements PitchDiatonicSingle {
 		return DiatonicAdapter.from( d );
 	}
 
-	public static Diatonic from(Chromatic chromatic) {
-		return DiatonicAdapter.from(chromatic);
+	public static Diatonic from(DiatonicAlt diatonicAlt) {
+		return DiatonicAdapter.from(diatonicAlt);
 	}
 
 	/** Transforms **/

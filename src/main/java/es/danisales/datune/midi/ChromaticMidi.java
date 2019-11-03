@@ -7,6 +7,7 @@ import es.danisales.datune.midi.Events.EventComplex;
 import es.danisales.datune.midi.Events.NoteOff;
 import es.danisales.datune.midi.Events.NoteOn;
 import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.musical.transformations.DistanceCalculator;
 import es.danisales.datune.musical.transformations.Namer;
@@ -130,7 +131,7 @@ public class ChromaticMidi implements PitchOctaveMidi, Codeable, EventComplex, P
 		return Namer.from(this);
 	}
 
-	public static String literal(Chromatic chromatic, Tonality tonality) {
+	public static String literal(DiatonicAlt chromatic, Tonality tonality) {
 		if ( tonality != null ) {
 			DiatonicDegree pos = tonality.getDegreeFrom( chromatic );
 			if ( pos != null )

@@ -17,33 +17,33 @@ import java.util.Arrays;
 import java.util.Set;
 
 public enum TonalityEnum implements Tonality {
-	C( Chromatic.C, ScaleEnum.MAJOR ),
-	D( Chromatic.D, ScaleEnum.MAJOR ),
-	E( Chromatic.E, ScaleEnum.MAJOR ),
-	F( Chromatic.F, ScaleEnum.MAJOR ),
-	G( Chromatic.G, ScaleEnum.MAJOR ),
-	A( Chromatic.A, ScaleEnum.MAJOR ),
-	B( Chromatic.B, ScaleEnum.MAJOR ),
-	Db( Chromatic.Db, ScaleEnum.MAJOR ),
-	Eb( Chromatic.Eb, ScaleEnum.MAJOR ),
-	FF( Chromatic.FF, ScaleEnum.MAJOR ),
-	Gb( Chromatic.Gb, ScaleEnum.MAJOR ),
-	Ab( Chromatic.Ab, ScaleEnum.MAJOR ),
-	Bb( Chromatic.Bb, ScaleEnum.MAJOR ),
+	C( DiatonicAlt.C, ScaleEnum.MAJOR ),
+	D( DiatonicAlt.D, ScaleEnum.MAJOR ),
+	E( DiatonicAlt.E, ScaleEnum.MAJOR ),
+	F( DiatonicAlt.F, ScaleEnum.MAJOR ),
+	G( DiatonicAlt.G, ScaleEnum.MAJOR ),
+	A( DiatonicAlt.A, ScaleEnum.MAJOR ),
+	B( DiatonicAlt.B, ScaleEnum.MAJOR ),
+	Db( DiatonicAlt.Db, ScaleEnum.MAJOR ),
+	Eb( DiatonicAlt.Eb, ScaleEnum.MAJOR ),
+	FF( DiatonicAlt.FF, ScaleEnum.MAJOR ),
+	Gb( DiatonicAlt.Gb, ScaleEnum.MAJOR ),
+	Ab( DiatonicAlt.Ab, ScaleEnum.MAJOR ),
+	Bb( DiatonicAlt.Bb, ScaleEnum.MAJOR ),
 
-	Cm( Chromatic.C, ScaleEnum.MINOR ),
-	Dm( Chromatic.D, ScaleEnum.MINOR ),
-	Em( Chromatic.E, ScaleEnum.MINOR ),
-	Fm( Chromatic.F, ScaleEnum.MINOR ),
-	Gm( Chromatic.G, ScaleEnum.MINOR ),
-	Am( Chromatic.A, ScaleEnum.MINOR ),
-	Bm( Chromatic.B, ScaleEnum.MINOR ),
-	CCm( Chromatic.CC, ScaleEnum.MINOR ),
-	DDm( Chromatic.DD, ScaleEnum.MINOR ),
-	Ebm( Chromatic.Eb, ScaleEnum.MINOR ),
-	FFm( Chromatic.FF, ScaleEnum.MINOR ),
-	GGm( Chromatic.GG, ScaleEnum.MINOR ),
-	Bbm( Chromatic.Bb, ScaleEnum.MINOR );
+	Cm( DiatonicAlt.C, ScaleEnum.MINOR ),
+	Dm( DiatonicAlt.D, ScaleEnum.MINOR ),
+	Em( DiatonicAlt.E, ScaleEnum.MINOR ),
+	Fm( DiatonicAlt.F, ScaleEnum.MINOR ),
+	Gm( DiatonicAlt.G, ScaleEnum.MINOR ),
+	Am( DiatonicAlt.A, ScaleEnum.MINOR ),
+	Bm( DiatonicAlt.B, ScaleEnum.MINOR ),
+	CCm( DiatonicAlt.CC, ScaleEnum.MINOR ),
+	DDm( DiatonicAlt.DD, ScaleEnum.MINOR ),
+	Ebm( DiatonicAlt.Eb, ScaleEnum.MINOR ),
+	FFm( DiatonicAlt.FF, ScaleEnum.MINOR ),
+	GGm( DiatonicAlt.GG, ScaleEnum.MINOR ),
+	Bbm( DiatonicAlt.Bb, ScaleEnum.MINOR );
 
 	public static final TonalityEnum[]	MAJOR_TONALITIES	= new TonalityEnum[] {
 		C,
@@ -75,13 +75,13 @@ public enum TonalityEnum implements Tonality {
 		Bm
 	};
 
-	private final Chromatic				root;
+	private final DiatonicAlt				root;
 	private final Scale					scale;
 
 	/** Temp */
-	private final Chromatic[]				notes;
+	private final DiatonicAlt[]				notes;
 
-	private TonalityEnum(Chromatic noteBase, Scale scale) {
+	private TonalityEnum(DiatonicAlt noteBase, Scale scale) {
 		this.root = noteBase;
 		this.scale = scale;
 
@@ -306,18 +306,18 @@ public enum TonalityEnum implements Tonality {
 		return ret;
 	}
 
-	private Chromatic[] updateChromaticsFromBase() {
-		Chromatic chromatic = root;
+	private DiatonicAlt[] updateChromaticsFromBase() {
+		DiatonicAlt diatonicAlt = root;
 		int len = length();
-		Chromatic[] notes = new Chromatic[len];
+		DiatonicAlt[] notes = new DiatonicAlt[len];
 		notes[0] = root;
 		Diatonic noteBaseDiatonic = Diatonic.from( notes[0] );
 		int alt = 0;
 		for ( int i = 1; i < len; i++ ) {
-			chromatic = chromatic.addSemi( scale.get( i - 1 ) );
+			diatonicAlt = diatonicAlt.addSemi( scale.get( i - 1 ) );
 			try {
 				noteBaseDiatonic = noteBaseDiatonic.shift( 1 );
-				notes[i] = ChromaticAdapter.from(noteBaseDiatonic, chromatic.distSemitonesFromC() );
+				notes[i] = ChromaticAdapter.from(noteBaseDiatonic, Chromatic.from(diatonicAlt) );
 				alt += notes[i].getAlterations();
 			} catch ( Exception e ) {
 				// e.printStackTrace();
@@ -350,7 +350,7 @@ public enum TonalityEnum implements Tonality {
 		if ( length() != tonality.length() )
 			return false;
 
-		for ( Chromatic note : notes )
+		for ( DiatonicAlt note : notes )
 			if ( !tonality.has( note ) ) {
 				return false;
 			}
@@ -369,7 +369,7 @@ public enum TonalityEnum implements Tonality {
 	public Integer getAlteration() {
 		assert notes != null;
 		int ret = 0;
-		for ( Chromatic c : notes )
+		for ( DiatonicAlt c : notes )
 			ret += c.getAlterations();
 
 		return ret;
@@ -533,11 +533,11 @@ public enum TonalityEnum implements Tonality {
 	}
 
 	@Override
-	public Chromatic[] getNotes() {
+	public DiatonicAlt[] getNotes() {
 		return notes;
 	}
 
-	static TonalityEnum of(Chromatic c2, Scale s) {
+	static TonalityEnum of(DiatonicAlt c2, Scale s) {
 		return null;
 	}
 

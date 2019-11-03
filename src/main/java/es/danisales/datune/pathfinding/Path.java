@@ -66,14 +66,14 @@ class Path<N extends Node<?, N>> {
 			}
 
 			List<N> sucesores = new ArrayList<N>();
-			// 6 : generar sucesores. Inserta todos y luego quita los que son antecedentes de N
+			// 6 : generar sucesores. Inserta todos y luego quita los que son antecedentes de NUMBER
 			List<N> ss = sucesores_f.apply(n);
 			sucesores.addAll(ss);
 
 			// Descarte de sucesores (tambi�n se podr�a poner un IF antes de a�adir cada sucesor)
 			for (int i = 0; i < sucesores.size(); i++) {
 				N s_i = sucesores.get(i);
-				if (n.findPredecessor(s_i)) { // Si el sucesor es antecesor de N
+				if (n.findPredecessor(s_i)) { // Si el sucesor es antecesor de NUMBER
 					sucesores.remove(i);
 					i--;
 					break;
@@ -88,7 +88,7 @@ class Path<N extends Node<?, N>> {
 			for (N s : sucesores) {
 				N n_g = (N)s.clone();
 				n_g.parent = n;
-				float s_g = dist_g.apply(ini, n_g); //  g(sucesor)=g(N)+K(N,sucesor)
+				float s_g = dist_g.apply(ini, n_g); //  g(sucesor)=g(NUMBER)+K(NUMBER,sucesor)
 
 				if ( openNodes.contains(s) ) { // Significa que antes ha llegado un camino que ha llegado a �l
 					if (s.g > s_g) { // Si por el camino actual se ha llegado al nodo con menos distancia que el �ltimo acceso

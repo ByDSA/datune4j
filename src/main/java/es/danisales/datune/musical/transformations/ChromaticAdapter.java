@@ -4,10 +4,11 @@ import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.PitchMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.Diatonic;
-import es.danisales.datune.musical.MusicalChecker;
+import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
+
 import java.util.Objects;
 
 public class ChromaticAdapter {
@@ -18,153 +19,149 @@ public class ChromaticAdapter {
         return tonality.get(diatonic.getDegree());
     }
 
-    public static Chromatic from(@NonNull Diatonic diatonic, int semitoneValue) {
+    public static DiatonicAlt from(@NonNull Diatonic diatonic, @NonNull Chromatic semitoneValue) {
         Objects.requireNonNull(diatonic);
-        MusicalChecker.semitoneIntValue(semitoneValue);
+        Objects.requireNonNull(semitoneValue);
 
         switch ( diatonic ) {
             case C:
                 switch ( semitoneValue ) {
-                    case 0:
-                        return Chromatic.C;
-                    case 1:
-                        return Chromatic.CC;
-                    case 2:
-                        return Chromatic.CCC;
-                    case 3:
-                        return Chromatic.CCCC;
-                    case 4:
-                        return Chromatic.CCCCC;
-                    case 11:
-                        return Chromatic.Cb;
-                    case 10:
-                        return Chromatic.Cbb;
-                    case 9:
-                        return Chromatic.Cbbb;
+                    case C:
+                        return DiatonicAlt.C;
+                    case CC:
+                        return DiatonicAlt.CC;
+                    case D:
+                        return DiatonicAlt.CCC;
+                    case DD:
+                        return DiatonicAlt.CCCC;
+                    case E:
+                        return DiatonicAlt.CCCCC;
+                    case B:
+                        return DiatonicAlt.Cb;
+                    case AA:
+                        return DiatonicAlt.Cbb;
+                    case A:
+                        return DiatonicAlt.Cbbb;
                 }
                 break;
             case D:
                 switch ( semitoneValue ) {
-                    case 2:
-                        return Chromatic.D;
-
-                    case 3:
-                        return Chromatic.DD;
-                    case 4:
-                        return Chromatic.DDD;
-                    case 5:
-                        return Chromatic.DDDD;
-                    case 6:
-                        return Chromatic.DDDDD;
-                    case 1:
-                        return Chromatic.Db;
-                    case 0:
-                        return Chromatic.Dbb;
-                    case 11:
-                        return Chromatic.Dbbb;
+                    case D:
+                        return DiatonicAlt.D;
+                    case DD:
+                        return DiatonicAlt.DD;
+                    case E:
+                        return DiatonicAlt.DDD;
+                    case F:
+                        return DiatonicAlt.DDDD;
+                    case FF:
+                        return DiatonicAlt.DDDDD;
+                    case CC:
+                        return DiatonicAlt.Db;
+                    case C:
+                        return DiatonicAlt.Dbb;
+                    case B:
+                        return DiatonicAlt.Dbbb;
                 }
                 break;
             case E:
                 switch ( semitoneValue ) {
-                    case 4:
-                        return Chromatic.E;
-                    case 5:
-                        return Chromatic.EE;
-                    case 6:
-                        return Chromatic.EEE;
-                    case 7:
-                        return Chromatic.EEEE;
-                    case 8:
-                        return Chromatic.EEEEE;
-                    case 3:
-                        return Chromatic.Eb;
-                    case 2:
-                        return Chromatic.Ebb;
-                    case 1:
-                        return Chromatic.Ebbb;
+                    case E:
+                        return DiatonicAlt.E;
+                    case F:
+                        return DiatonicAlt.EE;
+                    case FF:
+                        return DiatonicAlt.EEE;
+                    case G:
+                        return DiatonicAlt.EEEE;
+                    case GG:
+                        return DiatonicAlt.EEEEE;
+                    case DD:
+                        return DiatonicAlt.Eb;
+                    case D:
+                        return DiatonicAlt.Ebb;
+                    case CC:
+                        return DiatonicAlt.Ebbb;
                 }
                 break;
             case F:
                 switch ( semitoneValue ) {
-                    case 5:
-                        return Chromatic.F;
-
-                    case 6:
-                        return Chromatic.FF;
-                    case 7:
-                        return Chromatic.FFF;
-                    case 8:
-                        return Chromatic.FFFF;
-                    case 9:
-                        return Chromatic.FFFFF;
-                    case 4:
-                        return Chromatic.Fb;
-                    case 3:
-                        return Chromatic.Fbb;
-                    case 2:
-                        return Chromatic.Fbbb;
+                    case F:
+                        return DiatonicAlt.F;
+                    case FF:
+                        return DiatonicAlt.FF;
+                    case G:
+                        return DiatonicAlt.FFF;
+                    case GG:
+                        return DiatonicAlt.FFFF;
+                    case A:
+                        return DiatonicAlt.FFFFF;
+                    case E:
+                        return DiatonicAlt.Fb;
+                    case DD:
+                        return DiatonicAlt.Fbb;
+                    case D:
+                        return DiatonicAlt.Fbbb;
                 }
                 break;
             case G:
                 switch ( semitoneValue ) {
-                    case 7:
-                        return Chromatic.G;
-
-                    case 8:
-                        return Chromatic.GG;
-                    case 9:
-                        return Chromatic.GGG;
-                    case 10:
-                        return Chromatic.GGGG;
-                    case 11:
-                        return Chromatic.GGGGG;
-                    case 6:
-                        return Chromatic.Gb;
-                    case 5:
-                        return Chromatic.Gbb;
-                    case 4:
-                        return Chromatic.Gbbb;
+                    case G:
+                        return DiatonicAlt.G;
+                    case GG:
+                        return DiatonicAlt.GG;
+                    case A:
+                        return DiatonicAlt.GGG;
+                    case AA:
+                        return DiatonicAlt.GGGG;
+                    case B:
+                        return DiatonicAlt.GGGGG;
+                    case FF:
+                        return DiatonicAlt.Gb;
+                    case F:
+                        return DiatonicAlt.Gbb;
+                    case E:
+                        return DiatonicAlt.Gbbb;
                 }
                 break;
             case A:
                 switch ( semitoneValue ) {
-                    case 9:
-                        return Chromatic.A;
-
-                    case 10:
-                        return Chromatic.AA;
-                    case 11:
-                        return Chromatic.AAA;
-                    case 0:
-                        return Chromatic.AAAA;
-                    case 1:
-                        return Chromatic.AAAAA;
-                    case 8:
-                        return Chromatic.Ab;
-                    case 7:
-                        return Chromatic.Abb;
-                    case 6:
-                        return Chromatic.Abbb;
+                    case A:
+                        return DiatonicAlt.A;
+                    case AA:
+                        return DiatonicAlt.AA;
+                    case B:
+                        return DiatonicAlt.AAA;
+                    case C:
+                        return DiatonicAlt.AAAA;
+                    case CC:
+                        return DiatonicAlt.AAAAA;
+                    case GG:
+                        return DiatonicAlt.Ab;
+                    case G:
+                        return DiatonicAlt.Abb;
+                    case FF:
+                        return DiatonicAlt.Abbb;
                 }
                 break;
             case B:
                 switch ( semitoneValue ) {
-                    case 11:
-                        return Chromatic.B;
-                    case 0:
-                        return Chromatic.BB;
-                    case 1:
-                        return Chromatic.BBB;
-                    case 2:
-                        return Chromatic.BBBB;
-                    case 3:
-                        return Chromatic.BBBBB;
-                    case 10:
-                        return Chromatic.Bb;
-                    case 9:
-                        return Chromatic.Bbb;
-                    case 8:
-                        return Chromatic.Bbbb;
+                    case B:
+                        return DiatonicAlt.B;
+                    case C:
+                        return DiatonicAlt.BB;
+                    case CC:
+                        return DiatonicAlt.BBB;
+                    case D:
+                        return DiatonicAlt.BBBB;
+                    case DD:
+                        return DiatonicAlt.BBBBB;
+                    case AA:
+                        return DiatonicAlt.Bb;
+                    case A:
+                        return DiatonicAlt.Bbb;
+                    case GG:
+                        return DiatonicAlt.Bbbb;
                 }
                 break;
         }

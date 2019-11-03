@@ -6,8 +6,12 @@ import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.midi.PitchMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.Diatonic;
+import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
+import org.checkerframework.checker.nullness.qual.NonNull;
+
+import static es.danisales.datune.musical.DiatonicAlt.*;
 
 public class DiatonicAdapter {
     private DiatonicAdapter() {
@@ -48,77 +52,11 @@ public class DiatonicAdapter {
         return n;
     }
 
-    public static Diatonic from(Chromatic n) {
-        switch ( n ) {
-            case C:
-            case CC:
-            case CCC:
-            case CCCC:
-            case CCCCC:
-            case Cb:
-            case Cbb:
-            case Cbbb:
-                return Diatonic.C;
-            case D:
-            case DD:
-            case DDD:
-            case DDDD:
-            case DDDDD:
-            case Db:
-            case Dbb:
-            case Dbbb:
-                return Diatonic.D;
-            case E:
-            case EE:
-            case EEE:
-            case EEEE:
-            case EEEEE:
-            case Eb:
-            case Ebb:
-            case Ebbb:
-                return Diatonic.E;
-            case F:
-            case FF:
-            case FFF:
-            case FFFF:
-            case FFFFF:
-            case Fb:
-            case Fbb:
-            case Fbbb:
-                return Diatonic.F;
-            case G:
-            case GG:
-            case GGG:
-            case GGGG:
-            case GGGGG:
-            case Gb:
-            case Gbb:
-            case Gbbb:
-                return Diatonic.G;
-            case A:
-            case AA:
-            case AAA:
-            case AAAA:
-            case AAAAA:
-            case Ab:
-            case Abb:
-            case Abbb:
-                return Diatonic.A;
-            case B:
-            case BB:
-            case BBB:
-            case BBBB:
-            case BBBBB:
-            case Bb:
-            case Bbb:
-            case Bbbb:
-                return Diatonic.B;
-            default:
-                return null;
-        }
+    public static @NonNull Diatonic from(@NonNull DiatonicAlt diatonicAlt) {
+        return diatonicAlt.getDiatonic();
     }
 
-    public static Diatonic from(Chromatic chromatic, Tonality ton) {
+    public static Diatonic from(DiatonicAlt chromatic, Tonality ton) {
         DiatonicDegree pos = ton.getDegreeFrom(chromatic);
         if (pos == null)
             throw new TonalityException(chromatic, ton);
@@ -128,13 +66,13 @@ public class DiatonicAdapter {
     }
 
     public Diatonic from(ChromaticMidi chromaticMidi, Tonality tonality) throws TonalityException {
-        Chromatic chromatic = ChromaticAdapter.from(chromaticMidi);
+        DiatonicAlt chromatic = DiatonicAlt.from(chromaticMidi);
         DiatonicDegree degree = tonality.getDegreeFrom( chromatic );
         return Diatonic.from( degree );
     }
 
     public Diatonic from(PitchMidi pitchMidi, Tonality tonality) {
-        Chromatic chromatic = ChromaticAdapter.from(pitchMidi);
+        DiatonicAlt chromatic = DiatonicAlt.from(pitchMidi);
         return from(chromatic, tonality );
     }
 

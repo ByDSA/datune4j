@@ -11,15 +11,15 @@ import es.danisales.others.Codeable;
 public enum PitchMidi implements PitchChromaticSingle, PitchOctaveMidi, Codeable {
 	C0(0), CC0(1), D0(2), DD0(3), E0(4), F0(5), FF0(6), G0(7), GG0(8), A0(9), AA0(10), B0(11),
 	C1(12), CC1(13), D1(14), DD1(15), E1(16), F1(17), FF1(18), G1(19), GG1(20), A1(21), AA1(22), B1(23),
-	C2(0 + Chromatic.N * 2), CC2(1 + Chromatic.N * 2), D2(2 + Chromatic.N * 2), DD2(3 + Chromatic.N * 2), E2(4 + Chromatic.N * 2), F2(5 + Chromatic.N * 2), FF2(6 + Chromatic.N * 2), G2(7 + Chromatic.N * 2), GG2(8 + Chromatic.N * 2), A2(9 + Chromatic.N * 2), AA2(10 + Chromatic.N * 2), B2(11 + Chromatic.N * 2),
-	C3(0 + Chromatic.N * 3), CC3(1 + Chromatic.N * 3), D3(2 + Chromatic.N * 3), DD3(3 + Chromatic.N * 3), E3(4 + Chromatic.N * 3), F3(5 + Chromatic.N * 3), FF3(6 + Chromatic.N * 3), G3(7 + Chromatic.N * 3), GG3(8 + Chromatic.N * 3), A3(9 + Chromatic.N * 3), AA3(10 + Chromatic.N * 3), B3(11 + Chromatic.N * 3),
-	C4(0 + Chromatic.N * 4), CC4(1 + Chromatic.N * 4), D4(2 + Chromatic.N * 4), DD4(3 + Chromatic.N * 4), E4(4 + Chromatic.N * 4), F4(5 + Chromatic.N * 4), FF4(6 + Chromatic.N * 4), G4(7 + Chromatic.N * 4), GG4(8 + Chromatic.N * 4), A4(9 + Chromatic.N * 4), AA4(10 + Chromatic.N * 4), B4(11 + Chromatic.N * 4),
-	C5(0 + Chromatic.N * 5), CC5(1 + Chromatic.N * 5), D5(2 + Chromatic.N * 5), DD5(3 + Chromatic.N * 5), E5(4 + Chromatic.N * 5), F5(5 + Chromatic.N * 5), FF5(6 + Chromatic.N * 5), G5(7 + Chromatic.N * 5), GG5(8 + Chromatic.N * 5), A5(9 + Chromatic.N * 5), AA5(10 + Chromatic.N * 5), B5(11 + Chromatic.N * 5),
-	C6(0 + Chromatic.N * 6), CC6(1 + Chromatic.N * 6), D6(2 + Chromatic.N * 6), DD6(3 + Chromatic.N * 6), E6(4 + Chromatic.N * 6), F6(5 + Chromatic.N * 6), FF6(6 + Chromatic.N * 6), G6(7 + Chromatic.N * 6), GG6(8 + Chromatic.N * 6), A6(9 + Chromatic.N * 6), AA6(10 + Chromatic.N * 6), B6(11 + Chromatic.N * 6),
-	C7(0 + Chromatic.N * 7), CC7(1 + Chromatic.N * 7), D7(2 + Chromatic.N * 7), DD7(3 + Chromatic.N * 7), E7(4 + Chromatic.N * 7), F7(5 + Chromatic.N * 7), FF7(6 + Chromatic.N * 7), G7(7 + Chromatic.N * 7), GG7(8 + Chromatic.N * 7), A7(9 + Chromatic.N * 7), AA7(10 + Chromatic.N * 7), B7(11 + Chromatic.N * 7),
-	C8(0 + Chromatic.N * 8), CC8(1 + Chromatic.N * 8), D8(2 + Chromatic.N * 8), DD8(3 + Chromatic.N * 8), E8(4 + Chromatic.N * 8), F8(5 + Chromatic.N * 8), FF8(6 + Chromatic.N * 8), G8(7 + Chromatic.N * 8), GG8(8 + Chromatic.N * 8), A8(9 + Chromatic.N * 8), AA8(10 + Chromatic.N * 8), B8(11 + Chromatic.N * 8),
-	C9(0 + Chromatic.N * 9), CC9(1 + Chromatic.N * 9), D9(2 + Chromatic.N * 9), DD9(3 + Chromatic.N * 9), E9(4 + Chromatic.N * 9), F9(5 + Chromatic.N * 9), FF9(6 + Chromatic.N * 9), G9(7 + Chromatic.N * 9), GG9(8 + Chromatic.N * 9), A9(9 + Chromatic.N * 9), AA9(10 + Chromatic.N * 9), B9(11 + Chromatic.N * 9),
-	C10(0 + Chromatic.N * 10), CC10(1 + Chromatic.N * 10), D10(2 + Chromatic.N * 10), DD10(3 + Chromatic.N * 10), E10(4 + Chromatic.N * 10), F10(5 + Chromatic.N * 10), FF10(6 + Chromatic.N * 10), G10(7 + Chromatic.N * 10),
+	C2(0 + Chromatic.NUMBER * 2), CC2(1 + Chromatic.NUMBER * 2), D2(2 + Chromatic.NUMBER * 2), DD2(3 + Chromatic.NUMBER * 2), E2(4 + Chromatic.NUMBER * 2), F2(5 + Chromatic.NUMBER * 2), FF2(6 + Chromatic.NUMBER * 2), G2(7 + Chromatic.NUMBER * 2), GG2(8 + Chromatic.NUMBER * 2), A2(9 + Chromatic.NUMBER * 2), AA2(10 + Chromatic.NUMBER * 2), B2(11 + Chromatic.NUMBER * 2),
+	C3(0 + Chromatic.NUMBER * 3), CC3(1 + Chromatic.NUMBER * 3), D3(2 + Chromatic.NUMBER * 3), DD3(3 + Chromatic.NUMBER * 3), E3(4 + Chromatic.NUMBER * 3), F3(5 + Chromatic.NUMBER * 3), FF3(6 + Chromatic.NUMBER * 3), G3(7 + Chromatic.NUMBER * 3), GG3(8 + Chromatic.NUMBER * 3), A3(9 + Chromatic.NUMBER * 3), AA3(10 + Chromatic.NUMBER * 3), B3(11 + Chromatic.NUMBER * 3),
+	C4(0 + Chromatic.NUMBER * 4), CC4(1 + Chromatic.NUMBER * 4), D4(2 + Chromatic.NUMBER * 4), DD4(3 + Chromatic.NUMBER * 4), E4(4 + Chromatic.NUMBER * 4), F4(5 + Chromatic.NUMBER * 4), FF4(6 + Chromatic.NUMBER * 4), G4(7 + Chromatic.NUMBER * 4), GG4(8 + Chromatic.NUMBER * 4), A4(9 + Chromatic.NUMBER * 4), AA4(10 + Chromatic.NUMBER * 4), B4(11 + Chromatic.NUMBER * 4),
+	C5(0 + Chromatic.NUMBER * 5), CC5(1 + Chromatic.NUMBER * 5), D5(2 + Chromatic.NUMBER * 5), DD5(3 + Chromatic.NUMBER * 5), E5(4 + Chromatic.NUMBER * 5), F5(5 + Chromatic.NUMBER * 5), FF5(6 + Chromatic.NUMBER * 5), G5(7 + Chromatic.NUMBER * 5), GG5(8 + Chromatic.NUMBER * 5), A5(9 + Chromatic.NUMBER * 5), AA5(10 + Chromatic.NUMBER * 5), B5(11 + Chromatic.NUMBER * 5),
+	C6(0 + Chromatic.NUMBER * 6), CC6(1 + Chromatic.NUMBER * 6), D6(2 + Chromatic.NUMBER * 6), DD6(3 + Chromatic.NUMBER * 6), E6(4 + Chromatic.NUMBER * 6), F6(5 + Chromatic.NUMBER * 6), FF6(6 + Chromatic.NUMBER * 6), G6(7 + Chromatic.NUMBER * 6), GG6(8 + Chromatic.NUMBER * 6), A6(9 + Chromatic.NUMBER * 6), AA6(10 + Chromatic.NUMBER * 6), B6(11 + Chromatic.NUMBER * 6),
+	C7(0 + Chromatic.NUMBER * 7), CC7(1 + Chromatic.NUMBER * 7), D7(2 + Chromatic.NUMBER * 7), DD7(3 + Chromatic.NUMBER * 7), E7(4 + Chromatic.NUMBER * 7), F7(5 + Chromatic.NUMBER * 7), FF7(6 + Chromatic.NUMBER * 7), G7(7 + Chromatic.NUMBER * 7), GG7(8 + Chromatic.NUMBER * 7), A7(9 + Chromatic.NUMBER * 7), AA7(10 + Chromatic.NUMBER * 7), B7(11 + Chromatic.NUMBER * 7),
+	C8(0 + Chromatic.NUMBER * 8), CC8(1 + Chromatic.NUMBER * 8), D8(2 + Chromatic.NUMBER * 8), DD8(3 + Chromatic.NUMBER * 8), E8(4 + Chromatic.NUMBER * 8), F8(5 + Chromatic.NUMBER * 8), FF8(6 + Chromatic.NUMBER * 8), G8(7 + Chromatic.NUMBER * 8), GG8(8 + Chromatic.NUMBER * 8), A8(9 + Chromatic.NUMBER * 8), AA8(10 + Chromatic.NUMBER * 8), B8(11 + Chromatic.NUMBER * 8),
+	C9(0 + Chromatic.NUMBER * 9), CC9(1 + Chromatic.NUMBER * 9), D9(2 + Chromatic.NUMBER * 9), DD9(3 + Chromatic.NUMBER * 9), E9(4 + Chromatic.NUMBER * 9), F9(5 + Chromatic.NUMBER * 9), FF9(6 + Chromatic.NUMBER * 9), G9(7 + Chromatic.NUMBER * 9), GG9(8 + Chromatic.NUMBER * 9), A9(9 + Chromatic.NUMBER * 9), AA9(10 + Chromatic.NUMBER * 9), B9(11 + Chromatic.NUMBER * 9),
+	C10(0 + Chromatic.NUMBER * 10), CC10(1 + Chromatic.NUMBER * 10), D10(2 + Chromatic.NUMBER * 10), DD10(3 + Chromatic.NUMBER * 10), E10(4 + Chromatic.NUMBER * 10), F10(5 + Chromatic.NUMBER * 10), FF10(6 + Chromatic.NUMBER * 10), G10(7 + Chromatic.NUMBER * 10),
 	MIN(C0), MAX(G10);
 
 	private int value;
@@ -34,12 +34,12 @@ public enum PitchMidi implements PitchChromaticSingle, PitchOctaveMidi, Codeable
 
 	@Override
 	public PitchMidi shiftOctave(int o) {
-		return from( getCode() + Chromatic.N * o );
+		return from( getCode() + Chromatic.NUMBER * o );
 	}
 
 	@Override
 	public PitchMidi setOctave(int o) {
-		return from( getCode() % Chromatic.N + Chromatic.N * o );
+		return from( getCode() % Chromatic.NUMBER + Chromatic.NUMBER * o );
 	}
 
 	@Override
@@ -53,21 +53,20 @@ public enum PitchMidi implements PitchChromaticSingle, PitchOctaveMidi, Codeable
 
 	@Override
 	public int getOctave() {
-		return value / Chromatic.N;
+		return value / Chromatic.NUMBER;
 	}
 
 	public static PitchMidi from(int code) {
 		PitchMidiException.check( code );
-		Chromatic n = Chromatic.from( code % Chromatic.N);
-		int o = code / Chromatic.N;
+		Chromatic n = Chromatic.from( code % Chromatic.NUMBER);
+		int o = code / Chromatic.NUMBER;
 		return from( n, o );
 	}
 
 	public static PitchMidi from(Chromatic chromatic, int octave) {
-		Chromatic chromaticMinAlterations = AlterationsCalculator.minAlterationsFrom(chromatic);
 		switch ( octave ) {
 			case 0:
-				switch ( chromaticMinAlterations ) {
+				switch ( chromatic ) {
 					case C:
 						return PitchMidi.C0;
 					case CC:
@@ -96,7 +95,7 @@ public enum PitchMidi implements PitchChromaticSingle, PitchOctaveMidi, Codeable
 						return null;
 				}
 			case 1:
-				switch ( chromaticMinAlterations ) {
+				switch ( chromatic ) {
 					case C:
 						return PitchMidi.C1;
 					case CC:
@@ -125,7 +124,7 @@ public enum PitchMidi implements PitchChromaticSingle, PitchOctaveMidi, Codeable
 						return null;
 				}
 			case 2:
-				switch ( chromaticMinAlterations ) {
+				switch ( chromatic ) {
 					case C:
 						return PitchMidi.C2;
 					case CC:
@@ -154,7 +153,7 @@ public enum PitchMidi implements PitchChromaticSingle, PitchOctaveMidi, Codeable
 						return null;
 				}
 			case 3:
-				switch ( chromaticMinAlterations ) {
+				switch ( chromatic ) {
 					case C:
 						return PitchMidi.C3;
 					case CC:
@@ -183,7 +182,7 @@ public enum PitchMidi implements PitchChromaticSingle, PitchOctaveMidi, Codeable
 						return null;
 				}
 			case 4:
-				switch ( chromaticMinAlterations ) {
+				switch ( chromatic ) {
 					case C:
 						return PitchMidi.C4;
 					case CC:
@@ -212,7 +211,7 @@ public enum PitchMidi implements PitchChromaticSingle, PitchOctaveMidi, Codeable
 						return null;
 				}
 			case 5:
-				switch ( chromaticMinAlterations ) {
+				switch ( chromatic ) {
 					case C:
 						return PitchMidi.C5;
 					case CC:
@@ -241,7 +240,7 @@ public enum PitchMidi implements PitchChromaticSingle, PitchOctaveMidi, Codeable
 						return null;
 				}
 			case 6:
-				switch ( chromaticMinAlterations ) {
+				switch ( chromatic ) {
 					case C:
 						return PitchMidi.C6;
 					case CC:
@@ -270,7 +269,7 @@ public enum PitchMidi implements PitchChromaticSingle, PitchOctaveMidi, Codeable
 						return null;
 				}
 			case 7:
-				switch ( chromaticMinAlterations ) {
+				switch ( chromatic ) {
 					case C:
 						return PitchMidi.C7;
 					case CC:
@@ -299,7 +298,7 @@ public enum PitchMidi implements PitchChromaticSingle, PitchOctaveMidi, Codeable
 						return null;
 				}
 			case 8:
-				switch ( chromaticMinAlterations ) {
+				switch ( chromatic ) {
 					case C:
 						return PitchMidi.C8;
 					case CC:
@@ -328,7 +327,7 @@ public enum PitchMidi implements PitchChromaticSingle, PitchOctaveMidi, Codeable
 						return null;
 				}
 			case 9:
-				switch ( chromaticMinAlterations ) {
+				switch ( chromatic ) {
 					case C:
 						return PitchMidi.C9;
 					case CC:
@@ -357,7 +356,7 @@ public enum PitchMidi implements PitchChromaticSingle, PitchOctaveMidi, Codeable
 						return null;
 				}
 			case 10:
-				switch ( chromaticMinAlterations ) {
+				switch ( chromatic ) {
 					case C:
 						return PitchMidi.C10;
 					case CC:
@@ -378,7 +377,7 @@ public enum PitchMidi implements PitchChromaticSingle, PitchOctaveMidi, Codeable
 						return null;
 				}
 			default:
-				int code = getCodeFrom(chromaticMinAlterations, octave);
+				int code = getCodeFrom(chromatic, octave);
 				throw new PitchMidiException(code);
 		}
 	}
@@ -392,7 +391,7 @@ public enum PitchMidi implements PitchChromaticSingle, PitchOctaveMidi, Codeable
 	}
 
 	public static int getCodeFrom(Chromatic chromatic, int octave) {
-		return Chromatic.C.distSemitonesTo(chromatic) + octave * Chromatic.N;
+		return Chromatic.C.distSemitonesTo(chromatic) + octave * Chromatic.NUMBER;
 	}
 	
 	public static PitchMidi from(DiatonicDegree degree, Tonality tonality, int octave) {
@@ -400,7 +399,7 @@ public enum PitchMidi implements PitchChromaticSingle, PitchOctaveMidi, Codeable
 		Chromatic root = tonality.getRoot();
 		Chromatic degreeChromatic = tonality.get(degree);
 		if ( degreeChromatic.compareEnharmonicTo(root) < 0 )
-			code += Chromatic.N;
+			code += Chromatic.NUMBER;
 
 		return from( code );
 	}

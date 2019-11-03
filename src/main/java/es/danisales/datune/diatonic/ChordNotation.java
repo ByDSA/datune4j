@@ -10,7 +10,10 @@ public final class ChordNotation {
 	
 	/** The Constant DUPLICATED. */
 	public static final String DUPLICATED = " (dup)";
-	
+
+	public static final String FLAT = "b";
+	public static final String SHARP = "#";
+
 	/** The Constant POWER_CHORD. */
 	public static final String POWER_CHORD = "5";
 	
@@ -30,13 +33,13 @@ public final class ChordNotation {
 	public static final String AUGMENTED = "+";
 	
 	/** The Constant AUGMENTED2. */
-	public static final String AUGMENTED2 = "#";
+	public static final String AUGMENTED2 = SHARP;
 	
 	/** The Constant DIMINISHED. */
 	public static final String DIMINISHED = "dim";
 	
 	/** The Constant DIMINISHED2. */
-	public static final String DIMINISHED2 = "b";
+	public static final String DIMINISHED2 = FLAT;
 	
 	/** The Constant SUS. */
 	public static final String SUS = "sus";

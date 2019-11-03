@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.function.BiFunction;
 
 public interface ChordMutableInterface<N extends SymbolicPitch> extends ChordCommon<N> {
-	/*default ChordMutableInterface<N> inv(int n) {
+	/*default ChordMutableInterface<NUMBER> inv(int n) {
 		if ( size() < 2 || n == 0 )
 			return this;
 

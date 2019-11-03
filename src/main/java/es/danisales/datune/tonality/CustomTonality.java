@@ -19,12 +19,12 @@ import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.log.string.Logging;
 
 public class CustomTonality implements Tonality {
-	private Chromatic				root;
+	private DiatonicAlt				root;
 	private Scale					scale;
 
 	/** Temp */
-	private Chromatic[]				notes;
-	private Map<Integer, Chromatic>	valChromaticMap;
+	private DiatonicAlt[]				notes;
+	private Map<Integer, DiatonicAlt>	valChromaticMap;
 
 	// TODO: no usado
 	class ChromaticChordSet {
@@ -100,7 +100,7 @@ public class CustomTonality implements Tonality {
 		// assert outChords != null;
 	}
 
-	public CustomTonality(Chromatic noteBase, Scale scale) {
+	public CustomTonality(DiatonicAlt noteBase, Scale scale) {
 		useCache = false;
 		this.root = noteBase;
 		this.scale = scale;
@@ -117,7 +117,7 @@ public class CustomTonality implements Tonality {
 	public ArrayList<CustomTonality> minimizeAlterations() {
 		ArrayList<CustomTonality> out = new ArrayList<>();
 		List<Chromatic> possibilities = root.getEnharmonics();
-		Chromatic initialRoot = root;
+		DiatonicAlt initialRoot = root;
 		Integer minAlterations = getAlteration();
 		CustomTonality ton = clone();
 		out.add( ton.clone() );
@@ -445,18 +445,18 @@ public class CustomTonality implements Tonality {
 		return ret;
 	}
 
-	public boolean updateChromaticsFromBase(Chromatic noteBase) {
-		Chromatic note = noteBase;
+	public boolean updateChromaticsFromBase(DiatonicAlt noteBase) {
+		Chromatic note = Chromatic.from(noteBase);
 		int len = length();
-		notes = new Chromatic[len];
+		notes = new DiatonicAlt[len];
 		notes[0] = noteBase;
-		Diatonic noteBaseDiatonic = Diatonic.from( notes[0] );
+		Diatonic noteBaseDiatonic = notes[0].getDiatonic();
 		int alt = 0;
 		for ( int i = 1; i < len; i++ ) {
 			note = note.addSemi( scale.get( i - 1 ) );
 			try {
 				noteBaseDiatonic = noteBaseDiatonic.shift( 1 );
-				notes[i] = ChromaticAdapter.from( noteBaseDiatonic, note.distSemitonesFromC() );
+				notes[i] = ChromaticAdapter.from( noteBaseDiatonic, note );
 				alt += notes[i].getAlterations();
 			} catch ( Exception e ) {
 				// e.printStackTrace();
@@ -474,7 +474,7 @@ public class CustomTonality implements Tonality {
 
 	private void updateValChromaticMap() {
 		valChromaticMap = new HashMap<>();
-		for ( Chromatic c : notes )
+		for ( DiatonicAlt c : notes )
 			valChromaticMap.put( c.distSemitonesFromC(), c );
 	}
 	/*
@@ -504,7 +504,7 @@ public class CustomTonality implements Tonality {
 		if ( length() != tonality.length() )
 			return false;
 
-		for ( Chromatic note : notes )
+		for ( DiatonicAlt note : notes )
 			if ( !tonality.has( note ) ) {
 				return false;
 			}
@@ -521,8 +521,8 @@ public class CustomTonality implements Tonality {
 
 		int j = 0;
 		for ( Scale s : scale.getAllModes() )
-			for ( int i = 0; i < 12; i++ ) {
-				CustomTonality t = new CustomTonality( Chromatic.from( i ), s );
+			for ( Chromatic chromatic : Chromatic.values() ) {
+				CustomTonality t = new CustomTonality( chromatic, s );
 				if ( isModeOf( t ) )
 					ret[j++] = t;
 			}
@@ -559,7 +559,7 @@ public class CustomTonality implements Tonality {
 	public Integer getAlteration() {
 		assert notes != null;
 		int ret = 0;
-		for ( Chromatic c : notes )
+		for ( DiatonicAlt c : notes )
 			ret += c.getAlterations();
 
 		return ret;
@@ -570,7 +570,7 @@ public class CustomTonality implements Tonality {
 		if ( base.length() != 7 )
 			throw new RuntimeException( "No tiene 7 notas la escala" );
 
-		Chromatic[] notesChord = new Chromatic[c.size()];
+		DiatonicAlt[] notesChord = new DiatonicAlt[c.size()];
 		for ( int i = 0; i < c.size(); i++ ) {
 			notesChord[i] = ChromaticAdapter.from( c.get(i) );
 		}
@@ -581,11 +581,11 @@ public class CustomTonality implements Tonality {
 		Integer posBaseCorrector = ( Diatonic.from( notesChord[0] ).ordinal()
 				- Diatonic.from( base.root ).ordinal() + 7 ) % 7;
 		if ( posBaseCorrector == null ) {
-			Chromatic chromatic = ChromaticAdapter.from( c.get(0) );
+			DiatonicAlt chromatic = c.get(0);
 			throw new TonalityException(chromatic, base);
 		}
 
-		Chromatic[] tonalityNotes = new Chromatic[7];
+		DiatonicAlt[] tonalityNotes = new DiatonicAlt[7];
 		for ( int i = 0; i < 7; i++ ) {
 			int pos = ( posBaseCorrector + i ) % 7;
 
@@ -604,13 +604,13 @@ public class CustomTonality implements Tonality {
 		return new CustomTonality( notesChord[0], notes2scale( tonalityNotes ) );
 	}
 
-	public static Scale notes2scale(Chromatic[] notes) {
+	public static Scale notes2scale(DiatonicAlt[] notes) {
 		int[] ton = new int[notes.length];
 		int sum = 0;
 		for ( int i = 0; i < notes.length - 1; i++ ) {
-			Chromatic current = notes[i];
-			Chromatic next = notes[i + 1];
-			ton[i] = current.distSemitonesTo(next);
+			DiatonicAlt current = notes[i];
+			DiatonicAlt next = notes[i + 1];
+			ton[i] = Chromatic.from(current).distSemitonesTo(Chromatic.from(next));
 			while ( ton[i] < 0 )
 				ton[i] += 12;
 			sum += ton[i];
@@ -634,7 +634,7 @@ public class CustomTonality implements Tonality {
 		for ( int i = 0; i < length(); i++ ) {
 			Chromatic chromatic = ChromaticAdapter.from(note);
 			if (!enharmonic && get(i).equals(chromatic)
-					|| enharmonic && get(i).compareEnharmonicTo(chromatic) == 0)
+					|| enharmonic && Chromatic.from(get(i)) == chromatic)
 				return DiatonicDegree.fromIndex(i);
 		}
 
@@ -647,11 +647,11 @@ public class CustomTonality implements Tonality {
 	 * return null; }
 	 */
 
-	public boolean has(PitchChromaticSingle note) {
+	public boolean has(DiatonicAlt note) {
 		return getDegreeFrom( note ) != null;
 	}
 
-	public <N extends PitchChromaticSingle> boolean has(PitchChromaticChord<N> notes) {
+	public <N extends DiatonicAlt> boolean has(PitchChromaticChord<N> notes) {
 		for ( N n : notes ) {
 			if ( getDegreeFrom( n ) == null )
 				return false;
@@ -682,7 +682,7 @@ public class CustomTonality implements Tonality {
 		return scale;
 	}
 
-	public Chromatic getRoot() {
+	public DiatonicAlt getRoot() {
 		return root;
 	}
 
@@ -770,15 +770,15 @@ public class CustomTonality implements Tonality {
 		} );
 	}
 
-	public Chromatic getEnharmonic(Chromatic chromatic) throws TonalityException {
-		Chromatic c = valChromaticMap.get( chromatic.distSemitonesFromC() );
+	public Chromatic getEnharmonic(DiatonicAlt diatonicAlt) throws TonalityException {
+		DiatonicAlt c = valChromaticMap.get( diatonicAlt );
 		if ( c == null )
-			throw new TonalityException( chromatic, this );
+			throw new TonalityException( diatonicAlt, this );
 		return c;
 	}
 
 	@Override
-	public Chromatic[] getNotes() {
+	public DiatonicAlt[] getNotes() {
 		return notes; // TODO: clone
 	}
 }

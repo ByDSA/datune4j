@@ -1,10 +1,12 @@
 package es.danisales.datune.musical.transformations;
 
+import es.danisales.datune.diatonic.ChordNotation;
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.diatonic.Quality;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -12,80 +14,39 @@ public class Namer {
     private Namer() {
     }
 
-    @SuppressWarnings("WeakerAccess")
-    public static final String FLAT = "b";
-    @SuppressWarnings("WeakerAccess")
-    public static final String SHARP = "#";
+    public static String from(DiatonicAlt diatonicAlt) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append( diatonicAlt.getDiatonic() );
+        int alterations = diatonicAlt.getAlterations();
+        if (alterations > 0) {
+            if (diatonicAlt.getSemitonesAdded() < 0) {
+                for (int i = 0; i < alterations; i++)
+                    stringBuilder.append(ChordNotation.FLAT);
+            } else if (diatonicAlt.getSemitonesAdded() > 0) {
+                for (int i = 0; i < alterations; i++)
+                    stringBuilder.append(ChordNotation.SHARP);
+            }
+        }
+        return  stringBuilder.toString();
+    }
 
     public static String from(Chromatic chromatic) {
-        Chromatic chromaticWithoutAlterations = AlterationsCalculator.removeAlterationsFrom(chromatic);
-
         switch(chromatic) {
-            case C: return "C";
-            case D: return "D";
-            case E: return "E";
-            case F: return "F";
-            case G: return "G";
-            case A: return "A";
-            case B: return "B";
-            case CC:
-            case DD:
-            case EE:
-            case FF:
-            case GG:
-            case AA:
-            case BB:
-                return chromaticWithoutAlterations + SHARP;
-            case CCC:
-            case DDD:
-            case EEE:
-            case FFF:
-            case GGG:
-            case AAA:
-            case BBB:
-                return chromaticWithoutAlterations + SHARP + SHARP;
-            case CCCC:
-            case DDDD:
-            case EEEE:
-            case FFFF:
-            case GGGG:
-            case AAAA:
-            case BBBB:
-                return chromaticWithoutAlterations + SHARP + SHARP;
-            case CCCCC:
-            case DDDDD:
-            case EEEEE:
-            case FFFFF:
-            case GGGGG:
-            case AAAAA:
-            case BBBBB:
-                return chromaticWithoutAlterations + SHARP + SHARP + SHARP;
-            case Cb:
-            case Db:
-            case Eb:
-            case Fb:
-            case Gb:
-            case Ab:
-            case Bb:
-                return chromaticWithoutAlterations + FLAT;
-            case Cbb:
-            case Dbb:
-            case Ebb:
-            case Fbb:
-            case Gbb:
-            case Abb:
-            case Bbb:
-                return chromaticWithoutAlterations + FLAT + FLAT;
-            case Cbbb:
-            case Dbbb:
-            case Ebbb:
-            case Fbbb:
-            case Gbbb:
-            case Abbb:
-            case Bbbb:
-                return chromaticWithoutAlterations + FLAT + FLAT + FLAT;
-            default: return "Nota desconocida";
+            case C:  return "C";
+            case CC: return from(Chromatic.C) + ChordNotation.SHARP;
+            case D:  return "D";
+            case DD: return from(Chromatic.D) + ChordNotation.SHARP;
+            case E:  return "E";
+            case F:  return "F";
+            case FF: return from(Chromatic.F) + ChordNotation.SHARP;
+            case G:  return "G";
+            case GG: return from(Chromatic.G) + ChordNotation.SHARP;
+            case A:  return "A";
+            case AA: return from(Chromatic.A) + ChordNotation.SHARP;
+            case B:  return "B";
         }
+
+        throw new RuntimeException("Impossible");
     }
 
     public static String from(ChromaticMidi chromaticMidi) {

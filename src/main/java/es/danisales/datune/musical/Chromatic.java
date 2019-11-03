@@ -7,178 +7,148 @@ import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public enum Chromatic implements PitchChromaticSingle {
-	C(0), D(2), E(4), F(5), G(7),A(9), B(11),
-	CC(C.intValue() + 1), DD(D.intValue() + 1), EE(E.intValue() + 1), FF(F.intValue() + 1), GG(G.intValue() + 1), AA(A.intValue() + 1), BB(B.intValue() + 1),
-	CCC(C.intValue() + 2), DDD(D.intValue() + 2), EEE(E.intValue() + 2), FFF(F.intValue() + 2), GGG(G.intValue() + 2), AAA(A.intValue() + 2), BBB(B.intValue() + 2),
-	CCCC(C.intValue() + 3), DDDD(D.intValue() + 3), EEEE(E.intValue() + 3), FFFF(F.intValue() + 3), GGGG(G.intValue() + 3), AAAA(A.intValue() + 3), BBBB(B.intValue() + 3),
-	CCCCC(C.intValue() + 4), DDDDD(D.intValue() + 4), EEEEE(E.intValue() + 3), FFFFF(F.intValue() + 4), GGGGG(G.intValue() + 4), AAAAA(A.intValue() + 4), BBBBB(B.intValue() + 4),
-	Cb(C.intValue() - 1), Db(D.intValue() - 1), Eb(E.intValue() - 1), Fb(F.intValue() - 1), Gb(G.intValue() - 1), Ab(A.intValue() - 1), Bb(B.intValue() - 1),
-	Cbb(C.intValue() - 2), Dbb(D.intValue() - 2), Ebb(E.intValue() - 2), Fbb(F.intValue() - 2), Gbb(G.intValue() - 2), Abb(A.intValue() - 2), Bbb(B.intValue() - 2),
-	Cbbb(C.intValue() - 3), Dbbb(D.intValue() - 3), Ebbb(E.intValue() - 3), Fbbb(F.intValue() - 3), Gbbb(G.intValue() - 3), Abbb(A.intValue() - 3), Bbbb(B.intValue() - 3);
+	C, CC, D, DD, E, F, FF, G, GG, A, AA, B;
 
-    public static final int N = 12;
+    public static final int NUMBER = values().length;
 
-    private final int value;
+	private static final Map<DiatonicAlt, Chromatic> diatonicAltChromaticMap = new HashMap<>();
+	static {
+		diatonicAltChromaticMap.put(DiatonicAlt.AAAA, Chromatic.C);
+		diatonicAltChromaticMap.put(DiatonicAlt.BB, Chromatic.C);
+		diatonicAltChromaticMap.put(DiatonicAlt.C, Chromatic.C);
+		diatonicAltChromaticMap.put(DiatonicAlt.AAAAA, Chromatic.CC);
+		diatonicAltChromaticMap.put(DiatonicAlt.BBB, Chromatic.CC);
+		diatonicAltChromaticMap.put(DiatonicAlt.CC, Chromatic.CC);
+		diatonicAltChromaticMap.put(DiatonicAlt.BBBB, Chromatic.D);
+		diatonicAltChromaticMap.put(DiatonicAlt.CCC, Chromatic.D);
+		diatonicAltChromaticMap.put(DiatonicAlt.D, Chromatic.D);
+		diatonicAltChromaticMap.put(DiatonicAlt.BBBBB, Chromatic.DD);
+		diatonicAltChromaticMap.put(DiatonicAlt.CCCC, Chromatic.DD);
+		diatonicAltChromaticMap.put(DiatonicAlt.DD, Chromatic.DD);
+		diatonicAltChromaticMap.put(DiatonicAlt.CCCCC, Chromatic.E);
+		diatonicAltChromaticMap.put(DiatonicAlt.DDD, Chromatic.E);
+		diatonicAltChromaticMap.put(DiatonicAlt.E, Chromatic.E);
+		diatonicAltChromaticMap.put(DiatonicAlt.EE, Chromatic.F);
+		diatonicAltChromaticMap.put(DiatonicAlt.DDDD, Chromatic.F);
+		diatonicAltChromaticMap.put(DiatonicAlt.F, Chromatic.F);
+		diatonicAltChromaticMap.put(DiatonicAlt.EEE, Chromatic.FF);
+		diatonicAltChromaticMap.put(DiatonicAlt.DDDDD, Chromatic.FF);
+		diatonicAltChromaticMap.put(DiatonicAlt.FF, Chromatic.FF);
+		diatonicAltChromaticMap.put(DiatonicAlt.EEEE, Chromatic.G);
+		diatonicAltChromaticMap.put(DiatonicAlt.FFF, Chromatic.G);
+		diatonicAltChromaticMap.put(DiatonicAlt.G, Chromatic.G);
+		diatonicAltChromaticMap.put(DiatonicAlt.EEEEE, Chromatic.GG);
+		diatonicAltChromaticMap.put(DiatonicAlt.FFFF, Chromatic.GG);
+		diatonicAltChromaticMap.put(DiatonicAlt.GG, Chromatic.GG);
+		diatonicAltChromaticMap.put(DiatonicAlt.FFFFF, Chromatic.A);
+		diatonicAltChromaticMap.put(DiatonicAlt.GGG, Chromatic.A);
+		diatonicAltChromaticMap.put(DiatonicAlt.A, Chromatic.A);
+		diatonicAltChromaticMap.put(DiatonicAlt.GGGG, Chromatic.AA);
+		diatonicAltChromaticMap.put(DiatonicAlt.AA, Chromatic.AA);
+		diatonicAltChromaticMap.put(DiatonicAlt.AAA, Chromatic.B);
+		diatonicAltChromaticMap.put(DiatonicAlt.B, Chromatic.B);
 
-	Chromatic(int value) {
-		this.value = delimit(value);
+		diatonicAltChromaticMap.put(DiatonicAlt.Cb, Chromatic.B);
+		diatonicAltChromaticMap.put(DiatonicAlt.Db, Chromatic.CC);
+		diatonicAltChromaticMap.put(DiatonicAlt.Eb, Chromatic.DD);
+		diatonicAltChromaticMap.put(DiatonicAlt.Fb, Chromatic.E);
+		diatonicAltChromaticMap.put(DiatonicAlt.Gb, Chromatic.FF);
+		diatonicAltChromaticMap.put(DiatonicAlt.Ab, Chromatic.GG);
+		diatonicAltChromaticMap.put(DiatonicAlt.Bb, Chromatic.AA);
+
+		diatonicAltChromaticMap.put(DiatonicAlt.Dbb, Chromatic.C);
+		diatonicAltChromaticMap.put(DiatonicAlt.Ebb, Chromatic.D);
+		diatonicAltChromaticMap.put(DiatonicAlt.Fbb, Chromatic.DD);
+		diatonicAltChromaticMap.put(DiatonicAlt.Gbb, Chromatic.F);
+		diatonicAltChromaticMap.put(DiatonicAlt.Abb, Chromatic.G);
+		diatonicAltChromaticMap.put(DiatonicAlt.Bbb, Chromatic.A);
+		diatonicAltChromaticMap.put(DiatonicAlt.Cbb, Chromatic.AA);
+
+		diatonicAltChromaticMap.put(DiatonicAlt.Dbbb, Chromatic.B);
+		diatonicAltChromaticMap.put(DiatonicAlt.Ebbb, Chromatic.CC);
+		diatonicAltChromaticMap.put(DiatonicAlt.Fbbb, Chromatic.D);
+		diatonicAltChromaticMap.put(DiatonicAlt.Gbbb, Chromatic.E);
+		diatonicAltChromaticMap.put(DiatonicAlt.Abbb, Chromatic.FF);
+		diatonicAltChromaticMap.put(DiatonicAlt.Bbbb, Chromatic.GG);
+		diatonicAltChromaticMap.put(DiatonicAlt.Cbbb, Chromatic.A);
 	}
 
-	int intValue() {
-		return value;
-	}
-
-	private boolean isEnharmonicFrom(Chromatic chromatic) {
-		return value == chromatic.value;
+	public static Chromatic from(DiatonicAlt diatonicAlt) {
+		Objects.requireNonNull(diatonicAlt);
+		Chromatic ret = diatonicAltChromaticMap.get(diatonicAlt);
+		if (ret == null)
+			; // TODO
+		return ret;
 	}
 
 	public Chromatic addSemi(int n) {
-		return from(this.intValue() + n);
+		int index = (ordinal() + n) % NUMBER;
+		return values()[index];
 	}
 
 	public Chromatic addSemi() {
-		return PitchTransformation.addSemi(this);
+		return addSemi(1);
 	}
 
-	public Chromatic subSemi() {
-		return PitchTransformation.subSemi(this);
-	}
-
-	public List<Chromatic> getEnharmonics() {
-		return EnharmonicsCalculator.calculateFrom(this);
-	}
-
-	public int getAlterations() {
-		return AlterationsCalculator.from(this);
+	public List<DiatonicAlt> getEnharmonics(int maxAlts) {
+		return EnharmonicsCalculator.calculateFrom(this, maxAlts);
 	}
 
 	private static int delimit(int n) {
-		n = n % N;
+		n = n % NUMBER;
 		while(n < 0)
-			n += N;
+			n += NUMBER;
 
 		return n;
 	}
 
 	public static @NonNull Chromatic from(int intVal) {
 		intVal = delimit(intVal);
-
-		switch(intVal) {
-			case 0: return C;
-			case 1: return CC;
-			case 2: return D;
-			case 3: return DD;
-			case 4: return E;
-			case 5: return F;
-			case 6: return FF;
-			case 7: return G;
-			case 8: return GG;
-			case 9: return A;
-			case 10: return AA;
-			case 11: return B;
-		}
-
-		throw new RuntimeException("Impossible");
+		return Chromatic.values()[intVal];
 	}
 
 	public String toString() {
 		return Namer.from(this);
 	}
 
-	public IntervalChromatic dist(Chromatic n, IntervalDiatonic i) {
+	public IntervalChromatic dist(@NonNull Chromatic n, @NonNull IntervalDiatonic i) {
 		return DistanceCalculator.calculareInterval(this, n, i);
 	}
 
-	public Chromatic rename(Tonality ton) {
+	public Chromatic rename(@NonNull Tonality ton) {
 		return ton.getEnharmonic(this);
 	}
 
-	public int distSemitonesTo(Chromatic n2) {
-		int d = n2.intValue() - intValue();
+	public int distSemitonesTo(@NonNull Chromatic n2) {
+		int d = n2.ordinal() - ordinal();
 		while (d < 0)
 			d += IntervalChromatic.PERFECT_OCTAVE.getSemitones();
 
 		return d;
 	}
 
+	@Deprecated
 	public int distSemitonesFromC() {
 		return Chromatic.C.distSemitonesTo(this);
 	}
 
-	public Chromatic nextDiatonic() {
-		switch(this) {
-			case A: 	return B;
-			case AA: 	return BB;
-			case AAA: 	return BBB;
-			case AAAA: 	return BBBB;
-			case AAAAA:	return BBBBB;
-			case Ab:	return Bb;
-			case Abb:	return Bbb;
-			case Abbb:	return Bbbb;
-			case B:		return C;
-			case BB:	return CC;
-			case BBB:	return CCC;
-			case BBBB:	return CCCC;
-			case BBBBB:	return CCCCC;
-			case Bb:	return Cb;
-			case Bbb:	return Cbb;
-			case Bbbb:	return Cbbb;
-			case C:		return D;
-			case CC:	return DD;
-			case CCC:	return DDD;
-			case CCCC:	return DDDD;
-			case CCCCC:	return DDDDD;
-			case Cb:	return Db;
-			case Cbb:	return Dbb;
-			case Cbbb:	return Dbbb;
-			case D:		return E;
-			case DD:	return EE;
-			case DDD:	return EEE;
-			case DDDD:	return EEEE;
-			case DDDDD:	return EEEEE;
-			case Db:	return Eb;
-			case Dbb:	return Ebb;
-			case Dbbb:	return Ebbb;
-			case E:		return F;
-			case EE:	return FF;
-			case EEE:	return FFF;
-			case EEEE:	return FFFF;
-			case EEEEE:	return FFFFF;
-			case Eb:	return Fb;
-			case Ebb:	return Fbb;
-			case Ebbb:	return Fbbb;
-			case F:		return G;
-			case FF:	return GG;
-			case FFF:	return GGG;
-			case FFFF:	return GGGG;
-			case FFFFF:	return GGGGG;
-			case Fb:	return Gb;
-			case Fbb:	return Gbb;
-			case Fbbb:	return Gbbb;
-			case G:		return A;
-			case GG:	return AA;
-			case GGG:	return AAA;
-			case GGGG:	return AAAA;
-			case GGGGG:	return AAAAA;
-			case Gb:	return Ab;
-			case Gbb:	return Abb;
-			case Gbbb:	return Abbb;
-			default:	throw new AlterationException();
-		}
-	}
-
 	/** Comparator **/
 
+	@Deprecated
 	private static class EnharmonicComparator implements java.util.Comparator<Chromatic> {
 		@Override
 		public int compare(Chromatic o1, Chromatic o2) {
-			return Integer.compare(o1.intValue(), o2.intValue());
+			return Integer.compare(o1.ordinal(), o2.ordinal());
 		}
 	}
 
+	@Deprecated
 	public int compareEnharmonicTo(Chromatic otherChromatic) {
 		return new EnharmonicComparator().compare(this, otherChromatic);
 	}

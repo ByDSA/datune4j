@@ -10,13 +10,13 @@ import es.danisales.datune.musical.CustomChromaticChord.ImpossibleChord;
 public abstract class Chord<N extends SymbolicPitch> extends ArrayList<N> implements ChordMutableInterface<N> {
 	protected int root = -1;
 /*
-	public Chord(N... cs) {
-		for (N n : cs)
+	public Chord(NUMBER... cs) {
+		for (NUMBER n : cs)
 			super.addSemi( n );
 		resetRoot();
 	}
 
-	public <C extends Chord<N>> Chord(C cs) {
+	public <C extends Chord<NUMBER>> Chord(C cs) {
 		addAll( cs );
 		resetRoot();
 	}*/

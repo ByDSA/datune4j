@@ -27,7 +27,7 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic>, Chroma
 	G5(ChromaticChordMeta.POWER_CHORD, Chromatic.G, Chromatic.D),
 	GG5(ChromaticChordMeta.POWER_CHORD, Chromatic.GG, Chromatic.DD),
 	A5(ChromaticChordMeta.POWER_CHORD, Chromatic.A, Chromatic.E),
-	AA5(ChromaticChordMeta.POWER_CHORD, Chromatic.AA, Chromatic.EE),
+	AA5(ChromaticChordMeta.POWER_CHORD, Chromatic.AA, Chromatic.F),
 	B5(ChromaticChordMeta.POWER_CHORD, Chromatic.B, Chromatic.FF),
 
 	// Mayores

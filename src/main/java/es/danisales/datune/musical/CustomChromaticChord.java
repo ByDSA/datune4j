@@ -61,7 +61,7 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 	public List<Integer> toIntegerChromatics() {
 		Integer[] out = new Integer[size()];
 		for ( int i = 0; i < size(); i++ ) {
-			out[i] = get( i ).intValue();
+			out[i] = get( i ).ordinal();
 		}
 
 		return ImmutableList.copyOf(out);
@@ -207,7 +207,7 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 			return false;
 
 		for ( int i = 0; i < size(); i++ ) {
-			if ( get( i ).intValue() != notes.get( i ).intValue() )
+			if ( get( i ) != notes.get( i ) )
 				return false;
 		}
 
@@ -256,7 +256,7 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 	public CustomChromaticChord over(Chromatic c) throws ImpossibleChord {
 		CustomChromaticChord dup = clone();
 		for(int i = 0; i < size(); i++) {
-			if ( get(0).intValue() == c.intValue() )
+			if ( get(0) == c )
 				return dup;
 			if (i < size()-1)
 				dup.inv();
