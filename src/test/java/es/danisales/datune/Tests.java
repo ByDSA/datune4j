@@ -5,6 +5,7 @@ import es.danisales.datune.midi.*;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChordEnum;
 import es.danisales.datune.musical.Diatonic;
+import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.tonality.ScaleEnum;
 import es.danisales.datune.tonality.Tonality;
@@ -20,15 +21,15 @@ import static org.junit.Assert.*;
 public class Tests {
 	@Test
 	public void chromaticDiatonicConversion() throws Exception {
-		Chromatic c = Chromatic.Cb;
+		DiatonicAlt c = DiatonicAlt.Cb;
 		assertEquals( Diatonic.C, Diatonic.from( c ) );
-		c = Chromatic.BB;
+		c = DiatonicAlt.BB;
 		assertEquals( Diatonic.B, Diatonic.from( c ) );
 
 		Diatonic d = Diatonic.B;
-		assertEquals( Chromatic.BB, ChromaticAdapter.from(d, Chromatic.C.distSemitonesFromC() ) );
+		assertEquals( DiatonicAlt.BB, Chromatic.from(DiatonicAlt.C ) );
 		d = Diatonic.C;
-		assertEquals( Chromatic.C, ChromaticAdapter.from(d, Chromatic.BB.distSemitonesFromC() ) );
+		assertEquals( Chromatic.C, Chromatic.from(DiatonicAlt.BB) );
 	}
 
 	@Test
@@ -75,9 +76,9 @@ public class Tests {
 
 	@Test
 	public void chordSameNote() {
-		DiatonicMidi n1 = DiatonicMidi.of( DiatonicFunction.I, TonalityEnum.C, 5 );
-		DiatonicMidi n2 = DiatonicMidi.of( DiatonicFunction.II, TonalityEnum.C, 5 );
-		DiatonicMidi n3 = DiatonicMidi.of( DiatonicFunction.III, TonalityEnum.C, 5 );
+		DiatonicMidi n1 = DiatonicMidi.from( DiatonicDegree.I, TonalityEnum.C, 5 );
+		DiatonicMidi n2 = DiatonicMidi.from( DiatonicDegree.II, TonalityEnum.C, 5 );
+		DiatonicMidi n3 = DiatonicMidi.from( DiatonicDegree.III, TonalityEnum.C, 5 );
 
 		boolean error = false;
 		DiatonicChordMidi c2 = new DiatonicChordMidi( n2, n3 );
@@ -211,8 +212,10 @@ public class Tests {
 		DiatonicChordMidi c = new DiatonicChordMidi( DiatonicFunction.I, 5, s );
 
 		ChromaticChordMidi notes = ChromaticChordMidi.newEmpty();
-		for ( DiatonicMidi n : c )
-			notes.add( n );
+		for ( DiatonicMidi n : c ) {
+			ChromaticMidi chromaticMidi = ChromaticMidi.from(n);
+			notes.add(chromaticMidi);
+		}
 
 		ArrayList<DiatonicChordMidi> chords = notes.toDiatonicChordMidi( false );
 		assert ( chords.size() > 0 );
@@ -269,17 +272,17 @@ public class Tests {
 		n = ChromaticMidi.builder().pitch(Chromatic.B, 5 ).build();
 		assertEquals( PitchMidi.B5, n.getCode() );
 
-		DiatonicMidi n2 = DiatonicMidi.of( DiatonicFunction.I, TonalityEnum.C, 5 );
+		DiatonicMidi n2 = DiatonicMidi.from( DiatonicDegree.I, TonalityEnum.C, 5 );
 		assertEquals( PitchMidi.C5, n2.getCode() );
-		n2 = DiatonicMidi.of( DiatonicFunction.VII, TonalityEnum.C, 5 );
+		n2 = DiatonicMidi.from( DiatonicDegree.VII, TonalityEnum.C, 5 );
 		assertEquals( PitchMidi.B5, n2.getCode() );
 	}
 
 	@Test
 	public void getDegree() {
-		DiatonicMidi n2 = DiatonicMidi.of( DiatonicFunction.I, TonalityEnum.C, 5 );
+		DiatonicMidi n2 = DiatonicMidi.from( DiatonicDegree.I, TonalityEnum.C, 5 );
 		assertEquals( DiatonicDegree.I, n2.getDegree() );
-		n2 = DiatonicMidi.of( DiatonicFunction.VII, TonalityEnum.C, 5 );
+		n2 = DiatonicMidi.from( DiatonicDegree.VII, TonalityEnum.C, 5 );
 		assertEquals( DiatonicDegree.VII, n2.getDegree() );
 	}
 

@@ -37,8 +37,15 @@ public class MelodyDiatonic extends Melody {
 		return note;
 	}
 
-	public DiatonicMidi add(DiatonicDegree degree, int duration, int octaveShift, int vel) {
-		DiatonicMidi nd = DiatonicMidi.of(degree, tonality, octave + octaveShift, duration, vel);
+	public DiatonicMidi add(DiatonicDegree degree, int length, int octaveShift, int velocity) {
+		DiatonicMidi nd = DiatonicMidi.builder()
+				.diatonicDegree(degree)
+				.tonality(tonality)
+				.octave(octave + octaveShift)
+				.length(length)
+				.velocity(velocity)
+				.build();
+
 		return add(nd);
 	}
 

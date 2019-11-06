@@ -8,6 +8,7 @@ import java.util.Map;
 
 import es.danisales.datune.midi.PitchMidi;
 import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.musical.transformations.AlterationsCalculator;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
 
@@ -15,32 +16,31 @@ public class Tuning {
 	public final static double MIN_FREQUENCY = 20;
 	public final static double MAX_FREQUENCY = 20000;
 	
-	public final static Tuning DEFAULT = new Tuning(new EqualTemperament(), new NoteTuning(Chromatic.A, 4), 440);
+	public final static Tuning DEFAULT = new Tuning(new EqualTemperament(), new NoteTuning(DiatonicAlt.A, 4), 440);
 
-	final Temperament temperament;
-	final NoteTuning noteBase;
-	final Map<NoteTuning, Double> map = new HashMap();
+	private final Temperament temperament;
+	private final NoteTuning noteBase;
+	private final Map<NoteTuning, Double> map = new HashMap<>();
 	
-	final List<List<Chromatic>> notes = new ArrayList();
+	final List<List<Chromatic>> notes = new ArrayList<>();
 
 	public Tuning(Temperament t, NoteTuning nb, double frequencyBase) {
 		temperament = t;
 		noteBase = nb;
 
 		NoteTuning note = nb.clone();
-		double freq = frequencyBase;
 
 		for (int i = 0; i < 7; i++) {
-			map.put( note, freq );
-			addPrevious( note, freq );
-			addNext( note, freq );
+			map.put( note, frequencyBase);
+			addPrevious( note, frequencyBase);
+			addNext( note, frequencyBase);
 			/*addFlat( note, freq );
 			addSharp( note, freq );*/
 
-			Chromatic simpleNote = AlterationsCalculator.removeAlterationsFrom(note.note);
+			Chromatic simpleNote = Chromatic.from(note.note);
 			NoteTuning prev = note;
 			note = prev.clone();
-			note.note = note.note.nextDiatonic();
+			note.note = note.note.getNextDiatonic();
 			switch(simpleNote) {
 				case A:
 				case C:
@@ -59,14 +59,9 @@ public class Tuning {
 		}
 	}
 	
-	public double get(Chromatic c, int octave) {
+	public double get(DiatonicAlt c, int octave) {
 		NoteTuning n = new NoteTuning(c, octave);
 		return map.get( n );
-	}
-	
-	public double get(PitchMidi n) {
-		Chromatic chromatic = ChromaticAdapter.from(n);
-		return get(chromatic, n.getOctave() );
 	}
 
 	private void addPrevious(final NoteTuning n, double freq) {
@@ -92,7 +87,7 @@ public class Tuning {
 	}
 
 	public void showNotes() {
-		List<NoteFreq> notes = new ArrayList();
+		List<NoteFreq> notes = new ArrayList<>();
 		map.forEach( (NoteTuning n, Double f) -> {
 			NoteFreq nn = new NoteFreq(n.note, n.octave, f);
 			notes.add( nn );
@@ -112,7 +107,7 @@ public class Tuning {
 	}
 
 	static class NoteFreq extends NoteTuning {
-		public NoteFreq(Chromatic c, int o, double f) {
+		public NoteFreq(DiatonicAlt c, int o, double f) {
 			super( c, o );
 			frequency = f;
 		}

@@ -1,12 +1,12 @@
 package es.danisales.datune.tuning;
 
-import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.musical.DiatonicAlt;
 
 public class NoteTuning implements Cloneable {
-	public Chromatic note;
+	public DiatonicAlt note;
 	public int octave;
 	
-	public NoteTuning(Chromatic c, int o) {
+	public NoteTuning(DiatonicAlt c, int o) {
 		note = c;
 		octave = o;
 	}
@@ -14,11 +14,6 @@ public class NoteTuning implements Cloneable {
 	@Override
 	public boolean equals(Object n) {
 		return n instanceof NoteTuning && ((NoteTuning)n).note == note && ((NoteTuning)n).octave == octave;
-	}
-
-	@Override
-	public int hashCode() {
-		return octave + note.ordinal();
 	}
 
 	@Override

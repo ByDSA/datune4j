@@ -3,6 +3,7 @@ package es.danisales.datune.midi.Events;
 import es.danisales.datune.eventsequences.Track;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.ScaleEnum;
 import es.danisales.datune.tonality.Tonality;
@@ -36,7 +37,7 @@ public class KeySignatureEvent extends MetaEvent {
 
 	public Track channel;
 
-	Tonality tonality;
+	private Tonality tonality;
 
 	public KeySignatureEvent(int d, Tonality s) {
 		super(d, (byte)0x59);
@@ -49,8 +50,9 @@ public class KeySignatureEvent extends MetaEvent {
 
 	public byte[] get() {
 		Scale scale = tonality.getScale();
-		Chromatic note = tonality.getRoot();
-		byte[] bytes = null; 
+		DiatonicAlt diatonicAlt = tonality.getRoot();
+		Chromatic note = Chromatic.from( diatonicAlt );
+		byte[] bytes;
 
 		if (scale.equals(ScaleEnum.MAJOR)) {
 			bytes = major(note);
@@ -108,7 +110,7 @@ public class KeySignatureEvent extends MetaEvent {
 	
 	public String toString() {
 		Scale scale = tonality.getScale();
-		Chromatic note = tonality.getRoot();
+		DiatonicAlt note = tonality.getRoot();
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("KeySignature: " + ChromaticMidi.literal(note, tonality));

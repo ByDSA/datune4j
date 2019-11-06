@@ -3,6 +3,7 @@ package es.danisales.datune.midi;
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.musical.transformations.AlterationsCalculator;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.tonality.Tonality;
@@ -24,12 +25,16 @@ public enum PitchMidi implements PitchChromaticSingle, PitchOctaveMidi, Codeable
 
 	private int value;
 
-	private PitchMidi(int v) {
+	PitchMidi(int v) {
 		value = v;
 	}
 
-	private PitchMidi(PitchMidi p) {
+	PitchMidi(PitchMidi p) {
 		value = p.value;
+	}
+
+	public Chromatic getChromatic() {
+		return Chromatic.from(value % Chromatic.NUMBER);
 	}
 
 	@Override
@@ -391,14 +396,21 @@ public enum PitchMidi implements PitchChromaticSingle, PitchOctaveMidi, Codeable
 	}
 
 	public static int getCodeFrom(Chromatic chromatic, int octave) {
-		return Chromatic.C.distSemitonesTo(chromatic) + octave * Chromatic.NUMBER;
+		return octave * Chromatic.NUMBER + chromatic.ordinal();
+	}
+
+	public static int getCodeFrom(DiatonicAlt diatonicAlt, int octave) {
+		Chromatic chromatic = Chromatic.from(diatonicAlt);
+		return getCodeFrom(chromatic, octave);
 	}
 	
 	public static PitchMidi from(DiatonicDegree degree, Tonality tonality, int octave) {
 		int code = getCodeFrom( tonality.get( degree ), + octave);
-		Chromatic root = tonality.getRoot();
-		Chromatic degreeChromatic = tonality.get(degree);
-		if ( degreeChromatic.compareEnharmonicTo(root) < 0 )
+		DiatonicAlt root = tonality.getRoot();
+		Chromatic rootChromatic = Chromatic.from(root);
+		DiatonicAlt degreeDiatonicAlt = tonality.get(degree);
+		Chromatic degreeChromatic = Chromatic.from(degreeDiatonicAlt);
+		if ( degreeChromatic.ordinal() < rootChromatic.ordinal() )
 			code += Chromatic.NUMBER;
 
 		return from( code );

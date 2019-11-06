@@ -1,7 +1,7 @@
 package es.danisales.datune.midi;
 
 public class AddedException extends RuntimeException {
-	public <N extends ChromaticMidi> AddedException(N n, ChordMidi<N> c) {
+	public <N extends PitchSingleMidi> AddedException(N n, ChordMidi<N> c) {
 		super("Ya existe en el acorde (" + c.notesToString() + ") la nota que se intenta a�adir (" + n + ")");
 	}
 

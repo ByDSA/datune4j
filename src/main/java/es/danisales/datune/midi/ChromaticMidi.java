@@ -17,20 +17,33 @@ import es.danisales.datune.tonality.TonalityException;
 import es.danisales.others.Codeable;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public class ChromaticMidi implements PitchOctaveMidi, Codeable, EventComplex, PitchChromaticSingle {
+public final class ChromaticMidi implements PitchSingleMidi, PitchChromaticSingle {
 	protected PitchMidi	pitch;
 	protected int	velocity;
 	protected int	length;
 	
-	protected ChromaticMidi() { }
-	
-	@Override
+	private ChromaticMidi() { }
+
+    public static ChromaticMidi from(PitchSingleMidi diatonicMidi) {
+		return ChromaticMidi.builder()
+				.pitch(diatonicMidi.getPitchMidi())
+				.velocity(diatonicMidi.getVelocity())
+				.length(diatonicMidi.getLength())
+				.build();
+    }
+
+    @Override
 	public ChromaticMidi clone() {
 		return ChromaticMidi.builder()
 				.pitch(pitch)
-				.length(length)
 				.velocity(velocity)
+				.length(length)
 				.build();
+	}
+
+	@Override
+	public PitchMidi getPitchMidi() {
+		return pitch;
 	}
 
 	public int dist(ChromaticMidi cm) {
@@ -50,21 +63,6 @@ public class ChromaticMidi implements PitchOctaveMidi, Codeable, EventComplex, P
 	@Override
 	public int getCode() {
 		return pitch.getCode();
-	}
-
-	public DiatonicMidi getDiatonicMidi(Tonality ton) throws TonalityException {
-		assert ton != null;
-		DiatonicDegree pos = ton.getDegreeFrom( ChromaticAdapter.from(this) );
-		if ( pos == null )
-			throw new TonalityException( this, ton );
-		else {
-			int octaveNote = getOctave();
-			DiatonicMidi ns = DiatonicMidi.of( pos, ton, pitch.getOctave(), length, velocity );
-			int octaveNoteScaleNote = ns.pitch.getOctave();
-			ns.shiftOctave( octaveNote - octaveNoteScaleNote );
-
-			return ns;
-		}
 	}
 
 	@Override
@@ -88,19 +86,17 @@ public class ChromaticMidi implements PitchOctaveMidi, Codeable, EventComplex, P
 		return pitch.getOctave();
 	}
 
-	public PitchMidi getPitch() {
-		return pitch;
-	}
-
 	public static Builder builder() {
 		return new Builder();
 	}
 
+	@Override
 	public ChromaticMidi setVelocity(int v) {
 		velocity = v;
 		return this;
 	}
 
+	@Override
 	public ChromaticMidi setLength(int d) {
 		length = d;
 		return this;
@@ -131,14 +127,14 @@ public class ChromaticMidi implements PitchOctaveMidi, Codeable, EventComplex, P
 		return Namer.from(this);
 	}
 
-	public static String literal(DiatonicAlt chromatic, Tonality tonality) {
+	public static String literal(DiatonicAlt diatonicAlt, Tonality tonality) {
 		if ( tonality != null ) {
-			DiatonicDegree pos = tonality.getDegreeFrom( chromatic );
+			DiatonicDegree pos = tonality.getDegreeFrom( diatonicAlt );
 			if ( pos != null )
-				chromatic = tonality.get( pos );
+				diatonicAlt = tonality.get( pos );
 		}
 
-		return chromatic.toString();
+		return diatonicAlt.toString();
 	}
 
     public static class Builder extends es.danisales.utils.building.Builder<Builder, ChromaticMidi> {
@@ -165,6 +161,12 @@ public class ChromaticMidi implements PitchOctaveMidi, Codeable, EventComplex, P
         public Builder pitch(Chromatic chromatic, int octave) {
             return pitch( PitchMidi.from(chromatic, octave) );
         }
+
+
+		public Builder pitch(DiatonicAlt diatonicAlt, int octave) {
+        	Chromatic chromatic = Chromatic.from(diatonicAlt);
+			return pitch( PitchMidi.from(chromatic, octave) );
+		}
 
         public Builder pitch(Chromatic chromatic) {
             _pitch = PitchMidi.from(chromatic, Settings.DefaultValues.OCTAVE);

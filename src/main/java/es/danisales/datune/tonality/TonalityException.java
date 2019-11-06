@@ -1,12 +1,20 @@
 package es.danisales.datune.tonality;
 
 import es.danisales.datune.midi.DiatonicMidi;
+import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.pitch.SymbolicPitch;
 
 public class TonalityException extends RuntimeException {
 	public TonalityException(DiatonicAlt n, Tonality s) {
+		super(
+			"La nota " + n + " no pertenece a la tonalidad " + s + ": "
+					+ s.notesToString() + "."
+				);
+	}
+
+	public TonalityException(Chromatic n, Tonality s) {
 		super(
 			"La nota " + n + " no pertenece a la tonalidad " + s + ": "
 					+ s.notesToString() + "."

@@ -452,7 +452,7 @@ public class Main {
 			panel.add( labelPanel );
 			for ( int i = 0; i < panels.length; i++ ) {
 				panelF[i] = new JPanel();
-				panelF[i].add( new JLabel( ton.get( i ).name() ) );
+				panelF[i].add( new JLabel( ton.get( i ).toString() ) );
 				panelF[i].setLayout( new GridLayout( 1, 5 ) );
 				for ( int j = 0; j < panels[i].length; j++ ) {
 					panels[i][j] = new JPanel();

@@ -1,5 +1,6 @@
 package es.danisales.datune.musical.transformations;
 
+import com.sun.javafx.geom.transform.BaseTransform;
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.DiatonicMidi;
@@ -10,6 +11,7 @@ import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import static es.danisales.datune.musical.DiatonicAlt.*;
 
@@ -56,24 +58,28 @@ public class DiatonicAdapter {
         return diatonicAlt.getDiatonic();
     }
 
-    public static Diatonic from(DiatonicAlt chromatic, Tonality ton) {
-        DiatonicDegree pos = ton.getDegreeFrom(chromatic);
+    public static Diatonic from(DiatonicAlt diatonicAlt, Tonality ton) {
+        DiatonicDegree pos = ton.getDegreeFrom(diatonicAlt);
         if (pos == null)
-            throw new TonalityException(chromatic, ton);
+            throw new TonalityException(diatonicAlt, ton);
         else {
             return Diatonic.from(pos);
         }
     }
 
     public Diatonic from(ChromaticMidi chromaticMidi, Tonality tonality) throws TonalityException {
-        DiatonicAlt chromatic = DiatonicAlt.from(chromaticMidi);
+        Chromatic chromatic = ChromaticAdapter.from(chromaticMidi);
         DiatonicDegree degree = tonality.getDegreeFrom( chromatic );
         return Diatonic.from( degree );
     }
 
-    public Diatonic from(PitchMidi pitchMidi, Tonality tonality) {
-        DiatonicAlt chromatic = DiatonicAlt.from(pitchMidi);
-        return from(chromatic, tonality );
+    public @Nullable Diatonic from(@NonNull PitchMidi pitchMidi, @NonNull Tonality tonality) {
+        Chromatic chromatic = pitchMidi.getChromatic();
+        DiatonicDegree diatonicDegree = tonality.getDegreeFrom(chromatic);
+        if (diatonicDegree == null)
+            return null;
+        DiatonicAlt diatonicAlt = tonality.get(diatonicDegree);
+        return diatonicAlt.getDiatonic();
     }
 
     public Diatonic from(DiatonicMidi diatonicMidi) {

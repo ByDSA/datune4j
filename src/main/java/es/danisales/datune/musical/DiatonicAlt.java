@@ -3,10 +3,12 @@ package es.danisales.datune.musical;
 import es.danisales.datune.musical.transformations.AlterationsCalculator;
 import es.danisales.datune.musical.transformations.EnharmonicsCalculator;
 import es.danisales.datune.musical.transformations.Namer;
+import es.danisales.datune.pitch.SymbolicPitch;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.List;
 
-public class DiatonicAlt {
+public class DiatonicAlt implements SymbolicPitch {
 	public static final DiatonicAlt C = new DiatonicAlt(Diatonic.C, 0);
 	public static final DiatonicAlt D = new DiatonicAlt(Diatonic.D, 0);
 	public static final DiatonicAlt E = new DiatonicAlt(Diatonic.E, 0);
@@ -80,6 +82,25 @@ public class DiatonicAlt {
 
 	public static DiatonicAlt from(Diatonic diatonic, int alt) {
 		return new DiatonicAlt(diatonic, alt);
+	}
+
+	public static @NonNull DiatonicAlt from(@NonNull Chromatic chromatic) {
+		switch (chromatic) {
+			case C: return DiatonicAlt.C;
+			case CC: return DiatonicAlt.CC;
+			case D: return DiatonicAlt.D;
+			case DD: return DiatonicAlt.DD;
+			case E: return DiatonicAlt.E;
+			case F: return DiatonicAlt.F;
+			case FF: return DiatonicAlt.FF;
+			case G: return DiatonicAlt.G;
+			case GG: return DiatonicAlt.GG;
+			case A: return DiatonicAlt.A;
+			case AA: return DiatonicAlt.AA;
+			case B: return DiatonicAlt.B;
+		}
+
+		throw new RuntimeException("Impossible");
 	}
 
 	public int getSemitonesAdded() {

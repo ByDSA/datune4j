@@ -39,7 +39,7 @@ public class DiatonicMidiTest {
 	
 	@Test
 	public void addNegative() {
-		DiatonicMidi n = DiatonicMidi.of( DiatonicFunction.V, TonalityEnum.E, 6 );
+		DiatonicMidi n = DiatonicMidi.from( DiatonicDegree.V, TonalityEnum.E, 6 );
 		DiatonicMidi n2 = n.clone().sub( IntervalDiatonic.UNISON );
 		assertEquals( PitchMidi.B6, n2.getCode() );
 		n2 = n.clone().sub( IntervalDiatonic.SECOND );
@@ -68,7 +68,7 @@ public class DiatonicMidiTest {
 	@Test
 	public void add() {
 		Tonality s = Tonality.of( Chromatic.FF, ScaleEnum.MIXOLYDIAN );
-		DiatonicMidi n = DiatonicMidi.of( DiatonicFunction.I, s, 3 );
+		DiatonicMidi n = DiatonicMidi.from( DiatonicDegree.I, s, 3 );
 		assertEquals( 42, n.getCode() );
 		assertEquals( 3, n.getOctave() );
 		assertEquals( 46, n.clone().add( IntervalDiatonic.THIRD ).getCode() );
@@ -80,7 +80,7 @@ public class DiatonicMidiTest {
 	@Test
 	public void noteScaleAdd() {
 		Tonality s = Tonality.of( Chromatic.C, ScaleEnum.MAJOR );
-		DiatonicMidi n = DiatonicMidi.of( DiatonicFunction.I, s, 4 );
+		DiatonicMidi n = DiatonicMidi.from( DiatonicDegree.I, s, 4 );
 
 		for ( int i = 0; i < diffM.length; i++ ) {
 			IntervalDiatonic id = IntervalDiatonic.fromIndex( i+1 );
@@ -91,7 +91,7 @@ public class DiatonicMidiTest {
 		}
 
 		s = Tonality.of( Chromatic.FF, ScaleEnum.MINOR );
-		n = DiatonicMidi.of( DiatonicFunction.I, s, 4 );
+		n = DiatonicMidi.from( DiatonicDegree.I, s, 4 );
 
 		for ( int i = 0; i < diffm.length; i++ ) {
 			IntervalDiatonic id = IntervalDiatonic.fromIndex( i+1 );
@@ -101,7 +101,7 @@ public class DiatonicMidiTest {
 			assertEquals( "Error al a�adir " + i + " posiciones a " + n, d2, d1 );
 		}
 
-		n = DiatonicMidi.of( DiatonicDegree.VI, s, 4 );
+		n = DiatonicMidi.from( DiatonicDegree.VI, s, 4 );
 		int[] r = new int[] {
 			62,
 			64,
@@ -122,8 +122,8 @@ public class DiatonicMidiTest {
 	
 	@Test
 	public void equals() {
-		DiatonicMidi dm = DiatonicMidi.of( DiatonicDegree.I, TonalityEnum.C, 5 );
-		DiatonicMidi dm2 = DiatonicMidi.of( DiatonicDegree.I, TonalityEnum.C, 5 );
+		DiatonicMidi dm = DiatonicMidi.from( DiatonicDegree.I, TonalityEnum.C, 5 );
+		DiatonicMidi dm2 = DiatonicMidi.from( DiatonicDegree.I, TonalityEnum.C, 5 );
 		assertEquals(dm2, dm);
 	}
 }

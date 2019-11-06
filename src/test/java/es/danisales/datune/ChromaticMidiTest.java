@@ -32,11 +32,11 @@ public class ChromaticMidiTest {
 	@Test
 	public void toDiatonic() {
 		ChromaticMidi cm = ChromaticMidi.builder().pitch(Chromatic.F).build();
-		DiatonicMidi dm = cm.getDiatonicMidi(TonalityEnum.C);
+		DiatonicMidi dm = DiatonicMidi.from(cm, TonalityEnum.C);
 		Chromatic chromaticDm = ChromaticAdapter.from(dm);
 		assertEquals(Chromatic.F, chromaticDm);
 		cm = ChromaticMidi.builder().pitch(Chromatic.C).build();
-		dm = cm.getDiatonicMidi(TonalityEnum.C);
+		dm = DiatonicMidi.from(cm, TonalityEnum.C);
 		chromaticDm = ChromaticAdapter.from(dm);
 		assertEquals(Chromatic.C, chromaticDm);
 	}

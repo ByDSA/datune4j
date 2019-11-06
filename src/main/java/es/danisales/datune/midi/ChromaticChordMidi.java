@@ -56,20 +56,6 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 		return ccm;
 	}
 
-	public static <N extends PitchChromaticSingle> @NonNull ChromaticChordMidi from(@NonNull PitchChromaticChord<N> ns) {
-		ChromaticChordMidi ccm = new ChromaticChordMidi();
-		for (N n : ns) {
-			Chromatic chromatic = ChromaticAdapter.from(n);
-			ChromaticMidi cm = ChromaticMidi.builder()
-					.pitch(chromatic)
-					.build();
-			ccm.add( cm );
-		}
-
-		return ccm;
-	}
-
-
 	public static ChromaticChordMidi of(PitchChromaticSingle... ns) {
 		ChromaticChordMidi ccm = new ChromaticChordMidi();
 		for (PitchChromaticSingle n : ns) {
@@ -83,35 +69,36 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 		return ccm;
 	}
 
-	public static <N extends PitchChromaticSingle, Array extends PitchChromaticChord<N>> ChromaticChordMidi from(Array ns, int o, int d, int v) {
+	public static <N extends PitchChromaticSingle> ChromaticChordMidi from(Iterable<N> diatonicChordMidi) {
 		ChromaticChordMidi This = new ChromaticChordMidi();
 
-		for ( int i = 0; i < ns.size(); i++ ) {
-			N n = ns.get( i );
-
-			if ( n instanceof PitchOctave )
-				o = ( (PitchOctave) n ).getOctave();
-
-			if ( n instanceof Durable )
-				d = ( (Durable) n ).getDuration();
-
-			if ( n instanceof VelocityNote )
-				v = ( (VelocityNote) n ).getVelocity();
+		for (N n : diatonicChordMidi) {
+			ChromaticMidi.Builder builder = ChromaticMidi.builder();
 
 			Chromatic chromaticN = ChromaticAdapter.from(n);
-			ChromaticMidi cm = ChromaticMidi.builder()
-					.pitch(chromaticN, o)
-					.length(d)
-					.velocity(v)
-					.build();
-			Chromatic chromaticCm = ChromaticAdapter.from(cm);
-			Chromatic prevChromatic = ChromaticAdapter.from( This.get( This.size() - 1 ) );
-			if ( !(n instanceof PitchOctave) && This.size() > 0 && chromaticCm.compareEnharmonicTo(prevChromatic) <= 0 ) {
-				o++;
-				cm.shiftOctave( 1 );
+
+			if (n instanceof PitchOctave)
+				builder.pitch(chromaticN, (((PitchOctave) n).getOctave()));
+			else
+				builder.pitch(chromaticN);
+
+			if (n instanceof Durable) {
+				builder.length(((Durable) n).getDuration());
 			}
 
-			This.add( cm );
+			if (n instanceof VelocityNote) {
+				builder.velocity(((VelocityNote) n).getVelocity());
+			}
+
+			ChromaticMidi cm = builder
+					.build();
+			Chromatic chromaticCm = ChromaticAdapter.from(cm);
+			Chromatic prevChromatic = ChromaticAdapter.from(This.get(This.size() - 1));
+			if (!(n instanceof PitchOctave) && This.size() > 0 && chromaticCm.compareEnharmonicTo(prevChromatic) <= 0) {
+				cm.shiftOctave(1);
+			}
+
+			This.add(cm);
 		}
 
 		return This;
@@ -237,11 +224,6 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 	}
 
 	@Override
-	public ChromaticChordMidi over(PitchChromaticSingle c) throws ImpossibleChord {
-		return (ChromaticChordMidi) super.over( c );
-	}
-
-	@Override
 	public boolean isSus4() {
 		// TODO Auto-generated method stub
 		return false;
@@ -251,10 +233,6 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 	public boolean isSus2() {
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-	public PitchChromaticChord getChromaticChord() {
-		return this.toChromaticChord();
 	}
 
 	@Override

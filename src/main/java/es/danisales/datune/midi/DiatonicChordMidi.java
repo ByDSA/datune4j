@@ -17,10 +17,7 @@ import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.diatonic.Quality;
 import es.danisales.datune.midi.Settings.DefaultValues;
-import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.musical.ChromaticChord;
-import es.danisales.datune.musical.CustomChromaticChord;
-import es.danisales.datune.musical.DiatonicChord;
+import es.danisales.datune.musical.*;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.pitch.Chord;
 import es.danisales.datune.pitch.ChordCommon;
@@ -31,6 +28,7 @@ import es.danisales.datune.tonality.CustomTonality;
 import es.danisales.datune.tonality.ScaleEnum;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchDiatonic {
     protected HarmonicFunction	function	= null;
@@ -41,7 +39,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
     protected DiatonicChordMidi() {
     }
 
-    public DiatonicChordMidi(Tonality t) {
+    public DiatonicChordMidi(@NonNull Tonality t) {
         tonality = t;
         metaTonality = tonality;
     }
@@ -72,28 +70,18 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
             this( t, new CustomDiatonicChord( ns ) );
         }
     */
-    public <N extends PitchChromaticSingle, Array extends PitchChromaticChord<N>> DiatonicChordMidi(Array ns, Tonality t) {
-        this(
-                ns,
-                t,
-                Settings.DefaultValues.OCTAVE
-        );
-    }
 
-    public <N extends PitchChromaticSingle, Array extends PitchChromaticChord<N>> DiatonicChordMidi(Array ns, Tonality t, int o) {
-        this(
-                ns,
-                t,
-                o,
-                Settings.DefaultValues.DURATION_CHORD,
-                Settings.DefaultValues.VELOCITY
-        );
-    }
-
-    public <N extends PitchChromaticSingle, Array extends PitchChromaticChord<N>> DiatonicChordMidi(Array ns, Tonality t, int o, int d, int v) {
+    public <N extends DiatonicAlt, Array extends Chord<N>> DiatonicChordMidi(Array ns, Tonality t, int o, int d, int v) {
         for ( N n : ns ) {
-            DiatonicMidi cm = DiatonicMidi.of( t.getDegreeFrom( n ), t, o, d, v );
-            Chromatic chromaticCm = ChromaticAdapter.from(cm);
+            DiatonicDegree diatonicDegree = t.getDegreeFrom( n );
+            DiatonicMidi cm = DiatonicMidi.builder()
+                    .diatonicDegree(diatonicDegree)
+                    .tonality(t)
+                    .octave(o)
+                    .length(d)
+                    .velocity(v)
+                    .build();
+            Chromatic chromaticCm = Chromatic.from(cm);
             Chromatic lastChromatic = ChromaticAdapter.from( get( size() - 1 ) );
             if ( size() > 0 && chromaticCm.compareEnharmonicTo(lastChromatic) <= 0 ) {
                 o++;
@@ -122,8 +110,9 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
 
         if ( f instanceof ChromaticFunction ) {
             chromaticFunctionProcess( (ChromaticFunction) f, o );
-            Chromatic firstChromatic = ChromaticAdapter.from( get( 0 ) );
-            if ( firstChromatic.compareEnharmonicTo( metaTonality.get( 0 ) ) < 0 )
+            Chromatic firstChromatic = Chromatic.from( get( 0 ) );
+            Chromatic metaChromatic = Chromatic.from( metaTonality.get( 0 ) );
+            if ( firstChromatic.ordinal() < metaChromatic.ordinal() )
                 shiftOctave( 1 );
         } else if ( f instanceof DiatonicFunction )
             diatonicFunctionProcess( (DiatonicFunction) f, o );
@@ -582,7 +571,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
 
             ChromaticChordMidi ccm = ChromaticChordMidi.from(ccmArray);
 
-            if ( tonality.has( cc ) )
+            if ( tonality.hasEnharmonic( cc ) )
                 add( ccm );
             else {
                 metaTonality = tonality.searchInModeSameRoot( cc );
@@ -895,8 +884,10 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
     public boolean add(ChromaticMidi... ns) throws AddedException, TonalityException {
         assert tonality != null;
         assert ns != null;
-        for ( ChromaticMidi n : ns )
-            add( n.getDiatonicMidi( tonality ) );
+        for ( ChromaticMidi n : ns ) {
+            DiatonicMidi diatonicMidi = DiatonicMidi.from(n, tonality);
+            add(diatonicMidi);
+        }
 
         return true;
     }
@@ -990,16 +981,18 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
         ArrayList<ChromaticMidi> ret = new ArrayList<ChromaticMidi>();
 
         for ( DiatonicMidi nscale1 : this ) {
-            ChromaticMidi n1 = nscale1;
+            ChromaticMidi n1 = ChromaticMidi.from(nscale1);
             for ( DiatonicMidi nscale2 : c ) {
-                ChromaticMidi n2 = nscale2;
-                Chromatic chromaticn1 = ChromaticAdapter.from(n1);
-                Chromatic chromaticn2 = ChromaticAdapter.from(n2);
+                ChromaticMidi n2 = ChromaticMidi.from(nscale2);
 
                 if ( n1.getCode() == n2.getCode() )
                     ret.add( n2 );
-                else if ( sameOctave && chromaticn1 == chromaticn2 )
-                    ret.add( n2 );
+                else  {
+                    Chromatic chromaticn1 = Chromatic.from(n1);
+                    Chromatic chromaticn2 = Chromatic.from(n2);
+                    if ( sameOctave && chromaticn1 == chromaticn2 )
+                        ret.add( n2 );
+                }
             }
         }
 
@@ -1090,9 +1083,13 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
 
     public DiatonicChordMidi add(DiatonicDegree pos) throws AddedException {
         Integer octave = getOctave();
-        DiatonicMidi ns = DiatonicMidi.of(
-                pos, tonality, octave == null ? Settings.DefaultValues.OCTAVE : octave, DefaultValues.DURATION_CHORD, DefaultValues.VELOCITY
-        );
+        DiatonicMidi ns = DiatonicMidi.builder()
+                .diatonicDegree(pos)
+                .tonality(tonality)
+                .octave(octave)
+                .length(DefaultValues.DURATION_CHORD)
+                .velocity(DefaultValues.VELOCITY)
+                .build();
         add( ns );
         setRootPos( 0 );
 
@@ -1130,8 +1127,10 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
 
     public ChromaticChordMidi toChromaticChordMidi() {
         ChromaticChordMidi c = new ChromaticChordMidi();
-        for ( DiatonicMidi n : this )
-            c.add( n );
+        for ( DiatonicMidi n : this ) {
+            ChromaticMidi nChromatic = ChromaticMidi.from(n);
+            c.add(nChromatic);
+        }
         c.arpegio = arpegio;
         c.length = length;
         c.setRootPos( getRootPos() );
@@ -1265,11 +1264,13 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
     }
 
     public boolean isSus4() {
-        return this.toChromaticChord().isSus4();
+        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.from(this);
+        return chromaticChordMidi.isSus4();
     }
 
     public boolean isSus2() {
-        return this.toChromaticChord().isSus2();
+        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.from(this);
+        return chromaticChordMidi.isSus2();
     }
 
     public ChromaticChordMidi getChromaticChordMidi() {
@@ -1282,11 +1283,6 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
         return -1;
     }
 
-    @Override
-    public Quality getQuality() {
-        // TODO Auto-generated method stub
-        return null;
-    }
     @Override
     public DiatonicChordMidi setDuration(int d) {
         return (DiatonicChordMidi)super.setDuration( d );
@@ -1301,11 +1297,5 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
     @Override
     protected DiatonicChordMidi newChord() {
         return new DiatonicChordMidi();
-    }
-
-    @Override
-    public boolean hasSameNotes(PitchChromaticChord<DiatonicMidi> chord) {
-        // TODO Auto-generated method stub
-        return false;
     }
 }

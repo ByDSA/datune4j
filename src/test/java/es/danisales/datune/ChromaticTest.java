@@ -1,6 +1,7 @@
 package es.danisales.datune;
 
 import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.musical.DiatonicAlt;
 import org.junit.Test;
 
 import java.util.List;
@@ -33,29 +34,29 @@ public class ChromaticTest {
 	
 	@Test
 	public void equals() {
-		assertFalse(Chromatic.Bb.equals(Chromatic.AA));
-		assertFalse(Chromatic.Eb.equals(Chromatic.DD));
-		assertFalse(Chromatic.C.equals(Chromatic.BB));
-		assertFalse(Chromatic.CCC.equals(Chromatic.D));
-		assertFalse(Chromatic.CCCC.equals(Chromatic.DD));
-		
-		
-		assertTrue(Chromatic.C.equals(Chromatic.C));
-		assertTrue(Chromatic.Bb.equals(Chromatic.Bb));
+		assertNotEquals(DiatonicAlt.Bb, DiatonicAlt.AA);
+		assertNotEquals(DiatonicAlt.Eb, DiatonicAlt.DD);
+		assertNotEquals(DiatonicAlt.C, DiatonicAlt.BB);
+		assertNotEquals(DiatonicAlt.CCC, DiatonicAlt.D);
+		assertNotEquals(DiatonicAlt.CCCC, DiatonicAlt.DD);
+
+
+		assertEquals(DiatonicAlt.C, DiatonicAlt.C);
+		assertEquals(DiatonicAlt.Bb, DiatonicAlt.Bb);
 	}
 	
 	@Test
 	public void equalsEnharmonics() {
-		assertTrue(Chromatic.Bb.compareEnharmonicTo(Chromatic.AA) == 0);
-		assertTrue(Chromatic.Eb.compareEnharmonicTo(Chromatic.DD) == 0);
-		assertTrue(Chromatic.C.compareEnharmonicTo(Chromatic.BB) == 0);
-		assertTrue(Chromatic.CCC.compareEnharmonicTo(Chromatic.D) == 0);
-		assertTrue(Chromatic.CCCC.compareEnharmonicTo(Chromatic.DD) == 0);
+		assertSame(Chromatic.from(DiatonicAlt.Bb), Chromatic.AA);
+		assertSame(Chromatic.from(DiatonicAlt.Eb), Chromatic.DD);
+		assertSame(Chromatic.from(DiatonicAlt.BB), Chromatic.C);
+		assertSame(Chromatic.from(DiatonicAlt.CCC), Chromatic.D);
+		assertSame(Chromatic.from(DiatonicAlt.CCCC), Chromatic.DD);
 	}
 	
 	@Test
 	public void getEnharmonics() {
-		List<Chromatic> cs = Chromatic.C.getEnharmonics();
+		List<DiatonicAlt> cs = Chromatic.C.getEnharmonics(3);
 		assertEquals(4, cs.size());
 	}
 	
@@ -74,6 +75,6 @@ public class ChromaticTest {
 		assertEquals(1, Chromatic.B.distSemitonesTo(Chromatic.C));
 		assertEquals(11, Chromatic.C.distSemitonesTo(Chromatic.B));
 		assertEquals(11, Chromatic.CC.distSemitonesTo(Chromatic.C));
-		assertEquals(11, Chromatic.B.distSemitonesTo(Chromatic.Bb));
+		assertEquals(11, Chromatic.B.distSemitonesTo(Chromatic.from(DiatonicAlt.Bb)));
 	}
 }

@@ -14,6 +14,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Set;
 
 public enum TonalityEnum implements Tonality {
@@ -122,8 +123,8 @@ public enum TonalityEnum implements Tonality {
 		return out;
 	}
 
-	public boolean has(boolean outScale, PitchChromaticChord c) {
-		assert c != null;
+	public boolean has(boolean outScale, @NonNull PitchChromaticChord c) {
+		Objects.requireNonNull(c);
 
 		boolean hasNotes = has( c );
 
@@ -132,7 +133,7 @@ public enum TonalityEnum implements Tonality {
 		else if ( outScale ) {
 			for ( ChromaticFunction f : ChromaticFunction.ALL ) {
 				try {
-					PitchChromaticChord c2 = new DiatonicChordMidi( f, this );
+					PitchChromaticChord c2 = ChromaticChordMidi.from( new DiatonicChordMidi( f, this ) );
 					if ( c.hasSameNotesOrder( c2 ) )
 						return true;
 				} catch ( TonalityException e ) {
@@ -306,7 +307,13 @@ public enum TonalityEnum implements Tonality {
 		return ret;
 	}
 
-	private DiatonicAlt[] updateChromaticsFromBase() {
+	@Override
+	public boolean updateChromaticsFromBase(DiatonicAlt noteBase) {
+		// TODO
+		return false;
+	}
+
+	protected DiatonicAlt[] updateChromaticsFromBase() {
 		DiatonicAlt diatonicAlt = root;
 		int len = length();
 		DiatonicAlt[] notes = new DiatonicAlt[len];
@@ -375,13 +382,15 @@ public enum TonalityEnum implements Tonality {
 		return ret;
 	}
 
-	public static Scale notes2scale(Chromatic[] notes) {
+	public static Scale notes2scale(DiatonicAlt[] notes) {
 		int[] ton = new int[notes.length];
 		int sum = 0;
 		for ( int i = 0; i < notes.length - 1; i++ ) {
-			Chromatic current = notes[i];
-			Chromatic next = notes[i + 1];
-			ton[i] = current.distSemitonesTo(next);
+			DiatonicAlt current = notes[i];
+			Chromatic currentChromatic = Chromatic.from(current);
+			DiatonicAlt next = notes[i + 1];
+			Chromatic nextChromatic = Chromatic.from(next);
+			ton[i] = currentChromatic.distSemitonesTo(nextChromatic);
 			while ( ton[i] < 0 )
 				ton[i] += 12;
 			sum += ton[i];
@@ -402,7 +411,7 @@ public enum TonalityEnum implements Tonality {
 	public @Nullable DiatonicDegree getDegreeFrom(@NonNull PitchChromaticSingle note, boolean enharmonic) {
 		for ( int i = 0; i < length(); i++ ) {
 			Chromatic chromatic = ChromaticAdapter.from(note);
-			if (equalEnharmonic(get(i), chromatic, enharmonic))
+			if (equalEnharmonic(Chromatic.from(get(i)), chromatic, enharmonic))
 				return DiatonicDegree.fromIndex(i);
 		}
 
@@ -424,14 +433,6 @@ public enum TonalityEnum implements Tonality {
 		return getDegreeFrom( note ) != null;
 	}
 
-	public <N extends PitchChromaticSingle> boolean has(PitchChromaticChord<N> notes) {
-		for ( N n : notes ) {
-			if ( getDegreeFrom( n ) == null )
-				return false;
-		}
-
-		return true;
-	}
 	/*
 	 * public boolean has(int note) { return getDegreeFrom( note ) != null; }
 	 * 
@@ -449,7 +450,7 @@ public enum TonalityEnum implements Tonality {
 		return scale;
 	}
 
-	public Chromatic getRoot() {
+	public DiatonicAlt getRoot() {
 		return root;
 	}
 
@@ -528,7 +529,7 @@ public enum TonalityEnum implements Tonality {
 		return null;
 	}
 
-	public Chromatic getEnharmonic(Chromatic chromatic) throws TonalityException {
+	public DiatonicAlt get(Chromatic chromatic) throws TonalityException {
 		return null;
 	}
 
@@ -539,12 +540,6 @@ public enum TonalityEnum implements Tonality {
 
 	static TonalityEnum of(DiatonicAlt c2, Scale s) {
 		return null;
-	}
-
-	@Override
-	public boolean updateChromaticsFromBase(Chromatic noteBase) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override

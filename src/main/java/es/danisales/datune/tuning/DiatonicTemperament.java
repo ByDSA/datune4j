@@ -2,9 +2,10 @@ package es.danisales.datune.tuning;
 
 import es.danisales.datune.musical.AlterationException;
 import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.musical.transformations.AlterationsCalculator;
 
-public abstract class DiatonicTemperament extends Temperament<Chromatic> {
+public abstract class DiatonicTemperament extends Temperament<DiatonicAlt> {
 	public abstract double semi();
 	public abstract double tone();
 	public double octave() {
@@ -12,7 +13,7 @@ public abstract class DiatonicTemperament extends Temperament<Chromatic> {
 	}
 	
 	@Override
-	public DiatonicOctave makeOctave(Chromatic note, double freq) {
+	public DiatonicOctave makeOctave(DiatonicAlt note, double freq) {
 		DiatonicOctave dOct = new DiatonicOctave();
 		
 		dOct.put( note, freq );
@@ -21,8 +22,8 @@ public abstract class DiatonicTemperament extends Temperament<Chromatic> {
 		addFlat( dOct, note, freq );
 		addSharp( dOct, note, freq );
 
-		Chromatic simpleNote = AlterationsCalculator.removeAlterationsFrom(note);
-		note = note.nextDiatonic();
+		Chromatic simpleNote = Chromatic.from(note);
+		note = note.getNextDiatonic();
 		switch(simpleNote) {
 			case A:
 			case C:
@@ -43,30 +44,30 @@ public abstract class DiatonicTemperament extends Temperament<Chromatic> {
 	}
 
 
-	private void addFlat(DiatonicOctave map, Chromatic note, double freq) {
+	private void addFlat(DiatonicOctave map, DiatonicAlt note, double freq) {
 		freq /= semi();
-		note = note.subSemi();
+		note = note.addSemi(-1);
 		while(freq >= Tuning.MIN_FREQUENCY) {
 			map.put(note, freq );
 
 			freq /= semi();
 			try {
-				note = note.subSemi();
+				note = note.addSemi(-1);
 			} catch(AlterationException e) {
 				break;
 			}
 		}
 	}
 	
-	private void addSharp(DiatonicOctave map, Chromatic note, double freq) {
+	private void addSharp(DiatonicOctave map, DiatonicAlt note, double freq) {
 		freq *= semi();
-		note = note.addSemi();
+		note = note.addSemi(1);
 		while(freq <= Tuning.MAX_FREQUENCY) {
 			map.put(note, freq );
 
 			freq *= semi();
 			try {
-				note = note.addSemi();
+				note = note.addSemi(1);
 			} catch(AlterationException e) {
 				break;
 			}

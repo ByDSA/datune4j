@@ -14,16 +14,17 @@ import es.danisales.datune.pitch.PitchChromaticChord;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.BiFunction;
 
-public abstract class ChordMidi<N extends ChromaticMidi> extends Chord<N>
-implements Durable, PitchChromaticChord<N>, PitchOctaveMidi, EventComplex {
+public abstract class ChordMidi<N extends PitchSingleMidi> extends Chord<N>
+implements Durable, PitchOctaveMidi, EventComplex {
 	protected Arpegio	arpegio;
 	protected int		length;
 
 	public CustomChromaticChord meta = null; // TODO: poner private
-
+/*
 	public PitchChromaticChord toChromaticChord() {
 		if (getRootPos() != 0) {
 			CustomChromaticChord ns = CustomChromaticChord.noneOf();
@@ -39,7 +40,7 @@ implements Durable, PitchChromaticChord<N>, PitchOctaveMidi, EventComplex {
 		} else
 			return PitchChromaticChord.of(this);
 	}
-	
+	*/
 	@Override
 	public ChordMidi<N> over(N c) throws ImpossibleChord {
 		return (ChordMidi<N>) super.over( c );
@@ -234,13 +235,15 @@ implements Durable, PitchChromaticChord<N>, PitchOctaveMidi, EventComplex {
 			n.shiftOctave( o );
 		return this;
 	}
-	
+
+	@Override
 	public ChordMidi<N> setOctave(int o) {
 		int diff = o - getOctave();
 		shiftOctave( diff );
 		return this;
 	}
 
+	@Override
 	public int getOctave() {
 		return get( 0 ).getOctave();
 	}
@@ -252,7 +255,7 @@ implements Durable, PitchChromaticChord<N>, PitchOctaveMidi, EventComplex {
 				);
 	}
 
-	public <A extends ChordCommon<N>> boolean hasSameNotesOrderSameOctave(A notes) {
+	public <A extends List<N>> boolean hasSameNotesOrderSameOctave(A notes) {
 		if ( size() != notes.size() || size() == 0 )
 			return false;
 
@@ -264,9 +267,9 @@ implements Durable, PitchChromaticChord<N>, PitchOctaveMidi, EventComplex {
 		return true;
 	}
 
-	public <A extends PitchChromaticChord<N>> boolean hasSameNotesOrder(boolean sameOctave, A notes) {
+	public <A extends List<N>> boolean hasSameNotesOrder(boolean sameOctave, A notes) {
 		return sameOctave && hasSameNotesOrderSameOctave( notes )
-				|| !sameOctave && hasSameNotesOrder( notes );
+				;//|| !sameOctave && hasSameNotesOrder( notes );
 	}
 
 	@Override
@@ -285,7 +288,7 @@ implements Durable, PitchChromaticChord<N>, PitchOctaveMidi, EventComplex {
 
 	@Override
 	public Boolean updateWhatIsItIfNeeded() {
-		boolean ret = meta == null || !this.equalsEnharmonic( meta );
+		boolean ret = meta == null || !this.equals( meta );
 		if ( ret )
 			updateWhatIsIt();
 

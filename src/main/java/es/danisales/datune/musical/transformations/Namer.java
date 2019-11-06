@@ -5,6 +5,8 @@ import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.diatonic.Quality;
 import es.danisales.datune.midi.ChromaticMidi;
+import es.danisales.datune.midi.DiatonicMidi;
+import es.danisales.datune.midi.PitchSingleMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.tonality.Tonality;
@@ -53,8 +55,10 @@ public class Namer {
         return from(chromaticMidi, null);
     }
 
-    public static String from(ChromaticMidi chromaticMidi, Tonality tonality) {
-        return ChromaticMidi.literal(ChromaticAdapter.from(chromaticMidi.getPitch()), tonality ) + chromaticMidi.getOctave();
+    public static String from(PitchSingleMidi chromaticMidi, Tonality tonality) {
+        Chromatic chromatic = ChromaticAdapter.from(chromaticMidi.getPitchMidi());
+        DiatonicAlt diatonicAlt = tonality.get( tonality.getDegreeFrom(chromatic) );
+        return ChromaticMidi.literal(diatonicAlt, tonality ) + chromaticMidi.getOctave();
     }
 
     public static @NonNull String from(@NonNull IntervalDiatonic intervalDiatonic) {

@@ -2,14 +2,13 @@ package es.danisales.datune.musical;
 
 import com.google.common.collect.ImmutableList;
 import es.danisales.datune.diatonic.*;
-import es.danisales.datune.midi.ChromaticChordMidi;
-import es.danisales.datune.midi.DiatonicChordMidi;
-import es.danisales.datune.midi.DiatonicMidi;
-import es.danisales.datune.midi.Settings;
+import es.danisales.datune.midi.*;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.pitch.*;
 import es.danisales.datune.tonality.ScaleEnum;
 import es.danisales.datune.tonality.Tonality;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.*;
 import java.util.function.BiFunction;
@@ -237,14 +236,17 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 		return ret;
 	}
 
-	public CustomChromaticChord rename(Tonality ton) {
-		assert ton != null;
+	public @Nullable CustomChromaticChord rename(@NonNull Tonality ton) {
+		Objects.requireNonNull(ton);
+
 		int rp = getRootPos();
 		for ( int i = 0; i < size(); i++ ) {
 			Chromatic c = get( i );
-			assert c != null : i + " " + this.notesToString();
-			Chromatic c2 = c.rename( ton );
-			assert c2 != null;
+			DiatonicAlt diatonicAlt = c.rename( ton );
+			if (diatonicAlt == null)
+				return null;
+			Chromatic c2 = Chromatic.from( diatonicAlt );
+
 			set( i, c2 );
 		}
 
@@ -330,7 +332,16 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 	public static <T extends PitchChromaticSingle> CustomChromaticChord from(Iterable<T> chord) {
 		CustomChromaticChord c = new CustomChromaticChord();
 		for (T t : chord) {
-			Chromatic chromatic = ChromaticAdapter.from(t);
+			Chromatic chromatic = Chromatic.from(t);
+			c.add(chromatic);
+		}
+		return c;
+	}
+
+	public static <N extends PitchSingleMidi> CustomChromaticChord from(ChordMidi<N> chord) {
+		CustomChromaticChord c = new CustomChromaticChord();
+		for (N t : chord) {
+			Chromatic chromatic = Chromatic.from(t);
 			c.add(chromatic);
 		}
 		return c;
