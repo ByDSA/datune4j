@@ -173,10 +173,9 @@ public class DiatonicMidi implements PitchSingleMidi, PitchChromaticSingle, Pitc
 	}
 
 	@Override
-	public DiatonicMidi shiftOctave(int o) {
+	public void shiftOctave(int o) {
 		octave += o;
 		updatePitch();
-		return this;
 	}
 
 	private void updatePitch() {
@@ -184,10 +183,9 @@ public class DiatonicMidi implements PitchSingleMidi, PitchChromaticSingle, Pitc
 	}
 
 	@Override
-	public DiatonicMidi setOctave(int o) {
+	public void setOctave(int o) {
 		octave = o;
 		updatePitch();
-		return this;
 	}
 
 	@Override

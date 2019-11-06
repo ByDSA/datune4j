@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import es.danisales.datune.midi.ChromaticMidi;
+import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.midi.PitchOctaveMidi;
 import es.danisales.datune.musical.ChromaticChordEnum;
 import org.junit.Test;
@@ -46,8 +47,14 @@ public class ChordMidiTest {
 		assertEquals(0.0f, ccm.dist(ccm), 0);
 		assertEquals(ccm2.dist(ccm), ccm.dist(ccm2), 0);
 		assertNotEquals(0, ccm.dist(ccm2));
-		assertEquals(26, ccm.dist(ccm.clone().shiftOctave(1)));
-		assertNotEquals(0, ccm.dist(ccm.clone().shiftOctave(1)));
+
+		ChromaticChordMidi ccmTmp = ccm.clone();
+		ccmTmp.shiftOctave(1);
+		assertEquals(26, ccm.dist(ccmTmp));
+
+		ccmTmp = ccm.clone();
+		ccmTmp.shiftOctave(1);
+		assertNotEquals(0, ccm.dist(ccmTmp));
 	}
 	
 	@Test

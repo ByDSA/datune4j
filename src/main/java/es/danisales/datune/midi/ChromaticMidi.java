@@ -3,21 +3,17 @@ package es.danisales.datune.midi;
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.eventsequences.EventSequence;
-import es.danisales.datune.midi.Events.EventComplex;
 import es.danisales.datune.midi.Events.NoteOff;
 import es.danisales.datune.midi.Events.NoteOn;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
-import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.musical.transformations.DistanceCalculator;
 import es.danisales.datune.musical.transformations.Namer;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.tonality.Tonality;
-import es.danisales.datune.tonality.TonalityException;
-import es.danisales.others.Codeable;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public final class ChromaticMidi implements PitchSingleMidi, PitchChromaticSingle {
+public final class ChromaticMidi implements PitchSingleMidi, PitchChromaticSingle, PitchOctaveMidiEditable {
 	protected PitchMidi	pitch;
 	protected int	velocity;
 	protected int	length;
@@ -103,19 +99,17 @@ public final class ChromaticMidi implements PitchSingleMidi, PitchChromaticSingl
 	}
 
 	@Override
-	public ChromaticMidi setOctave(int o) {
-		pitch = pitch.setOctave( o );
-		return this;
+	public void setOctave(int o) {
+		pitch = pitch.getWithOctave( o );
 	}
 
-	public ChromaticMidi shift(IntervalChromatic i) {
-		pitch = pitch.shift( i );
-		return this;
+	public void shift(IntervalChromatic i) {
+		pitch = pitch.getShift( i );
 	}
 
-	public ChromaticMidi shiftOctave(int o) {
-		pitch = pitch.shiftOctave( o );
-		return this;
+	@Override
+	public void shiftOctave(int o) {
+		pitch = pitch.getWithShiftOctave( o );
 	}
 
 	public String toString(Tonality tonality) {

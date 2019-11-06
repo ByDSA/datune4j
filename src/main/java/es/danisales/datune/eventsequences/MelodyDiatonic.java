@@ -136,8 +136,7 @@ public class MelodyDiatonic extends Melody {
 	}
 
 	@Override
-	public Durable setDuration(int d) {
+	public void setLength(int d) {
 		// TODO Auto-generated method stub
-		return null;
 	}
 }

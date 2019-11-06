@@ -61,7 +61,7 @@ public class Drums extends EventSequence {
 		for (int i = 0; i < Duration.V1; i += Duration.V16)
 			POWER.add( i, Drums.BASS_DRUM1 );
 
-		POWER.setDuration( Duration.V1 );
+		POWER.setLength( Duration.V1 );
 	}
 
 	public Drums add(int d, int n) {

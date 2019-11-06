@@ -4,7 +4,6 @@ import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
-import es.danisales.datune.musical.transformations.AlterationsCalculator;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.others.Codeable;
@@ -37,13 +36,11 @@ public enum PitchMidi implements PitchChromaticSingle, PitchOctaveMidi, Codeable
 		return Chromatic.from(value % Chromatic.NUMBER);
 	}
 
-	@Override
-	public PitchMidi shiftOctave(int o) {
+	public PitchMidi getWithShiftOctave(int o) {
 		return from( getCode() + Chromatic.NUMBER * o );
 	}
 
-	@Override
-	public PitchMidi setOctave(int o) {
+	public PitchMidi getWithOctave(int o) {
 		return from( getCode() % Chromatic.NUMBER + Chromatic.NUMBER * o );
 	}
 
@@ -387,12 +384,12 @@ public enum PitchMidi implements PitchChromaticSingle, PitchOctaveMidi, Codeable
 		}
 	}
 
-	public PitchMidi shift(int i) {
+	public PitchMidi getShift(int i) {
 		return PitchMidi.from(getCode() + i);
 	}
 
-	public PitchMidi shift(IntervalChromatic i) {
-		return shift( i.getSemitones() );
+	public PitchMidi getShift(IntervalChromatic i) {
+		return getShift( i.getSemitones() );
 	}
 
 	public static int getCodeFrom(Chromatic chromatic, int octave) {

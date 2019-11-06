@@ -11,7 +11,7 @@ public class PitchTests {
 	@Test
 	public void add() {
 		assertEquals( 60, PitchMidi.C5.getCode() );
-		PitchMidi p = PitchMidi.C5.shift( 4 );
+		PitchMidi p = PitchMidi.C5.getShift( 4 );
 		assertEquals( PitchMidi.E5, p );
 		assertEquals( 60, PitchMidi.C5.getCode() );
 	}
@@ -19,7 +19,7 @@ public class PitchTests {
 	@Test
 	public void setOctave() {
 		assertEquals( 60, PitchMidi.C5.getCode() );
-		PitchMidi p = PitchMidi.C5.setOctave( 4 );
+		PitchMidi p = PitchMidi.C5.getWithOctave( 4 );
 		assertEquals( PitchMidi.C4, p );
 		assertEquals( 60, PitchMidi.C5.getCode() );
 	}
@@ -27,7 +27,7 @@ public class PitchTests {
 	@Test
 	public void shiftOctave() {
 		assertEquals( 60, PitchMidi.C5.getCode() );
-		PitchMidi p = PitchMidi.C5.shiftOctave( 1 );
+		PitchMidi p = PitchMidi.C5.getWithShiftOctave( 1 );
 		assertEquals( PitchMidi.C6, p );
 		assertEquals( 60, PitchMidi.C5.getCode() );
 	}

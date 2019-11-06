@@ -11,20 +11,23 @@ import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.pitch.Chord;
 import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.PitchChromaticChord;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.BiFunction;
 
 public abstract class ChordMidi<N extends PitchSingleMidi> extends Chord<N>
-implements Durable, PitchOctaveMidi, EventComplex {
+implements Durable, PitchOctaveMidiEditable, EventComplex {
 	protected Arpegio	arpegio;
 	protected int		length;
 
-	public CustomChromaticChord meta = null; // TODO: poner private
-/*
+	CustomChromaticChord meta = null;
+
+	@Deprecated
 	public PitchChromaticChord toChromaticChord() {
 		if (getRootPos() != 0) {
 			CustomChromaticChord ns = CustomChromaticChord.noneOf();
@@ -40,22 +43,19 @@ implements Durable, PitchOctaveMidi, EventComplex {
 		} else
 			return PitchChromaticChord.of(this);
 	}
-	*/
+
 	@Override
 	public ChordMidi<N> over(N c) throws ImpossibleChord {
 		return (ChordMidi<N>) super.over( c );
 	}
 
-	public <T extends ChordMidi> T assign(T c) {
-		assert c != null;
+	public <T extends ChordMidi<N>> void assign(@NonNull T c) {
+		Objects.requireNonNull(c);
 		clear();
-		List<N> ns = c;
-		for ( N n : ns )
-			add( n );
+		this.addAll(c);
 		arpegio = c.arpegio;
 		length = c.length;
 
-		return (T) this;
 	}
 /*
 	public ChordMidi<NUMBER> inv(int n) {
@@ -157,15 +157,15 @@ implements Durable, PitchOctaveMidi, EventComplex {
 		return max;
 	}
 
-	public Arpegio getArpegio() {
+	public @Nullable Arpegio getArpegio() {
 		return arpegio;
 	}
 
-	public <T extends ChordMidi<N>> T setArpegio(Arpegio a) {
+	public void setArpegio(@NonNull Arpegio a) {
+		Objects.requireNonNull(a);
+
 		arpegio = a.clone();
 		arpegio.setChord( this );
-
-		return (T) this;
 	}
 
 	public int[] integerNotation() {
@@ -188,7 +188,7 @@ implements Durable, PitchOctaveMidi, EventComplex {
 		return distancesAbsolute;
 	}
 
-	public boolean hasNote(final N nIn) {
+	public boolean hasNote(@NonNull final N nIn) {
 		int nInCode = nIn.getCode();
 		for ( N n : this )
 			if ( n.getCode() == nInCode )
@@ -197,7 +197,7 @@ implements Durable, PitchOctaveMidi, EventComplex {
 		return false;
 	}
 
-	public boolean add(N n) throws AddedException {
+	public boolean add(@NonNull N n) throws AddedException {
 		if ( !hasNote( n ) )
 			super.add( n );
 		else
@@ -217,30 +217,26 @@ implements Durable, PitchOctaveMidi, EventComplex {
 		return get( index );
 	}
 
-	public <T extends ChordMidi> T setVelocity(int v) {
+	public <T extends ChordMidi> void setVelocity(int v) {
 		for ( N n : this )
 			n.setVelocity( (int) Math.round( n.getVelocity() * v / 100.0 ) );
-		return (T) this;
 	}
 
 	@Override
-	public ChordMidi<N> setDuration(int d) {
+	public void setLength(int d) {
 		length = d;
-		return (ChordMidi<N>) this;
 	}
 
 	@Override
-	public ChordMidi<N> shiftOctave(int o) {
+	public void shiftOctave(int o) {
 		for ( N n : this )
 			n.shiftOctave( o );
-		return this;
 	}
 
 	@Override
-	public ChordMidi<N> setOctave(int o) {
+	public void setOctave(int o) {
 		int diff = o - getOctave();
 		shiftOctave( diff );
-		return this;
 	}
 
 	@Override

@@ -384,9 +384,9 @@ public class DiatonicChordMidiTest {
 		DiatonicChordMidi c2 = new DiatonicChordMidi( DiatonicFunction.I, 5, TonalityEnum.C );
 		assertEquals( c, c2 );
 
-		c.setDuration( Duration.V2 );
+		c.setLength( Duration.V2 );
 		assertNotEquals( c, c2 );
-		c2.setDuration( Duration.V2 );
+		c2.setLength( Duration.V2 );
 		assertEquals( c, c2 );
 
 		c.setOctave( 6 );

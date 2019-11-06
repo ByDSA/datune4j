@@ -108,9 +108,8 @@ public class Arpegio implements Durable, Cloneable {
 	}
 
 	@Override
-	public Arpegio setDuration(int d) {
+	public void setLength(int d) {
 		length = d;
-		return this;
 	}
 
 	@Override

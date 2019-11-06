@@ -196,10 +196,8 @@ public class EventSequence implements Durable, EventComplex {
 	}
 
 	@Override
-	public EventSequence setDuration(int d) {
+	public void setLength(int d) {
 		duration = d;
-
-		return this;
 	}
 
 	@Override

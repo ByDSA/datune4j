@@ -1,34 +1,23 @@
 package es.danisales.datune.midi;
 
+import es.danisales.arrays.ArrayUtils;
+import es.danisales.datune.diatonic.*;
+import es.danisales.datune.midi.Settings.DefaultValues;
+import es.danisales.datune.musical.*;
+import es.danisales.datune.musical.transformations.ChromaticAdapter;
+import es.danisales.datune.pitch.*;
+import es.danisales.datune.tonality.CustomTonality;
+import es.danisales.datune.tonality.ScaleEnum;
+import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityException;
+import org.checkerframework.checker.nullness.qual.NonNull;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
-
-import es.danisales.arrays.ArrayUtils;
-import es.danisales.datune.diatonic.ChordNotation;
-import es.danisales.datune.diatonic.ChromaticFunction;
-import es.danisales.datune.diatonic.DiatonicDegree;
-import es.danisales.datune.diatonic.DiatonicFunction;
-import es.danisales.datune.diatonic.HarmonicFunction;
-import es.danisales.datune.diatonic.IntervalChromatic;
-import es.danisales.datune.diatonic.IntervalDiatonic;
-import es.danisales.datune.diatonic.Quality;
-import es.danisales.datune.midi.Settings.DefaultValues;
-import es.danisales.datune.musical.*;
-import es.danisales.datune.musical.transformations.ChromaticAdapter;
-import es.danisales.datune.pitch.Chord;
-import es.danisales.datune.pitch.ChordCommon;
-import es.danisales.datune.pitch.PitchChromaticChord;
-import es.danisales.datune.pitch.PitchChromaticSingle;
-import es.danisales.datune.pitch.PitchDiatonic;
-import es.danisales.datune.tonality.CustomTonality;
-import es.danisales.datune.tonality.ScaleEnum;
-import es.danisales.datune.tonality.Tonality;
-import es.danisales.datune.tonality.TonalityException;
-import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchDiatonic {
     protected HarmonicFunction	function	= null;
@@ -377,7 +366,8 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
                     .length(DefaultValues.DURATION_CHORD)
                     .build();
             add( n );
-            ChromaticMidi n2 = n.clone().shift( IntervalChromatic.PERFECT_FIFTH );
+            ChromaticMidi n2 = n.clone();
+            n2.shift( IntervalChromatic.PERFECT_FIFTH );
             //assert !n.equalsEnharmonic( n2 ) : n2;
             add( n2 );
         } else if ( ArrayUtils.contains( t, ChromaticFunction.TENSIONS ) ) {
@@ -597,7 +587,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
     }
 
     public void add(DiatonicChord dt, int octave) {
-        //shift( dt.getDiatonicMidi( tonality, octave ) );
+        //getShift( dt.getDiatonicMidi( tonality, octave ) );
     }
 
     public Boolean isOmitByInterval(IntervalDiatonic i) {
@@ -908,7 +898,8 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
 
         int sizeIni = size();
         for ( int i = 0; i < sizeIni; i++ ) {
-            DiatonicMidi n = get( i ).clone().shiftOctave( oct );
+            DiatonicMidi n = get( i ).clone();
+            n.shiftOctave( oct );
             add( n );
         }
 
@@ -1012,11 +1003,10 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
         return c;
     }
 
-    public DiatonicChordMidi shiftOctave(int o) {
+    @Override
+    public void shiftOctave(int o) {
         for ( DiatonicMidi n : this )
             n.shiftOctave( o );
-
-        return this;
     }
 
     public static ArrayList<DiatonicChordMidi> shiftOctave(ArrayList<DiatonicChordMidi> a, int o) {
@@ -1281,11 +1271,6 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
     public int getInversionNumber() {
         // TODO Auto-generated method stub
         return -1;
-    }
-
-    @Override
-    public DiatonicChordMidi setDuration(int d) {
-        return (DiatonicChordMidi)super.setDuration( d );
     }
 
     @Override
