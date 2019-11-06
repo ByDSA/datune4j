@@ -402,10 +402,10 @@ public enum PitchMidi implements PitchChromaticSingle, PitchOctaveMidi, Codeable
 	}
 	
 	public static PitchMidi from(DiatonicDegree degree, Tonality tonality, int octave) {
-		int code = getCodeFrom( tonality.get( degree ), + octave);
+		int code = getCodeFrom( tonality.getNote( degree ), + octave);
 		DiatonicAlt root = tonality.getRoot();
 		Chromatic rootChromatic = Chromatic.from(root);
-		DiatonicAlt degreeDiatonicAlt = tonality.get(degree);
+		DiatonicAlt degreeDiatonicAlt = tonality.getNote(degree);
 		Chromatic degreeChromatic = Chromatic.from(degreeDiatonicAlt);
 		if ( degreeChromatic.ordinal() < rootChromatic.ordinal() )
 			code += Chromatic.NUMBER;

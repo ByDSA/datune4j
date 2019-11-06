@@ -30,10 +30,10 @@ public class EventSequence implements Durable, EventComplex {
 		map.get( t ).add( e );
 	}
 	/*
-	 * public void addFunction(long t, Class cl, Function f, long length) {
+	 * public void addFunction(long t, Class cl, Function f, long size) {
 	 * Constructor con; try { con = cl.getConstructor(Integer.TYPE, Integer.TYPE);
-	 * int step = Note.V64; for(int i = 0; i < length; i += step) { addSemi(t+i,
-	 * (Event)con.newInstance((int)(t+i), (int)( f.calculateFrom(((double)i)/length) ) ) ); }
+	 * int step = Note.V64; for(int i = 0; i < size; i += step) { addSemi(t+i,
+	 * (Event)con.newInstance((int)(t+i), (int)( f.calculateFrom(((double)i)/size) ) ) ); }
 	 * } catch (NoSuchMethodException | SecurityException | InstantiationException |
 	 * IllegalAccessException | IllegalArgumentException | InvocationTargetException
 	 * e) { // TODO Auto-generated catch block e.printStackTrace(); } }

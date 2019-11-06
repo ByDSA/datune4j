@@ -7,7 +7,9 @@ import es.danisales.datune.musical.CustomChromaticChord;
 import es.danisales.datune.musical.CustomChromaticChord.ImpossibleChord;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public interface PitchChromaticChord<N extends PitchChromaticSingle> extends ChordCommon<N> {	
 	boolean hasSameNotes(PitchChromaticChord<N> chord);
@@ -24,6 +26,17 @@ public interface PitchChromaticChord<N extends PitchChromaticSingle> extends Cho
 		}
 
 		return true;
+	}
+
+	default List<Integer> integerNotationFromRoot() {
+		List<Integer> ret = new ArrayList<>();
+		for (PitchChromaticSingle chromatic : this) {
+			Chromatic c = Chromatic.from(chromatic);
+			Chromatic first = Chromatic.from(get(0));
+			ret.add(c.distSemitonesTo(first));
+		}
+
+		return ret;
 	}
 
 	default boolean equalsEnharmonic(PitchChromaticChord<?> ca) {

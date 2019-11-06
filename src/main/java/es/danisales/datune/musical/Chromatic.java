@@ -1,14 +1,11 @@
 package es.danisales.datune.musical;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
-import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.IntervalDiatonic;
-import es.danisales.datune.midi.PitchSingleMidi;
 import es.danisales.datune.musical.transformations.*;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.tonality.Tonality;
-import es.danisales.datune.tonality.TonalityEnum;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -84,11 +81,11 @@ public enum Chromatic implements PitchChromaticSingle {
 		diatonicAltChromaticMap.put(DiatonicAlt.Cbbb, Chromatic.A);
 	}
 
-	public static @Nullable Chromatic from(@NonNull DiatonicAlt diatonicAlt) {
+	public static @NonNull Chromatic from(@NonNull DiatonicAlt diatonicAlt) {
 		Objects.requireNonNull(diatonicAlt);
 		Chromatic ret = diatonicAltChromaticMap.get(diatonicAlt);
-		if (ret == null)
-			; // TODO
+		Objects.requireNonNull(ret); // todo: provisional
+
 		return ret;
 	}
 
@@ -97,7 +94,7 @@ public enum Chromatic implements PitchChromaticSingle {
 	}
 
 	public static Chromatic from(DiatonicDegree diatonicDegree, Tonality tonality) {
-		DiatonicAlt diatonicAlt = tonality.get(diatonicDegree);
+		DiatonicAlt diatonicAlt = tonality.getNote(diatonicDegree);
 		return Chromatic.from(diatonicAlt);
 	}
 
@@ -136,7 +133,7 @@ public enum Chromatic implements PitchChromaticSingle {
 	}
 
 	public @Nullable DiatonicAlt rename(@NonNull Tonality ton) {
-		return ton.get(this);
+		return ton.getChordFrom(this);
 	}
 
 	public int distSemitonesTo(@NonNull Chromatic n2) {
@@ -145,11 +142,6 @@ public enum Chromatic implements PitchChromaticSingle {
 			d += IntervalChromatic.PERFECT_OCTAVE.getSemitones();
 
 		return d;
-	}
-
-	@Deprecated
-	public int distSemitonesFromC() {
-		return Chromatic.C.distSemitonesTo(this);
 	}
 
 	/** Comparator **/

@@ -14,10 +14,11 @@ import es.danisales.datune.midi.Events.NoteOn;
 import es.danisales.datune.midi.Events.Volume;
 import es.danisales.datune.midi.Progressions.Progression;
 import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.musical.CustomChromaticChord;
+import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.songs.Power;
 import es.danisales.datune.tonality.ScaleEnum;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityChordRetrieval;
 import es.danisales.datune.tonality.TonalityEnum;
 
 import javax.sound.midi.InvalidMidiDataException;
@@ -552,7 +553,7 @@ public class Main {
 			panel.add( labelPanel );
 			for ( int i = 0; i < panels.length; i++ ) {
 				panelF[i] = new JPanel();
-				panelF[i].add( new JLabel( ton.get( i ).toString() ) );
+				panelF[i].add( new JLabel( ton.getNote( i ).toString() ) );
 				panelF[i].setLayout( new GridLayout( 1, 5 ) );
 				for ( int j = 0; j < panels[i].length; j++ ) {
 					panels[i][j] = new JPanel();
@@ -566,10 +567,10 @@ public class Main {
 
 			AtomicReference<DiatonicChordMidi> lastPlayed = new AtomicReference<>( null );
 
-			ArrayList<CustomChromaticChord> fs = new ArrayList<>();
-			ArrayList<CustomChromaticChord> cs = ton.getAllChords();
-			for ( CustomChromaticChord c1 : cs ) {
-				c1.showNotes();
+			java.util.List<ChromaticChord> fs = new ArrayList<>();
+			java.util.List<ChromaticChord> cs = ton.getAllChords();
+			for ( ChromaticChord c1 : cs ) {
+				System.out.println(c1);
 				DiatonicChordMidi c = c1.toMidi().getDiatonicChordMidi( ton );
 				System.out.println( c.getFunction()  + " " + (c.getFunction() instanceof DiatonicFunction) + " " + c.metaTonality + " " + c.getTonality());
 				assert c.getFunction() != null : c;
@@ -579,7 +580,7 @@ public class Main {
 						|| c.isSus2() || c.isSus4()) && !sus24 )
 					continue;
 
-				if (ton.isMajorMinor() && !c.getMetatonality().isMajorMinor() && !modal)
+				if (ton.isMajorOrMinor() && !c.getMetatonality().isMajorOrMinor() && !modal)
 					continue;
 
 				if (fs.contains( c1 ))
@@ -841,7 +842,7 @@ public class Main {
 
 
 		for (DiatonicFunction f : DiatonicFunction.values() ) {
-			System.out.println( f.name() + " " + TonalityEnum.C.get( f ) );
+			System.out.println( f.name() + " " + ChromaticChord.from(TonalityEnum.C, f ) );
 		}
 		
 /*
@@ -1218,9 +1219,9 @@ public class Main {
  * Chord.III, Chord.VI};
  *
  * add(primary[0]); for (int i = 0; i < 10; i++) { int rnd = new
- * SecureRandom().nextInt(primary.length); add(primary[rnd]); rnd = new
- * SecureRandom().nextInt(secondary.length); add(secondary[rnd]); rnd = new
- * SecureRandom().nextInt(primary.length); add(primary[rnd]);
+ * SecureRandom().nextInt(primary.size); add(primary[rnd]); rnd = new
+ * SecureRandom().nextInt(secondary.size); add(secondary[rnd]); rnd = new
+ * SecureRandom().nextInt(primary.size); add(primary[rnd]);
  * add(Chord.VII).inv(2); }
  *
  * setChordArpegio(new ArpegioAscDesc(3, Note.V1, Note.V16)); } }; c.add(0, l);

@@ -15,11 +15,7 @@ public class ScaleTest {
 		
 		assertTrue( a == b );
 		assertEquals(a, b);
-		
-		b = new CustomScale( 2, 2, 1, 2, 2, 2, 1 );
-		assertFalse( a == b );
-		assertTrue( a.equals( b ));
-		
+
 		b = Scale.of( 2, 2, 1, 2, 2, 2, 1 );
 		assertTrue( a == b );
 		assertTrue( a.equals( b ));

@@ -125,7 +125,7 @@ public final class ChromaticMidi implements PitchSingleMidi, PitchChromaticSingl
 		if ( tonality != null ) {
 			DiatonicDegree pos = tonality.getDegreeFrom( diatonicAlt );
 			if ( pos != null )
-				diatonicAlt = tonality.get( pos );
+				diatonicAlt = tonality.getNote( pos );
 		}
 
 		return diatonicAlt.toString();

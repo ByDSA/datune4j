@@ -230,7 +230,7 @@ public class Sequence extends BinaryFile {
 
 	public static Sequence loadRaw(File file) throws InvalidMidiDataException, IOException {
 		javax.sound.midi.Sequence sequence = MidiSystem.getSequence( file );
-		//System.out.println( sequence.getPatchList().length );
+		//System.out.println( sequence.getPatchList().size );
 		int bpm = sequence.getResolution() / 8;
 		Sequence song = new Sequence(null, bpm);
 

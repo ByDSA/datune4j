@@ -118,7 +118,7 @@ public class Power extends Song {
 			} else if (i == 6) {
 				l.add(i*Duration.V1 + 0, 3, Duration.V4+Duration.V8);
 				l.add(i*Duration.V1 + Duration.V4+Duration.V8, 2, Duration.V8);
-				l.add(i*Duration.V1 + Duration.V2, 1, Duration.V2_3).shiftPos(1);
+				l.add(i*Duration.V1 + Duration.V2, 1, Duration.V2_3).shiftPos(IntervalDiatonic.SECOND);
 				l.add(i*Duration.V1 + Duration.V2+Duration.V2_3, 2, Duration.V2_3);
 				l.add(i*Duration.V1 + Duration.V2+2*Duration.V2_3, 3, Duration.V2_3);
 			} else if (i == 7) {

@@ -21,7 +21,6 @@ public interface ChordCommon<N extends SymbolicPitch> extends List<N>, Cloneable
 	}*/
 
 	/** Show */
-	List integerNotationFromRoot();
 	default String notesToString() {
 		StringBuilder sb = new StringBuilder();
 		boolean first = true;

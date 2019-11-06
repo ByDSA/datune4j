@@ -12,10 +12,7 @@ import es.danisales.log.string.Logging;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public enum TonalityEnum implements Tonality {
 	C( DiatonicAlt.C, ScaleEnum.MAJOR ),
@@ -95,8 +92,9 @@ public enum TonalityEnum implements Tonality {
 					);
 	}
 
-	public ArrayList<CustomChromaticChord> getAllChords() {
-		ArrayList<CustomChromaticChord> ret = new ArrayList<>();
+	@Override
+	public List<ChromaticChord> getAllChords() {
+		List<ChromaticChord> ret = new ArrayList<>();
 
 		ret.addAll( getScaleChords() );
 		ret.addAll( getOutScaleChords() );
@@ -105,7 +103,8 @@ public enum TonalityEnum implements Tonality {
 		return ret;
 	}
 
-	public Set<CustomChromaticChord> getBorrowedChords() {
+	@Override
+	public Set<ChromaticChord> getBorrowedChords() {
 		return null;
 	}
 
@@ -152,7 +151,7 @@ public enum TonalityEnum implements Tonality {
 		return false;
 	}
 
-	public boolean isMajorMinor() {
+	public boolean isMajorOrMinor() {
 		if ( scale.equals( ScaleEnum.MAJOR ) || scale.equals( ScaleEnum.MINOR ) )
 			return true;
 		else
@@ -170,10 +169,10 @@ public enum TonalityEnum implements Tonality {
 				continue;
 			ChromaticChordMidi chordCopy = chord.clone();
 
-			ArrayList<Tonality> candidatesPrev = candidates;
+			List<Tonality> candidatesPrev = candidates;
 
 			do {
-				ArrayList<DiatonicChordMidi> possibleChords = chordCopy
+				List<DiatonicChordMidi> possibleChords = chordCopy
 						.toDiatonicChordMidi( outScale );
 				if ( first ) {
 					for ( DiatonicChordMidi c : possibleChords ) {
@@ -222,89 +221,8 @@ public enum TonalityEnum implements Tonality {
 		return Arrays.equals( notes, t.notes );
 	}
 
-	@Override
-	public PitchChromaticChord get(DiatonicFunction f) {
-		PitchChromaticChord ret = GetDiatonicFunctionMajor.get(this, f);
-		if (ret == null)
-			ret = GetDiatonicFunctionMinor.get(this, f);
-		return ret;
-	}
-
-	@Override
-	public CustomChromaticChord get(ChromaticFunction f) {
-
-
-		return null;
-	}
-
-	public PitchChromaticChord<Chromatic> get(CustomDiatonicChord dc, DiatonicFunction df) {
+	public PitchChromaticChord<Chromatic> getChordFrom(CustomDiatonicChord dc, DiatonicFunction df) {
 		return dc.toChromatic( this, df );
-	}
-
-	public PitchChromaticChord[] getTriadChords() {
-		NoDiatonicScaleException.check( scale );
-		PitchChromaticChord[] ret = new PitchChromaticChord[7];
-		for ( int i = 0; i < 7; i++ ) {
-			DiatonicFunction f = null;
-			switch ( i ) {
-				case 0:
-					f = DiatonicFunction.I;
-					break;
-				case 1:
-					f = DiatonicFunction.II;
-					break;
-				case 2:
-					f = DiatonicFunction.III;
-					break;
-				case 3:
-					f = DiatonicFunction.IV;
-					break;
-				case 4:
-					f = DiatonicFunction.V;
-					break;
-				case 5:
-					f = DiatonicFunction.VI;
-					break;
-				case 6:
-					f = DiatonicFunction.VII;
-			}
-			ret[i] = get( f );
-		}
-
-		return ret;
-	}
-
-	public PitchChromaticChord[] getSeventhChords() {
-		NoDiatonicScaleException.check( scale );
-		PitchChromaticChord[] ret = new PitchChromaticChord[7];
-		for ( int i = 0; i < 7; i++ ) {
-			DiatonicFunction f = null;
-			switch ( i ) {
-				case 0:
-					f = DiatonicFunction.I7;
-					break;
-				case 1:
-					f = DiatonicFunction.II7;
-					break;
-				case 2:
-					f = DiatonicFunction.III7;
-					break;
-				case 3:
-					f = DiatonicFunction.IV7;
-					break;
-				case 4:
-					f = DiatonicFunction.V7;
-					break;
-				case 5:
-					f = DiatonicFunction.VI7;
-					break;
-				case 6:
-					f = DiatonicFunction.VII7;
-			}
-			ret[i] = get( f );
-		}
-
-		return ret;
 	}
 
 	@Override
@@ -321,10 +239,13 @@ public enum TonalityEnum implements Tonality {
 		Diatonic noteBaseDiatonic = Diatonic.from( notes[0] );
 		int alt = 0;
 		for ( int i = 1; i < len; i++ ) {
-			diatonicAlt = diatonicAlt.addSemi( scale.get( i - 1 ) );
+			DiatonicDegree diatonicDegree = DiatonicDegree.values()[i-1];
+			int semis = scale.get( diatonicDegree );
+			diatonicAlt = diatonicAlt.addSemi( semis );
 			try {
 				noteBaseDiatonic = noteBaseDiatonic.shift( 1 );
-				notes[i] = ChromaticAdapter.from(noteBaseDiatonic, Chromatic.from(diatonicAlt) );
+				Chromatic chromatic = Chromatic.from(diatonicAlt);
+				notes[i] = ChromaticAdapter.from(noteBaseDiatonic, chromatic );
 				alt += notes[i].getAlterations();
 			} catch ( Exception e ) {
 				// e.printStackTrace();
@@ -409,10 +330,10 @@ public enum TonalityEnum implements Tonality {
 	}
 
 	public @Nullable DiatonicDegree getDegreeFrom(@NonNull PitchChromaticSingle note, boolean enharmonic) {
-		for ( int i = 0; i < length(); i++ ) {
+		for ( DiatonicDegree diatonicDegree : DiatonicDegree.values() ) {
 			Chromatic chromatic = ChromaticAdapter.from(note);
-			if (equalEnharmonic(Chromatic.from(get(i)), chromatic, enharmonic))
-				return DiatonicDegree.fromIndex(i);
+			if (equalEnharmonic(Chromatic.from(getNote(diatonicDegree)), chromatic, enharmonic))
+				return diatonicDegree;
 		}
 
 		return null;
@@ -423,7 +344,7 @@ public enum TonalityEnum implements Tonality {
 				|| enharmonic && chromatic1.compareEnharmonicTo(chromatic2) == 0;
 	}
 	/*
-	 * public Integer getDegreeFrom(int note) { for ( int i = 0; i < length(); i++ ) if
+	 * public Integer getDegreeFrom(int note) { for ( int i = 0; i < size(); i++ ) if
 	 * ( calculateFrom( i ).intValue() == note ) return i;
 	 * 
 	 * return null; }
@@ -487,21 +408,19 @@ public enum TonalityEnum implements Tonality {
 		return ret;
 	}
 
-	public Set<CustomChromaticChord> getScaleChords() {
+	@Override
+	public Set<ChromaticChord> getScaleChords() {
 		return null;
 	}
 
-	public Set<CustomChromaticChord> getOutScaleChords() {
+	@Override
+	public Set<ChromaticChord> getOutScaleChords() {
 		return null;
 	}
 
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append( ChromaticMidi.literal( root, this ) + " " );
-
-		sb.append( scale );
-
-		return sb.toString();
+		return ChromaticMidi.literal(root, this) + " " +
+				scale;
 	}
 
 	public void showNotes() {
@@ -511,7 +430,7 @@ public enum TonalityEnum implements Tonality {
 	public String notesToString() {
 		StringBuilder sb = new StringBuilder();
 		for ( int i = 0; i < length(); i++ ) {
-			sb.append( ChromaticMidi.literal( get( i ), this ) + " " );
+			sb.append(ChromaticMidi.literal(getNote(i), this)).append(" ");
 		}
 
 		return sb.toString();
@@ -529,7 +448,7 @@ public enum TonalityEnum implements Tonality {
 		return null;
 	}
 
-	public DiatonicAlt get(Chromatic chromatic) throws TonalityException {
+	public DiatonicAlt getChordFrom(Chromatic chromatic) throws TonalityException {
 		return null;
 	}
 

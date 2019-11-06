@@ -1,28 +1,17 @@
 package es.danisales.datune.midi;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
-import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.IntervalDiatonic;
-import es.danisales.datune.eventsequences.EventSequence;
-import es.danisales.datune.midi.Events.EventComplex;
-import es.danisales.datune.midi.Events.NoteOff;
-import es.danisales.datune.midi.Events.NoteOn;
-import es.danisales.datune.midi.Settings.DefaultValues;
 import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.musical.Diatonic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.musical.transformations.Namer;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.pitch.PitchDiatonic;
 import es.danisales.datune.tonality.Tonality;
-import es.danisales.datune.tonality.TonalityEnum;
 import es.danisales.datune.tonality.TonalityException;
-import es.danisales.others.Codeable;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-
-import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -63,7 +52,7 @@ public class DiatonicMidi implements PitchSingleMidi, PitchChromaticSingle, Pitc
 		int o = ( degreeInt ) / IntervalDiatonic.OCTAVE.ordinal();
 		if ( degreeInt < 0 )
 			o--;
-		DiatonicDegree degree = DiatonicDegree.fromIndex( degreeInt );
+		DiatonicDegree degree = DiatonicDegree.values()[degreeInt];
 		assert degree != null : getDegree().val() + " " + i;
 
 		DiatonicMidi dm = clone();
@@ -100,18 +89,13 @@ public class DiatonicMidi implements PitchSingleMidi, PitchChromaticSingle, Pitc
 		return pitch;
 	}
 
-	public DiatonicMidi setDegree(int p) {
-		degree = DiatonicDegree.fromIndex( tonality.getScale().trim( p ) );
-
-		return this;
+	public void setDegree(DiatonicDegree diatonicDegree) {
+		degree = diatonicDegree;
 	}
 
-	public DiatonicMidi setDegree(DiatonicDegree d) {
-		return setDegree( d.val() );
-	}
-
-	public DiatonicMidi shiftPos(int p) {
-		return setDegree( getDegree().val() + p );
+	public void shiftPos(IntervalDiatonic intervalDiatonic) {
+		DiatonicDegree newDegree = DiatonicDegree.add(getDegree(), intervalDiatonic);
+		setDegree( newDegree );
 	}
 
 	public IntervalChromatic distInterval(DiatonicMidi n) throws TonalityException {
@@ -202,6 +186,6 @@ public class DiatonicMidi implements PitchSingleMidi, PitchChromaticSingle, Pitc
 	}
 
 	public DiatonicAlt getDiatonicAlt() {
-		return tonality.get(degree);
+		return tonality.getNote(degree);
 	}
 }

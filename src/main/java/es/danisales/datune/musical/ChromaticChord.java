@@ -1,14 +1,17 @@
 package es.danisales.datune.musical;
 
-import es.danisales.datune.diatonic.ChromaticFunction;
-import es.danisales.datune.diatonic.DiatonicDegree;
-import es.danisales.datune.diatonic.DiatonicFunction;
-import es.danisales.datune.diatonic.IntervalChromatic;
+import es.danisales.datune.diatonic.*;
 import es.danisales.datune.midi.*;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.pitch.PitchChromaticChord;
+import es.danisales.datune.tonality.CustomTonality;
 import es.danisales.datune.tonality.ScaleEnum;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityEnum;
+import org.checkerframework.checker.nullness.qual.NonNull;
+
+import java.util.Arrays;
+import java.util.List;
 
 public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
     static ChromaticChord from(ChromaticFunction f, Tonality t) {
@@ -16,25 +19,25 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
         if ( f == ChromaticFunction.I || f == ChromaticFunction.II || f == ChromaticFunction.III
                 || f == ChromaticFunction.IV || f == ChromaticFunction.V
                 || f == ChromaticFunction.VI || f == ChromaticFunction.VII ) {
-            DiatonicAlt r = t.get( f.getDegree() );
+            DiatonicAlt r = t.getNote( f.getDegree() );
             Chromatic rChromatic = Chromatic.from(r);
             ret.add( ChromaticChordEnum.whichRootIs( rChromatic, ChromaticChordEnum.CHORDS_MAJOR ) );
         } else if ( f == ChromaticFunction.i || f == ChromaticFunction.ii
                 || f == ChromaticFunction.iii
                 || f == ChromaticFunction.iv || f == ChromaticFunction.v
                 || f == ChromaticFunction.vi || f == ChromaticFunction.vii ) {
-            DiatonicAlt r = t.get( f.getDegree() );
+            DiatonicAlt r = t.getNote( f.getDegree() );
             Chromatic rChromatic = Chromatic.from(r);
             ret.add( ChromaticChordEnum.whichRootIs( rChromatic, ChromaticChordEnum.CHORDS_MINOR ) );
         } else if ( f == ChromaticFunction.I0 || f == ChromaticFunction.II0
                 || f == ChromaticFunction.III0 || f == ChromaticFunction.IV0
                 || f == ChromaticFunction.V0 || f == ChromaticFunction.VI0
                 || f == ChromaticFunction.VII0 ) {
-            DiatonicAlt r = t.get( f.getDegree() );
+            DiatonicAlt r = t.getNote( f.getDegree() );
             Chromatic rChromatic = Chromatic.from(r);
             ret.add( ChromaticChordEnum.whichRootIs( rChromatic, ChromaticChordEnum.CHORDS_DIMINISHED ) );
         } else if ( f == ChromaticFunction.N6 ) {
-            DiatonicAlt base = t.get( 0 );
+            DiatonicAlt base = t.getNote( 0 );
 
             DiatonicAlt n1 = base.addSemi( 1 );
             DiatonicAlt n2 = base.addSemi( 5 );
@@ -50,7 +53,7 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
                 || f == ChromaticFunction.VII5 ) {
             DiatonicDegree d = f.getDegree();
 
-            DiatonicAlt n = t.get( d );
+            DiatonicAlt n = t.getNote( d );
             Chromatic nChromatic = Chromatic.from(n);
             ret.add( nChromatic );
             DiatonicAlt n2 = n.addSemi( IntervalChromatic.PERFECT_FIFTH.getSemitones() );
@@ -247,6 +250,41 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
         return ret;
     }
 
+    static ChromaticChord from(Iterable<Chromatic> c) {
+        ChromaticChord ret = new CustomChromaticChord();
+        for (Chromatic chromatic : c)
+            ret.add(chromatic);
+
+        return ret;
+    }
+
+    static ChromaticChord _from(TonalityEnum tonality, DiatonicFunction diatonicFunction) {
+        ChromaticChord ret = GetDiatonicFunctionMajor.get(tonality, diatonicFunction);
+        if (ret == null)
+            ret = GetDiatonicFunctionMinor.get(tonality, diatonicFunction);
+        return ret;
+    }
+
+    static ChromaticChord from(Tonality tonality, DiatonicFunction diatonicFunction) {
+        if (tonality instanceof TonalityEnum)
+            return _from((TonalityEnum)tonality, diatonicFunction);
+        else {
+            return ((CustomTonality)tonality).getChordFrom(diatonicFunction);
+        }
+    }
+
+    static ChromaticChord from(Tonality tonality, ChromaticFunction chromaticFunction) {
+        if (tonality instanceof TonalityEnum)
+            return null;
+        else {
+            return ((CustomTonality)tonality).getChordFrom(chromaticFunction);
+        }
+    }
+
+    static ChromaticChord from(Chromatic... chromatics) {
+        return from( Arrays.asList(chromatics) );
+    }
+
     default ChromaticChordMidi toMidi(int octave, int length) {
         return toMidi( octave, length, Settings.DefaultValues.VELOCITY );
     }
@@ -268,5 +306,24 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
                 .velocity(velocity)
                 .build();
         return ccm;
+    }
+
+
+
+    default ChromaticChord[] getModalChords(@NonNull Tonality t) {
+        HarmonicFunction f = t.getFunction( this );
+        if ( f == null || f instanceof ChromaticFunction )
+            return null;
+
+        DiatonicFunction fCasted = (DiatonicFunction) f;
+        List<Tonality> ts = t.getModesSameRoot();
+
+        int i = 0;
+        ChromaticChord[] ret = new ChromaticChord[t.length()];
+        for ( Tonality t2 : ts ) {
+            ret[i++] = ChromaticChord.from(t2, fCasted);
+        }
+
+        return ret;
     }
 }

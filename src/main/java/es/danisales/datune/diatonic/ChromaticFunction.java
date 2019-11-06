@@ -3,6 +3,7 @@ package es.danisales.datune.diatonic;
 import es.danisales.arrays.ArrayUtils;
 import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
+import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.CustomChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.tonality.CustomTonality;
@@ -245,8 +246,8 @@ public enum ChromaticFunction implements HarmonicFunction {
 	 * @return the chromatic function
 	 */
 	public static @Nullable ChromaticFunction from(@NonNull PitchChromaticChord c, @NonNull Tonality t) {
-		Set<CustomChromaticChord> cs = t.getOutScaleChords();
-		for ( CustomChromaticChord c2 : cs ) {
+		Set<ChromaticChord> cs = t.getOutScaleChords();
+		for ( ChromaticChord c2 : cs ) {
 			if ( c.equalsEnharmonic( c2 ) ) {
 				HarmonicFunction hf = t.getFunction( c2, false );
 				if ( hf instanceof ChromaticFunction )

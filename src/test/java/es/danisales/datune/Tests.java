@@ -6,7 +6,6 @@ import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChordEnum;
 import es.danisales.datune.musical.Diatonic;
 import es.danisales.datune.musical.DiatonicAlt;
-import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.tonality.ScaleEnum;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityEnum;
@@ -14,6 +13,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -58,7 +58,7 @@ public class Tests {
 	@Test
 	public void dist() {
 		ChromaticChordMidi notes = ChromaticChordMidi.of(
-			Chromatic.FF, Chromatic.A, Chromatic.CC
+				Chromatic.FF, Chromatic.A, Chromatic.CC
 		);
 
 		assertEquals( PitchMidi.FF5, notes.get( 0 ).getCode() );
@@ -66,11 +66,11 @@ public class Tests {
 		List<Integer> n = notes.integerNotationFromRoot();
 
 		assertArrayEquals(
-			new Integer[] {
-				0,
-				3,
-				7
-			}, n.toArray()
+				new Integer[] {
+						0,
+						3,
+						7
+				}, n.toArray()
 		);
 	}
 
@@ -154,12 +154,12 @@ public class Tests {
 		DiatonicChordMidi c = new DiatonicChordMidi( ChromaticFunction.V7_IV, 5, s );
 
 		assertEquals(
-			Tonality.of( Chromatic.C, ScaleEnum.MIXOLYDIAN ).getScale(), c.getTonality().getScale()
+				Tonality.of( Chromatic.C, ScaleEnum.MIXOLYDIAN ).getScale(), c.getTonality().getScale()
 		);
 
 		c = new DiatonicChordMidi( ChromaticFunction.V7_V, 5, TonalityEnum.E );
 		assertEquals(
-			Tonality.of( Chromatic.FF, ScaleEnum.MIXOLYDIAN ).getScale(), c.getTonality().getScale()
+				Tonality.of( Chromatic.FF, ScaleEnum.MIXOLYDIAN ).getScale(), c.getTonality().getScale()
 		);
 	}
 
@@ -176,7 +176,7 @@ public class Tests {
 		DiatonicChordMidi c = ( new DiatonicChordMidi( DiatonicFunction.IV6, 5, TonalityEnum.C ) )
 				.getInv( 3 );
 
-		ArrayList<DiatonicChordMidi> chords = c.toChromaticChordMidi().toDiatonicChordMidi( false );
+		List<DiatonicChordMidi> chords = c.toChromaticChordMidi().toDiatonicChordMidi( false );
 	}
 
 	@Test
@@ -184,7 +184,7 @@ public class Tests {
 		DiatonicChordMidi c = ( new DiatonicChordMidi( DiatonicFunction.IV6, 5, TonalityEnum.C ) )
 				.getInv( 3 );
 
-		ArrayList<DiatonicChordMidi> chords = c.toChromaticChordMidi().toDiatonicChordMidi( false );
+		List<DiatonicChordMidi> chords = c.toChromaticChordMidi().toDiatonicChordMidi( false );
 
 		int s1 = chords.size();
 		assertEquals( 50, s1 );
@@ -217,7 +217,7 @@ public class Tests {
 			notes.add(chromaticMidi);
 		}
 
-		ArrayList<DiatonicChordMidi> chords = notes.toDiatonicChordMidi( false );
+		List<DiatonicChordMidi> chords = notes.toDiatonicChordMidi( false );
 		assert ( chords.size() > 0 );
 	}
 
@@ -234,8 +234,8 @@ public class Tests {
 
 		assertEquals( Chromatic.C, s.getRoot() );
 
-		assertEquals( Chromatic.C, s.get( 0 ) );
-		assertEquals( Chromatic.D, s.get( 1 ) );
+		assertEquals( Chromatic.C, s.getNote( 0 ) );
+		assertEquals( Chromatic.D, s.getNote( 1 ) );
 	}
 
 	@Test
@@ -247,16 +247,16 @@ public class Tests {
 
 	@Test
 	public void getModes() {
-		assertArrayEquals(
-			new int[] {
-				2,
-				1,
-				2,
-				2,
-				1,
-				2,
-				2
-			}, ScaleEnum.MINOR.val()
+		assertEquals(
+				Arrays.asList(
+						2,
+						1,
+						2,
+						2,
+						1,
+						2,
+						2
+				), ScaleEnum.MINOR.getValue()
 		);
 	}
 
@@ -314,123 +314,123 @@ public class Tests {
 
 		for ( ChromaticChordEnum c : ChromaticChordEnum.CHORDS_MAJOR )
 			Assert.assertArrayEquals(
-				new Integer[] {
-					0,
-					4,
-					7
-				}, c.integerNotationFromRoot().toArray()
+					new Integer[] {
+							0,
+							4,
+							7
+					}, c.integerNotationFromRoot().toArray()
 			);
 		for ( ChromaticChordEnum c : ChromaticChordEnum.CHORDS_MINOR )
 			Assert.assertArrayEquals(
-				new Integer[] {
-					0,
-					3,
-					7
-				}, c.integerNotationFromRoot().toArray()
+					new Integer[] {
+							0,
+							3,
+							7
+					}, c.integerNotationFromRoot().toArray()
 			);
 		for ( ChromaticChordEnum c : ChromaticChordEnum.CHORDS_DIMINISHED )
 			Assert.assertArrayEquals(
-				new Integer[] {
-					0,
-					3,
-					6
-				}, c.integerNotationFromRoot().toArray()
+					new Integer[] {
+							0,
+							3,
+							6
+					}, c.integerNotationFromRoot().toArray()
 			);
 		for ( ChromaticChordEnum c : ChromaticChordEnum.CHORDS_AUGMENTED )
 			Assert.assertArrayEquals(
-				new Integer[] {
-					0,
-					4,
-					8
-				}, c.integerNotationFromRoot().toArray()
+					new Integer[] {
+							0,
+							4,
+							8
+					}, c.integerNotationFromRoot().toArray()
 			);
 		for ( ChromaticChordEnum c : ChromaticChordEnum.CHORDS_SUS4 )
 			Assert.assertArrayEquals(
-				new Integer[] {
-					0,
-					5,
-					7
-				}, c.integerNotationFromRoot().toArray()
+					new Integer[] {
+							0,
+							5,
+							7
+					}, c.integerNotationFromRoot().toArray()
 			);
 		for ( ChromaticChordEnum c : ChromaticChordEnum.CHORDS_SUS2 )
 			Assert.assertArrayEquals(
-				new Integer[] {
-					0,
-					2,
-					7
-				}, c.integerNotationFromRoot().toArray()
+					new Integer[] {
+							0,
+							2,
+							7
+					}, c.integerNotationFromRoot().toArray()
 			);
 		for ( ChromaticChordEnum c : ChromaticChordEnum.CHORDS_7 )
 			Assert.assertArrayEquals(
-				new Integer[] {
-					0,
-					4,
-					7,
-					10
-				}, c.integerNotationFromRoot().toArray()
+					new Integer[] {
+							0,
+							4,
+							7,
+							10
+					}, c.integerNotationFromRoot().toArray()
 			);
 		for ( ChromaticChordEnum c : ChromaticChordEnum.CHORDS_7b5 )
 			Assert.assertArrayEquals(
-				new Integer[] {
-					0,
-					4,
-					6,
-					10
-				}, c.integerNotationFromRoot().toArray()
+					new Integer[] {
+							0,
+							4,
+							6,
+							10
+					}, c.integerNotationFromRoot().toArray()
 			);
 		for ( ChromaticChordEnum c : ChromaticChordEnum.CHORDS_7a5 )
 			Assert.assertArrayEquals(
-				new Integer[] {
-					0,
-					4,
-					8,
-					10
-				}, c.integerNotationFromRoot().toArray()
+					new Integer[] {
+							0,
+							4,
+							8,
+							10
+					}, c.integerNotationFromRoot().toArray()
 			);
 		for ( ChromaticChordEnum c : ChromaticChordEnum.CHORDS_Maj7 )
 			Assert.assertArrayEquals(
-				new Integer[] {
-					0,
-					4,
-					7,
-					11
-				}, c.integerNotationFromRoot().toArray()
+					new Integer[] {
+							0,
+							4,
+							7,
+							11
+					}, c.integerNotationFromRoot().toArray()
 			);
 		for ( ChromaticChordEnum c : ChromaticChordEnum.CHORDS_mMaj7 )
 			Assert.assertArrayEquals(
-				new Integer[] {
-					0,
-					3,
-					7,
-					11
-				}, c.integerNotationFromRoot().toArray()
+					new Integer[] {
+							0,
+							3,
+							7,
+							11
+					}, c.integerNotationFromRoot().toArray()
 			);
 		for ( ChromaticChordEnum c : ChromaticChordEnum.CHORDS_m7 )
 			Assert.assertArrayEquals(
-				new Integer[] {
-					0,
-					3,
-					7,
-					10
-				}, c.integerNotationFromRoot().toArray()
+					new Integer[] {
+							0,
+							3,
+							7,
+							10
+					}, c.integerNotationFromRoot().toArray()
 			);
 		for ( ChromaticChordEnum c : ChromaticChordEnum.CHORDS_m7a5 )
 			Assert.assertArrayEquals(
-				new Integer[] {
-					0,
-					3,
-					8,
-					10
-				}, c.integerNotationFromRoot().toArray()
+					new Integer[] {
+							0,
+							3,
+							8,
+							10
+					}, c.integerNotationFromRoot().toArray()
 			);
 		for ( ChromaticChordEnum c : ChromaticChordEnum.CHORDS_m7b5 )
 			Assert.assertArrayEquals(
-				new Integer[] {
-					0,
-					3,
-					6,
-					10
-				}, c.integerNotationFromRoot().toArray()
+					new Integer[] {
+							0,
+							3,
+							6,
+							10
+					}, c.integerNotationFromRoot().toArray()
 			);
 	}
 }

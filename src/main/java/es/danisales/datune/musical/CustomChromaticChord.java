@@ -3,9 +3,7 @@ package es.danisales.datune.musical;
 import com.google.common.collect.ImmutableList;
 import es.danisales.datune.diatonic.*;
 import es.danisales.datune.midi.*;
-import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.pitch.*;
-import es.danisales.datune.tonality.ScaleEnum;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -217,25 +215,6 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 		return meta.quality;
 	}
 
-	public CustomChromaticChord[] getModalChords(Tonality t) {
-		HarmonicFunction f = t.getFunction( this );
-		if ( f == null || f instanceof ChromaticFunction )
-			return null;
-
-		DiatonicFunction fCasted = (DiatonicFunction) f;
-		List<Tonality> ts = t.getModesSameRoot();
-
-		int i = 0;
-		CustomChromaticChord[] ret = new CustomChromaticChord[t.length()];
-		for ( Tonality t2 : ts ) {
-			CustomChromaticChord c = new CustomChromaticChord( );
-			c.add( t2.get( fCasted ) );
-			ret[i++] = c;
-		}
-
-		return ret;
-	}
-
 	public @Nullable CustomChromaticChord rename(@NonNull Tonality ton) {
 		Objects.requireNonNull(ton);
 
@@ -366,12 +345,6 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 		ee.addAll(chord);
 
 		return e.equals( ee );
-	}
-
-	@Override
-	public List integerNotationFromRoot() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

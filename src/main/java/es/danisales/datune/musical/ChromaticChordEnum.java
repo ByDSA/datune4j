@@ -1989,7 +1989,7 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic>, Chroma
 	private final List<Chromatic> notes;
 	private final ChromaticChordMeta meta;
 
-	private ChromaticChordEnum(ChromaticChordMeta m, @NonNull Chromatic... cs) {
+	ChromaticChordEnum(ChromaticChordMeta m, @NonNull Chromatic... cs) {
 		Objects.requireNonNull(cs);
 
 		List<Chromatic> notesMutatable = new ArrayList<>(Arrays.asList(cs));
@@ -2236,12 +2236,6 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic>, Chroma
 		}
 
 		return chords;
-	}
-
-	@Override
-	public List integerNotationFromRoot() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

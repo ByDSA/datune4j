@@ -1,6 +1,5 @@
 package es.danisales.datune.musical.transformations;
 
-import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.PitchMidi;
 import es.danisales.datune.midi.PitchSingleMidi;
 import es.danisales.datune.musical.Chromatic;
@@ -17,7 +16,7 @@ public class ChromaticAdapter {
     }
 
     public static Chromatic from(@NonNull Diatonic diatonic, Tonality tonality) {
-        return Chromatic.from( tonality.get(diatonic.getDegree()) );
+        return Chromatic.from( tonality.getNote(diatonic.getDegree()) );
     }
 
     public static DiatonicAlt from(@NonNull Diatonic diatonic, @NonNull Chromatic semitoneValue) {

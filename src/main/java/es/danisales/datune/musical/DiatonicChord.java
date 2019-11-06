@@ -302,7 +302,7 @@ public interface DiatonicChord extends DiatonicChordCommon<Diatonic> {
 				throw new TonalityException( this, tonality );
 			else {
 				int octaveNote = getOctave();
-				DiatonicMidi ns = DiatonicMidi.fromIndex( pos, tonality, pitch.getOctave(), length, velocity );
+				DiatonicMidi ns = DiatonicMidi.fromIndex( pos, tonality, pitch.getOctave(), size, velocity );
 				int octaveNoteScaleNote = ns.getPitch().getOctave();
 				ns.shiftOctave( octaveNote - octaveNoteScaleNote );
 

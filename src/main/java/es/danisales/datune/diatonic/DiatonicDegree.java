@@ -1,5 +1,6 @@
 package es.danisales.datune.diatonic;
 
+import es.danisales.datune.musical.Diatonic;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
@@ -7,6 +8,10 @@ import org.checkerframework.checker.nullness.qual.NonNull;
  */
 public enum DiatonicDegree {
 	I, II, III, IV, V, VI, VII;
+
+	public static DiatonicDegree from(IntervalDiatonic intervalDiatonic) {
+		return values()[intervalDiatonic.ordinal() % DiatonicDegree.values().length];
+	}
 
 	/**
 	 * Value
@@ -38,17 +43,16 @@ public enum DiatonicDegree {
 	 * @param n the n
 	 * @return the degree
 	 */
-	@Deprecated
-	public static DiatonicDegree fromIndex(int n) {
+	private static DiatonicDegree fromIndex(int n) {
 		n = limitToOneOctave(n);
 
 		return values()[n];
 	}
 
 	private static int limitToOneOctave(int n) {
-		n = n % IntervalDiatonic.OCTAVE.ordinal();
+		n = n % Diatonic.NUMBER;
 		if ( n < 0 )
-			n += IntervalDiatonic.OCTAVE.ordinal();
+			n += Diatonic.NUMBER;
 		return n;
 	}
 

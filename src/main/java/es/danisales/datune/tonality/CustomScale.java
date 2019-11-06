@@ -1,40 +1,38 @@
 package es.danisales.datune.tonality;
 
-import java.util.Arrays;
+import es.danisales.datune.diatonic.DiatonicDegree;
+
+import java.util.Collections;
+import java.util.List;
 
 public class CustomScale implements Scale {
-	private int[] value;
+	private List<Integer> value;
 	
-	public CustomScale(int... i) {
-		value = i;
-	}
-	
-	public int get(int n) {
-		return value[trim( n )];
+	public CustomScale(List<Integer> values) {
+		value = values;
 	}
 	
 	@Override
-	public int[] val() {
-		return Arrays.copyOf(
-			value, value.length
-		);
+	public List<Integer> getValue() {
+		return Collections.unmodifiableList(value);
 	}
-	
+
+	@Override
 	public boolean equals(Object m) {
 		if ( m instanceof Scale )
-			return Arrays.equals(
-				value, ( (Scale) m ).val()
-			);
-		else if ( m instanceof int[] )
-			return Arrays.equals(
-				value, (int[]) m
-			);
+			return
+				value.equals(((Scale) m ).getValue());
 		else
 			return false;
 	}
 
 	@Override
-	public int length() {
-		return value.length;
+	public int size() {
+		return value.size();
+	}
+
+	@Override
+	public int get(DiatonicDegree diatonicDegree) {
+		return value.get(diatonicDegree.ordinal());
 	}
 }

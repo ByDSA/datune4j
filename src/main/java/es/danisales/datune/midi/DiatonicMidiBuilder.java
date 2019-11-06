@@ -31,7 +31,7 @@ public final class DiatonicMidiBuilder extends Builder<DiatonicMidiBuilder, Diat
         Objects.requireNonNull(diatonicDegree);
 
         int dv = diatonicDegree.val();
-        octave += ( dv < 0 && dv % tonality.getScale().length() != 0 ? -1 : 0 );
+        octave += ( dv < 0 && dv % tonality.getScale().size() != 0 ? -1 : 0 );
 
         DiatonicMidi dm = new DiatonicMidi();
         dm.setLength( length );

@@ -104,8 +104,8 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 		return This;
 	}
 
-	public ArrayList<DiatonicChordMidi> toDiatonicChordMidi(boolean outScale) {
-		ArrayList<Tonality> tonalities = Tonality.getFromChord( outScale, this );
+	public List<DiatonicChordMidi> toDiatonicChordMidi(boolean outScale) {
+		List<Tonality> tonalities = Tonality.getFromChord( outScale, this );
 
 		if ( tonalities.size() == 0 )
 			return new ArrayList<>();

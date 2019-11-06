@@ -14,6 +14,9 @@ import es.danisales.datune.musical.*;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticSingle;
+import org.checkerframework.checker.nullness.qual.NonNull;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 public class CustomTonality implements Tonality {
 	private DiatonicAlt				root;
@@ -38,45 +41,45 @@ public class CustomTonality implements Tonality {
 
 	// Cache
 	private boolean										useCache;
-	private Set<CustomChromaticChord>							scaleChords;
-	private Set<CustomChromaticChord>							outScaleChords;
-	private Set<CustomChromaticChord>							borrowedChords;
-	private HashMap<DiatonicFunction, CustomChromaticChord>	functionChordsMap;
-	private HashMap<ChromaticFunction, CustomChromaticChord>	chromaticChordsMap;
-	public HashMap<CustomChromaticChord, HarmonicFunction>	chromaticChordFunction;	// TODO: private
+	private Set<ChromaticChord>							scaleChords;
+	private Set<ChromaticChord>							outScaleChords;
+	private Set<ChromaticChord>							borrowedChords;
+	private HashMap<DiatonicFunction, ChromaticChord>	functionChordsMap;
+	private HashMap<ChromaticFunction, ChromaticChord>	chromaticChordsMap;
+	private HashMap<ChromaticChord, HarmonicFunction>	chromaticChordFunction;
 
 	private static final int	SIZE_MIN	= 2;
 	private static final int	SIZE_MAX	= 8;
 
 	private void createCache() {
-		scaleChords = new HashSet();
-		outScaleChords = new HashSet();
-		borrowedChords = new HashSet();
-		chromaticChordFunction = new HashMap();
+		scaleChords = new HashSet<>();
+		outScaleChords = new HashSet<>();
+		borrowedChords = new HashSet<>();
+		chromaticChordFunction = new HashMap<>();
 
 		functionChordsMap = new HashMap<>();
 		for ( DiatonicFunction f : DiatonicFunction.COMMON )
-			functionChordsMap.put( f, get( f ) );
+			functionChordsMap.put( f, getChordFrom( f ) );
 
 		chromaticChordsMap = new HashMap<>();
 		for ( ChromaticFunction f : ChromaticFunction.ALL )
-			chromaticChordsMap.put( f, get( f ) );
+			chromaticChordsMap.put( f, getChordFrom( f ) );
 
 		useCache = true;
 
 		for ( DiatonicFunction f : ArrayUtils
 				.concat( DiatonicFunction.TRIADS, DiatonicFunction.SEVENTH ) ) {
-			CustomChromaticChord cc = get( f );
-			CustomChromaticChord[] modalChromaticChords = cc.getModalChords( this );
+			ChromaticChord cc = getChordFrom( f );
+			ChromaticChord[] modalChromaticChords = cc.getModalChords( this );
 			if ( modalChromaticChords == null )
 				continue;
-			for ( CustomChromaticChord cc2 : modalChromaticChords )
+			for ( ChromaticChord cc2 : modalChromaticChords )
 				if ( !hasEnharmonic( cc2 ) ) {
 					borrowedChords.add( cc2 );
 				}
 		}
 		/*
-		 * if ( this.isMajorMinor() ) { Scale otherScale = scale.equals( Scale.MAJOR ) ?
+		 * if ( this.isMajorOrMinor() ) { Scale otherScale = scale.equals( Scale.MAJOR ) ?
 		 * Scale.MINOR : Scale.MAJOR; Tonality ton = new Tonality( root, otherScale );
 		 * DiatonicFunction[] fs = new DiatonicFunction[] { DiatonicFunction.D,
 		 * DiatonicFunction.E, DiatonicFunction.F, DiatonicFunction.G,
@@ -133,7 +136,7 @@ public class CustomTonality implements Tonality {
 				out.add( this.clone() );
 				if ( a == 0 )
 					break;
-			} else if ( a == minAlterations ) {
+			} else if (a.equals(minAlterations)) {
 				out.add( ton.clone() );
 			}
 		}
@@ -146,10 +149,11 @@ public class CustomTonality implements Tonality {
 			createCache();
 	}
 
-	public ArrayList<CustomChromaticChord> getAllChords() {
+	@Override
+	public List<ChromaticChord> getAllChords() {
 		createCacheIfNeeded();
 
-		ArrayList<CustomChromaticChord> ret = new ArrayList<>();
+		List<ChromaticChord> ret = new ArrayList<>();
 
 		ret.addAll( getScaleChords() );
 		ret.addAll( getOutScaleChords() );
@@ -158,20 +162,21 @@ public class CustomTonality implements Tonality {
 		return ret;
 	}
 
-	public Set<CustomChromaticChord> getBorrowedChords() {
+	@Override
+	public Set<ChromaticChord> getBorrowedChords() {
 		createCacheIfNeeded();
-		Set<CustomChromaticChord> ret = new HashSet();
-		for (CustomChromaticChord c : borrowedChords)
-			ret.add( c.clone() );
+		Set<ChromaticChord> ret = new HashSet<>();
+		for (ChromaticChord c : borrowedChords)
+			ret.add( ChromaticChord.from(c) );
 		return ret;
 	}
 
-	public static ArrayList<CustomTonality> getFromChord(PitchChromaticChord c) {
+	public static List<CustomTonality> getFromChord(PitchChromaticChord c) {
 		return getFromChord( false, c );
 	}
 
-	public static ArrayList<CustomTonality> getFromChord(boolean outScale, PitchChromaticChord c) {
-		ArrayList<CustomTonality> out = new ArrayList<>();
+	public static List<CustomTonality> getFromChord(boolean outScale, PitchChromaticChord c) {
+		List<CustomTonality> out = new ArrayList<>();
 		for ( CustomTonality t : CustomTonality.all() ) {
 			if ( t.has( outScale, c ) )
 				out.add( t );
@@ -180,8 +185,8 @@ public class CustomTonality implements Tonality {
 		return out;
 	}
 
-	public boolean has(boolean outScale, PitchChromaticChord c) {
-		assert c != null;
+	public boolean has(boolean outScale, @NonNull PitchChromaticChord c) {
+		Objects.requireNonNull(c);
 
 		boolean hasNotes = has( c );
 
@@ -202,24 +207,13 @@ public class CustomTonality implements Tonality {
 		return false;
 	}
 
-	private static boolean contains(ArrayList<CustomTonality> c, CustomTonality t) {
-		for ( CustomTonality i : c )
-			if ( i.equals( t ) )
-				return true;
-		return false;
+	public boolean isMajorOrMinor() {
+		return scale.equals(ScaleEnum.MAJOR) || scale.equals(ScaleEnum.MINOR);
 	}
 
-	public boolean isMajorMinor() {
-		if ( scale.equals( ScaleEnum.MAJOR ) || scale.equals( ScaleEnum.MINOR ) )
-			return true;
-		else
-			return false;
-	}
-
-	public static ArrayList<Tonality> getFromChords(boolean outScale, ArrayList<ChromaticChordMidi> chords) {
-		ArrayList<Tonality> candidates = new ArrayList<Tonality>();
-
-		assert chords.size() > 0;
+	public static List<Tonality> getFromChords(boolean outScale, List<ChromaticChordMidi> chords) {
+		checkArgument(chords.size() > 0);
+		List<Tonality> candidates = new ArrayList<>();
 
 		boolean first = true;
 		for ( ChromaticChordMidi chord : chords ) {
@@ -227,10 +221,10 @@ public class CustomTonality implements Tonality {
 				continue;
 			ChromaticChordMidi chordCopy = chord.clone();
 
-			ArrayList<Tonality> candidatesPrev = candidates;
+			List<Tonality> candidatesPrev = candidates;
 
 			do {
-				ArrayList<DiatonicChordMidi> possibleChords = chordCopy
+				List<DiatonicChordMidi> possibleChords = chordCopy
 						.toDiatonicChordMidi( outScale );
 				if ( first ) {
 					for ( DiatonicChordMidi c : possibleChords ) {
@@ -260,31 +254,13 @@ public class CustomTonality implements Tonality {
 		return candidates;
 	}
 
-	public boolean equals(CustomTonality t) {
-		return sameRoot( t ) && sameScale( t ) && sameNotes( t );
-	}
-
-	public boolean sameRoot(CustomTonality t) {
-		assert t != null;
-		assert root != null;
-		assert t.root != null;
-		return root.equals( t.root );
-	}
-
-	public boolean sameScale(CustomTonality t) {
-		return scale.equals( t.scale );
-	}
-
-	public boolean sameNotes(CustomTonality t) {
-		return Arrays.equals( notes, t.notes );
-	}
-
 	public CustomTonality clone() {
 		return new CustomTonality( root, scale );
 	}
 
-	public CustomChromaticChord get(DiatonicFunction f) {
-		CustomChromaticChord cc = null;
+	// todo: private
+	public ChromaticChord getChordFrom(DiatonicFunction f) {
+		ChromaticChord cc = null;
 		if ( functionChordsMap != null )
 			cc = functionChordsMap.get( f );
 
@@ -308,26 +284,28 @@ public class CustomTonality implements Tonality {
 			chromaticChordFunction.put( cc, f );*/
 		}
 
-		cc = cc.clone( true );
+		cc = ChromaticChord.from(cc);
 
 		return cc;
 	}
 
-	public CustomChromaticChord get(ChromaticFunction f) {
-		CustomChromaticChord cc = null;
+	// todo: private
+	public ChromaticChord getChordFrom(ChromaticFunction f) {
+		ChromaticChord cc = null;
 		if ( chromaticChordsMap != null )
 			cc = chromaticChordsMap.get( f );
 
 		if ( cc == null ) {
-			cc = (CustomChromaticChord)ChromaticChord.from( f, this );
-			cc.updateWhatIsIt();
+			cc = ChromaticChord.from( f, this );
+			if (cc instanceof CustomChromaticChord)
+				((CustomChromaticChord)cc).updateWhatIsIt();
 			assert cc != null : f + " " + this.notesToString();
 
 			if ( chromaticChordsMap == null )
 				chromaticChordsMap = new HashMap<>();
 			chromaticChordsMap.put( f, cc );
 
-			DiatonicDegree d = null;
+			DiatonicDegree d;
 			d = f.getDegree();
 			assert d != null : f;
 			if ( outScaleChords == null )
@@ -340,7 +318,7 @@ public class CustomTonality implements Tonality {
 			chromaticChordFunction.putIfAbsent(cc, f);
 		}
 
-		cc = cc.clone( true );
+		cc = ChromaticChord.from(cc);
 
 		return cc;
 	}
@@ -372,76 +350,6 @@ public class CustomTonality implements Tonality {
 		return null;
 	}*/
 
-	public PitchChromaticChord<Chromatic> get(CustomDiatonicChord dc, DiatonicFunction df) {
-		return dc.toChromatic( this, df );
-	}
-
-	public CustomChromaticChord[] getTriadChords() {
-		NoDiatonicScaleException.check( scale );
-		CustomChromaticChord[] ret = new CustomChromaticChord[7];
-		for ( int i = 0; i < 7; i++ ) {
-			DiatonicFunction f = null;
-			switch ( i ) {
-				case 0:
-					f = DiatonicFunction.I;
-					break;
-				case 1:
-					f = DiatonicFunction.II;
-					break;
-				case 2:
-					f = DiatonicFunction.III;
-					break;
-				case 3:
-					f = DiatonicFunction.IV;
-					break;
-				case 4:
-					f = DiatonicFunction.V;
-					break;
-				case 5:
-					f = DiatonicFunction.VI;
-					break;
-				case 6:
-					f = DiatonicFunction.VII;
-			}
-			ret[i] = get( f );
-		}
-
-		return ret;
-	}
-
-	public CustomChromaticChord[] getSeventhChords() {
-		NoDiatonicScaleException.check( scale );
-		CustomChromaticChord[] ret = new CustomChromaticChord[7];
-		for ( int i = 0; i < 7; i++ ) {
-			DiatonicFunction f = null;
-			switch ( i ) {
-				case 0:
-					f = DiatonicFunction.I7;
-					break;
-				case 1:
-					f = DiatonicFunction.II7;
-					break;
-				case 2:
-					f = DiatonicFunction.III7;
-					break;
-				case 3:
-					f = DiatonicFunction.IV7;
-					break;
-				case 4:
-					f = DiatonicFunction.V7;
-					break;
-				case 5:
-					f = DiatonicFunction.VI7;
-					break;
-				case 6:
-					f = DiatonicFunction.VII7;
-			}
-			ret[i] = get( f );
-		}
-
-		return ret;
-	}
-
 	public boolean updateChromaticsFromBase(DiatonicAlt noteBase) {
 		Chromatic note = Chromatic.from(noteBase);
 		int len = length();
@@ -450,7 +358,9 @@ public class CustomTonality implements Tonality {
 		Diatonic noteBaseDiatonic = notes[0].getDiatonic();
 		int alt = 0;
 		for ( int i = 1; i < len; i++ ) {
-			note = note.addSemi( scale.get( i - 1 ) );
+			DiatonicDegree diatonicDegree = DiatonicDegree.values()[i - 1];
+			int semis =  scale.get( diatonicDegree );
+			note = note.addSemi(semis);
 			try {
 				noteBaseDiatonic = noteBaseDiatonic.shift( 1 );
 				notes[i] = ChromaticAdapter.from( noteBaseDiatonic, note );
@@ -481,25 +391,7 @@ public class CustomTonality implements Tonality {
 		this( Chromatic.calculateFrom( noteBase ), scale );
 	}*/
 
-	public CustomTonality getRelativeMinor() {
-		CustomTonality[] rel = getModes();
-		for ( CustomTonality s : rel )
-			if ( s.getScale().equals( ScaleEnum.MINOR ) )
-				return s;
-
-		return null;
-	}
-
-	public CustomTonality getRelativeMajor() {
-		CustomTonality[] rel = getModes();
-		for ( CustomTonality s : rel )
-			if ( s.getScale().equals( ScaleEnum.MAJOR ) )
-				return s;
-
-		return null;
-	}
-
-	public boolean isModeOf(CustomTonality tonality) {
+	public boolean isModeOf(Tonality tonality) {
 		if ( length() != tonality.length() )
 			return false;
 
@@ -511,27 +403,9 @@ public class CustomTonality implements Tonality {
 		return true;
 	}
 
-	public boolean isIntercambioModalOf(CustomTonality t) {
-		return scale.isDiatonic() && this.root == t.root && !scale.equals( t.scale );
-	}
-
-	public CustomTonality[] getModes() {
-		CustomTonality[] ret = new CustomTonality[length()];
-
-		int j = 0;
-		for ( Scale s : scale.getAllModes() )
-			for ( Chromatic chromatic : Chromatic.values() ) {
-				DiatonicAlt diatonicAlt = DiatonicAlt.from(chromatic);
-				CustomTonality customTonality = new CustomTonality( diatonicAlt, s );
-				if ( isModeOf( customTonality ) )
-					ret[j++] = customTonality;
-			}
-
-		return ret;
-	}
 	/*
 	public List<CustomTonality> getModesSameRoot() {
-		List<CustomTonality> ret = new CustomTonality[length()];
+		List<CustomTonality> ret = new CustomTonality[size()];
 
 		int j = 0;
 		for ( Scale s : scale.getAllModes() )
@@ -593,15 +467,17 @@ public class CustomTonality implements Tonality {
 			int pos = ( posBaseCorrector + i ) % 7;
 
 			boolean notFound = true;
-			for ( int j = 0; j < notesChord.length; j++ )
-				if ( base.scale.trim( c.get( j ).getDegree().val() + posChordCorrector ) == i ) {
+			for ( int j = 0; j < notesChord.length; j++ ) {
+				int index = (c.get(j).getDegree().val() + posChordCorrector) % base.getScale().size();
+				if (index == i) {
 					tonalityNotes[i] = notesChord[j];
 					notFound = false;
 					break;
 				}
+			}
 
 			if ( notFound )
-				tonalityNotes[i] = base.get( pos );
+				tonalityNotes[i] = base.getNote( pos );
 		}
 
 		return new CustomTonality( notesChord[0], notes2scale( tonalityNotes ) );
@@ -634,17 +510,17 @@ public class CustomTonality implements Tonality {
 	public DiatonicDegree getDegreeFrom(PitchChromaticSingle note, boolean enharmonic) {
 		assert note != null : "No se ha especificado nota";
 
-		for ( int i = 0; i < length(); i++ ) {
+		for ( DiatonicDegree diatonicDegree : DiatonicDegree.values() ) {
 			Chromatic chromatic = ChromaticAdapter.from(note);
-			if (!enharmonic && get(i).equals(chromatic)
-					|| enharmonic && Chromatic.from(get(i)) == chromatic)
-				return DiatonicDegree.fromIndex(i);
+			if (!enharmonic && getNote(diatonicDegree).equals(chromatic)
+					|| enharmonic && Chromatic.from(getNote(diatonicDegree)) == chromatic)
+				return diatonicDegree;
 		}
 
 		return null;
 	}
 	/*
-	 * public Integer getDegreeFrom(int note) { for ( int i = 0; i < length(); i++ ) if
+	 * public Integer getDegreeFrom(int note) { for ( int i = 0; i < size(); i++ ) if
 	 * ( calculateFrom( i ).intValue() == note ) return i;
 	 *
 	 * return null; }
@@ -714,19 +590,25 @@ public class CustomTonality implements Tonality {
 		return ret;
 	}
 
-	public Set<CustomChromaticChord> getScaleChords() {
+	@Override
+	public Set<ChromaticChord> getScaleChords() {
 		createCacheIfNeeded();
-		Set<CustomChromaticChord> ret = new HashSet();
-		for (CustomChromaticChord c : scaleChords)
-			ret.add( c.clone( true ) );
+		Set<ChromaticChord> ret = new HashSet<>();
+		for (ChromaticChord c : scaleChords) {
+			ChromaticChord c2 = ChromaticChord.from(c);
+			ret.add(c2);
+		}
 		return ret;
 	}
 
-	public Set<CustomChromaticChord> getOutScaleChords() {
+	@Override
+	public Set<ChromaticChord> getOutScaleChords() {
 		createCacheIfNeeded();
-		Set<CustomChromaticChord> ret = new HashSet();
-		for (CustomChromaticChord c : outScaleChords)
-			ret.add( c.clone( true ) );
+		Set<ChromaticChord> ret = new HashSet<>();
+		for (ChromaticChord c : outScaleChords) {
+			ChromaticChord c2 = ChromaticChord.from(c);
+			ret.add(c2);
+		}
 		return ret;
 	}
 
@@ -766,7 +648,7 @@ public class CustomTonality implements Tonality {
 	}
 
 	@Override
-	public DiatonicAlt get(Chromatic chromatic) throws TonalityException {
+	public DiatonicAlt getChordFrom(Chromatic chromatic) throws TonalityException {
 		DiatonicAlt c = valChromaticMap.get( chromatic.ordinal() );
 		if ( c == null )
 			throw new TonalityException( chromatic, this );

@@ -1,57 +1,62 @@
 package es.danisales.datune.tonality;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import com.google.common.primitives.Ints;
+import es.danisales.datune.diatonic.DiatonicDegree;
+import es.danisales.datune.diatonic.IntervalChromatic;
+import es.danisales.datune.musical.transformations.Namer;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
+
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import es.danisales.arrays.ArrayWrapper;
-import es.danisales.datune.diatonic.IntervalChromatic;
+import static com.google.common.base.Preconditions.checkArgument;
 
 public enum ScaleEnum implements Scale {
 	// 7
 	MAJOR( 2, 2, 1, 2, 2, 2, 1 ),
 	IONIAN( MAJOR ),
-	DORIAN( MAJOR.getMode( 1 ) ),
-	PHRYGIAN( MAJOR.getMode( 2 ) ),
-	LYDIAN( MAJOR.getMode( 3 ) ),
-	MIXOLYDIAN( MAJOR.getMode( 4 ) ),
-	MINOR( MAJOR.getMode( 5 ) ),
+	DORIAN( MAJOR.getMode(DiatonicDegree.II) ),
+	PHRYGIAN( MAJOR.getMode( DiatonicDegree.III ) ),
+	LYDIAN( MAJOR.getMode( DiatonicDegree.IV ) ),
+	MIXOLYDIAN( MAJOR.getMode( DiatonicDegree.V ) ),
+	MINOR( MAJOR.getMode( DiatonicDegree.VI ) ),
 	AEOLIAN( MINOR ),
-	LOCRIAN( MAJOR.getMode( 6 ) ),
+	LOCRIAN( MAJOR.getMode( DiatonicDegree.VII ) ),
 
 	HARMONIC_MINOR( 2, 1, 2, 2, 1, 3, 1 ),
-	LOCRIAN_H6( HARMONIC_MINOR.getMode( 1 ) ),
-	IONIAN_H5( HARMONIC_MINOR.getMode( 2 ) ),
-	DORIAN_H4( HARMONIC_MINOR.getMode( 3 ) ),
+	LOCRIAN_H6( HARMONIC_MINOR.getMode( DiatonicDegree.II ) ),
+	IONIAN_H5( HARMONIC_MINOR.getMode( DiatonicDegree.III ) ),
+	DORIAN_H4( HARMONIC_MINOR.getMode( DiatonicDegree.IV ) ),
 	UKRANIAN_MINOR_SCALE( DORIAN_H4 ),
-	MIXOLIDIAN_b9_b13( HARMONIC_MINOR.getMode( 4 ) ),
-	LYDIAN_H2( HARMONIC_MINOR.getMode( 5 ) ),
-	SUPERLOCRIAN_bb7( HARMONIC_MINOR.getMode( 6 ) ),
+	MIXOLIDIAN_b9_b13( HARMONIC_MINOR.getMode( DiatonicDegree.V ) ),
+	LYDIAN_H2( HARMONIC_MINOR.getMode( DiatonicDegree.VI ) ),
+	SUPERLOCRIAN_bb7( HARMONIC_MINOR.getMode( DiatonicDegree.VII ) ),
 
 	HARMONIC_MAJOR( 2, 2, 1, 2, 1, 3, 1 ),
-	DORIAN_b5( HARMONIC_MAJOR.getMode( 1 ) ),
-	PHRYGIAN_b4( HARMONIC_MAJOR.getMode( 2 ) ),
-	LYDIAN_b3( HARMONIC_MAJOR.getMode( 3 ) ),
-	MIXOLYDIAN_b2( HARMONIC_MAJOR.getMode( 4 ) ),
-	AEOLIAN_b1( HARMONIC_MAJOR.getMode( 5 ) ),
-	LOCRIAN_bb7( HARMONIC_MAJOR.getMode( 6 ) ),
+	DORIAN_b5( HARMONIC_MAJOR.getMode( DiatonicDegree.II ) ),
+	PHRYGIAN_b4( HARMONIC_MAJOR.getMode( DiatonicDegree.III ) ),
+	LYDIAN_b3( HARMONIC_MAJOR.getMode( DiatonicDegree.IV ) ),
+	MIXOLYDIAN_b2( HARMONIC_MAJOR.getMode( DiatonicDegree.V ) ),
+	AEOLIAN_b1( HARMONIC_MAJOR.getMode( DiatonicDegree.VI ) ),
+	LOCRIAN_bb7( HARMONIC_MAJOR.getMode( DiatonicDegree.VII ) ),
 
 	MELODIC_MINOR( 2, 1, 2, 2, 2, 2, 1 ),
-	DORIAN_b2( MELODIC_MINOR.getMode( 1 ) ),
-	LYDIAN_H5( MELODIC_MINOR.getMode( 2 ) ),
-	LYDIAN_b7( MELODIC_MINOR.getMode( 3 ) ),
-	MIXOLIDIAN_b13( MELODIC_MINOR.getMode( 4 ) ),
-	LOCRIAN_H2( MELODIC_MINOR.getMode( 5 ) ),
-	SUPERLOCRIAN( MELODIC_MINOR.getMode( 6 ) ),
+	DORIAN_b2( MELODIC_MINOR.getMode( DiatonicDegree.II ) ),
+	LYDIAN_H5( MELODIC_MINOR.getMode( DiatonicDegree.III ) ),
+	LYDIAN_b7( MELODIC_MINOR.getMode( DiatonicDegree.IV ) ),
+	MIXOLIDIAN_b13( MELODIC_MINOR.getMode( DiatonicDegree.V ) ),
+	LOCRIAN_H2( MELODIC_MINOR.getMode( DiatonicDegree.VI ) ),
+	SUPERLOCRIAN( MELODIC_MINOR.getMode( DiatonicDegree.VII ) ),
 
 	DOUBLE_HARMONIC( 1, 3, 1, 2, 1, 3, 1 ),
-	LYDIAN_H2_H6( DOUBLE_HARMONIC.getMode( 1 ) ),
-	ULTRAPHRYGIAN( DOUBLE_HARMONIC.getMode( 2 ) ),
-	HUNGARIAN_MINOR( DOUBLE_HARMONIC.getMode( 3 ) ),
-	ORIENTAL( DOUBLE_HARMONIC.getMode( 4 ) ),
-	IONIAN_AUGMENTED_H2( DOUBLE_HARMONIC.getMode( 5 ) ),
-	LOCRIAN_bb3_bb7( DOUBLE_HARMONIC.getMode( 6 ) ),
+	LYDIAN_H2_H6( DOUBLE_HARMONIC.getMode( DiatonicDegree.II ) ),
+	ULTRAPHRYGIAN( DOUBLE_HARMONIC.getMode( DiatonicDegree.III ) ),
+	HUNGARIAN_MINOR( DOUBLE_HARMONIC.getMode( DiatonicDegree.IV ) ),
+	ORIENTAL( DOUBLE_HARMONIC.getMode( DiatonicDegree.V ) ),
+	IONIAN_AUGMENTED_H2( DOUBLE_HARMONIC.getMode( DiatonicDegree.VI ) ),
+	LOCRIAN_bb3_bb7( DOUBLE_HARMONIC.getMode( DiatonicDegree.VII ) ),
 
 	NEAPOLITAN_MINOR( 1, 2, 2, 2, 1, 3, 1 ),
 	NEAPOLITAN_MAJOR( 1, 2, 2, 2, 2, 2, 1 ),
@@ -63,47 +68,43 @@ public enum ScaleEnum implements Scale {
 
 	// 5
 	PENTATONIC_MINOR( 3, 2, 3, 2, 2 ),
-	PENTATONIC( PENTATONIC_MINOR.getMode( 1 ) ),
-	EGYPCIAN( PENTATONIC_MINOR.getMode( 2 ) ),
+	PENTATONIC( PENTATONIC_MINOR.getMode( DiatonicDegree.II ) ),
+	EGYPCIAN( PENTATONIC_MINOR.getMode( DiatonicDegree.III ) ),
 	SUSPENDED( EGYPCIAN ),
-	BLUES_MINOR( PENTATONIC_MINOR.getMode( 3 ) ),
+	BLUES_MINOR( PENTATONIC_MINOR.getMode( DiatonicDegree.IV ) ),
 	MAN_GONG( BLUES_MINOR ),
-	BLUES_MAJOR( PENTATONIC_MINOR.getMode( 4 ) ),
+	BLUES_MAJOR( PENTATONIC_MINOR.getMode( DiatonicDegree.V ) ),
 	YO_SCALE( BLUES_MAJOR);
 
-	private static final Map<ArrayWrapper<Integer>, ScaleEnum> _map = new HashMap();
+	private static final Map<List<Integer>, ScaleEnum> _map = new HashMap<>();
 	static {
 		for (ScaleEnum s : values()) {
 			Integer[] integers = Arrays.stream( s.value ).boxed().toArray( Integer[]::new );
-			ArrayWrapper array =  new ArrayWrapper<Integer>(integers);
-			if (_map.get( array ) == null)
-				_map.put( array, s );
+			List<Integer> array = Arrays.asList(integers);
+			_map.putIfAbsent(array, s);
 		}
 	}
 
-	public static ScaleEnum of(int[] v) {
-		Integer[] integers = Arrays.stream( v ).boxed().toArray( Integer[]::new );
-		return of(integers);
-	}
-	
-	public static ScaleEnum of(Integer[] integers) {
-		ArrayWrapper array =  new ArrayWrapper<Integer>(integers);
-		return _map.get( array );
+	public static @Nullable ScaleEnum of(@NonNull List<Integer> integers) {
+		Objects.requireNonNull(integers);
+		checkArgument(integers.size() > 0);
+
+		return _map.get( integers );
 	}
 
 	public static final ScaleEnum[] DIATONICS = new ScaleEnum[] {
-		IONIAN,
-		DORIAN,
-		PHRYGIAN,
-		LYDIAN,
-		MIXOLYDIAN,
-		AEOLIAN,
-		LOCRIAN
+			IONIAN,
+			DORIAN,
+			PHRYGIAN,
+			LYDIAN,
+			MIXOLYDIAN,
+			AEOLIAN,
+			LOCRIAN
 	};
 
 	private int[] value;
 
-	private ScaleEnum(int... i) throws ScaleException {
+	ScaleEnum(int... i) throws ScaleException {
 		value = i;
 		if (IntStream.of( i ).sum() != IntervalChromatic.PERFECT_OCTAVE.getSemitones()) {
 			System.out.println( IntStream.of( i ).sum() );
@@ -112,154 +113,27 @@ public enum ScaleEnum implements Scale {
 		}
 	}
 
-	private ScaleEnum(Scale s) {
-		this(s.val());
+	ScaleEnum(Scale s) {
+		this( Ints.toArray(s.getValue()) );
 	}
 
 	@Override
-	public int[] val() {
-		// TODO: comprobar si hace falta a hacer copia
-		return Arrays.copyOf(
-			value, value.length
-				);
+	public List<Integer> getValue() {
+		return Arrays.stream(value).boxed().collect(Collectors.toList());
 	}
 
 	@Override
-	public int length() {
+	public int size() {
 		return value.length;
 	}
 
-	public int get(int n) {
-		return value[trim( n )];
+	@Override
+	public int get(DiatonicDegree diatonicDegree) {
+		return value[diatonicDegree.ordinal()];
 	}
 
 	@Override
 	public String toString() {
-		if ( this.equals( ScaleEnum.MAJOR ) )
-			return "Mayor";
-		else if ( this.equals( ScaleEnum.MINOR ) )
-			return "Menor";
-		else if ( this.equals( ScaleEnum.HARMONIC_MINOR ) )
-			return "Menor arm�nica";
-		else if ( this.equals( ScaleEnum.MELODIC_MINOR ) )
-			return "Menor mel�dica";
-		else if ( this.equals( ScaleEnum.AEOLIAN ) )
-			return "E�lica";
-		else if ( this.equals( ScaleEnum.DORIAN ) )
-			return "D�rica";
-		else if ( this.equals( ScaleEnum.LOCRIAN ) )
-			return "Locria";
-		else if ( this.equals( ScaleEnum.SUPERLOCRIAN ) )
-			return "Superlocria";
-		else if ( this.equals( ScaleEnum.LYDIAN ) )
-			return "Lidia";
-		else if ( this.equals( ScaleEnum.LYDIAN_b7 ) )
-			return "Lidia b7";
-		else if ( this.equals( ScaleEnum.MIXOLYDIAN ) )
-			return "Mixolidia";
-		else if ( this.equals( ScaleEnum.MIXOLIDIAN_b9_b13 ) )
-			return "Mixolidia b9 b13";
-		else if ( this.equals( ScaleEnum.MIXOLIDIAN_b13 ) )
-			return "Mixolidia b13";
-		else if ( this.equals( ScaleEnum.PHRYGIAN ) )
-			return "Frigia";
-		else if ( this.equals( ScaleEnum.NEAPOLITAN_MAJOR ) )
-			return "Napolitana mayor";
-		else if ( this.equals( ScaleEnum.NEAPOLITAN_MINOR ) )
-			return "Napolitana menor";
-		else if ( this.equals( HARMONIC_MINOR ) )
-			return "Menor Arm�nica";
-		else if ( this.equals( LOCRIAN_H6 ) )
-			return "Locria #6";
-		else if ( this.equals( IONIAN_H5 ) )
-			return "J�nica #5";
-		else if ( this.equals( DORIAN_H4 ) )
-			return "D�rica #4";
-		else if ( this.equals( MIXOLIDIAN_b9_b13 ) )
-			return "Mixolidia b9 b13";
-		else if ( this.equals( LYDIAN_H2 ) )
-			return "Lidia #2";
-		else if ( this.equals( SUPERLOCRIAN_bb7 ) )
-			return "Superlocria bb7";
-		else if ( this.equals( HARMONIC_MAJOR ) )
-			return "Mayor Arm�nica";
-		else if ( this.equals( DORIAN_b5 ) )
-			return "D�rica b5";
-		else if ( this.equals( PHRYGIAN_b4 ) )
-			return "Frigia b4";
-		else if ( this.equals( LYDIAN_b3 ) )
-			return "Lidia b3";
-		else if ( this.equals( MIXOLYDIAN_b2 ) )
-			return "Mixolidia b2";
-		else if ( this.equals( AEOLIAN_b1 ) )
-			return "E�lica b1";
-		else if ( this.equals( LOCRIAN_bb7 ) )
-			return "Locria bb7";
-		else if ( this.equals( MELODIC_MINOR ) )
-			return "Menor Mel�dica";
-		else if ( this.equals( DORIAN_b2 ) )
-			return "D�rica b2";
-		else if ( this.equals( LYDIAN_H5 ) )
-			return "Lidia #5";
-		else if ( this.equals( LYDIAN_b7 ) )
-			return "Lidia b7";
-		else if ( this.equals( MIXOLIDIAN_b13 ) )
-			return "Mixolidia b13";
-		else if ( this.equals( LOCRIAN_H2 ) )
-			return "Locria #2";
-		else if ( this.equals( SUPERLOCRIAN ) )
-			return "Superlocria";
-		else if ( this.equals( DOUBLE_HARMONIC ) )
-			return "Doble Arm�nica";
-		else if ( this.equals( LYDIAN_H2_H6 ) )
-			return "Lidia #2 #6";
-		else if ( this.equals( ULTRAPHRYGIAN ) )
-			return "Ultrafrigia";
-		else if ( this.equals( HUNGARIAN_MINOR ) )
-			return "H�ngara menor";
-		else if ( this.equals( ORIENTAL ) )
-			return "Oriental";
-		else if ( this.equals( IONIAN_AUGMENTED_H2 ) )
-			return "J�nica aumentada #2";
-		else if ( this.equals( LOCRIAN_bb3_bb7 ) )
-			return "Locria bb3 bb7";
-		else
-			return null;
-	}
-
-	public void showAlterationsTonality() {
-		StringBuilder sb = new StringBuilder();
-		for ( int i = 0; i < length(); i++ ) {
-			if ( i > 0 )
-				sb.append( " " );
-
-			int altered = showAlterationsTonality( i );
-			if ( altered == -1 )
-				sb.append( "b" );
-			else if ( altered == -2 )
-				sb.append( "bb" );
-			else if ( altered == 1 )
-				sb.append( "#" );
-			else if ( altered == 0 )
-				;
-			else
-				sb.append( "?" );
-
-			sb.append( i + 1 );
-		}
-
-		System.out.println( sb.toString() );
-	}
-
-	private int showAlterationsTonality(int pos) {
-		int majorScale = 0;
-		int alteredScale = 0;
-
-		for ( int i = 0; i < pos; i++ ) {
-			majorScale += ScaleEnum.MAJOR.get( i );
-			alteredScale += get( i );
-		}
-
-		return alteredScale - majorScale;
+		return ScaleNamer.from(this);
 	}
 }

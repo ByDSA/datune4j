@@ -1,16 +1,19 @@
 package es.danisales.datune.musical.transformations;
 
-import es.danisales.datune.diatonic.ChordNotation;
-import es.danisales.datune.diatonic.IntervalChromatic;
-import es.danisales.datune.diatonic.IntervalDiatonic;
-import es.danisales.datune.diatonic.Quality;
+import es.danisales.datune.diatonic.*;
 import es.danisales.datune.midi.ChromaticMidi;
-import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.midi.PitchSingleMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
+import es.danisales.datune.tonality.Scale;
+import es.danisales.datune.tonality.ScaleEnum;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 public class Namer {
     private Namer() {
@@ -57,7 +60,8 @@ public class Namer {
 
     public static String from(PitchSingleMidi chromaticMidi, Tonality tonality) {
         Chromatic chromatic = ChromaticAdapter.from(chromaticMidi.getPitchMidi());
-        DiatonicAlt diatonicAlt = tonality.get( tonality.getDegreeFrom(chromatic) );
+        DiatonicDegree diatonicDegree = tonality.getDegreeFrom(chromatic);
+        DiatonicAlt diatonicAlt = tonality.getNote(diatonicDegree);
         return ChromaticMidi.literal(diatonicAlt, tonality ) + chromaticMidi.getOctave();
     }
 

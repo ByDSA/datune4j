@@ -1,6 +1,5 @@
 package es.danisales.datune.musical.transformations;
 
-import com.sun.javafx.geom.transform.BaseTransform;
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.DiatonicMidi;
@@ -12,8 +11,6 @@ import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-
-import static es.danisales.datune.musical.DiatonicAlt.*;
 
 public class DiatonicAdapter {
     private DiatonicAdapter() {
@@ -47,9 +44,9 @@ public class DiatonicAdapter {
     }
 
     private static int delimit(int n) {
-        n %= Diatonic.N;
+        n %= Diatonic.NUMBER;
         while ( n < 0 )
-            n += Diatonic.N;
+            n += Diatonic.NUMBER;
 
         return n;
     }
@@ -78,7 +75,7 @@ public class DiatonicAdapter {
         DiatonicDegree diatonicDegree = tonality.getDegreeFrom(chromatic);
         if (diatonicDegree == null)
             return null;
-        DiatonicAlt diatonicAlt = tonality.get(diatonicDegree);
+        DiatonicAlt diatonicAlt = tonality.getNote(diatonicDegree);
         return diatonicAlt.getDiatonic();
     }
 

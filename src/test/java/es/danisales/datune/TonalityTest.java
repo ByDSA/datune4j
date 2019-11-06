@@ -4,21 +4,17 @@ import es.danisales.datune.diatonic.ChromaticFunction;
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.midi.PitchMidi;
-import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.musical.ChromaticChordEnum;
-import es.danisales.datune.musical.CustomChromaticChord;
-import es.danisales.datune.musical.DiatonicAlt;
+import es.danisales.datune.musical.*;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.tonality.CustomTonality;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityChordRetrieval;
 import es.danisales.datune.tonality.TonalityEnum;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.*;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class TonalityTest {
 	@Test
@@ -26,7 +22,7 @@ public class TonalityTest {
 		Tonality s = TonalityEnum.A;
 		DiatonicAlt[] notes = new DiatonicAlt[7];
 		for ( int i = 0; i < 7; i++ )
-			notes[i] = s.get( i );
+			notes[i] = s.getNote( i );
 
 		assertEquals( s.getScale(), TonalityEnum.notes2scale( notes ) );
 	}
@@ -44,13 +40,13 @@ public class TonalityTest {
 	@Test
 	public void _clone() {
 		for ( Tonality t : TonalityEnum.values() ) {
-			assertEquals( true, t.sameRoot( Tonality.of( t ) ) );
-			assertEquals( true, t.sameScale( Tonality.of( t ) ) );
-			assertEquals( true, t.sameNotes( Tonality.of( t ) ) );
-			assertEquals( true, t.equals( Tonality.of( t ) ) );
+			assertTrue(t.hasSameRootAs(Tonality.of(t)));
+			assertTrue(t.hasSameScaleAs(Tonality.of(t)));
+			assertTrue(t.hasSameNotesAs(Tonality.of(t)));
+			assertTrue(t.equals(Tonality.of(t)));
 		}
 
-		assertEquals( false, TonalityEnum.FF.equals( TonalityEnum.Gb ) );
+		assertFalse(TonalityEnum.FF.equals(TonalityEnum.Gb));
 	}
 
 	@Test
@@ -60,7 +56,7 @@ public class TonalityTest {
 			int alt = t2.getAlteration();
 			ArrayList<CustomTonality> out = t2.minimizeAlterations();
 
-			assertEquals( true, t2.getAlteration() <= alt );
+			assertTrue(t2.getAlteration() <= alt);
 		}
 	}
 
@@ -74,36 +70,36 @@ public class TonalityTest {
 
 	@Test
 	public void whichGetsChord() {
-		ArrayList<CustomTonality> ts = CustomTonality.getFromChord( false, ChromaticChordEnum.C );
-		assertEquals( true, ts.size() > 0 );
+		List<CustomTonality> ts = CustomTonality.getFromChord( false, ChromaticChordEnum.C );
+		assertTrue(ts.size() > 0);
 	}
 
 	@Test
 	public void whichGetsChordOutScale() {
-		ArrayList<CustomTonality> ts = CustomTonality.getFromChord( true, ChromaticChordEnum.C );
-		assertEquals( true, ts.size() > 0 );
+		List<CustomTonality> ts = CustomTonality.getFromChord( true, ChromaticChordEnum.C );
+		assertTrue(ts.size() > 0);
 	}
 
 	@Test
 	public void getChordFunction() {
 		Tonality ton = TonalityEnum.E;
-		PitchChromaticChord cc = ton.get( DiatonicFunction.I );
+		PitchChromaticChord cc = ChromaticChord.from(ton, DiatonicFunction.I );
 
 		assertEquals( ChromaticChordEnum.E, cc );
-		cc = ton.get( DiatonicFunction.VII );
+		cc = ChromaticChord.from(ton, DiatonicFunction.VII );
 
 		assertEquals( ChromaticChordEnum.DDdim, cc );
 
 		ton = TonalityEnum.Em;
-		cc = ton.get( DiatonicFunction.I );
+		cc = ChromaticChord.from(ton, DiatonicFunction.I );
 
 		assertEquals( ChromaticChordEnum.Em, cc );
-		cc = ton.get( DiatonicFunction.VII );
+		cc = ChromaticChord.from(ton, DiatonicFunction.VII );
 
 		assertEquals( ChromaticChordEnum.D, cc );
 
 		ton = TonalityEnum.C;
-		cc = ton.get( DiatonicFunction.V7 );
+		cc = ChromaticChord.from(ton, DiatonicFunction.V7 );
 
 		assertEquals( ChromaticChordEnum.G7, cc );
 	}
@@ -112,77 +108,77 @@ public class TonalityTest {
 	public void getTriadSeventhChords() {
 		Tonality t = TonalityEnum.C;
 
-		assertArrayEquals(
-			new ChromaticChordEnum[] {
-				ChromaticChordEnum.C,
-				ChromaticChordEnum.Dm,
-				ChromaticChordEnum.Em,
-				ChromaticChordEnum.F,
-				ChromaticChordEnum.G,
-				ChromaticChordEnum.Am,
-				ChromaticChordEnum.Bdim
+		assertEquals(
+				Arrays.asList(
+						ChromaticChordEnum.C,
+						ChromaticChordEnum.Dm,
+						ChromaticChordEnum.Em,
+						ChromaticChordEnum.F,
+						ChromaticChordEnum.G,
+						ChromaticChordEnum.Am,
+						ChromaticChordEnum.Bdim
 
-			}, t.getTriadChords()
+				), TonalityChordRetrieval.getTriadChordsFrom(t)
 		);
 
-		assertArrayEquals(
-			new ChromaticChordEnum[] {
-				ChromaticChordEnum.CMaj7,
-				ChromaticChordEnum.Dm7,
-				ChromaticChordEnum.Em7,
-				ChromaticChordEnum.FMaj7,
-				ChromaticChordEnum.G7,
-				ChromaticChordEnum.Am7,
-				ChromaticChordEnum.Bm7b5
+		assertEquals(
+				Arrays.asList(
+						ChromaticChordEnum.CMaj7,
+						ChromaticChordEnum.Dm7,
+						ChromaticChordEnum.Em7,
+						ChromaticChordEnum.FMaj7,
+						ChromaticChordEnum.G7,
+						ChromaticChordEnum.Am7,
+						ChromaticChordEnum.Bm7b5
 
-			}, t.getSeventhChords()
+				), TonalityChordRetrieval.getTriadChordsFrom(t)
 		);
 
 		t = TonalityEnum.Am;
 
-		assertArrayEquals(
-			new ChromaticChordEnum[] {
-				ChromaticChordEnum.Am,
-				ChromaticChordEnum.Bdim,
-				ChromaticChordEnum.C,
-				ChromaticChordEnum.Dm,
-				ChromaticChordEnum.Em,
-				ChromaticChordEnum.F,
-				ChromaticChordEnum.G
-			}, t.getTriadChords()
+		assertEquals(
+				Arrays.asList(
+						ChromaticChordEnum.Am,
+						ChromaticChordEnum.Bdim,
+						ChromaticChordEnum.C,
+						ChromaticChordEnum.Dm,
+						ChromaticChordEnum.Em,
+						ChromaticChordEnum.F,
+						ChromaticChordEnum.G
+				), TonalityChordRetrieval.getTriadChordsFrom(t)
 		);
 
-		assertArrayEquals(
-			new ChromaticChordEnum[] {
-				ChromaticChordEnum.Am7,
-				ChromaticChordEnum.Bm7b5,
-				ChromaticChordEnum.CMaj7,
-				ChromaticChordEnum.Dm7,
-				ChromaticChordEnum.Em7,
-				ChromaticChordEnum.FMaj7,
-				ChromaticChordEnum.G7
-			}, t.getSeventhChords()
+		assertEquals(
+				Arrays.asList(
+						ChromaticChordEnum.Am7,
+						ChromaticChordEnum.Bm7b5,
+						ChromaticChordEnum.CMaj7,
+						ChromaticChordEnum.Dm7,
+						ChromaticChordEnum.Em7,
+						ChromaticChordEnum.FMaj7,
+						ChromaticChordEnum.G7
+				), TonalityChordRetrieval.getTriadChordsFrom(t)
 		);
 	}
 
 	@Test
 	public void getAllChords() {
 		Tonality t = TonalityEnum.C;
-		Set<CustomChromaticChord> cs = t.getScaleChords();
+		Set<ChromaticChord> cs = t.getScaleChords();
 		assertEquals( 49, DiatonicFunction.COMMON.length );
 		assertEquals( 49, cs.size() );
-		
+
 		cs = t.getBorrowedChords();
 		assertEquals( 42, cs.size() );
 		cs = t.getOutScaleChords();
 		int i = 1;
-		for (CustomChromaticChord c : cs) {
+		for (ChromaticChord c : cs) {
 			System.out.println( t.getFunction( c )  + ": " + c);
 		}
 		assertEquals( 25, ChromaticFunction.ALL.length );
 		assertEquals( 25, cs.size() );
-		
-		ArrayList<CustomChromaticChord> ccs = t.getAllChords( );
+
+		List<ChromaticChord> ccs = t.getAllChords( );
 		assertEquals( 116, ccs.size() );
 	}
 
@@ -236,7 +232,7 @@ public class TonalityTest {
 		 * assertEquals( true, ton.has( ChromaticChord.G9 ) ); assertEquals( true,
 		 * ton.has( ChromaticChord.A9 ) ); assertEquals( true, ton.has(
 		 * ChromaticChord.B9 ) );
-		 * 
+		 *
 		 * assertEquals( true, ton.has( ChromaticChord.C11 ) ); assertEquals( true,
 		 * ton.has( ChromaticChord.D11 ) ); assertEquals( true, ton.has(
 		 * ChromaticChord.E11 ) ); assertEquals( true, ton.has( ChromaticChord.F11 ) );
@@ -245,21 +241,21 @@ public class TonalityTest {
 		 * ChromaticChord.B11 ) );
 		 */
 
-		for ( CustomChromaticChord c : ton.getScaleChords() ) {
+		for ( ChromaticChord c : ton.getScaleChords() ) {
 			/*c.show();
 			c.showNotes();*/
-			assertEquals( true, ton.hasEnharmonic( c ) );
+			assertTrue(ton.hasEnharmonic(c));
 		}
 
 		for ( DiatonicFunction df : DiatonicFunction.COMMON )
-			assertEquals( true, ton.has( ton.get( df ) ) );
+			assertTrue(ton.has(ChromaticChord.from(ton, df)));
 
 		ton = TonalityEnum.Db;
-		for ( CustomChromaticChord c : ton.getScaleChords() )
-			assertEquals( true, ton.hasEnharmonic( c ) );
+		for ( ChromaticChord c : ton.getScaleChords() )
+			assertTrue(ton.hasEnharmonic(c));
 
 		for ( DiatonicFunction df : DiatonicFunction.COMMON )
-			assertEquals( true, ton.has( ton.get( df ) ) );
+			assertTrue(ton.has(ChromaticChord.from(ton, df)));
 	}
 
 	@Test
@@ -270,107 +266,99 @@ public class TonalityTest {
 		assertEquals( DiatonicDegree.II, ton.getDegreeFrom( PitchMidi.D5.getChromatic() ) );
 		assertEquals( DiatonicDegree.III, ton.getDegreeFrom( PitchMidi.E6.getChromatic() ) );
 		assertEquals( DiatonicDegree.IV, ton.getDegreeFrom( Chromatic.F ) );
-		assertEquals( null, ton.getDegreeFrom( DiatonicAlt.EEEE, false ) );
+		assertNull(ton.getDegreeFrom(DiatonicAlt.EEEE));
 		assertEquals( DiatonicDegree.V, ton.getDegreeFrom( DiatonicAlt.EEEE ) );
 	}
 
 	@Test
 	public void get() {
 		Tonality ton = TonalityEnum.C;
-		assertEquals( ChromaticChordEnum.C, ton.get( DiatonicFunction.I ) );
-		assertEquals( ChromaticChordEnum.Dm, ton.get( DiatonicFunction.II ) );
-		assertEquals( ChromaticChordEnum.Em, ton.get( DiatonicFunction.III ) );
-		assertEquals( ChromaticChordEnum.F, ton.get( DiatonicFunction.IV ) );
-		assertEquals( ChromaticChordEnum.G, ton.get( DiatonicFunction.V ) );
-		assertEquals( ChromaticChordEnum.Am, ton.get( DiatonicFunction.VI ) );
-		assertEquals( ChromaticChordEnum.Bdim, ton.get( DiatonicFunction.VII ) );
+		assertEquals( ChromaticChordEnum.C, ChromaticChord.from( ton, DiatonicFunction.I ) );
+		assertEquals( ChromaticChordEnum.Dm, ChromaticChord.from( ton, DiatonicFunction.II ) );
+		assertEquals( ChromaticChordEnum.Em, ChromaticChord.from( ton, DiatonicFunction.III ) );
+		assertEquals( ChromaticChordEnum.F, ChromaticChord.from( ton, DiatonicFunction.IV ) );
+		assertEquals( ChromaticChordEnum.G, ChromaticChord.from( ton, DiatonicFunction.V ) );
+		assertEquals( ChromaticChordEnum.Am, ChromaticChord.from( ton, DiatonicFunction.VI ) );
+		assertEquals( ChromaticChordEnum.Bdim, ChromaticChord.from( ton, DiatonicFunction.VII ) );
 
-		assertEquals( ChromaticChordEnum.Csus2, ton.get( DiatonicFunction.I2 ) );
-		assertEquals( ChromaticChordEnum.Dsus2, ton.get( DiatonicFunction.II2 ) );
-		// assertEquals( DiatonicFunction.III2, ton.getFunction( ChromaticChord.Em ) );
-		assertEquals( ChromaticChordEnum.Fsus2, ton.get( DiatonicFunction.IV2 ) );
-		assertEquals( ChromaticChordEnum.Gsus2, ton.get( DiatonicFunction.V2 ) );
-		assertEquals( ChromaticChordEnum.Asus2, ton.get( DiatonicFunction.VI2 ) );
-		// assertEquals( DiatonicFunction.VII2, ton.calculateFrom( ChromaticChord.Bdim ) );
+		assertEquals( ChromaticChordEnum.Csus2, ChromaticChord.from( ton, DiatonicFunction.I2 ) );
+		assertEquals( ChromaticChordEnum.Dsus2, ChromaticChord.from( ton, DiatonicFunction.II2 ) );
+		// assertEquals( DiatonicFunction.III2, ChromaticChord.from( ton, ChromaticChord.Em ) );
+		assertEquals( ChromaticChordEnum.Fsus2, ChromaticChord.from( ton, DiatonicFunction.IV2 ) );
+		assertEquals( ChromaticChordEnum.Gsus2, ChromaticChord.from( ton, DiatonicFunction.V2 ) );
+		assertEquals( ChromaticChordEnum.Asus2, ChromaticChord.from( ton, DiatonicFunction.VI2 ) );
+		// assertEquals( DiatonicFunction.VII2, ChromaticChord.from( ton, ChromaticChord.Bdim ) );
 
-		assertEquals( ChromaticChordEnum.Csus4, ton.get( DiatonicFunction.I4 ) );
-		assertEquals( ChromaticChordEnum.Dsus4, ton.get( DiatonicFunction.II4 ) );
-		assertEquals( ChromaticChordEnum.Esus4, ton.get( DiatonicFunction.III4 ) );
-		// assertEquals( DiatonicFunction.IV4, ton.calculateFrom( ChromaticChord.F ) );
-		assertEquals( ChromaticChordEnum.Gsus4, ton.get( DiatonicFunction.V4 ) );
-		assertEquals( ChromaticChordEnum.Asus4, ton.get( DiatonicFunction.VI4 ) );
-		// assertEquals( DiatonicFunction.VII4, ton.calculateFrom( ChromaticChord.Bdim ) );
+		assertEquals( ChromaticChordEnum.Csus4, ChromaticChord.from( ton, DiatonicFunction.I4 ) );
+		assertEquals( ChromaticChordEnum.Dsus4, ChromaticChord.from( ton, DiatonicFunction.II4 ) );
+		assertEquals( ChromaticChordEnum.Esus4, ChromaticChord.from( ton, DiatonicFunction.III4 ) );
+		// assertEquals( DiatonicFunction.IV4, ChromaticChord.from( ton, ChromaticChord.F ) );
+		assertEquals( ChromaticChordEnum.Gsus4, ChromaticChord.from( ton, DiatonicFunction.V4 ) );
+		assertEquals( ChromaticChordEnum.Asus4, ChromaticChord.from( ton, DiatonicFunction.VI4 ) );
+		// assertEquals( DiatonicFunction.VII4, ChromaticChord.from( ton, ChromaticChord.Bdim ) );
 
-		assertEquals( ChromaticChordEnum.C6, ton.get( DiatonicFunction.I6 ) );
-		assertEquals( ChromaticChordEnum.Dm6, ton.get( DiatonicFunction.II6 ) );
-		// assertEquals( DiatonicFunction.III6, ton.calculateFrom( ChromaticChord.Em ) );
-		assertEquals( ChromaticChordEnum.F6, ton.get( DiatonicFunction.IV6 ) );
-		assertEquals( ChromaticChordEnum.G6, ton.get( DiatonicFunction.V6 ) );
-		// assertEquals( DiatonicFunction.VI6, ton.calculateFrom( ChromaticChord.Am ) );
-		// assertEquals( DiatonicFunction.VII6, ton.calculateFrom( ChromaticChord.Bdim ) );
+		assertEquals( ChromaticChordEnum.C6, ChromaticChord.from( ton, DiatonicFunction.I6 ) );
+		assertEquals( ChromaticChordEnum.Dm6, ChromaticChord.from( ton, DiatonicFunction.II6 ) );
+		// assertEquals( DiatonicFunction.III6, ChromaticChord.from( ton, ChromaticChord.Em ) );
+		assertEquals( ChromaticChordEnum.F6, ChromaticChord.from( ton, DiatonicFunction.IV6 ) );
+		assertEquals( ChromaticChordEnum.G6, ChromaticChord.from( ton, DiatonicFunction.V6 ) );
+		// assertEquals( DiatonicFunction.VI6, ChromaticChord.from( ton, ChromaticChord.Am ) );
+		// assertEquals( DiatonicFunction.VII6, ChromaticChord.from( ton, ChromaticChord.Bdim ) );
 
-		assertEquals( ChromaticChordEnum.CMaj7, ton.get( DiatonicFunction.I7 ) );
-		assertEquals( ChromaticChordEnum.Dm7, ton.get( DiatonicFunction.II7 ) );
-		assertEquals( ChromaticChordEnum.Em7, ton.get( DiatonicFunction.III7 ) );
-		assertEquals( ChromaticChordEnum.FMaj7, ton.get( DiatonicFunction.IV7 ) );
-		assertEquals( ChromaticChordEnum.G7, ton.get( DiatonicFunction.V7 ) );
-		assertEquals( ChromaticChordEnum.Am7, ton.get( DiatonicFunction.VI7 ) );
-		assertEquals( ChromaticChordEnum.Bm7b5, ton.get( DiatonicFunction.VII7 ) );
+		assertEquals( ChromaticChordEnum.CMaj7, ChromaticChord.from( ton, DiatonicFunction.I7 ) );
+		assertEquals( ChromaticChordEnum.Dm7, ChromaticChord.from( ton, DiatonicFunction.II7 ) );
+		assertEquals( ChromaticChordEnum.Em7, ChromaticChord.from( ton, DiatonicFunction.III7 ) );
+		assertEquals( ChromaticChordEnum.FMaj7, ChromaticChord.from( ton, DiatonicFunction.IV7 ) );
+		assertEquals( ChromaticChordEnum.G7, ChromaticChord.from( ton, DiatonicFunction.V7 ) );
+		assertEquals( ChromaticChordEnum.Am7, ChromaticChord.from( ton, DiatonicFunction.VI7 ) );
+		assertEquals( ChromaticChordEnum.Bm7b5, ChromaticChord.from( ton, DiatonicFunction.VII7 ) );
 
-		assertEquals( ChromaticChordEnum.C5, ton.get( ChromaticFunction.I5 ) );
-		assertEquals( ChromaticChordEnum.D5, ton.get( ChromaticFunction.II5 ) );
-		assertEquals( ChromaticChordEnum.E5, ton.get( ChromaticFunction.III5 ) );
-		assertEquals( ChromaticChordEnum.F5, ton.get( ChromaticFunction.IV5 ) );
-		assertEquals( ChromaticChordEnum.G5, ton.get( ChromaticFunction.V5 ) );
-		assertEquals( ChromaticChordEnum.A5, ton.get( ChromaticFunction.VI5 ) );
-		assertEquals( ChromaticChordEnum.B5, ton.get( ChromaticFunction.VII5 ) );
+		assertEquals( ChromaticChordEnum.C5, ChromaticChord.from( ton, ChromaticFunction.I5 ) );
+		assertEquals( ChromaticChordEnum.D5, ChromaticChord.from( ton, ChromaticFunction.II5 ) );
+		assertEquals( ChromaticChordEnum.E5, ChromaticChord.from( ton, ChromaticFunction.III5 ) );
+		assertEquals( ChromaticChordEnum.F5, ChromaticChord.from( ton, ChromaticFunction.IV5 ) );
+		assertEquals( ChromaticChordEnum.G5, ChromaticChord.from( ton, ChromaticFunction.V5 ) );
+		assertEquals( ChromaticChordEnum.A5, ChromaticChord.from( ton, ChromaticFunction.VI5 ) );
+		assertEquals( ChromaticChordEnum.B5, ChromaticChord.from( ton, ChromaticFunction.VII5 ) );
 
-		assertEquals( ChromaticChordEnum.A, ton.get( ChromaticFunction.V_II ) );
-		assertEquals( ChromaticChordEnum.B, ton.get( ChromaticFunction.V_III ) );
-		assertEquals( ChromaticChordEnum.C, ton.get( ChromaticFunction.V_IV ) );
-		assertEquals( ton.get( DiatonicFunction.I ), ton.get( ChromaticFunction.V_IV ) );
-		assertEquals( ChromaticChordEnum.D, ton.get( ChromaticFunction.V_V ) );
-		assertEquals( ChromaticChordEnum.E, ton.get( ChromaticFunction.V_VI ) );
+		assertEquals( ChromaticChordEnum.A, ChromaticChord.from( ton, ChromaticFunction.V_II ) );
+		assertEquals( ChromaticChordEnum.B, ChromaticChord.from( ton, ChromaticFunction.V_III ) );
+		assertEquals( ChromaticChordEnum.C, ChromaticChord.from( ton, ChromaticFunction.V_IV ) );
+		assertEquals( ChromaticChord.from( ton, DiatonicFunction.I ), ChromaticChord.from( ton, ChromaticFunction.V_IV ) );
+		assertEquals( ChromaticChordEnum.D, ChromaticChord.from( ton, ChromaticFunction.V_V ) );
+		assertEquals( ChromaticChordEnum.E, ChromaticChord.from( ton, ChromaticFunction.V_VI ) );
 
-		assertEquals( ChromaticChordEnum.A7, ton.get( ChromaticFunction.V7_II ) );
-		assertEquals( ChromaticChordEnum.B7, ton.get( ChromaticFunction.V7_III ) );
+		assertEquals( ChromaticChordEnum.A7, ChromaticChord.from( ton, ChromaticFunction.V7_II ) );
+		assertEquals( ChromaticChordEnum.B7, ChromaticChord.from( ton, ChromaticFunction.V7_III ) );
+		assertTrue(ChromaticChord.from(ton, ChromaticFunction.V7_IV).equalsEnharmonic(ChromaticChordEnum.C7));
+		assertEquals( ChromaticChordEnum.D7, ChromaticChord.from( ton, ChromaticFunction.V7_V ) );
+		assertEquals( ChromaticChordEnum.E7, ChromaticChord.from( ton, ChromaticFunction.V7_VI ) );
+
+		assertTrue(ChromaticChord.from(ton, ChromaticFunction.SUBV7).equalsEnharmonic(ChromaticChordEnum.CC7));
+
+		assertTrue(ChromaticChord.from(ton, ChromaticFunction.SUBV7_II).equalsEnharmonic(ChromaticChordEnum.DD7));
+
+		assertTrue(ChromaticChord.from(ton, ChromaticFunction.SUBV7_III).equalsEnharmonic(ChromaticChordEnum.F7));
+
+		assertTrue(ChromaticChord.from(ton, ChromaticFunction.SUBV7_IV).equalsEnharmonic(ChromaticChordEnum.FF7));
+
+		assertTrue(ChromaticChord.from(ton, ChromaticFunction.SUBV7_V).equalsEnharmonic(ChromaticChordEnum.GG7));
+
+		assertTrue(ChromaticChord.from(ton, ChromaticFunction.SUBV7_VI).equalsEnharmonic(ChromaticChordEnum.AA7));
+
 		assertEquals(
-			true, ton.get( ChromaticFunction.V7_IV ).equalsEnharmonic( ChromaticChordEnum.C7 ) );
-			assertEquals( ChromaticChordEnum.D7, ton.get( ChromaticFunction.V7_V ) );
-		assertEquals( ChromaticChordEnum.E7, ton.get( ChromaticFunction.V7_VI ) );
+				ChromaticChordEnum.CC.getInv(), ChromaticChord.from( ton,  ChromaticFunction.N6 )
+		);
 
-		assertEquals(
-			true, ton.get( ChromaticFunction.SUBV7 ).equalsEnharmonic( ChromaticChordEnum.CC7 ) );
-
-			assertEquals(
-				true, ton.get( ChromaticFunction.SUBV7_II ).equalsEnharmonic( ChromaticChordEnum.DD7 ) );
-
-				assertEquals(
-					true, ton.get( ChromaticFunction.SUBV7_III ).equalsEnharmonic( ChromaticChordEnum.F7 ) );
-
-					assertEquals(
-						true, ton.get( ChromaticFunction.SUBV7_IV ).equalsEnharmonic( ChromaticChordEnum.FF7 ) );
-
-						assertEquals(
-							true, ton.get( ChromaticFunction.SUBV7_V ).equalsEnharmonic( ChromaticChordEnum.GG7 ) );
-
-							assertEquals(
-								true, ton.get( ChromaticFunction.SUBV7_VI ).equalsEnharmonic( ChromaticChordEnum.AA7 ) );
-
-								assertEquals(
-										ChromaticChordEnum.CC.getInv(), ton
-											.get( ChromaticFunction.N6 )
-									);
-
-									// TODO:
-									// V7ALT
+		// TODO:
+		// V7ALT
 
 		ton = TonalityEnum.Cm;
-		
-		assertEquals( true, ton.get( DiatonicFunction.VII7 ).equalsEnharmonic(ChromaticChordEnum.AA7) );
-		
+
+		assertTrue(ChromaticChord.from(ton, DiatonicFunction.VII7).equalsEnharmonic(ChromaticChordEnum.AA7));
+
 		ton = TonalityEnum.Db;
-		assertEquals( true, ton.get( DiatonicFunction.II ).equalsEnharmonic( ChromaticChordEnum.DDm ) );
+		assertTrue(ChromaticChord.from(ton, DiatonicFunction.II).equalsEnharmonic(ChromaticChordEnum.DDm));
 	}
 
 	@Test
@@ -384,7 +372,7 @@ public class TonalityTest {
 		assertEquals( DiatonicFunction.VI, ton.getFunction( ChromaticChordEnum.Am ) );
 		assertEquals( DiatonicFunction.VII, ton.getFunction( ChromaticChordEnum.Bdim ) );
 
-		assertEquals( ChromaticChordEnum.Csus2, ton.get( DiatonicFunction.I2 ) );
+		assertEquals( ChromaticChordEnum.Csus2, ChromaticChord.from( ton,  DiatonicFunction.I2 ) );
 		assertEquals( DiatonicFunction.I2, ton.getFunction( ChromaticChordEnum.Csus2 ) );
 		assertEquals( DiatonicFunction.II2, ton.getFunction( ChromaticChordEnum.Dsus2 ) );
 		// assertEquals( DiatonicFunction.III2, ton.getFunction( ChromaticChord.Em ) );
@@ -429,7 +417,7 @@ public class TonalityTest {
 		 * assertEquals( DiatonicFunction.VII9, ton.getFunction( ChromaticChord.Bdim )
 		 * );
 		 */
-		ton = TonalityEnum.Cm;		
+		ton = TonalityEnum.Cm;
 		assertEquals( DiatonicFunction.VII7, ton.getFunction( CustomChromaticChord.from( ChromaticChordEnum.AA7 ).rename(ton) ) );
 	}
 }

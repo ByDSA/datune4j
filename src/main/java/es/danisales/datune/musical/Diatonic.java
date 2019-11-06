@@ -8,7 +8,7 @@ import es.danisales.datune.pitch.PitchDiatonicSingle;
 public enum Diatonic implements PitchDiatonicSingle {
 	C, D, E, F, G, A, B;
 
-	public static final int N = 7;
+	public static final int NUMBER = 7;
 
 	int intValue() {
 		return ordinal();
@@ -34,7 +34,7 @@ public enum Diatonic implements PitchDiatonicSingle {
 
 	@Override
 	public DiatonicDegree getDegree() {
-		return DiatonicDegree.fromIndex( ordinal() );
+		return DiatonicDegree.values()[ ordinal() ];
 	}
 
 	public IntervalDiatonic dist(Diatonic n2) {

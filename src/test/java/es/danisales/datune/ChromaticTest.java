@@ -14,11 +14,11 @@ public class ChromaticTest {
 	public void noteName() {
 		Chromatic note = Chromatic.C;
 
-		assertEquals( 0, note.distSemitonesFromC() );
+		assertEquals( 0, note.ordinal() );
 
 		note = Chromatic.A;
 
-		assertEquals( 9, note.distSemitonesFromC() );
+		assertEquals( 9, note.ordinal() );
 	}
 	@Test
 	public void add() {
