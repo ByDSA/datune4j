@@ -4,6 +4,7 @@ import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.musical.DiatonicAlt;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -14,6 +15,28 @@ public class ScaleTest {
     @Test
     public void getMode() {
         assertEquals(Scale.DORIAN, Scale.IONIAN.getMode(DiatonicDegree.II));
+    }
+
+    @Test
+    public void constantScalesSameAsScaleEnumSize() {
+        assertEquals(ScaleEnum.values().length, Scale.ALL.size());
+    }
+
+    @Test
+    public void constantScalesSameAsScaleEnumContent() {
+        List<ScaleEnum> scaleEnumList = Arrays.asList( ScaleEnum.values() );
+        List<ScaleEnum> scaleEnumListFromScale = new ArrayList<>();
+        for (Scale scale : Scale.ALL)
+            scaleEnumListFromScale.add((ScaleEnum)scale.innerScale);
+
+        for (ScaleEnum scaleEnum : scaleEnumListFromScale)
+            assertTrue(scaleEnum.toString(), scaleEnumList.contains(scaleEnum));
+
+        for (ScaleEnum scaleEnum : scaleEnumList) {
+            assertTrue(scaleEnum.toString(), scaleEnumListFromScale.contains(scaleEnum));
+        }
+
+        assertEquals(ScaleEnum.values().length, Scale.ALL.size());
     }
 
     @Test
