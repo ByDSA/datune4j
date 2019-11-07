@@ -1,35 +1,70 @@
 package es.danisales.datune.tonality;
 
 import es.danisales.datune.diatonic.*;
-import es.danisales.datune.midi.ChromaticMidi;
+import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.musical.*;
 import es.danisales.datune.pitch.PitchChromaticChord;
-import es.danisales.log.string.Logging;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.*;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
 public interface Tonality extends Cloneable {
-	List<ChromaticChord> getAllChords();
-
-	Set<ChromaticChord> getBorrowedChords();
-
-	static List<Tonality> getFromChord(PitchChromaticChord c) {
-		return getFromChord( false, c );
+	static @NonNull List<Tonality> all() {
+		return TonalityRetrieval.all();
 	}
 
-	static List<Tonality> getFromChord(boolean outScale, PitchChromaticChord c) {
-		List<Tonality> out = new ArrayList<>();
-		for ( Tonality t : Tonality.all() ) {
-			if ( t.has( outScale, c ) )
-				out.add( t );
+	static @NonNull List<Tonality> fromChord(PitchChromaticChord c) {
+		return fromChord( false, c );
+	}
+
+	static @NonNull List<Tonality> fromChord(boolean outScale, PitchChromaticChord c) {
+		return TonalityRetrieval.fromChord(outScale, c);
+	}
+
+	static Tonality fromDiatonicChord(@NonNull DiatonicChordMidi c, @NonNull Tonality base) throws TonalityException {
+		return TonalityRetrieval.fromDiatonicChord(c, base);
+	}
+
+	static Tonality of(DiatonicAlt diatonicAlt, Scale scale) {
+		Tonality t = TonalityEnum.of(diatonicAlt, scale);
+		if (t == null)
+			t = new CustomTonality(diatonicAlt, scale);
+		return t;
+	}
+
+	static Tonality from(Chromatic chromatic, Scale s) {
+		DiatonicAlt diatonicAlt = DiatonicAlt.from(chromatic);
+		return of (diatonicAlt, s);
+	}
+
+
+	static @NonNull List<DiatonicAlt> getNotesFrom(@NonNull final DiatonicAlt noteBase, @NonNull final Scale scale) {
+		List<DiatonicAlt> notes = new ArrayList<>();
+		boolean first = true;
+		Chromatic chromatic = Chromatic.from(noteBase);
+		Diatonic diatonic = noteBase.getDiatonic();
+		for ( ScaleDistance step : scale ) {
+			if (first) {
+				notes.add(noteBase);
+				first = false;
+			} else {
+				if (noteBase.getDiatonic() == diatonic)
+					break;
+				DiatonicAlt newDiatonicAlt = DiatonicAlt.from(chromatic, diatonic);
+				notes.add(newDiatonicAlt);
+			}
+
+			chromatic = chromatic.addSemi(step);
+			diatonic = diatonic.next();
 		}
 
-		return out;
+		return notes;
+	}
+
+	static Tonality of(Tonality t) {
+		return of(t.getRoot(), t.getScale());
 	}
 
 	default Tonality getRelativeMinor() {
@@ -40,10 +75,8 @@ public interface Tonality extends Cloneable {
 		return TonalityChordRetrieval.getRelativeMajorFrom(this);
 	}
 
-	boolean has(boolean outScale, PitchChromaticChord c);
-
 	default boolean isMajorOrMinor() {
-		return ( getScale().equals( ScaleEnum.MAJOR ) || getScale().equals( ScaleEnum.MINOR ) );
+		return ( getScale().equals( Scale.MAJOR ) || getScale().equals( Scale.MINOR ) );
 	}
 
 	default boolean equals(Tonality t) {
@@ -63,31 +96,20 @@ public interface Tonality extends Cloneable {
 	}
 
 	default boolean hasSameNotesAs(Tonality t) {
-		return Arrays.equals( getNotes(), t.getNotes() );
+		return getNotes().equals( t.getNotes() );
 	}
 
-	@Deprecated
-	default PitchChromaticChord getChordFrom(CustomDiatonicChord dc, DiatonicFunction df) {
-		return dc.toChromatic( this, df );
-	}
-
-	boolean updateChromaticsFromBase(DiatonicAlt noteBase);
-
-	default int length() {
+	default int size() {
 		return getScale().size();
 	}
 
-	default DiatonicAlt getNote(int pos) {
-		int i = pos % getScale().size();
-		return getNotes()[i];
-	}
-
 	default DiatonicAlt getNote(DiatonicDegree diatonicDegree) {
-		return getNote(diatonicDegree.ordinal());
+		int i = diatonicDegree.ordinal();
+		return getNotes().get(i);
 	}
 
 	default boolean isModeOf(Tonality tonality) {
-		if ( length() != tonality.length() )
+		if ( size() != tonality.size() )
 			return false;
 
 		for ( DiatonicAlt note : getNotes() )
@@ -103,41 +125,15 @@ public interface Tonality extends Cloneable {
 	}
 
 	default Tonality[] getModes() {
-		Tonality[] ret = new Tonality[length()];
+		Tonality[] ret = new Tonality[size()];
 
 		int j = 0;
 		for ( Scale s : getScale().getAllModes() )
 			for ( Chromatic chromatic : Chromatic.values() ) {
-				Tonality t = Tonality.of( chromatic, s );
+				Tonality t = Tonality.from( chromatic, s );
 				if ( isModeOf( t ) )
 					ret[j++] = t;
 			}
-
-		return ret;
-	}
-
-	default List<Tonality> getModesSameRoot() {
-		List<Tonality> ret = new ArrayList<>();
-
-		for ( Scale s : getScale().getAllModes() )
-			for ( Chromatic chromatic : Chromatic.values() ) {
-				Tonality t = Tonality.of( chromatic, s );
-				if ( isModeOf( t ) ) {
-					t.updateChromaticsFromBase( getRoot() );
-					if (t instanceof CustomTonality)
-						((CustomTonality)t).minimizeAlterations();
-					ret.add( t );
-				}
-			}
-
-		return ret;
-	}
-
-	static List<Tonality> all() {
-		List<Tonality> ret = new ArrayList<>();
-		for ( Scale mode : Scale.ALL )
-			for ( Chromatic chromatic : Chromatic.values() )
-				ret.add( Tonality.of( chromatic, mode ) );
 
 		return ret;
 	}
@@ -152,44 +148,20 @@ public interface Tonality extends Cloneable {
 		return ret;
 	}
 
-	static Tonality createFromChord(DiatonicChordMidi c, Tonality base) throws TonalityException {
-		assert base != null;
-		if ( base.length() != 7 )
-			throw new RuntimeException( "No tiene 7 notas la escala" );
+	default List<Tonality> getModesSameRoot() {
+		List<Tonality> ret = new ArrayList<>();
 
-		DiatonicAlt[] notesChord = new DiatonicAlt[c.size()];
-		for ( int i = 0; i < c.size(); i++ )
-			notesChord[i] = c.get( i ).getDiatonicAlt();
-
-		int posChordCorrector = 7 - c.get( 0 ).getDegree().val();
-
-		// Integer posBaseCorrector = base.getDegreeFrom(notesChord[0]);
-		Integer posBaseCorrector = ( Diatonic.from( notesChord[0] ).ordinal()
-				- Diatonic.from( base.getRoot() ).ordinal() + 7 ) % 7;
-		if ( posBaseCorrector == null ) {
-			DiatonicAlt chromatic = c.get(0).getDiatonicAlt();
-			throw new TonalityException(chromatic, base);
-		}
-
-		DiatonicAlt[] tonalityNotes = new DiatonicAlt[7];
-		for ( int i = 0; i < 7; i++ ) {
-			int pos = ( posBaseCorrector + i ) % 7;
-
-			boolean notFound = true;
-			for ( int j = 0; j < notesChord.length; j++ ) {
-				int index = (c.get(j).getDegree().val() + posChordCorrector) % base.getScale().size();
-				if (index == i) {
-					tonalityNotes[i] = notesChord[j];
-					notFound = false;
-					break;
+		for ( Scale s : getScale().getAllModes() )
+			for ( Chromatic chromatic : Chromatic.values() ) {
+				Tonality t = Tonality.from( chromatic, s );
+				if ( isModeOf( t ) ) {
+					if (t instanceof CustomTonality)
+						((CustomTonality)t).minimizeAlterations();
+					ret.add( t );
 				}
 			}
 
-			if ( notFound )
-				tonalityNotes[i] = base.getNote( pos );
-		}
-
-		return Tonality.of( notesChord[0], Scale.fromDiatonicAltList( Arrays.asList(tonalityNotes) ) );
+		return ret;
 	}
 
 	default @Nullable DiatonicDegree getDegreeFrom(@NonNull DiatonicAlt note) {
@@ -205,8 +177,11 @@ public interface Tonality extends Cloneable {
 
 	default @Nullable DiatonicDegree getDegreeFrom(@NonNull Chromatic chromatic) {
 		Objects.requireNonNull(chromatic, "No se ha especificado nota");
+
 		for ( DiatonicDegree diatonicDegree : DiatonicDegree.values() ) {
-			if (Chromatic.from( getNote(diatonicDegree) ) == chromatic)
+			DiatonicAlt degreeDiatonicAlt = getNote(diatonicDegree);
+			Chromatic degreeChromatic = Chromatic.from(degreeDiatonicAlt);
+			if (degreeChromatic == chromatic)
 				return diatonicDegree;
 		}
 
@@ -236,7 +211,6 @@ public interface Tonality extends Cloneable {
 
 		return true;
 	}
-
 	default <N extends Chromatic> boolean hasEnharmonic(Iterable<N> notes) {
 		for ( N n : notes ) {
 			if ( getDegreeFrom( n ) == null )
@@ -245,6 +219,7 @@ public interface Tonality extends Cloneable {
 
 		return true;
 	}
+
 	/*
 	 * public boolean has(int note) { return getDegreeFrom( note ) != null; }
 	 *
@@ -263,29 +238,20 @@ public interface Tonality extends Cloneable {
 		return Tonality.of( getRoot().addSemi( distanceScale.getSemitones() ), getScale() );
 	}
 
-	Scale getScale();
-
-	DiatonicAlt getRoot();
-
-	DiatonicAlt[] getNotes();
-
-	default Tonality minor() {
-		Tonality s = Tonality.of( getRoot(), Scale.MINOR );
-		return s;
+	default Tonality getMinor() {
+		return Tonality.of( getRoot(), Scale.MINOR );
 	}
 
-	default Tonality major() {
-		Tonality s = Tonality.of( getRoot(), Scale.MAJOR );
-		return s;
+	default Tonality getMajor() {
+		return Tonality.of( getRoot(), Scale.MAJOR );
 	}
 
-	default Tonality lydian() {
-		Tonality s = Tonality.of( getRoot(), Scale.LYDIAN );
-		return s;
+	default Tonality getLydian() {
+		return Tonality.of( getRoot(), Scale.LYDIAN );
 	}
 
-	default ArrayList<DiatonicChordMidi[]> commonChords(Tonality s) {
-		ArrayList<DiatonicChordMidi[]> ret = new ArrayList<>();
+	default List<DiatonicChordMidi[]> commonChords(Tonality s) {
+		List<DiatonicChordMidi[]> ret = new ArrayList<>();
 		for ( DiatonicFunction i : DiatonicFunction.COMMON )
 			for ( DiatonicFunction j : DiatonicFunction.COMMON ) {
 				DiatonicChordMidi c = new DiatonicChordMidi( i, this );
@@ -300,23 +266,6 @@ public interface Tonality extends Cloneable {
 					);
 			}
 		return ret;
-	}
-
-	Set<ChromaticChord> getScaleChords();
-
-	Set<ChromaticChord> getOutScaleChords();
-
-	default void showNotes() {
-		Logging.log( this + ": " + notesToString() );
-	}
-
-	default String notesToString() {
-		StringBuilder sb = new StringBuilder();
-		for ( int i = 0; i < length(); i++ ) {
-			sb.append( ChromaticMidi.literal( getNote( i ), this ) + " " );
-		}
-
-		return sb.toString();
 	}
 
 	default IntervalChromatic getInterval(DiatonicDegree from, IntervalDiatonic id) {
@@ -340,28 +289,47 @@ public interface Tonality extends Cloneable {
 		return hf;
 	}
 
-	@Nullable HarmonicFunction getFunction(PitchChromaticChord c, boolean rename);
-
-	void showChromaticChordFunction();
-
-	DiatonicAlt getChordFrom(Chromatic chromatic) throws TonalityException;
-
-	static Tonality of(DiatonicAlt c, Scale s) {
-		Tonality t = TonalityEnum.of(c, s);
-		if (t == null)
-			t = new CustomTonality(c, s);
-		return t;
-	}
-
-	static Tonality of(Chromatic chromatic, Scale s) {
-		return of (chromatic, s);
-	}
-
-	static Tonality of(Tonality t) {
-		return of(t.getRoot(), t.getScale());
-	}
-
 	default boolean has(ChromaticChord from) {
 		return false; // todo
 	}
+
+	@NonNull Set<ChromaticChord> getAllChords();
+
+	@NonNull Set<ChromaticChord> getBorrowedChords();
+
+	default boolean has(boolean outScale, @NonNull PitchChromaticChord c) {
+		Objects.requireNonNull(c);
+
+		boolean hasNotes = has( c );
+
+		if ( hasNotes )
+			return true;
+		else if ( outScale ) {
+			for ( ChromaticFunction f : ChromaticFunction.ALL ) {
+				try {
+					PitchChromaticChord c2 = ChromaticChordMidi.from( new DiatonicChordMidi( f, this ) );
+					if ( c.hasSameNotesOrder( c2 ) )
+						return true;
+				} catch ( TonalityException e ) {
+					continue;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	@NonNull Scale getScale();
+
+	@NonNull DiatonicAlt getRoot();
+
+	@NonNull List<DiatonicAlt> getNotes();
+
+	@NonNull Set<ChromaticChord> getScaleChords();
+
+	@NonNull Set<ChromaticChord> getOutScaleChords();
+
+	@Nullable HarmonicFunction getFunction(PitchChromaticChord c, boolean rename);
+
+	DiatonicAlt getDiatonicAltFrom(Chromatic chromatic) throws TonalityException;
 }

@@ -5,15 +5,8 @@ import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.PitchSingleMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
-import es.danisales.datune.tonality.Scale;
-import es.danisales.datune.tonality.ScaleEnum;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.google.common.base.Preconditions.checkArgument;
 
 public class Namer {
     private Namer() {

@@ -10,11 +10,7 @@ public enum Diatonic implements PitchDiatonicSingle {
 
 	public static final int NUMBER = 7;
 
-	int intValue() {
-		return ordinal();
-	}
-
-	/** Constrution **/
+	/** Building **/
 
 	public static Diatonic from(DiatonicDegree d) {
 		return DiatonicAdapter.from( d );
@@ -30,7 +26,19 @@ public enum Diatonic implements PitchDiatonicSingle {
 		return DiatonicAdapter.from( this.intValue() + n );
 	}
 
+	public Diatonic next() {
+		return shift(1);
+	}
+
+	public Diatonic previous() {
+		return shift(-1);
+	}
+
 	/** Calculator **/
+
+	int intValue() {
+		return ordinal();
+	}
 
 	@Override
 	public DiatonicDegree getDegree() {

@@ -6,10 +6,7 @@ import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.midi.PitchMidi;
 import es.danisales.datune.musical.*;
 import es.danisales.datune.pitch.PitchChromaticChord;
-import es.danisales.datune.tonality.CustomTonality;
-import es.danisales.datune.tonality.Tonality;
-import es.danisales.datune.tonality.TonalityChordRetrieval;
-import es.danisales.datune.tonality.TonalityEnum;
+import es.danisales.datune.tonality.*;
 import org.junit.Test;
 
 import java.util.*;
@@ -20,11 +17,11 @@ public class TonalityTest {
 	@Test
 	public void notes2tonality() {
 		Tonality s = TonalityEnum.A;
-		DiatonicAlt[] notes = new DiatonicAlt[7];
-		for ( int i = 0; i < 7; i++ )
-			notes[i] = s.getNote( i );
+		List<DiatonicAlt> notes = new ArrayList<>();
+		for ( DiatonicDegree diatonicDegree : DiatonicDegree.values() )
+			notes.add( s.getNote( diatonicDegree ) );
 
-		assertEquals( s.getScale(), TonalityEnum.notes2scale( notes ) );
+		assertEquals( s.getScale(), Scale.fromDiatonicAltList( notes ) );
 	}
 
 	@Test
@@ -64,7 +61,6 @@ public class TonalityTest {
 	public void updateChromaticsFromBase() {
 		Tonality t = TonalityEnum.Gb;
 		assertEquals( DiatonicAlt.Gb, t.getRoot() );
-		t.updateChromaticsFromBase( DiatonicAlt.FF );
 		assertEquals( DiatonicAlt.FF, t.getRoot() );
 	}
 
@@ -178,7 +174,7 @@ public class TonalityTest {
 		assertEquals( 25, ChromaticFunction.ALL.length );
 		assertEquals( 25, cs.size() );
 
-		List<ChromaticChord> ccs = t.getAllChords( );
+		Set<ChromaticChord> ccs = t.getAllChords( );
 		assertEquals( 116, ccs.size() );
 	}
 

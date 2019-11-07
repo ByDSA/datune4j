@@ -153,12 +153,12 @@ public class Tests {
 		DiatonicChordMidi c = new DiatonicChordMidi( ChromaticFunction.V7_IV, 5, s );
 
 		assertEquals(
-				Tonality.of( Chromatic.C, Scale.MIXOLYDIAN ).getScale(), c.getTonality().getScale()
+				Tonality.from( Chromatic.C, Scale.MIXOLYDIAN ).getScale(), c.getTonality().getScale()
 		);
 
 		c = new DiatonicChordMidi( ChromaticFunction.V7_V, 5, TonalityEnum.E );
 		assertEquals(
-				Tonality.of( Chromatic.FF, Scale.MIXOLYDIAN ).getScale(), c.getTonality().getScale()
+				Tonality.from( Chromatic.FF, Scale.MIXOLYDIAN ).getScale(), c.getTonality().getScale()
 		);
 	}
 
@@ -224,7 +224,7 @@ public class Tests {
 	public void scaleRelative() {
 		Tonality scale = TonalityEnum.E.getRelativeScaleDiatonic( DiatonicDegree.V );
 		assertEquals( Chromatic.B, scale.getRoot() );
-		assertEquals( Tonality.of( Chromatic.B, Scale.MAJOR ).getScale(), scale.getScale() );
+		assertEquals( Tonality.from( Chromatic.B, Scale.MAJOR ).getScale(), scale.getScale() );
 	}
 
 	@Test
@@ -233,8 +233,8 @@ public class Tests {
 
 		assertEquals( Chromatic.C, s.getRoot() );
 
-		assertEquals( Chromatic.C, s.getNote( 0 ) );
-		assertEquals( Chromatic.D, s.getNote( 1 ) );
+		assertEquals( Chromatic.C, s.getNote( DiatonicDegree.I ) );
+		assertEquals( Chromatic.D, s.getNote( DiatonicDegree.II ) );
 	}
 
 	@Test

@@ -37,7 +37,7 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
             Chromatic rChromatic = Chromatic.from(r);
             ret.add( ChromaticChordEnum.whichRootIs( rChromatic, ChromaticChordEnum.CHORDS_DIMINISHED ) );
         } else if ( f == ChromaticFunction.N6 ) {
-            DiatonicAlt base = t.getNote( 0 );
+            DiatonicAlt base = t.getNote( DiatonicDegree.I );
 
             DiatonicAlt n1 = base.addSemi( 1 );
             DiatonicAlt n2 = base.addSemi( 5 );
@@ -63,7 +63,7 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
             DiatonicMidi n = null;
             switch ( f ) {
                 case V_II:
-                    t = Tonality.createFromChord(
+                    t = Tonality.fromDiatonicChord(
                             new DiatonicChordMidi(
                                     DiatonicFunction.V, t
                                     .getRelativeScaleDiatonic( DiatonicDegree.II )
@@ -71,7 +71,7 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
                     );
                     break;
                 case V7_II:
-                    t = Tonality.createFromChord(
+                    t = Tonality.fromDiatonicChord(
                             new DiatonicChordMidi(
                                     DiatonicFunction.V7, t
                                     .getRelativeScaleDiatonic( DiatonicDegree.II )
@@ -79,7 +79,7 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
                     );
                     break;
                 case V_III:
-                    t = Tonality.createFromChord(
+                    t = Tonality.fromDiatonicChord(
                             new DiatonicChordMidi(
                                     DiatonicFunction.V, t
                                     .getRelativeScaleDiatonic( DiatonicDegree.III )
@@ -87,7 +87,7 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
                     );
                     break;
                 case V7_III:
-                    t = Tonality.createFromChord(
+                    t = Tonality.fromDiatonicChord(
                             new DiatonicChordMidi(
                                     DiatonicFunction.V7, t
                                     .getRelativeScaleDiatonic( DiatonicDegree.III )
@@ -95,7 +95,7 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
                     );
                     break;
                 case V_IV:
-                    t = Tonality.createFromChord(
+                    t = Tonality.fromDiatonicChord(
                             new DiatonicChordMidi(
                                     DiatonicFunction.V, t
                                     .getRelativeScaleDiatonic( DiatonicDegree.IV )
@@ -103,7 +103,7 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
                     );
                     break;
                 case V7_IV:
-                    t = Tonality.createFromChord(
+                    t = Tonality.fromDiatonicChord(
                             new DiatonicChordMidi(
                                     DiatonicFunction.V7, t
                                     .getRelativeScaleDiatonic( DiatonicDegree.IV )
@@ -111,7 +111,7 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
                     );
                     break;
                 case V_V:
-                    t = Tonality.createFromChord(
+                    t = Tonality.fromDiatonicChord(
                             new DiatonicChordMidi(
                                     DiatonicFunction.V, t
                                     .getRelativeScaleDiatonic( DiatonicDegree.V )
@@ -119,7 +119,7 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
                     );
                     break;
                 case V7_V:
-                    t = Tonality.createFromChord(
+                    t = Tonality.fromDiatonicChord(
                             new DiatonicChordMidi(
                                     DiatonicFunction.V7, t
                                     .getRelativeScaleDiatonic( DiatonicDegree.V )
@@ -127,7 +127,7 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
                     );
                     break;
                 case V_VI:
-                    t = Tonality.createFromChord(
+                    t = Tonality.fromDiatonicChord(
                             new DiatonicChordMidi(
                                     DiatonicFunction.V, t
                                     .getRelativeScaleDiatonic( DiatonicDegree.VI )
@@ -135,7 +135,7 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
                     );
                     break;
                 case V7_VI:
-                    t = Tonality.createFromChord(
+                    t = Tonality.fromDiatonicChord(
                             new DiatonicChordMidi(
                                     DiatonicFunction.V7, t
                                     .getRelativeScaleDiatonic( DiatonicDegree.VI )
@@ -145,7 +145,7 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
                 case SUBV7:
                     DiatonicChordMidi c = new DiatonicChordMidi( DiatonicFunction.V7, t );
                     Chromatic chromatic = ChromaticAdapter.from(c.get( 0 ));
-                    t = Tonality.of(
+                    t = Tonality.from(
                             chromatic.addSemi( 6 ), Scale.LYDIAN_b7
                     );
                     break;
@@ -154,7 +154,7 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
                             ChromaticFunction.V7_II, t
                     );
                     Chromatic chromatic2 = ChromaticAdapter.from(c2.get( 0 ));
-                    t = Tonality.of(
+                    t = Tonality.from(
                             chromatic2.addSemi( 6 ), Scale.LYDIAN_b7
                     );
                     break;
@@ -163,7 +163,7 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
                             ChromaticFunction.V7_III, t
                     );
                     Chromatic chromatic3 = ChromaticAdapter.from(c3.get( 0 ));
-                    t = Tonality.of(
+                    t = Tonality.from(
                             chromatic3.addSemi( 6 ), Scale.LYDIAN_b7
                     );
                     break;
@@ -172,7 +172,7 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
                             ChromaticFunction.V7_IV, t
                     );
                     Chromatic chromatic4 = ChromaticAdapter.from(c4.get( 0 ));
-                    t = Tonality.of(
+                    t = Tonality.from(
                             chromatic4.addSemi( 6 ), Scale.LYDIAN_b7
                     );
                     break;
@@ -181,7 +181,7 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
                             ChromaticFunction.V7_V, t
                     );
                     Chromatic chromatic5 = ChromaticAdapter.from(c5.get( 0 ));
-                    t = Tonality.of(
+                    t = Tonality.from(
                             chromatic5.addSemi( 6 ), Scale.LYDIAN_b7
                     );
                     break;
@@ -190,7 +190,7 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
                             ChromaticFunction.V7_VI, t
                     );
                     Chromatic chromatic6 = ChromaticAdapter.from(c6.get( 0 ));
-                    t = Tonality.of(
+                    t = Tonality.from(
                             chromatic6.addSemi( 6 ), Scale.LYDIAN_b7
                     );
                     break;
@@ -199,7 +199,7 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
                             DiatonicFunction.V7, t
                     );
                     Chromatic chromaticAlt = ChromaticAdapter.from(calt.get( 0 ));
-                    t = Tonality.of(
+                    t = Tonality.from(
                             chromaticAlt, Scale.SUPERLOCRIAN
                     );
                     break;
@@ -319,7 +319,7 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
         List<Tonality> ts = t.getModesSameRoot();
 
         int i = 0;
-        ChromaticChord[] ret = new ChromaticChord[t.length()];
+        ChromaticChord[] ret = new ChromaticChord[t.size()];
         for ( Tonality t2 : ts ) {
             ret[i++] = ChromaticChord.from(t2, fCasted);
         }

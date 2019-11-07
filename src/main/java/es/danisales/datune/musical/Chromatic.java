@@ -138,7 +138,7 @@ public enum Chromatic implements PitchChromaticSingle {
 	}
 
 	public @Nullable DiatonicAlt rename(@NonNull Tonality ton) {
-		return ton.getChordFrom(this);
+		return ton.getDiatonicAltFrom(this);
 	}
 
 	public int distSemitonesTo(@NonNull Chromatic n2) {

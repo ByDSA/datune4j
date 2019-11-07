@@ -11,7 +11,6 @@ import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityEnum;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -20,7 +19,7 @@ import static org.junit.Assert.assertNotEquals;
 public class DiatonicChordMidiTest {
 	@Test
 	public void chordConstructorPowerChords() {
-		Tonality s = Tonality.of( Chromatic.C, Scale.MAJOR );
+		Tonality s = Tonality.from( Chromatic.C, Scale.MAJOR );
 		DiatonicChordMidi c;
 
 		c = new DiatonicChordMidi( ChromaticFunction.I5, 5, s );
@@ -98,7 +97,7 @@ public class DiatonicChordMidiTest {
 
 	@Test
 	public void constructorDiatonicFunc() {
-		Tonality s =Tonality.of( Chromatic.C, Scale.MAJOR );
+		Tonality s =Tonality.from( Chromatic.C, Scale.MAJOR );
 		DiatonicChordMidi c;
 		c = new DiatonicChordMidi( DiatonicFunction.I, 5, s );
 		assertEquals( 3, c.size() );
@@ -142,7 +141,7 @@ public class DiatonicChordMidiTest {
 		assertEquals( PitchMidi.D6, c.get( 1 ).getCode() );
 		assertEquals( PitchMidi.F6, c.get( 2 ).getCode() );
 
-		s = Tonality.of( Chromatic.FF, Scale.MINOR );
+		s = Tonality.from( Chromatic.FF, Scale.MINOR );
 
 		c = new DiatonicChordMidi( DiatonicFunction.I, 5, s );
 		assertEquals( 3, c.size() );

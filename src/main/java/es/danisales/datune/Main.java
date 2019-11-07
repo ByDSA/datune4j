@@ -223,7 +223,7 @@ public class Main {
 					break; // VII
 			}
 
-			tonality = Tonality.of( Chromatic.C, scale );
+			tonality = Tonality.from( Chromatic.C, scale );
 			Progression pp = ( (Progression) p.clone() ).setTonality( tonality );
 
 			MelodyDiatonic mm2 = (MelodyDiatonic) ( (MelodyDiatonic) m.clone() )
@@ -550,7 +550,8 @@ public class Main {
 			panel.add( labelPanel );
 			for ( int i = 0; i < panels.length; i++ ) {
 				panelF[i] = new JPanel();
-				panelF[i].add( new JLabel( ton.getNote( i ).toString() ) );
+				DiatonicDegree diatonicDegree = DiatonicDegree.values()[i];
+				panelF[i].add( new JLabel( ton.getNote( diatonicDegree ).toString() ) );
 				panelF[i].setLayout( new GridLayout( 1, 5 ) );
 				for ( int j = 0; j < panels[i].length; j++ ) {
 					panels[i][j] = new JPanel();
@@ -565,7 +566,7 @@ public class Main {
 			AtomicReference<DiatonicChordMidi> lastPlayed = new AtomicReference<>( null );
 
 			java.util.List<ChromaticChord> fs = new ArrayList<>();
-			java.util.List<ChromaticChord> cs = ton.getAllChords();
+			java.util.Set<ChromaticChord> cs = ton.getAllChords();
 			for ( ChromaticChord c1 : cs ) {
 				System.out.println(c1);
 				DiatonicChordMidi c = c1.toMidi().getDiatonicChordMidi( ton );
@@ -1135,7 +1136,7 @@ public class Main {
  *
  * add(Chord.VII, -1).setLength(Note.V2); // E G# B VII II IV VII
  *
- * add(Chord.VII, -1, s.major()).setLength(Note.V2); // F G# B 3�m 5�� } };
+ * add(Chord.VII, -1, s.getMajor()).setLength(Note.V2); // F G# B 3�m 5�� } };
  * c.add(Note.V1*4*i, l);
  *
  * c2.setScale(s); int pre = Note.V1*4*i + Note.V4 + Note.V8; c2.add(pre, new
@@ -1173,7 +1174,7 @@ public class Main {
  *
  * add(Chord.VII, -1) .setLength(Note.V2); // E G# B VII II IV VII
  *
- * add(Chord.VII, -1, s.major()) .setLength(Note.V2); // F G# B 3�m 5��
+ * add(Chord.VII, -1, s.getMajor()) .setLength(Note.V2); // F G# B 3�m 5��
  *
  * setChordArpegio(new ArpegioAscDesc(3, Note.V1, Note.V16)); setChordArpegio(3,
  * new ArpegioAscDesc(3, Note.V1, Note.V16)); setChordArpegio(4, new
@@ -1202,7 +1203,7 @@ public class Main {
  *
  * add(Chord.V, 0) .inv(2) .setLength(Note.V2);
  *
- * add(Chord.VII, 0, s.major()) .inv(2) .setLength(Note.V2);
+ * add(Chord.VII, 0, s.getMajor()) .inv(2) .setLength(Note.V2);
  *
  * add(Chord.I, 1) .inv(2);
  *

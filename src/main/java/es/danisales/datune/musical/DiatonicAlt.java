@@ -80,6 +80,10 @@ public class DiatonicAlt implements SymbolicPitch {
 		this.semitonesAdded = semitonesAdded;
 	}
 
+	public static DiatonicAlt from(@NonNull Chromatic chromatic, @NonNull Diatonic diatonic) {
+		return DiatonicAltAdapter.from(chromatic, diatonic);
+	}
+
 	public static DiatonicAlt from(Diatonic diatonic, int alt) {
 		return new DiatonicAlt(diatonic, alt);
 	}

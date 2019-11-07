@@ -7,7 +7,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.*;
 
 @SuppressWarnings("WeakerAccess")
-public class Scale {
+public class Scale implements Iterable<ScaleDistance> {
 	/**
 	 * Constant Scales
 	 */
@@ -214,5 +214,10 @@ public class Scale {
 
 		Scale scale = (Scale)o;
 		return scale.getCode().equals(getCode());
+	}
+
+	@Override
+	public @NonNull Iterator<ScaleDistance> iterator() {
+		return innerScale.getCode().iterator();
 	}
 }

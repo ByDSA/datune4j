@@ -102,7 +102,7 @@ public class DiatonicMidi implements PitchSingleMidi, PitchChromaticSingle, Pitc
 		if ( !n.tonality.equals( tonality ) )
 			throw new TonalityException( this, n );
 
-		int tonalityLength = n.getTonality().length();
+		int tonalityLength = n.getTonality().size();
 
 		IntervalDiatonic id = IntervalDiatonic.fromIndex(
 				n.getOctave() * tonalityLength + n.getDegree().val()

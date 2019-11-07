@@ -4,28 +4,27 @@ import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.pitch.PitchChromaticChord;
-import es.danisales.datune.pitch.SymbolicPitch;
 
 public class TonalityException extends RuntimeException {
-	public TonalityException(DiatonicAlt n, Tonality s) {
+	public TonalityException(DiatonicAlt diatonicAlt, Tonality tonality) {
 		super(
-			"La nota " + n + " no pertenece a la tonalidad " + s + ": "
-					+ s.notesToString() + "."
+			"La nota " + diatonicAlt + " no pertenece a la tonalidad " + tonality + ": "
+					+ TonalityNamer.notesFrom(tonality) + "."
 				);
 	}
 
-	public TonalityException(Chromatic n, Tonality s) {
+	public TonalityException(Chromatic chromatic, Tonality tonality) {
 		super(
-			"La nota " + n + " no pertenece a la tonalidad " + s + ": "
-					+ s.notesToString() + "."
+			"La nota " + chromatic + " no pertenece a la tonalidad " + tonality + ": "
+					+ TonalityNamer.notesFrom(tonality) + "."
 				);
 	}
 
-	public TonalityException(PitchChromaticChord n, Tonality s) {
+	public TonalityException(PitchChromaticChord pitchChromaticChord, Tonality tonality) {
 		super(
-			"El acorde a a�adir " + n + " de notas " + n.notesToString()
-			+ " no pertenece a la escala " + s + ": "
-			+ s.notesToString() + "."
+			"El acorde a añadir " + pitchChromaticChord + " de notas " + pitchChromaticChord.notesToString()
+			+ " no pertenece a la escala " + tonality + ": "
+			+ TonalityNamer.notesFrom(tonality) + "."
 				);
 	}
 
