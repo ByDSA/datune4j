@@ -15,33 +15,33 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import java.util.*;
 
 public enum TonalityEnum implements Tonality {
-	C( DiatonicAlt.C, ScaleEnum.MAJOR ),
-	D( DiatonicAlt.D, ScaleEnum.MAJOR ),
-	E( DiatonicAlt.E, ScaleEnum.MAJOR ),
-	F( DiatonicAlt.F, ScaleEnum.MAJOR ),
-	G( DiatonicAlt.G, ScaleEnum.MAJOR ),
-	A( DiatonicAlt.A, ScaleEnum.MAJOR ),
-	B( DiatonicAlt.B, ScaleEnum.MAJOR ),
-	Db( DiatonicAlt.Db, ScaleEnum.MAJOR ),
-	Eb( DiatonicAlt.Eb, ScaleEnum.MAJOR ),
-	FF( DiatonicAlt.FF, ScaleEnum.MAJOR ),
-	Gb( DiatonicAlt.Gb, ScaleEnum.MAJOR ),
-	Ab( DiatonicAlt.Ab, ScaleEnum.MAJOR ),
-	Bb( DiatonicAlt.Bb, ScaleEnum.MAJOR ),
+	C( DiatonicAlt.C, Scale.MAJOR ),
+	D( DiatonicAlt.D, Scale.MAJOR ),
+	E( DiatonicAlt.E, Scale.MAJOR ),
+	F( DiatonicAlt.F, Scale.MAJOR ),
+	G( DiatonicAlt.G, Scale.MAJOR ),
+	A( DiatonicAlt.A, Scale.MAJOR ),
+	B( DiatonicAlt.B, Scale.MAJOR ),
+	Db( DiatonicAlt.Db, Scale.MAJOR ),
+	Eb( DiatonicAlt.Eb, Scale.MAJOR ),
+	FF( DiatonicAlt.FF, Scale.MAJOR ),
+	Gb( DiatonicAlt.Gb, Scale.MAJOR ),
+	Ab( DiatonicAlt.Ab, Scale.MAJOR ),
+	Bb( DiatonicAlt.Bb, Scale.MAJOR ),
 
-	Cm( DiatonicAlt.C, ScaleEnum.MINOR ),
-	Dm( DiatonicAlt.D, ScaleEnum.MINOR ),
-	Em( DiatonicAlt.E, ScaleEnum.MINOR ),
-	Fm( DiatonicAlt.F, ScaleEnum.MINOR ),
-	Gm( DiatonicAlt.G, ScaleEnum.MINOR ),
-	Am( DiatonicAlt.A, ScaleEnum.MINOR ),
-	Bm( DiatonicAlt.B, ScaleEnum.MINOR ),
-	CCm( DiatonicAlt.CC, ScaleEnum.MINOR ),
-	DDm( DiatonicAlt.DD, ScaleEnum.MINOR ),
-	Ebm( DiatonicAlt.Eb, ScaleEnum.MINOR ),
-	FFm( DiatonicAlt.FF, ScaleEnum.MINOR ),
-	GGm( DiatonicAlt.GG, ScaleEnum.MINOR ),
-	Bbm( DiatonicAlt.Bb, ScaleEnum.MINOR );
+	Cm( DiatonicAlt.C, Scale.MINOR ),
+	Dm( DiatonicAlt.D, Scale.MINOR ),
+	Em( DiatonicAlt.E, Scale.MINOR ),
+	Fm( DiatonicAlt.F, Scale.MINOR ),
+	Gm( DiatonicAlt.G, Scale.MINOR ),
+	Am( DiatonicAlt.A, Scale.MINOR ),
+	Bm( DiatonicAlt.B, Scale.MINOR ),
+	CCm( DiatonicAlt.CC, Scale.MINOR ),
+	DDm( DiatonicAlt.DD, Scale.MINOR ),
+	Ebm( DiatonicAlt.Eb, Scale.MINOR ),
+	FFm( DiatonicAlt.FF, Scale.MINOR ),
+	GGm( DiatonicAlt.GG, Scale.MINOR ),
+	Bbm( DiatonicAlt.Bb, Scale.MINOR );
 
 	public static final TonalityEnum[]	MAJOR_TONALITIES	= new TonalityEnum[] {
 		C,
@@ -152,7 +152,7 @@ public enum TonalityEnum implements Tonality {
 	}
 
 	public boolean isMajorOrMinor() {
-		if ( scale.equals( ScaleEnum.MAJOR ) || scale.equals( ScaleEnum.MINOR ) )
+		if ( scale.equals( Scale.MAJOR ) || scale.equals( Scale.MINOR ) )
 			return true;
 		else
 			return false;
@@ -240,8 +240,9 @@ public enum TonalityEnum implements Tonality {
 		int alt = 0;
 		for ( int i = 1; i < len; i++ ) {
 			DiatonicDegree diatonicDegree = DiatonicDegree.values()[i-1];
-			int semis = scale.get( diatonicDegree );
-			diatonicAlt = diatonicAlt.addSemi( semis );
+			ScaleDistance distanceScale = scale.get( diatonicDegree );
+			int semitones = distanceScale.getSemitones();
+			diatonicAlt = diatonicAlt.addSemi( semitones );
 			try {
 				noteBaseDiatonic = noteBaseDiatonic.shift( 1 );
 				Chromatic chromatic = Chromatic.from(diatonicAlt);
@@ -259,7 +260,7 @@ public enum TonalityEnum implements Tonality {
 	public TonalityEnum getRelativeMinor() {
 		TonalityEnum[] rel = getModes();
 		for ( TonalityEnum s : rel )
-			if ( s.getScale().equals( ScaleEnum.MINOR ) )
+			if ( s.getScale().equals( Scale.MINOR ) )
 				return s;
 
 		return null;
@@ -268,7 +269,7 @@ public enum TonalityEnum implements Tonality {
 	public TonalityEnum getRelativeMajor() {
 		TonalityEnum[] rel = getModes();
 		for ( TonalityEnum s : rel )
-			if ( s.getScale().equals( ScaleEnum.MAJOR ) )
+			if ( s.getScale().equals( Scale.MAJOR ) )
 				return s;
 
 		return null;
@@ -321,7 +322,7 @@ public enum TonalityEnum implements Tonality {
 		assert dif > 0;
 		ton[notes.length - 1] = dif;
 
-		return Scale.of( ton );
+		return Scale.fromIntegers( ton );
 	}
 
 	public DiatonicDegree getDegreeFrom(PitchChromaticSingle note) {
@@ -376,17 +377,17 @@ public enum TonalityEnum implements Tonality {
 	}
 
 	public TonalityEnum minor() {
-		TonalityEnum s = TonalityEnum.of( root, ScaleEnum.MINOR );
+		TonalityEnum s = TonalityEnum.of( root, Scale.MINOR );
 		return s;
 	}
 
 	public TonalityEnum major() {
-		TonalityEnum s = TonalityEnum.of( root, ScaleEnum.MAJOR );
+		TonalityEnum s = TonalityEnum.of( root, Scale.MAJOR );
 		return s;
 	}
 
 	public TonalityEnum lydian() {
-		TonalityEnum s = TonalityEnum.of( root, ScaleEnum.LYDIAN );
+		TonalityEnum s = TonalityEnum.of( root, Scale.LYDIAN );
 		return s;
 	}
 

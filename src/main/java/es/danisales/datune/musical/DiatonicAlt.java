@@ -111,8 +111,8 @@ public class DiatonicAlt implements SymbolicPitch {
 		return semitonesAdded == chromatic.semitonesAdded;
 	}
 
-	public DiatonicAlt addSemi(int n) {
-		return new DiatonicAlt(diatonicBase, semitonesAdded + n);
+	public DiatonicAlt addSemi(int semis) {
+		return new DiatonicAlt(diatonicBase, semitonesAdded + semis);
 	}
 
 	public List<DiatonicAlt> getEnharmonics(int maxAlterations) {

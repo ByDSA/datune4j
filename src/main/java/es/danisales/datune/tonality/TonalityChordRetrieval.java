@@ -17,13 +17,13 @@ public class TonalityChordRetrieval {
         List<Tonality> ts;
         if ( tonality.getScale().isDiatonic() ) {
             ts = new ArrayList<>();
-            ts.add( new CustomTonality( tonality.getRoot(), ScaleEnum.MAJOR ) );
-            ts.add( new CustomTonality( tonality.getRoot(), ScaleEnum.MINOR ) );
-            ts.add( new CustomTonality( tonality.getRoot(), ScaleEnum.DORIAN ) );
-            ts.add( new CustomTonality( tonality.getRoot(), ScaleEnum.PHRYGIAN ) );
-            ts.add( new CustomTonality( tonality.getRoot(), ScaleEnum.LYDIAN ) );
-            ts.add( new CustomTonality( tonality.getRoot(), ScaleEnum.MIXOLYDIAN ) );
-            ts.add( new CustomTonality( tonality.getRoot(), ScaleEnum.LOCRIAN ) );
+            ts.add( new CustomTonality( tonality.getRoot(), Scale.MAJOR ) );
+            ts.add( new CustomTonality( tonality.getRoot(), Scale.MINOR ) );
+            ts.add( new CustomTonality( tonality.getRoot(), Scale.DORIAN ) );
+            ts.add( new CustomTonality( tonality.getRoot(), Scale.PHRYGIAN ) );
+            ts.add( new CustomTonality( tonality.getRoot(), Scale.LYDIAN ) );
+            ts.add( new CustomTonality( tonality.getRoot(), Scale.MIXOLYDIAN ) );
+            ts.add( new CustomTonality( tonality.getRoot(), Scale.LOCRIAN ) );
         } else
             ts = tonality.getModesSameRoot();
 
@@ -42,7 +42,7 @@ public class TonalityChordRetrieval {
     public static Tonality getRelativeMinorFrom(Tonality tonality) {
         Tonality[] rel = tonality.getModes();
         for ( Tonality s : rel )
-            if ( s.getScale().equals( ScaleEnum.MINOR ) )
+            if ( s.getScale().equals( Scale.MINOR ) )
                 return s;
 
         return null;
@@ -51,7 +51,7 @@ public class TonalityChordRetrieval {
     public static Tonality getRelativeMajorFrom(Tonality tonality) {
         Tonality[] rel = tonality.getModes();
         for ( Tonality s : rel )
-            if ( s.getScale().equals( ScaleEnum.MAJOR ) )
+            if ( s.getScale().equals( Scale.MAJOR ) )
                 return s;
 
         return null;

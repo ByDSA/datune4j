@@ -16,10 +16,7 @@ import es.danisales.datune.midi.Progressions.Progression;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.songs.Power;
-import es.danisales.datune.tonality.ScaleEnum;
-import es.danisales.datune.tonality.Tonality;
-import es.danisales.datune.tonality.TonalityChordRetrieval;
-import es.danisales.datune.tonality.TonalityEnum;
+import es.danisales.datune.tonality.*;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.swing.*;
@@ -201,28 +198,28 @@ public class Main {
 
 		for ( int j = 0; j < 7; j++ ) {
 
-			ScaleEnum scale = null;
+			Scale scale = null;
 			switch ( j ) {
 				case 0:
-					scale = ScaleEnum.LYDIAN;
+					scale = Scale.LYDIAN;
 					break; // IV
 				case 1:
-					scale = ScaleEnum.MAJOR;
+					scale = Scale.MAJOR;
 					break; // I
 				case 2:
-					scale = ScaleEnum.MIXOLYDIAN;
+					scale = Scale.MIXOLYDIAN;
 					break; // V
 				case 3:
-					scale = ScaleEnum.DORIAN;
+					scale = Scale.DORIAN;
 					break; // II
 				case 4:
-					scale = ScaleEnum.MINOR;
+					scale = Scale.MINOR;
 					break; // VI
 				case 5:
-					scale = ScaleEnum.PHRYGIAN;
+					scale = Scale.PHRYGIAN;
 					break; // III
 				case 6:
-					scale = ScaleEnum.LOCRIAN;
+					scale = Scale.LOCRIAN;
 					break; // VII
 			}
 

@@ -1,19 +1,14 @@
 package es.danisales.datune.tonality;
 
-import com.google.common.primitives.Ints;
 import es.danisales.datune.diatonic.DiatonicDegree;
-import es.danisales.datune.diatonic.IntervalChromatic;
-import es.danisales.datune.musical.transformations.Namer;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-public enum ScaleEnum implements Scale {
+enum ScaleEnum implements ScaleInterface {
 	// 7
 	MAJOR( 2, 2, 1, 2, 2, 2, 1 ),
 	IONIAN( MAJOR ),
@@ -74,66 +69,62 @@ public enum ScaleEnum implements Scale {
 	BLUES_MINOR( PENTATONIC_MINOR.getMode( DiatonicDegree.IV ) ),
 	MAN_GONG( BLUES_MINOR ),
 	BLUES_MAJOR( PENTATONIC_MINOR.getMode( DiatonicDegree.V ) ),
-	YO_SCALE( BLUES_MAJOR);
+	YO_SCALE( BLUES_MAJOR),
 
-	private static final Map<List<Integer>, ScaleEnum> _map = new HashMap<>();
+	// 12
+	CHROMATIC(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+
+	private static final Map<List<ScaleDistance>, ScaleEnum> _map = new HashMap<>();
 	static {
 		for (ScaleEnum s : values()) {
-			Integer[] integers = Arrays.stream( s.value ).boxed().toArray( Integer[]::new );
-			List<Integer> array = Arrays.asList(integers);
-			_map.putIfAbsent(array, s);
+			_map.putIfAbsent(s.value, s);
 		}
 	}
 
-	public static @Nullable ScaleEnum of(@NonNull List<Integer> integers) {
-		Objects.requireNonNull(integers);
-		checkArgument(integers.size() > 0);
+	@SuppressWarnings("ConstantConditions") // Se crea primero las constantes de ScaleEnum que el map.
+	static @Nullable ScaleEnum of(@NonNull List<ScaleDistance> code) {
+		if (_map == null)
+			return null;
+		Objects.requireNonNull(code);
+		checkArgument(code.size() > 0);
 
-		return _map.get( integers );
+		return _map.get( code );
 	}
 
-	public static final ScaleEnum[] DIATONICS = new ScaleEnum[] {
-			IONIAN,
-			DORIAN,
-			PHRYGIAN,
-			LYDIAN,
-			MIXOLYDIAN,
-			AEOLIAN,
-			LOCRIAN
-	};
+	private final List<ScaleDistance> value;
 
-	private int[] value;
+	ScaleEnum(List<ScaleDistance> values) {
+		value = Collections.unmodifiableList(values);
 
-	ScaleEnum(int... i) throws ScaleException {
-		value = i;
-		if (IntStream.of( i ).sum() != IntervalChromatic.PERFECT_OCTAVE.getSemitones()) {
-			System.out.println( IntStream.of( i ).sum() );
-			System.out.println( IntervalChromatic.PERFECT_OCTAVE.getSemitones() );
-			throw new ScaleException( this );
-		}
+		sumCheck();
 	}
 
-	ScaleEnum(Scale s) {
-		this( Ints.toArray(s.getValue()) );
+	ScaleEnum(int... intValues) {
+		ScaleDistance[] distanceScales = new ScaleDistance[intValues.length];
+		for (int i = 0; i < intValues.length; i++)
+			distanceScales[i] = ScaleDistance.from(intValues[i]);
+
+		value = Collections.unmodifiableList (Arrays.asList(distanceScales));
+
+		sumCheck();
+	}
+
+	ScaleEnum(ScaleInterface s) {
+		this( s.getCode() );
 	}
 
 	@Override
-	public List<Integer> getValue() {
-		return Arrays.stream(value).boxed().collect(Collectors.toList());
+	public List<ScaleDistance> getCode() {
+		return value;
 	}
 
 	@Override
 	public int size() {
-		return value.length;
+		return value.size();
 	}
 
 	@Override
-	public int get(DiatonicDegree diatonicDegree) {
-		return value[diatonicDegree.ordinal()];
-	}
-
-	@Override
-	public String toString() {
-		return ScaleNamer.from(this);
+	public @NonNull ScaleDistance get(DiatonicDegree diatonicDegree) {
+		return value.get(diatonicDegree.ordinal());
 	}
 }

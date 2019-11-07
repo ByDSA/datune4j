@@ -5,6 +5,7 @@ import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.musical.transformations.*;
 import es.danisales.datune.pitch.PitchChromaticSingle;
+import es.danisales.datune.tonality.ScaleDistance;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -101,6 +102,10 @@ public enum Chromatic implements PitchChromaticSingle {
 	public Chromatic addSemi(int n) {
 		int index = (ordinal() + n) % NUMBER;
 		return values()[index];
+	}
+
+	public Chromatic addSemi(ScaleDistance distanceScale) {
+		return addSemi(distanceScale.getSemitones());
 	}
 
 	public Chromatic addSemi() {

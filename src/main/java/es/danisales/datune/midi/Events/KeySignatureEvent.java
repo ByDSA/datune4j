@@ -5,7 +5,7 @@ import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.tonality.Scale;
-import es.danisales.datune.tonality.ScaleEnum;
+import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
 
 public class KeySignatureEvent extends MetaEvent {
@@ -54,9 +54,9 @@ public class KeySignatureEvent extends MetaEvent {
 		Chromatic note = Chromatic.from( diatonicAlt );
 		byte[] bytes;
 
-		if (scale.equals(ScaleEnum.MAJOR)) {
+		if (scale.equals(Scale.MAJOR)) {
 			bytes = major(note);
-		} else if (scale.equals(ScaleEnum.MINOR)) {
+		} else if (scale.equals(Scale.MINOR)) {
 			bytes = minor(note);
 		} else
 			bytes = minor(note); // TODO
@@ -115,9 +115,9 @@ public class KeySignatureEvent extends MetaEvent {
 		
 		sb.append("KeySignature: " + ChromaticMidi.literal(note, tonality));
 
-		if (scale.equals(ScaleEnum.MAJOR)) {
+		if (scale.equals(Scale.MAJOR)) {
 			sb.append(" Mayor");
-		} else if (scale.equals(ScaleEnum.MINOR)) {
+		} else if (scale.equals(Scale.MINOR)) {
 			sb.append(" Menor");
 		}
 		

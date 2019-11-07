@@ -6,7 +6,7 @@ import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.midi.PitchMidi;
 import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.tonality.ScaleEnum;
+import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityEnum;
 import org.junit.Test;
@@ -67,7 +67,7 @@ public class DiatonicMidiTest {
 
 	@Test
 	public void add() {
-		Tonality s = Tonality.of( Chromatic.FF, ScaleEnum.MIXOLYDIAN );
+		Tonality s = Tonality.of( Chromatic.FF, Scale.MIXOLYDIAN );
 		DiatonicMidi n = DiatonicMidi.from( DiatonicDegree.I, s, 3 );
 		assertEquals( 42, n.getCode() );
 		assertEquals( 3, n.getOctave() );
@@ -79,7 +79,7 @@ public class DiatonicMidiTest {
 	
 	@Test
 	public void noteScaleAdd() {
-		Tonality s = Tonality.of( Chromatic.C, ScaleEnum.MAJOR );
+		Tonality s = Tonality.of( Chromatic.C, Scale.MAJOR );
 		DiatonicMidi n = DiatonicMidi.from( DiatonicDegree.I, s, 4 );
 
 		for ( int i = 0; i < diffM.length; i++ ) {
@@ -90,7 +90,7 @@ public class DiatonicMidiTest {
 			assertEquals( d2, d1 );
 		}
 
-		s = Tonality.of( Chromatic.FF, ScaleEnum.MINOR );
+		s = Tonality.of( Chromatic.FF, Scale.MINOR );
 		n = DiatonicMidi.from( DiatonicDegree.I, s, 4 );
 
 		for ( int i = 0; i < diffm.length; i++ ) {

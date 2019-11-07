@@ -268,7 +268,7 @@ public class CustomTonality implements Tonality {
 			/*CustomDiatonicChord dc = new CustomDiatonicChord( f );
 			assert dc != null : f + " " + this;
 
-			cc = CustomChromaticChord.from( calculateFrom( dc, f ) );
+			cc = CustomChromaticChord.fromIntegers( calculateFrom( dc, f ) );
 			cc.rename( this );
 			//assert cc.meta.str != null : cc.notesToString();
 			if ( functionChordsMap == null )
@@ -359,7 +359,7 @@ public class CustomTonality implements Tonality {
 		int alt = 0;
 		for ( int i = 1; i < len; i++ ) {
 			DiatonicDegree diatonicDegree = DiatonicDegree.values()[i - 1];
-			int semis =  scale.get( diatonicDegree );
+			ScaleDistance semis =  scale.get( diatonicDegree );
 			note = note.addSemi(semis);
 			try {
 				noteBaseDiatonic = noteBaseDiatonic.shift( 1 );
@@ -423,7 +423,7 @@ public class CustomTonality implements Tonality {
 	 */
 	public static ArrayList<CustomTonality> all() {
 		ArrayList<CustomTonality> ret = new ArrayList<>();
-		for ( ScaleEnum mode : ScaleEnum.values() )
+		for ( Scale mode : Scale.ALL )
 			for ( int i = 0; i < Chromatic.NUMBER; i++ ) {
 				Chromatic chromatic = Chromatic.from(i);
 				DiatonicAlt diatonicAlt = DiatonicAlt.from(chromatic);
@@ -499,7 +499,7 @@ public class CustomTonality implements Tonality {
 		assert dif > 0;
 		ton[notes.length - 1] = dif;
 
-		return Scale.of( ton );
+		return Scale.fromIntegers( ton );
 	}
 
 	public DiatonicDegree getDegreeFrom(PitchChromaticSingle note) {
@@ -539,11 +539,14 @@ public class CustomTonality implements Tonality {
 	 * return true; }
 	 */
 
-	public CustomTonality getRelativeScaleChromatic(int pos) {
-		return new CustomTonality( root.addSemi( pos ), getScale() );
+	public CustomTonality getRelativeScaleChromatic(int semitonesAdded) {
+		ScaleDistance distanceScale = ScaleDistance.from(semitonesAdded);
+		int semitones = distanceScale.getSemitones();
+		DiatonicAlt shiftedRoot = root.addSemi( semitones );
+		return new CustomTonality( shiftedRoot, getScale() );
 	}
 
-	public CustomTonality setScale(ScaleEnum t) {
+	public CustomTonality setScale(Scale t) {
 		scale = t;
 
 		return this;
@@ -558,17 +561,17 @@ public class CustomTonality implements Tonality {
 	}
 
 	public CustomTonality minor() {
-		CustomTonality s = new CustomTonality( root, ScaleEnum.MINOR );
+		CustomTonality s = new CustomTonality( root, Scale.MINOR );
 		return s;
 	}
 
 	public CustomTonality major() {
-		CustomTonality s = new CustomTonality( root, ScaleEnum.MAJOR );
+		CustomTonality s = new CustomTonality( root, Scale.MAJOR );
 		return s;
 	}
 
 	public CustomTonality lydian() {
-		CustomTonality s = new CustomTonality( root, ScaleEnum.LYDIAN );
+		CustomTonality s = new CustomTonality( root, Scale.LYDIAN );
 		return s;
 	}
 

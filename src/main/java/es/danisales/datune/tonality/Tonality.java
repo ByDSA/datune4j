@@ -135,7 +135,7 @@ public interface Tonality extends Cloneable {
 
 	static List<Tonality> all() {
 		List<Tonality> ret = new ArrayList<>();
-		for ( ScaleEnum mode : ScaleEnum.values() )
+		for ( Scale mode : Scale.ALL )
 			for ( Chromatic chromatic : Chromatic.values() )
 				ret.add( Tonality.of( chromatic, mode ) );
 
@@ -189,7 +189,7 @@ public interface Tonality extends Cloneable {
 				tonalityNotes[i] = base.getNote( pos );
 		}
 
-		return Tonality.of( notesChord[0], Scale.fromDiatonicAlt( Arrays.asList(tonalityNotes) ) );
+		return Tonality.of( notesChord[0], Scale.fromDiatonicAltList( Arrays.asList(tonalityNotes) ) );
 	}
 
 	default @Nullable DiatonicDegree getDegreeFrom(@NonNull DiatonicAlt note) {
@@ -259,7 +259,8 @@ public interface Tonality extends Cloneable {
 	}
 
 	default Tonality getRelativeScaleChromatic(int pos) {
-		return Tonality.of( getRoot().addSemi( pos ), getScale() );
+		ScaleDistance distanceScale = ScaleDistance.from(pos);
+		return Tonality.of( getRoot().addSemi( distanceScale.getSemitones() ), getScale() );
 	}
 
 	Scale getScale();
@@ -269,17 +270,17 @@ public interface Tonality extends Cloneable {
 	DiatonicAlt[] getNotes();
 
 	default Tonality minor() {
-		Tonality s = Tonality.of( getRoot(), ScaleEnum.MINOR );
+		Tonality s = Tonality.of( getRoot(), Scale.MINOR );
 		return s;
 	}
 
 	default Tonality major() {
-		Tonality s = Tonality.of( getRoot(), ScaleEnum.MAJOR );
+		Tonality s = Tonality.of( getRoot(), Scale.MAJOR );
 		return s;
 	}
 
 	default Tonality lydian() {
-		Tonality s = Tonality.of( getRoot(), ScaleEnum.LYDIAN );
+		Tonality s = Tonality.of( getRoot(), Scale.LYDIAN );
 		return s;
 	}
 

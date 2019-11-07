@@ -213,7 +213,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
         }
     }
 
-    public boolean hasScale(ScaleEnum s) {
+    public boolean hasScale(Scale s) {
         return metaTonality.getScale().equals( s );
     }
 
@@ -354,7 +354,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
             IntervalChromatic ic = tonality.getInterval( d, IntervalDiatonic.FIFTH );
 
             if ( !ic.equals( IntervalChromatic.PERFECT_FIFTH ) ) {
-                tonality = Tonality.of( tonality.getNote( d ), ScaleEnum.MAJOR );
+                tonality = Tonality.of( tonality.getNote( d ), Scale.MAJOR );
                 d = DiatonicDegree.I;
             }
 
@@ -454,7 +454,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
                     DiatonicChordMidi c = new DiatonicChordMidi( DiatonicFunction.V7, tonality );
                     Chromatic firstChromatic = ChromaticAdapter.from(c.get( 0 ) );
                     tonality = Tonality.of(
-                            firstChromatic.addSemi( 6 ), ScaleEnum.LYDIAN_b7
+                            firstChromatic.addSemi( 6 ), Scale.LYDIAN_b7
                     );
                     break;
                 case SUBV7_II:
@@ -463,7 +463,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
                     );
                     Chromatic firstChromatic2 = ChromaticAdapter.from(c2.get( 0 ) );
                     tonality = Tonality.of(
-                            firstChromatic2.addSemi( 6 ), ScaleEnum.LYDIAN_b7
+                            firstChromatic2.addSemi( 6 ), Scale.LYDIAN_b7
                     );
                     break;
                 case SUBV7_III:
@@ -472,7 +472,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
                     );
                     Chromatic firstChromatic3 = ChromaticAdapter.from(c3.get( 0 ) );
                     tonality = Tonality.of(
-                            firstChromatic3.addSemi( 6 ), ScaleEnum.LYDIAN_b7
+                            firstChromatic3.addSemi( 6 ), Scale.LYDIAN_b7
                     );
                     break;
                 case SUBV7_IV:
@@ -481,7 +481,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
                     );
                     Chromatic firstChromatic4 = ChromaticAdapter.from(c4.get( 0 ) );
                     tonality = Tonality.of(
-                            firstChromatic4.addSemi( 6 ), ScaleEnum.LYDIAN_b7
+                            firstChromatic4.addSemi( 6 ), Scale.LYDIAN_b7
                     );
                     break;
                 case SUBV7_V:
@@ -490,7 +490,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
                     );
                     Chromatic firstChromatic5 = ChromaticAdapter.from(c5.get( 0 ) );
                     tonality = Tonality.of(
-                            firstChromatic5.addSemi( 6 ), ScaleEnum.LYDIAN_b7
+                            firstChromatic5.addSemi( 6 ), Scale.LYDIAN_b7
                     );
                     break;
                 case SUBV7_VI:
@@ -499,7 +499,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
                     );
                     Chromatic firstChromatic6 = ChromaticAdapter.from(c6.get( 0 ) );
                     tonality = Tonality.of(
-                            firstChromatic6.addSemi( 6 ), ScaleEnum.LYDIAN_b7
+                            firstChromatic6.addSemi( 6 ), Scale.LYDIAN_b7
                     );
                     break;
                 case V7ALT:
@@ -508,7 +508,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
                     );
                     Chromatic firstChromaticAlt = ChromaticAdapter.from(calt.get( 0 ) );
                     tonality = Tonality.of(
-                            firstChromaticAlt, ScaleEnum.SUPERLOCRIAN
+                            firstChromaticAlt, Scale.SUPERLOCRIAN
                     );
                     break;
             }

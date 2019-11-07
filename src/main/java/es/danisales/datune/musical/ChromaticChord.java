@@ -5,7 +5,7 @@ import es.danisales.datune.midi.*;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.tonality.CustomTonality;
-import es.danisales.datune.tonality.ScaleEnum;
+import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityEnum;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -146,7 +146,7 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
                     DiatonicChordMidi c = new DiatonicChordMidi( DiatonicFunction.V7, t );
                     Chromatic chromatic = ChromaticAdapter.from(c.get( 0 ));
                     t = Tonality.of(
-                            chromatic.addSemi( 6 ), ScaleEnum.LYDIAN_b7
+                            chromatic.addSemi( 6 ), Scale.LYDIAN_b7
                     );
                     break;
                 case SUBV7_II:
@@ -155,7 +155,7 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
                     );
                     Chromatic chromatic2 = ChromaticAdapter.from(c2.get( 0 ));
                     t = Tonality.of(
-                            chromatic2.addSemi( 6 ), ScaleEnum.LYDIAN_b7
+                            chromatic2.addSemi( 6 ), Scale.LYDIAN_b7
                     );
                     break;
                 case SUBV7_III:
@@ -164,7 +164,7 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
                     );
                     Chromatic chromatic3 = ChromaticAdapter.from(c3.get( 0 ));
                     t = Tonality.of(
-                            chromatic3.addSemi( 6 ), ScaleEnum.LYDIAN_b7
+                            chromatic3.addSemi( 6 ), Scale.LYDIAN_b7
                     );
                     break;
                 case SUBV7_IV:
@@ -173,7 +173,7 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
                     );
                     Chromatic chromatic4 = ChromaticAdapter.from(c4.get( 0 ));
                     t = Tonality.of(
-                            chromatic4.addSemi( 6 ), ScaleEnum.LYDIAN_b7
+                            chromatic4.addSemi( 6 ), Scale.LYDIAN_b7
                     );
                     break;
                 case SUBV7_V:
@@ -182,7 +182,7 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
                     );
                     Chromatic chromatic5 = ChromaticAdapter.from(c5.get( 0 ));
                     t = Tonality.of(
-                            chromatic5.addSemi( 6 ), ScaleEnum.LYDIAN_b7
+                            chromatic5.addSemi( 6 ), Scale.LYDIAN_b7
                     );
                     break;
                 case SUBV7_VI:
@@ -191,7 +191,7 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
                     );
                     Chromatic chromatic6 = ChromaticAdapter.from(c6.get( 0 ));
                     t = Tonality.of(
-                            chromatic6.addSemi( 6 ), ScaleEnum.LYDIAN_b7
+                            chromatic6.addSemi( 6 ), Scale.LYDIAN_b7
                     );
                     break;
                 case V7ALT:
@@ -200,7 +200,7 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
                     );
                     Chromatic chromaticAlt = ChromaticAdapter.from(calt.get( 0 ));
                     t = Tonality.of(
-                            chromaticAlt, ScaleEnum.SUPERLOCRIAN
+                            chromaticAlt, Scale.SUPERLOCRIAN
                     );
                     break;
             }

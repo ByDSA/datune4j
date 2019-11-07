@@ -6,7 +6,7 @@ import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.midi.*;
 import es.danisales.datune.musical.*;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
-import es.danisales.datune.tonality.ScaleEnum;
+import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityEnum;
 import org.junit.Test;
@@ -20,7 +20,7 @@ import static org.junit.Assert.assertNotEquals;
 public class DiatonicChordMidiTest {
 	@Test
 	public void chordConstructorPowerChords() {
-		Tonality s = Tonality.of( Chromatic.C, ScaleEnum.MAJOR );
+		Tonality s = Tonality.of( Chromatic.C, Scale.MAJOR );
 		DiatonicChordMidi c;
 
 		c = new DiatonicChordMidi( ChromaticFunction.I5, 5, s );
@@ -98,7 +98,7 @@ public class DiatonicChordMidiTest {
 
 	@Test
 	public void constructorDiatonicFunc() {
-		Tonality s =Tonality.of( Chromatic.C, ScaleEnum.MAJOR );
+		Tonality s =Tonality.of( Chromatic.C, Scale.MAJOR );
 		DiatonicChordMidi c;
 		c = new DiatonicChordMidi( DiatonicFunction.I, 5, s );
 		assertEquals( 3, c.size() );
@@ -142,7 +142,7 @@ public class DiatonicChordMidiTest {
 		assertEquals( PitchMidi.D6, c.get( 1 ).getCode() );
 		assertEquals( PitchMidi.F6, c.get( 2 ).getCode() );
 
-		s = Tonality.of( Chromatic.FF, ScaleEnum.MINOR );
+		s = Tonality.of( Chromatic.FF, Scale.MINOR );
 
 		c = new DiatonicChordMidi( DiatonicFunction.I, 5, s );
 		assertEquals( 3, c.size() );

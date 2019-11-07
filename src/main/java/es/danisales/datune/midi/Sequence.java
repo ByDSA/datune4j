@@ -92,7 +92,7 @@ public class Sequence extends BinaryFile {
 
 			for(Map.Entry<Long, ArrayList<Event>> entry : e.getMap().entrySet()) {
 				Long key = entry.getKey();
-				ArrayList<Event> value = entry.getValue();
+				ArrayList<Event> value = entry.getCode();
 
 				for(Event ev : value) {
 					if (ev instanceof KeySignatureEvent)
@@ -134,7 +134,7 @@ public class Sequence extends BinaryFile {
 				if (it.hasNext() ) {
 					Map.Entry<Long, ArrayList<Event>> entry = it.nextDiatonic();
 					Long key = entry.getKey();
-					ArrayList<Event> value = entry.getValue();
+					ArrayList<Event> value = entry.getCode();
 					if (key > ms)
 						break;
 

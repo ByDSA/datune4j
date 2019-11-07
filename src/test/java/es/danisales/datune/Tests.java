@@ -6,13 +6,12 @@ import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChordEnum;
 import es.danisales.datune.musical.Diatonic;
 import es.danisales.datune.musical.DiatonicAlt;
-import es.danisales.datune.tonality.ScaleEnum;
+import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityEnum;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -154,12 +153,12 @@ public class Tests {
 		DiatonicChordMidi c = new DiatonicChordMidi( ChromaticFunction.V7_IV, 5, s );
 
 		assertEquals(
-				Tonality.of( Chromatic.C, ScaleEnum.MIXOLYDIAN ).getScale(), c.getTonality().getScale()
+				Tonality.of( Chromatic.C, Scale.MIXOLYDIAN ).getScale(), c.getTonality().getScale()
 		);
 
 		c = new DiatonicChordMidi( ChromaticFunction.V7_V, 5, TonalityEnum.E );
 		assertEquals(
-				Tonality.of( Chromatic.FF, ScaleEnum.MIXOLYDIAN ).getScale(), c.getTonality().getScale()
+				Tonality.of( Chromatic.FF, Scale.MIXOLYDIAN ).getScale(), c.getTonality().getScale()
 		);
 	}
 
@@ -225,7 +224,7 @@ public class Tests {
 	public void scaleRelative() {
 		Tonality scale = TonalityEnum.E.getRelativeScaleDiatonic( DiatonicDegree.V );
 		assertEquals( Chromatic.B, scale.getRoot() );
-		assertEquals( Tonality.of( Chromatic.B, ScaleEnum.MAJOR ).getScale(), scale.getScale() );
+		assertEquals( Tonality.of( Chromatic.B, Scale.MAJOR ).getScale(), scale.getScale() );
 	}
 
 	@Test
@@ -256,7 +255,7 @@ public class Tests {
 						1,
 						2,
 						2
-				), ScaleEnum.MINOR.getValue()
+				), Scale.MINOR.getCode()
 		);
 	}
 
