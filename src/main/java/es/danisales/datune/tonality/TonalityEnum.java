@@ -110,8 +110,8 @@ public enum TonalityEnum implements Tonality {
 		notes = Collections.unmodifiableList( Tonality.getNotesFrom(noteBase, scale) );
 
 
-		this.scaleChords = Collections.unmodifiableSet( calculateScaleChords(this) );
-		this.outScaleChords = Collections.unmodifiableSet( calculateOutScaleChords(this) );
+		this.scaleChords = Collections.unmodifiableSet( TonalityEnumChordRetrieval.getScaleChordsFrom(this) );
+		this.outScaleChords = Collections.unmodifiableSet( TonalityEnumChordRetrieval.getOutScaleChordsFrom(this) );
 		this.borrowedChords = Collections.unmodifiableSet(new HashSet<>());
 		this.functionChordsMap = new HashMap<>();
 		this.chromaticChordsMap = new HashMap<>();
