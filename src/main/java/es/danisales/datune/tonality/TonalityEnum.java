@@ -83,6 +83,13 @@ public enum TonalityEnum implements Tonality {
 	/** Temp */
 	private final List<DiatonicAlt>	notes;
 
+	private final Set<ChromaticChord>							scaleChords;
+	private final Set<ChromaticChord>							outScaleChords;
+	private final Set<ChromaticChord>							borrowedChords;
+	private final Map<DiatonicFunction, ChromaticChord>	functionChordsMap;
+	private final Map<ChromaticFunction, ChromaticChord>	chromaticChordsMap;
+	private final Map<ChromaticChord, HarmonicFunction> chromaticChordFunctionMap;
+
 	static @Nullable Tonality of(@NonNull DiatonicAlt diatonicAlt, @NonNull Scale scale) {
 		Objects.requireNonNull(diatonicAlt);
 		Objects.requireNonNull(scale);
@@ -94,68 +101,29 @@ public enum TonalityEnum implements Tonality {
 		return null;
 	}
 
-	public static List<TonalityEnum> getFromChord(PitchChromaticChord c) {
-		return getFromChord( false, c );
-	}
 
-	public static List<TonalityEnum> getFromChord(boolean outScale, PitchChromaticChord c) {
-		List<TonalityEnum> out = new ArrayList<>();
-		for ( TonalityEnum t : TonalityEnum.values() ) {
-			if ( t.has( outScale, c ) )
-				out.add( t );
-		}
-
-		return out;
-	}
-
-	public static List<Tonality> getFromChords(boolean outScale, @NonNull List<ChromaticChordMidi> chords) {
-		checkArgument(chords.size() > 0);
-		List<Tonality> candidates = new ArrayList<>();
-
-		boolean first = true;
-		for ( ChromaticChordMidi chord : chords ) {
-			if ( chord.isEmpty() )
-				continue;
-			ChromaticChordMidi chordCopy = chord.clone();
-
-			List<Tonality> candidatesPrev = candidates;
-
-			do {
-				List<DiatonicChordMidi> possibleChords = chordCopy
-						.toDiatonicChordMidi( outScale );
-				if ( first ) {
-					for ( DiatonicChordMidi c : possibleChords ) {
-						Tonality t = c.getTonality();
-						if ( !candidates.contains( t ) )
-							candidates.add( t );
-					}
-					first = false;
-				} else {
-					candidates = new ArrayList<>();
-
-					for ( DiatonicChordMidi c : possibleChords ) {
-						for ( Tonality t : candidatesPrev )
-							if ( ( c.metaTonality.equals( t )
-									|| c.getTonality().isIntercambioModalOf( t ) )
-									&& !candidates.contains( t ) )
-								candidates.add( t );
-					}
-				}
-
-				if ( candidates.isEmpty() ) {
-					chordCopy = chordCopy.subList( 0, chordCopy.size() - 1 );
-				}
-			} while ( candidates.isEmpty() && !chordCopy.isEmpty() );
-		}
-
-		return candidates;
-	}
 
 	TonalityEnum(DiatonicAlt noteBase, Scale scale) {
 		this.root = noteBase;
 		this.scale = scale;
 
 		notes = Collections.unmodifiableList( Tonality.getNotesFrom(noteBase, scale) );
+
+
+		this.scaleChords = Collections.unmodifiableSet( calculateScaleChords(this) );
+		this.outScaleChords = Collections.unmodifiableSet( calculateOutScaleChords(this) );
+		this.borrowedChords = Collections.unmodifiableSet(new HashSet<>());
+		this.functionChordsMap = new HashMap<>();
+		this.chromaticChordsMap = new HashMap<>();
+		this.chromaticChordFunctionMap = new HashMap<>();
+	}
+
+	private HashSet<ChromaticChord> calculateScaleChords(Tonality tonality) {
+		return new HashSet<>();
+	}
+
+	private HashSet<ChromaticChord> calculateOutScaleChords(Tonality tonality) {
+		return new HashSet<>();
 	}
 
 	@Override
@@ -171,7 +139,7 @@ public enum TonalityEnum implements Tonality {
 
 	@Override
 	public @NonNull Set<ChromaticChord> getBorrowedChords() {
-		return null;
+		return borrowedChords;
 	}
 
 	@Override
@@ -182,10 +150,6 @@ public enum TonalityEnum implements Tonality {
 	@Override
 	public @NonNull Set<ChromaticChord> getScaleChords() {
 		return null;
-	}
-
-	public boolean has(Chromatic note) {
-		return getDegreeFrom( note ) != null;
 	}
 
 	public @NonNull Scale getScale() {
@@ -201,6 +165,11 @@ public enum TonalityEnum implements Tonality {
 				scale;
 	}
 
+	@Override
+	public @NonNull List<DiatonicAlt> getNotes() {
+		return notes;
+	}
+
 	public HarmonicFunction getFunction(PitchChromaticChord c, boolean rename) {
 // todo
 		return null;
@@ -209,10 +178,5 @@ public enum TonalityEnum implements Tonality {
 	public DiatonicAlt getDiatonicAltFrom(Chromatic chromatic) throws TonalityException {
 		// todo
 		return null;
-	}
-
-	@Override
-	public @NonNull List<DiatonicAlt> getNotes() {
-		return notes;
 	}
 }

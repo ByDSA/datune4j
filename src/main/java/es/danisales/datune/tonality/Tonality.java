@@ -289,13 +289,16 @@ public interface Tonality extends Cloneable {
 		return hf;
 	}
 
-	default boolean has(ChromaticChord from) {
-		return false; // todo
-	}
+	boolean has(ChromaticChord from);
 
 	@NonNull Set<ChromaticChord> getAllChords();
 
 	@NonNull Set<ChromaticChord> getBorrowedChords();
+
+
+	default boolean has(Chromatic note) {
+		return getDegreeFrom( note ) != null;
+	}
 
 	default boolean has(boolean outScale, @NonNull PitchChromaticChord c) {
 		Objects.requireNonNull(c);
@@ -307,11 +310,10 @@ public interface Tonality extends Cloneable {
 		else if ( outScale ) {
 			for ( ChromaticFunction f : ChromaticFunction.ALL ) {
 				try {
-					PitchChromaticChord c2 = ChromaticChordMidi.from( new DiatonicChordMidi( f, this ) );
+					ChromaticChord c2 = ChromaticChord.from( new DiatonicChordMidi( f, this ) );
 					if ( c.hasSameNotesOrder( c2 ) )
 						return true;
-				} catch ( TonalityException e ) {
-					continue;
+				} catch ( TonalityException ignored) {
 				}
 			}
 		}
