@@ -1,132 +1,26 @@
 package es.danisales.datune.tonality;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+import es.danisales.datune.diatonic.ChromaticFunction;
+import es.danisales.datune.diatonic.DiatonicFunction;
+import es.danisales.datune.diatonic.HarmonicFunction;
 import es.danisales.datune.musical.ChromaticChord;
 import org.checkerframework.checker.nullness.qual.NonNull;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
 
 class TonalityEnumChordRetrieval {
     private TonalityEnumChordRetrieval() {
     }
 
-    static @NonNull Set<ChromaticChord> getScaleChordsFrom(TonalityEnum tonalityEnum) {
-        Set<ChromaticChord> set = null;
-        switch (tonalityEnum) {
-            case C:
-                break;
-            case D:
-                break;
-            case E:
-                break;
-            case F:
-                break;
-            case G:
-                break;
-            case A:
-                break;
-            case B:
-                break;
-            case Db:
-                break;
-            case Eb:
-                break;
-            case FF:
-                break;
-            case Gb:
-                break;
-            case Ab:
-                break;
-            case Bb:
-                break;
-            case Cm:
-                break;
-            case Dm:
-                break;
-            case Em:
-                break;
-            case Fm:
-                break;
-            case Gm:
-                break;
-            case Am:
-                break;
-            case Bm:
-                break;
-            case CCm:
-                break;
-            case DDm:
-                break;
-            case Ebm:
-                break;
-            case FFm:
-                break;
-            case GGm:
-                break;
-            case Bbm:
-                break;
-        }
+    static @NonNull BiMap<HarmonicFunction, ChromaticChord> getHarmonicFunctionChomaticChordBiMap(TonalityEnum tonalityEnum) {
+        BiMap<HarmonicFunction, ChromaticChord> map = HashBiMap.create();
 
-        return Collections.unmodifiableSet(set);
-    }
-    static @NonNull Set<ChromaticChord> getOutScaleChordsFrom(TonalityEnum tonalityEnum) {
-        Set<ChromaticChord> set = null;
-        switch (tonalityEnum) {
-            case C:
-                break;
-            case D:
-                break;
-            case E:
-                break;
-            case F:
-                break;
-            case G:
-                break;
-            case A:
-                break;
-            case B:
-                break;
-            case Db:
-                break;
-            case Eb:
-                break;
-            case FF:
-                break;
-            case Gb:
-                break;
-            case Ab:
-                break;
-            case Bb:
-                break;
-            case Cm:
-                break;
-            case Dm:
-                break;
-            case Em:
-                break;
-            case Fm:
-                break;
-            case Gm:
-                break;
-            case Am:
-                break;
-            case Bm:
-                break;
-            case CCm:
-                break;
-            case DDm:
-                break;
-            case Ebm:
-                break;
-            case FFm:
-                break;
-            case GGm:
-                break;
-            case Bbm:
-                break;
-        }
+        for (DiatonicFunction diatonicFunction : DiatonicFunction.values())
+            map.put(diatonicFunction, ChromaticChord.from(tonalityEnum, diatonicFunction));
 
-        return Collections.unmodifiableSet(set);
+        for (ChromaticFunction chromaticFunction : ChromaticFunction.values())
+            map.put(chromaticFunction, ChromaticChord.from(tonalityEnum, chromaticFunction));
+
+        return map;
     }
 }

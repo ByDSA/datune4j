@@ -4,7 +4,6 @@ import es.danisales.datune.diatonic.ChromaticFunction;
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.tonality.Tonality;
-import es.danisales.datune.tonality.TonalityEnum;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;
@@ -13,7 +12,7 @@ public class TonalityEnumTest {
 
 	@Test
 	public void getDiatonicFunction() {
-		Tonality t = TonalityEnum.C;
+		Tonality t = Tonality.C;
 		for (DiatonicFunction df : DiatonicFunction.values()) {
 			assertNotNull( ChromaticChord.from( t, df ) );
 		}
@@ -21,7 +20,7 @@ public class TonalityEnumTest {
 	
 	@Test
 	public void getChromaticFunction() {
-		Tonality t = TonalityEnum.C;
+		Tonality t = Tonality.C;
 		for (ChromaticFunction cf : ChromaticFunction.values()) {
 			assertNotNull( ChromaticChord.from( t, cf ) );
 		}

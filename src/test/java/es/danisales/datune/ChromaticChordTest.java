@@ -5,7 +5,7 @@ import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChordEnum;
 import es.danisales.datune.musical.CustomChromaticChord;
-import es.danisales.datune.tonality.TonalityEnum;
+import es.danisales.datune.tonality.Tonality;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
@@ -53,7 +53,7 @@ public class ChromaticChordTest {
 		assertEquals( "Cm", ChromaticChordEnum.Cm.toString() );
 		assertEquals( "C7", ChromaticChordEnum.C7.toString() );
 		assertEquals(
-			"C/E (C)", new DiatonicChordMidi( DiatonicFunction.I, TonalityEnum.C ).getInv().toString()
+			"C/E (C)", new DiatonicChordMidi( DiatonicFunction.I, Tonality.C ).getInv().toString()
 		);
 		assertEquals( "C/E", ChromaticChordEnum.C.getInv().toString() );
 		assertEquals( "C/G", ChromaticChordEnum.C.getInv( 2 ).toString() );

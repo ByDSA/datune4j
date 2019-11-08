@@ -174,7 +174,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
     public static void showPossibleProgressions(Function<DiatonicChordMidi, Boolean> f, List<ChromaticChordMidi> chordsIn) {
         List<ChromaticChordMidi> chords = reduceDistances( chordsIn );
 
-        List<Tonality> possibleTonalities = CustomTonality.getFromChords( true, chords );
+        List<Tonality> possibleTonalities = Tonality.getFromChords( true, chords );
 
         // DEBUG
         if ( possibleTonalities == null || possibleTonalities.size() == 0 ) {
@@ -252,29 +252,20 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
             }
         } catch ( TonalityException e ) {
             clear();
-            Set<ChromaticChord> cs = ton.getOutScaleChords();
-            cs.addAll( ton.getBorrowedChords() );
-            ChromaticChord c = null;
-            for ( ChromaticChord dc : cs )
-                if ( ns.equalsEnharmonic( dc ) ) {
-                    c = dc;
-                    break;
-                }
-            assert c != null : "Acorde " + ns + " no reconocido en tonalidad " + tonality + ": "
-                    + ns.notesToString() + " "
-                    + Arrays.toString( ns.integerNotationFromRoot().toArray() );
 
-            function = ton.getFunction( c );
+            function = ton.getFunction( ns );
             if ( function == null ) {
-                tonality = TonalityChordRetrieval.searchInModeSameRoot(tonality, c);
+                tonality = TonalityChordRetrieval.searchInModeSameRoot(tonality, ns);
                 metaTonality = tonality;
             } else
-                tonality = Tonality.fromChord( c ).get( 0 );
+                tonality = Tonality.fromChord( ns ).get( 0 );
 
             if ( tonality == null )
                 throw new TonalityException( ns, ton );
 
-            add( c.toMidi() );
+            ChromaticChordMidi c = ChromaticChordMidi.from(ns);
+
+            add( c );
         }
 
         Chord c = ( (Chord) ns );

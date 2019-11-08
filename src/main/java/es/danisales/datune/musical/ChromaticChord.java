@@ -4,10 +4,8 @@ import es.danisales.datune.diatonic.*;
 import es.danisales.datune.midi.*;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.pitch.PitchChromaticChord;
-import es.danisales.datune.tonality.CustomTonality;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
-import es.danisales.datune.tonality.TonalityEnum;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Arrays;
@@ -258,27 +256,12 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
         return ret;
     }
 
-    static ChromaticChord _from(TonalityEnum tonality, DiatonicFunction diatonicFunction) {
-        ChromaticChord ret = GetDiatonicFunctionMajor.get(tonality, diatonicFunction);
-        if (ret == null)
-            ret = GetDiatonicFunctionMinor.get(tonality, diatonicFunction);
-        return ret;
-    }
-
     static ChromaticChord from(Tonality tonality, DiatonicFunction diatonicFunction) {
-        if (tonality instanceof TonalityEnum)
-            return _from((TonalityEnum)tonality, diatonicFunction);
-        else {
-            return ((CustomTonality)tonality).getChordFrom(diatonicFunction);
-        }
+        return tonality.getChordFrom(diatonicFunction);
     }
 
     static ChromaticChord from(Tonality tonality, ChromaticFunction chromaticFunction) {
-        if (tonality instanceof TonalityEnum)
-            return null;
-        else {
-            return ((CustomTonality)tonality).getChordFrom(chromaticFunction);
-        }
+        return tonality.getChordFrom(chromaticFunction);
     }
 
     static ChromaticChord from(Chromatic... chromatics) {

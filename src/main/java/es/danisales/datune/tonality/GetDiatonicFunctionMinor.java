@@ -1,10 +1,13 @@
-package es.danisales.datune.musical;
+package es.danisales.datune.tonality;
 
 import es.danisales.datune.diatonic.DiatonicFunction;
+import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.musical.ChromaticChord;
+import es.danisales.datune.musical.ChromaticChordEnum;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.tonality.TonalityEnum;
 
-public class GetDiatonicFunctionMinor {
+class GetDiatonicFunctionMinor {
 	public static ChromaticChord get(TonalityEnum t, DiatonicFunction f) {
 		switch(t) {
 			case Cm: switch(f) {

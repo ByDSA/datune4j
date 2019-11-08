@@ -6,10 +6,8 @@ import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
-import es.danisales.datune.musical.CustomChromaticChord;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.tonality.Tonality;
-import es.danisales.datune.tonality.TonalityEnum;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -18,7 +16,7 @@ import static org.junit.Assert.assertNotNull;
 public class ChromaticFunctionTest {
 	@Test
 	public void degree() {
-		Tonality ton = TonalityEnum.C;
+		Tonality ton = Tonality.C;
 		ChromaticChord cc = ChromaticChord.from( ChromaticFunction.I, ton );
 		assertEquals( DiatonicDegree.I, ton.getDegreeFrom( cc.get( 0 ) ) );
 		cc = ChromaticChord.from( ChromaticFunction.II, ton );
@@ -64,14 +62,14 @@ public class ChromaticFunctionTest {
 /*
 	@Test
 	public void calculateFrom() {
-		Tonality t = TonalityEnum.C;
+		Tonality t = Tonality.C;
 		ChromaticChordEnum cc = ChromaticChordEnum.F5;
 		assertEquals( ChromaticFunction.IV5, ChromaticFunction.calculateFrom( cc, t ) );
 
-		checkTonality( TonalityEnum.C );
-		checkTonality( TonalityEnum.D );
-		checkTonality( TonalityEnum.Cm );
-		checkTonality( TonalityEnum.Dm );
+		checkTonality( Tonality.C );
+		checkTonality( Tonality.D );
+		checkTonality( Tonality.Cm );
+		checkTonality( Tonality.Dm );
 	}
 
 	public void checkTonality(Tonality ton) {

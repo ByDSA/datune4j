@@ -5,7 +5,7 @@ import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.midi.PitchMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
-import es.danisales.datune.tonality.TonalityEnum;
+import es.danisales.datune.tonality.Tonality;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -32,11 +32,11 @@ public class ChromaticMidiTest {
 	@Test
 	public void toDiatonic() {
 		ChromaticMidi cm = ChromaticMidi.builder().pitch(Chromatic.F).build();
-		DiatonicMidi dm = DiatonicMidi.from(cm, TonalityEnum.C);
+		DiatonicMidi dm = DiatonicMidi.from(cm, Tonality.C);
 		Chromatic chromaticDm = ChromaticAdapter.from(dm);
 		assertEquals(Chromatic.F, chromaticDm);
 		cm = ChromaticMidi.builder().pitch(Chromatic.C).build();
-		dm = DiatonicMidi.from(cm, TonalityEnum.C);
+		dm = DiatonicMidi.from(cm, Tonality.C);
 		chromaticDm = ChromaticAdapter.from(dm);
 		assertEquals(Chromatic.C, chromaticDm);
 	}

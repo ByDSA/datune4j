@@ -3,16 +3,10 @@ package es.danisales.datune.diatonic;
 import es.danisales.arrays.ArrayUtils;
 import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
-import es.danisales.datune.musical.ChromaticChord;
-import es.danisales.datune.musical.CustomChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticChord;
-import es.danisales.datune.tonality.CustomTonality;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-
-import java.lang.annotation.Native;
-import java.util.Set;
 
 /**
  * Funciones crom�ticas
@@ -40,15 +34,15 @@ public enum ChromaticFunction implements HarmonicFunction {
 	V7_II, V7_III, V7_IV, V7_V, V7_VI,
 
 	/** The subv7. */
-	SUBV7, 
+	SUBV7,
 	/** The subv7 ii. */
-	SUBV7_II, 
+	SUBV7_II,
 	/** The subv7 iii. */
-	SUBV7_III, 
+	SUBV7_III,
 	/** The subv7 iv. */
-	SUBV7_IV, 
+	SUBV7_IV,
 	/** The subv7 v. */
-	SUBV7_V, 
+	SUBV7_V,
 	/** The subv7 vi. */
 	SUBV7_VI,
 
@@ -57,72 +51,72 @@ public enum ChromaticFunction implements HarmonicFunction {
 
 	/** Funciones de triada */
 	public static final ChromaticFunction[] TRIAD_FUNCTIONS = new ChromaticFunction[] {
-		I,
-		II,
-		III,
-		IV,
-		V,
-		VI,
-		VII,
-		i,
-		ii,
-		iii,
-		iv,
-		v,
-		vi,
-		vii,
-		I0,
-		II0,
-		III0,
-		IV0,
-		V0,
-		VI0,
-		VII0,
+			I,
+			II,
+			III,
+			IV,
+			V,
+			VI,
+			VII,
+			i,
+			ii,
+			iii,
+			iv,
+			v,
+			vi,
+			vii,
+			I0,
+			II0,
+			III0,
+			IV0,
+			V0,
+			VI0,
+			VII0,
 	};
 
 	/** Funciones POWER */
 	public static final ChromaticFunction[] POWER_CHORDS = new ChromaticFunction[] {
-		I5,
-		II5,
-		III5,
-		IV5,
-		V5,
-		VI5,
-		VII5,
+			I5,
+			II5,
+			III5,
+			IV5,
+			V5,
+			VI5,
+			VII5,
 	};
 
 	/** Funciones V de... */
 	public static final ChromaticFunction[] V_FUNCTIONS = new ChromaticFunction[] {
-		V_II,
-		V_III,
-		V_IV,
-		V_V,
-		V_VI,
+			V_II,
+			V_III,
+			V_IV,
+			V_V,
+			V_VI,
 	};
 
 	/** Funciones V7 de... */
 	public static final ChromaticFunction[] V7_FUNCTIONS = new ChromaticFunction[] {
-		V7_II,
-		V7_III,
-		V7_IV,
-		V7_V,
-		V7_VI,
+			V7_II,
+			V7_III,
+			V7_IV,
+			V7_V,
+			V7_VI,
 	};
 
 	/** Funciones SUBV7. */
 	public static final ChromaticFunction[] SUBV7_FUNCTIONS = new ChromaticFunction[] {
-		SUBV7,
-		SUBV7_II,
-		SUBV7_III,
-		SUBV7_IV,
-		SUBV7_V,
-		SUBV7_VI,
+			SUBV7,
+			SUBV7_II,
+			SUBV7_III,
+			SUBV7_IV,
+			SUBV7_V,
+			SUBV7_VI,
 	};
 
 	/** Otras funciones */
 	public static final ChromaticFunction[] OTHERS = new ChromaticFunction[] {
-		N6,
-		V7ALT,
+			N6,
+			V7ALT,
 	};
 
 	/** The Constant TENSIONS. */
@@ -246,14 +240,9 @@ public enum ChromaticFunction implements HarmonicFunction {
 	 * @return the chromatic function
 	 */
 	public static @Nullable ChromaticFunction from(@NonNull PitchChromaticChord c, @NonNull Tonality t) {
-		Set<ChromaticChord> cs = t.getOutScaleChords();
-		for ( ChromaticChord c2 : cs ) {
-			if ( c.equalsEnharmonic( c2 ) ) {
-				HarmonicFunction hf = t.getFunction( c2, false );
-				if ( hf instanceof ChromaticFunction )
-					return (ChromaticFunction) hf;
-			}
-		}
+		HarmonicFunction hf = t.getFunction(c);
+		if ( hf instanceof ChromaticFunction )
+			return (ChromaticFunction) hf;
 
 		return null;
 	}
@@ -267,7 +256,7 @@ public enum ChromaticFunction implements HarmonicFunction {
 	public static HarmonicFunction from(DiatonicChordMidi diatonicChordMidi) {
 		ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.from(diatonicChordMidi);
 		return ChromaticFunction
-				.from( chromaticChordMidi, new CustomTonality(diatonicChordMidi.metaTonality.getRoot(), diatonicChordMidi.metaTonality.getScale()) );
+				.from( chromaticChordMidi, Tonality.of(diatonicChordMidi.metaTonality.getRoot(), diatonicChordMidi.metaTonality.getScale()) );
 	}
 
 	/* (non-Javadoc)

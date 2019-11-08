@@ -7,7 +7,7 @@ import es.danisales.datune.midi.PitchMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
-import es.danisales.datune.tonality.TonalityEnum;
+import es.danisales.datune.tonality.Tonality;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -38,7 +38,7 @@ public class DiatonicMidiTest {
 	
 	@Test
 	public void addNegative() {
-		DiatonicMidi n = DiatonicMidi.from( DiatonicDegree.V, TonalityEnum.E, 6 );
+		DiatonicMidi n = DiatonicMidi.from( DiatonicDegree.V, Tonality.E, 6 );
 		DiatonicMidi n2 = n.clone().sub( IntervalDiatonic.UNISON );
 		assertEquals( PitchMidi.B6, n2.getCode() );
 		n2 = n.clone().sub( IntervalDiatonic.SECOND );
@@ -115,14 +115,14 @@ public class DiatonicMidiTest {
 			IntervalDiatonic id = IntervalDiatonic.fromIndex( i );
 			DiatonicMidi n2 = n.clone().add( id );
 			int d1 = n2.getCode();
-			assertEquals( "Error al a�adir " + i + " posiciones a " + n, r[i], d1 );
+			assertEquals( "Error al añadir " + i + " posiciones a " + n, r[i], d1 );
 		}
 	}
 	
 	@Test
 	public void equals() {
-		DiatonicMidi dm = DiatonicMidi.from( DiatonicDegree.I, TonalityEnum.C, 5 );
-		DiatonicMidi dm2 = DiatonicMidi.from( DiatonicDegree.I, TonalityEnum.C, 5 );
+		DiatonicMidi dm = DiatonicMidi.from( DiatonicDegree.I, Tonality.C, 5 );
+		DiatonicMidi dm2 = DiatonicMidi.from( DiatonicDegree.I, Tonality.C, 5 );
 		assertEquals(dm2, dm);
 	}
 }

@@ -3,14 +3,51 @@ package es.danisales.datune.tonality;
 import es.danisales.datune.diatonic.*;
 import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
-import es.danisales.datune.musical.*;
+import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.musical.ChromaticChord;
+import es.danisales.datune.musical.Diatonic;
+import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.pitch.PitchChromaticChord;
+import es.danisales.datune.pitch.PitchChromaticSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 public interface Tonality extends Cloneable {
+	Tonality C = TonalityEnum.C;
+	Tonality D = TonalityEnum.D;
+	Tonality E = TonalityEnum.E;
+	Tonality F = TonalityEnum.F;
+	Tonality G = TonalityEnum.G;
+	Tonality A = TonalityEnum.A;
+	Tonality B = TonalityEnum.B;
+	Tonality Db = TonalityEnum.Db;
+	Tonality Eb = TonalityEnum.Eb;
+	Tonality FF = TonalityEnum.FF;
+	Tonality Gb = TonalityEnum.Gb;
+	Tonality Ab = TonalityEnum.Ab;
+	Tonality Bb = TonalityEnum.Bb;
+
+	Tonality Cm = TonalityEnum.Cm;
+	Tonality Dm = TonalityEnum.Dm;
+	Tonality Em = TonalityEnum.Em;
+	Tonality Fm = TonalityEnum.Fm;
+	Tonality Gm = TonalityEnum.Gm;
+	Tonality Am = TonalityEnum.Am;
+	Tonality Bm = TonalityEnum.Bm;
+	Tonality CCm = TonalityEnum.CCm;
+	Tonality DDm = TonalityEnum.DDm;
+	Tonality FFm = TonalityEnum.FFm;
+	Tonality GGm = TonalityEnum.GGm;
+	Tonality Bbm = TonalityEnum.Bbm;
+
+	Tonality[] ALL = new Tonality[] { C, D, E, F, G, A, B, Db, Eb, FF, Gb, Ab, Bb, Cm, Dm, Em, Fm, Gm, Am, Bm, CCm, DDm, FFm, GGm, Bbm };
+
 	static @NonNull List<Tonality> all() {
 		return TonalityRetrieval.all();
 	}
@@ -34,9 +71,9 @@ public interface Tonality extends Cloneable {
 		return t;
 	}
 
-	static Tonality from(Chromatic chromatic, Scale s) {
+	static Tonality from(Chromatic chromatic, Scale scale) {
 		DiatonicAlt diatonicAlt = DiatonicAlt.from(chromatic);
-		return of (diatonicAlt, s);
+		return of (diatonicAlt, scale);
 	}
 
 
@@ -65,6 +102,63 @@ public interface Tonality extends Cloneable {
 
 	static Tonality of(Tonality t) {
 		return of(t.getRoot(), t.getScale());
+	}
+
+	static List<Tonality> getFromChords(boolean outScale, List<ChromaticChordMidi> chords) {
+		checkArgument(chords.size() > 0);
+		List<Tonality> candidates = new ArrayList<>();
+
+		boolean first = true;
+		for ( ChromaticChordMidi chord : chords ) {
+			if ( chord.size() == 0 )
+				continue;
+			ChromaticChordMidi chordCopy = chord.clone();
+
+			List<Tonality> candidatesPrev = candidates;
+
+			do {
+				List<DiatonicChordMidi> possibleChords = chordCopy
+						.toDiatonicChordMidi( outScale );
+				if ( first ) {
+					for ( DiatonicChordMidi c : possibleChords ) {
+						Tonality t = c.getTonality();
+						if ( !candidates.contains( t ) )
+							candidates.add( t );
+					}
+					first = false;
+				} else {
+					candidates = new ArrayList<Tonality>();
+
+					for ( DiatonicChordMidi c : possibleChords ) {
+						for ( Tonality t : candidatesPrev )
+							if ( ( c.metaTonality.equals( t )
+									|| c.getTonality().isIntercambioModalOf( t ) )
+									&& !candidates.contains( t ) )
+								candidates.add( t );
+					}
+				}
+
+				if ( candidates.size() == 0 ) {
+					chordCopy = chordCopy.subList( 0, chordCopy.size() - 1 );
+				}
+			} while ( candidates.size() == 0 && chordCopy.size() > 0 );
+		}
+
+		return candidates;
+	}
+
+	static List<Tonality> getFromChord(PitchChromaticChord c) {
+		return getFromChord( false, c );
+	}
+
+	static List<Tonality> getFromChord(boolean outScale, PitchChromaticChord c) {
+		List<Tonality> out = new ArrayList<>();
+		for ( CustomTonality t : CustomTonality.all() ) {
+			if ( t.has( outScale, c ) )
+				out.add( t );
+		}
+
+		return out;
 	}
 
 	default Tonality getRelativeMinor() {
@@ -203,7 +297,7 @@ public interface Tonality extends Cloneable {
 		return getDegreeFrom( note ) != null;
 	}
 
-	default <N extends DiatonicAlt> boolean has(Iterable<N> notes) {
+	default <N extends DiatonicAlt> boolean has(@NonNull Iterable<N> notes) {
 		for ( N n : notes ) {
 			if ( getDegreeFrom( n ) == null )
 				return false;
@@ -211,7 +305,8 @@ public interface Tonality extends Cloneable {
 
 		return true;
 	}
-	default <N extends Chromatic> boolean hasEnharmonic(Iterable<N> notes) {
+
+	default <N extends Chromatic> boolean hasEnharmonic(@NonNull Iterable<N> notes) {
 		for ( N n : notes ) {
 			if ( getDegreeFrom( n ) == null )
 				return false;
@@ -235,7 +330,8 @@ public interface Tonality extends Cloneable {
 
 	default Tonality getRelativeScaleChromatic(int pos) {
 		ScaleDistance distanceScale = ScaleDistance.from(pos);
-		return Tonality.of( getRoot().addSemi( distanceScale.getSemitones() ), getScale() );
+		int semitones = distanceScale.getSemitones();
+		return Tonality.of( getRoot().addSemi( semitones ), getScale() );
 	}
 
 	default Tonality getMinor() {
@@ -291,19 +387,21 @@ public interface Tonality extends Cloneable {
 
 	boolean has(ChromaticChord from);
 
-	@NonNull Set<ChromaticChord> getAllChords();
+	ChromaticChord getChordFrom(DiatonicFunction diatonicFunction);
 
-	@NonNull Set<ChromaticChord> getBorrowedChords();
-
+	ChromaticChord getChordFrom(ChromaticFunction chromaticFunction);
 
 	default boolean has(Chromatic note) {
 		return getDegreeFrom( note ) != null;
 	}
 
-	default boolean has(boolean outScale, @NonNull PitchChromaticChord c) {
+	default boolean has(boolean outScale, @NonNull PitchChromaticChord<Chromatic> c) {
 		Objects.requireNonNull(c);
 
-		boolean hasNotes = has( c );
+		List<DiatonicAlt> cc = new ArrayList<>();
+		for (Chromatic chromatic : c)
+			cc.add(DiatonicAlt.from(chromatic));
+		boolean hasNotes = has( cc );
 
 		if ( hasNotes )
 			return true;
@@ -326,10 +424,6 @@ public interface Tonality extends Cloneable {
 	@NonNull DiatonicAlt getRoot();
 
 	@NonNull List<DiatonicAlt> getNotes();
-
-	@NonNull Set<ChromaticChord> getScaleChords();
-
-	@NonNull Set<ChromaticChord> getOutScaleChords();
 
 	@Nullable HarmonicFunction getFunction(PitchChromaticChord c, boolean rename);
 

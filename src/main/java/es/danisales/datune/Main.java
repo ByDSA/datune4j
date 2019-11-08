@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Main {
@@ -245,7 +246,7 @@ public class Main {
 	}
 
 	public static Song spec() {
-		Song song = new Song( "spec", 128, TonalityEnum.CCm );
+		Song song = new Song( "spec", 128, Tonality.CCm );
 
 		Track	channel;
 		Track	strings;
@@ -355,7 +356,7 @@ public class Main {
 	}
 
 	public static Song test() {
-		Song song = new Song( "spec", 128, TonalityEnum.Am );
+		Song song = new Song( "spec", 128, Tonality.Am );
 
 		Track	channel;
 		Track	strings;
@@ -432,7 +433,7 @@ public class Main {
 	}
 
 	public static Song digi2end() {
-		Song song = new Song( "spec", 125, TonalityEnum.Cm );
+		Song song = new Song( "spec", 125, Tonality.Cm );
 
 		Track	channel;
 		Track	strings;
@@ -566,7 +567,11 @@ public class Main {
 			AtomicReference<DiatonicChordMidi> lastPlayed = new AtomicReference<>( null );
 
 			java.util.List<ChromaticChord> fs = new ArrayList<>();
-			java.util.Set<ChromaticChord> cs = ton.getAllChords();
+			java.util.Set<ChromaticChord> cs = new HashSet<>();
+			for (DiatonicFunction diatonicFunction : DiatonicFunction.values())
+				cs.add( ChromaticChord.from(ton, diatonicFunction) );
+			for (ChromaticFunction chromaticFunction : ChromaticFunction.values())
+				cs.add( ChromaticChord.from(ton, chromaticFunction) );
 			for ( ChromaticChord c1 : cs ) {
 				System.out.println(c1);
 				DiatonicChordMidi c = c1.toMidi().getDiatonicChordMidi( ton );
@@ -685,7 +690,7 @@ public class Main {
 			JPanel selectorPanel = new JPanel();
 
 			JComboBox<Tonality> combo = new JComboBox();
-			for ( Tonality t : TonalityEnum.values() )
+			for ( Tonality t : Tonality.ALL )
 				combo.addItem( t );
 
 			combo.addActionListener( new ActionListener() {
@@ -737,7 +742,7 @@ public class Main {
 
 			getContentPane().add( panel, BorderLayout.CENTER );
 
-			load( TonalityEnum.C );
+			load( Tonality.C );
 
 			setVisible( true );
 			this.setResizable( true );
@@ -804,7 +809,7 @@ public class Main {
 
 		/*
 		 * EventSequence e = new EventSequence(); int t = 0; for(ChordFunc c :
-		 * TonalityEnum.C.getAllChords()) { System.out.println(c);
+		 * Tonality.C.getAllChords()) { System.out.println(c);
 		 * c.setLength(Duration.V8); e.add(t++*Duration.V4, c); }
 		 */
 
@@ -826,21 +831,21 @@ public class Main {
 		 * : cs) { c.showNotesOctave(); } System.out.println("B-----------");
 		 */
 		/*
-		 * ChromaticChord[] cs = ChromaticChord.C.getModalChords( TonalityEnum.C ); for (
+		 * ChromaticChord[] cs = ChromaticChord.C.getModalChords( Tonality.C ); for (
 		 * ChromaticChord c : cs ) c.show();
 		 */
 
 		/*JFrame f = new F();
 
 		for ( DiatonicFunction c : DiatonicFunction.ALL ) {
-			DiatonicChordMidi chord = new DiatonicChordMidi( c, TonalityEnum.C );
+			DiatonicChordMidi chord = new DiatonicChordMidi( c, Tonality.C );
 			// chord.show();
 			// chord.showNotes();
 		}*/
 
 
 		for (DiatonicFunction f : DiatonicFunction.values() ) {
-			System.out.println( f.name() + " " + ChromaticChord.from(TonalityEnum.C, f ) );
+			System.out.println( f.name() + " " + ChromaticChord.from(Tonality.C, f ) );
 		}
 		
 /*
@@ -1050,11 +1055,11 @@ public class Main {
 		 *
 		 *
 		 * for(int j = 0; j < 7; j++) { int[] tonality = null; switch(j) { case 0:
-		 * tonality = TonalityEnum.LYDIAN; break; // IV case 1: tonality = TonalityEnum.MAJOR;
-		 * break; // I case 2: tonality = TonalityEnum.MIXOLYDIAN; break; // V case 3:
-		 * tonality = TonalityEnum.DORIAN; break; // II case 4: tonality = TonalityEnum.MINOR;
-		 * break; // VI case 5: tonality = TonalityEnum.PHRYGIAN; break; // III case 6:
-		 * tonality = TonalityEnum.LOCRIAN; break; // VII } scale = new Scale(Note.E,
+		 * tonality = Tonality.LYDIAN; break; // IV case 1: tonality = Tonality.MAJOR;
+		 * break; // I case 2: tonality = Tonality.MIXOLYDIAN; break; // V case 3:
+		 * tonality = Tonality.DORIAN; break; // II case 4: tonality = Tonality.MINOR;
+		 * break; // VI case 5: tonality = Tonality.PHRYGIAN; break; // III case 6:
+		 * tonality = Tonality.LOCRIAN; break; // VII } scale = new Scale(Note.E,
 		 * tonality);
 		 *
 		 * Progression pp = ((Progression)p.duplicate()).setScale(scale);
@@ -1087,7 +1092,7 @@ public class Main {
  * c3.setPan((Pan.RIGHT*2+Pan.MID)/3); seq.add(c4); int end = 7; for(int i = 0;
  * i < end; i++) { if (Note.D+i == 12) octave++;
  *
- * Scale s = new Scale(Note.D+i, TonalityEnum.MAJOR); c.setScale(8*i*Note.V1, s);
+ * Scale s = new Scale(Note.D+i, Tonality.MAJOR); c.setScale(8*i*Note.V1, s);
  * Progression l = new Pachelbel(s, octave-1, Pachelbel.NORMAL);
  * c.add(8*i*Note.V1, l); if (i == end-1) c.addFunction(8*i*Note.V1,
  * Volume.class, new LinealFunction(Volume.MAX, Volume.MIN), Note.V1*8); if (i >
@@ -1112,7 +1117,7 @@ public class Main {
  */
 
 /*
- * Scale s = new Scale(Note.D, TonalityEnum.MAJOR); Progression l = new
+ * Scale s = new Scale(Note.D, Tonality.MAJOR); Progression l = new
  * Progression(s, 5) { { add(Chord.I); add(Chord.vi); add(Chord.iii);
  * add(Chord.V); add(Chord.I);
  *
@@ -1126,7 +1131,7 @@ public class Main {
  * Track(2, 62); Track c3 = new Track(1, 19); c3.setVolume(Volume.MAX);
  * c.setPan((Pan.LEFT*3+Pan.MID)/4); c3.setPan((Pan.RIGHT*3+Pan.MID)/4);
  * seq.add(c); seq.add(c2); seq.add(c3); Scale s = new Scale(note,
- * TonalityEnum.MINOR); for(int i = 0; i < 4; i++) { Progression l = new
+ * Tonality.MINOR); for(int i = 0; i < 4; i++) { Progression l = new
  * Progression(s, octave-1) { { // F# G# A B C# D E F# G# A# B C# D# F
  * add(Chord.I); // F# A C# I III V
  *

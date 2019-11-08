@@ -1,13 +1,14 @@
-package es.danisales.datune.musical;
+package es.danisales.datune.tonality;
 
 import es.danisales.datune.diatonic.DiatonicFunction;
-import es.danisales.datune.pitch.PitchChromaticChord;
-import es.danisales.datune.tonality.TonalityEnum;
+import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.musical.ChromaticChord;
+import es.danisales.datune.musical.ChromaticChordEnum;
 
-public class GetDiatonicFunctionMajor {
-	public static ChromaticChord get(TonalityEnum t, DiatonicFunction f) {
-		switch(t) {
-			case C: switch(f) {
+class GetDiatonicFunctionMajor {
+	public static ChromaticChord get(TonalityEnum tonalityEnum, DiatonicFunction diatonicFunction) {
+		switch(tonalityEnum) {
+			case C: switch(diatonicFunction) {
 				case I: return ChromaticChordEnum.C;
 				case II: return ChromaticChordEnum.Dm;
 				case III: return ChromaticChordEnum.Em;
@@ -121,7 +122,7 @@ public class GetDiatonicFunctionMajor {
 				case VI9_O3_O7: return ChromaticChord.from(Chromatic.A, Chromatic.E, Chromatic.B );
 				case VII9_O3_O7: return ChromaticChord.from(Chromatic.B, Chromatic.F, Chromatic.C );
 			} break;
-			case Db: switch(f) {
+			case Db: switch(diatonicFunction) {
 				case I: return ChromaticChord.from(Chromatic.CC, Chromatic.F, Chromatic.GG );
 				case II: return ChromaticChord.from(Chromatic.DD, Chromatic.FF, Chromatic.AA );
 				case III: return ChromaticChord.from(Chromatic.F, Chromatic.GG, Chromatic.C );
@@ -235,7 +236,7 @@ public class GetDiatonicFunctionMajor {
 				case VI9_O3_O7: return ChromaticChord.from(Chromatic.AA, Chromatic.F, Chromatic.C );
 				case VII9_O3_O7: return ChromaticChord.from(Chromatic.C, Chromatic.FF, Chromatic.CC );
 			} break;
-			case D: switch(f) {
+			case D: switch(diatonicFunction) {
 				case I: return ChromaticChordEnum.D;
 				case II: return ChromaticChordEnum.Em;
 				case III: return ChromaticChord.from(Chromatic.FF, Chromatic.A, Chromatic.CC );
@@ -349,7 +350,7 @@ public class GetDiatonicFunctionMajor {
 				case VI9_O3_O7: return ChromaticChord.from(Chromatic.B, Chromatic.FF, Chromatic.CC );
 				case VII9_O3_O7: return ChromaticChord.from(Chromatic.CC, Chromatic.G, Chromatic.D );
 			} break;
-			case Eb: switch(f) {
+			case Eb: switch(diatonicFunction) {
 				case I: return ChromaticChord.from(Chromatic.DD, Chromatic.G, Chromatic.AA );
 				case II: return ChromaticChord.from(Chromatic.F, Chromatic.GG, Chromatic.C );
 				case III: return ChromaticChord.from(Chromatic.G, Chromatic.AA, Chromatic.D );
@@ -463,7 +464,7 @@ public class GetDiatonicFunctionMajor {
 				case VI9_O3_O7: return ChromaticChord.from(Chromatic.C, Chromatic.G, Chromatic.D );
 				case VII9_O3_O7: return ChromaticChord.from(Chromatic.D, Chromatic.GG, Chromatic.DD );
 			} break;
-			case E: switch(f) {
+			case E: switch(diatonicFunction) {
 				case I: return ChromaticChordEnum.E;
 				case II: return ChromaticChord.from(Chromatic.FF, Chromatic.A, Chromatic.CC );
 				case III: return ChromaticChord.from(Chromatic.GG, Chromatic.B, Chromatic.DD );
@@ -577,7 +578,7 @@ public class GetDiatonicFunctionMajor {
 				case VI9_O3_O7: return ChromaticChord.from(Chromatic.CC, Chromatic.GG, Chromatic.DD );
 				case VII9_O3_O7: return ChromaticChord.from(Chromatic.DD, Chromatic.A, Chromatic.E );
 			} break;
-			case F: switch(f) {
+			case F: switch(diatonicFunction) {
 				case I: return ChromaticChordEnum.F;
 				case II: return ChromaticChordEnum.Gm;
 				case III: return ChromaticChordEnum.Am;
@@ -691,7 +692,7 @@ public class GetDiatonicFunctionMajor {
 				case VI9_O3_O7: return ChromaticChord.from(Chromatic.D, Chromatic.A, Chromatic.E );
 				case VII9_O3_O7: return ChromaticChord.from(Chromatic.E, Chromatic.AA, Chromatic.F );
 			} break;
-			case FF: switch(f) {
+			case FF: switch(diatonicFunction) {
 				case I: return ChromaticChord.from(Chromatic.FF, Chromatic.AA, Chromatic.CC );
 				case II: return ChromaticChord.from(Chromatic.GG, Chromatic.B, Chromatic.DD );
 				case III: return ChromaticChord.from(Chromatic.AA, Chromatic.CC, Chromatic.F );
@@ -805,7 +806,7 @@ public class GetDiatonicFunctionMajor {
 				case VI9_O3_O7: return ChromaticChord.from(Chromatic.DD, Chromatic.AA, Chromatic.F );
 				case VII9_O3_O7: return ChromaticChord.from(Chromatic.F, Chromatic.B, Chromatic.FF );
 			} break;
-			case G: switch(f) {
+			case G: switch(diatonicFunction) {
 				case I: return ChromaticChordEnum.G;
 				case II: return ChromaticChordEnum.Am;
 				case III: return ChromaticChordEnum.Bm;
@@ -919,7 +920,7 @@ public class GetDiatonicFunctionMajor {
 				case VI9_O3_O7: return ChromaticChord.from(Chromatic.E, Chromatic.B, Chromatic.FF );
 				case VII9_O3_O7: return ChromaticChord.from(Chromatic.FF, Chromatic.C, Chromatic.G );
 			} break;
-			case Ab: switch(f) {
+			case Ab: switch(diatonicFunction) {
 				case I: return ChromaticChord.from(Chromatic.GG, Chromatic.C, Chromatic.DD );
 				case II: return ChromaticChord.from(Chromatic.AA, Chromatic.CC, Chromatic.F );
 				case III: return ChromaticChord.from(Chromatic.C, Chromatic.DD, Chromatic.G );
@@ -1033,7 +1034,7 @@ public class GetDiatonicFunctionMajor {
 				case VI9_O3_O7: return ChromaticChord.from(Chromatic.F, Chromatic.C, Chromatic.G );
 				case VII9_O3_O7: return ChromaticChord.from(Chromatic.G, Chromatic.CC, Chromatic.GG );
 			} break;
-			case A: switch(f) {
+			case A: switch(diatonicFunction) {
 				case I: return ChromaticChordEnum.A;
 				case II: return ChromaticChordEnum.Bm;
 				case III: return ChromaticChord.from(Chromatic.CC, Chromatic.E, Chromatic.GG );
@@ -1147,7 +1148,7 @@ public class GetDiatonicFunctionMajor {
 				case VI9_O3_O7: return ChromaticChord.from(Chromatic.FF, Chromatic.CC, Chromatic.GG );
 				case VII9_O3_O7: return ChromaticChord.from(Chromatic.GG, Chromatic.D, Chromatic.A );
 			} break;
-			case Bb: switch(f) {
+			case Bb: switch(diatonicFunction) {
 				case I: return ChromaticChord.from(Chromatic.AA, Chromatic.D, Chromatic.F );
 				case II: return ChromaticChord.from(Chromatic.C, Chromatic.DD, Chromatic.G );
 				case III: return ChromaticChord.from(Chromatic.D, Chromatic.F, Chromatic.A );
@@ -1261,7 +1262,7 @@ public class GetDiatonicFunctionMajor {
 				case VI9_O3_O7: return ChromaticChord.from(Chromatic.G, Chromatic.D, Chromatic.A );
 				case VII9_O3_O7: return ChromaticChord.from(Chromatic.A, Chromatic.DD, Chromatic.AA );
 			} break;
-			case B: switch(f) {
+			case B: switch(diatonicFunction) {
 				case I: return ChromaticChordEnum.B;
 				case II: return ChromaticChord.from(Chromatic.CC, Chromatic.E, Chromatic.GG );
 				case III: return ChromaticChord.from(Chromatic.DD, Chromatic.FF, Chromatic.AA );

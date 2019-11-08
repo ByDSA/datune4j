@@ -27,21 +27,18 @@ class ScaleNamer {
         return sb.toString();
     }
 
-    public static String from(ScaleDistance distanceScale) {
+    public static String from(@NonNull ScaleDistance distanceScale) {
         switch (distanceScale) {
             case HALF: return "1";
             case WHOLE: return "2";
             case WHOLE_HALF: return "3";
-            case FOUR: return "4";
-            case FIVE: return "5";
-            case SIX: return "6";
         }
 
         return null;
     }
 
 
-    public static String from(Scale s) {
+    public static String from(@NonNull Scale s) {
         ScaleInterface scale = s.innerScale;
         if ( scale.equals( ScaleEnum.MAJOR ) )
             return "Mayor";

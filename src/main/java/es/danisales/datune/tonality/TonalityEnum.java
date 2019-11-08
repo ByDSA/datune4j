@@ -1,24 +1,20 @@
 package es.danisales.datune.tonality;
 
+import com.google.common.collect.BiMap;
 import es.danisales.datune.diatonic.ChromaticFunction;
-import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.diatonic.HarmonicFunction;
-import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.ChromaticMidi;
-import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.musical.*;
-import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.pitch.PitchChromaticChord;
-import es.danisales.datune.pitch.PitchChromaticSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
-public enum TonalityEnum implements Tonality {
+enum TonalityEnum implements Tonality {
 	C( DiatonicAlt.C, Scale.MAJOR ),
 	D( DiatonicAlt.D, Scale.MAJOR ),
 	E( DiatonicAlt.E, Scale.MAJOR ),
@@ -83,12 +79,7 @@ public enum TonalityEnum implements Tonality {
 	/** Temp */
 	private final List<DiatonicAlt>	notes;
 
-	private final Set<ChromaticChord>							scaleChords;
-	private final Set<ChromaticChord>							outScaleChords;
-	private final Set<ChromaticChord>							borrowedChords;
-	private final Map<DiatonicFunction, ChromaticChord>	functionChordsMap;
-	private final Map<ChromaticFunction, ChromaticChord>	chromaticChordsMap;
-	private final Map<ChromaticChord, HarmonicFunction> chromaticChordFunctionMap;
+	private final BiMap<HarmonicFunction, ChromaticChord> functionChordMap;
 
 	static @Nullable Tonality of(@NonNull DiatonicAlt diatonicAlt, @NonNull Scale scale) {
 		Objects.requireNonNull(diatonicAlt);
@@ -101,6 +92,23 @@ public enum TonalityEnum implements Tonality {
 		return null;
 	}
 
+	@Override
+	public boolean has(ChromaticChord from) {
+		return functionChordMap.inverse().containsKey(from);
+	}
+
+	@Override
+	public ChromaticChord getChordFrom(DiatonicFunction diatonicFunction) {
+		ChromaticChord ret = GetDiatonicFunctionMajor.get(this, diatonicFunction);
+		if (ret == null)
+			ret = GetDiatonicFunctionMinor.get(this, diatonicFunction);
+		return ret;
+	}
+
+	@Override
+	public ChromaticChord getChordFrom(ChromaticFunction chromaticFunction) {
+		return null;
+	}
 
 
 	TonalityEnum(DiatonicAlt noteBase, Scale scale) {
@@ -109,47 +117,7 @@ public enum TonalityEnum implements Tonality {
 
 		notes = Collections.unmodifiableList( Tonality.getNotesFrom(noteBase, scale) );
 
-
-		this.scaleChords = Collections.unmodifiableSet( TonalityEnumChordRetrieval.getScaleChordsFrom(this) );
-		this.outScaleChords = Collections.unmodifiableSet( TonalityEnumChordRetrieval.getOutScaleChordsFrom(this) );
-		this.borrowedChords = Collections.unmodifiableSet(new HashSet<>());
-		this.functionChordsMap = new HashMap<>();
-		this.chromaticChordsMap = new HashMap<>();
-		this.chromaticChordFunctionMap = new HashMap<>();
-	}
-
-	private HashSet<ChromaticChord> calculateScaleChords(Tonality tonality) {
-		return new HashSet<>();
-	}
-
-	private HashSet<ChromaticChord> calculateOutScaleChords(Tonality tonality) {
-		return new HashSet<>();
-	}
-
-	@Override
-	public @NonNull Set<ChromaticChord> getAllChords() {
-		Set<ChromaticChord> ret = new HashSet<>();
-
-		ret.addAll( getScaleChords() );
-		ret.addAll( getOutScaleChords() );
-		ret.addAll( getBorrowedChords() );
-
-		return ret;
-	}
-
-	@Override
-	public @NonNull Set<ChromaticChord> getBorrowedChords() {
-		return borrowedChords;
-	}
-
-	@Override
-	public @NonNull Set<ChromaticChord> getOutScaleChords() {
-		return null;
-	}
-
-	@Override
-	public @NonNull Set<ChromaticChord> getScaleChords() {
-		return null;
+		this.functionChordMap = TonalityEnumChordRetrieval.getHarmonicFunctionChomaticChordBiMap(this);
 	}
 
 	public @NonNull Scale getScale() {

@@ -8,7 +8,7 @@ import es.danisales.datune.musical.*;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
-import es.danisales.datune.tonality.TonalityEnum;
+import es.danisales.datune.tonality.Tonality;
 import org.junit.Test;
 
 import java.util.List;
@@ -57,7 +57,7 @@ public class DiatonicChordMidiTest {
 		assertEquals( PitchMidi.B5, c.get( 0 ).getCode() );
 		assertEquals( PitchMidi.FF6, c.get( 1 ).getCode() );
 
-		s = TonalityEnum.Cm;
+		s = Tonality.Cm;
 
 		c = new DiatonicChordMidi( ChromaticFunction.I5, 5, s );
 		assertEquals( 2, c.size() );
@@ -188,7 +188,7 @@ public class DiatonicChordMidiTest {
 
 	@Test
 	public void duplicate() {
-		DiatonicChordMidi ca = new DiatonicChordMidi( TonalityEnum.C, ChromaticChordEnum.C );
+		DiatonicChordMidi ca = new DiatonicChordMidi( Tonality.C, ChromaticChordEnum.C );
 		DiatonicChordMidi ca2 = ca.clone();
 
 		assertEquals( ca.getFunction(), ca2.getFunction() );
@@ -203,7 +203,7 @@ public class DiatonicChordMidiTest {
 
 	@Test
 	public void inv() {
-		DiatonicChordMidi c = new DiatonicChordMidi( TonalityEnum.C, ChromaticChordEnum.C );
+		DiatonicChordMidi c = new DiatonicChordMidi( Tonality.C, ChromaticChordEnum.C );
 		c.inv();
 		Chromatic chromatic0 = ChromaticAdapter.from( c.get( 0 ) );
 		Chromatic chromatic1 = ChromaticAdapter.from( c.get( 1 ) );
@@ -218,14 +218,14 @@ public class DiatonicChordMidiTest {
 
 	@Test
 	public void getRoot() {
-		Chromatic chromatic = ChromaticAdapter.from( new DiatonicChordMidi( TonalityEnum.C, ChromaticChordEnum.C ).getRoot() );
+		Chromatic chromatic = ChromaticAdapter.from( new DiatonicChordMidi( Tonality.C, ChromaticChordEnum.C ).getRoot() );
 		assertEquals(Chromatic.C, chromatic);
-		DiatonicChordMidi c = new DiatonicChordMidi( TonalityEnum.C, ChromaticChordEnum.C );
+		DiatonicChordMidi c = new DiatonicChordMidi( Tonality.C, ChromaticChordEnum.C );
 		c.inv();
 		assertEquals( 2, c.getRootPos() );
 		assertEquals( Chromatic.C, ChromaticAdapter.from( c.getRoot() ) );
 
-		c = new DiatonicChordMidi( TonalityEnum.C, ChromaticChordEnum.F5 );
+		c = new DiatonicChordMidi( Tonality.C, ChromaticChordEnum.F5 );
 		assertEquals( 0, c.getRootPos() );
 		assertEquals( Chromatic.F, ChromaticAdapter.from( c.getRoot() ) );
 
@@ -238,13 +238,13 @@ public class DiatonicChordMidiTest {
 	public void names() {
 		assertEquals( "C", ChromaticChordEnum.C.toString() );
 
-		DiatonicChordMidi dcm = new DiatonicChordMidi( DiatonicFunction.I, TonalityEnum.C );
+		DiatonicChordMidi dcm = new DiatonicChordMidi( DiatonicFunction.I, Tonality.C );
 
 		assertEquals( "C (C)", dcm.toString() );
 
-		dcm = new DiatonicChordMidi( DiatonicFunction.I, TonalityEnum.Cm );
+		dcm = new DiatonicChordMidi( DiatonicFunction.I, Tonality.Cm );
 		assertEquals( "Cm (C)", dcm.toString() );
-		dcm = new DiatonicChordMidi( DiatonicFunction.I, TonalityEnum.C );
+		dcm = new DiatonicChordMidi( DiatonicFunction.I, Tonality.C );
 		dcm.inv();
 		
 		assertEquals( "C/E (C)", dcm.toString() );
@@ -253,27 +253,27 @@ public class DiatonicChordMidiTest {
 		dcm.inv();
 		assertEquals( "C (C)", dcm.toString() );
 
-		dcm = new DiatonicChordMidi( ChromaticFunction.IV5, TonalityEnum.C );
+		dcm = new DiatonicChordMidi( ChromaticFunction.IV5, Tonality.C );
 		assertEquals( "F5 (IV5)", dcm.toString() );
 		dcm.inv();
 		assertEquals( "F5/C (IV5)", dcm.toString() );
 
-		dcm = new DiatonicChordMidi( DiatonicFunction.I2, TonalityEnum.C );
+		dcm = new DiatonicChordMidi( DiatonicFunction.I2, Tonality.C );
 		assertEquals( "Csus2 (I2)", dcm.toString() );
-		dcm = new DiatonicChordMidi( DiatonicFunction.V4, TonalityEnum.C );
+		dcm = new DiatonicChordMidi( DiatonicFunction.V4, Tonality.C );
 		assertEquals( "Gsus4 (V4)", dcm.toString() );
 		dcm.inv();
 		assertEquals( "Gsus4/C (V4)", dcm.toString() );
 
 		CustomChromaticChord cc = CustomChromaticChord.from( Chromatic.C, Chromatic.D, Chromatic.G );
-		dcm = new DiatonicChordMidi( TonalityEnum.C, cc );
+		dcm = new DiatonicChordMidi( Tonality.C, cc );
 		assertEquals( "Csus2 (I2)", dcm.toString() );
 	}
 
 	@Test
 	public void addChromatics() {
-		DiatonicChordMidi dcm = new DiatonicChordMidi( TonalityEnum.C );
-		assertEquals( TonalityEnum.C, dcm.getTonality() );
+		DiatonicChordMidi dcm = new DiatonicChordMidi( Tonality.C );
+		assertEquals( Tonality.C, dcm.getTonality() );
 		assertEquals( 0, dcm.size() );
 		ChromaticChordMidi ccm = ChromaticChordMidi.from( ChromaticChordEnum.F5 );
 		for ( ChromaticMidi cm : ccm )
@@ -283,17 +283,17 @@ public class DiatonicChordMidiTest {
 		Chromatic chromatic1 = ChromaticAdapter.from( dcm.get( 1 ) );
 		assertEquals( Chromatic.F, chromatic0 );
 		assertEquals( Chromatic.C, chromatic1 );
-		assertEquals( TonalityEnum.C, dcm.getTonality() );
+		assertEquals( Tonality.C, dcm.getTonality() );
 		assertEquals( "F5 (IV5)", dcm.toString() );
 	}
 
 	@Test
 	public void addChromaticChord() {
-		DiatonicChordMidi dcm = new DiatonicChordMidi( TonalityEnum.C );
-		assertEquals( TonalityEnum.C, dcm.getTonality() );
+		DiatonicChordMidi dcm = new DiatonicChordMidi( Tonality.C );
+		assertEquals( Tonality.C, dcm.getTonality() );
 		assertEquals( 0, dcm.size() );
 		ChromaticChordMidi ccm = ChromaticChordMidi.from( ChromaticChordEnum.F5 );
-		dcm = new DiatonicChordMidi( TonalityEnum.C );
+		dcm = new DiatonicChordMidi( Tonality.C );
 		dcm.add( ccm );
 		assertNotEquals( 0, dcm.size() );
 		assertEquals( 0, dcm.getRootPos() );
@@ -301,13 +301,13 @@ public class DiatonicChordMidiTest {
 		Chromatic chromatic1 = ChromaticAdapter.from( dcm.get( 1 ) );
 		assertEquals( Chromatic.F, chromatic0 );
 		assertEquals( Chromatic.C, chromatic1 );
-		assertEquals( TonalityEnum.C, dcm.getTonality() );
+		assertEquals( Tonality.C, dcm.getTonality() );
 		assertEquals( "F5 (IV5)", dcm.toString() );
 	}
 
 	@Test
 	public void chromaticChordToMidi() {
-		DiatonicChordMidi c = new DiatonicChordMidi( TonalityEnum.C, ChromaticChordEnum.F5 );
+		DiatonicChordMidi c = new DiatonicChordMidi( Tonality.C, ChromaticChordEnum.F5 );
 		assertEquals( 0, c.getRootPos() );
 		Chromatic chromatic0 = ChromaticAdapter.from( c.get( 0 ) );
 		Chromatic chromatic1 = ChromaticAdapter.from( c.get( 1 ) );
@@ -318,7 +318,7 @@ public class DiatonicChordMidiTest {
 
 	@Test
 	public void functions() {
-		Tonality ton = TonalityEnum.C;
+		Tonality ton = Tonality.C;
 		DiatonicChordMidi dcm = new DiatonicChordMidi( DiatonicFunction.I, ton );
 		assertEquals( ChromaticChordEnum.C, ChromaticChord.from(dcm) );
 
@@ -343,7 +343,7 @@ public class DiatonicChordMidiTest {
 		dcm = new DiatonicChordMidi( ChromaticFunction.IV5, ton );
 		assertEquals( CustomChromaticChord.from( Chromatic.F, Chromatic.C ), ChromaticChord.from(dcm) );
 
-		ton = TonalityEnum.FFm;
+		ton = Tonality.FFm;
 		dcm = new DiatonicChordMidi( DiatonicFunction.I, ton );
 		assertEquals( ChromaticChordEnum.FFm, ChromaticChord.from(dcm) );
 
@@ -351,13 +351,13 @@ public class DiatonicChordMidiTest {
 			new CustomDiatonicChord( Diatonic.D, Diatonic.F, Diatonic.A), DiatonicChord.from( DiatonicFunction.II )
 		);
 		assertEquals(
-			ChromaticChordEnum.GGdim, DiatonicChord.from( DiatonicFunction.II ).toChromaticChord( TonalityEnum.FFm )
+			ChromaticChordEnum.GGdim, DiatonicChord.from( DiatonicFunction.II ).toChromaticChord( Tonality.FFm )
 		);
 /*
 		assertEquals(
-			ChromaticChordEnum.GGdim, new CustomDiatonicChord( DiatonicFunction.D ).toChromaticChord( TonalityEnum.FFm ).toMidi().toChromaticChord()
+			ChromaticChordEnum.GGdim, new CustomDiatonicChord( DiatonicFunction.D ).toChromaticChord( Tonality.FFm ).toMidi().toChromaticChord()
 		);*/
-		assertEquals( Chromatic.GG, TonalityEnum.FFm.getNote( DiatonicDegree.II ) );
+		assertEquals( Chromatic.GG, Tonality.FFm.getNote( DiatonicDegree.II ) );
 
 		dcm = new DiatonicChordMidi( DiatonicFunction.II, ton );
 		assertEquals( ChromaticChordEnum.GGdim, ChromaticChord.from(dcm) );
@@ -380,8 +380,8 @@ public class DiatonicChordMidiTest {
 
 	@Test
 	public void equals() {
-		DiatonicChordMidi c = new DiatonicChordMidi( DiatonicFunction.I, 5, TonalityEnum.C );
-		DiatonicChordMidi c2 = new DiatonicChordMidi( DiatonicFunction.I, 5, TonalityEnum.C );
+		DiatonicChordMidi c = new DiatonicChordMidi( DiatonicFunction.I, 5, Tonality.C );
+		DiatonicChordMidi c2 = new DiatonicChordMidi( DiatonicFunction.I, 5, Tonality.C );
 		assertEquals( c, c2 );
 
 		c.setLength( Duration.V2 );
@@ -404,8 +404,8 @@ public class DiatonicChordMidiTest {
 		c2.setVelocity( 50 );
 		assertEquals( c, c2 );
 
-		c = new DiatonicChordMidi( TonalityEnum.C );
-		c2 = new DiatonicChordMidi( TonalityEnum.C );
+		c = new DiatonicChordMidi( Tonality.C );
+		c2 = new DiatonicChordMidi( Tonality.C );
 		c.add( PitchMidi.C5.toMidi() );
 		c.add( PitchMidi.E5.toMidi() );
 		c.add( PitchMidi.G5.toMidi() );
@@ -414,15 +414,15 @@ public class DiatonicChordMidiTest {
 		c2.add( PitchMidi.G5.toMidi() );
 		assertEquals( c, c2 );
 
-		c = new DiatonicChordMidi( DiatonicFunction.I, 5, TonalityEnum.Am );
-		c2 = new DiatonicChordMidi( DiatonicFunction.VI, 5, TonalityEnum.C );
+		c = new DiatonicChordMidi( DiatonicFunction.I, 5, Tonality.Am );
+		c2 = new DiatonicChordMidi( DiatonicFunction.VI, 5, Tonality.C );
 		assertNotEquals( c, c2 );
 		assertEquals( ChromaticChord.from(c), ChromaticChord.from(c2) );
 	}
 
 	@Test
 	public void toDiatonic() {
-		DiatonicChordMidi c = new DiatonicChordMidi( DiatonicFunction.I, 5, TonalityEnum.C );
+		DiatonicChordMidi c = new DiatonicChordMidi( DiatonicFunction.I, 5, Tonality.C );
 		assertEquals( Duration.V1, c.get(0).getLength() );
 		ChromaticChordMidi ccm = c.toChromaticChordMidi();
 		assertEquals( Duration.V1, ccm.get(0).getLength() );

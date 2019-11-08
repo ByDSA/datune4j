@@ -2,7 +2,7 @@ package es.danisales.datune.diatonic;
 
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.musical.ChromaticChord;
-import es.danisales.datune.tonality.TonalityEnum;
+import es.danisales.datune.tonality.Tonality;
 
 public interface HarmonicFunction {
 	DiatonicDegree getDegree();
@@ -11,7 +11,7 @@ public interface HarmonicFunction {
 		HarmonicFunction hf = ChromaticFunction.from( diatonicChordMidi );
 		if ( hf == null )
 			hf = DiatonicFunction.from( diatonicChordMidi );
-		assert hf != null : diatonicChordMidi.notesToString() + " " + diatonicChordMidi.getMetatonality() + " " + ChromaticChord.from(TonalityEnum.Cm, DiatonicFunction.VII7).notesToString();
+		assert hf != null : diatonicChordMidi.notesToString() + " " + diatonicChordMidi.getMetatonality() + " " + ChromaticChord.from(Tonality.Cm, DiatonicFunction.VII7).notesToString();
 		
 		return hf;
 	}

@@ -1,23 +1,18 @@
 package es.danisales.datune.pathfinding;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-
-import javax.sound.midi.InvalidMidiDataException;
-import javax.sound.midi.MidiUnavailableException;
-
 import es.danisales.datune.eventsequences.Instrument;
 import es.danisales.datune.eventsequences.Track;
-import es.danisales.datune.midi.ChordMidi;
-import es.danisales.datune.midi.ChromaticChordMidi;
-import es.danisales.datune.midi.Duration;
-import es.danisales.datune.midi.Midi;
-import es.danisales.datune.midi.Song;
+import es.danisales.datune.midi.*;
 import es.danisales.datune.midi.Events.Volume;
 import es.danisales.datune.musical.ChromaticChordEnum;
 import es.danisales.datune.pitch.ProgressionChromaticChordMidi;
-import es.danisales.datune.tonality.TonalityEnum;
+import es.danisales.datune.tonality.Tonality;
+
+import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiUnavailableException;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 class Main {
 	static Map map;
@@ -53,7 +48,7 @@ class Main {
 			n.object.showNotes();
 		}
 
-		Song p = new Song( "azsxdc", 120, TonalityEnum.FFm );
+		Song p = new Song( "azsxdc", 120, Tonality.FFm );
 		Track strings = new Track( 0, Instrument.get( 48 ) );
 		int l2 = 0;
 		for ( int i = 0; i < pcm.size(); i++ ) {
