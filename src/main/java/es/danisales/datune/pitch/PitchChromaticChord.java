@@ -14,7 +14,7 @@ import java.util.List;
 public interface PitchChromaticChord<N extends PitchChromaticSingle> extends ChordCommon<N> {	
 	boolean hasSameNotes(PitchChromaticChord<N> chord);
 
-	default <Array extends PitchChromaticChord<N>> boolean hasSameNotesOrder(Array notes) {
+	default <Array extends PitchChromaticChord<? extends PitchChromaticSingle>> boolean hasSameNotesOrder(Array notes) {
 		if ( size() != notes.size() )
 			return false;
 

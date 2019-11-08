@@ -7,7 +7,7 @@ import es.danisales.datune.musical.ChromaticChordEnum;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.tonality.TonalityEnum;
 
-class GetDiatonicFunctionMinor {
+class TonalityGetDiatonicFunctionMinor {
 	public static ChromaticChord get(TonalityEnum t, DiatonicFunction f) {
 		switch(t) {
 			case Cm: switch(f) {

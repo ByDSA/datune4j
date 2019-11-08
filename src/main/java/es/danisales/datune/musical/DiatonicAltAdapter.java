@@ -1,11 +1,26 @@
 package es.danisales.datune.musical;
 
+import es.danisales.datune.midi.ChromaticMidi;
+import es.danisales.datune.pitch.PitchChromaticSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Objects;
 
 class DiatonicAltAdapter {
-    static DiatonicAlt from(@NonNull Chromatic chromatic, @NonNull Diatonic diatonic) {
+    static @NonNull DiatonicAlt from(@NonNull PitchChromaticSingle pitchChromaticSingle, @NonNull Diatonic diatonic) {
+        if (pitchChromaticSingle instanceof Chromatic) {
+            Chromatic chromatic = (Chromatic) pitchChromaticSingle;
+            return from(chromatic, diatonic);
+        } else if (pitchChromaticSingle instanceof ChromaticMidi) {
+            ChromaticMidi chromaticMidi = (ChromaticMidi) pitchChromaticSingle;
+            Chromatic chromatic = Chromatic.from(chromaticMidi);
+            return from(chromatic, diatonic);
+        }
+
+        throw new RuntimeException("Impossible conversion");
+    }
+
+    private static @NonNull DiatonicAlt from(@NonNull Chromatic chromatic, @NonNull Diatonic diatonic) {
         Objects.requireNonNull(diatonic);
         Objects.requireNonNull(chromatic);
 
@@ -151,6 +166,9 @@ class DiatonicAltAdapter {
                 }
                 break;
         }
-        throw new RuntimeException("Impossible conversion");
+
+        Chromatic chromaticDiatonic = Chromatic.from(diatonic);
+        int semis = chromaticDiatonic.distSemitonesTo(chromaticDiatonic);
+        return DiatonicAlt.from(diatonic, semis);
     }
 }

@@ -10,6 +10,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
     static ChromaticChord from(ChromaticFunction f, Tonality t) {
@@ -256,11 +257,14 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
         return ret;
     }
 
-    static ChromaticChord from(Tonality tonality, DiatonicFunction diatonicFunction) {
+    static @NonNull ChromaticChord from(@NonNull Tonality tonality, @NonNull DiatonicFunction diatonicFunction) {
+        Objects.requireNonNull(tonality);
+        Objects.requireNonNull(diatonicFunction);
+
         return tonality.getChordFrom(diatonicFunction);
     }
 
-    static ChromaticChord from(Tonality tonality, ChromaticFunction chromaticFunction) {
+    static @NonNull ChromaticChord from(Tonality tonality, ChromaticFunction chromaticFunction) {
         return tonality.getChordFrom(chromaticFunction);
     }
 

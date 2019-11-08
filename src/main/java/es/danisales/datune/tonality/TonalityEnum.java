@@ -1,11 +1,12 @@
 package es.danisales.datune.tonality;
 
-import com.google.common.collect.BiMap;
 import es.danisales.datune.diatonic.ChromaticFunction;
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.diatonic.HarmonicFunction;
 import es.danisales.datune.midi.ChromaticMidi;
-import es.danisales.datune.musical.*;
+import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.musical.ChromaticChord;
+import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -79,7 +80,7 @@ enum TonalityEnum implements Tonality {
 	/** Temp */
 	private final List<DiatonicAlt>	notes;
 
-	private final BiMap<HarmonicFunction, ChromaticChord> functionChordMap;
+	//private final BiMap<HarmonicFunction, ChromaticChord> functionChordMap;
 
 	static @Nullable Tonality of(@NonNull DiatonicAlt diatonicAlt, @NonNull Scale scale) {
 		Objects.requireNonNull(diatonicAlt);
@@ -94,14 +95,18 @@ enum TonalityEnum implements Tonality {
 
 	@Override
 	public boolean has(ChromaticChord from) {
-		return functionChordMap.inverse().containsKey(from);
+		return false;//functionChordMap.inverse().containsKey(from);
 	}
 
 	@Override
-	public ChromaticChord getChordFrom(DiatonicFunction diatonicFunction) {
-		ChromaticChord ret = GetDiatonicFunctionMajor.get(this, diatonicFunction);
+	public @NonNull ChromaticChord getChordFrom(@NonNull DiatonicFunction diatonicFunction) {
+		Objects.requireNonNull(diatonicFunction);
+
+		ChromaticChord ret = TonalityGetDiatonicFunctionMajor.get(this, diatonicFunction);
 		if (ret == null)
-			ret = GetDiatonicFunctionMinor.get(this, diatonicFunction);
+			ret = TonalityGetDiatonicFunctionMinor.get(this, diatonicFunction);
+		if (ret == null)
+			throw new RuntimeException("aa");
 		return ret;
 	}
 
@@ -110,14 +115,13 @@ enum TonalityEnum implements Tonality {
 		return null;
 	}
 
-
 	TonalityEnum(DiatonicAlt noteBase, Scale scale) {
 		this.root = noteBase;
 		this.scale = scale;
 
 		notes = Collections.unmodifiableList( Tonality.getNotesFrom(noteBase, scale) );
 
-		this.functionChordMap = TonalityEnumChordRetrieval.getHarmonicFunctionChomaticChordBiMap(this);
+		//this.functionChordMap = TonalityEnumChordRetrieval.getHarmonicFunctionChomaticChordBiMap(this);
 	}
 
 	public @NonNull Scale getScale() {

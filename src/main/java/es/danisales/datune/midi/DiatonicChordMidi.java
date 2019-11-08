@@ -174,29 +174,29 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
     public static void showPossibleProgressions(Function<DiatonicChordMidi, Boolean> f, List<ChromaticChordMidi> chordsIn) {
         List<ChromaticChordMidi> chords = reduceDistances( chordsIn );
 
-        List<Tonality> possibleTonalities = Tonality.getFromChords( true, chords );
+        List<Tonality> possibleTonalitiesList = Tonality.getFromChords( true, chords );
 
         // DEBUG
-        if ( possibleTonalities == null || possibleTonalities.size() == 0 ) {
+        if ( possibleTonalitiesList == null || possibleTonalitiesList.isEmpty() ) {
             for ( ChromaticChordMidi c : chords ) {
-                for ( ChromaticMidi n : c )
-                    System.out.print( n + "  " );
+                for ( ChromaticMidi chromaticMidi : c )
+                    System.out.print( chromaticMidi + "  " );
                 System.out.println();
             }
         }
 
-        assert possibleTonalities != null
-                && possibleTonalities.size() > 0 : "No se ha encontrado escala";
+        assert possibleTonalitiesList != null
+                && !possibleTonalitiesList.isEmpty() : "No se ha encontrado escala";
 
         // Mostrar por consola
-        for ( Tonality t : possibleTonalities ) {
-            if ( t.isMajorOrMinor() ) {
+        for ( Tonality tonality : possibleTonalitiesList ) {
+            if ( tonality.isMajorOrMinor() ) {
                 StringBuilder sb = new StringBuilder();
                 boolean yep = true;
                 boolean first = false;
-                sb.append( "----" + t + "----" );
-                for ( ChromaticChordMidi n : chords ) {
-                    DiatonicChordMidi c = new DiatonicChordMidi( t, n );
+                sb.append( "----" + tonality + "----" );
+                for ( ChromaticChordMidi chromaticMidis : chords ) {
+                    DiatonicChordMidi c = new DiatonicChordMidi( tonality, chromaticMidis );
                     if ( !f.apply( c ) ) {
                         yep = false;
                         break;
@@ -258,7 +258,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
                 tonality = TonalityChordRetrieval.searchInModeSameRoot(tonality, ns);
                 metaTonality = tonality;
             } else
-                tonality = Tonality.fromChord( ns ).get( 0 );
+                tonality = TonalityRetrieval.listFromChord( ns ).get( 0 );
 
             if ( tonality == null )
                 throw new TonalityException( ns, ton );
@@ -330,7 +330,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
         if ( t == ChromaticFunction.N6 ) {
             ChromaticChord cc = ChromaticChord.from( t, tonality );
 
-            tonality = Tonality.fromChord( cc ).get( 0 );
+            tonality = TonalityRetrieval.listFromChord( cc ).get( 0 );
 
             ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder()
                     .fromChromatic (cc)

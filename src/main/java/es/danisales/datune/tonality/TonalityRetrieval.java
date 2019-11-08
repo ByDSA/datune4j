@@ -3,32 +3,76 @@ package es.danisales.datune.tonality;
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.Diatonic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.pitch.PitchChromaticChord;
+import es.danisales.datune.pitch.PitchChromaticSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
-class TonalityRetrieval {
+public class TonalityRetrieval {
     private TonalityRetrieval() {
+    }
+
+    public static @NonNull Set<Tonality> majorMinor() {
+        return new HashSet<>( Arrays.asList(
+                Tonality.C,
+                Tonality.D,
+                Tonality.E,
+                Tonality.F,
+                Tonality.G,
+                Tonality.A,
+                Tonality.B,
+                Tonality.Cm,
+                Tonality.Dm,
+                Tonality.Em,
+                Tonality.Fm,
+                Tonality.Gm,
+                Tonality.Am,
+                Tonality.Bm,
+                Tonality.Db,
+                Tonality.Eb,
+                Tonality.FF,
+                Tonality.Gb,
+                Tonality.Ab,
+                Tonality.Bb,
+                Tonality.CCm,
+                Tonality.DDm,
+                Tonality.Ebm,
+                Tonality.FFm,
+                Tonality.GGm,
+                Tonality.Bbm
+        ) );
     }
 
     static @NonNull List<Tonality> all() {
         List<Tonality> ret = new ArrayList<>();
+        List<DiatonicAlt> diatonicAltList = DiatonicAlt.listFromAlterations(1);
         for ( Scale mode : Scale.ALL )
-            for ( Chromatic chromatic : Chromatic.values() )
-                ret.add( Tonality.from( chromatic, mode ) );
+            for ( DiatonicAlt diatonicAlt : diatonicAltList ) {
+                Tonality tonality = Tonality.of( diatonicAlt, mode );
+                ret.add(tonality);
+            }
 
         return ret;
     }
 
-    static @NonNull List<Tonality> fromChord(boolean outScale, @NonNull PitchChromaticChord c) {
+    public static @NonNull List<Tonality> listFromChord(@NonNull PitchChromaticChord<? extends PitchChromaticSingle> c) {
         List<Tonality> out = new ArrayList<>();
-        for ( Tonality t : Tonality.all() ) {
-            if ( t.has( outScale, c ) )
+        for ( CustomTonality t : CustomTonality.all() ) {
+            if ( t.has( false, c ) )
+                out.add( t );
+        }
+
+        return out;
+    }
+
+    public static @NonNull List<Tonality> listFromChordOutScale(@NonNull PitchChromaticChord<? extends PitchChromaticSingle> c) {
+        List<Tonality> out = new ArrayList<>();
+        for ( CustomTonality t : CustomTonality.all() ) {
+            if ( t.has( true, c ) )
                 out.add( t );
         }
 

@@ -1,11 +1,14 @@
 package es.danisales.datune.musical;
 
+import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.musical.transformations.AlterationsCalculator;
 import es.danisales.datune.musical.transformations.EnharmonicsCalculator;
 import es.danisales.datune.musical.transformations.Namer;
+import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.pitch.SymbolicPitch;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DiatonicAlt implements SymbolicPitch {
@@ -72,15 +75,15 @@ public class DiatonicAlt implements SymbolicPitch {
 	public static final DiatonicAlt Abbb = new DiatonicAlt(Diatonic.A, -3);
 	public static final DiatonicAlt Bbbb = new DiatonicAlt(Diatonic.B, -3);
 
-    private final int semitonesAdded;
-    private final Diatonic diatonicBase;
+	private final int semitonesAdded;
+	private final Diatonic diatonicBase;
 
 	private DiatonicAlt(Diatonic diatonicBase, int semitonesAdded) {
 		this.diatonicBase = diatonicBase;
 		this.semitonesAdded = semitonesAdded;
 	}
 
-	public static DiatonicAlt from(@NonNull Chromatic chromatic, @NonNull Diatonic diatonic) {
+	public static DiatonicAlt from(@NonNull PitchChromaticSingle chromatic, @NonNull Diatonic diatonic) {
 		return DiatonicAltAdapter.from(chromatic, diatonic);
 	}
 
@@ -88,23 +91,41 @@ public class DiatonicAlt implements SymbolicPitch {
 		return new DiatonicAlt(diatonic, alt);
 	}
 
-	public static @NonNull DiatonicAlt from(@NonNull Chromatic chromatic) {
-		switch (chromatic) {
-			case C: return DiatonicAlt.C;
-			case CC: return DiatonicAlt.CC;
-			case D: return DiatonicAlt.D;
-			case DD: return DiatonicAlt.DD;
-			case E: return DiatonicAlt.E;
-			case F: return DiatonicAlt.F;
-			case FF: return DiatonicAlt.FF;
-			case G: return DiatonicAlt.G;
-			case GG: return DiatonicAlt.GG;
-			case A: return DiatonicAlt.A;
-			case AA: return DiatonicAlt.AA;
-			case B: return DiatonicAlt.B;
+	public static @NonNull DiatonicAlt from(@NonNull PitchChromaticSingle pitchChromaticSingle) {
+
+		if (pitchChromaticSingle instanceof Chromatic)
+			switch ((Chromatic)pitchChromaticSingle) {
+				case C: return DiatonicAlt.C;
+				case CC: return DiatonicAlt.CC;
+				case D: return DiatonicAlt.D;
+				case DD: return DiatonicAlt.DD;
+				case E: return DiatonicAlt.E;
+				case F: return DiatonicAlt.F;
+				case FF: return DiatonicAlt.FF;
+				case G: return DiatonicAlt.G;
+				case GG: return DiatonicAlt.GG;
+				case A: return DiatonicAlt.A;
+				case AA: return DiatonicAlt.AA;
+				case B: return DiatonicAlt.B;
+			}
+		else if (pitchChromaticSingle instanceof ChromaticMidi) {
+			ChromaticMidi chromaticMidi = (ChromaticMidi)pitchChromaticSingle;
+			Chromatic chromatic = Chromatic.from(chromaticMidi);
+			return from(chromatic);
 		}
 
 		throw new RuntimeException("Impossible");
+	}
+
+	public static List<DiatonicAlt> listFromAlterations(int alts) {
+		List<DiatonicAlt> ret = new ArrayList<>();
+		for (int i = -alts; i <= alts; i++)
+			for (Diatonic diatonic : Diatonic.values()) {
+				DiatonicAlt diatonicAlt = DiatonicAlt.from(diatonic, i);
+				ret.add(diatonicAlt);
+			}
+
+		return ret;
 	}
 
 	public int getSemitonesAdded() {
@@ -124,7 +145,10 @@ public class DiatonicAlt implements SymbolicPitch {
 	}
 
 	public int getAlterations() {
-		return AlterationsCalculator.from(this);
+		int altSigned = getSemitonesAdded();
+		if (altSigned == 0)
+			return 0;
+		return Math.abs( altSigned );
 	}
 
 	public String toString() {

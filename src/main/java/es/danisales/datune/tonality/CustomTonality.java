@@ -5,7 +5,6 @@ import es.danisales.datune.diatonic.ChromaticFunction;
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.diatonic.HarmonicFunction;
-import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.musical.*;
@@ -76,38 +75,6 @@ class CustomTonality implements Tonality {
 					"Error inicializando las notas de la tonalidad con note base " + this.root
 							+ " y escala " + this.scale
 			);
-	}
-
-	public ArrayList<CustomTonality> minimizeAlterations() {
-		ArrayList<CustomTonality> out = new ArrayList<>();
-		List<DiatonicAlt> possibilities = root.getEnharmonics(3);
-		DiatonicAlt initialRoot = root;
-		Integer minAlterations = getAlteration();
-		CustomTonality ton = clone();
-		out.add( ton.clone() );
-		for ( DiatonicAlt p : possibilities ) {
-			if ( p.equals( initialRoot ) )
-				continue;
-
-			ton.updateNotes();
-
-			Integer a = ton.getAlteration();
-			assert a != null;
-			if ( a < minAlterations ) {
-				minAlterations = a;
-				root = ton.root;
-				notes = ton.notes;
-
-				out.clear();
-				out.add( this.clone() );
-				if ( a == 0 )
-					break;
-			} else if (a.equals(minAlterations)) {
-				out.add( ton.clone() );
-			}
-		}
-
-		return out;
 	}
 
 	private void createCacheIfNeeded() {
@@ -253,15 +220,6 @@ class CustomTonality implements Tonality {
 		return ret;
 	}
 
-	public Integer getAlteration() {
-		assert notes != null;
-		int ret = 0;
-		for ( DiatonicAlt c : notes )
-			ret += c.getAlterations();
-
-		return ret;
-	}
-
 	public static CustomTonality createFromChord(DiatonicChordMidi c, CustomTonality base) throws TonalityException {
 		assert base != null;
 		if ( base.size() != 7 )
@@ -370,24 +328,6 @@ class CustomTonality implements Tonality {
 
 	public @NonNull DiatonicAlt getRoot() {
 		return root;
-	}
-
-	public List<DiatonicChordMidi[]> commonChords(CustomTonality s) {
-		List<DiatonicChordMidi[]> ret = new ArrayList<>();
-		for ( DiatonicFunction i : DiatonicFunction.COMMON )
-			for ( DiatonicFunction j : DiatonicFunction.COMMON ) {
-				DiatonicChordMidi c = new DiatonicChordMidi( i, this );
-				DiatonicChordMidi c2 = new DiatonicChordMidi( j, s );
-
-				if ( c.commonNotes( c2, false ).size() == c.size() && c.size() == c2.size() )
-					ret.add(
-							new DiatonicChordMidi[] {
-									c,
-									c2
-							}
-					);
-			}
-		return ret;
 	}
 
 	@Override

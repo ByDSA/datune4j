@@ -8,11 +8,15 @@ import es.danisales.datune.diatonic.HarmonicFunction;
 import es.danisales.datune.musical.ChromaticChord;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.util.Objects;
+
 class TonalityEnumChordRetrieval {
     private TonalityEnumChordRetrieval() {
     }
 
-    static @NonNull BiMap<HarmonicFunction, ChromaticChord> getHarmonicFunctionChomaticChordBiMap(TonalityEnum tonalityEnum) {
+    static @NonNull BiMap<HarmonicFunction, ChromaticChord> getHarmonicFunctionChomaticChordBiMap(@NonNull TonalityEnum tonalityEnum) {
+        Objects.requireNonNull(tonalityEnum);
+
         BiMap<HarmonicFunction, ChromaticChord> map = HashBiMap.create();
 
         for (DiatonicFunction diatonicFunction : DiatonicFunction.values())

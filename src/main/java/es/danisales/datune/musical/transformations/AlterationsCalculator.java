@@ -15,13 +15,6 @@ public class AlterationsCalculator {
     private AlterationsCalculator() {
     }
 
-    public static int from(DiatonicAlt diatonicAlt) {
-        int altSigned = diatonicAlt.getAlterations();
-        if (altSigned == 0)
-            return 0;
-        return Math.abs( altSigned );
-    }
-
     @Deprecated
     public static @NonNull Diatonic removeAlterationsFrom(@NonNull DiatonicAlt chromatic) {
         Objects.requireNonNull(chromatic);

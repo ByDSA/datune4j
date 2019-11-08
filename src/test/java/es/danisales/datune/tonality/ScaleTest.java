@@ -235,6 +235,17 @@ public class ScaleTest {
         assertEquals(Scale.MAJOR, Scale.IONIAN);
     }
 
+
+    @Test
+    public void fromDiatonicAltList() {
+        Tonality s = Tonality.A;
+        List<DiatonicAlt> notes = new ArrayList<>();
+        for (DiatonicDegree diatonicDegree : DiatonicDegree.values())
+            notes.add(s.getNote(diatonicDegree));
+
+        assertEquals(s.getScale(), Scale.fromDiatonicAltList(notes));
+    }
+
     @Test
     public void fromIntegers() {
         Scale scale = Scale.fromIntegers( 2, 2, 1, 2, 2, 2, 1 );

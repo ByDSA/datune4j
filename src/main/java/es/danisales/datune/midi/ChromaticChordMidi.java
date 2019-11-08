@@ -11,6 +11,7 @@ import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.pitch.PitchOctave;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
+import es.danisales.datune.tonality.TonalityRetrieval;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
@@ -105,7 +106,11 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 	}
 
 	public List<DiatonicChordMidi> toDiatonicChordMidi(boolean outScale) {
-		List<Tonality> tonalities = Tonality.fromChord( outScale, this );
+		List<Tonality> tonalities;
+		if (outScale)
+			tonalities = TonalityRetrieval.listFromChordOutScale( this );
+		else
+			tonalities = TonalityRetrieval.listFromChord( this );
 
 		if ( tonalities.size() == 0 )
 			return new ArrayList<>();

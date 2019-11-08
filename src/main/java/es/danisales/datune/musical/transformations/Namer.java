@@ -12,7 +12,7 @@ public class Namer {
     private Namer() {
     }
 
-    public static String from(DiatonicAlt diatonicAlt) {
+    public static String from(@NonNull DiatonicAlt diatonicAlt) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append( diatonicAlt.getDiatonic() );
         int alterations = diatonicAlt.getAlterations();
@@ -28,7 +28,7 @@ public class Namer {
         return  stringBuilder.toString();
     }
 
-    public static String from(Chromatic chromatic) {
+    public static String from(@NonNull Chromatic chromatic) {
         switch(chromatic) {
             case C:  return "C";
             case CC: return from(Chromatic.C) + ChordNotation.SHARP;

@@ -18,7 +18,7 @@ import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-public interface Tonality extends Cloneable {
+public interface Tonality {
 	Tonality C = TonalityEnum.C;
 	Tonality D = TonalityEnum.D;
 	Tonality E = TonalityEnum.E;
@@ -42,22 +42,13 @@ public interface Tonality extends Cloneable {
 	Tonality Bm = TonalityEnum.Bm;
 	Tonality CCm = TonalityEnum.CCm;
 	Tonality DDm = TonalityEnum.DDm;
+	Tonality Ebm = TonalityEnum.Ebm;
 	Tonality FFm = TonalityEnum.FFm;
 	Tonality GGm = TonalityEnum.GGm;
 	Tonality Bbm = TonalityEnum.Bbm;
 
-	Tonality[] ALL = new Tonality[] { C, D, E, F, G, A, B, Db, Eb, FF, Gb, Ab, Bb, Cm, Dm, Em, Fm, Gm, Am, Bm, CCm, DDm, FFm, GGm, Bbm };
-
 	static @NonNull List<Tonality> all() {
 		return TonalityRetrieval.all();
-	}
-
-	static @NonNull List<Tonality> fromChord(PitchChromaticChord c) {
-		return fromChord( false, c );
-	}
-
-	static @NonNull List<Tonality> fromChord(boolean outScale, PitchChromaticChord c) {
-		return TonalityRetrieval.fromChord(outScale, c);
 	}
 
 	static Tonality fromDiatonicChord(@NonNull DiatonicChordMidi c, @NonNull Tonality base) throws TonalityException {
@@ -100,7 +91,7 @@ public interface Tonality extends Cloneable {
 		return notes;
 	}
 
-	static Tonality of(Tonality t) {
+	static Tonality of(@NonNull Tonality t) {
 		return of(t.getRoot(), t.getScale());
 	}
 
@@ -147,21 +138,26 @@ public interface Tonality extends Cloneable {
 		return candidates;
 	}
 
-	static List<Tonality> getFromChord(PitchChromaticChord c) {
-		return getFromChord( false, c );
-	}
+    static @NonNull List<Tonality> minAltsFrom(@NonNull Tonality tonalityBase) {
+	    List<Tonality> ret = new ArrayList<>();
+	    List<DiatonicAlt> possibleRootList = tonalityBase.getRoot().getEnharmonics(3);
 
-	static List<Tonality> getFromChord(boolean outScale, PitchChromaticChord c) {
-		List<Tonality> out = new ArrayList<>();
-		for ( CustomTonality t : CustomTonality.all() ) {
-			if ( t.has( outScale, c ) )
-				out.add( t );
-		}
+        int alts = Integer.MAX_VALUE;
+        for (DiatonicAlt diatonicAlt : possibleRootList) {
+            Tonality currentTonality = Tonality.of(diatonicAlt, tonalityBase.getScale());
+            int currentAlts = currentTonality.getAlterations();
+            if (currentAlts < alts) {
+                ret.clear();
+                alts = currentAlts;
+                ret.add(currentTonality);
+            } else if (currentAlts == alts)
+                ret.add(currentTonality);
+        }
 
-		return out;
-	}
+	    return ret;
+    }
 
-	default Tonality getRelativeMinor() {
+    default Tonality getRelativeMinor() {
 		return TonalityChordRetrieval.getRelativeMinorFrom(this);
 	}
 
@@ -232,7 +228,7 @@ public interface Tonality extends Cloneable {
 		return ret;
 	}
 
-	default Integer getAlteration() {
+	default int getAlterations() {
 		Objects.requireNonNull(getNotes());
 
 		int ret = 0;
@@ -250,7 +246,7 @@ public interface Tonality extends Cloneable {
 				Tonality t = Tonality.from( chromatic, s );
 				if ( isModeOf( t ) ) {
 					if (t instanceof CustomTonality)
-						((CustomTonality)t).minimizeAlterations();
+						t = Tonality.minAltsFrom(t).get(0);
 					ret.add( t );
 				}
 			}
@@ -395,11 +391,11 @@ public interface Tonality extends Cloneable {
 		return getDegreeFrom( note ) != null;
 	}
 
-	default boolean has(boolean outScale, @NonNull PitchChromaticChord<Chromatic> c) {
+	default boolean has(boolean outScale, @NonNull PitchChromaticChord<? extends PitchChromaticSingle> c) {
 		Objects.requireNonNull(c);
 
 		List<DiatonicAlt> cc = new ArrayList<>();
-		for (Chromatic chromatic : c)
+		for (PitchChromaticSingle chromatic : c)
 			cc.add(DiatonicAlt.from(chromatic));
 		boolean hasNotes = has( cc );
 

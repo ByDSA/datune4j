@@ -3,10 +3,14 @@ package es.danisales.datune.musical;
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.IntervalDiatonic;
-import es.danisales.datune.musical.transformations.*;
+import es.danisales.datune.musical.transformations.ChromaticAdapter;
+import es.danisales.datune.musical.transformations.DistanceCalculator;
+import es.danisales.datune.musical.transformations.EnharmonicsCalculator;
+import es.danisales.datune.musical.transformations.Namer;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.tonality.ScaleDistance;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.utils.MathUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -85,9 +89,29 @@ public enum Chromatic implements PitchChromaticSingle {
 	public static @NonNull Chromatic from(@NonNull DiatonicAlt diatonicAlt) {
 		Objects.requireNonNull(diatonicAlt);
 		Chromatic ret = diatonicAltChromaticMap.get(diatonicAlt);
-		Objects.requireNonNull(ret); // todo: provisional
+		if (ret == null) {
+			Diatonic diatonicOriginal = diatonicAlt.getDiatonic();
+			int semitones = diatonicAlt.getSemitonesAdded();
+			Chromatic chromaticDiatonicOriginal = Chromatic.from(diatonicOriginal);
+			ret = chromaticDiatonicOriginal.addSemi(semitones);
+		}
 
 		return ret;
+	}
+
+	@SuppressWarnings("DuplicatedCode")
+	public static @NonNull Chromatic from(Diatonic diatonic) {
+		switch (diatonic) {
+			case C: return C;
+			case D: return D;
+			case E: return E;
+			case F: return F;
+			case G: return G;
+			case A: return A;
+			case B: return B;
+		}
+
+		throw new RuntimeException("Impossible");
 	}
 
 	public static Chromatic from(PitchChromaticSingle t) {
@@ -100,7 +124,7 @@ public enum Chromatic implements PitchChromaticSingle {
 	}
 
 	public Chromatic addSemi(int n) {
-		int index = (ordinal() + n) % NUMBER;
+		int index = delimit(ordinal() + n);
 		return values()[index];
 	}
 
@@ -117,11 +141,7 @@ public enum Chromatic implements PitchChromaticSingle {
 	}
 
 	private static int delimit(int n) {
-		n = n % NUMBER;
-		while(n < 0)
-			n += NUMBER;
-
-		return n;
+		return MathUtils.rotativeTrim(n,  NUMBER);
 	}
 
 	public static @NonNull Chromatic from(int intVal) {

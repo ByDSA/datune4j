@@ -2,6 +2,7 @@ package es.danisales.datune.tonality;
 
 import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
+import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -17,15 +18,15 @@ public class TonalityClass {
         this.innerTonality = innerTonality;
     }
 
-    public static List<TonalityEnum> getFromChord(PitchChromaticChord c) {
+    public static List<TonalityEnum> getFromChord(ChromaticChord c) {
         return getFromChord( false, c );
     }
 
-    public static List<TonalityEnum> getFromChordOutScale(PitchChromaticChord c) {
+    public static List<TonalityEnum> getFromChordOutScale(ChromaticChord c) {
         return getFromChord(true, c);
     }
 
-    private static List<TonalityEnum> getFromChord(boolean outScale, PitchChromaticChord c) {
+    private static List<TonalityEnum> getFromChord(boolean outScale, ChromaticChord c) {
         List<TonalityEnum> out = new ArrayList<>();
         for ( TonalityEnum t : TonalityEnum.values() ) {
             if ( t.has( outScale, c ) )

@@ -4,9 +4,16 @@ import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.ChromaticChordEnum;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
-class GetDiatonicFunctionMajor {
-	public static ChromaticChord get(TonalityEnum tonalityEnum, DiatonicFunction diatonicFunction) {
+import java.util.Objects;
+
+class TonalityGetDiatonicFunctionMajor {
+	public static @Nullable ChromaticChord get(@NonNull TonalityEnum tonalityEnum, @NonNull DiatonicFunction diatonicFunction) {
+		Objects.requireNonNull(tonalityEnum);
+		Objects.requireNonNull(diatonicFunction);
+
 		switch(tonalityEnum) {
 			case C: switch(diatonicFunction) {
 				case I: return ChromaticChordEnum.C;

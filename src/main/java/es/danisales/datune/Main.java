@@ -690,7 +690,7 @@ public class Main {
 			JPanel selectorPanel = new JPanel();
 
 			JComboBox<Tonality> combo = new JComboBox();
-			for ( Tonality t : Tonality.ALL )
+			for ( Tonality t : Tonality.all() )
 				combo.addItem( t );
 
 			combo.addActionListener( new ActionListener() {
