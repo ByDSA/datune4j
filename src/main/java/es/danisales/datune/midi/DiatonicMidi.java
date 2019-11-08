@@ -77,7 +77,7 @@ public class DiatonicMidi implements PitchSingleMidi, PitchChromaticSingle, Pitc
 	public DiatonicMidi clone() {
 		return builder()
 				.diatonicDegree(degree)
-				.tonality( Tonality.of( tonality ) )
+				.tonality( Tonality.from( tonality ) )
 				.octave(octave)
 				.length(length)
 				.velocity(velocity)

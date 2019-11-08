@@ -10,9 +10,7 @@ import es.danisales.datune.tonality.*;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -345,7 +343,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
             IntervalChromatic ic = tonality.getInterval( d, IntervalDiatonic.FIFTH );
 
             if ( !ic.equals( IntervalChromatic.PERFECT_FIFTH ) ) {
-                tonality = Tonality.of( tonality.getNote( d ), Scale.MAJOR );
+                tonality = Tonality.from( tonality.getNote( d ), Scale.MAJOR );
                 d = DiatonicDegree.I;
             }
 

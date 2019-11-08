@@ -171,4 +171,31 @@ class DiatonicAltAdapter {
         int semis = chromaticDiatonic.distSemitonesTo(chromaticDiatonic);
         return DiatonicAlt.from(diatonic, semis);
     }
+
+
+    static @NonNull DiatonicAlt from(@NonNull PitchChromaticSingle pitchChromaticSingle) {
+        if (pitchChromaticSingle instanceof Chromatic)
+            switch ((Chromatic)pitchChromaticSingle) {
+                case C: return DiatonicAlt.C;
+                case CC: return DiatonicAlt.CC;
+                case D: return DiatonicAlt.D;
+                case DD: return DiatonicAlt.DD;
+                case E: return DiatonicAlt.E;
+                case F: return DiatonicAlt.F;
+                case FF: return DiatonicAlt.FF;
+                case G: return DiatonicAlt.G;
+                case GG: return DiatonicAlt.GG;
+                case A: return DiatonicAlt.A;
+                case AA: return DiatonicAlt.AA;
+                case B: return DiatonicAlt.B;
+            }
+        else if (pitchChromaticSingle instanceof ChromaticMidi) {
+            ChromaticMidi chromaticMidi = (ChromaticMidi)pitchChromaticSingle;
+            Chromatic chromatic = Chromatic.from(chromaticMidi);
+            return from(chromatic);
+        }
+
+        throw new RuntimeException("Impossible");
+    }
+
 }

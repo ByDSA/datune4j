@@ -2,7 +2,6 @@ package es.danisales.datune.eventsequences;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.midi.DiatonicMidi;
-import es.danisales.datune.midi.Durable;
 import es.danisales.datune.midi.Events.Event;
 import es.danisales.datune.midi.Settings.DefaultValues;
 import es.danisales.datune.tonality.Tonality;
@@ -113,7 +112,7 @@ public class MelodyDiatonic extends Melody {
 
 	@Override
 	public MelodyDiatonic clone() {
-		MelodyDiatonic md = new MelodyDiatonic(octave, Tonality.of( tonality ));
+		MelodyDiatonic md = new MelodyDiatonic(octave, Tonality.from( tonality ));
 		
 		int d = 0;
 		for (DiatonicMidi nd : notesDiatonic) {

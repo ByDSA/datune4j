@@ -256,7 +256,7 @@ public enum ChromaticFunction implements HarmonicFunction {
 	public static HarmonicFunction from(DiatonicChordMidi diatonicChordMidi) {
 		ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.from(diatonicChordMidi);
 		return ChromaticFunction
-				.from( chromaticChordMidi, Tonality.of(diatonicChordMidi.metaTonality.getRoot(), diatonicChordMidi.metaTonality.getScale()) );
+				.from( chromaticChordMidi, Tonality.from(diatonicChordMidi.metaTonality.getRoot(), diatonicChordMidi.metaTonality.getScale()) );
 	}
 
 	/* (non-Javadoc)

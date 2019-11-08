@@ -2,10 +2,9 @@ package es.danisales.datune.tonality;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.midi.DiatonicChordMidi;
-import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.Diatonic;
 import es.danisales.datune.musical.DiatonicAlt;
+import es.danisales.datune.musical.DiatonicAltRetrieval;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -49,10 +48,10 @@ public class TonalityRetrieval {
 
     static @NonNull List<Tonality> all() {
         List<Tonality> ret = new ArrayList<>();
-        List<DiatonicAlt> diatonicAltList = DiatonicAlt.listFromAlterations(1);
+        List<DiatonicAlt> diatonicAltList = DiatonicAltRetrieval.listFromAlterations(1);
         for ( Scale mode : Scale.ALL )
             for ( DiatonicAlt diatonicAlt : diatonicAltList ) {
-                Tonality tonality = Tonality.of( diatonicAlt, mode );
+                Tonality tonality = Tonality.from( diatonicAlt, mode );
                 ret.add(tonality);
             }
 
@@ -61,7 +60,7 @@ public class TonalityRetrieval {
 
     public static @NonNull List<Tonality> listFromChord(@NonNull PitchChromaticChord<? extends PitchChromaticSingle> c) {
         List<Tonality> out = new ArrayList<>();
-        for ( CustomTonality t : CustomTonality.all() ) {
+        for ( Tonality t : Tonality.all() ) {
             if ( t.has( false, c ) )
                 out.add( t );
         }
@@ -71,7 +70,7 @@ public class TonalityRetrieval {
 
     public static @NonNull List<Tonality> listFromChordOutScale(@NonNull PitchChromaticChord<? extends PitchChromaticSingle> c) {
         List<Tonality> out = new ArrayList<>();
-        for ( CustomTonality t : CustomTonality.all() ) {
+        for ( Tonality t : Tonality.all() ) {
             if ( t.has( true, c ) )
                 out.add( t );
         }
@@ -116,6 +115,39 @@ public class TonalityRetrieval {
                 tonalityNotes[i] = base.getNote( diatonicDegree );
         }
 
-        return Tonality.of( notesChord[0], Scale.fromDiatonicAltList( Arrays.asList(tonalityNotes) ) );
+        return Tonality.from( notesChord[0], Scale.fromDiatonicAltList( Arrays.asList(tonalityNotes) ) );
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public static @NonNull Set<Tonality> getEnharmonicFrom(@NonNull Tonality tonality, int maxAlterations) {
+        Set<Tonality> ret = new HashSet<>();
+        Set<DiatonicAlt> possibleRootList = DiatonicAltRetrieval.getEnharmonicsFrom(tonality.getRoot(), maxAlterations);
+
+        for (DiatonicAlt diatonicAlt : possibleRootList) {
+            Tonality currentTonality = Tonality.from(diatonicAlt, tonality.getScale());
+            ret.add(currentTonality);
+        }
+
+        return Collections.unmodifiableSet(ret);
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public static @NonNull Set<Tonality> getEnharmonicMinimalAltsFrom(@NonNull Tonality tonalityBase) {
+        Set<Tonality> ret = new HashSet<>();
+
+        Set<Tonality> enharmonicTonalities = getEnharmonicFrom(tonalityBase, 3);
+
+        int minAlts = Integer.MAX_VALUE;
+        for (Tonality currentTonality : enharmonicTonalities) {
+            int currentAlts = currentTonality.getAlterations();
+            if (currentAlts < minAlts) {
+                ret.clear();
+                minAlts = currentAlts;
+                ret.add(currentTonality);
+            } else if (currentAlts == minAlts)
+                ret.add(currentTonality);
+        }
+
+        return Collections.unmodifiableSet(ret);
     }
 }

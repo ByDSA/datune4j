@@ -15,9 +15,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.*;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
-class CustomTonality implements Tonality {
+class TonalityCustom implements Tonality {
 	private DiatonicAlt				root;
 	private Scale					scale;
 
@@ -28,10 +26,10 @@ class CustomTonality implements Tonality {
 	// TODO: no usado
 	class ChromaticChordSet {
 		public CustomChromaticChord	chord;
-		public CustomTonality			tonality;
+		public TonalityCustom tonality;
 		public HarmonicFunction	function;
 
-		public ChromaticChordSet(CustomChromaticChord c, CustomTonality t, HarmonicFunction f) {
+		public ChromaticChordSet(CustomChromaticChord c, TonalityCustom t, HarmonicFunction f) {
 			chord = c;
 			tonality = t;
 			function = f;
@@ -63,7 +61,7 @@ class CustomTonality implements Tonality {
 		useCache = true;
 	}
 
-	public CustomTonality(DiatonicAlt noteBase, Scale scale) {
+	public TonalityCustom(DiatonicAlt noteBase, Scale scale) {
 		useCache = false;
 		this.root = noteBase;
 		this.scale = scale;
@@ -83,8 +81,8 @@ class CustomTonality implements Tonality {
 	}
 
 	@Override
-	public CustomTonality clone() {
-		return new CustomTonality( root, scale );
+	public TonalityCustom clone() {
+		return new TonalityCustom( root, scale );
 	}
 
 	// todo: private
@@ -208,19 +206,8 @@ class CustomTonality implements Tonality {
 		return ret;
 	}
 	 */
-	public static ArrayList<CustomTonality> all() {
-		ArrayList<CustomTonality> ret = new ArrayList<>();
-		for ( Scale mode : Scale.ALL )
-			for ( int i = 0; i < Chromatic.NUMBER; i++ ) {
-				Chromatic chromatic = Chromatic.from(i);
-				DiatonicAlt diatonicAlt = DiatonicAlt.from(chromatic);
-				ret.add(new CustomTonality(diatonicAlt, mode));
-			}
 
-		return ret;
-	}
-
-	public static CustomTonality createFromChord(DiatonicChordMidi c, CustomTonality base) throws TonalityException {
+	public static TonalityCustom createFromChord(DiatonicChordMidi c, TonalityCustom base) throws TonalityException {
 		assert base != null;
 		if ( base.size() != 7 )
 			throw new RuntimeException( "No tiene 7 notas la escala" );
@@ -258,7 +245,7 @@ class CustomTonality implements Tonality {
 				tonalityNotes.add( base.getNote( diatonicDegree ) );
 		}
 
-		return new CustomTonality( notesChord[0], Scale.fromDiatonicAltList( tonalityNotes ) );
+		return new TonalityCustom( notesChord[0], Scale.fromDiatonicAltList( tonalityNotes ) );
 	}
 
 	public DiatonicDegree getDegreeFrom(PitchChromaticSingle note) {
@@ -285,6 +272,21 @@ class CustomTonality implements Tonality {
 	 * return null; }
 	 */
 
+	@Override
+	public boolean equals(Object o) {
+		if ( !(o instanceof Tonality) )
+			return false;
+
+		Tonality tonality = (Tonality)o;
+
+		return getNotes().equals( tonality.getNotes() );
+	}
+
+	@Override
+	public int hashCode() {
+		return notes.hashCode();
+	}
+
 	public boolean has(DiatonicAlt note) {
 		return getDegreeFrom( note ) != null;
 	}
@@ -298,11 +300,11 @@ class CustomTonality implements Tonality {
 	 * return true; }
 	 */
 
-	public CustomTonality getRelativeScaleChromatic(int semitonesAdded) {
+	public TonalityCustom getRelativeScaleChromatic(int semitonesAdded) {
 		ScaleDistance distanceScale = ScaleDistance.from(semitonesAdded);
 		int semitones = distanceScale.getSemitones();
 		DiatonicAlt shiftedRoot = root.addSemi( semitones );
-		return new CustomTonality( shiftedRoot, getScale() );
+		return new TonalityCustom( shiftedRoot, getScale() );
 	}
 
 	@Override

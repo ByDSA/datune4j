@@ -80,8 +80,6 @@ enum TonalityEnum implements Tonality {
 	/** Temp */
 	private final List<DiatonicAlt>	notes;
 
-	//private final BiMap<HarmonicFunction, ChromaticChord> functionChordMap;
-
 	static @Nullable Tonality of(@NonNull DiatonicAlt diatonicAlt, @NonNull Scale scale) {
 		Objects.requireNonNull(diatonicAlt);
 		Objects.requireNonNull(scale);

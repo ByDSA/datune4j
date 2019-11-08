@@ -17,13 +17,13 @@ public class TonalityChordRetrieval {
         List<Tonality> ts;
         if ( tonality.getScale().isDiatonic() ) {
             ts = new ArrayList<>();
-            ts.add( new CustomTonality( tonality.getRoot(), Scale.MAJOR ) );
-            ts.add( new CustomTonality( tonality.getRoot(), Scale.MINOR ) );
-            ts.add( new CustomTonality( tonality.getRoot(), Scale.DORIAN ) );
-            ts.add( new CustomTonality( tonality.getRoot(), Scale.PHRYGIAN ) );
-            ts.add( new CustomTonality( tonality.getRoot(), Scale.LYDIAN ) );
-            ts.add( new CustomTonality( tonality.getRoot(), Scale.MIXOLYDIAN ) );
-            ts.add( new CustomTonality( tonality.getRoot(), Scale.LOCRIAN ) );
+            ts.add( new TonalityCustom( tonality.getRoot(), Scale.MAJOR ) );
+            ts.add( new TonalityCustom( tonality.getRoot(), Scale.MINOR ) );
+            ts.add( new TonalityCustom( tonality.getRoot(), Scale.DORIAN ) );
+            ts.add( new TonalityCustom( tonality.getRoot(), Scale.PHRYGIAN ) );
+            ts.add( new TonalityCustom( tonality.getRoot(), Scale.LYDIAN ) );
+            ts.add( new TonalityCustom( tonality.getRoot(), Scale.MIXOLYDIAN ) );
+            ts.add( new TonalityCustom( tonality.getRoot(), Scale.LOCRIAN ) );
         } else
             ts = tonality.getModesSameRoot();
 

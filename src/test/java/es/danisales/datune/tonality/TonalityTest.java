@@ -8,13 +8,112 @@ import es.danisales.datune.musical.*;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
 public class TonalityTest {
+    @Test
+    public void getRoot1() {
+        assertEquals( DiatonicAlt.C, Tonality.C.getRoot() );
+    }
+
+    @Test
+    public void getRoot2() {
+        assertEquals( DiatonicAlt.Bb, Tonality.Bb.getRoot() );
+    }
+
+    @Test
+    public void getRoot3() {
+        assertEquals( DiatonicAlt.Bb, Tonality.Bbm.getRoot() );
+    }
+
+    @Test
+    public void getScale1() {
+        assertEquals( Scale.MAJOR, Tonality.C.getScale() );
+    }
+
+    @Test
+    public void getScale2() {
+        assertEquals( Scale.MAJOR, Tonality.Bb.getScale() );
+    }
+
+    @Test
+    public void getScale3() {
+        assertEquals( Scale.MINOR, Tonality.Bbm.getScale() );
+    }
+
+    @Test
+    public void getNotes1() {
+        List<DiatonicAlt> notes = Arrays.asList(
+                DiatonicAlt.C,
+                DiatonicAlt.D,
+                DiatonicAlt.E,
+                DiatonicAlt.F,
+                DiatonicAlt.G,
+                DiatonicAlt.A,
+                DiatonicAlt.B
+        );
+        assertEquals(notes, Tonality.C.getNotes() );
+    }
+
+    @Test
+    public void getNotes2() {
+        List<DiatonicAlt> notes = Arrays.asList(
+                DiatonicAlt.A,
+                DiatonicAlt.B,
+                DiatonicAlt.C,
+                DiatonicAlt.D,
+                DiatonicAlt.E,
+                DiatonicAlt.F,
+                DiatonicAlt.G
+        );
+        assertEquals(notes, Tonality.Am.getNotes() );
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void tryToEditNotes() {
+        Tonality.C.getNotes().set(0, DiatonicAlt.CC);
+    }
+
+    @Test
+    public void equals1() {
+        Tonality tonality = Tonality.from(DiatonicAlt.C, Scale.MAJOR);
+        assertEquals( Tonality.C, tonality );
+    }
+
+    @Test
+    public void equals2() {
+        Tonality tonality = Tonality.from(DiatonicAlt.Bb, Scale.MAJOR);
+        assertNotEquals( Tonality.C, tonality );
+    }
+
+    @Test
+    public void equals3() {
+        Tonality tonality1 = Tonality.from(DiatonicAlt.GG, Scale.DORIAN);
+        Tonality tonality2 = Tonality.from(DiatonicAlt.Ab, Scale.DORIAN);
+        assertNotEquals( tonality1, tonality2 );
+    }
+
+    @Test
+    public void hashCode1() {
+        Tonality tonality = Tonality.from(DiatonicAlt.C, Scale.MAJOR);
+        assertEquals( Tonality.C.hashCode(), tonality.hashCode() );
+    }
+
+    @Test
+    public void hashCode2() {
+        Tonality tonality = Tonality.from(DiatonicAlt.Bb, Scale.MAJOR);
+        assertNotEquals( Tonality.C.hashCode(), tonality.hashCode() );
+    }
+
+    @Test
+    public void hashCode3() {
+        Tonality tonality1 = Tonality.from(DiatonicAlt.GG, Scale.DORIAN);
+        Tonality tonality2 = Tonality.from(DiatonicAlt.Ab, Scale.DORIAN);
+        assertNotEquals( tonality1.hashCode(), tonality2.hashCode() );
+    }
+
     @Test
     public void allSize() {
         List<Tonality> tonalities = Tonality.all();
@@ -41,6 +140,16 @@ public class TonalityTest {
     @Test
     public void allContains3() {
         allContains(TonalityEnum.Ab);
+    }
+
+    @Test
+    public void allContains4() {
+        allContains(Tonality.from(DiatonicAlt.Ab, Scale.DORIAN));
+    }
+
+    @Test
+    public void allContains5() {
+        allContains(Tonality.from(DiatonicAlt.GG, Scale.DORIAN));
     }
 
     @Test
@@ -87,7 +196,7 @@ public class TonalityTest {
     @Test
     public void ofTonalityEquals() {
         for (Tonality t : Tonality.all()) {
-            Tonality tonality2 = Tonality.of(t);
+            Tonality tonality2 = Tonality.from(t);
             assertEquals(t, tonality2);
         }
     }
@@ -98,37 +207,62 @@ public class TonalityTest {
     }
     @Test
     public void enharmonicNotEquals2() {
-        Tonality tonality = Tonality.of(DiatonicAlt.BB, Scale.MAJOR);
+        Tonality tonality = Tonality.from(DiatonicAlt.BB, Scale.MAJOR);
         assertNotEquals(Tonality.C, tonality);
     }
 
     @Test
     public void minimizeAlterationsBB() {
-        Tonality tonality = Tonality.of(DiatonicAlt.BB, Scale.MAJOR);
-        Tonality minimizedTonality = Tonality.minAltsFrom(tonality).get(0);
+        Tonality tonality = Tonality.from(DiatonicAlt.BB, Scale.MAJOR);
+        Tonality minimizedTonality = TonalityRetrieval.getEnharmonicMinimalAltsFrom(tonality).iterator().next();
 
         assertEquals(Tonality.C, minimizedTonality);
     }
 
     @Test
     public void minimizeAlterationsSize1() {
-        Tonality tonality = Tonality.of(DiatonicAlt.BB, Scale.MAJOR);
-        List<Tonality> minimizedTonalityList = Tonality.minAltsFrom(tonality);
+        Tonality tonality = Tonality.from(DiatonicAlt.BB, Scale.MAJOR);
+        Set<Tonality> minimizedTonalityList = TonalityRetrieval.getEnharmonicMinimalAltsFrom(tonality);
 
         assertEquals(1, minimizedTonalityList.size());
     }
 
     @Test
     public void minimizeAlterationsSizeNot1() {
-        int max = Integer.MIN_VALUE;
-        for (Tonality tonality : TonalityRetrieval.all()) {
-            List<Tonality> minimizedTonalityList = Tonality.minAltsFrom(tonality);
-            max = Math.max(max, minimizedTonalityList.size());
-            if (max == minimizedTonalityList.size())
-                System.out.println();
-        }
+        Set<Tonality> tonalityList = TonalityRetrieval.getEnharmonicMinimalAltsFrom(Tonality.Gb);
 
-        assertTrue(max > 1);
+        assertEquals(2, tonalityList.size());
+    }
+
+    @Test
+    public void hashCodeTest() {
+        Tonality tonality1 = Tonality.from(DiatonicAlt.GG, Scale.DORIAN);
+        Tonality tonality1b = Tonality.from(DiatonicAlt.GG, Scale.DORIAN);
+
+        assertEquals(tonality1.hashCode(), tonality1b.hashCode());
+    }
+
+    @Test
+    public void minimizeAlterationsBidirectional1() {
+        Set<Tonality> minTonalityListGG = TonalityRetrieval.getEnharmonicMinimalAltsFrom(Tonality.from(DiatonicAlt.GG, Scale.MAJOR));
+        Set<Tonality> minTonalityListFb = TonalityRetrieval.getEnharmonicMinimalAltsFrom(Tonality.from(DiatonicAlt.Ab, Scale.MAJOR));
+
+        assertEquals(minTonalityListFb.hashCode(), minTonalityListGG.hashCode());
+        assertEquals(minTonalityListFb, minTonalityListGG);
+    }
+
+    @Test
+    public void minimizeAlterationsBidirectionalAll() {
+        for (Tonality tonality : Tonality.all()) {
+            Set<Tonality> minTonalityListReference = TonalityRetrieval.getEnharmonicMinimalAltsFrom(tonality);
+
+            if (minTonalityListReference.size() > 1)
+                for (Tonality minTonality : minTonalityListReference) {
+                    Set<Tonality> minTonalityListParticular = TonalityRetrieval.getEnharmonicMinimalAltsFrom(minTonality);
+
+                    assertEquals(minTonalityListReference, minTonalityListParticular);
+                }
+        }
     }
 
     @Test

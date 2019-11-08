@@ -81,9 +81,11 @@ public class ScaleTest {
     public void integersChromatic() {
         Scale scale = Scale.fromIntegers( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 );
         assertEquals(Scale.CHROMATIC, scale);
+        assertEquals(Scale.CHROMATIC.hashCode(), scale.hashCode());
         assertEquals(12, scale.getCode().size());
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Test
     public void scaleEnumReusable1() {
         ScaleEnum scaleEnum = ScaleEnum.of(Arrays.asList(
@@ -98,6 +100,7 @@ public class ScaleTest {
 
         assertSame(ScaleEnum.MAJOR, scaleEnum);
         assertNotSame(ScaleEnum.IONIAN, scaleEnum);
+        assertEquals(ScaleEnum.MAJOR.hashCode(), scaleEnum.hashCode());
     }
 
     @Test
@@ -131,6 +134,7 @@ public class ScaleTest {
         ) );
 
         assertEquals(Scale.MAJOR, scale);
+        assertEquals(Scale.MAJOR.hashCode(), scale.hashCode());
     }
 
     @Test
@@ -146,6 +150,7 @@ public class ScaleTest {
         ) );
 
         assertEquals(Scale.MINOR, scale);
+        assertEquals(Scale.MINOR.hashCode(), scale.hashCode());
     }
 
     @Test
@@ -161,6 +166,7 @@ public class ScaleTest {
         ) ); // Fa Major
 
         assertEquals(Scale.MAJOR, scale);
+        assertEquals(Scale.MAJOR.hashCode(), scale.hashCode());
     }
 
     @Test
@@ -177,6 +183,14 @@ public class ScaleTest {
         assertEquals(Scale.MIXOLYDIAN, scaleModes.get(4));
         assertEquals(Scale.AEOLIAN, scaleModes.get(5));
         assertEquals(Scale.LOCRIAN, scaleModes.get(6));
+
+        assertEquals(Scale.MAJOR.hashCode(), scaleModes.get(0).hashCode());
+        assertEquals(Scale.DORIAN.hashCode(), scaleModes.get(1).hashCode());
+        assertEquals(Scale.PHRYGIAN.hashCode(), scaleModes.get(2).hashCode());
+        assertEquals(Scale.LYDIAN.hashCode(), scaleModes.get(3).hashCode());
+        assertEquals(Scale.MIXOLYDIAN.hashCode(), scaleModes.get(4).hashCode());
+        assertEquals(Scale.AEOLIAN.hashCode(), scaleModes.get(5).hashCode());
+        assertEquals(Scale.LOCRIAN.hashCode(), scaleModes.get(6).hashCode());
     }
 
     @Test
@@ -211,6 +225,7 @@ public class ScaleTest {
         Scale scale2 = Scale.of(listAdded);
 
         assertEquals(scale1, scale2);
+        assertEquals(scale1.hashCode(), scale2.hashCode());
     }
 
     @Test
@@ -228,11 +243,13 @@ public class ScaleTest {
         Scale scale = Scale.of(listAdded);
 
         assertEquals(Scale.MAJOR, scale);
+        assertEquals(Scale.MAJOR.hashCode(), scale.hashCode());
     }
 
     @Test
     public void equalsDifferentName() {
         assertEquals(Scale.MAJOR, Scale.IONIAN);
+        assertEquals(Scale.MAJOR.hashCode(), Scale.IONIAN.hashCode());
     }
 
 
@@ -244,6 +261,7 @@ public class ScaleTest {
             notes.add(s.getNote(diatonicDegree));
 
         assertEquals(s.getScale(), Scale.fromDiatonicAltList(notes));
+        assertEquals(s.getScale().hashCode(), Scale.fromDiatonicAltList(notes).hashCode());
     }
 
     @Test
@@ -267,6 +285,7 @@ public class ScaleTest {
         Scale b = Scale.fromIntegers( 2, 2, 1, 2, 2, 2, 1 );
         assertNotSame(a, b);
         assertEquals(a, b);
+        assertEquals(a.hashCode(), b.hashCode());
     }
 
     @Test
@@ -283,6 +302,7 @@ public class ScaleTest {
         ) );
         assertNotSame(a, b);
         assertEquals(a, b);
+        assertEquals(a.hashCode(), b.hashCode());
     }
 
     @Test

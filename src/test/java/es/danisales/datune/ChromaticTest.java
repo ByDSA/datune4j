@@ -5,6 +5,7 @@ import es.danisales.datune.musical.DiatonicAlt;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -56,7 +57,7 @@ public class ChromaticTest {
 	
 	@Test
 	public void getEnharmonics() {
-		List<DiatonicAlt> cs = Chromatic.C.getEnharmonics(3);
+		Set<DiatonicAlt> cs = Chromatic.C.getEnharmonics(3);
 		assertEquals(4, cs.size());
 	}
 	

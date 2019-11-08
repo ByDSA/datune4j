@@ -14,10 +14,7 @@ import es.danisales.utils.MathUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public enum Chromatic implements PitchChromaticSingle {
 	C, CC, D, DD, E, F, FF, G, GG, A, AA, B;
@@ -136,7 +133,7 @@ public enum Chromatic implements PitchChromaticSingle {
 		return addSemi(1);
 	}
 
-	public List<DiatonicAlt> getEnharmonics(int maxAlts) {
+	public Set<DiatonicAlt> getEnharmonics(int maxAlts) {
 		return EnharmonicsCalculator.calculateFrom(this, maxAlts);
 	}
 

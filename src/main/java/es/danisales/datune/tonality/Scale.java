@@ -217,6 +217,11 @@ public class Scale implements Iterable<ScaleDistance> {
 	}
 
 	@Override
+	public int hashCode() {
+		return getCode().hashCode();
+	}
+
+	@Override
 	public @NonNull Iterator<ScaleDistance> iterator() {
 		return innerScale.getCode().iterator();
 	}

@@ -231,7 +231,7 @@ public class Progression<This extends Progression> implements EventComplex {
 			p.nodes.add((DiatonicChordMidi)n.clone());
 		}
 
-		p.tonality = Tonality.of(tonality.getRoot(),tonality.getScale());
+		p.tonality = Tonality.from(tonality.getRoot(),tonality.getScale());
 
 		return (This)p;
 	}
