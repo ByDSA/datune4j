@@ -15,32 +15,32 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 public interface Tonality {
     Tonality C = TonalityEnum.C;
+    Tonality Db = TonalityEnum.Db;
     Tonality D = TonalityEnum.D;
+    Tonality Eb = TonalityEnum.Eb;
     Tonality E = TonalityEnum.E;
     Tonality F = TonalityEnum.F;
-    Tonality G = TonalityEnum.G;
-    Tonality A = TonalityEnum.A;
-    Tonality B = TonalityEnum.B;
-    Tonality Db = TonalityEnum.Db;
-    Tonality Eb = TonalityEnum.Eb;
     Tonality FF = TonalityEnum.FF;
     Tonality Gb = TonalityEnum.Gb;
+    Tonality G = TonalityEnum.G;
     Tonality Ab = TonalityEnum.Ab;
+    Tonality A = TonalityEnum.A;
     Tonality Bb = TonalityEnum.Bb;
+    Tonality B = TonalityEnum.B;
 
     Tonality Cm = TonalityEnum.Cm;
-    Tonality Dm = TonalityEnum.Dm;
-    Tonality Em = TonalityEnum.Em;
-    Tonality Fm = TonalityEnum.Fm;
-    Tonality Gm = TonalityEnum.Gm;
-    Tonality Am = TonalityEnum.Am;
-    Tonality Bm = TonalityEnum.Bm;
     Tonality CCm = TonalityEnum.CCm;
+    Tonality Dm = TonalityEnum.Dm;
     Tonality DDm = TonalityEnum.DDm;
     Tonality Ebm = TonalityEnum.Ebm;
+    Tonality Em = TonalityEnum.Em;
+    Tonality Fm = TonalityEnum.Fm;
     Tonality FFm = TonalityEnum.FFm;
+    Tonality Gm = TonalityEnum.Gm;
     Tonality GGm = TonalityEnum.GGm;
+    Tonality Am = TonalityEnum.Am;
     Tonality Bbm = TonalityEnum.Bbm;
+    Tonality Bm = TonalityEnum.Bm;
 
     static @NonNull List<Tonality> all() {
         return TonalityRetrieval.all();
@@ -142,7 +142,15 @@ public interface Tonality {
     }
 
     default boolean isMajorOrMinor() {
-        return ( getScale().equals( Scale.MAJOR ) || getScale().equals( Scale.MINOR ) );
+        return isMajor() || isMinor();
+    }
+
+    default boolean isMajor() {
+        return getScale().equals( Scale.MAJOR );
+    }
+
+    default boolean isMinor() {
+        return getScale().equals( Scale.MINOR );
     }
 
     default int size() {

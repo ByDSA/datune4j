@@ -31,11 +31,43 @@ public class TonalityRetrievalTest {
     }
 
     @Test
+    public void majorSize() {
+        Set<Tonality> tonalityList = TonalityRetrieval.mainMajor();
+
+        assertEquals(13, tonalityList.size());
+    }
+
+    @Test
+    public void minorSize() {
+        Set<Tonality> tonalityList = TonalityRetrieval.mainMinor();
+        for (Tonality tonality : tonalityList)
+            System.out.println(tonality.getNotes());
+
+        assertEquals(13, tonalityList.size());
+    }
+
+    @Test
     public void majorMinorAreMajorOrMinor() {
         Set<Tonality> tonalityList = TonalityRetrieval.majorMinor();
 
         for (Tonality tonality : tonalityList)
             assertTrue( tonality.isMajorOrMinor() );
+    }
+
+    @Test
+    public void isMajor() {
+        Set<Tonality> tonalityList = TonalityRetrieval.mainMajor();
+
+        for (Tonality tonality : tonalityList)
+            assertTrue( tonality.isMajor() );
+    }
+
+    @Test
+    public void isMinor() {
+        Set<Tonality> tonalityList = TonalityRetrieval.mainMinor();
+
+        for (Tonality tonality : tonalityList)
+            assertTrue( tonality.isMinor() );
     }
 
     @Test

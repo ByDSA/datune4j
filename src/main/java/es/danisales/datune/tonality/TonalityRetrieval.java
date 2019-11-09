@@ -1,7 +1,9 @@
 package es.danisales.datune.tonality;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
+import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
+import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.Diatonic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.musical.DiatonicAltRetrieval;
@@ -10,40 +12,62 @@ import es.danisales.datune.pitch.PitchChromaticSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 public class TonalityRetrieval {
     private TonalityRetrieval() {
     }
 
+    private static final Set<Tonality> majorTonalities = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+            Tonality.C,
+            Tonality.Db,
+            Tonality.D,
+            Tonality.Eb,
+            Tonality.E,
+            Tonality.F,
+            Tonality.FF,
+            Tonality.Gb,
+            Tonality.G,
+            Tonality.Ab,
+            Tonality.A,
+            Tonality.Bb,
+            Tonality.B
+    )));
+
+    private static final Set<Tonality> minorTonalities = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+            Tonality.Cm,
+            Tonality.CCm,
+            Tonality.Dm,
+            Tonality.DDm,
+            Tonality.Ebm,
+            Tonality.Em,
+            Tonality.Fm,
+            Tonality.FFm,
+            Tonality.Gm,
+            Tonality.GGm,
+            Tonality.Am,
+            Tonality.Bbm,
+            Tonality.Bm
+    )));
+
+    private static final Set<Tonality> majorMinorTonalities = Collections.unmodifiableSet(
+            Stream.concat(majorTonalities.stream(), minorTonalities.stream())
+            .collect(Collectors.toSet())
+    );
+
+    public static @NonNull Set<Tonality> mainMajor() {
+        return majorTonalities;
+    }
+
+    public static @NonNull Set<Tonality> mainMinor() {
+        return minorTonalities;
+    }
+
     public static @NonNull Set<Tonality> majorMinor() {
-        return new HashSet<>( Arrays.asList(
-                Tonality.C,
-                Tonality.D,
-                Tonality.E,
-                Tonality.F,
-                Tonality.G,
-                Tonality.A,
-                Tonality.B,
-                Tonality.Cm,
-                Tonality.Dm,
-                Tonality.Em,
-                Tonality.Fm,
-                Tonality.Gm,
-                Tonality.Am,
-                Tonality.Bm,
-                Tonality.Db,
-                Tonality.Eb,
-                Tonality.FF,
-                Tonality.Gb,
-                Tonality.Ab,
-                Tonality.Bb,
-                Tonality.CCm,
-                Tonality.DDm,
-                Tonality.Ebm,
-                Tonality.FFm,
-                Tonality.GGm,
-                Tonality.Bbm
-        ) );
+        return majorMinorTonalities;
     }
 
     static @NonNull List<Tonality> all() {
@@ -89,12 +113,8 @@ public class TonalityRetrieval {
         int posChordCorrector = 7 - c.get( 0 ).getDegree().val();
 
         // Integer posBaseCorrector = base.getDegreeFrom(notesChord[0]);
-        Integer posBaseCorrector = ( Diatonic.from( notesChord[0] ).ordinal()
+        int posBaseCorrector = ( Diatonic.from( notesChord[0] ).ordinal()
                 - Diatonic.from( base.getRoot() ).ordinal() + 7 ) % 7;
-        if ( posBaseCorrector == null ) {
-            DiatonicAlt chromatic = c.get(0).getDiatonicAlt();
-            throw new TonalityException(chromatic, base);
-        }
 
         DiatonicAlt[] tonalityNotes = new DiatonicAlt[7];
         for ( int i = 0; i < 7; i++ ) {
@@ -131,7 +151,6 @@ public class TonalityRetrieval {
         return Collections.unmodifiableSet(ret);
     }
 
-    @SuppressWarnings("WeakerAccess")
     public static @NonNull Set<Tonality> getEnharmonicMinimalAltsFrom(@NonNull Tonality tonalityBase) {
         Set<Tonality> ret = new HashSet<>();
 
@@ -149,5 +168,66 @@ public class TonalityRetrieval {
         }
 
         return Collections.unmodifiableSet(ret);
+    }
+
+    public static List<Tonality> getFromChord(ChromaticChord c) {
+        return getFromChord( false, c );
+    }
+
+    public static List<Tonality> getFromChordOutScale(ChromaticChord c) {
+        return getFromChord(true, c);
+    }
+
+    public static List<Tonality> getFromChord(boolean outScale, ChromaticChord c) {
+        List<Tonality> out = new ArrayList<>();
+        for ( TonalityEnum t : TonalityEnum.values() ) {
+            if ( t.has( outScale, c ) )
+                out.add( t );
+        }
+
+        return out;
+    }
+
+    public static List<Tonality> getFromChords(boolean outScale, @NonNull List<ChromaticChordMidi> chords) {
+        checkArgument(chords.size() > 0);
+        List<Tonality> candidates = new ArrayList<>();
+
+        boolean first = true;
+        for ( ChromaticChordMidi chord : chords ) {
+            if ( chord.isEmpty() )
+                continue;
+            ChromaticChordMidi chordCopy = chord.clone();
+
+            List<Tonality> candidatesPrev = candidates;
+
+            do {
+                List<DiatonicChordMidi> possibleChords = chordCopy
+                        .toDiatonicChordMidi( outScale );
+                if ( first ) {
+                    for ( DiatonicChordMidi c : possibleChords ) {
+                        Tonality t = c.getTonality();
+                        if ( !candidates.contains( t ) )
+                            candidates.add( t );
+                    }
+                    first = false;
+                } else {
+                    candidates = new ArrayList<>();
+
+                    for ( DiatonicChordMidi c : possibleChords ) {
+                        for ( Tonality t : candidatesPrev )
+                            if ( ( c.metaTonality.equals( t )
+                                    || c.getTonality().isIntercambioModalOf( t ) )
+                                    && !candidates.contains( t ) )
+                                candidates.add( t );
+                    }
+                }
+
+                if ( candidates.isEmpty() ) {
+                    chordCopy = chordCopy.subList( 0, chordCopy.size() - 1 );
+                }
+            } while ( candidates.isEmpty() && !chordCopy.isEmpty() );
+        }
+
+        return candidates;
     }
 }

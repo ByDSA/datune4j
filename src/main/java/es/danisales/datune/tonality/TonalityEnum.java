@@ -44,40 +44,8 @@ enum TonalityEnum implements Tonality {
 	GGm( DiatonicAlt.GG, Scale.MINOR ),
 	Bbm( DiatonicAlt.Bb, Scale.MINOR );
 
-	public static final TonalityEnum[]	MAJOR_TONALITIES	= new TonalityEnum[] {
-			C,
-			Db,
-			D,
-			Eb,
-			E,
-			F,
-			FF,
-			G,
-			Ab,
-			A,
-			Bb,
-			B
-	};
-
-	public static final TonalityEnum[]	MINOR_TONALITIES	= new TonalityEnum[] {
-			Cm,
-			CCm,
-			Dm,
-			DDm,
-			Em,
-			Fm,
-			FFm,
-			Gm,
-			GGm,
-			Am,
-			Bbm,
-			Bm
-	};
-
 	private final DiatonicAlt root;
 	private final Scale	scale;
-
-	/** Temp */
 	private final List<DiatonicAlt>	notes;
 
 	static @Nullable Tonality of(@NonNull DiatonicAlt diatonicAlt, @NonNull Scale scale) {
