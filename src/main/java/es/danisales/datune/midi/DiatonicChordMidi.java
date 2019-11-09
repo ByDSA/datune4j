@@ -1029,7 +1029,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
         return setTonality( tonality.getMajor() );
     }
 
-    public boolean add(DiatonicMidi n) throws AddedException {
+    public boolean add(@NonNull DiatonicMidi n) throws AddedException {
         boolean r = super.add( n );
 
         setArpegioIfNull();

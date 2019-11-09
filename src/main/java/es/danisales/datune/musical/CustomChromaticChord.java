@@ -20,7 +20,7 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 			//m.updated = true;
 			for ( int i = 0; i < c.size(); i++ ) {
 				CustomChromaticChord c2 = new CustomChromaticChord();
-				c2.add( c );
+				c2.addAll( c );
 				if ( i > 0 )
 					c2.inv( i );
 				List<Integer> array = c2.toIntegerChromatics();
@@ -50,7 +50,7 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 
 	public CustomChromaticChord clone(boolean b) {
 		CustomChromaticChord ca = new CustomChromaticChord();
-		ca.add( this );
+		ca.addAll( this );
 		ca.assignMeta( this );
 		return ca;
 	}
@@ -93,7 +93,7 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 
 		this.assignMeta( foundChord );
 
-		assert meta.str != null : foundChord.notesToString();
+		assert meta.str != null : ChordNamer.from(foundChord);
 
 		meta.updated = true;
 
@@ -129,7 +129,7 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 			return ChordNotation.EMPTY_CHORD;
 
 		if (true)
-			return notesToString();
+			return ChordNamer.from(this);
 		updateWhatIsItIfNeeded();
 
 		//assert meta.str != null : "meta.str es null: " + notesToString();
@@ -234,7 +234,7 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 		return this;
 	}
 
-	public CustomChromaticChord over(Chromatic c) throws ImpossibleChord {
+	public @NonNull CustomChromaticChord getOver(@NonNull Chromatic c) throws ImpossibleChord {
 		CustomChromaticChord dup = clone();
 		for(int i = 0; i < size(); i++) {
 			if ( get(0) == c )
@@ -256,23 +256,6 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 		public ImpossibleChord() {
 			super("Acorde imposible");
 		}
-	}
-	public String javaNotes() {
-		StringBuilder sb = new StringBuilder();
-		if (this instanceof CustomChromaticChord)
-			sb.append( "new ChromaticChord(" );
-		boolean first = true;
-		for ( Chromatic n : this ) {
-			if ( first ) {
-				first = false;
-			} else
-				sb.append( ", " );
-			if (this instanceof CustomChromaticChord)
-				sb.append( "Chromatic." + n );
-		}
-		sb.append( " );" );
-
-		return sb.toString();
 	}
 
 	@Override

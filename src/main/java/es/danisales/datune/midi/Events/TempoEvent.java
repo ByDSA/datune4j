@@ -1,9 +1,12 @@
 package es.danisales.datune.midi.Events;
 
 import es.danisales.datune.midi.Utils;
+import es.danisales.utils.MathUtils;
+
+import java.util.Objects;
 
 public class TempoEvent extends MetaEvent {
-	int tempo;
+	private int tempo;
 
 	public TempoEvent(int n) {
 		super(0, (byte)0x51);
@@ -11,11 +14,12 @@ public class TempoEvent extends MetaEvent {
 
 		int q = (int)Math.round(60.0*1000*1000 / tempo);
 
-		byte[] bs = Utils.dec2bytes(q);
+		byte[] bs = MathUtils.dec2bytes(q);
 
 		setData(bs);
 	}
 
+	@SuppressWarnings("unused")
 	public int getTempo() {
 		return tempo;
 	}
@@ -24,9 +28,9 @@ public class TempoEvent extends MetaEvent {
 		return "Tempo: " + tempo;
 	}
 
-	public byte[] get() {
-		if (data == null)
-			throw new NullPointerException("No se ha especificado 'data'");
+	@Override
+	protected byte[] getMetaBytes() {
+		Objects.requireNonNull(data, "No se ha especificado 'data'");
 
 		byte[] deltaByte = Utils.deltaByte(delta);
 
@@ -34,8 +38,7 @@ public class TempoEvent extends MetaEvent {
 
 		byte[] ret = new byte[3+l+data.length];
 
-		for(int i = 0; i < l; i++)
-			ret[i] = deltaByte[i];
+		System.arraycopy(deltaByte, 0, ret, 0, l);
 
 		ret[l] = status;
 		ret[l+1] = type;

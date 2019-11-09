@@ -7,20 +7,19 @@ public class MetaEvent extends ChunkData {
 		super(0, (byte) 0);
 	}
 	
-	public MetaEvent(int d, byte t) {
+	protected MetaEvent(int d, byte t) {
 		super(d, (byte)0xFF);
 		
 		type = t;
 	}
 	
-	public byte[] get() {
+	protected byte[] getMetaBytes() {
 		byte[] ret = new byte[4+data.length];
 		ret[0] = (byte)delta;
 		ret[1] = status;
 		ret[2] = type;
 		ret[3] = (byte)data.length;
-		for(int i = 0; i < data.length; i++)
-			ret[i+4] = data[i];
+		System.arraycopy(data, 0, ret, 4, data.length);
 		
 		return ret;
 	}

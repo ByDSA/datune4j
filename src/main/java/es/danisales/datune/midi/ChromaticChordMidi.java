@@ -224,8 +224,8 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 	}
 
 	@Override
-	public ChromaticChordMidi over(ChromaticMidi c) throws ImpossibleChord {
-		return (ChromaticChordMidi) super.over( c );
+	public @NonNull ChromaticChordMidi getOver(@NonNull ChromaticMidi c) throws ImpossibleChord {
+		return (ChromaticChordMidi) super.getOver( c );
 	}
 
 	@Override

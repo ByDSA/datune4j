@@ -1,5 +1,7 @@
 package es.danisales.utils;
 
+import java.util.ArrayList;
+
 public class MathUtils {
     private MathUtils() {
     }
@@ -11,4 +13,22 @@ public class MathUtils {
 
         return n;
     }
+
+    public static byte[] dec2bytes(int n) {
+        ArrayList<Byte> array = new ArrayList<>();
+
+        while ( n > 0 ) {
+            byte b = (byte) ( n & 0xff );
+            array.add( 0, b );
+            n >>= 8;
+        }
+
+        byte[] bytes = new byte[array.size()];
+        for ( int i = 0; i < array.size(); i++ ) {
+            bytes[i] = array.get(i);
+        }
+
+        return bytes;
+    }
+
 }

@@ -5,7 +5,6 @@ import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.tonality.Scale;
-import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
 
 public class KeySignatureEvent extends MetaEvent {
@@ -48,7 +47,8 @@ public class KeySignatureEvent extends MetaEvent {
 		this(0, s);
 	}
 
-	public byte[] get() {
+	@Override
+	protected byte[] getMetaBytes() {
 		Scale scale = tonality.getScale();
 		DiatonicAlt diatonicAlt = tonality.getRoot();
 		Chromatic note = Chromatic.from( diatonicAlt );
@@ -63,7 +63,7 @@ public class KeySignatureEvent extends MetaEvent {
 
 		setData(bytes);
 
-		return super.get();
+		return super.getMetaBytes();
 	}
 	
 	public Tonality getScale() {

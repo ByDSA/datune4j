@@ -1,34 +1,7 @@
 package es.danisales.datune.midi;
 
-import java.util.ArrayList;
-
 public class Utils {
-	public static String array2Str(int[] array) {
-		StringBuilder sb = new StringBuilder();
-		for ( int i = 0; i < array.length; i++ ) {
-			if ( i > 0 )
-				sb.append( "-" );
-			sb.append( array[i] );
-		}
-
-		return sb.toString();
-	}
-
-	public static byte[] dec2bytes(int n) {
-		ArrayList<Byte> array = new ArrayList<Byte>();
-
-		while ( n > 0 ) {
-			byte b = (byte) ( n & 0xff );
-			array.add( 0, b );
-			n >>= 8;
-		}
-
-		byte[] bytes = new byte[array.size()];
-		for ( int i = 0; i < array.size(); i++ ) {
-			bytes[i] = array.get( i ).byteValue();
-		}
-
-		return bytes;
+	private Utils() {
 	}
 
 	public static byte[] deltaByte(int n) {

@@ -5,11 +5,11 @@ import es.danisales.datune.midi.Utils;
 import java.nio.ByteBuffer;
 
 public abstract class ChunkData implements Event {
-	protected int delta;
-	protected byte status;
+	int delta;
+	byte status;
 	byte[] data;
 
-	public ChunkData(int d, byte s) {
+	ChunkData(int d, byte s) {
 		delta = d;
 		setStatus(s);
 	}
@@ -53,13 +53,12 @@ public abstract class ChunkData implements Event {
 		buff.put( data );
 	}
 
-	protected void cloneInto(ChunkData cd) {
+	void cloneInto(ChunkData cd) {
 		cd.delta = delta;
 		cd.status = status;
 		int len = data.length;
 		cd.data = new byte[len];
-		for(int i = 0; i < len; i++)
-			cd.data[i] = data[i];
+		System.arraycopy(data, 0, cd.data, 0, len);
 	}
 
 	@Override

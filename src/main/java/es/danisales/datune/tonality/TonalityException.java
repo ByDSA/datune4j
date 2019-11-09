@@ -3,6 +3,7 @@ package es.danisales.datune.tonality;
 import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
+import es.danisales.datune.pitch.ChordNamer;
 import es.danisales.datune.pitch.PitchChromaticChord;
 
 public class TonalityException extends RuntimeException {
@@ -22,7 +23,7 @@ public class TonalityException extends RuntimeException {
 
 	public TonalityException(PitchChromaticChord pitchChromaticChord, Tonality tonality) {
 		super(
-			"El acorde a añadir " + pitchChromaticChord + " de notas " + pitchChromaticChord.notesToString()
+			"El acorde a añadir " + pitchChromaticChord + " de notas " + ChordNamer.from(pitchChromaticChord)
 			+ " no pertenece a la escala " + tonality + ": "
 			+ TonalityNamer.notesFrom(tonality) + "."
 				);

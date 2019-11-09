@@ -1,6 +1,7 @@
 package es.danisales.datune.pitch;
 
 import es.danisales.datune.midi.AddedException;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
 public interface ChordCommon<N extends SymbolicPitch> extends List<N>, Cloneable {
 	<T extends ChordCommon<N>> List<T> getAllInversions();
 	int getRootPos();
-	N getRoot();
+	@Nullable N getRoot();
 
 	default int getInversionNumber() {
 		return ( size() - getRootPos() ) % size();
@@ -20,20 +21,6 @@ public interface ChordCommon<N extends SymbolicPitch> extends List<N>, Cloneable
 			addSemi(c);
 	}*/
 
-	/** Show */
-	default String notesToString() {
-		StringBuilder sb = new StringBuilder();
-		boolean first = true;
-		for ( N n : this ) {
-			if ( first ) {
-				first = false;
-			} else
-				sb.append( ", " );
-			sb.append( n );
-		}
-
-		return sb.toString();
-	}
 	/*
 	public void showNotes();
 	

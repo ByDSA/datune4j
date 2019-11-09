@@ -14,7 +14,6 @@ import es.danisales.datune.pitch.PitchChromaticChord;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -45,11 +44,11 @@ implements Durable, PitchOctaveMidiEditable, EventComplex {
 	}
 
 	@Override
-	public ChordMidi<N> over(N c) throws ImpossibleChord {
-		return (ChordMidi<N>) super.over( c );
+	public @NonNull ChordMidi<N> getOver(@NonNull N c) throws ImpossibleChord {
+		return (ChordMidi<N>) super.getOver( c );
 	}
 
-	public <T extends ChordMidi<N>> void assign(@NonNull T c) {
+	<T extends ChordMidi<N>> void assign(@NonNull T c) {
 		Objects.requireNonNull(c);
 		clear();
 		this.addAll(c);
@@ -168,27 +167,7 @@ implements Durable, PitchOctaveMidiEditable, EventComplex {
 		arpegio.setChord( this );
 	}
 
-	public int[] integerNotation() {
-		int[] distancesAbsolute = null;
-
-		if ( size() > 0 ) {
-			try {
-				distancesAbsolute = new int[size()];
-				distancesAbsolute[0] = 0;
-
-				for ( int i = 1; i < size(); i++ ) {
-					distancesAbsolute[i] = get( i ).getCode()
-							- get( 0 ).getCode();
-				}
-			} catch ( Exception e ) {
-				e.printStackTrace();
-			}
-		}
-
-		return distancesAbsolute;
-	}
-
-	public boolean hasNote(@NonNull final N nIn) {
+	public boolean contains(@NonNull N nIn) {
 		int nInCode = nIn.getCode();
 		for ( N n : this )
 			if ( n.getCode() == nInCode )
@@ -198,7 +177,7 @@ implements Durable, PitchOctaveMidiEditable, EventComplex {
 	}
 
 	public boolean add(@NonNull N n) throws AddedException {
-		if ( !hasNote( n ) )
+		if ( !contains( n ) )
 			super.add( n );
 		else
 			throw new AddedException( n, this );
@@ -208,16 +187,7 @@ implements Durable, PitchOctaveMidiEditable, EventComplex {
 		return true;
 	}
 
-	public N getRandomNote() {
-		if ( size() == 0 )
-			return null;
-		SecureRandom randomGenerator = new SecureRandom();
-		int index = randomGenerator.nextInt( size() );
-
-		return get( index );
-	}
-
-	public <T extends ChordMidi> void setVelocity(int v) {
+	public void setVelocity(int v) {
 		for ( N n : this )
 			n.setVelocity( (int) Math.round( n.getVelocity() * v / 100.0 ) );
 	}
@@ -244,7 +214,7 @@ implements Durable, PitchOctaveMidiEditable, EventComplex {
 		return get( 0 ).getOctave();
 	}
 
-	public void sort() {
+	protected void sort() {
 		this.sort(
 			(N n1, N n2) -> ( n1.getCode() > n2.getCode() ? 1
 					: ( n1 == n2 ? 0 : -1 ) )

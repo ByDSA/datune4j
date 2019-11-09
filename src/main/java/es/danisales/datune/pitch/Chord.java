@@ -1,98 +1,196 @@
 package es.danisales.datune.pitch;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
+import java.util.stream.Stream;
 
 import es.danisales.datune.midi.AddedException;
 import es.danisales.datune.midi.PitchMidiException;
 import es.danisales.datune.musical.CustomChromaticChord.ImpossibleChord;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
-public abstract class Chord<N extends SymbolicPitch> extends ArrayList<N> implements ChordMutableInterface<N> {
+public abstract class Chord<N extends SymbolicPitch> implements List<N>, ChordMutableInterface<N> {
 	protected int root = -1;
-/*
-	public Chord(NUMBER... cs) {
-		for (NUMBER n : cs)
-			super.addSemi( n );
-		resetRoot();
-	}
-
-	public <C extends Chord<NUMBER>> Chord(C cs) {
-		addAll( cs );
-		resetRoot();
-	}*/
+	private List<N> innerList = new ArrayList<>();
 
 	@Override
-	public boolean add(N note) {
-		assert note != null;
-		super.add( note );
+	public int size() {
+		return innerList.size();
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return innerList.isEmpty();
+	}
+
+	@Override
+	public boolean contains(Object o) {
+		return innerList.contains(o);
+	}
+
+	@Override
+	public Iterator<N> iterator() {
+		return innerList.iterator();
+	}
+
+	@Override
+	public void forEach(Consumer<? super N> consumer) {
+		innerList.forEach(consumer);
+	}
+
+	@Override
+	public Object[] toArray() {
+		return innerList.toArray();
+	}
+
+	@Override
+	public <T> T[] toArray(T[] ts) {
+		return innerList.toArray(ts);
+	}
+
+	@Override
+	public boolean add(@NonNull N note) {
+		Objects.requireNonNull(note);
+		innerList.add( note );
 		resetRootIfNeeded();
 		return true;
 	}
-	
-	public Chord<N> over(N c) throws ImpossibleChord {
-		Chord<N> dup = clone();
+
+	@Override
+	public boolean remove(Object o) {
+		return innerList.remove(o);
+	}
+
+	@Override
+	public boolean containsAll(@NonNull Collection<?> collection) {
+		return innerList.containsAll(collection);
+	}
+
+	public @NonNull Chord<N> getOver(@NonNull N c) throws ImpossibleChord {
+		Chord<N> dup = (Chord<N>) clone();
+		dup.addAll(this);
+		dup.over(c);
+
+		return dup;
+	}
+
+
+	public void over(@NonNull N c) throws ImpossibleChord {
 		for(int i = 0; i < size(); i++) {
 			if ( get(0).equals( c ) )
-				return dup;
+				return;
 			if (i < size()-1)
-				dup.inv();
+				inv();
 		}
 
 		throw new ImpossibleChord();
 	}
 
 	@Override
-	public <T extends ChordCommon<N>> T add(N... cs) {
-		if ( cs.length == 0 )
-			return (T)this;
-
-		for ( SymbolicPitch c : cs )
-			super.add( (N)c );
+	public boolean addAll(@NonNull Collection<? extends N> collection) {
+		boolean ret = innerList.addAll(collection);
 
 		resetRootIfNeeded();
 
-		return (T)this;
+		return ret;
 	}
 
 	@Override
-	public <T extends ChordCommon<N>> T add(ChordCommon<N> cs) {
-		if ( cs.size() == 0 )
-			return (T)this;
+	public boolean addAll(int i, @NonNull Collection<? extends N> collection) {
+		return innerList.addAll(i, collection);
+	}
 
-		for ( N c : cs )
-			super.add( c );
+	@Override
+	public boolean removeAll(@NonNull Collection<?> collection) {
+		return innerList.removeAll(collection);
+	}
 
-		resetRootIfNeeded();
+	@Override
+	public boolean removeIf(Predicate<? super N> predicate) {
+		return innerList.removeIf(predicate);
+	}
 
-		return (T)this;
+	@Override
+	public boolean retainAll(@NonNull Collection<?> collection) {
+		return innerList.retainAll(collection);
+	}
+
+	@Override
+	public void replaceAll(UnaryOperator<N> unaryOperator) {
+		innerList.replaceAll(unaryOperator);
+	}
+
+	@Override
+	public void sort(Comparator<? super N> comparator) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void clear() {
+		innerList.clear();
 	}
 
 	@Override
 	public void add(int n, N note) throws AddedException {
-		super.add( n, note );
+		innerList.add( n, note );
 		resetRootIfNeeded();
 	}
 
-	@Override
-	public <T extends ChordCommon<N>> T add(int pos, N... ns) {
-		if ( ns.length == 0 )
-			return (T)this;
-
-		for ( SymbolicPitch n : ns )
-			super.add( pos++,(N) n );
-		resetRootIfNeeded();
-
-		return (T)this;
+	public boolean addAll(int pos, @NonNull N... ns) {
+		return addAll(pos, Arrays.asList(ns));
 	}
 
 	@Override
 	public N remove(int n) {
 		N root = getRoot();
-		N r = super.remove( n );
-		if ( r == root )
+		N ret = innerList.remove( n );
+		if ( ret == root )
 			resetRoot();
 
-		return r;
+		return ret;
+	}
+
+	@Override
+	public int indexOf(Object o) {
+		return innerList.indexOf(o);
+	}
+
+	@Override
+	public int lastIndexOf(Object o) {
+		return innerList.lastIndexOf(o);
+	}
+
+	@Override
+	public ListIterator<N> listIterator() {
+		return innerList.listIterator();
+	}
+
+	@Override
+	public ListIterator<N> listIterator(int i) {
+		return innerList.listIterator(i);
+	}
+
+	@Override
+	public List<N> subList(int i, int i1) {
+		return innerList.subList(i, i1);
+	}
+
+	@Override
+	public Spliterator<N> spliterator() {
+		return innerList.spliterator();
+	}
+
+	@Override
+	public Stream<N> stream() {
+		return innerList.stream();
+	}
+
+	@Override
+	public Stream<N> parallelStream() {
+		return innerList.parallelStream();
 	}
 
 	@Override
@@ -115,27 +213,29 @@ public abstract class Chord<N extends SymbolicPitch> extends ArrayList<N> implem
 	}
 
 	protected void resetRootIfNeeded() {
-		if ( root == -1 || root >= size() ) {
+		if ( hasInvalidRoot() )
 			resetRoot();
-		}
+	}
+
+	protected boolean hasInvalidRoot() {
+		return root < 0 || root >= size();
 	}
 
 	@Override
 	public void setRootPos(int n) {
-		if ( n >= size())
+		if ( n >= size() || n < 0 )
 			throw new ArrayIndexOutOfBoundsException();
 
 		root = n;
 	}
 
 	@Override
-	public N getRoot() {
+	public @NonNull N getRoot() {
 		return get(root);
 	}
 
 	@Override
 	public int getRootPos() {
-		resetRootIfNeeded();
 		return root;
 	}
 
@@ -144,50 +244,23 @@ public abstract class Chord<N extends SymbolicPitch> extends ArrayList<N> implem
 		if ( !( o instanceof Chord ) )
 			return false;
 
-		Chord c = (Chord) o;
-		if ( c.size() != size() )
-			return false;
+		Chord chordCasted = (Chord) o;
 
-		for ( int i = 0; i < size(); i++ ) {
-			if ( !get( i ).equals( c.get( i ) ) )
-				return false;
-		}
-
-		return getRoot().equals( c.getRoot() );
+		return innerList.equals(chordCasted.innerList) && getRoot().equals( chordCasted.getRoot() );
 	}
 
 	@Override
-	public Chord<N> clone() {
-		return (Chord) super.clone();
+	public N get(int i) {
+		return innerList.get(i);
 	}
 
-	/** Show */
+	@Override
+	public N set(int i, N n) {
+		return innerList.set(i, n);
+	}
+
+	@Override
 	public String toString() {
-		return notesToString();
-	}
-
-	//TODO: quitar
-	public String javaNotes() {
-		StringBuilder sb = new StringBuilder();
-		boolean first = true;
-		for ( N n : this ) {
-			if ( first ) {
-				first = false;
-			} else
-				sb.append( ", " );
-		}
-		sb.append( " );" );
-
-		return sb.toString();
-	}
-
-	// TODO: quitar
-	public final void showNotes() {
-		System.out.println( this.notesToString() );
-	}
-
-	// TODO: quitar
-	public final void show() {
-		System.out.println( this );
+		return ChordNamer.from(this);
 	}
 }

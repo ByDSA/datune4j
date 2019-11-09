@@ -1,17 +1,17 @@
 package es.danisales.datune.midi.Events;
 
 public class ControlChangeEvent extends ChannelEvent {
-	int value;
-	byte controllerNumber;
+	private int value;
+	private byte controllerNumber;
 
-	public ControlChangeEvent(int delta, byte status, byte c, int channel, int v) {
+	private ControlChangeEvent(int delta, byte status, byte c, int channel, int v) {
 		super(delta, status, channel);
 		
 		controllerNumber = c;
 		setValue(v);
 	}
 	
-	public ControlChangeEvent(int delta, byte status, byte c, int v) {
+	ControlChangeEvent(int delta, byte status, byte c, int v) {
 		this(delta, status, c, 0, v);
 	}
 	

@@ -18,10 +18,10 @@ import es.danisales.datune.midi.Progressions.Progression;
 import es.danisales.datune.tonality.Tonality;
 
 public class Track extends EventSequence {
-	int channel;
-	Instrument midiInstrument;
+	private int channel;
+	private Instrument midiInstrument;
 
-	Sequence sequence; // Para firstOfSequence
+	private Sequence sequence; // Para firstOfSequence
 
 	public Track(int mc, Instrument i) {
 		channel = mc;
@@ -42,18 +42,18 @@ public class Track extends EventSequence {
 		return channel == 10-1;
 	}
 
-	public void add(int n, Progression p) {
-		super.add(n, p);
+	public void add(int n, Progression progression) {
+		super.add(n, progression);
 
-		setScale(p.getScale());
+		setScale(progression.getScale());
 	}
 
-	public void add(EventComplex p) {
-		add(0, p);
+	public void add(EventComplex eventComplex) {
+		add(0, eventComplex);
 	}
 
-	public void setScale(Tonality s) {
-		add(0, new KeySignatureEvent(s));
+	public void setScale(Tonality tonality) {
+		add(0, new KeySignatureEvent(tonality));
 	}
 
 	public void setPan(int p) {
@@ -88,20 +88,12 @@ public class Track extends EventSequence {
 		return t2;
 	}
 
-	public Track changeProgram(int d, Instrument v) {
+	public void changeProgram(int d, Instrument v) {
 		add(d, new ProgramChange(getChannel(), v));
-
-		return this;
 	}
 
 	@Override
 	public void write(ByteBuffer buff) {
-		for(Map.Entry<Long, ArrayList<Event>> entry : this.getMap().entrySet()) {
-			Long key = entry.getKey();
-			ArrayList<Event> value = entry.getValue();
-			//break;
-		}
-
 		EventSequence e = getBasicEvents();
 		TrackChunk tc = new TrackChunk();
 
@@ -109,7 +101,7 @@ public class Track extends EventSequence {
 			TempoEvent t = new TempoEvent( sequence.getTempo() );
 			tc.add( t );
 
-			final byte timeSigEvent[] = new byte[]
+			final byte[] timeSigEvent = new byte[]
 					{
 						0x00, (byte)0xFF, 0x58, 0x04,
 						0x04, // numerator
@@ -131,7 +123,7 @@ public class Track extends EventSequence {
 		tc.add(e);
 
 		// Standard footer
-		final byte footer[] = new byte[]
+		final byte[] footer = new byte[]
 				{
 					0x00,
 					(byte)0xFF, 0x2F, 0x00
