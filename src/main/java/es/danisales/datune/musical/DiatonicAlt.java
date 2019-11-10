@@ -1,16 +1,11 @@
 package es.danisales.datune.musical;
 
-import es.danisales.datune.midi.ChromaticMidi;
-import es.danisales.datune.musical.transformations.AlterationsCalculator;
-import es.danisales.datune.musical.transformations.EnharmonicsCalculator;
 import es.danisales.datune.musical.transformations.Namer;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.pitch.SymbolicPitch;
+import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 public class DiatonicAlt implements SymbolicPitch {
 	public static final DiatonicAlt C = new DiatonicAlt(Diatonic.C, 0);
@@ -96,6 +91,14 @@ public class DiatonicAlt implements SymbolicPitch {
 		return DiatonicAltAdapter.from(pitchChromaticSingle);
 	}
 
+	public static @Nullable DiatonicAlt from(@NonNull Diatonic diatonic, @NonNull Tonality tonality) {
+		for ( DiatonicAlt diatonicAlt : tonality.getNotes() )
+			if (diatonicAlt.getDiatonic().equals(diatonic))
+				return diatonicAlt;
+
+			return null;
+	}
+
 	public int getSemitonesAdded() {
 		return semitonesAdded;
 	}
@@ -112,7 +115,7 @@ public class DiatonicAlt implements SymbolicPitch {
 	}
 
 	public DiatonicAlt getNextDiatonic() {
-		return new DiatonicAlt(diatonicBase.shift(1), semitonesAdded);
+		return new DiatonicAlt(diatonicBase.next(), semitonesAdded);
 	}
 
 	public Diatonic getDiatonic() {

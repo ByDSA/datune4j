@@ -57,7 +57,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
 
     public <N extends DiatonicAlt, Array extends Chord<N>> DiatonicChordMidi(Array ns, Tonality t, int o, int d, int v) {
         for ( N n : ns ) {
-            DiatonicDegree diatonicDegree = t.getDegreeFrom( n );
+            DiatonicDegree diatonicDegree = (DiatonicDegree)t.getDegreeFrom( n );
             DiatonicMidi cm = DiatonicMidi.builder()
                     .diatonicDegree(diatonicDegree)
                     .tonality(t)
@@ -150,7 +150,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
 
         for ( DiatonicChordMidi c : chords )
             if ( f.get() )
-                c.show();
+                System.out.println(c);
     }
 
     public static void showPossibleProgressionsMajorMinor(List<ChromaticChordMidi> cs) {
@@ -285,7 +285,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
             d = ( (ChromaticFunction) function ).getDegree();
         if ( d == null ) {
             Chromatic c = ChromaticAdapter.from( getRoot() );
-            d = metaTonality.getDegreeFrom( c );
+            d = (DiatonicDegree)metaTonality.getDegreeFrom( c );
         }
         return d;
     }
@@ -1209,9 +1209,9 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
                     updateFunctionIfNull();
                     CustomChromaticChord ret = CustomChromaticChord.noneOf();
                     if ( function instanceof DiatonicFunction )
-                        ret.add( ChromaticChord.from(tonality, (DiatonicFunction) function ) );
+                        ret.addAll( ChromaticChord.from(tonality, (DiatonicFunction) function ) );
                     else
-                        ret.add( ChromaticChord.from(tonality, (ChromaticFunction) function ) );
+                        ret.addAll( ChromaticChord.from(tonality, (ChromaticFunction) function ) );
 
                     assert this.size() == ret.size();
 

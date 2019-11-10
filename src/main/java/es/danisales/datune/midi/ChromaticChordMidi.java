@@ -4,7 +4,7 @@ import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.Quality;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.CustomChromaticChord;
-import es.danisales.datune.musical.CustomChromaticChord.ImpossibleChord;
+import es.danisales.datune.musical.ImpossibleChordException;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticSingle;
@@ -14,6 +14,7 @@ import es.danisales.datune.tonality.TonalityException;
 import es.danisales.datune.tonality.TonalityRetrieval;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,7 +28,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 
 	public static @NonNull ChromaticChordMidi from(@NonNull ChromaticChordMidi ns) {
 		ChromaticChordMidi ccm = new ChromaticChordMidi();
-		ccm.add( ns );
+		ccm.addAll( ns );
 
 		return ccm;
 	}
@@ -52,7 +53,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 
 	public static @NonNull ChromaticChordMidi from(@NonNull ChromaticMidi... ns) {
 		ChromaticChordMidi ccm = new ChromaticChordMidi();
-		ccm.add( ns );
+		ccm.addAll( Arrays.asList(ns) );
 
 		return ccm;
 	}
@@ -84,7 +85,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 				builder.pitch(chromaticN);
 
 			if (n instanceof Durable) {
-				builder.length(((Durable) n).getDuration());
+				builder.length(((Durable) n).getLength());
 			}
 
 			if (n instanceof VelocityNote) {
@@ -172,6 +173,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 	}
 
 	@Override
+	@Nonnull
 	public ChromaticChordMidi subList(int a, int b) {
 		assert b < size();
 		ChromaticChordMidi c = new ChromaticChordMidi();
@@ -224,7 +226,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 	}
 
 	@Override
-	public @NonNull ChromaticChordMidi getOver(@NonNull ChromaticMidi c) throws ImpossibleChord {
+	public @NonNull ChromaticChordMidi getOver(@NonNull ChromaticMidi c) throws ImpossibleChordException {
 		return (ChromaticChordMidi) super.getOver( c );
 	}
 

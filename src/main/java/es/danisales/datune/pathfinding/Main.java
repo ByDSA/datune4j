@@ -45,7 +45,7 @@ class Main {
 		for ( int i = 0; i < nodes.size(); i++ ) {
 			NodeProgression n = nodes.get( i );
 			pcm.set( i, (ChromaticChordMidi)n.object );
-			n.object.showNotes();
+			System.out.println(n.object);
 		}
 
 		Song p = new Song( "azsxdc", 120, Tonality.FFm );

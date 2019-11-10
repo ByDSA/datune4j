@@ -1,15 +1,16 @@
 package es.danisales.datune.pitch;
 
-import es.danisales.datune.midi.AddedException;
 import es.danisales.datune.musical.CustomChromaticChord;
+import es.danisales.datune.musical.ImpossibleChordException;
 
-import java.util.Arrays;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.BiFunction;
 
 public interface ChordMutableInterface<N extends SymbolicPitch> extends ChordCommon<N> {
 	ChordMutableInterface<N> clone();
-	
+
 	default void resetRoot() {
 		if ( isEmpty() )
 			return;
@@ -22,6 +23,7 @@ public interface ChordMutableInterface<N extends SymbolicPitch> extends ChordCom
 	default void inv() {
 		inv( 1 );
 	}
+
 	default void inv(int n) {
 		if ( size() < 2 || n == 0 )
 			return;
@@ -47,6 +49,16 @@ public interface ChordMutableInterface<N extends SymbolicPitch> extends ChordCom
 		}
 	}
 	
+	// todo: protected
+
+	default Boolean updateWhatIsIt() {
+		return updateWhatIsIt(
+				(List<CustomChromaticChord> chords, ChordCommon<?> self) -> chords.get( 0 )
+		);
+	}
+	Boolean updateWhatIsIt(BiFunction<List<CustomChromaticChord>, ChordCommon<?>, CustomChromaticChord> fSelectChord);
+
+	Boolean updateWhatIsItIfNeeded();
 	default <T extends ChordCommon<N>> T removeHigherDuplicates() {
 		ChordMutableInterface<N> out = clone();
 		for ( N n : this ) {
@@ -58,17 +70,26 @@ public interface ChordMutableInterface<N extends SymbolicPitch> extends ChordCom
 
 		this.clear();
 		this.addAll(out);
-		
+
 		return (T)out;
 	}
 
-	// todo: protected
-	default Boolean updateWhatIsIt() {
-		return updateWhatIsIt(
-				(List<CustomChromaticChord> chords, ChordCommon<?> self) -> chords.get( 0 )
-		);
+	default @Nullable ChordMutableInterface<N> getOver(@Nonnull N c) {
+		ChordMutableInterface<N> dup = clone();
+		dup.addAll(this);
+		dup.over(c);
+
+		return dup;
 	}
 
-	Boolean updateWhatIsIt(BiFunction<List<CustomChromaticChord>, ChordCommon<?>, CustomChromaticChord> fSelectChord);
-	Boolean updateWhatIsItIfNeeded();
+	default void over(@Nonnull N c) throws ImpossibleChordException {
+		for(int i = 0; i < size(); i++) {
+			if ( get(0).equals( c ) )
+				return;
+			if (i < size()-1)
+				inv();
+		}
+
+		throw new ImpossibleChordException();
+	}
 }

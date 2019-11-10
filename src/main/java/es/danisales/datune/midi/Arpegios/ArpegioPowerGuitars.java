@@ -6,7 +6,7 @@ public class ArpegioPowerGuitars extends Arpegio {
 
 	public ArpegioPowerGuitars() {
 		super((This) -> {
-			int length2 = This.chord.getDuration() / Duration.V1;
+			int length2 = This.chord.getLength() / Duration.V1;
 			This.add(0, -1, Duration.V1);
 			for(int i = 0; i < 4; i++) {
 				This.add(i*Duration.V4, Duration.V16);

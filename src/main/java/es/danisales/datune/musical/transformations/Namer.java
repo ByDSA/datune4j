@@ -53,7 +53,7 @@ public class Namer {
 
     public static String from(PitchSingleMidi chromaticMidi, Tonality tonality) {
         Chromatic chromatic = ChromaticAdapter.from(chromaticMidi.getPitchMidi());
-        DiatonicDegree diatonicDegree = tonality.getDegreeFrom(chromatic);
+        DiatonicDegree diatonicDegree = (DiatonicDegree)tonality.getDegreeFrom(chromatic);
         DiatonicAlt diatonicAlt = tonality.getNote(diatonicDegree);
         return ChromaticMidi.literal(diatonicAlt, tonality ) + chromaticMidi.getOctave();
     }

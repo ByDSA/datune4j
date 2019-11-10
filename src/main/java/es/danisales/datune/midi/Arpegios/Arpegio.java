@@ -58,7 +58,7 @@ public class Arpegio implements Durable, Cloneable {
 		return this;
 	}
 
-	public int getDuration() {
+	public int getLength() {
 		int d = length;
 		for ( Node n : nodes )
 			d = Math.max( d, n.time + n.length );

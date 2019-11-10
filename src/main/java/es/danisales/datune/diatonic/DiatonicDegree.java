@@ -1,24 +1,19 @@
 package es.danisales.datune.diatonic;
 
 import es.danisales.datune.musical.Diatonic;
+import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * Grado
  */
-public enum DiatonicDegree {
+public enum DiatonicDegree implements TonalityDegree {
 	I, II, III, IV, V, VI, VII;
 
 	public static DiatonicDegree from(IntervalDiatonic intervalDiatonic) {
 		return values()[intervalDiatonic.ordinal() % DiatonicDegree.values().length];
 	}
 
-	/**
-	 * Value
-	 *
-	 * @return the int value
-	 */
-	@Deprecated
 	public int val() {
 		return ordinal();
 	}

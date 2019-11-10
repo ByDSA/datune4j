@@ -11,6 +11,7 @@ import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -2058,6 +2059,12 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic>, Chroma
 		return 0;
 	}
 
+	@Nullable
+	@Override
+	public ChordCommon<Chromatic> getOver(@Nonnull Chromatic c) { // todo
+		return null;
+	}
+
 	@Override
 	public Quality getQuality() {
 		return meta.quality;
@@ -2192,13 +2199,13 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic>, Chroma
 
 	public static CustomChromaticChord add(ChromaticChordEnum chromaticChordEnum, Chromatic... cs) throws AddedException {
 		CustomChromaticChord dup = CustomChromaticChord.from(chromaticChordEnum);
-		dup.add( cs );
+		dup.addAll( Arrays.asList(cs) );
 		return dup;
 	}
 
 	public static CustomChromaticChord add(ChromaticChordEnum chromaticChordEnum, ChordCommon<Chromatic> cs) throws AddedException {
 		CustomChromaticChord dup = CustomChromaticChord.from(chromaticChordEnum);
-		dup = dup.add( cs );
+		dup.addAll( cs );
 		return dup;
 	}
 

@@ -9,6 +9,7 @@ import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChordEnum;
 import es.danisales.datune.musical.Diatonic;
 import es.danisales.datune.musical.DiatonicAlt;
+import es.danisales.datune.pitch.ChordNamer;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.Tonality;
@@ -310,7 +311,7 @@ public class Tests {
 
 		for ( ChromaticChordEnum c : ChromaticChordEnum.COMMON_CHORDS ) {
 			assertEquals( true, c.size() > 1 );
-			assertNotEquals( c.notesToString(), null, c.getQuality() );
+			assertNotEquals(ChordNamer.from(c), null, c.getQuality() );
 			assertNotEquals( ChordNotation.EMPTY_CHORD, c.toString() );
 		}
 

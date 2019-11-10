@@ -8,27 +8,29 @@ import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
-
-import java.util.Objects;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 public class ChromaticAdapter {
     private ChromaticAdapter() {
     }
 
-    public static Chromatic from(@NonNull Diatonic diatonic, Tonality tonality) {
-        return Chromatic.from( tonality.getNote(diatonic.getDegree()) );
+    public static @Nullable Chromatic from(@NonNull Diatonic diatonic, Tonality tonality) {
+        DiatonicAlt diatonicAlt = DiatonicAlt.from(diatonic, tonality);
+        if (diatonicAlt == null)
+            return null;
+        return Chromatic.from(diatonicAlt);
     }
 
-    public static Chromatic from(PitchMidi pitchMidi) {
+    public static @NonNull Chromatic from(PitchMidi pitchMidi) {
         int value = pitchMidi.getCode();
-        return Chromatic.from( value % 12 );
+        return Chromatic.from( value % Chromatic.NUMBER );
     }
 
-    public static Chromatic from(PitchSingleMidi chromaticMidi) {
+    public static @NonNull Chromatic from(PitchSingleMidi chromaticMidi) {
         return from( chromaticMidi.getPitchMidi() );
     }
 
-    public static Chromatic from(PitchChromaticSingle t) {
+    public static @NonNull Chromatic from(PitchChromaticSingle t) {
         if (t.getClass().equals(PitchMidi.class))
             return from((PitchMidi)t);
         else if (t.getClass().equals(PitchSingleMidi.class))

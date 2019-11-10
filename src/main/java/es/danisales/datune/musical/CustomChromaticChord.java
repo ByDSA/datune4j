@@ -1,8 +1,11 @@
 package es.danisales.datune.musical;
 
 import com.google.common.collect.ImmutableList;
-import es.danisales.datune.diatonic.*;
-import es.danisales.datune.midi.*;
+import es.danisales.datune.diatonic.ChordNotation;
+import es.danisales.datune.diatonic.IntervalChromatic;
+import es.danisales.datune.diatonic.Quality;
+import es.danisales.datune.midi.ChordMidi;
+import es.danisales.datune.midi.PitchSingleMidi;
 import es.danisales.datune.pitch.*;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -234,7 +237,22 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 		return this;
 	}
 
-	public @NonNull CustomChromaticChord getOver(@NonNull Chromatic c) throws ImpossibleChord {
+	@Override
+	public List<ChromaticChord> getAllInversions() {
+		List<ChromaticChord> ret = new ArrayList<>();
+
+		ret.add( this.clone() );
+
+		ChromaticChord last = this;
+		for ( int i = 0; i < size(); i++ ) {
+			ret.add( last );
+			last = last.getInv();
+		}
+
+		return ret;
+	}
+
+	public @NonNull CustomChromaticChord getOver(@NonNull Chromatic c) throws ImpossibleChordException {
 		CustomChromaticChord dup = clone();
 		for(int i = 0; i < size(); i++) {
 			if ( get(0) == c )
@@ -243,25 +261,12 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 				dup.inv();
 		}
 
-		throw new ImpossibleChord();
+		throw new ImpossibleChordException();
 	}
 
 	@Override
-	public CustomChromaticChord clone() {
-		return (CustomChromaticChord)super.clone();
-	}
-
-	public static class ImpossibleChord extends RuntimeException {
-
-		public ImpossibleChord() {
-			super("Acorde imposible");
-		}
-	}
-
-	@Override
-	public int getInversionNumber() {
-		// TODO Auto-generated method stub
-		return -1;
+	public CustomChromaticChord clone() { // TODO
+		return null;
 	}
 
 	/*

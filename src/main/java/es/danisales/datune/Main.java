@@ -15,6 +15,7 @@ import es.danisales.datune.midi.Events.Volume;
 import es.danisales.datune.midi.Progressions.Progression;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
+import es.danisales.datune.pitch.ChordNamer;
 import es.danisales.datune.songs.Power;
 import es.danisales.datune.tonality.*;
 
@@ -230,7 +231,7 @@ public class Main {
 			MelodyDiatonic mm2 = (MelodyDiatonic) ( (MelodyDiatonic) m.clone() )
 					.setTonality( tonality );
 
-			int l = mm2.getDuration();
+			int l = mm2.getLength();
 
 			strings.add( j * l, pp );
 			channel.add( j * l, mm2 );
@@ -661,7 +662,7 @@ public class Main {
 								for ( DiatonicMidi n : c )
 									es.add( 0, new NoteOn( n ) );
 								es.play();
-								System.out.println( "Press " + c + " " + c.notesToString() );
+								System.out.println( "Press " + c + " " + ChordNamer.from(c) );
 							} else {
 								EventSequence es = new EventSequence();
 								for ( DiatonicMidi n : c )

@@ -4,13 +4,11 @@ import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.midi.Arpegios.Arpegio;
 import es.danisales.datune.midi.Arpegios.ArpegioDefault;
 import es.danisales.datune.midi.Events.EventComplex;
-import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.CustomChromaticChord;
-import es.danisales.datune.musical.CustomChromaticChord.ImpossibleChord;
-import es.danisales.datune.musical.transformations.ChromaticAdapter;
+import es.danisales.datune.musical.DiatonicChord;
+import es.danisales.datune.musical.ImpossibleChordException;
 import es.danisales.datune.pitch.Chord;
 import es.danisales.datune.pitch.ChordCommon;
-import es.danisales.datune.pitch.PitchChromaticChord;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -20,31 +18,14 @@ import java.util.Objects;
 import java.util.function.BiFunction;
 
 public abstract class ChordMidi<N extends PitchSingleMidi> extends Chord<N>
-implements Durable, PitchOctaveMidiEditable, EventComplex {
+		implements Durable, PitchOctaveMidiEditable, EventComplex {
 	protected Arpegio	arpegio;
 	protected int		length;
 
 	CustomChromaticChord meta = null;
 
-	@Deprecated
-	public PitchChromaticChord toChromaticChord() {
-		if (getRootPos() != 0) {
-			CustomChromaticChord ns = CustomChromaticChord.noneOf();
-			for ( N n : this ) {
-				Chromatic chromatic = ChromaticAdapter.from(n);
-				ns.add( chromatic );
-
-				if ( n == getRoot() )
-					ns.setRootPos( ns.size() - 1 );
-			}
-
-			return ns;
-		} else
-			return PitchChromaticChord.of(this);
-	}
-
 	@Override
-	public @NonNull ChordMidi<N> getOver(@NonNull N c) throws ImpossibleChord {
+	public @NonNull ChordMidi<N> getOver(@NonNull N c) throws ImpossibleChordException {
 		return (ChordMidi<N>) super.getOver( c );
 	}
 
@@ -54,57 +35,9 @@ implements Durable, PitchOctaveMidiEditable, EventComplex {
 		this.addAll(c);
 		arpegio = c.arpegio;
 		length = c.length;
-
 	}
-/*
-	public ChordMidi<NUMBER> inv(int n) {
-		if ( size() == 0 )
-			return (ChordMidi<NUMBER>) this;
 
-		if ( n < 0 ) {
-			int lastIndex = size() - 1;
-			for ( int i = 0; i > n; i-- ) {
-				boolean updateRoot = getRootPos() == lastIndex;
-
-				final NUMBER last = calculateFrom( lastIndex );
-				final NUMBER first = calculateFrom( 0 );
-				do {
-					last.shiftOctave( -1 );
-				} while ( last.getCode() >= first.getCode() );
-
-				addSemi( 0, remove( lastIndex ) );
-
-				if ( updateRoot )
-					setRootPos( 0 );
-			}
-		}
-
-		for ( int i = 0; i < n; i++ ) {
-			boolean updateRoot = getRootPos() == 0;
-
-			int firstIndex = 0;
-			final NUMBER first = calculateFrom( firstIndex );
-
-			final NUMBER last = calculateFrom( size() - 1 );
-			do {
-				first.shiftOctave( 1 );
-			} while ( first.getCode() <= last.getCode() );
-
-			addSemi( remove( firstIndex ) );
-
-			if ( updateRoot )
-				setRootPos( size() - 1 );
-		}
-
-		sort();
-
-		// meta.setRoot(getRootPos());
-
-		return (ChordMidi<NUMBER>) this;
-	}*/
-
-	//public abstract NUMBER calculateFrom(int note, List<NUMBER> ns);
-
+	@SuppressWarnings("unchecked")
 	@Override
 	public EventSequence getEvents() {
 		EventSequence es = new EventSequence();
@@ -112,7 +45,7 @@ implements Durable, PitchOctaveMidiEditable, EventComplex {
 		Arpegio aNodes;
 		if ( arpegio == null )
 			this.setArpegio( new ArpegioDefault() );
-		int arpDuration = arpegio.getDuration();
+		int arpDuration = arpegio.getLength();
 
 		if ( length != 0 && length > arpDuration ) {
 			aNodes = arpegio.clone();
@@ -144,14 +77,14 @@ implements Durable, PitchOctaveMidiEditable, EventComplex {
 	}
 
 	@Override
-	public int getDuration() {
+	public int getLength() {
 		int max = length;
 
 		if ( arpegio == null )
 			for ( N n : this )
 				max = Math.max( max, n.getLength() );
 		else
-			max = arpegio.getDuration();
+			max = arpegio.getLength();
 
 		return max;
 	}
@@ -216,9 +149,9 @@ implements Durable, PitchOctaveMidiEditable, EventComplex {
 
 	protected void sort() {
 		this.sort(
-			(N n1, N n2) -> ( n1.getCode() > n2.getCode() ? 1
-					: ( n1 == n2 ? 0 : -1 ) )
-				);
+				(N n1, N n2) -> ( n1.getCode() > n2.getCode() ? 1
+						: ( n1 == n2 ? 0 : -1 ) )
+		);
 	}
 
 	public <A extends List<N>> boolean hasSameNotesOrderSameOctave(A notes) {
@@ -260,22 +193,36 @@ implements Durable, PitchOctaveMidiEditable, EventComplex {
 
 		return ret;
 	}
-/*
-	public double getPitchMean() {
-		int sum = 0, oct = 0;
-		ChromaticMidi last = null;
-		for ( NUMBER c : this ) {
-			sum += c.getFrequency();
+	/*
+        public double getPitchMean() {
+            int sum = 0, oct = 0;
+            ChromaticMidi last = null;
+            for ( NUMBER c : this ) {
+                sum += c.getFrequency();
+            }
+            return ( (double) sum ) / size();
+        }
+    */
+
+	private <T extends ChordMidi<N>> List<T> _getAllInversions() {
+		List<T> ret = new ArrayList<>();
+
+		ret.add( (T) this.clone() );
+
+		T last = (T)this;
+		for ( int i = 0; i < size(); i++ ) {
+			ret.add( last );
+			last = last.getInv();
 		}
-		return ( (double) sum ) / size();
+
+		return ret;
 	}
-*/
+
 	public <T extends ChordMidi<N>> List<T> getAllDispositionsWithInv() {
 		List<T> ret = new ArrayList<>();
-		List<T> bases = super.getAllInversions();
-		for ( T c : bases ) {
+		List<T> bases = _getAllInversions();
+		for ( T c : bases )
 			ret.addAll( (List<T>) c.getAllInversions() );
-		}
 
 		return ret;
 	}
@@ -294,7 +241,7 @@ implements Durable, PitchOctaveMidiEditable, EventComplex {
 			System.out.print( n.getOctave() + " " );
 		System.out.println( "" );
 	}
-	
+
 	protected abstract <T extends ChordMidi<N>> T newChord();
 
 	protected <T extends ChordMidi<N>> List<T> getAllDispositionsSub(boolean sub, int level, boolean first) {
@@ -324,7 +271,7 @@ implements Durable, PitchOctaveMidiEditable, EventComplex {
 						// Forma listOf superChord = [listOf[0] + subChordcombination]
 						T superChord = newChord();
 						superChord.add( (N)get( 0 ).clone() );
-						superChord.add( subCombination.clone() );
+						superChord.addAll( subCombination.clone() );
 
 						// Combinaciones de 'n�mero' dentro del listOf superChord = ['n�mero' +
 						// subChordcombination]
@@ -410,9 +357,9 @@ implements Durable, PitchOctaveMidiEditable, EventComplex {
 		if ( arpegio == null )
 			setArpegio( new ArpegioDefault() );
 	}
-	
+
 	@Override
-	public ChordMidi<N> clone() {
-		return (ChordMidi<N>)super.clone();
+	public ChordMidi<N> clone() { // todo
+		return (ChordMidi<N>)null;
 	}
 }

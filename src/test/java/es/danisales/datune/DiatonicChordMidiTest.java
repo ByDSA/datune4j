@@ -6,8 +6,8 @@ import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.midi.*;
 import es.danisales.datune.musical.*;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
+import es.danisales.datune.pitch.ChordNamer;
 import es.danisales.datune.tonality.Scale;
-import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.Tonality;
 import org.junit.Test;
 
@@ -348,10 +348,11 @@ public class DiatonicChordMidiTest {
 		assertEquals( ChromaticChordEnum.FFm, ChromaticChord.from(dcm) );
 
 		assertEquals(
-			new CustomDiatonicChord( Diatonic.D, Diatonic.F, Diatonic.A), DiatonicChord.from( DiatonicFunction.II )
+			DiatonicChord.from( Diatonic.D, Diatonic.F, Diatonic.A), DiatonicChord.from( DiatonicFunction.II )
 		);
+
 		assertEquals(
-			ChromaticChordEnum.GGdim, DiatonicChord.from( DiatonicFunction.II ).toChromaticChord( Tonality.FFm )
+			ChromaticChordEnum.GGdim, ChromaticChord.from( DiatonicChord.from( DiatonicFunction.II ), Tonality.FFm )
 		);
 /*
 		assertEquals(
@@ -436,8 +437,8 @@ public class DiatonicChordMidiTest {
 		DiatonicChordMidi c2 = chords.get( 0 );
 		assertEquals( Duration.V1, c2.get(0).getLength() );
 		assertEquals( c.getArpegio(), c2.getArpegio() );
-		assertEquals( c.getDuration(), c2.getDuration() );
-		assertEquals( c.notesToString(), c2.notesToString() );
+		assertEquals( c.getLength(), c2.getLength() );
+		assertEquals( ChordNamer.from(c), ChordNamer.from(c2) );
 		assertEquals( c.get( 0 ).getCode(), c2.get( 0 ).getCode() );
 		assertEquals( c.get( 0 ).getDegree(), c2.get( 0 ).getDegree() );
 		assertEquals( c.get( 0 ).getLength(), c.get( 0 ).clone().getLength() );

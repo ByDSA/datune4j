@@ -22,16 +22,12 @@ public enum Diatonic implements PitchDiatonicSingle {
 
 	/** Transforms **/
 
-	public Diatonic shift(int n) {
-		return DiatonicAdapter.from( this.intValue() + n );
+	public Diatonic shift(IntervalDiatonic intervalDiatonic) {
+		return DiatonicAdapter.from( this.intValue() + intervalDiatonic.ordinal() );
 	}
 
 	public Diatonic next() {
-		return shift(1);
-	}
-
-	public Diatonic previous() {
-		return shift(-1);
+		return shift(IntervalDiatonic.SECOND);
 	}
 
 	/** Calculator **/

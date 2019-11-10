@@ -1,5 +1,6 @@
 package es.danisales.datune.musical;
 
+import es.danisales.datastructures.SetUtils;
 import es.danisales.datune.diatonic.*;
 import es.danisales.datune.midi.*;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
@@ -7,6 +8,7 @@ import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,21 +22,21 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
                 || f == ChromaticFunction.VI || f == ChromaticFunction.VII ) {
             DiatonicAlt r = t.getNote( f.getDegree() );
             Chromatic rChromatic = Chromatic.from(r);
-            ret.add( ChromaticChordEnum.whichRootIs( rChromatic, ChromaticChordEnum.CHORDS_MAJOR ) );
+            ret.addAll( ChromaticChordEnum.whichRootIs( rChromatic, ChromaticChordEnum.CHORDS_MAJOR ) );
         } else if ( f == ChromaticFunction.i || f == ChromaticFunction.ii
                 || f == ChromaticFunction.iii
                 || f == ChromaticFunction.iv || f == ChromaticFunction.v
                 || f == ChromaticFunction.vi || f == ChromaticFunction.vii ) {
             DiatonicAlt r = t.getNote( f.getDegree() );
             Chromatic rChromatic = Chromatic.from(r);
-            ret.add( ChromaticChordEnum.whichRootIs( rChromatic, ChromaticChordEnum.CHORDS_MINOR ) );
+            ret.addAll( ChromaticChordEnum.whichRootIs( rChromatic, ChromaticChordEnum.CHORDS_MINOR ) );
         } else if ( f == ChromaticFunction.I0 || f == ChromaticFunction.II0
                 || f == ChromaticFunction.III0 || f == ChromaticFunction.IV0
                 || f == ChromaticFunction.V0 || f == ChromaticFunction.VI0
                 || f == ChromaticFunction.VII0 ) {
             DiatonicAlt r = t.getNote( f.getDegree() );
             Chromatic rChromatic = Chromatic.from(r);
-            ret.add( ChromaticChordEnum.whichRootIs( rChromatic, ChromaticChordEnum.CHORDS_DIMINISHED ) );
+            ret.addAll( ChromaticChordEnum.whichRootIs( rChromatic, ChromaticChordEnum.CHORDS_DIMINISHED ) );
         } else if ( f == ChromaticFunction.N6 ) {
             DiatonicAlt base = t.getNote( DiatonicDegree.I );
 
@@ -45,7 +47,7 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
             Chromatic n2Chromatic = Chromatic.from(n2);
             Chromatic n3Chromatic = Chromatic.from(n3);
 
-            ret.add( n2Chromatic, n3Chromatic, n1Chromatic ); // Primera inversi�n
+            ret.addAll( Arrays.asList(n2Chromatic, n3Chromatic, n1Chromatic) ); // Primera inversión
         } else if ( f == ChromaticFunction.I5 || f == ChromaticFunction.II5
                 || f == ChromaticFunction.III5 || f == ChromaticFunction.IV5
                 || f == ChromaticFunction.V5 || f == ChromaticFunction.VI5
@@ -230,11 +232,22 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
             }
 
             DiatonicChord dc = DiatonicChord.from( f2 );
-            PitchChromaticChord<Chromatic> cc = dc.toChromaticChord( t );
-            ret.add( cc );
+            PitchChromaticChord<Chromatic> cc = ChromaticChord.from(dc, t);
+            ret.addAll( cc );
         }
 
         return ret;
+    }
+
+    static @Nullable ChromaticChord from(DiatonicChord diatonicChord, Tonality tonality) {
+        ChromaticChord chromaticChord = new CustomChromaticChord();
+        for (Diatonic diatonic : diatonicChord) {
+            Chromatic chromatic = Chromatic.from(diatonic, tonality);
+            if (chromatic == null)
+                return null;
+            chromaticChord.add(chromatic);
+        }
+        return chromaticChord;
     }
 
     static ChromaticChord from(DiatonicChordMidi diatonicChordMidi) {
@@ -312,5 +325,59 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
         }
 
         return ret;
+    }
+
+
+    static PitchChromaticChord<Chromatic> from(DiatonicChord diatonicChord, Tonality t, DiatonicFunction df) {
+        CustomChromaticChord cc = new CustomChromaticChord();
+        for ( Diatonic d : diatonicChord ) {
+            Chromatic chromatic = ChromaticAdapter.from(d, t);
+            cc.add(chromatic);
+        }
+
+        if ( df != null )
+            switch ( df ) {
+                case I2:
+                case II2:
+                case III2:
+                case IV2:
+                case V2:
+                case VI2:
+                case VII2:
+                    for ( ChromaticChordEnum c : SetUtils.concat( ChromaticChordEnum.CHORDS_SUS2, ChromaticChordEnum.CHORDS_SUSb2, ChromaticChordEnum.CHORDS_SUSb2b5 ) )
+                        if ( cc.equalsEnharmonic( c ) ) {
+                            return c;
+                        }
+                    break;
+                case I4:
+                case II4:
+                case III4:
+                case IV4:
+                case V4:
+                case VI4:
+                case VII4:
+                    for ( ChromaticChordEnum c : SetUtils.concat( ChromaticChordEnum.CHORDS_SUS4, ChromaticChordEnum.CHORDS_SUSa4 ) )
+                        if ( cc.equalsEnharmonic( c ) ) {
+                            return c;
+                        }
+                    break;
+                case I6:
+                case II6:
+                case III6:
+                case IV6:
+                case V6:
+                case VI6:
+                case VII6:
+                    for ( ChromaticChordEnum c : SetUtils.concat( ChromaticChordEnum.CHORDS_6, ChromaticChordEnum.CHORDS_m6 ) )
+                        if ( cc.equalsEnharmonic( c ) ) {
+                            return c;
+                        }
+                    break;
+            }
+
+        cc.updateWhatIsIt();
+        //assert cc.meta.str != null : "meta.str es null: " + cc.notesToString() + " [" + t + "] [" + df + "] " + t.notesToString();
+
+        return cc;
     }
 }

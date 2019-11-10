@@ -10,7 +10,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 class DiatonicMidiAdapter {
     public static @Nullable DiatonicMidi from(@NonNull ChromaticMidi chromaticMidi, @NonNull Tonality tonality) {
         Chromatic chromatic = ChromaticAdapter.from(chromaticMidi);
-            DiatonicDegree pos = tonality.getDegreeFrom( chromatic );
+            DiatonicDegree pos = (DiatonicDegree)tonality.getDegreeFrom( chromatic );
             if ( pos == null ) {
                 //throw new TonalityException( chromatic, tonality );
                 return null;

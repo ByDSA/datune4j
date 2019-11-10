@@ -1,6 +1,7 @@
 package es.danisales.datune.musical;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
+import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.midi.AddedException;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.pitch.Chord;
@@ -8,8 +9,12 @@ import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
+import javax.annotation.Nonnull;
 import java.util.*;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 public enum DiatonicChordEnum implements DiatonicChord {
 	TRIAD(Diatonic.C, Diatonic.E, Diatonic.G),
@@ -31,19 +36,26 @@ public enum DiatonicChordEnum implements DiatonicChord {
 
 	private final List<Diatonic> notes;
 
-	DiatonicChordEnum(Diatonic... cs) {
-		assert cs != null;		
-		List<Diatonic> notesMutatable = new ArrayList<>();
-		notesMutatable.addAll(Arrays.asList(cs));
+	DiatonicChordEnum(@NonNull Diatonic... diatonics) {
+		Objects.requireNonNull(diatonics);
+		List<Diatonic> notesMutatable = new ArrayList<>(Arrays.asList(diatonics));
 		notes = Collections.unmodifiableList( notesMutatable );
 	}
 
 	@Override
 	public List<DiatonicChord> getAllInversions() {
-		return null;
+			List<DiatonicChord> ret = new ArrayList<>();
+
+			ret.add( this );
+
+			DiatonicChord last = this;
+			for ( int i = 0; i < size(); i++ ) {
+				ret.add( last );
+				last = last.getInv();
+			}
+
+			return ret;
 	}
-	
-	
 
 	@Override
 	public int getRootPos() {
@@ -55,22 +67,32 @@ public enum DiatonicChordEnum implements DiatonicChord {
 		return notes.get( getRootPos() );
 	}
 
+	@Nullable
 	@Override
-	public CustomDiatonicChord getInv(int n) {
-		CustomDiatonicChord copy = new CustomDiatonicChord(this);
-		copy.inv(n);
+	public DiatonicChord getOver(@Nonnull Diatonic diatonic) { // todo
+		DiatonicChord diatonicChord = DiatonicChord.from(this);
+		if ( firstDiatonicIs(diatonic) )
+			return this;
+		for (int i = 0; i < size(); i++) {
+			diatonicChord = diatonicChord.getInv();
+			if ( firstDiatonicIs(diatonic) )
+				return this;
+		}
+
+		return null;
+	}
+
+	private boolean firstDiatonicIs(Diatonic diatonic) {
+		return get(0) == diatonic;
+	}
+
+	@Override
+	public DiatonicChord getInv(int n) {
+		DiatonicChord copy = DiatonicChord.from(this);
+		for (int i = 0; i < n; i++)
+			copy = copy.getInv();
+
 		return copy;
-	}
-
-
-	public static Chord<Diatonic> setRootPos(DiatonicChordEnum diatonicChordEnum, int n) {
-		CustomDiatonicChord customDiatonicChord = new CustomDiatonicChord(diatonicChordEnum);
-		customDiatonicChord.setRootPos( n );
-		return customDiatonicChord;
-	}
-
-	public static CustomDiatonicChord add(DiatonicChordEnum diatonicChordEnum, int pos, Diatonic... ns) throws AddedException {
-		return new CustomDiatonicChord(diatonicChordEnum).add( pos, ns );
 	}
 
 	@Override
@@ -189,31 +211,25 @@ public enum DiatonicChordEnum implements DiatonicChord {
 	}
 
 	@Override
-	public PitchChromaticChord<Chromatic> toChromaticChord(Tonality t) {
-		CustomChromaticChord c = new CustomChromaticChord();
-		for (Diatonic d : notes) {
-			Chromatic chromatic = ChromaticAdapter.from(d, t);
-			c.add(chromatic);
-		}
-		return PitchChromaticChord.of( c );
+	public DiatonicChord getShifted(IntervalDiatonic i) { // TODO
+		return null;
 	}
 
-	public static CustomDiatonicChord add(DiatonicChordEnum diatonicChordEnum, Diatonic... cs) throws AddedException {
-		return new CustomDiatonicChord(diatonicChordEnum).add( cs );
+	public static DiatonicChord add(DiatonicChordEnum diatonicChordEnum, Diatonic... cs) throws AddedException {
+		DiatonicChord diatonicChord = DiatonicChord.from(diatonicChordEnum);
+		diatonicChord.addAll( Arrays.asList(cs) );
+		return diatonicChord;
 	}
 
-	public static <T extends ChordCommon<Diatonic>> T add(DiatonicChordEnum diatonicChordEnum, ChordCommon<Diatonic> cs) throws AddedException {
-		return new CustomDiatonicChord(diatonicChordEnum).add( cs );
+	public static DiatonicChord add(DiatonicChordEnum diatonicChordEnum, ChordCommon<Diatonic> cs) throws AddedException {
+		DiatonicChord diatonicChord = DiatonicChord.from(diatonicChordEnum);
+		diatonicChord.addAll( cs );
+
+		return diatonicChord;
 	}
 
 	@Override
 	public DiatonicDegree getDegree() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CustomDiatonicChord shift(int i) {
 		// TODO Auto-generated method stub
 		return null;
 	}

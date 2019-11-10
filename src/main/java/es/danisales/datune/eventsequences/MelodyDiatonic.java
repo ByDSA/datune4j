@@ -126,7 +126,7 @@ public class MelodyDiatonic extends Melody {
 	}
 
 	@Override
-	public int getDuration() {
+	public int getLength() {
 		int d = 0;
 		for (DiatonicMidi nd : notesDiatonic)
 			d += nd.getLength();

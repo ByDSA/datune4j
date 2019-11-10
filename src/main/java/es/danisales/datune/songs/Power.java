@@ -258,7 +258,7 @@ public class Power extends Song {
 					c.addInterval(IntervalDiatonic.NINTH);
 					//c.addInterval(IntervalDiatonic.SIXTH);
 					//c.addInterval(IntervalDiatonic.SEVENTH);
-					c.showNotes();
+					System.out.println(c);
 				} else {
 					//c.addInterval(IntervalDiatonic.TENTH);
 					c.addInterval(IntervalDiatonic.SEVENTH);
@@ -318,7 +318,7 @@ public class Power extends Song {
 
 		channelGuitars2.add(seek, cad);
 
-		for(int i = 0; i < cad.getDuration(); i+= Drums.POWER.getDuration())
+		for(int i = 0; i < cad.getDuration(); i+= Drums.POWER.getLength())
 			drums.add(seek+ i, Drums.POWER);
 
 		return cad.getDuration();

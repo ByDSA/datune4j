@@ -1,10 +1,12 @@
 package es.danisales.datune.pitch;
 
 import es.danisales.datune.diatonic.Quality;
+import es.danisales.datune.midi.ChromaticChordMidi;
+import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChordEnum;
 import es.danisales.datune.musical.CustomChromaticChord;
-import es.danisales.datune.musical.CustomChromaticChord.ImpossibleChord;
+import es.danisales.datune.musical.ImpossibleChordException;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
 
 import java.util.ArrayList;
@@ -13,6 +15,22 @@ import java.util.List;
 
 public interface PitchChromaticChord<N extends PitchChromaticSingle> extends ChordCommon<N> {	
 	boolean hasSameNotes(PitchChromaticChord<N> chord);
+
+	static PitchChromaticChord<Chromatic> from(ChromaticChordMidi chromaticChordMidi) {
+		if (chromaticChordMidi.getRootPos() != 0) {
+			CustomChromaticChord ns = CustomChromaticChord.noneOf();
+			for ( ChromaticMidi n : chromaticChordMidi ) {
+				Chromatic chromatic = ChromaticAdapter.from(n);
+				ns.add( chromatic );
+
+				if ( n == chromaticChordMidi.getRoot() )
+					ns.setRootPos( ns.size() - 1 );
+			}
+
+			return ns;
+		} else
+			return PitchChromaticChord.of(chromaticChordMidi);
+	}
 
 	default <Array extends PitchChromaticChord<? extends PitchChromaticSingle>> boolean hasSameNotesOrder(Array notes) {
 		if ( size() != notes.size() )
@@ -98,7 +116,7 @@ public interface PitchChromaticChord<N extends PitchChromaticSingle> extends Cho
 
 	Quality getQuality();
 	
-	default <T extends PitchChromaticChord> T over(PitchChromaticSingle c) throws ImpossibleChord {
+	default <T extends PitchChromaticChord> T over(PitchChromaticSingle c) throws ImpossibleChordException {
 		T dup = (T) of(this);
 		Chromatic chromaticOther = ChromaticAdapter.from( c );
 		Chromatic firstChromatic = ChromaticAdapter.from( get(0) );
@@ -109,7 +127,7 @@ public interface PitchChromaticChord<N extends PitchChromaticSingle> extends Cho
 				dup = (T)dup.getInv();
 		}
 
-		throw new ImpossibleChord();
+		throw new ImpossibleChordException();
 	}
 
 	static PitchChromaticChord of(PitchChromaticSingle... chord) {

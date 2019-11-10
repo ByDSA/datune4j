@@ -115,7 +115,7 @@ public class Progression<This extends Progression> implements EventComplex {
 				es.add(duration, new KeySignatureEvent(s));
 
 			es.add(duration, node);
-			duration += node.getDuration();
+			duration += node.getLength();
 		}
 
 		return es;
@@ -204,7 +204,7 @@ public class Progression<This extends Progression> implements EventComplex {
 	public DiatonicChordMidi getChordAtTime(int t) {
 		int duration = 0;
 		for(DiatonicChordMidi n : nodes) {
-			int d = n.getDuration();
+			int d = n.getLength();
 			if (duration + d > t)
 				return n;
 			duration += d;
@@ -216,7 +216,7 @@ public class Progression<This extends Progression> implements EventComplex {
 	public int getDuration() {
 		int d = 0;
 		for(DiatonicChordMidi n : nodes)
-			d += n.getDuration();
+			d += n.getLength();
 
 		return d;
 	}

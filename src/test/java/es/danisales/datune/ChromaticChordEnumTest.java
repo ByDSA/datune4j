@@ -4,6 +4,7 @@ import es.danisales.datune.diatonic.Quality;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChordEnum;
 import es.danisales.datune.musical.CustomChromaticChord;
+import es.danisales.datune.musical.ImpossibleChordException;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import org.junit.Test;
 
@@ -26,7 +27,7 @@ public class ChromaticChordEnumTest {
 		assertEquals( ChromaticChordEnum.C.getInv(), c );
 	}
 
-	@Test(expected = CustomChromaticChord.ImpossibleChord.class)
+	@Test(expected = ImpossibleChordException.class)
 	public void overImpossibleChord() {
 		PitchChromaticChord<Chromatic> c = ChromaticChordEnum.C.over(Chromatic.F);
 	}

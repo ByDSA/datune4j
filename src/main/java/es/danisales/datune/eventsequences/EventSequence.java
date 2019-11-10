@@ -100,7 +100,7 @@ public class EventSequence implements Durable, EventComplex {
 	}
 
 	public static ChromaticChordMidi whatNotesArePlaying(EventSequence es, long time) {
-		assert time < es.getDuration();
+		assert time < es.getLength();
 		ChromaticChordMidi notes = ChromaticChordMidi.newEmpty();
 
 		es.forEach( (Long t, Event ev) -> {
@@ -178,7 +178,7 @@ public class EventSequence implements Durable, EventComplex {
 	}
 
 	@Override
-	public int getDuration() {
+	public int getLength() {
 		int d = duration;
 		for ( Iterator<Map.Entry<Long, ArrayList<Event>>> it = getMap().entrySet().iterator(); it
 				.hasNext(); ) {
@@ -188,7 +188,7 @@ public class EventSequence implements Durable, EventComplex {
 
 			for ( Event e : value )
 				if ( e instanceof Durable ) {
-					d = (int) Math.max( d, key + ( (Durable) e ).getDuration() );
+					d = (int) Math.max( d, key + ( (Durable) e ).getLength() );
 				}
 		}
 

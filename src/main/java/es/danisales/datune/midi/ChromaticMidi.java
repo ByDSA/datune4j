@@ -2,6 +2,7 @@ package es.danisales.datune.midi;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.IntervalChromatic;
+import es.danisales.datune.diatonic.TonalityDegree;
 import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.midi.Events.NoteOff;
 import es.danisales.datune.midi.Events.NoteOn;
@@ -123,7 +124,7 @@ public final class ChromaticMidi implements PitchSingleMidi, PitchChromaticSingl
 
 	public static String literal(DiatonicAlt diatonicAlt, Tonality tonality) {
 		if ( tonality != null ) {
-			DiatonicDegree pos = tonality.getDegreeFrom( diatonicAlt );
+			TonalityDegree pos = tonality.getDegreeFrom( diatonicAlt );
 			if ( pos != null )
 				diatonicAlt = tonality.getNote( pos );
 		}

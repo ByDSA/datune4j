@@ -111,13 +111,17 @@ public enum Chromatic implements PitchChromaticSingle {
 		throw new RuntimeException("Impossible");
 	}
 
-	public static Chromatic from(PitchChromaticSingle t) {
+	public static @NonNull Chromatic from(PitchChromaticSingle t) {
 		return ChromaticAdapter.from(t);
 	}
 
-	public static Chromatic from(DiatonicDegree diatonicDegree, Tonality tonality) {
+	public static @NonNull Chromatic from(DiatonicDegree diatonicDegree, Tonality tonality) {
 		DiatonicAlt diatonicAlt = tonality.getNote(diatonicDegree);
 		return Chromatic.from(diatonicAlt);
+	}
+
+	public static @Nullable Chromatic from(@NonNull Diatonic diatonic, @NonNull Tonality tonality) {
+		return ChromaticAdapter.from(diatonic, tonality);
 	}
 
 	public Chromatic addSemi(int n) {

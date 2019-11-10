@@ -157,8 +157,8 @@ public interface Tonality {
         return getScale().size();
     }
 
-    default DiatonicAlt getNote(DiatonicDegree diatonicDegree) {
-        int i = diatonicDegree.ordinal();
+    default @NonNull DiatonicAlt getNote(@NonNull TonalityDegree diatonicDegree) {
+        int i = diatonicDegree.val();
         return getNotes().get(i);
     }
 
@@ -218,10 +218,10 @@ public interface Tonality {
         return ret;
     }
 
-    default @Nullable DiatonicDegree getDegreeFrom(@NonNull DiatonicAlt note) {
+    default @Nullable TonalityDegree getDegreeFrom(@NonNull DiatonicAlt note) {
         Objects.requireNonNull(note, "No se ha especificado nota");
 
-        for ( DiatonicDegree diatonicDegree : DiatonicDegree.values() ) {
+        for ( TonalityDegree diatonicDegree : getDegrees() ) {
             if (getNote(diatonicDegree).equals(note))
                 return diatonicDegree;
         }
@@ -229,10 +229,14 @@ public interface Tonality {
         return null;
     }
 
-    default @Nullable DiatonicDegree getDegreeFrom(@NonNull Chromatic chromatic) {
+    default List<TonalityDegree> getDegrees() {
+        return TonalityDegree.valuesFrom( getNotes().size() );
+    }
+
+    default @Nullable TonalityDegree getDegreeFrom(@NonNull Chromatic chromatic) {
         Objects.requireNonNull(chromatic, "No se ha especificado nota");
 
-        for ( DiatonicDegree diatonicDegree : DiatonicDegree.values() ) {
+        for ( TonalityDegree diatonicDegree : getDegrees() ) {
             DiatonicAlt degreeDiatonicAlt = getNote(diatonicDegree);
             Chromatic degreeChromatic = Chromatic.from(degreeDiatonicAlt);
             if (degreeChromatic == chromatic)
@@ -284,7 +288,7 @@ public interface Tonality {
      * return true; }
      */
 
-    default Tonality getRelativeScaleDiatonic(DiatonicDegree pos) {
+    default Tonality getRelativeScaleDiatonic(DiatonicDegree pos) { // todo: sólo diatonic
         return Tonality.from( getNote( pos ), getScale() );
     }
 
@@ -324,7 +328,7 @@ public interface Tonality {
         return ret;
     }
 
-    default IntervalChromatic getInterval(DiatonicDegree from, IntervalDiatonic id) {
+    default IntervalChromatic getInterval(DiatonicDegree from, IntervalDiatonic id) { // todo: sólo diatónica
         int idInt = id.ordinal();
         DiatonicDegree toDiatonicDegree = DiatonicDegree.add(from, id);
         DiatonicAlt toDiatonicAlt = getNote(toDiatonicDegree);
