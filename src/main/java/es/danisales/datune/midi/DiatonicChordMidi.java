@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchDiatonic {
+public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchDiatonic, DiatonicChordCommon<DiatonicMidi> {
     protected HarmonicFunction	function	= null;
     public Tonality				metaTonality;
 
@@ -1267,5 +1267,10 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
     @Override
     protected DiatonicChordMidi newChord() {
         return new DiatonicChordMidi();
+    }
+
+    @Override
+    public DiatonicChordCommon getShifted(IntervalDiatonic intervalDiatonic) {
+        return null;
     }
 }

@@ -1,24 +1,47 @@
 package es.danisales.datune.musical;
 
-import es.danisales.datastructures.SetUtils;
 import es.danisales.datune.diatonic.DiatonicDegree;
-import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.midi.AddedException;
 import es.danisales.datune.midi.ChromaticMidi;
-import es.danisales.datune.musical.transformations.ChromaticAdapter;
-import es.danisales.datune.pitch.*;
+import es.danisales.datune.pitch.Chord;
+import es.danisales.datune.pitch.ChordCommon;
+import es.danisales.datune.pitch.ChordMutableInterface;
 import es.danisales.datune.tonality.Tonality;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.BiFunction;
 
 class CustomDiatonicChord extends Chord<Diatonic> implements DiatonicChord, ChordMutableInterface<Diatonic> {
-	public void shift(IntervalDiatonic intervalDiatonic) {
+    public static CustomDiatonicChord from(DiatonicChord diatonics) {
+    	CustomDiatonicChord customDiatonicChord = new CustomDiatonicChord();
+		customDiatonicChord.addAll(diatonics);
+    	return customDiatonicChord;
+    }
+
+	@Override
+	public DiatonicChord getInv(int n) {
+		CustomDiatonicChord ret = CustomDiatonicChord.from(this);
+		if ( n == 0 )
+			return ret;
+		Collections.rotate(ret, -n);
+		ret.setRootPos(getRootPos()-n);
+
+		if (ret.getRootPos() != 0) {
+			DiatonicChordEnum diatonicChordEnum = DiatonicChordEnum.from(ret);
+			if (diatonicChordEnum != null)
+				return diatonicChordEnum;
+		}
+
+		return ret;
+	}
+
+    public void shift(IntervalDiatonic intervalDiatonic) {
 		for ( int i = 0; i < size(); i++ ) {
-			set( i, get( i ).shift( intervalDiatonic ) );
+			set( i, get( i ).getShifted( intervalDiatonic ) );
 		}
 	}
 
@@ -67,12 +90,6 @@ class CustomDiatonicChord extends Chord<Diatonic> implements DiatonicChord, Chor
 	}
 
 	@Override
-	public DiatonicChord getInv(int n) {
-		DiatonicChord copy = DiatonicChord.from(this);
-		return copy.getInv(n);
-	}
-
-	@Override
 	public List<DiatonicChord> getAllInversions() {
 		List<DiatonicChord> ret = new ArrayList<>();
 
@@ -85,5 +102,23 @@ class CustomDiatonicChord extends Chord<Diatonic> implements DiatonicChord, Chor
 		}
 
 		return ret;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if ( !(o instanceof DiatonicChord))
+			return false;
+
+		DiatonicChord notes = (DiatonicChord)o;
+
+		if (size() != notes.size())
+			return false;
+
+		for (int i = 0; i < size(); i++) {
+			if (get(i).getDiatonic().intValue() != notes.get(i).getDiatonic().intValue())
+				return false;
+		}
+
+		return true;
 	}
 }

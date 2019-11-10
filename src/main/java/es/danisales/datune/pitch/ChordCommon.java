@@ -1,10 +1,8 @@
 package es.danisales.datune.pitch;
 
-import es.danisales.datune.musical.ImpossibleChordException;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.List;
 
 // Para las cosas comunes de los chord mutables y los chord inmutables

@@ -11,6 +11,7 @@ import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -348,7 +349,7 @@ public class DiatonicChordMidiTest {
 		assertEquals( ChromaticChordEnum.FFm, ChromaticChord.from(dcm) );
 
 		assertEquals(
-			DiatonicChord.from( Diatonic.D, Diatonic.F, Diatonic.A), DiatonicChord.from( DiatonicFunction.II )
+			DiatonicChord.from(Arrays.asList( Diatonic.D, Diatonic.F, Diatonic.A) ), DiatonicChord.from( DiatonicFunction.II )
 		);
 
 		assertEquals(

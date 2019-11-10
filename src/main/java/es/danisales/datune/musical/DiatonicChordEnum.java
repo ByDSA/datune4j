@@ -3,18 +3,13 @@ package es.danisales.datune.musical;
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.midi.AddedException;
-import es.danisales.datune.musical.transformations.ChromaticAdapter;
-import es.danisales.datune.pitch.Chord;
 import es.danisales.datune.pitch.ChordCommon;
-import es.danisales.datune.pitch.PitchChromaticChord;
-import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.pitch.PitchDiatonicSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import javax.annotation.Nonnull;
 import java.util.*;
-
-import static com.google.common.base.Preconditions.checkArgument;
 
 public enum DiatonicChordEnum implements DiatonicChord {
 	TRIAD(Diatonic.C, Diatonic.E, Diatonic.G),
@@ -42,19 +37,41 @@ public enum DiatonicChordEnum implements DiatonicChord {
 		notes = Collections.unmodifiableList( notesMutatable );
 	}
 
+	public static @Nullable DiatonicChordEnum from(@NonNull Collection<? extends PitchDiatonicSingle> diatonicCollection) {
+		for (DiatonicChordEnum diatonicChord : DiatonicChordEnum.values())
+			if (diatonicChord.sameDiatonicsAs(diatonicCollection))
+				return diatonicChord;
+
+		return null;
+	}
+
+	private boolean sameDiatonicsAs(Collection<? extends PitchDiatonicSingle> diatonicCollection) {
+		if (notes.size() != diatonicCollection.size())
+			return false;
+
+		int i = 0;
+		for (PitchDiatonicSingle pitchDiatonicSingle : diatonicCollection) {
+			if (notes.get(i) != pitchDiatonicSingle.getDiatonic())
+				return false;
+			i++;
+		}
+
+		return true;
+	}
+
 	@Override
 	public List<DiatonicChord> getAllInversions() {
-			List<DiatonicChord> ret = new ArrayList<>();
+		List<DiatonicChord> ret = new ArrayList<>();
 
-			ret.add( this );
+		ret.add( this );
 
-			DiatonicChord last = this;
-			for ( int i = 0; i < size(); i++ ) {
-				ret.add( last );
-				last = last.getInv();
-			}
+		DiatonicChord last = this;
+		for ( int i = 0; i < size(); i++ ) {
+			ret.add( last );
+			last = last.getInv();
+		}
 
-			return ret;
+		return ret;
 	}
 
 	@Override
@@ -69,7 +86,7 @@ public enum DiatonicChordEnum implements DiatonicChord {
 
 	@Nullable
 	@Override
-	public DiatonicChord getOver(@Nonnull Diatonic diatonic) { // todo
+	public DiatonicChord getOver(@Nonnull Diatonic diatonic) {
 		DiatonicChord diatonicChord = DiatonicChord.from(this);
 		if ( firstDiatonicIs(diatonic) )
 			return this;
@@ -84,15 +101,6 @@ public enum DiatonicChordEnum implements DiatonicChord {
 
 	private boolean firstDiatonicIs(Diatonic diatonic) {
 		return get(0) == diatonic;
-	}
-
-	@Override
-	public DiatonicChord getInv(int n) {
-		DiatonicChord copy = DiatonicChord.from(this);
-		for (int i = 0; i < n; i++)
-			copy = copy.getInv();
-
-		return copy;
 	}
 
 	@Override
@@ -230,7 +238,6 @@ public enum DiatonicChordEnum implements DiatonicChord {
 
 	@Override
 	public DiatonicDegree getDegree() {
-		// TODO Auto-generated method stub
-		return null;
+		return getRoot().getDegree();
 	}
 }

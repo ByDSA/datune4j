@@ -4,10 +4,12 @@ import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.musical.Diatonic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.musical.transformations.Namer;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.pitch.PitchDiatonic;
+import es.danisales.datune.pitch.PitchDiatonicSingle;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -15,7 +17,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-public class DiatonicMidi implements PitchSingleMidi, PitchChromaticSingle, PitchDiatonic {
+public class DiatonicMidi implements PitchSingleMidi, PitchDiatonicSingle, PitchChromaticSingle, PitchDiatonic {
 	protected PitchMidi	pitch;
 	protected int	velocity;
 	protected int	length;
@@ -187,5 +189,21 @@ public class DiatonicMidi implements PitchSingleMidi, PitchChromaticSingle, Pitc
 
 	public DiatonicAlt getDiatonicAlt() {
 		return tonality.getNote(degree);
+	}
+
+	@Override
+	public Diatonic getDiatonic() {
+		return getDiatonicAlt().getDiatonic();
+	}
+
+	@Override
+	public PitchDiatonicSingle getShifted(IntervalDiatonic i) {
+		DiatonicMidi diatonicMidi = DiatonicMidi.from(this);
+		diatonicMidi.degree = DiatonicDegree.add(diatonicMidi.degree, i);
+		return diatonicMidi;
+	}
+
+	private static DiatonicMidi from(DiatonicMidi diatonicMidi) {
+		return diatonicMidi.clone();
 	}
 }

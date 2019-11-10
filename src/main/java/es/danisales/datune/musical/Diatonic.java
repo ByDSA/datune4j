@@ -4,6 +4,7 @@ import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.musical.transformations.DiatonicAdapter;
 import es.danisales.datune.pitch.PitchDiatonicSingle;
+import es.danisales.utils.MathUtils;
 
 public enum Diatonic implements PitchDiatonicSingle {
 	C, D, E, F, G, A, B;
@@ -22,12 +23,13 @@ public enum Diatonic implements PitchDiatonicSingle {
 
 	/** Transforms **/
 
-	public Diatonic shift(IntervalDiatonic intervalDiatonic) {
+	@Override
+	public Diatonic getShifted(IntervalDiatonic intervalDiatonic) {
 		return DiatonicAdapter.from( this.intValue() + intervalDiatonic.ordinal() );
 	}
 
 	public Diatonic next() {
-		return shift(IntervalDiatonic.SECOND);
+		return getShifted(IntervalDiatonic.SECOND);
 	}
 
 	/** Calculator **/
@@ -43,8 +45,9 @@ public enum Diatonic implements PitchDiatonicSingle {
 
 	public IntervalDiatonic dist(Diatonic n2) {
 		int d = n2.getDegree().val() - getDegree().val();
+		d = MathUtils.rotativeTrim(d, Diatonic.NUMBER);
 
-		return IntervalDiatonic.fromIndex( d );
+		return IntervalDiatonic.values()[d];
 	}
 
 	@Override
