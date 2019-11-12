@@ -6,6 +6,7 @@ import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.CustomChromaticChord;
 import es.danisales.datune.musical.ImpossibleChordException;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
+import es.danisales.datune.pitch.Chord;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.pitch.PitchOctave;
@@ -173,6 +174,11 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 	}
 
 	@Override
+	public ChromaticChordMidi duplicate() {
+		return ChromaticChordMidi.from(this);
+	}
+
+	@Override
 	@Nonnull
 	public ChromaticChordMidi subList(int a, int b) {
 		assert b < size();
@@ -226,11 +232,6 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 	}
 
 	@Override
-	public @NonNull ChromaticChordMidi getOver(@NonNull ChromaticMidi c) throws ImpossibleChordException {
-		return (ChromaticChordMidi) super.getOver( c );
-	}
-
-	@Override
 	public boolean isSus4() {
 		// TODO Auto-generated method stub
 		return false;
@@ -263,13 +264,6 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 	public List integerNotationFromRoot() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public ChromaticChordMidi getInv(int n) {
-		ChromaticChordMidi copy = ChromaticChordMidi.from(this);
-		copy.inv(n);
-		return copy;
 	}
 
 	public static Builder builder() {

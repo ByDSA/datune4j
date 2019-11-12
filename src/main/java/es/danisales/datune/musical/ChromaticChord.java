@@ -380,4 +380,9 @@ public interface ChromaticChord extends PitchChromaticChord<Chromatic> {
 
         return cc;
     }
+
+    @Override
+    default CustomChromaticChord duplicate() {
+        return CustomChromaticChord.from(this);
+    }
 }

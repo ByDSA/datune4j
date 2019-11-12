@@ -168,24 +168,24 @@ public class Tests {
 
 	@Test
 	public void toChordUnfunc() {
-		DiatonicChordMidi c = ( new DiatonicChordMidi( DiatonicFunction.IV6, 5, Tonality.C ) )
-				.getInv( 3 );
+		DiatonicChordMidi c = ( new DiatonicChordMidi( DiatonicFunction.IV6, 5, Tonality.C ) );
+		c.inv(3);
 
 		ChromaticChordMidi cc = c.toChromaticChordMidi();
 	}
 
 	@Test
 	public void toChordFunc() {
-		DiatonicChordMidi c = ( new DiatonicChordMidi( DiatonicFunction.IV6, 5, Tonality.C ) )
-				.getInv( 3 );
+		DiatonicChordMidi c = ( new DiatonicChordMidi( DiatonicFunction.IV6, 5, Tonality.C ) );
+		c.inv(3);
 
 		List<DiatonicChordMidi> chords = c.toChromaticChordMidi().toDiatonicChordMidi( false );
 	}
 
 	@Test
 	public void whatIsIt() {
-		DiatonicChordMidi c = ( new DiatonicChordMidi( DiatonicFunction.IV6, 5, Tonality.C ) )
-				.getInv( 3 );
+		DiatonicChordMidi c = ( new DiatonicChordMidi( DiatonicFunction.IV6, 5, Tonality.C ) );
+		c.inv(3);
 
 		List<DiatonicChordMidi> chords = c.toChromaticChordMidi().toDiatonicChordMidi( false );
 

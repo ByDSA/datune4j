@@ -1,15 +1,16 @@
 package es.danisales.datune.pitch;
 
+import es.danisales.datune.musical.Diatonic;
+import es.danisales.datune.musical.DiatonicChord;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
 // Para las cosas comunes de los chord mutables y los chord inmutables
-public interface ChordCommon<N extends SymbolicPitch> extends List<N>, Cloneable {
+public interface ChordCommon<N extends SymbolicPitch> extends List<N> {
 	<T extends ChordCommon<N>> List<T> getAllInversions();
 	int getRootPos();
-	<T extends ChordCommon<N>> T getInv(int n);
 	@Nullable N getRoot();
 	default int getInversionNumber() {
 		int rootPos = getRootPos();
@@ -18,9 +19,18 @@ public interface ChordCommon<N extends SymbolicPitch> extends List<N>, Cloneable
 		else
 			return -1;
 	}
-	default <T extends ChordCommon<N>> T getInv() {
-		return getInv(1);
-	}
+	ChordCommon<N> duplicate(); // Si se usa clone, no se puede definir como default en la interfaz p. ej. DiatonicChordInterface
 
-	@Nullable ChordCommon<N> getOver(@Nonnull N c);
+	default int _hashCode() { // si se usa hashCode normal, no se peude usar en enum, donde no se peude sobreescribir
+		if (size() == 0)
+			return 0;
+
+		int result = 1;
+
+		for (N element : this)
+			result = 31 * result + (element == null ? 0 : element.hashCode());
+		result = 37 * result + getRootPos();
+
+		return result;
+	}
 }

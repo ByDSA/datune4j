@@ -127,6 +127,11 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 	}
 
 	@Override
+	public CustomChromaticChord duplicate() {
+		return ChromaticChord.super.duplicate();
+	}
+
+	@Override
 	public String toString() {
 		if ( size() == 0 )
 			return ChordNotation.EMPTY_CHORD;
@@ -243,10 +248,10 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 
 		ret.add( this.clone() );
 
-		ChromaticChord last = this;
+		CustomChromaticChord last = this;
 		for ( int i = 0; i < size(); i++ ) {
 			ret.add( last );
-			last = last.getInv();
+			last.inv();
 		}
 
 		return ret;
@@ -333,13 +338,6 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 		ee.addAll(chord);
 
 		return e.equals( ee );
-	}
-
-	@Override
-	public CustomChromaticChord getInv(int n) {
-		CustomChromaticChord copy = CustomChromaticChord.from(this);
-		copy.inv(n);
-		return copy;
 	}
 
 	public static CustomChromaticChord noneOf() {

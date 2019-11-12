@@ -12,22 +12,27 @@ class DiatonicChordAdapter {
     private DiatonicChordAdapter() {
     }
 
-    public static @NonNull DiatonicChord from(@NonNull Collection<? extends PitchDiatonicSingle> diatonicChord) {
+    public static @NonNull DiatonicChordInterface from(@NonNull Collection<? extends PitchDiatonicSingle> diatonicChord) {
         Objects.requireNonNull(diatonicChord);
 
-        DiatonicChord ret = DiatonicChordEnum.from(diatonicChord);
+        DiatonicChordInterface ret = DiatonicChordEnum.from(diatonicChord);
         if (ret == null) {
             ret = new CustomDiatonicChord();
             for (PitchDiatonicSingle diatonic : diatonicChord) {
                 Diatonic c = diatonic.getDiatonic();
                 ret.add(c);
             }
+            if (diatonicChord instanceof CustomDiatonicChord) {
+                CustomDiatonicChord retCustom = (CustomDiatonicChord)ret;
+                CustomDiatonicChord inCustom = (CustomDiatonicChord)diatonicChord;
+                retCustom.setRootPos(inCustom.getRootPos());
+            }
         }
 
         return ret;
     }
 
-    public static DiatonicChord from(@NonNull DiatonicFunction f) {
+    public static DiatonicChordInterface from(@NonNull DiatonicFunction f) {
         Objects.requireNonNull(f);
 
         switch ( f ) {
@@ -265,5 +270,25 @@ class DiatonicChordAdapter {
         throw new RuntimeException( " " + f + " " );
 
         // return null;
+    }
+
+    static boolean equals(DiatonicChordInterface self, Object o) {
+        if ( !(o instanceof DiatonicChordInterface))
+            return false;
+
+        DiatonicChordInterface notes = (DiatonicChordInterface)o;
+
+        if (self.getRootPos() != notes.getRootPos())
+            return false;
+
+        if (self.size() != notes.size())
+            return false;
+
+        for (int i = 0; i < self.size(); i++) {
+            if (self.get(i).getDiatonic().intValue() != notes.get(i).getDiatonic().intValue())
+                return false;
+        }
+
+        return true;
     }
 }

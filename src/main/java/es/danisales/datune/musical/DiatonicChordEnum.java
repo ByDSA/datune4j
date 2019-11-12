@@ -8,10 +8,9 @@ import es.danisales.datune.pitch.PitchDiatonicSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-import javax.annotation.Nonnull;
 import java.util.*;
 
-public enum DiatonicChordEnum implements DiatonicChord {
+enum DiatonicChordEnum implements DiatonicChordInterface {
 	TRIAD(Diatonic.C, Diatonic.E, Diatonic.G),
 	THIRD(Diatonic.C, Diatonic.E),
 	SUS2(Diatonic.C, Diatonic.D, Diatonic.G),
@@ -63,12 +62,11 @@ public enum DiatonicChordEnum implements DiatonicChord {
 	public List<DiatonicChord> getAllInversions() {
 		List<DiatonicChord> ret = new ArrayList<>();
 
-		ret.add( this );
-
-		DiatonicChord last = this;
+		CustomDiatonicChord last = CustomDiatonicChord.from(this);
 		for ( int i = 0; i < size(); i++ ) {
-			ret.add( last );
-			last = last.getInv();
+			ret.add( DiatonicChord.from(last) );
+			if (i < size()-1)
+				last.inv();
 		}
 
 		return ret;
@@ -84,48 +82,37 @@ public enum DiatonicChordEnum implements DiatonicChord {
 		return notes.get( getRootPos() );
 	}
 
-	@Nullable
 	@Override
-	public DiatonicChord getOver(@Nonnull Diatonic diatonic) {
-		DiatonicChord diatonicChord = DiatonicChord.from(this);
-		if ( firstDiatonicIs(diatonic) )
-			return this;
-		for (int i = 0; i < size(); i++) {
-			diatonicChord = diatonicChord.getInv();
-			if ( firstDiatonicIs(diatonic) )
-				return this;
-		}
-
-		return null;
-	}
-
-	private boolean firstDiatonicIs(Diatonic diatonic) {
-		return get(0) == diatonic;
+	public DiatonicChordEnum duplicate() {
+		return this;
 	}
 
 	@Override
 	public boolean add(Diatonic e) {
-		return notes.add( e );
+		excep();
+		return false;
 	}
 
 	@Override
 	public void add(int index, Diatonic element) {
-		notes.add( index, element );
+		excep();
 	}
 
 	@Override
 	public boolean addAll(@NonNull Collection<? extends Diatonic> c) {
-		return notes.addAll( c );
+		excep();
+		return false;
 	}
 
 	@Override
 	public boolean addAll(int index, @NonNull Collection<? extends Diatonic> c) {
-		return notes.addAll(c);
+		excep();
+		return false;
 	}
 
 	@Override
 	public void clear() {
-		notes.clear();
+		excep();
 	}
 
 	@Override
@@ -175,27 +162,36 @@ public enum DiatonicChordEnum implements DiatonicChord {
 
 	@Override
 	public boolean remove(Object o) {
-		return notes.remove( o );
+		excep();
+		return false;
+	}
+
+	private void excep() {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public Diatonic remove(int index) {
-		return notes.remove( index );
+		excep();
+		return null;
 	}
 
 	@Override
-	public boolean removeAll(Collection<?> c) {
-		return notes.removeAll( c );
+	public boolean removeAll(@NonNull Collection<?> c) {
+		excep();
+		return false;
 	}
 
 	@Override
-	public boolean retainAll(Collection<?> c) {
-		return notes.retainAll( c );
+	public boolean retainAll(@NonNull Collection<?> c) {
+		excep();
+		return false;
 	}
 
 	@Override
 	public Diatonic set(int index, Diatonic element) {
-		return notes.set( index, element );
+		excep();
+		return null;
 	}
 
 	@Override
@@ -219,7 +215,7 @@ public enum DiatonicChordEnum implements DiatonicChord {
 	}
 
 	@Override
-	public DiatonicChord getShifted(IntervalDiatonic i) { // TODO
+	public DiatonicChordInterface getShifted(IntervalDiatonic i) { // TODO
 		return null;
 	}
 

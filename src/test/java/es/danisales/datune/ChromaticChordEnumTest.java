@@ -18,18 +18,23 @@ import static org.junit.Assert.*;
 public class ChromaticChordEnumTest {
 	@Test
 	public void over() {
-		PitchChromaticChord<Chromatic> c = ChromaticChordEnum.C.over(Chromatic.C);
+		CustomChromaticChord c = CustomChromaticChord.from(ChromaticChordEnum.C);
+		c.over(Chromatic.C);
 
-		c = ChromaticChordEnum.C.over(Chromatic.E);
+		c = CustomChromaticChord.from( ChromaticChordEnum.C);
+		c.over(Chromatic.E);
 
 		assertEquals( Chromatic.E, c.get( 0 ) );
 
-		assertEquals( ChromaticChordEnum.C.getInv(), c );
+		CustomChromaticChord reference = CustomChromaticChord.from(ChromaticChordEnum.C);
+		reference.inv();
+		assertEquals(reference, c );
 	}
 
 	@Test(expected = ImpossibleChordException.class)
 	public void overImpossibleChord() {
-		PitchChromaticChord<Chromatic> c = ChromaticChordEnum.C.over(Chromatic.F);
+		CustomChromaticChord c = CustomChromaticChord.from(ChromaticChordEnum.C);
+		c.over(Chromatic.F);
 	}
 
 	@Test

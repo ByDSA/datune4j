@@ -2059,12 +2059,6 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic>, Chroma
 		return 0;
 	}
 
-	@Nullable
-	@Override
-	public ChordCommon<Chromatic> getOver(@Nonnull Chromatic c) { // todo
-		return null;
-	}
-
 	@Override
 	public Quality getQuality() {
 		return meta.quality;
@@ -2243,12 +2237,5 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic>, Chroma
 		}
 
 		return chords;
-	}
-
-	@Override
-	public ChordCommon<Chromatic> getInv(int n) {
-		CustomChromaticChord copy = CustomChromaticChord.from(this);
-		copy.inv(n);
-		return copy;
 	}
 }

@@ -1,6 +1,7 @@
 package es.danisales.datune.pitch;
 
 import es.danisales.datune.midi.AddedException;
+import es.danisales.datune.musical.Chromatic;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -14,7 +15,7 @@ public abstract class Chord<N extends SymbolicPitch> implements List<N>, ChordMu
 	private List<N> innerList = new ArrayList<>();
 
 	@Override
-	public abstract Chord<N> clone();
+	public abstract Chord<N> duplicate();
 
 	@Override
 	public int size() {

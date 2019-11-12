@@ -9,35 +9,15 @@ import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.ChordMutableInterface;
 import es.danisales.datune.tonality.Tonality;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.function.BiFunction;
 
-class CustomDiatonicChord extends Chord<Diatonic> implements DiatonicChord, ChordMutableInterface<Diatonic> {
-    public static CustomDiatonicChord from(DiatonicChord diatonics) {
+class CustomDiatonicChord extends Chord<Diatonic> implements DiatonicChordInterface, ChordMutableInterface<Diatonic> {
+    public static CustomDiatonicChord from(Collection<Diatonic> diatonics) {
     	CustomDiatonicChord customDiatonicChord = new CustomDiatonicChord();
 		customDiatonicChord.addAll(diatonics);
     	return customDiatonicChord;
     }
-
-	@Override
-	public DiatonicChord getInv(int n) {
-		CustomDiatonicChord ret = CustomDiatonicChord.from(this);
-		if ( n == 0 )
-			return ret;
-		Collections.rotate(ret, -n);
-		ret.setRootPos(getRootPos()-n);
-
-		if (ret.getRootPos() != 0) {
-			DiatonicChordEnum diatonicChordEnum = DiatonicChordEnum.from(ret);
-			if (diatonicChordEnum != null)
-				return diatonicChordEnum;
-		}
-
-		return ret;
-	}
 
     public void shift(IntervalDiatonic intervalDiatonic) {
 		for ( int i = 0; i < size(); i++ ) {
@@ -46,15 +26,10 @@ class CustomDiatonicChord extends Chord<Diatonic> implements DiatonicChord, Chor
 	}
 
 	@Override
-	public DiatonicChord getShifted(IntervalDiatonic intervalDiatonic) {
-		DiatonicChord diatonicChord = DiatonicChord.from(this);
+	public DiatonicChordInterface getShifted(IntervalDiatonic intervalDiatonic) {
+		DiatonicChordInterface diatonicChord = DiatonicChordInterface.from(this);
 		diatonicChord = diatonicChord.getShifted(intervalDiatonic);
 		return diatonicChord;
-	}
-
-	@Override
-	public CustomDiatonicChord clone() { // TODO
-		return (CustomDiatonicChord) null;
 	}
 
 	@Override
@@ -90,35 +65,28 @@ class CustomDiatonicChord extends Chord<Diatonic> implements DiatonicChord, Chor
 	}
 
 	@Override
-	public List<DiatonicChord> getAllInversions() {
-		List<DiatonicChord> ret = new ArrayList<>();
+	public List<DiatonicChordInterface> getAllInversions() {
+		List<DiatonicChordInterface> ret = new ArrayList<>();
 
-		ret.add( this.clone() );
+		ret.add( this.duplicate() );
 
-		DiatonicChord last = this;
+		DiatonicChordInterface last = this;
 		for ( int i = 0; i < size(); i++ ) {
 			ret.add( last );
-			last = last.getInv();
+			inv();
 		}
 
 		return ret;
 	}
 
 	@Override
+	public CustomDiatonicChord duplicate() {
+		return CustomDiatonicChord.from(this);
+	}
+
+	@SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
+	@Override
 	public boolean equals(Object o) {
-		if ( !(o instanceof DiatonicChord))
-			return false;
-
-		DiatonicChord notes = (DiatonicChord)o;
-
-		if (size() != notes.size())
-			return false;
-
-		for (int i = 0; i < size(); i++) {
-			if (get(i).getDiatonic().intValue() != notes.get(i).getDiatonic().intValue())
-				return false;
-		}
-
-		return true;
+		return DiatonicChordAdapter.equals(this, o);
 	}
 }

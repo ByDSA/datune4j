@@ -1029,6 +1029,11 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
         return setTonality( tonality.getMajor() );
     }
 
+    @Override
+    public DiatonicChordMidi duplicate() { // todo
+        return null;
+    }
+
     public boolean add(@NonNull DiatonicMidi n) throws AddedException {
         boolean r = super.add( n );
 
@@ -1193,13 +1198,6 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
         }
 
         return distancesAbsolute;
-    }
-
-    @Override
-    public DiatonicChordMidi getInv(int n) {
-        DiatonicChordMidi copy = this.clone();
-        copy.inv(n);
-        return copy;
     }
 
     @Override

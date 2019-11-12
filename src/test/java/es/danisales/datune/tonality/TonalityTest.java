@@ -487,8 +487,10 @@ public class TonalityTest {
 
         assertTrue(ChromaticChord.from(ton, ChromaticFunction.SUBV7_VI).equalsEnharmonic(ChromaticChordEnum.AA7));
 
+        CustomChromaticChord c = ChromaticChordEnum.CC.duplicate();
+        c.inv();
         assertEquals(
-                ChromaticChordEnum.CC.getInv(), ChromaticChord.from(ton, ChromaticFunction.N6)
+                c, ChromaticChord.from(ton, ChromaticFunction.N6)
         );
 
         // TODO:

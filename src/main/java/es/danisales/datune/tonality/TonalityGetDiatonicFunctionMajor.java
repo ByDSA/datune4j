@@ -4,6 +4,7 @@ import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.ChromaticChordEnum;
+import es.danisales.datune.musical.CustomChromaticChord;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -36,14 +37,14 @@ class TonalityGetDiatonicFunctionMajor {
 				case IV4: return ChromaticChord.from(Chromatic.F, Chromatic.B, Chromatic.C ); // Fsus(#4)
 				case V4: return ChromaticChordEnum.Gsus4;
 				case VI4: return ChromaticChordEnum.Asus4;
-				case VII4: return ChromaticChordEnum.Esusb2.over( Chromatic.B );
+				case VII4: CustomChromaticChord ret = CustomChromaticChord.from(ChromaticChordEnum.Esusb2); ret.over( Chromatic.B ); return ret;
 				case I6: return ChromaticChordEnum.C6;
 				case II6: return ChromaticChordEnum.Dm6;
-				case III6: return ChromaticChordEnum.CMaj7.over( Chromatic.E );
+				case III6: ret = CustomChromaticChord.from( ChromaticChordEnum.CMaj7 ); ret.over( Chromatic.E ); return ret;
 				case IV6: return ChromaticChordEnum.F6;
 				case V6: return ChromaticChordEnum.G6;
-				case VI6: return ChromaticChordEnum.FMaj7.over( Chromatic.A );
-				case VII6: return ChromaticChordEnum.G7.over( Chromatic.B );
+				case VI6: ret = CustomChromaticChord.from( ChromaticChordEnum.FMaj7 ); ret.over( Chromatic.A ); return ret;
+				case VII6: ret = CustomChromaticChord.from( ChromaticChordEnum.G7 ); ret.over( Chromatic.B ); return ret;
 				case I7: return ChromaticChordEnum.CMaj7;
 				case II7: return ChromaticChordEnum.Dm7;
 				case III7: return ChromaticChordEnum.Em7;
@@ -53,7 +54,7 @@ class TonalityGetDiatonicFunctionMajor {
 				case VII7: return ChromaticChordEnum.Bm7b5;
 				case I9: return ChromaticChordEnum.CMaj9;
 				case II9: return ChromaticChordEnum.Dm9;
-				case III9: return ChromaticChordEnum.G7add13.over( Chromatic.E );
+				case III9: ret = CustomChromaticChord.from(  ChromaticChordEnum.G7add13 ); ret.over( Chromatic.E ); return ret;
 				case IV9: return ChromaticChordEnum.FMaj9;
 				case V9: return ChromaticChordEnum.G9;
 				case VI9: return ChromaticChordEnum.Am9;
@@ -65,13 +66,13 @@ class TonalityGetDiatonicFunctionMajor {
 				case V11: return ChromaticChordEnum.G11;
 				case VI11: return ChromaticChordEnum.Am11;
 				case VII11: return ChromaticChord.from(Chromatic.B, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.E ); // B7b911
-				case I13: return ChromaticChordEnum.Dm13.over( Chromatic.C );
+				case I13: ret = CustomChromaticChord.from(  ChromaticChordEnum.Dm13 ); ret.over( Chromatic.C ); return ret;
 				case II13: return ChromaticChordEnum.Dm13;
-				case III13: return ChromaticChordEnum.Dm13.over( Chromatic.E );
-				case IV13: return ChromaticChordEnum.Dm13.over( Chromatic.F );
-				case V13: return ChromaticChordEnum.Dm13.over( Chromatic.G );
-				case VI13: return ChromaticChordEnum.Dm13.over( Chromatic.A );
-				case VII13: return ChromaticChordEnum.Dm13.over( Chromatic.B );
+				case III13: ret = CustomChromaticChord.from(  ChromaticChordEnum.Dm13 ); ret.over( Chromatic.E ); return ret;
+				case IV13: ret = CustomChromaticChord.from(  ChromaticChordEnum.Dm13 ); ret.over( Chromatic.F ); return ret;
+				case V13: ret = CustomChromaticChord.from(  ChromaticChordEnum.Dm13 ); ret.over( Chromatic.G ); return ret;
+				case VI13: ret = CustomChromaticChord.from(  ChromaticChordEnum.Dm13 ); ret.over( Chromatic.A ); return ret;
+				case VII13: ret = CustomChromaticChord.from(  ChromaticChordEnum.Dm13 ); ret.over( Chromatic.B ); return ret;
 				case I_SECOND: return ChromaticChord.from(Chromatic.C, Chromatic.D );
 				case II_SECOND: return ChromaticChord.from(Chromatic.D, Chromatic.E );
 				case III_SECOND: return ChromaticChord.from(Chromatic.E, Chromatic.F );

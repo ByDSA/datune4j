@@ -24,11 +24,6 @@ public abstract class ChordMidi<N extends PitchSingleMidi> extends Chord<N>
 
 	CustomChromaticChord meta = null;
 
-	@Override
-	public @NonNull ChordMidi<N> getOver(@NonNull N c) throws ImpossibleChordException {
-		return (ChordMidi<N>) super.getOver( c );
-	}
-
 	<T extends ChordMidi<N>> void assign(@NonNull T c) {
 		Objects.requireNonNull(c);
 		clear();
@@ -212,7 +207,7 @@ public abstract class ChordMidi<N extends PitchSingleMidi> extends Chord<N>
 		T last = (T)this;
 		for ( int i = 0; i < size(); i++ ) {
 			ret.add( last );
-			last = last.getInv();
+			last.inv();
 		}
 
 		return ret;

@@ -4,8 +4,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
 public class CustomDiatonicChordTest {
     @Test
@@ -51,21 +50,33 @@ public class CustomDiatonicChordTest {
     @Test
     public void getInv() {
         DiatonicChord diatonicChord = DiatonicChord.from( Arrays.asList(Diatonic.E, Diatonic.G, Diatonic.B) );
-        DiatonicChord diatonicChordInv = DiatonicChord.from( Arrays.asList(Diatonic.G, Diatonic.B, Diatonic.E) );
-        assertEquals(diatonicChordInv, diatonicChord.getInv());
+        diatonicChord.inv();
+        DiatonicChordInterface diatonicChordInv = DiatonicChordInterface.from( Arrays.asList(Diatonic.G, Diatonic.B, Diatonic.E) );
+        assertEquals(diatonicChordInv, diatonicChord);
     }
 
     @Test
     public void getInv2() {
         DiatonicChord diatonicChord = DiatonicChord.from( Arrays.asList(Diatonic.E, Diatonic.G, Diatonic.B) );
-        DiatonicChord diatonicChordInv = DiatonicChord.from( Arrays.asList(Diatonic.B, Diatonic.E, Diatonic.G) );
-        assertEquals(diatonicChordInv, diatonicChord.getInv());
+        diatonicChord.inv(2);
+        DiatonicChordInterface diatonicChordInv = DiatonicChordInterface.from( Arrays.asList(Diatonic.B, Diatonic.E, Diatonic.G) );
+        assertEquals(diatonicChordInv, diatonicChord);
     }
 
     @Test
     public void getInvToEnum() {
         DiatonicChord diatonicChord = DiatonicChord.from( Arrays.asList(Diatonic.G, Diatonic.C, Diatonic.E) );
-        assertSame(DiatonicChordEnum.TRIAD, diatonicChord.getInv());
+        diatonicChord.inv();
+        assertNotSame(DiatonicChordEnum.TRIAD, diatonicChord);
+        assertNotEquals(DiatonicChordEnum.TRIAD, diatonicChord);
+    }
+
+    @Test
+    public void getInvToEnumResetRoot() {
+        DiatonicChord diatonicChord = DiatonicChord.from( Arrays.asList(Diatonic.G, Diatonic.C, Diatonic.E) );
+        diatonicChord.inv();
+        diatonicChord.setRootPos(0);
+        assertSame(DiatonicChordEnum.TRIAD, diatonicChord);
     }
 
     @Test

@@ -10,6 +10,10 @@ import static org.junit.Assert.*;
 
 public class DiatonicChordEnumTest {
     @Test
+    public void getAllInversions() { // todo
+    }
+
+    @Test
     public void getRootPos() {
         for (DiatonicChordEnum diatonicChordEnum : DiatonicChordEnum.values())
             assertEquals(0, diatonicChordEnum.getRootPos());
@@ -22,101 +26,126 @@ public class DiatonicChordEnumTest {
     }
 
     @Test
-    public void getAllInversions() {
-    }
-
-    @Test
     public void from() {
         DiatonicChord diatonicChord = DiatonicChord.from( Arrays.asList(Diatonic.C, Diatonic.E, Diatonic.G) );
-        assertSame(DiatonicChordEnum.TRIAD, diatonicChord);
+        assertSame(DiatonicChord.TRIAD.innerObject, diatonicChord.innerObject);
     }
 
     @Test
     public void getOver() {
         DiatonicChord diatonicChord = DiatonicChord.from( Arrays.asList(Diatonic.E, Diatonic.G, Diatonic.C) );
-        assertEquals(diatonicChord, DiatonicChordEnum.TRIAD.getOver(Diatonic.E));
+        DiatonicChord dc = DiatonicChord.from(DiatonicChord.TRIAD);
+        dc.over(Diatonic.E);
+
+        assertNotEquals(diatonicChord, dc); // Root es diferente
+    }
+
+    @Test
+    public void getOverResetRoot() {
+        DiatonicChord diatonicChord = DiatonicChord.from( Arrays.asList(Diatonic.E, Diatonic.G, Diatonic.C) );
+        DiatonicChord dc = DiatonicChord.from(DiatonicChord.TRIAD);
+        dc.over(Diatonic.E);
+        dc.resetRoot();
+
+        assertEquals(diatonicChord, dc); // Root es el mismo
     }
 
     @Test
     public void getOverNoChanges() {
-        assertSame(DiatonicChordEnum.TRIAD, DiatonicChordEnum.TRIAD.getOver(Diatonic.C));
+        DiatonicChord dc = DiatonicChord.from(DiatonicChord.TRIAD);
+        dc.over(Diatonic.C);
+
+        assertEquals(DiatonicChord.TRIAD, dc);
+        assertSame(DiatonicChord.TRIAD.innerObject, dc.innerObject);
     }
 
     @Test
     public void getInv() {
         DiatonicChord diatonicChordInv = DiatonicChord.from( Arrays.asList(Diatonic.E, Diatonic.G, Diatonic.C) );
-        assertEquals(diatonicChordInv, DiatonicChordEnum.TRIAD.getInv());
+        diatonicChordInv.setRootPos(2);
+        DiatonicChord dc = DiatonicChord.TRIAD.duplicate();
+        dc.inv();
+
+        assertEquals(diatonicChordInv, dc);
     }
 
     @Test
     public void getInv2() {
         DiatonicChord diatonicChordInv = DiatonicChord.from( Arrays.asList(Diatonic.G, Diatonic.C, Diatonic.E) );
-        assertEquals(diatonicChordInv, DiatonicChordEnum.TRIAD.getInv(2));
+        diatonicChordInv.setRootPos(1);
+        DiatonicChord dc = DiatonicChord.TRIAD.duplicate();
+        dc.inv(2);
+        assertEquals(diatonicChordInv, dc);
     }
 
     @Test
     public void getInv3Same() {
-        assertSame(DiatonicChordEnum.TRIAD, DiatonicChordEnum.TRIAD.getInv(3));
+        DiatonicChord dc = DiatonicChord.from(DiatonicChord.TRIAD);
+        dc.inv(3);
+
+        assertEquals(DiatonicChord.TRIAD, dc);
+        assertEquals(DiatonicChord.TRIAD.innerObject, dc.innerObject);
+        assertSame(DiatonicChord.TRIAD.innerObject, dc.innerObject);
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void add() {
-        DiatonicChordEnum.TRIAD.add(Diatonic.C);
+        DiatonicChord.TRIAD.add(Diatonic.C);
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void addAll() {
-        DiatonicChordEnum.TRIAD.addAll( Arrays.asList(Diatonic.C, Diatonic.D) );
+        DiatonicChord.TRIAD.addAll( Arrays.asList(Diatonic.C, Diatonic.D) );
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void clear() {
-        DiatonicChordEnum.TRIAD.clear();
+        DiatonicChord.TRIAD.clear();
     }
 
     @Test
     public void containsTrue() {
-        assertTrue( DiatonicChordEnum.TRIAD.contains(Diatonic.C) );
+        assertTrue( DiatonicChord.TRIAD.contains(Diatonic.C) );
     }
 
     @Test
     public void containsFalse() {
-        assertFalse( DiatonicChordEnum.TRIAD.contains(Diatonic.D) );
+        assertFalse( DiatonicChord.TRIAD.contains(Diatonic.D) );
     }
 
     @Test
     public void containsAll() {
-        assertTrue( DiatonicChordEnum.TRIAD.containsAll( Arrays.asList(Diatonic.C, Diatonic.E) ) );
+        assertTrue( DiatonicChord.TRIAD.containsAll( Arrays.asList(Diatonic.C, Diatonic.E) ) );
     }
 
     @Test
     public void containsAllFalse() {
-        assertFalse( DiatonicChordEnum.TRIAD.containsAll( Arrays.asList(Diatonic.C, Diatonic.D) ) );
+        assertFalse( DiatonicChord.TRIAD.containsAll( Arrays.asList(Diatonic.C, Diatonic.D) ) );
     }
 
     @Test
     public void get() {
-        assertEquals( Diatonic.C, DiatonicChordEnum.TRIAD.get(0) );
+        assertEquals( Diatonic.C, DiatonicChord.TRIAD.get(0) );
     }
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void getNegative() {
-        assertEquals( Diatonic.C, DiatonicChordEnum.TRIAD.get(-1) );
+        assertEquals( Diatonic.C, DiatonicChord.TRIAD.get(-1) );
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void getExceed() {
-        assertEquals( Diatonic.C, DiatonicChordEnum.TRIAD.get(3) );
+        assertEquals( Diatonic.C, DiatonicChord.TRIAD.get(3) );
     }
 
     @Test
     public void indexOf() {
-        assertEquals(1, DiatonicChordEnum.TRIAD.indexOf(Diatonic.E));
+        assertEquals(1, DiatonicChord.TRIAD.indexOf(Diatonic.E));
     }
 
     @Test
     public void indexOfFalse() {
-        assertEquals(-1, DiatonicChordEnum.TRIAD.indexOf(Diatonic.D));
+        assertEquals(-1, DiatonicChord.TRIAD.indexOf(Diatonic.D));
     }
 
     @Test
@@ -133,12 +162,12 @@ public class DiatonicChordEnumTest {
 
     @Test
     public void lastIndexOf() {
-        assertEquals(1, DiatonicChordEnum.TRIAD.indexOf(Diatonic.E));
+        assertEquals(1, DiatonicChord.TRIAD.indexOf(Diatonic.E));
     }
 
     @Test
     public void lastIndexOfFalse() {
-        assertEquals(-1, DiatonicChordEnum.TRIAD.indexOf(Diatonic.D));
+        assertEquals(-1, DiatonicChord.TRIAD.indexOf(Diatonic.D));
     }
 
     @Test
@@ -149,27 +178,27 @@ public class DiatonicChordEnumTest {
 
     @Test(expected = UnsupportedOperationException.class)
     public void remove() {
-        DiatonicChordEnum.TRIAD.remove(Diatonic.C);
+        DiatonicChord.TRIAD.remove(Diatonic.C);
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void removeAll() {
-        DiatonicChordEnum.TRIAD.removeAll( Arrays.asList(Diatonic.C, Diatonic.E) );
+        DiatonicChord.TRIAD.removeAll( Arrays.asList(Diatonic.C, Diatonic.E) );
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void retainAll() {
-        DiatonicChordEnum.TRIAD.retainAll( Arrays.asList(Diatonic.C, Diatonic.E) );
+        DiatonicChord.TRIAD.retainAll( Arrays.asList(Diatonic.C, Diatonic.E) );
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void set() {
-        DiatonicChordEnum.TRIAD.set(0, Diatonic.C);
+        DiatonicChord.TRIAD.set(0, Diatonic.C);
     }
 
     @Test
     public void size() {
-        assertEquals( 3, DiatonicChordEnum.TRIAD.size() );
+        assertEquals( 3, DiatonicChord.TRIAD.size() );
         assertEquals( 4, DiatonicChordEnum.SEVENTH.size() );
         assertEquals( 5, DiatonicChordEnum.NINTH.size() );
     }
@@ -181,12 +210,42 @@ public class DiatonicChordEnumTest {
 
     @Test
     public void toArray() {
-        assertArrayEquals( new Diatonic[]{Diatonic.C, Diatonic.E, Diatonic.G}, DiatonicChordEnum.TRIAD.toArray() );
+        assertArrayEquals( new Diatonic[]{Diatonic.C, Diatonic.E, Diatonic.G}, DiatonicChord.TRIAD.toArray() );
     }
 
     @Test
     public void getDegree() {
         for (DiatonicChordEnum diatonicChordEnum : DiatonicChordEnum.values())
             assertEquals(diatonicChordEnum.toString(), DiatonicDegree.I, diatonicChordEnum.getDegree());
+    }
+
+    @Test
+    public void equalsCustomBidirectional() {
+        DiatonicChord original = DiatonicChord.TRIAD;
+        DiatonicChord other = DiatonicChord.from( Arrays.asList(Diatonic.C, Diatonic.E, Diatonic.G) );
+
+        assertEquals(other, original);
+        assertEquals(original, other);
+    }
+
+    @Test
+    public void duplicate() {
+        DiatonicChord original = DiatonicChord.TRIAD;
+        DiatonicChord duplicated = original.duplicate();
+
+        assertEquals(original, duplicated);
+        assertNotSame(original, duplicated);
+        assertSame(original.innerObject, duplicated.innerObject);
+    }
+
+    @Test
+    public void duplicateWithChange() {
+        DiatonicChord original = DiatonicChord.TRIAD;
+        DiatonicChord duplicated = original.duplicate();
+        duplicated.inv();
+
+        assertNotEquals(original, duplicated);
+        assertNotSame(original, duplicated);
+        assertNotSame(original.innerObject, duplicated.innerObject);
     }
 }

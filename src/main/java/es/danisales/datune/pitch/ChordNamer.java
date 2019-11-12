@@ -15,6 +15,12 @@ public class ChordNamer {
                 sb.append( n );
             }
 
+            sb.append(" | root = ");
+            sb.append(chordCommon.getRoot());
+            sb.append("(");
+            sb.append(chordCommon.getRootPos());
+            sb.append(")");
+
             return sb.toString();
     }
 }

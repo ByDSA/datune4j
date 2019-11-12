@@ -10,7 +10,7 @@ public class DiatonicChordNamer {
     private DiatonicChordNamer() {
     }
 
-    public static @NonNull List<IntervalDiatonic> integerNotationFromRootFrom(@NonNull DiatonicChord diatonicChord) {
+    public static @NonNull List<IntervalDiatonic> integerNotationFromRootFrom(@NonNull DiatonicChordInterface diatonicChord) {
         List<IntervalDiatonic> distancesAbsolute = new ArrayList<>();
         distancesAbsolute.add( IntervalDiatonic.UNISON );
 

@@ -3,6 +3,7 @@ package es.danisales.datune;
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.ChromaticChordEnum;
 import es.danisales.datune.musical.CustomChromaticChord;
 import es.danisales.datune.tonality.Tonality;
@@ -37,7 +38,8 @@ public class ChromaticChordTest {
 		c.inv();
 		assertEquals( 2, c.getRootPos() );
 		assertEquals( Chromatic.C, c.getRoot() );
-		c = ChromaticChordEnum.F5.getInv();
+		c = CustomChromaticChord.from( ChromaticChordEnum.F5 );
+		c.inv();
 		assertEquals( 1, c.getRootPos() );
 		assertEquals( Chromatic.F, c.getRoot() );
 	}
@@ -52,19 +54,33 @@ public class ChromaticChordTest {
 
 		assertEquals( "Cm", ChromaticChordEnum.Cm.toString() );
 		assertEquals( "C7", ChromaticChordEnum.C7.toString() );
+		DiatonicChordMidi ccm = new DiatonicChordMidi( DiatonicFunction.I, Tonality.C );
+		cc.inv();
 		assertEquals(
-			"C/E (C)", new DiatonicChordMidi( DiatonicFunction.I, Tonality.C ).getInv().toString()
+			"C/E (C)", ccm.toString()
 		);
-		assertEquals( "C/E", ChromaticChordEnum.C.getInv().toString() );
-		assertEquals( "C/G", ChromaticChordEnum.C.getInv( 2 ).toString() );
-		assertEquals( "C", ChromaticChordEnum.C.getInv( 3 ).toString() );
+		cc = CustomChromaticChord.from(ChromaticChordEnum.C);
+		cc.inv();
+		assertEquals( "C/E", cc.toString() );
+		cc = CustomChromaticChord.from(ChromaticChordEnum.C);
+		cc.inv(2);
+		assertEquals( "C/G", cc.toString() );
+		cc = CustomChromaticChord.from(ChromaticChordEnum.C);
+		cc.inv(3);
+		assertEquals( "C", cc.toString() );
 		assertEquals( "F5", ChromaticChordEnum.F5.toString() );
-		assertEquals( "F5/C", ChromaticChordEnum.F5.getInv().toString() );
+		cc = CustomChromaticChord.from(ChromaticChordEnum.F5);
+		cc.inv();
+		assertEquals( "F5/C", cc.toString() );
 
 		assertEquals( "Csus2", ChromaticChordEnum.Csus2.toString() );
-		assertEquals( "Csus2/D", ChromaticChordEnum.Csus2.getInv().toString() );
+		cc = CustomChromaticChord.from(ChromaticChordEnum.Csus2);
+		cc.inv();
+		assertEquals( "Csus2/D", cc.toString() );
 		assertEquals( "Gsus4", ChromaticChordEnum.Gsus4.toString() );
-		assertEquals( "Gsus4/C", ChromaticChordEnum.Gsus4.getInv().toString() );
+		cc = CustomChromaticChord.from(ChromaticChordEnum.Gsus4);
+		cc.inv();
+		assertEquals( "Gsus4/C", cc.toString() );
 	}
 /*
 	@Test

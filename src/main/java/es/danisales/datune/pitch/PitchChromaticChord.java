@@ -115,20 +115,6 @@ public interface PitchChromaticChord<N extends PitchChromaticSingle> extends Cho
 	}
 
 	Quality getQuality();
-	
-	default <T extends PitchChromaticChord> T over(PitchChromaticSingle c) throws ImpossibleChordException {
-		T dup = (T) of(this);
-		Chromatic chromaticOther = ChromaticAdapter.from( c );
-		Chromatic firstChromatic = ChromaticAdapter.from( get(0) );
-		for(int i = 0; i < size(); i++) {
-			if ( firstChromatic.equals( chromaticOther ) )
-				return dup;
-			if (i < size()-1)
-				dup = (T)dup.getInv();
-		}
-
-		throw new ImpossibleChordException();
-	}
 
 	static PitchChromaticChord of(PitchChromaticSingle... chord) {
 		return of( Arrays.asList( chord ));
