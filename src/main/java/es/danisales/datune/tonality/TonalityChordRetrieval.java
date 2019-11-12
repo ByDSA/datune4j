@@ -3,7 +3,7 @@ package es.danisales.datune.tonality;
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.diatonic.HarmonicFunction;
-import es.danisales.datune.musical.ChromaticChord;
+import es.danisales.datune.musical.ChromaticChordInterface;
 import es.danisales.datune.pitch.PitchChromaticChord;
 
 import java.util.ArrayList;
@@ -57,9 +57,9 @@ public class TonalityChordRetrieval {
         return null;
     }
 
-    public static List<ChromaticChord> getTriadChordsFrom(Tonality tonality) {
+    public static List<ChromaticChordInterface> getTriadChordsFrom(Tonality tonality) {
         NoDiatonicScaleException.check( tonality.getScale() );
-        List<ChromaticChord> ret = new ArrayList<>();
+        List<ChromaticChordInterface> ret = new ArrayList<>();
         for ( DiatonicDegree diatonicDegree : DiatonicDegree.values() ) {
             DiatonicFunction f = null;
             switch ( diatonicDegree ) {
@@ -84,7 +84,7 @@ public class TonalityChordRetrieval {
                 case VII:
                     f = DiatonicFunction.VII;
             }
-            ChromaticChord chromaticChord = ChromaticChord.from(tonality, f);
+            ChromaticChordInterface chromaticChord = ChromaticChordInterface.from(tonality, f);
             ret.add(chromaticChord);
         }
 
@@ -118,7 +118,7 @@ public class TonalityChordRetrieval {
                 case VII:
                     f = DiatonicFunction.VII7;
             }
-            ChromaticChord chromaticChord = ChromaticChord.from(tonality, f);
+            ChromaticChordInterface chromaticChord = ChromaticChordInterface.from(tonality, f);
             ret.add(chromaticChord);
         }
 

@@ -326,7 +326,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
 
     private void chromaticFunctionProcess(ChromaticFunction t, int octave) {
         if ( t == ChromaticFunction.N6 ) {
-            ChromaticChord cc = ChromaticChord.from( t, tonality );
+            ChromaticChordInterface cc = ChromaticChordInterface.from( t, tonality );
 
             tonality = TonalityRetrieval.listFromChord( cc ).get( 0 );
 
@@ -534,7 +534,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
                 System.out.println( t );
             }
         } else {
-            ChromaticChord cc = ChromaticChord.from( t, tonality );
+            ChromaticChordInterface cc = ChromaticChordInterface.from( t, tonality );
 
             ChromaticMidi[] ccmArray = new ChromaticMidi[cc.size()];
             int i = 0;
@@ -1207,9 +1207,9 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
                     updateFunctionIfNull();
                     CustomChromaticChord ret = CustomChromaticChord.noneOf();
                     if ( function instanceof DiatonicFunction )
-                        ret.addAll( ChromaticChord.from(tonality, (DiatonicFunction) function ) );
+                        ret.addAll( ChromaticChordInterface.from(tonality, (DiatonicFunction) function ) );
                     else
-                        ret.addAll( ChromaticChord.from(tonality, (ChromaticFunction) function ) );
+                        ret.addAll( ChromaticChordInterface.from(tonality, (ChromaticFunction) function ) );
 
                     assert this.size() == ret.size();
 

@@ -1,22 +1,19 @@
 package es.danisales.datune.musical;
 
-import es.danisales.arrays.ArrayWrapperInteger;
 import es.danisales.datastructures.EnumTreeSet;
 import es.danisales.datastructures.SetUtils;
 import es.danisales.datune.diatonic.Quality;
-import es.danisales.datune.midi.AddedException;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
-import es.danisales.datune.pitch.Chord;
-import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticSingle;
+import es.danisales.datune.pitch.PitchDiatonicSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import javax.annotation.Nonnull;
 import java.util.*;
 
-public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic>, ChromaticChord {
+public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic>, ChromaticChordInterface {
 	// Quintas
 	C5(ChromaticChordMeta.POWER_CHORD, Chromatic.C, Chromatic.G),
 	CC5(ChromaticChordMeta.POWER_CHORD, Chromatic.CC, Chromatic.GG),
@@ -1975,7 +1972,7 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic>, Chroma
 
 	public static final EnumSet<ChromaticChordEnum>	COMMON_CHORDS	= SetUtils.concat(TRIAD_CHORDS, SEVENTH_CHORDS, SIXTH_CHORDS, NINTH_CHORDS, ELEVENTH_CHORDS, THIRTEENTH_CHORDS, PARTIAL_CHORDS);
 
-	private static final HashMap<ArrayWrapperInteger, ArrayList<ChromaticChordEnum>> sameOrderChromatics = new HashMap<>();
+	private static final HashMap<List<Integer>, ArrayList<ChromaticChordEnum>> sameOrderChromatics = new HashMap<>();
 
 	static EnumTreeSet<Chromatic, ChromaticChordEnum> chordTree;
 
@@ -1999,9 +1996,38 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic>, Chroma
 		meta = m;
 	}
 
+	public static ChromaticChordEnum from(ChromaticChordInterface innerChord) {
+	}
+
+	public static @Nullable ChromaticChordEnum from(@NonNull Collection<? extends PitchChromaticSingle> chromaticCollection) {
+		for (ChromaticChordEnum chromaticChordEnum : ChromaticChordEnum.values())
+			if (chromaticChordEnum.sameChromaticAs(chromaticCollection))
+				return chromaticChordEnum;
+
+		return null;
+	}
+
+	private boolean sameChromaticAs(Collection<? extends PitchChromaticSingle> diatonicCollection) {
+		if (notes.size() != diatonicCollection.size())
+			return false;
+
+		int i = 0;
+		for (PitchChromaticSingle pitchChromaticSingle : diatonicCollection) {
+			if (notes.get(i) != pitchChromaticSingle.getChromatic())
+				return false;
+			i++;
+		}
+
+		return true;
+	}
+
+	private void excep() {
+		throw new UnsupportedOperationException();
+	}
+
 	@Override
 	public void clear() {
-		throw new UnsupportedOperationException();
+		excep();
 	}
 
 	@Override
@@ -2011,27 +2037,32 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic>, Chroma
 
 	@Override
 	public boolean remove(Object o) {
-		throw new UnsupportedOperationException();
+		excep();
+		return false;
 	}
 
 	@Override
 	public Chromatic remove(int index) {
-		throw new UnsupportedOperationException();
+		excep();
+		return null;
 	}
 
 	@Override
 	public boolean removeAll(@Nonnull Collection<?> c) {
-		throw new UnsupportedOperationException();
+		excep();
+		return false;
 	}
 
 	@Override
 	public boolean retainAll(@NonNull Collection<?> c) {
-		throw new UnsupportedOperationException();
+		excep();
+		return false;
 	}
 
 	@Override
 	public Chromatic set(int index, Chromatic element) {
-		throw new UnsupportedOperationException();
+		excep();
+		return null;
 	}
 
 	@Override
@@ -2086,22 +2117,25 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic>, Chroma
 
 	@Override
 	public boolean add(Chromatic e) {
-		throw new UnsupportedOperationException();
+		excep();
+		return false;
 	}
 
 	@Override
 	public void add(int index, Chromatic element) {
-		throw new UnsupportedOperationException();
+		excep();
 	}
 
 	@Override
 	public boolean addAll(@NonNull Collection<? extends Chromatic> c) {
-		throw new UnsupportedOperationException();
+		excep();
+		return false;
 	}
 
 	@Override
 	public boolean addAll(int index, @NonNull Collection<? extends Chromatic> c) {
-		throw new UnsupportedOperationException();
+		excep();
+		return false;
 	}
 
 	@Override
@@ -2150,21 +2184,10 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic>, Chroma
 		return notes.toArray();
 	}
 
+	@SuppressWarnings("SuspiciousToArrayCall")
 	@Override
 	public <T> T[] toArray(@NonNull T[] a) {
 		return notes.toArray( a );
-	}
-
-	public static Chord<Chromatic> resetRoot(ChromaticChordEnum chromaticChordEnum) {
-		CustomChromaticChord dup = CustomChromaticChord.from( chromaticChordEnum );
-		dup.resetRoot();
-		return dup;
-	}
-
-	public  static Chord<Chromatic> setRootPos(ChromaticChordEnum chromaticChordEnum, int n) {
-		CustomChromaticChord dup = CustomChromaticChord.from( chromaticChordEnum );
-		dup.setRootPos(n);
-		return dup;
 	}
 
 	@Override
@@ -2179,25 +2202,7 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic>, Chroma
 		return false;
 	}
 
-	public static CustomChromaticChord removeHigherDuplicates(ChromaticChordEnum chromaticChordEnum) {
-		CustomChromaticChord dup = CustomChromaticChord.from(chromaticChordEnum);
-		dup = dup.removeHigherDuplicates();
-		return dup;
-	}
-
-	public static CustomChromaticChord add(ChromaticChordEnum chromaticChordEnum, Chromatic... cs) throws AddedException {
-		CustomChromaticChord dup = CustomChromaticChord.from(chromaticChordEnum);
-		dup.addAll( Arrays.asList(cs) );
-		return dup;
-	}
-
-	public static CustomChromaticChord add(ChromaticChordEnum chromaticChordEnum, ChordCommon<Chromatic> cs) throws AddedException {
-		CustomChromaticChord dup = CustomChromaticChord.from(chromaticChordEnum);
-		dup.addAll( cs );
-		return dup;
-	}
-
-	public static ChromaticChordEnum whichRootIs(Chromatic c, EnumSet<ChromaticChordEnum> pcc) {
+	public static ChromaticChordEnum whichRootIs(Chromatic c, EnumSet<ChromaticChordEnum> pcc) { // todo: mover a retrieval
 		for (ChromaticChordEnum chord : pcc)
 			if (chord.getRoot() == c)
 				return chord;
@@ -2206,7 +2211,7 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic>, Chroma
 	}
 
 	@Override
-	public boolean hasSameNotes(PitchChromaticChord<Chromatic> chord) {
+	public boolean hasSameNotes(PitchChromaticChord<Chromatic> chord) { // todo: mover a retrieval
 		EnumSet<Chromatic> e = EnumSet.noneOf( Chromatic.class );
 		e.addAll(this);
 
@@ -2216,7 +2221,7 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic>, Chroma
 		return e.equals( ee );
 	}
 
-	public static EnumSet<ChromaticChordEnum> getChordsWithRepeatedNotes() {
+	public static EnumSet<ChromaticChordEnum> getChordsWithRepeatedNotes() { // todo: mover a retrieval
 		EnumSet<ChromaticChordEnum> chords = EnumSet.noneOf( ChromaticChordEnum.class );
 		for (ChromaticChordEnum cc : ChromaticChordEnum.values()) {
 			EnumMap<Chromatic, Integer> e = new EnumMap<>( Chromatic.class );

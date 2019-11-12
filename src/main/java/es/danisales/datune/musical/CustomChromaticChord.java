@@ -14,7 +14,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import java.util.*;
 import java.util.function.BiFunction;
 
-public class CustomChromaticChord extends Chord<Chromatic> implements PitchChromaticChord<Chromatic>, ChordMutableInterface<Chromatic>, ChromaticChord {
+public class CustomChromaticChord extends Chord<Chromatic> implements PitchChromaticChord<Chromatic>, ChordMutableInterface<Chromatic>, ChromaticChordInterface {
 	private ChromaticChordMeta meta = new ChromaticChordMeta();
 	private static final HashMap<List<Integer>, ArrayList<CustomChromaticChord>> sameOrderChromatics = new HashMap<>();
 
@@ -128,7 +128,7 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 
 	@Override
 	public CustomChromaticChord duplicate() {
-		return ChromaticChord.super.duplicate();
+		return ChromaticChordInterface.super.duplicate();
 	}
 
 	@Override

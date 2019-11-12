@@ -321,39 +321,39 @@ public class DiatonicChordMidiTest {
 	public void functions() {
 		Tonality ton = Tonality.C;
 		DiatonicChordMidi dcm = new DiatonicChordMidi( DiatonicFunction.I, ton );
-		assertEquals( ChromaticChordEnum.C, ChromaticChord.from(dcm) );
+		assertEquals( ChromaticChordEnum.C, ChromaticChordInterface.from(dcm) );
 
 		dcm = new DiatonicChordMidi( DiatonicFunction.II, ton );
-		assertEquals( ChromaticChordEnum.Dm, ChromaticChord.from(dcm) );
+		assertEquals( ChromaticChordEnum.Dm, ChromaticChordInterface.from(dcm) );
 
 		dcm = new DiatonicChordMidi( DiatonicFunction.III, ton );
-		assertEquals( ChromaticChordEnum.Em, ChromaticChord.from(dcm) );
+		assertEquals( ChromaticChordEnum.Em, ChromaticChordInterface.from(dcm) );
 
 		dcm = new DiatonicChordMidi( DiatonicFunction.IV, ton );
-		assertEquals( ChromaticChordEnum.F, ChromaticChord.from(dcm) );
+		assertEquals( ChromaticChordEnum.F, ChromaticChordInterface.from(dcm) );
 
 		dcm = new DiatonicChordMidi( DiatonicFunction.V, ton );
-		assertEquals( ChromaticChordEnum.G, ChromaticChord.from(dcm) );
+		assertEquals( ChromaticChordEnum.G, ChromaticChordInterface.from(dcm) );
 
 		dcm = new DiatonicChordMidi( DiatonicFunction.VI, ton );
-		assertEquals( ChromaticChordEnum.Am, ChromaticChord.from(dcm) );
+		assertEquals( ChromaticChordEnum.Am, ChromaticChordInterface.from(dcm) );
 
 		dcm = new DiatonicChordMidi( DiatonicFunction.VII, ton );
-		assertEquals( ChromaticChordEnum.Bdim, ChromaticChord.from(dcm) );
+		assertEquals( ChromaticChordEnum.Bdim, ChromaticChordInterface.from(dcm) );
 
 		dcm = new DiatonicChordMidi( ChromaticFunction.IV5, ton );
-		assertEquals( CustomChromaticChord.from( Chromatic.F, Chromatic.C ), ChromaticChord.from(dcm) );
+		assertEquals( CustomChromaticChord.from( Chromatic.F, Chromatic.C ), ChromaticChordInterface.from(dcm) );
 
 		ton = Tonality.FFm;
 		dcm = new DiatonicChordMidi( DiatonicFunction.I, ton );
-		assertEquals( ChromaticChordEnum.FFm, ChromaticChord.from(dcm) );
+		assertEquals( ChromaticChordEnum.FFm, ChromaticChordInterface.from(dcm) );
 
 		assertEquals(
 			DiatonicChord.from(Arrays.asList( Diatonic.D, Diatonic.F, Diatonic.A) ), DiatonicChord.from( DiatonicFunction.II )
 		);
 
 		assertEquals(
-			ChromaticChordEnum.GGdim, ChromaticChord.from( DiatonicChord.from( DiatonicFunction.II ), Tonality.FFm )
+			ChromaticChordEnum.GGdim, ChromaticChordInterface.from( DiatonicChord.from( DiatonicFunction.II ), Tonality.FFm )
 		);
 /*
 		assertEquals(
@@ -362,22 +362,22 @@ public class DiatonicChordMidiTest {
 		assertEquals( Chromatic.GG, Tonality.FFm.getNote( DiatonicDegree.II ) );
 
 		dcm = new DiatonicChordMidi( DiatonicFunction.II, ton );
-		assertEquals( ChromaticChordEnum.GGdim, ChromaticChord.from(dcm) );
+		assertEquals( ChromaticChordEnum.GGdim, ChromaticChordInterface.from(dcm) );
 
 		dcm = new DiatonicChordMidi( DiatonicFunction.III, ton );
-		assertEquals( ChromaticChordEnum.A, ChromaticChord.from(dcm) );
+		assertEquals( ChromaticChordEnum.A, ChromaticChordInterface.from(dcm) );
 
 		dcm = new DiatonicChordMidi( DiatonicFunction.IV, ton );
-		assertEquals( ChromaticChordEnum.Bm, ChromaticChord.from(dcm) );
+		assertEquals( ChromaticChordEnum.Bm, ChromaticChordInterface.from(dcm) );
 
 		dcm = new DiatonicChordMidi( DiatonicFunction.V, ton );
-		assertEquals( ChromaticChordEnum.CCm, ChromaticChord.from(dcm) );
+		assertEquals( ChromaticChordEnum.CCm, ChromaticChordInterface.from(dcm) );
 
 		dcm = new DiatonicChordMidi( DiatonicFunction.VI, ton );
-		assertEquals( ChromaticChordEnum.D, ChromaticChord.from(dcm) );
+		assertEquals( ChromaticChordEnum.D, ChromaticChordInterface.from(dcm) );
 
 		dcm = new DiatonicChordMidi( DiatonicFunction.VII, ton );
-		assertEquals( ChromaticChordEnum.E, ChromaticChord.from(dcm) );
+		assertEquals( ChromaticChordEnum.E, ChromaticChordInterface.from(dcm) );
 	}
 
 	@Test
@@ -419,7 +419,7 @@ public class DiatonicChordMidiTest {
 		c = new DiatonicChordMidi( DiatonicFunction.I, 5, Tonality.Am );
 		c2 = new DiatonicChordMidi( DiatonicFunction.VI, 5, Tonality.C );
 		assertNotEquals( c, c2 );
-		assertEquals( ChromaticChord.from(c), ChromaticChord.from(c2) );
+		assertEquals( ChromaticChordInterface.from(c), ChromaticChordInterface.from(c2) );
 	}
 
 	@Test

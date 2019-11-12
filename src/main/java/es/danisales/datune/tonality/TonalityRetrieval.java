@@ -3,7 +3,7 @@ package es.danisales.datune.tonality;
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
-import es.danisales.datune.musical.ChromaticChord;
+import es.danisales.datune.musical.ChromaticChordInterface;
 import es.danisales.datune.musical.Diatonic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.musical.DiatonicAltRetrieval;
@@ -170,15 +170,15 @@ public class TonalityRetrieval {
         return Collections.unmodifiableSet(ret);
     }
 
-    public static List<Tonality> getFromChord(ChromaticChord c) {
+    public static List<Tonality> getFromChord(ChromaticChordInterface c) {
         return getFromChord( false, c );
     }
 
-    public static List<Tonality> getFromChordOutScale(ChromaticChord c) {
+    public static List<Tonality> getFromChordOutScale(ChromaticChordInterface c) {
         return getFromChord(true, c);
     }
 
-    public static List<Tonality> getFromChord(boolean outScale, ChromaticChord c) {
+    public static List<Tonality> getFromChord(boolean outScale, ChromaticChordInterface c) {
         List<Tonality> out = new ArrayList<>();
         for ( TonalityEnum t : TonalityEnum.values() ) {
             if ( t.has( outScale, c ) )

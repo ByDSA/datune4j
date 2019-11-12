@@ -14,7 +14,7 @@ import es.danisales.datune.midi.Events.NoteOn;
 import es.danisales.datune.midi.Events.Volume;
 import es.danisales.datune.midi.Progressions.Progression;
 import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.musical.ChromaticChord;
+import es.danisales.datune.musical.ChromaticChordInterface;
 import es.danisales.datune.pitch.ChordNamer;
 import es.danisales.datune.songs.Power;
 import es.danisales.datune.tonality.*;
@@ -567,13 +567,13 @@ public class Main {
 
 			AtomicReference<DiatonicChordMidi> lastPlayed = new AtomicReference<>( null );
 
-			java.util.List<ChromaticChord> fs = new ArrayList<>();
-			java.util.Set<ChromaticChord> cs = new HashSet<>();
+			java.util.List<ChromaticChordInterface> fs = new ArrayList<>();
+			java.util.Set<ChromaticChordInterface> cs = new HashSet<>();
 			for (DiatonicFunction diatonicFunction : DiatonicFunction.values())
-				cs.add( ChromaticChord.from(ton, diatonicFunction) );
+				cs.add( ChromaticChordInterface.from(ton, diatonicFunction) );
 			for (ChromaticFunction chromaticFunction : ChromaticFunction.values())
-				cs.add( ChromaticChord.from(ton, chromaticFunction) );
-			for ( ChromaticChord c1 : cs ) {
+				cs.add( ChromaticChordInterface.from(ton, chromaticFunction) );
+			for ( ChromaticChordInterface c1 : cs ) {
 				System.out.println(c1);
 				DiatonicChordMidi c = c1.toMidi().getDiatonicChordMidi( ton );
 				System.out.println( c.getFunction()  + " " + (c.getFunction() instanceof DiatonicFunction) + " " + c.metaTonality + " " + c.getTonality());
@@ -846,7 +846,7 @@ public class Main {
 
 
 		for (DiatonicFunction f : DiatonicFunction.values() ) {
-			System.out.println( f.name() + " " + ChromaticChord.from(Tonality.C, f ) );
+			System.out.println( f.name() + " " + ChromaticChordInterface.from(Tonality.C, f ) );
 		}
 		
 /*

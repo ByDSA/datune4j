@@ -1,9 +1,6 @@
 package es.danisales.datune.diatonic;
 
 import es.danisales.datune.midi.DiatonicChordMidi;
-import es.danisales.datune.musical.ChromaticChord;
-import es.danisales.datune.pitch.ChordNamer;
-import es.danisales.datune.tonality.Tonality;
 
 public interface HarmonicFunction {
 	DiatonicDegree getDegree();

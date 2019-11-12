@@ -349,11 +349,11 @@ public interface Tonality {
         return hf;
     }
 
-    boolean has(ChromaticChord from);
+    boolean has(ChromaticChordInterface from);
 
-    ChromaticChord getChordFrom(DiatonicFunction diatonicFunction);
+    ChromaticChordInterface getChordFrom(DiatonicFunction diatonicFunction);
 
-    ChromaticChord getChordFrom(ChromaticFunction chromaticFunction);
+    ChromaticChordInterface getChordFrom(ChromaticFunction chromaticFunction);
 
     default boolean has(Chromatic note) {
         return getDegreeFrom( note ) != null;
@@ -372,7 +372,7 @@ public interface Tonality {
         else if ( outScale ) {
             for ( ChromaticFunction f : ChromaticFunction.ALL ) {
                 try {
-                    ChromaticChord c2 = ChromaticChord.from( new DiatonicChordMidi( f, this ) );
+                    ChromaticChordInterface c2 = ChromaticChordInterface.from( new DiatonicChordMidi( f, this ) );
                     if ( c.hasSameNotesOrder( c2 ) )
                         return true;
                 } catch ( TonalityException ignored) {

@@ -3,7 +3,6 @@ package es.danisales.datune;
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.ChromaticChordEnum;
 import es.danisales.datune.musical.CustomChromaticChord;
 import es.danisales.datune.tonality.Tonality;

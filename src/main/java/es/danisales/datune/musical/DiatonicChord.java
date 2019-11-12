@@ -75,6 +75,21 @@ public class DiatonicChord implements DiatonicChordCommon<Diatonic>, ChordMutabl
         fixed = true;
     }
 
+    private void turnIntoEnumIfPossible() {
+        DiatonicChordEnum diatonicChordEnum = DiatonicChordEnum.from(innerObject);
+        if (diatonicChordEnum != null)
+            innerObject = diatonicChordEnum;
+    }
+
+    private void exceptionIfFixed() {
+        if (fixed)
+            throw new UnsupportedOperationException();
+    }
+
+    private void turnInnerIntoCustom() {
+        innerObject = CustomDiatonicChord.from(innerObject);
+    }
+
     @Override
     public void inv(int n) {
         exceptionIfFixed();
@@ -87,12 +102,6 @@ public class DiatonicChord implements DiatonicChordCommon<Diatonic>, ChordMutabl
             if (getRootPos() == 0)
                 turnIntoEnumIfPossible();
         }
-    }
-
-    private void turnIntoEnumIfPossible() {
-        DiatonicChordEnum diatonicChordEnum = DiatonicChordEnum.from(innerObject);
-        if (diatonicChordEnum != null)
-            innerObject = diatonicChordEnum;
     }
 
     @Override
@@ -130,13 +139,8 @@ public class DiatonicChord implements DiatonicChordCommon<Diatonic>, ChordMutabl
     public DiatonicChord duplicate() {
         DiatonicChord ret = new DiatonicChord();
         ret.innerObject = innerObject.duplicate();
-        turnIntoEnumIfPossible();
+        ret.turnIntoEnumIfPossible();
         return ret;
-    }
-
-    private void exceptionIfFixed() {
-        if (fixed)
-            throw new UnsupportedOperationException();
     }
 
     @Override
@@ -154,10 +158,6 @@ public class DiatonicChord implements DiatonicChordCommon<Diatonic>, ChordMutabl
         }
 
         turnIntoEnumIfPossible();
-    }
-
-    private void turnInnerIntoCustom() {
-        innerObject = CustomDiatonicChord.from(innerObject);
     }
 
     @Override

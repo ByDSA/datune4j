@@ -5,7 +5,7 @@ import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.diatonic.HarmonicFunction;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.musical.ChromaticChord;
+import es.danisales.datune.musical.ChromaticChordInterface;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -60,15 +60,15 @@ enum TonalityEnum implements Tonality {
 	}
 
 	@Override
-	public boolean has(ChromaticChord from) {
+	public boolean has(ChromaticChordInterface from) {
 		return false;//functionChordMap.inverse().containsKey(from);
 	}
 
 	@Override
-	public @NonNull ChromaticChord getChordFrom(@NonNull DiatonicFunction diatonicFunction) {
+	public @NonNull ChromaticChordInterface getChordFrom(@NonNull DiatonicFunction diatonicFunction) {
 		Objects.requireNonNull(diatonicFunction);
 
-		ChromaticChord ret = TonalityGetDiatonicFunctionMajor.get(this, diatonicFunction);
+		ChromaticChordInterface ret = TonalityGetDiatonicFunctionMajor.get(this, diatonicFunction);
 		if (ret == null)
 			ret = TonalityGetDiatonicFunctionMinor.get(this, diatonicFunction);
 		if (ret == null)
@@ -77,7 +77,7 @@ enum TonalityEnum implements Tonality {
 	}
 
 	@Override
-	public ChromaticChord getChordFrom(ChromaticFunction chromaticFunction) {
+	public ChromaticChordInterface getChordFrom(ChromaticFunction chromaticFunction) {
 		return null;
 	}
 

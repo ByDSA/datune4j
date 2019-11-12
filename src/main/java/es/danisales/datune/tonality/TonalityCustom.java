@@ -38,10 +38,10 @@ class TonalityCustom implements Tonality {
 
 	// Cache
 	private boolean										useCache;
-	private Set<ChromaticChord>							outScaleChords;
-	private HashMap<DiatonicFunction, ChromaticChord>	functionChordsMap;
-	private HashMap<ChromaticFunction, ChromaticChord>	chromaticChordsMap;
-	private HashMap<ChromaticChord, HarmonicFunction> chromaticChordFunctionMap;
+	private Set<ChromaticChordInterface>							outScaleChords;
+	private HashMap<DiatonicFunction, ChromaticChordInterface>	functionChordsMap;
+	private HashMap<ChromaticFunction, ChromaticChordInterface>	chromaticChordsMap;
+	private HashMap<ChromaticChordInterface, HarmonicFunction> chromaticChordFunctionMap;
 
 	private static final int	SIZE_MIN	= 2;
 	private static final int	SIZE_MAX	= 8;
@@ -86,8 +86,8 @@ class TonalityCustom implements Tonality {
 	}
 
 	// todo: private
-	public ChromaticChord getChordFrom(DiatonicFunction f) {
-		ChromaticChord cc = null;
+	public ChromaticChordInterface getChordFrom(DiatonicFunction f) {
+		ChromaticChordInterface cc = null;
 		if ( functionChordsMap != null )
 			cc = functionChordsMap.get( f );
 
@@ -111,19 +111,19 @@ class TonalityCustom implements Tonality {
 			chromaticChordFunctionMap.put( cc, f );*/
 		}
 
-		cc = ChromaticChord.from(cc);
+		cc = ChromaticChordInterface.from(cc);
 
 		return cc;
 	}
 
 	@Override
-	public ChromaticChord getChordFrom(ChromaticFunction f) {
-		ChromaticChord cc = null;
+	public ChromaticChordInterface getChordFrom(ChromaticFunction f) {
+		ChromaticChordInterface cc = null;
 		if ( chromaticChordsMap != null )
 			cc = chromaticChordsMap.get( f );
 
 		if ( cc == null ) {
-			cc = ChromaticChord.from( f, this );
+			cc = ChromaticChordInterface.from( f, this );
 			if (cc instanceof CustomChromaticChord)
 				((CustomChromaticChord)cc).updateWhatIsIt();
 			assert cc != null : f + " " + TonalityNamer.notesFrom(this);
@@ -142,7 +142,7 @@ class TonalityCustom implements Tonality {
 			chromaticChordFunctionMap.putIfAbsent(cc, f);
 		}
 
-		cc = ChromaticChord.from(cc);
+		cc = ChromaticChordInterface.from(cc);
 
 		return cc;
 	}
@@ -308,7 +308,7 @@ class TonalityCustom implements Tonality {
 	}
 
 	@Override
-	public boolean has(ChromaticChord from) {
+	public boolean has(ChromaticChordInterface from) {
 		return chromaticChordFunctionMap.get(from) != null;
 	}
 
