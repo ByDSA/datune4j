@@ -2155,12 +2155,6 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic>, Chroma
 		return notes.toArray( a );
 	}
 
-	@Override
-	public <T extends ChordCommon<Chromatic>> List<T> getAllInversions() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public static Chord<Chromatic> resetRoot(ChromaticChordEnum chromaticChordEnum) {
 		CustomChromaticChord dup = CustomChromaticChord.from( chromaticChordEnum );
 		dup.resetRoot();

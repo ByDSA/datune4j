@@ -12,10 +12,6 @@ import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.*;
 
 public class DiatonicChordFixedTest {
-    @Test
-    public void shift() { // todo
-    }
-
     @Test(expected = UnsupportedOperationException.class)
     public void inv() {
         DiatonicChord.TRIAD.inv();

@@ -1,15 +1,11 @@
 package es.danisales.datune.pitch;
 
-import es.danisales.datune.musical.Diatonic;
-import es.danisales.datune.musical.DiatonicChord;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 // Para las cosas comunes de los chord mutables y los chord inmutables
 public interface ChordCommon<N extends SymbolicPitch> extends List<N> {
-	<T extends ChordCommon<N>> List<T> getAllInversions();
 	int getRootPos();
 	@Nullable N getRoot();
 	default int getInversionNumber() {

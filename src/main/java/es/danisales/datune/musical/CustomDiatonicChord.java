@@ -13,23 +13,26 @@ import java.util.*;
 import java.util.function.BiFunction;
 
 class CustomDiatonicChord extends Chord<Diatonic> implements DiatonicChordInterface, ChordMutableInterface<Diatonic> {
-    public static CustomDiatonicChord from(Collection<Diatonic> diatonics) {
-    	CustomDiatonicChord customDiatonicChord = new CustomDiatonicChord();
+	public static CustomDiatonicChord from(Collection<Diatonic> diatonics) {
+		CustomDiatonicChord customDiatonicChord = new CustomDiatonicChord();
 		customDiatonicChord.addAll(diatonics);
-    	return customDiatonicChord;
-    }
+		if (diatonics instanceof DiatonicChordCommon) {
+			DiatonicChordCommon diatonicsCasted = (DiatonicChordCommon)diatonics;
+			if (diatonicsCasted.getRootPos() != 0)
+				customDiatonicChord.setRootPos(diatonicsCasted.getRootPos());
+		}
+		return customDiatonicChord;
+	}
 
-    public void shift(IntervalDiatonic intervalDiatonic) {
+	public void shift(IntervalDiatonic intervalDiatonic) {
 		for ( int i = 0; i < size(); i++ ) {
 			set( i, get( i ).getShifted( intervalDiatonic ) );
 		}
 	}
 
 	@Override
-	public DiatonicChordInterface getShifted(IntervalDiatonic intervalDiatonic) {
-		DiatonicChordInterface diatonicChord = DiatonicChordInterface.from(this);
-		diatonicChord = diatonicChord.getShifted(intervalDiatonic);
-		return diatonicChord;
+	public List<CustomDiatonicChord> getAllInversions(){
+		return super.getAllInversions();
 	}
 
 	@Override
@@ -62,21 +65,6 @@ class CustomDiatonicChord extends Chord<Diatonic> implements DiatonicChordInterf
 	@Override
 	public DiatonicDegree getDegree() {
 		return getRoot().getDegree();
-	}
-
-	@Override
-	public List<DiatonicChordInterface> getAllInversions() {
-		List<DiatonicChordInterface> ret = new ArrayList<>();
-
-		ret.add( this.duplicate() );
-
-		DiatonicChordInterface last = this;
-		for ( int i = 0; i < size(); i++ ) {
-			ret.add( last );
-			inv();
-		}
-
-		return ret;
 	}
 
 	@Override

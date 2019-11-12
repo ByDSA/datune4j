@@ -8,10 +8,7 @@ import es.danisales.datune.pitch.ChordMutableInterface;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 import java.util.function.BiFunction;
 
 public class DiatonicChord implements DiatonicChordCommon<Diatonic>, ChordMutableInterface<Diatonic> {
@@ -79,11 +76,6 @@ public class DiatonicChord implements DiatonicChordCommon<Diatonic>, ChordMutabl
     }
 
     @Override
-    public DiatonicChordInterface getShifted(IntervalDiatonic i) {
-        return innerObject.getShifted(i);
-    }
-
-    @Override
     public void inv(int n) {
         exceptionIfFixed();
 
@@ -105,7 +97,22 @@ public class DiatonicChord implements DiatonicChordCommon<Diatonic>, ChordMutabl
 
     @Override
     public List<DiatonicChord> getAllInversions() {
-        return innerObject.getAllInversions();
+        CustomDiatonicChord base;
+        if (innerObject instanceof CustomDiatonicChord)
+            base = (CustomDiatonicChord)innerObject;
+        else
+            base = CustomDiatonicChord.from(innerObject);
+        List<CustomDiatonicChord> customDiatonicChords = base.getAllInversions();
+
+        List<DiatonicChord> ret = new ArrayList<>();
+        for (CustomDiatonicChord customDiatonicChord : customDiatonicChords) {
+            DiatonicChord diatonicChord = new DiatonicChord();
+            diatonicChord.innerObject = customDiatonicChord;
+            diatonicChord.turnIntoEnumIfPossible();
+            ret.add(diatonicChord);
+        }
+
+        return ret;
     }
 
     @Override
@@ -134,7 +141,7 @@ public class DiatonicChord implements DiatonicChordCommon<Diatonic>, ChordMutabl
 
     @Override
     public void setRootPos(int pos) {
-       exceptionIfFixed();
+        exceptionIfFixed();
 
         if (getRootPos() == pos)
             return;

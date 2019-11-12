@@ -5,12 +5,26 @@ import es.danisales.utils.MathUtils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.BiFunction;
 
 public interface ChordMutableInterface<N extends SymbolicPitch> extends ChordCommon<N> {
 	ChordMutableInterface<N> duplicate();
+
+	default <T extends ChordMutableInterface<N>> List<T> getAllInversions() {
+		List<T> ret = new ArrayList<>();
+
+		T last = (T)this.duplicate();
+		for ( int i = 0; i < size(); i++ ) {
+			ret.add( (T)last.duplicate() );
+			if (i < size()-1)
+				last.inv();
+		}
+
+		return ret;
+	}
 
 	default void resetRoot() {
 		if ( isEmpty() )

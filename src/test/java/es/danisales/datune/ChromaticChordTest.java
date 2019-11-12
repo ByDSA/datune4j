@@ -15,7 +15,7 @@ public class ChromaticChordTest {
 	@Test
 	public void _clone() {
 		CustomChromaticChord ca = CustomChromaticChord.from( Chromatic.C, Chromatic.E, Chromatic.G );
-		CustomChromaticChord ca2 = ca.clone();
+		CustomChromaticChord ca2 = ca.duplicate();
 
 		assertEquals( ca, ca2 );
 	}

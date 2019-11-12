@@ -243,22 +243,13 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 	}
 
 	@Override
-	public List<ChromaticChord> getAllInversions() {
-		List<ChromaticChord> ret = new ArrayList<>();
-
-		ret.add( this.clone() );
-
-		CustomChromaticChord last = this;
-		for ( int i = 0; i < size(); i++ ) {
-			ret.add( last );
-			last.inv();
-		}
-
-		return ret;
+	public List<CustomChromaticChord> getAllInversions() {
+		CustomChromaticChord customChromaticChord = CustomChromaticChord.from(this);
+		return customChromaticChord.getAllInversions();
 	}
 
 	public @NonNull CustomChromaticChord getOver(@NonNull Chromatic c) throws ImpossibleChordException {
-		CustomChromaticChord dup = clone();
+		CustomChromaticChord dup = duplicate();
 		for(int i = 0; i < size(); i++) {
 			if ( get(0) == c )
 				return dup;
@@ -267,11 +258,6 @@ public class CustomChromaticChord extends Chord<Chromatic> implements PitchChrom
 		}
 
 		throw new ImpossibleChordException();
-	}
-
-	@Override
-	public CustomChromaticChord clone() { // TODO
-		return null;
 	}
 
 	/*

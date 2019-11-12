@@ -266,13 +266,6 @@ public class TonalityTest {
     }
 
     @Test
-    public void updateChromaticsFromBase() {
-        Tonality t = Tonality.Gb;
-        assertEquals(DiatonicAlt.Gb, t.getRoot());
-        assertEquals(DiatonicAlt.FF, t.getRoot());
-    }
-
-    @Test
     public void getChordFunction() {
         Tonality ton = Tonality.E;
         PitchChromaticChord cc = ChromaticChord.from(ton, DiatonicFunction.I);
@@ -322,8 +315,7 @@ public class TonalityTest {
                         ChromaticChordEnum.G7,
                         ChromaticChordEnum.Am7,
                         ChromaticChordEnum.Bm7b5
-
-                ), TonalityChordRetrieval.getTriadChordsFrom(t)
+                ), TonalityChordRetrieval.getSeventhChordsFrom(t)
         );
 
         t = Tonality.Am;
@@ -415,7 +407,7 @@ public class TonalityTest {
         assertEquals(DiatonicDegree.III, ton.getDegreeFrom(PitchMidi.E6.getChromatic()));
         assertEquals(DiatonicDegree.IV, ton.getDegreeFrom(Chromatic.F));
         assertNull(ton.getDegreeFrom(DiatonicAlt.EEEE));
-        assertEquals(DiatonicDegree.V, ton.getDegreeFrom(DiatonicAlt.EEEE));
+        assertEquals(DiatonicDegree.V, ton.getDegreeFrom(Chromatic.from(DiatonicAlt.EEEE)));
     }
 
     @Test

@@ -1,7 +1,6 @@
 package es.danisales.datune.musical;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
-import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.midi.AddedException;
 import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.PitchDiatonicSingle;
@@ -59,26 +58,12 @@ enum DiatonicChordEnum implements DiatonicChordInterface {
 	}
 
 	@Override
-	public List<DiatonicChord> getAllInversions() {
-		List<DiatonicChord> ret = new ArrayList<>();
-
-		CustomDiatonicChord last = CustomDiatonicChord.from(this);
-		for ( int i = 0; i < size(); i++ ) {
-			ret.add( DiatonicChord.from(last) );
-			if (i < size()-1)
-				last.inv();
-		}
-
-		return ret;
-	}
-
-	@Override
 	public int getRootPos() {
 		return 0;
 	}
 
 	@Override
-	public Diatonic getRoot() {
+	public @NonNull Diatonic getRoot() {
 		return notes.get( getRootPos() );
 	}
 
@@ -209,15 +194,12 @@ enum DiatonicChordEnum implements DiatonicChordInterface {
 		return notes.toArray();
 	}
 
+	@SuppressWarnings("SuspiciousToArrayCall")
 	@Override
 	public <T> T[] toArray(@NonNull T[] a) {
 		return notes.toArray( a );
 	}
 
-	@Override
-	public DiatonicChordInterface getShifted(IntervalDiatonic i) { // TODO
-		return null;
-	}
 
 	public static DiatonicChord add(DiatonicChordEnum diatonicChordEnum, Diatonic... cs) throws AddedException {
 		DiatonicChord diatonicChord = DiatonicChord.from(diatonicChordEnum);

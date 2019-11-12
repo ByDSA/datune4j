@@ -10,10 +10,6 @@ import static org.junit.Assert.*;
 
 public class DiatonicChordEnumTest {
     @Test
-    public void getAllInversions() { // todo
-    }
-
-    @Test
     public void getRootPos() {
         for (DiatonicChordEnum diatonicChordEnum : DiatonicChordEnum.values())
             assertEquals(0, diatonicChordEnum.getRootPos());

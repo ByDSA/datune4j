@@ -1266,9 +1266,4 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
     protected DiatonicChordMidi newChord() {
         return new DiatonicChordMidi();
     }
-
-    @Override
-    public DiatonicChordCommon getShifted(IntervalDiatonic intervalDiatonic) {
-        return null;
-    }
 }
