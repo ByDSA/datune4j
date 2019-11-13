@@ -24,7 +24,7 @@ public class DiatonicChordEnumTest {
     @Test
     public void from() {
         DiatonicChord diatonicChord = DiatonicChord.from( Arrays.asList(Diatonic.C, Diatonic.E, Diatonic.G) );
-        assertSame(DiatonicChord.TRIAD.innerObject, diatonicChord.innerObject);
+        assertSame(DiatonicChord.TRIAD.innerChord, diatonicChord.innerChord);
     }
 
     @Test
@@ -52,7 +52,7 @@ public class DiatonicChordEnumTest {
         dc.over(Diatonic.C);
 
         assertEquals(DiatonicChord.TRIAD, dc);
-        assertSame(DiatonicChord.TRIAD.innerObject, dc.innerObject);
+        assertSame(DiatonicChord.TRIAD.innerChord, dc.innerChord);
     }
 
     @Test
@@ -80,8 +80,8 @@ public class DiatonicChordEnumTest {
         dc.inv(3);
 
         assertEquals(DiatonicChord.TRIAD, dc);
-        assertEquals(DiatonicChord.TRIAD.innerObject, dc.innerObject);
-        assertSame(DiatonicChord.TRIAD.innerObject, dc.innerObject);
+        assertEquals(DiatonicChord.TRIAD.innerChord, dc.innerChord);
+        assertSame(DiatonicChord.TRIAD.innerChord, dc.innerChord);
     }
 
     @Test(expected = UnsupportedOperationException.class)
@@ -231,7 +231,7 @@ public class DiatonicChordEnumTest {
 
         assertEquals(original, duplicated);
         assertNotSame(original, duplicated);
-        assertSame(original.innerObject, duplicated.innerObject);
+        assertSame(original.innerChord, duplicated.innerChord);
     }
 
     @Test
@@ -242,6 +242,6 @@ public class DiatonicChordEnumTest {
 
         assertNotEquals(original, duplicated);
         assertNotSame(original, duplicated);
-        assertNotSame(original.innerObject, duplicated.innerObject);
+        assertNotSame(original.innerChord, duplicated.innerChord);
     }
 }

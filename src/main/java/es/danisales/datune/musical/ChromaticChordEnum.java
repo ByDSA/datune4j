@@ -3,10 +3,9 @@ package es.danisales.datune.musical;
 import es.danisales.datastructures.EnumTreeSet;
 import es.danisales.datastructures.SetUtils;
 import es.danisales.datune.diatonic.Quality;
-import es.danisales.datune.musical.transformations.ChromaticAdapter;
+import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticSingle;
-import es.danisales.datune.pitch.PitchDiatonicSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -1984,8 +1983,8 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic>, Chroma
 	}
 
 	/** Variables */
-	private final List<Chromatic> notes;
-	private final ChromaticChordMeta meta;
+	final List<Chromatic> notes;
+	final ChromaticChordMeta meta;
 
 	ChromaticChordEnum(ChromaticChordMeta m, @NonNull Chromatic... cs) {
 		Objects.requireNonNull(cs);
@@ -1994,9 +1993,6 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic>, Chroma
 		notes = Collections.unmodifiableList( notesMutatable );
 
 		meta = m;
-	}
-
-	public static ChromaticChordEnum from(ChromaticChordInterface innerChord) {
 	}
 
 	public static @Nullable ChromaticChordEnum from(@NonNull Collection<? extends PitchChromaticSingle> chromaticCollection) {
@@ -2013,7 +2009,7 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic>, Chroma
 
 		int i = 0;
 		for (PitchChromaticSingle pitchChromaticSingle : diatonicCollection) {
-			if (notes.get(i) != pitchChromaticSingle.getChromatic())
+			if (notes.get(i) != pitchChromaticSingle)
 				return false;
 			i++;
 		}
@@ -2021,48 +2017,21 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic>, Chroma
 		return true;
 	}
 
-	private void excep() {
-		throw new UnsupportedOperationException();
-	}
+	public static EnumSet<ChromaticChordEnum> getChordsWithRepeatedNotes() { // todo: mover a retrieval
+		EnumSet<ChromaticChordEnum> chords = EnumSet.noneOf( ChromaticChordEnum.class );
+		for (ChromaticChordEnum cc : ChromaticChordEnum.values()) {
+			EnumMap<Chromatic, Integer> e = new EnumMap<>( Chromatic.class );
+			for (Chromatic c : Chromatic.values())
+				e.put( c, 0 );
+			for (Chromatic c : cc) {
+				Integer i = e.get( c );
+				if (i > 0)
+					chords.add( cc );
+				e.put( c, i+1 );
+			}
+		}
 
-	@Override
-	public void clear() {
-		excep();
-	}
-
-	@Override
-	public boolean isEmpty() {
-		return false;
-	}
-
-	@Override
-	public boolean remove(Object o) {
-		excep();
-		return false;
-	}
-
-	@Override
-	public Chromatic remove(int index) {
-		excep();
-		return null;
-	}
-
-	@Override
-	public boolean removeAll(@Nonnull Collection<?> c) {
-		excep();
-		return false;
-	}
-
-	@Override
-	public boolean retainAll(@NonNull Collection<?> c) {
-		excep();
-		return false;
-	}
-
-	@Override
-	public Chromatic set(int index, Chromatic element) {
-		excep();
-		return null;
+		return chords;
 	}
 
 	@Override
@@ -2095,46 +2064,8 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic>, Chroma
 		return meta.quality;
 	}
 
-	public static ChromaticChordEnum of(PitchChromaticSingle... chord) {
-		return of( Arrays.asList( chord ) );
-	}
-
-	public static <T extends PitchChromaticSingle> ChromaticChordEnum of(Iterable<T> chord) {
-		List<Chromatic> notes = new ArrayList<>();
-		for (T t : chord) {
-			Chromatic chromatic = ChromaticAdapter.from(t);
-			notes.add(chromatic);
-		}
-		EnumTreeSet<Chromatic, ChromaticChordEnum> node = ChromaticChordEnum.chordTree.getNode( notes );
-		if (node == null)
-			return null;
-		EnumSet<ChromaticChordEnum> content = node.getContent();
-		if ( content.size() != 1 )
-			return null;
-
-		return content.iterator().next();
-	}
-
 	@Override
-	public boolean add(Chromatic e) {
-		excep();
-		return false;
-	}
-
-	@Override
-	public void add(int index, Chromatic element) {
-		excep();
-	}
-
-	@Override
-	public boolean addAll(@NonNull Collection<? extends Chromatic> c) {
-		excep();
-		return false;
-	}
-
-	@Override
-	public boolean addAll(int index, @NonNull Collection<? extends Chromatic> c) {
-		excep();
+	public boolean isEmpty() {
 		return false;
 	}
 
@@ -2202,6 +2133,75 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic>, Chroma
 		return false;
 	}
 
+	/**
+	 *  UnsupportedOperation
+	 */
+
+	private void excep() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void clear() {
+		excep();
+	}
+
+	@Override
+	public boolean remove(Object o) {
+		excep();
+		return false;
+	}
+
+	@Override
+	public Chromatic remove(int index) {
+		excep();
+		return null;
+	}
+
+	@Override
+	public boolean removeAll(@Nonnull Collection<?> c) {
+		excep();
+		return false;
+	}
+
+	@Override
+	public boolean retainAll(@NonNull Collection<?> c) {
+		excep();
+		return false;
+	}
+
+	@Override
+	public Chromatic set(int index, Chromatic element) {
+		excep();
+		return null;
+	}
+
+	@Override
+	public boolean add(Chromatic e) {
+		excep();
+		return false;
+	}
+
+	@Override
+	public void add(int index, Chromatic element) {
+		excep();
+	}
+
+	@Override
+	public boolean addAll(@NonNull Collection<? extends Chromatic> c) {
+		excep();
+		return false;
+	}
+
+	@Override
+	public boolean addAll(int index, @NonNull Collection<? extends Chromatic> c) {
+		excep();
+		return false;
+	}
+
+
+
+
 	public static ChromaticChordEnum whichRootIs(Chromatic c, EnumSet<ChromaticChordEnum> pcc) { // todo: mover a retrieval
 		for (ChromaticChordEnum chord : pcc)
 			if (chord.getRoot() == c)
@@ -2219,22 +2219,5 @@ public enum ChromaticChordEnum implements PitchChromaticChord<Chromatic>, Chroma
 		ee.addAll(chord);
 
 		return e.equals( ee );
-	}
-
-	public static EnumSet<ChromaticChordEnum> getChordsWithRepeatedNotes() { // todo: mover a retrieval
-		EnumSet<ChromaticChordEnum> chords = EnumSet.noneOf( ChromaticChordEnum.class );
-		for (ChromaticChordEnum cc : ChromaticChordEnum.values()) {
-			EnumMap<Chromatic, Integer> e = new EnumMap<>( Chromatic.class );
-			for (Chromatic c : Chromatic.values())
-				e.put( c, 0 );
-			for (Chromatic c : cc) {
-				Integer i = e.get( c );
-				if (i > 0)
-					chords.add( cc );
-				e.put( c, i+1 );
-			}
-		}
-
-		return chords;
 	}
 }

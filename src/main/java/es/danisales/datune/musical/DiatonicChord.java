@@ -2,7 +2,7 @@ package es.danisales.datune.musical;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.DiatonicFunction;
-import es.danisales.datune.diatonic.IntervalDiatonic;
+import es.danisales.datune.musical.transformations.DiatonicAdapter;
 import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.ChordMutableInterface;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -11,7 +11,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import java.util.*;
 import java.util.function.BiFunction;
 
-public class DiatonicChord implements DiatonicChordCommon<Diatonic>, ChordMutableInterface<Diatonic> {
+public class DiatonicChord extends NormalChordCommon<Diatonic> implements DiatonicChordCommon<Diatonic>, ChordMutableInterface<Diatonic> {
     public static final DiatonicChord TRIAD = new DiatonicChord( DiatonicChordEnum.TRIAD );
     public static final DiatonicChord THIRD = new DiatonicChord( DiatonicChordEnum.THIRD );
     public static final DiatonicChord SUS2 = new DiatonicChord( DiatonicChordEnum.SUS2 );
@@ -53,17 +53,17 @@ public class DiatonicChord implements DiatonicChordCommon<Diatonic>, ChordMutabl
 
     public static @NonNull DiatonicChord from(@NonNull Collection<Diatonic> diatonicChord) {
         DiatonicChord ret = new DiatonicChord();
-        ret.innerObject = DiatonicChordAdapter.from(diatonicChord);
+        ret.innerChord = DiatonicChordAdapter.from(diatonicChord);
         return ret;
     }
 
     public static @NonNull DiatonicChord from(@NonNull DiatonicFunction f) {
         DiatonicChord ret = new DiatonicChord();
-        ret.innerObject = DiatonicChordAdapter.from(f);
+        ret.innerChord = DiatonicChordAdapter.from(f);
         return ret;
     }
-    DiatonicChordInterface innerObject;
 
+    DiatonicChordInterface innerChord;
     private boolean fixed;
 
     private DiatonicChord() {
@@ -71,93 +71,56 @@ public class DiatonicChord implements DiatonicChordCommon<Diatonic>, ChordMutabl
     }
 
     private DiatonicChord(DiatonicChordInterface scaleInterface) {
-        innerObject = scaleInterface;
+        innerChord = scaleInterface;
         fixed = true;
     }
 
-    private void turnIntoEnumIfPossible() {
-        DiatonicChordEnum diatonicChordEnum = DiatonicChordEnum.from(innerObject);
+    @Override
+    protected final void turnIntoEnumIfPossible() {
+        DiatonicChordEnum diatonicChordEnum = DiatonicChordEnum.from(innerChord);
         if (diatonicChordEnum != null)
-            innerObject = diatonicChordEnum;
-    }
-
-    private void exceptionIfFixed() {
-        if (fixed)
-            throw new UnsupportedOperationException();
-    }
-
-    private void turnInnerIntoCustom() {
-        innerObject = CustomDiatonicChord.from(innerObject);
+            innerChord = diatonicChordEnum;
     }
 
     @Override
-    public void inv(int n) {
-        exceptionIfFixed();
-
-        if (innerObject instanceof DiatonicChordEnum)
-            turnInnerIntoCustom();
-
-        if (innerObject instanceof CustomDiatonicChord) {
-            ((CustomDiatonicChord) innerObject).inv(n);
-            if (getRootPos() == 0)
-                turnIntoEnumIfPossible();
-        }
+    protected final void turnInnerIntoCustom() {
+        innerChord = CustomDiatonicChord.from(innerChord);
     }
 
     @Override
-    public List<DiatonicChord> getAllInversions() {
-        CustomDiatonicChord base;
-        if (innerObject instanceof CustomDiatonicChord)
-            base = (CustomDiatonicChord)innerObject;
-        else
-            base = CustomDiatonicChord.from(innerObject);
-        List<CustomDiatonicChord> customDiatonicChords = base.getAllInversions();
-
-        List<DiatonicChord> ret = new ArrayList<>();
-        for (CustomDiatonicChord customDiatonicChord : customDiatonicChords) {
-            DiatonicChord diatonicChord = new DiatonicChord();
-            diatonicChord.innerObject = customDiatonicChord;
-            diatonicChord.turnIntoEnumIfPossible();
-            ret.add(diatonicChord);
-        }
-
-        return ret;
+    protected final boolean isEnum() {
+        return innerChord instanceof DiatonicChordEnum;
     }
 
     @Override
-    public int getRootPos() {
-        return innerObject.getRootPos();
-    }
-
-    @Nullable
-    @Override
-    public Diatonic getRoot() {
-        return innerObject.getRoot();
+    protected final boolean isCustom() {
+        return innerChord instanceof CustomDiatonicChord;
     }
 
     @Override
-    public DiatonicChord duplicate() {
-        DiatonicChord ret = new DiatonicChord();
-        ret.innerObject = innerObject.duplicate();
-        ret.turnIntoEnumIfPossible();
-        return ret;
+    protected final ChordMutableInterface<Diatonic> castCustom(ChordCommon<Diatonic> chord) {
+        return (CustomDiatonicChord)innerChord;
     }
 
     @Override
-    public void setRootPos(int pos) {
-        exceptionIfFixed();
+    protected final DiatonicChord create() {
+        return new DiatonicChord();
+    }
 
-        if (getRootPos() == pos)
-            return;
+    @Override
+    protected ChordCommon<Diatonic> createInnerFrom(ChordCommon<Diatonic> chord) {
+        return DiatonicChordAdapter.from(chord);
+    }
 
-        if (innerObject instanceof CustomDiatonicChord)
-            ((CustomDiatonicChord)innerObject).setRootPos(pos);
-        else if (pos != 0) {
-            turnInnerIntoCustom();
-            ((CustomDiatonicChord)innerObject).setRootPos(pos);
-        }
+    @SuppressWarnings("unchecked")
+    @Override
+    public final List<DiatonicChord> getAllInversions() {
+        return (List<DiatonicChord>)super.getAllInversions();
+    }
 
-        turnIntoEnumIfPossible();
+    @Override
+    public final DiatonicChord duplicate() {
+        return (DiatonicChord)super.duplicate();
     }
 
     @Override
@@ -171,197 +134,8 @@ public class DiatonicChord implements DiatonicChordCommon<Diatonic>, ChordMutabl
     }
 
     @Override
-    public DiatonicDegree getDegree() {
-        return innerObject.getDegree();
-    }
-
-    @Override
-    public int size() {
-        return innerObject.size();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return innerObject.isEmpty();
-    }
-
-    @Override
-    public boolean contains(Object o) {
-        return innerObject.contains(o);
-    }
-
-    @Override
-    @NonNull
-    public Iterator<Diatonic> iterator() {
-        return innerObject.iterator();
-    }
-
-    @Override
-    public @NonNull Object[] toArray() {
-        return innerObject.toArray();
-    }
-
-    @Override
-    public @NonNull<T> T[] toArray(@NonNull T[] a) {
-        return innerObject.toArray(a);
-    }
-
-    @Override
-    public boolean add(Diatonic diatonic) {
-        exceptionIfFixed();
-        turnIntoCustomIfNot();
-        boolean ret = innerObject.add(diatonic);
-        turnIntoEnumIfPossible();
-
-        return ret;
-    }
-
-    private void turnIntoCustomIfNot() {
-        if ( !(innerObject instanceof CustomDiatonicChord) )
-            turnInnerIntoCustom();
-    }
-
-    @Override
-    public boolean remove(Object o) {
-        exceptionIfFixed();
-        turnIntoCustomIfNot();
-        boolean ret = innerObject.remove(o);
-        turnIntoEnumIfPossible();
-
-        return ret;
-    }
-
-    @Override
-    public boolean containsAll(@NonNull Collection<?> c) {
-        return innerObject.containsAll(c);
-    }
-
-    @Override
-    public boolean addAll(@NonNull Collection<? extends Diatonic> c) {
-        exceptionIfFixed();
-        turnIntoCustomIfNot();
-        boolean ret = innerObject.addAll(c);
-        turnIntoEnumIfPossible();
-
-        return ret;
-    }
-
-    @Override
-    public boolean addAll(int index, @NonNull Collection<? extends Diatonic> c) {
-        exceptionIfFixed();
-        turnIntoCustomIfNot();
-        boolean ret = innerObject.addAll(index, c);
-        turnIntoEnumIfPossible();
-
-        return ret;
-    }
-
-    @Override
-    public boolean removeAll(@NonNull Collection<?> c) {
-        exceptionIfFixed();
-        turnIntoCustomIfNot();
-        boolean ret = innerObject.removeAll(c);
-        turnIntoEnumIfPossible();
-
-        return ret;
-    }
-
-    @Override
-    public boolean retainAll(@NonNull Collection<?> c) {
-        exceptionIfFixed();
-        turnIntoCustomIfNot();
-        boolean ret = innerObject.removeAll(c);
-        turnIntoEnumIfPossible();
-
-        return ret;
-    }
-
-    @Override
-    public void clear() {
-        exceptionIfFixed();
-        turnIntoCustomIfNot();
-        innerObject.clear();
-    }
-
-    @Override
-    public Diatonic get(int index) {
-        return innerObject.get(index);
-    }
-
-    @Override
-    public void resetRoot() {
-        exceptionIfFixed();
-        turnIntoCustomIfNot();
-        ChordMutableInterface.super.resetRoot();
-        turnIntoEnumIfPossible();
-    }
-
-    @Override
-    public Diatonic set(int index, Diatonic element) {
-        exceptionIfFixed();
-
-        if (get(index) == element)
-            return element;
-
-        turnIntoCustomIfNot();
-
-        Diatonic old = null;
-        if (innerObject instanceof CustomDiatonicChord)
-            old = innerObject.set(index, element);
-
-        turnIntoEnumIfPossible();
-
-        return old;
-    }
-
-    @Override
-    public void add(int index, Diatonic element) {
-        exceptionIfFixed();
-        turnIntoCustomIfNot();
-        innerObject.add(index, element);
-        turnIntoEnumIfPossible();
-    }
-
-    @Override
-    public Diatonic remove(int index) {
-        exceptionIfFixed();
-        turnIntoCustomIfNot();
-        Diatonic ret = innerObject.remove(index);
-        turnIntoEnumIfPossible();
-        return ret;
-    }
-
-    @Override
-    public int indexOf(Object o) {
-        return innerObject.indexOf(o);
-    }
-
-    @Override
-    public int lastIndexOf(Object o) {
-        return innerObject.lastIndexOf(o);
-    }
-
-    @Override
-    @NonNull
-    public ListIterator<Diatonic> listIterator() {
-        return innerObject.listIterator();
-    }
-
-    @Override
-    @NonNull
-    public ListIterator<Diatonic> listIterator(int index) {
-        return innerObject.listIterator(index);
-    }
-
-    @Override
-    @NonNull
-    public List<Diatonic> subList(int fromIndex, int toIndex) {
-        return innerObject.subList(fromIndex, toIndex);
-    }
-
-    @Override
-    public String toString() {
-        return innerObject.toString();
+    public final DiatonicDegree getDegree() {
+        return innerChord.getDegree();
     }
 
     @Override
@@ -369,11 +143,6 @@ public class DiatonicChord implements DiatonicChordCommon<Diatonic>, ChordMutabl
         if ( !(o instanceof DiatonicChord) )
             return false;
         DiatonicChord other = (DiatonicChord)o;
-        return DiatonicChordAdapter.equals(innerObject, other.innerObject);
-    }
-
-    @Override
-    public int hashCode() {
-        return innerObject._hashCode();
+        return DiatonicChordAdapter.equals(innerChord, other.innerChord);
     }
 }

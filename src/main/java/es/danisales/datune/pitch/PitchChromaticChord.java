@@ -11,6 +11,7 @@ import es.danisales.datune.musical.transformations.ChromaticAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public interface PitchChromaticChord<N extends PitchChromaticSingle> extends ChordCommon<N> {	
@@ -120,8 +121,8 @@ public interface PitchChromaticChord<N extends PitchChromaticSingle> extends Cho
 		return of( Arrays.asList( chord ));
 	}
 
-	static <T extends PitchChromaticSingle> PitchChromaticChord<Chromatic> of(Iterable<T> chord) {
-		PitchChromaticChord<Chromatic> c = ChromaticChordEnum.of(chord);
+	static <T extends PitchChromaticSingle> PitchChromaticChord<Chromatic> of(Collection<T> chord) {
+		PitchChromaticChord<Chromatic> c = ChromaticChordEnum.from(chord);
 		if (c == null) {
 			c = CustomChromaticChord.from( chord );
 		}

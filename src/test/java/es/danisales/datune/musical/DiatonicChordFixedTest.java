@@ -61,7 +61,7 @@ public class DiatonicChordFixedTest {
         DiatonicChord diatonicChord = DiatonicChord.TRIAD.duplicate();
         diatonicChord.set(1, Diatonic.D);
         assertEquals(DiatonicChord.SUS2, diatonicChord);
-        assertSame(DiatonicChord.SUS2.innerObject, diatonicChord.innerObject);
+        assertSame(DiatonicChord.SUS2.innerChord, diatonicChord.innerChord);
     }
 
     @Test(expected = UnsupportedOperationException.class)
@@ -322,7 +322,7 @@ public class DiatonicChordFixedTest {
         diatonicChord.inv();
         diatonicChord.resetRoot();
         assertNotSame(DiatonicChord.TRIAD, diatonicChord);
-        assertSame(DiatonicChord.TRIAD.innerObject, diatonicChord.innerObject);
+        assertSame(DiatonicChord.TRIAD.innerChord, diatonicChord.innerChord);
     }
 
     @Test
@@ -330,41 +330,41 @@ public class DiatonicChordFixedTest {
         DiatonicChord diatonicChord = DiatonicChord.from( Arrays.asList(Diatonic.G, Diatonic.C, Diatonic.E) );
         diatonicChord.setRootPos(1);
         diatonicChord.inv();
-        assertSame(DiatonicChord.TRIAD.innerObject, diatonicChord.innerObject);
+        assertSame(DiatonicChord.TRIAD.innerChord, diatonicChord.innerChord);
     }
 
     @Test
     public void sameAfterSet() {
         DiatonicChord diatonicChord = DiatonicChord.from( Arrays.asList(Diatonic.C, Diatonic.E, Diatonic.G) );
         diatonicChord.set(1, Diatonic.D);
-        assertSame(DiatonicChord.SUS2.innerObject, diatonicChord.innerObject);
+        assertSame(DiatonicChord.SUS2.innerChord, diatonicChord.innerChord);
     }
 
     @Test
     public void sameAfterAdd() {
         DiatonicChord diatonicChord = DiatonicChord.from( Arrays.asList(Diatonic.C, Diatonic.E, Diatonic.G) );
         diatonicChord.add(Diatonic.B);
-        assertSame(DiatonicChord.SEVENTH.innerObject, diatonicChord.innerObject);
+        assertSame(DiatonicChord.SEVENTH.innerChord, diatonicChord.innerChord);
     }
 
     @Test
     public void sameAfterRemove() {
         DiatonicChord diatonicChord = DiatonicChord.from( Arrays.asList(Diatonic.C, Diatonic.E, Diatonic.G, Diatonic.B) );
         diatonicChord.remove(Diatonic.G);
-        assertSame(DiatonicChord.SEVENTH_O5.innerObject, diatonicChord.innerObject);
+        assertSame(DiatonicChord.SEVENTH_O5.innerChord, diatonicChord.innerChord);
     }
 
     @Test
     public void sameAfterRemove2() {
         DiatonicChord diatonicChord = DiatonicChord.from( Arrays.asList(Diatonic.C, Diatonic.E, Diatonic.G, Diatonic.B) );
         diatonicChord.remove(2);
-        assertSame(DiatonicChord.SEVENTH_O5.innerObject, diatonicChord.innerObject);
+        assertSame(DiatonicChord.SEVENTH_O5.innerChord, diatonicChord.innerChord);
     }
 
     @Test
     public void sameAfterAddPos() {
         DiatonicChord diatonicChord = DiatonicChord.from( Arrays.asList(Diatonic.C, Diatonic.E, Diatonic.G) );
         diatonicChord.add(3,Diatonic.B);
-        assertSame(DiatonicChord.SEVENTH.innerObject, diatonicChord.innerObject);
+        assertSame(DiatonicChord.SEVENTH.innerChord, diatonicChord.innerChord);
     }
 }

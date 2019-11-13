@@ -79,7 +79,7 @@ public class CustomDiatonicChordTest {
         DiatonicChord diatonicChord = DiatonicChord.from( Arrays.asList(Diatonic.G, Diatonic.C, Diatonic.E) );
         diatonicChord.inv();
         diatonicChord.setRootPos(0);
-        assertSame(DiatonicChordEnum.TRIAD, diatonicChord.innerObject);
+        assertSame(DiatonicChordEnum.TRIAD, diatonicChord.innerChord);
     }
 
     @Test
