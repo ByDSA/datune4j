@@ -1203,9 +1203,9 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
     @Override
     public Boolean updateWhatIsIt() {
         return updateWhatIsIt(
-                (List<CustomChromaticChord> chords, ChordCommon<?> self) -> {
+                (List<ChromaticChordCustom> chords, ChordCommon<?> self) -> {
                     updateFunctionIfNull();
-                    CustomChromaticChord ret = CustomChromaticChord.noneOf();
+                    ChromaticChordCustom ret = ChromaticChordCustom.noneOf();
                     if ( function instanceof DiatonicFunction )
                         ret.addAll( ChromaticChordInterface.from(tonality, (DiatonicFunction) function ) );
                     else
@@ -1214,7 +1214,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
                     assert this.size() == ret.size();
 
                     if ( getRootPos() != 0 ) {
-                        ret = ret.clone(true);
+                        ret = ret.duplicate();
                         ret.inv(ret.size() - getRootPos());
                     }
 
@@ -1234,16 +1234,6 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
 
         return super.equals( dcm ) && getFunction().equals( dcm.getFunction() )
                 && metaTonality.equals( dcm.metaTonality );
-    }
-
-    public boolean isSus4() {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.from(this);
-        return chromaticChordMidi.isSus4();
-    }
-
-    public boolean isSus2() {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.from(this);
-        return chromaticChordMidi.isSus2();
     }
 
     public ChromaticChordMidi getChromaticChordMidi() {

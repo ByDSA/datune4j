@@ -6,7 +6,7 @@ import javax.management.RuntimeErrorException;
 
 import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
-import es.danisales.datune.musical.CustomChromaticChord;
+import es.danisales.datune.musical.ChromaticChordCustom;
 
 public class ProgressionChromaticChordMidi extends ArrayList<ChromaticChordMidi> {
 	public ProgressionChromaticChordMidi(
@@ -14,8 +14,8 @@ public class ProgressionChromaticChordMidi extends ArrayList<ChromaticChordMidi>
 		for ( PitchChromaticChord cm : a ) {
 			if ( cm instanceof ChromaticChordMidi )
 				add( (ChromaticChordMidi) cm );
-			else if ( cm instanceof CustomChromaticChord )
-				add( ( (CustomChromaticChord) cm ).toMidi() );
+			else if ( cm instanceof ChromaticChordCustom)
+				add( ( (ChromaticChordCustom) cm ).toMidi() );
 			else if (cm instanceof DiatonicChordMidi)
 				add( ( (DiatonicChordMidi) cm ).toChromaticChordMidi() );
 			else

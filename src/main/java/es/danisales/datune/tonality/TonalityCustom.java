@@ -25,11 +25,11 @@ class TonalityCustom implements Tonality {
 
 	// TODO: no usado
 	class ChromaticChordSet {
-		public CustomChromaticChord	chord;
+		public ChromaticChordCustom chord;
 		public TonalityCustom tonality;
 		public HarmonicFunction	function;
 
-		public ChromaticChordSet(CustomChromaticChord c, TonalityCustom t, HarmonicFunction f) {
+		public ChromaticChordSet(ChromaticChordCustom c, TonalityCustom t, HarmonicFunction f) {
 			chord = c;
 			tonality = t;
 			function = f;
@@ -124,8 +124,8 @@ class TonalityCustom implements Tonality {
 
 		if ( cc == null ) {
 			cc = ChromaticChordInterface.from( f, this );
-			if (cc instanceof CustomChromaticChord)
-				((CustomChromaticChord)cc).updateWhatIsIt();
+			if (cc instanceof ChromaticChordCustom)
+				((ChromaticChordCustom)cc).updateWhatIsIt();
 			assert cc != null : f + " " + TonalityNamer.notesFrom(this);
 
 			if ( chromaticChordsMap == null )
@@ -342,7 +342,7 @@ class TonalityCustom implements Tonality {
 		return sb.toString();
 	}
 
-	public HarmonicFunction getFunction(CustomChromaticChord c) {
+	public HarmonicFunction getFunction(ChromaticChordCustom c) {
 		HarmonicFunction hf = getFunction( c, true );
 		if ( hf == null )
 			hf = getFunction( c, false );
@@ -352,8 +352,8 @@ class TonalityCustom implements Tonality {
 	@Override
 	public HarmonicFunction getFunction(PitchChromaticChord c, boolean rename) {
 		createCacheIfNeeded();
-		CustomChromaticChord c2;
-		c2 = CustomChromaticChord.from( c );
+		ChromaticChordCustom c2;
+		c2 = ChromaticChordCustom.from( c );
 		if ( rename )
 			c2.rename( this );
 

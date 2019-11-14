@@ -5,21 +5,19 @@ import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChordEnum;
-import es.danisales.datune.musical.CustomChromaticChord;
-import es.danisales.datune.musical.ImpossibleChordException;
+import es.danisales.datune.musical.ChromaticChordCustom;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public interface PitchChromaticChord<N extends PitchChromaticSingle> extends ChordCommon<N> {	
-	boolean hasSameNotes(PitchChromaticChord<N> chord);
-
+public interface PitchChromaticChord<N extends PitchChromaticSingle> extends ChordCommon<N> {
 	static PitchChromaticChord<Chromatic> from(ChromaticChordMidi chromaticChordMidi) {
 		if (chromaticChordMidi.getRootPos() != 0) {
-			CustomChromaticChord ns = CustomChromaticChord.noneOf();
+			ChromaticChordCustom ns = ChromaticChordCustom.noneOf();
 			for ( ChromaticMidi n : chromaticChordMidi ) {
 				Chromatic chromatic = ChromaticAdapter.from(n);
 				ns.add( chromatic );
@@ -115,6 +113,7 @@ public interface PitchChromaticChord<N extends PitchChromaticSingle> extends Cho
 		return false;
 	}
 
+	@NonNull
 	Quality getQuality();
 
 	static PitchChromaticChord of(PitchChromaticSingle... chord) {
@@ -124,11 +123,8 @@ public interface PitchChromaticChord<N extends PitchChromaticSingle> extends Cho
 	static <T extends PitchChromaticSingle> PitchChromaticChord<Chromatic> of(Collection<T> chord) {
 		PitchChromaticChord<Chromatic> c = ChromaticChordEnum.from(chord);
 		if (c == null) {
-			c = CustomChromaticChord.from( chord );
+			c = ChromaticChordCustom.from( chord );
 		}
 		return c;
 	}
-
-	boolean isSus4();
-	boolean isSus2();	
 }

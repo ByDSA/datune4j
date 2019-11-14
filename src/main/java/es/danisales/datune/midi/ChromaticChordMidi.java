@@ -3,10 +3,8 @@ package es.danisales.datune.midi;
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.Quality;
 import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.musical.CustomChromaticChord;
-import es.danisales.datune.musical.ImpossibleChordException;
+import es.danisales.datune.musical.ChromaticChordCustom;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
-import es.danisales.datune.pitch.Chord;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.pitch.PitchOctave;
@@ -216,7 +214,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 	}
 
 	public String toString() {
-		CustomChromaticChord ca = CustomChromaticChord.from( this );
+		ChromaticChordCustom ca = ChromaticChordCustom.from( this );
 
 		return ca.toString();
 	}
@@ -232,27 +230,9 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 	}
 
 	@Override
-	public boolean isSus4() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isSus2() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public int getInversionNumber() {
 		// TODO Auto-generated method stub
 		return 0;
-	}
-
-	@Override
-	public boolean hasSameNotes(PitchChromaticChord<ChromaticMidi> chord) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override

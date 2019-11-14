@@ -16,27 +16,27 @@ import java.util.Objects;
 
 public interface ChromaticChordInterface extends PitchChromaticChord<Chromatic> {
     static ChromaticChordInterface from(ChromaticFunction f, Tonality t) {
-        CustomChromaticChord ret = new CustomChromaticChord();
+        ChromaticChordCustom ret = new ChromaticChordCustom();
         if ( f == ChromaticFunction.I || f == ChromaticFunction.II || f == ChromaticFunction.III
                 || f == ChromaticFunction.IV || f == ChromaticFunction.V
                 || f == ChromaticFunction.VI || f == ChromaticFunction.VII ) {
             DiatonicAlt r = t.getNote( f.getDegree() );
             Chromatic rChromatic = Chromatic.from(r);
-            ret.addAll( ChromaticChordEnum.whichRootIs( rChromatic, ChromaticChordEnum.CHORDS_MAJOR ) );
+            ret.addAll( ChromaticChordRetrieval.whichRootIs( rChromatic, ChromaticChordEnum.CHORDS_MAJOR ) );
         } else if ( f == ChromaticFunction.i || f == ChromaticFunction.ii
                 || f == ChromaticFunction.iii
                 || f == ChromaticFunction.iv || f == ChromaticFunction.v
                 || f == ChromaticFunction.vi || f == ChromaticFunction.vii ) {
             DiatonicAlt r = t.getNote( f.getDegree() );
             Chromatic rChromatic = Chromatic.from(r);
-            ret.addAll( ChromaticChordEnum.whichRootIs( rChromatic, ChromaticChordEnum.CHORDS_MINOR ) );
+            ret.addAll( ChromaticChordRetrieval.whichRootIs( rChromatic, ChromaticChordEnum.CHORDS_MINOR ) );
         } else if ( f == ChromaticFunction.I0 || f == ChromaticFunction.II0
                 || f == ChromaticFunction.III0 || f == ChromaticFunction.IV0
                 || f == ChromaticFunction.V0 || f == ChromaticFunction.VI0
                 || f == ChromaticFunction.VII0 ) {
             DiatonicAlt r = t.getNote( f.getDegree() );
             Chromatic rChromatic = Chromatic.from(r);
-            ret.addAll( ChromaticChordEnum.whichRootIs( rChromatic, ChromaticChordEnum.CHORDS_DIMINISHED ) );
+            ret.addAll( ChromaticChordRetrieval.whichRootIs( rChromatic, ChromaticChordEnum.CHORDS_DIMINISHED ) );
         } else if ( f == ChromaticFunction.N6 ) {
             DiatonicAlt base = t.getNote( DiatonicDegree.I );
 
@@ -240,7 +240,7 @@ public interface ChromaticChordInterface extends PitchChromaticChord<Chromatic> 
     }
 
     static @Nullable ChromaticChordInterface from(DiatonicChord diatonicChord, Tonality tonality) {
-        ChromaticChordInterface chromaticChord = new CustomChromaticChord();
+        ChromaticChordInterface chromaticChord = new ChromaticChordCustom();
         for (Diatonic diatonic : diatonicChord) {
             Chromatic chromatic = Chromatic.from(diatonic, tonality);
             if (chromatic == null)
@@ -256,14 +256,14 @@ public interface ChromaticChordInterface extends PitchChromaticChord<Chromatic> 
     }
 
     static ChromaticChordInterface from(ChromaticChordMidi chromaticChordMidi) {
-        ChromaticChordInterface ret = new CustomChromaticChord();
+        ChromaticChordInterface ret = new ChromaticChordCustom();
         for (ChromaticMidi chromaticMidi : chromaticChordMidi)
             ret.add(Chromatic.from(chromaticMidi));
         return ret;
     }
 
     static ChromaticChordInterface from(Iterable<Chromatic> c) {
-        ChromaticChordInterface ret = new CustomChromaticChord();
+        ChromaticChordInterface ret = new ChromaticChordCustom();
         for (Chromatic chromatic : c)
             ret.add(chromatic);
 
@@ -329,7 +329,7 @@ public interface ChromaticChordInterface extends PitchChromaticChord<Chromatic> 
 
 
     static PitchChromaticChord<Chromatic> from(DiatonicChord diatonicChord, Tonality t, DiatonicFunction df) {
-        CustomChromaticChord cc = new CustomChromaticChord();
+        ChromaticChordCustom cc = new ChromaticChordCustom();
         for ( Diatonic d : diatonicChord ) {
             Chromatic chromatic = ChromaticAdapter.from(d, t);
             cc.add(chromatic);
@@ -382,7 +382,7 @@ public interface ChromaticChordInterface extends PitchChromaticChord<Chromatic> 
     }
 
     @Override
-    default CustomChromaticChord duplicate() {
-        return CustomChromaticChord.from(this);
+    default ChromaticChordCustom duplicate() {
+        return ChromaticChordCustom.from(this);
     }
 }

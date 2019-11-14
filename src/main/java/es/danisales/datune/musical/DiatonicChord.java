@@ -2,11 +2,9 @@ package es.danisales.datune.musical;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.DiatonicFunction;
-import es.danisales.datune.musical.transformations.DiatonicAdapter;
 import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.ChordMutableInterface;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.*;
 import java.util.function.BiFunction;
@@ -63,16 +61,12 @@ public class DiatonicChord extends NormalChordCommon<Diatonic> implements Diaton
         return ret;
     }
 
-    DiatonicChordInterface innerChord;
-    private boolean fixed;
-
     private DiatonicChord() {
-        fixed = false;
+        super();
     }
 
     private DiatonicChord(DiatonicChordInterface scaleInterface) {
-        innerChord = scaleInterface;
-        fixed = true;
+        super(scaleInterface);
     }
 
     @Override
@@ -84,7 +78,7 @@ public class DiatonicChord extends NormalChordCommon<Diatonic> implements Diaton
 
     @Override
     protected final void turnInnerIntoCustom() {
-        innerChord = CustomDiatonicChord.from(innerChord);
+        innerChord = DiatonicChordCustom.from(innerChord);
     }
 
     @Override
@@ -94,12 +88,12 @@ public class DiatonicChord extends NormalChordCommon<Diatonic> implements Diaton
 
     @Override
     protected final boolean isCustom() {
-        return innerChord instanceof CustomDiatonicChord;
+        return innerChord instanceof DiatonicChordCustom;
     }
 
     @Override
     protected final ChordMutableInterface<Diatonic> castCustom(ChordCommon<Diatonic> chord) {
-        return (CustomDiatonicChord)innerChord;
+        return (DiatonicChordCustom)innerChord;
     }
 
     @Override
@@ -124,7 +118,7 @@ public class DiatonicChord extends NormalChordCommon<Diatonic> implements Diaton
     }
 
     @Override
-    public Boolean updateWhatIsIt(BiFunction<List<CustomChromaticChord>, ChordCommon<?>, CustomChromaticChord> fSelectChord) {
+    public Boolean updateWhatIsIt(BiFunction<List<ChromaticChordCustom>, ChordCommon<?>, ChromaticChordCustom> fSelectChord) {
         return null;
     }
 
@@ -135,7 +129,7 @@ public class DiatonicChord extends NormalChordCommon<Diatonic> implements Diaton
 
     @Override
     public final DiatonicDegree getDegree() {
-        return innerChord.getDegree();
+        return ((DiatonicChordInterface)innerChord).getDegree();
     }
 
     @Override
@@ -143,6 +137,6 @@ public class DiatonicChord extends NormalChordCommon<Diatonic> implements Diaton
         if ( !(o instanceof DiatonicChord) )
             return false;
         DiatonicChord other = (DiatonicChord)o;
-        return DiatonicChordAdapter.equals(innerChord, other.innerChord);
+        return DiatonicChordAdapter.equals(((DiatonicChordInterface)innerChord), other.innerChord);
     }
 }

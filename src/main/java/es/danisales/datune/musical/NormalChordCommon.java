@@ -32,7 +32,7 @@ public abstract class NormalChordCommon<N extends SymbolicPitch> implements Chor
 
 
     private void turnIntoCustomIfNot() {
-        if ( !(innerChord instanceof CustomDiatonicChord) )
+        if ( !(innerChord instanceof DiatonicChordCustom) )
             turnInnerIntoCustom();
     }
 
@@ -62,15 +62,29 @@ public abstract class NormalChordCommon<N extends SymbolicPitch> implements Chor
     @SuppressWarnings("unchecked")
     @Override
     public List<? extends ChordCommon<N>> getAllInversions() {
-        ChordCommon<N> base;
-        if (isCustom())
-            base = castCustom(innerChord);
-        else
-            base = createInnerFrom(innerChord);
-        List<ChordMutableInterface<N>> customDiatonicChords = base.getAllInversions();
+        List<ChordMutableInterface<N>> customDiatonicChords = getAllInversionsRaw();
 
-        List<ChordCommon<N>> ret = new ArrayList<>();
-        for (ChordCommon<N> customChromaticChord : customDiatonicChords) {
+        return createListFrom(customDiatonicChords);
+    }
+
+    private List<ChordMutableInterface<N>> getAllInversionsRaw() {
+        List<ChordMutableInterface<N>> customDiatonicChords;
+
+        if (isCustom()) {
+            customDiatonicChords = castCustom(innerChord).getAllInversions();
+        } else {
+            ChordCommon<N> tmp = innerChord;
+            turnInnerIntoCustom();
+            customDiatonicChords = castCustom(innerChord).getAllInversions();
+            innerChord = tmp;
+        }
+
+        return customDiatonicChords;
+    }
+
+    private List<NormalChordCommon<N>> createListFrom(List<ChordMutableInterface<N>> list) {
+        List<NormalChordCommon<N>> ret = new ArrayList<>();
+        for (ChordCommon<N> customChromaticChord : list) {
             NormalChordCommon<N> chromaticChord = create();
             chromaticChord.innerChord = customChromaticChord;
             chromaticChord.turnIntoEnumIfPossible();
@@ -117,7 +131,7 @@ public abstract class NormalChordCommon<N extends SymbolicPitch> implements Chor
     }
 
     @Override
-    public Boolean updateWhatIsIt(BiFunction<List<CustomChromaticChord>, ChordCommon<?>, CustomChromaticChord> fSelectChord) {
+    public Boolean updateWhatIsIt(BiFunction<List<ChromaticChordCustom>, ChordCommon<?>, ChromaticChordCustom> fSelectChord) {
         return null;
     }
 
@@ -149,8 +163,8 @@ public abstract class NormalChordCommon<N extends SymbolicPitch> implements Chor
 
     @Override
     @NonNull
-    public final N[] toArray() {
-        return (N[])innerChord.toArray();
+    public Object[] toArray() {
+        return innerChord.toArray();
     }
 
     @SuppressWarnings("SuspiciousToArrayCall")
@@ -232,6 +246,7 @@ public abstract class NormalChordCommon<N extends SymbolicPitch> implements Chor
         return ret;
     }
 
+    @SuppressWarnings("SuspiciousMethodCalls")
     @Override
     public final boolean retainAll(@NonNull Collection<?> c) {
         exceptionIfFixed();

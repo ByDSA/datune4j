@@ -581,7 +581,7 @@ public class Main {
 				if ( (c.getFunction() instanceof DiatonicFunction
 						&& ( ( (DiatonicFunction) c.getFunction() ).isSus2()
 						|| ( (DiatonicFunction) c.getFunction() ).isSus4() )
-						|| c.isSus2() || c.isSus4()) && !sus24 )
+						) && !sus24 )
 					continue;
 
 				if (ton.isMajorOrMinor() && !c.getMetatonality().isMajorOrMinor() && !modal)

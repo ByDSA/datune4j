@@ -266,7 +266,9 @@ public class DiatonicChordMidiTest {
 		dcm.inv();
 		assertEquals( "Gsus4/C (V4)", dcm.toString() );
 
-		CustomChromaticChord cc = CustomChromaticChord.from( Chromatic.C, Chromatic.D, Chromatic.G );
+		ChromaticChordCustom cc = ChromaticChordCustom.from(
+				Arrays.asList( Chromatic.C, Chromatic.D, Chromatic.G )
+		);
 		dcm = new DiatonicChordMidi( Tonality.C, cc );
 		assertEquals( "Csus2 (I2)", dcm.toString() );
 	}
@@ -342,7 +344,9 @@ public class DiatonicChordMidiTest {
 		assertEquals( ChromaticChordEnum.Bdim, ChromaticChordInterface.from(dcm) );
 
 		dcm = new DiatonicChordMidi( ChromaticFunction.IV5, ton );
-		assertEquals( CustomChromaticChord.from( Chromatic.F, Chromatic.C ), ChromaticChordInterface.from(dcm) );
+		assertEquals( ChromaticChord.from(
+				Arrays.asList( Chromatic.F, Chromatic.C )
+		), ChromaticChordInterface.from(dcm) );
 
 		ton = Tonality.FFm;
 		dcm = new DiatonicChordMidi( DiatonicFunction.I, ton );

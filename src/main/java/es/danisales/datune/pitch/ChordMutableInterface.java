@@ -3,8 +3,6 @@ package es.danisales.datune.pitch;
 import es.danisales.datune.musical.*;
 import es.danisales.utils.MathUtils;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -41,6 +39,8 @@ public interface ChordMutableInterface<N extends SymbolicPitch> extends ChordCom
 				return;
 			inv();
 		}
+
+		throw new ImpossibleChordException();
 	}
 
 	default void inv() {
@@ -58,11 +58,11 @@ public interface ChordMutableInterface<N extends SymbolicPitch> extends ChordCom
 	// todo: protected
 	default Boolean updateWhatIsIt() {
 		return updateWhatIsIt(
-				(List<CustomChromaticChord> chords, ChordCommon<?> self) -> chords.get( 0 )
+				(List<ChromaticChordCustom> chords, ChordCommon<?> self) -> chords.get( 0 )
 		);
 	}
 
-	Boolean updateWhatIsIt(BiFunction<List<CustomChromaticChord>, ChordCommon<?>, CustomChromaticChord> fSelectChord);
+	Boolean updateWhatIsIt(BiFunction<List<ChromaticChordCustom>, ChordCommon<?>, ChromaticChordCustom> fSelectChord);
 
 	Boolean updateWhatIsItIfNeeded();
 

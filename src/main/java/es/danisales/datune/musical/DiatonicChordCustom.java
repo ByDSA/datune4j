@@ -12,9 +12,9 @@ import es.danisales.datune.tonality.Tonality;
 import java.util.*;
 import java.util.function.BiFunction;
 
-class CustomDiatonicChord extends Chord<Diatonic> implements DiatonicChordInterface, ChordMutableInterface<Diatonic> {
-	public static CustomDiatonicChord from(Collection<Diatonic> diatonics) {
-		CustomDiatonicChord customDiatonicChord = new CustomDiatonicChord();
+class DiatonicChordCustom extends Chord<Diatonic> implements DiatonicChordInterface, ChordMutableInterface<Diatonic> {
+	public static DiatonicChordCustom from(Collection<Diatonic> diatonics) {
+		DiatonicChordCustom customDiatonicChord = new DiatonicChordCustom();
 		customDiatonicChord.addAll(diatonics);
 		if (diatonics instanceof DiatonicChordCommon) {
 			DiatonicChordCommon diatonicsCasted = (DiatonicChordCommon)diatonics;
@@ -31,12 +31,12 @@ class CustomDiatonicChord extends Chord<Diatonic> implements DiatonicChordInterf
 	}
 
 	@Override
-	public List<CustomDiatonicChord> getAllInversions(){
+	public List<DiatonicChordCustom> getAllInversions(){
 		return super.getAllInversions();
 	}
 
 	@Override
-	public Boolean updateWhatIsIt(BiFunction<List<CustomChromaticChord>, ChordCommon<?>, CustomChromaticChord> fSelectChord) {
+	public Boolean updateWhatIsIt(BiFunction<List<ChromaticChordCustom>, ChordCommon<?>, ChromaticChordCustom> fSelectChord) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -47,19 +47,14 @@ class CustomDiatonicChord extends Chord<Diatonic> implements DiatonicChordInterf
 		return null;
 	}
 
-	public CustomDiatonicChord add(Diatonic... cs) throws AddedException {
+	public DiatonicChordCustom add(Diatonic... cs) throws AddedException {
 		this.addAll(Arrays.asList(cs));
 		return this;
 	}
 
 	@Override
-	public CustomDiatonicChord removeHigherDuplicates() {
-		return (CustomDiatonicChord)super.removeHigherDuplicates();
-	}
-
-	public ChromaticMidi getDiatonicMidi(Tonality tonality, int octave) {
-		// TODO Auto-generated method stub
-		return null;
+	public DiatonicChordCustom removeHigherDuplicates() {
+		return (DiatonicChordCustom)super.removeHigherDuplicates();
 	}
 
 	@Override
@@ -68,8 +63,8 @@ class CustomDiatonicChord extends Chord<Diatonic> implements DiatonicChordInterf
 	}
 
 	@Override
-	public CustomDiatonicChord duplicate() {
-		return CustomDiatonicChord.from(this);
+	public DiatonicChordCustom duplicate() {
+		return DiatonicChordCustom.from(this);
 	}
 
 	@SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
