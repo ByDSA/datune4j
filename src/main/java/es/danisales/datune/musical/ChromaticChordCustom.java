@@ -62,7 +62,7 @@ public class ChromaticChordCustom extends Chord<Chromatic> implements PitchChrom
 
 	public ChromaticChordCustom assignMeta(ChromaticChordCustom c) {
 		setRootPos( c.getRootPos() );
-		this.meta = new ChromaticChordMeta( c.meta.quality, c.meta.str );
+		this.meta = new ChromaticChordMeta( c.meta.quality, c.meta.str, c.meta.getPattern() );
 		this.meta.updated = c.meta.updated;
 
 		return this;

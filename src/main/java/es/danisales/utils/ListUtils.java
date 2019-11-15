@@ -6,6 +6,7 @@ public class ListUtils {
     private ListUtils() {
     }
 
+    @SafeVarargs
     public static<T> List<T> concatUnmodificable(List<T>... lists) {
         List<T> result = new ArrayList<>();
 
@@ -15,6 +16,7 @@ public class ListUtils {
         return Collections.unmodifiableList(result);
     }
 
+    @SafeVarargs
     public static<T> Set<T> concatUnmodificable(Set<T>... sets) { // todo: to setUtils
         Set<T> result = new HashSet<>();
 
