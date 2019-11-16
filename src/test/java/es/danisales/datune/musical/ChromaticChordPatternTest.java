@@ -135,7 +135,206 @@ public class ChromaticChordPatternTest {
                 Chromatic.AA
         ), ChromaticChord.Cm7a5.getNotes());
 
+	// Do treceava mayor
+	assertEquals(Arrays.asList(
+                Chromatic.C,
+                Chromatic.E,
+                Chromatic.G,
+                Chromatic.B,
+		Chromatic.D,
+		Chromatic.F,
+		Chromatic.A,
+        ), ChromaticChord.CMaj13.getNotes());
 
+	assertEquals(Arrays.asList(
+                Chromatic.C,
+                Chromatic.E,
+                Chromatic.G,
+                Chromatic.B,
+		Chromatic.D,
+		Chromatic.A,
+        ), ChromaticChord.CMaj13omit11.getNotes());
+
+	// Do menor treceava mayor
+	assertEquals(Arrays.asList(
+                Chromatic.C,
+                Chromatic.DD,
+                Chromatic.G,
+                Chromatic.B,
+		Chromatic.D,
+		Chromatic.F,
+		Chromatic.A,
+        ), ChromaticChord.CmMaj13.getNotes());
+
+	assertEquals(Arrays.asList(
+                Chromatic.C,
+                Chromatic.DD,
+                Chromatic.G,
+                Chromatic.B,
+		Chromatic.D,
+		Chromatic.A,
+        ), ChromaticChord.CmMaj13omit11.getNotes());
+
+	// Do treceava mayor con quinta bemol
+	assertEquals(Arrays.asList(
+                Chromatic.C,
+                Chromatic.E,
+                Chromatic.FF,
+                Chromatic.B,
+		Chromatic.D,
+		Chromatic.F,
+		Chromatic.A,
+        ), ChromaticChord.CMaj13b5.getNotes());
+
+	assertEquals(Arrays.asList(
+                Chromatic.C,
+                Chromatic.E,
+                Chromatic.FF,
+                Chromatic.B,
+		Chromatic.D,
+		Chromatic.A,
+        ), ChromaticChord.CMaj13b5omit11.getNotes());
+
+	// Do treceava mayor con quinta aumentada
+	assertEquals(Arrays.asList(
+                Chromatic.C,
+                Chromatic.E,
+                Chromatic.GG,
+                Chromatic.B,
+		Chromatic.D,
+		Chromatic.F,
+		Chromatic.A,
+        ), ChromaticChord.CMaj13a9.getNotes());
+
+	assertEquals(Arrays.asList(
+                Chromatic.C,
+                Chromatic.E,
+                Chromatic.GG,
+                Chromatic.B,
+		Chromatic.D,
+		Chromatic.A,
+        ), ChromaticChord.CMaj13a9omit11.getNotes());
+
+	// Do treceava mayor con novena bemol
+	assertEquals(Arrays.asList(
+                Chromatic.C,
+                Chromatic.E,
+                Chromatic.G,
+                Chromatic.B,
+		Chromatic.CC,
+		Chromatic.F,
+		Chromatic.A,
+        ), ChromaticChord.CMaj13b9.getNotes());
+
+	assertEquals(Arrays.asList(
+                Chromatic.C,
+                Chromatic.E,
+                Chromatic.G,
+                Chromatic.B,
+		Chromatic.CC,
+		Chromatic.A,
+        ), ChromaticChord.CMaj13b9omit11.getNotes());
+
+
+	// Do treceava mayor con novena aumentada
+	assertEquals(Arrays.asList(
+                Chromatic.C,
+                Chromatic.E,
+                Chromatic.G,
+                Chromatic.B,
+		Chromatic.DD,
+		Chromatic.F,
+		Chromatic.A,
+        ), ChromaticChord.CMaj13a9.getNotes());
+
+	assertEquals(Arrays.asList(
+                Chromatic.C,
+                Chromatic.E,
+                Chromatic.G,
+                Chromatic.B,
+		Chromatic.DD,
+		Chromatic.A,
+        ), ChromaticChord.CMaj13a9omit11.getNotes());
+
+	// Do treceava mayor con quinta y novena bemoles
+	assertEquals(Arrays.asList(
+                Chromatic.C,
+                Chromatic.E,
+                Chromatic.FF,
+                Chromatic.B,
+		Chromatic.CC,
+		Chromatic.F,
+		Chromatic.A,
+        ), ChromaticChord.CMaj13b5b9.getNotes());
+
+	assertEquals(Arrays.asList(
+                Chromatic.C,
+                Chromatic.E,
+                Chromatic.FF,
+                Chromatic.B,
+		Chromatic.CC,
+		Chromatic.A,
+        ), ChromaticChord.CMaj13b5b9omit11.getNotes());
+
+	// Do treceava mayor con quinta bemol y novena aumentada
+	assertEquals(Arrays.asList(
+                Chromatic.C,
+                Chromatic.E,
+                Chromatic.FF,
+                Chromatic.B,
+		Chromatic.DD,
+		Chromatic.F,
+		Chromatic.A,
+        ), ChromaticChord.CMaj13b5a9.getNotes());
+
+	assertEquals(Arrays.asList(
+                Chromatic.C,
+                Chromatic.E,
+                Chromatic.FF,
+                Chromatic.B,
+		Chromatic.DD,
+		Chromatic.A,
+        ), ChromaticChord.CMaj13b5a9omit11.getNotes());
+
+	//Do treceava mayor con quinta aumentada y novena bemol
+	assertEquals(Arrays.asList(
+                Chromatic.C,
+                Chromatic.E,
+                Chromatic.GG,
+                Chromatic.B,
+		Chromatic.CC,
+		Chromatic.F,
+		Chromatic.A,
+        ), ChromaticChord.CMaj13a5b9.getNotes());
+
+	assertEquals(Arrays.asList(
+                Chromatic.C,
+                Chromatic.E,
+                Chromatic.GG,
+                Chromatic.B,
+		Chromatic.CC,
+		Chromatic.A,
+        ), ChromaticChord.CMaj13a5b9omit11.getNotes());
+
+	// Do treceava mayor con quinta y novena aumentadas
+        assertEquals(Arrays.asList(
+                Chromatic.C,
+                Chromatic.E,
+                Chromatic.GG,
+                Chromatic.B,
+		Chromatic.DD,
+		Chromatic.F,
+		Chromatic.A,
+        ), ChromaticChord.CMaj13a5a9.getNotes());
+
+	assertEquals(Arrays.asList(
+                Chromatic.C,
+                Chromatic.E,
+                Chromatic.GG,
+                Chromatic.B,
+		Chromatic.DD,
+		Chromatic.A,
+        ), ChromaticChord.CMaj13a5a9omit11.getNotes());
 
     }
 }
