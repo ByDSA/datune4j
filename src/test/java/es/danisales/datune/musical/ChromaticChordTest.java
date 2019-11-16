@@ -82,18 +82,53 @@ public class ChromaticChordTest {
 
     @Test
     public void from() {
-    }
+	ChromaticChord chromaticChord = ChromaticChord.from( Chromatic.C, Chromatic.D, Chromatic.E );
+	assertNotNull(chromaticChord);
 
-    @Test
-    public void from1() {
+	assertEquals(3, chromaticChord.size());
+	assertEquals(0, chromaticChord.getRootPos());
+	assertEquals(Chromatic.C, chromaticChord.get(0));
+	assertEquals(Chromatic.D, chromaticChord.get(1));
+	assertEquals(Chromatic.E, chromaticChord.get(2));
     }
 
     @Test
     public void getAllInversions() {
+	List<ChromaticChord> listChromaticChords = ChromaticChord.C.getAllInversions();
+	
+	ChromaticChord original = ChromaticChord.from(Chromatic.C, Chromatic.E, Chromatic.G);
+	ChromaticChord inv1 = ChromaticChord.from(Chromatic.E, Chromatic.G, Chromatic.C);
+	inv1.setRootPos(2);
+	ChromaticChord inv2 = ChromaticChord.from(Chromatic.G, Chromatic.C, Chromatic.E);
+	inv1.setRootPos(1);
+
+	assertEquals(3, listChromaticChords.size());
+	assertEquals( original, listChromaticChords.get(0) );
+	assertEquals( inv1, listChromaticChords.get(1) );    
+	assertEquals( inv2, listChromaticChords.get(2) );
     }
 
     @Test
-    public void duplicate() {
+    public void duplicateCustom() {
+	ChromaticChord chromaticChord = ChromaticChord.from(Chromatic.C, Chromatic.D, Chromatic.E);
+	ChromaticChord duplicatedChromaticChord = chromaticChord.duplicate();
+
+	assertEquals(chromaticChord, duplicatedChromaticChord);
+	
+	chromaticChord.set(2, Chromatic.G);
+
+	assertNotEquals(chromaticChord, duplicatedChromaticChord);
+    }
+
+    @Test
+    public void duplicateEnum() {
+	ChromaticChord chromaticChord = ChromaticChord.C.duplicate();
+	assertEquals(ChromaticChord.C.innerChord, chromaticChord.innerChord);
+
+
+	chromaticChord.set(2, Chromatic.G);
+
+	assertNotEquals(ChromaticChord.C.innerChord, chromaticChord.innerChord);
     }
 
     /*
