@@ -72,6 +72,31 @@ public class ChromaticChordPattern implements Iterable<Integer> {
     public static final ChromaticChordPattern SUS2b2 = new ChromaticChordPattern(ChromaticChordPatternEnum.SUS2b2);
     public static final ChromaticChordPattern SUS2b2b5 = new ChromaticChordPattern(ChromaticChordPatternEnum.SUS2b2b5);
 
+    public static final ChromaticChordPattern THIRTEENTH_MINOR_OMIT11 = new ChromaticChordPattern(ChromaticChordPatternEnum.THIRTEENTH_MINOR_OMIT11);
+    public static final ChromaticChordPattern THIRTEENTH_SUS4_OMIT11 = new ChromaticChordPattern(ChromaticChordPatternEnum.THIRTEENTH_SUS4_OMIT11);
+    public static final ChromaticChordPattern THIRTEENTH_b5_OMIT11 = new ChromaticChordPattern(ChromaticChordPatternEnum.THIRTEENTH_b5_OMIT11);
+    public static final ChromaticChordPattern THIRTEENTH_a5_OMIT11 = new ChromaticChordPattern(ChromaticChordPatternEnum.THIRTEENTH_a5_OMIT11);
+    public static final ChromaticChordPattern THIRTEENTH_b9_OMIT11 = new ChromaticChordPattern(ChromaticChordPatternEnum.THIRTEENTH_b9_OMIT11);
+    public static final ChromaticChordPattern THIRTEENTH_a9_OMIT11 = new ChromaticChordPattern(ChromaticChordPatternEnum.THIRTEENTH_a9_OMIT11);
+    public static final ChromaticChordPattern THIRTEENTH_b5b9_OMIT11 = new ChromaticChordPattern(ChromaticChordPatternEnum.THIRTEENTH_b5b9_OMIT11);
+    public static final ChromaticChordPattern THIRTEENTH_b5a9_OMIT11 = new ChromaticChordPattern(ChromaticChordPatternEnum.THIRTEENTH_b5a9_OMIT11);
+    public static final ChromaticChordPattern THIRTEENTH_a5b9_OMIT11 = new ChromaticChordPattern(ChromaticChordPatternEnum.THIRTEENTH_a5b9_OMIT11);
+    public static final ChromaticChordPattern THIRTEENTH_a5a9_OMIT11 = new ChromaticChordPattern(ChromaticChordPatternEnum.THIRTEENTH_a5a9_OMIT11);
+    public static final ChromaticChordPattern THIRTEENTH_MAJ13_OMIT11 = new ChromaticChordPattern(ChromaticChordPatternEnum.THIRTEENTH_MAJ13_OMIT11);
+    public static final ChromaticChordPattern THIRTEENTH_MINOR_MAJ13_OMIT11 = new ChromaticChordPattern(ChromaticChordPatternEnum.THIRTEENTH_MINOR_MAJ13_OMIT11);
+    public static final ChromaticChordPattern THIRTEENTH_MAJ13_b5_OMIT11 = new ChromaticChordPattern(ChromaticChordPatternEnum.THIRTEENTH_MAJ13_b5_OMIT11);
+    public static final ChromaticChordPattern THIRTEENTH_MAJ13_a5_OMIT11 = new ChromaticChordPattern(ChromaticChordPatternEnum.THIRTEENTH_MAJ13_a5_OMIT11);
+    public static final ChromaticChordPattern THIRTEENTH_MAJ13_b9_OMIT11 = new ChromaticChordPattern(ChromaticChordPatternEnum.THIRTEENTH_MAJ13_b9_OMIT11);
+    public static final ChromaticChordPattern THIRTEENTH_MAJ13_a9_OMIT11 = new ChromaticChordPattern(ChromaticChordPatternEnum.THIRTEENTH_MAJ13_a9_OMIT11);
+    public static final ChromaticChordPattern THIRTEENTH_MAJ13_b5b9_OMIT11 = new ChromaticChordPattern(ChromaticChordPatternEnum.THIRTEENTH_MAJ13_b5b9_OMIT11);
+    public static final ChromaticChordPattern THIRTEENTH_MAJ13_b5a9_OMIT11 = new ChromaticChordPattern(ChromaticChordPatternEnum.THIRTEENTH_MAJ13_b5a9_OMIT11);
+    public static final ChromaticChordPattern THIRTEENTH_MAJ13_a5b9_OMIT11 = new ChromaticChordPattern(ChromaticChordPatternEnum.THIRTEENTH_MAJ13_a5b9_OMIT11);
+    public static final ChromaticChordPattern THIRTEENTH_MAJ13_a5a9_OMIT11 = new ChromaticChordPattern(ChromaticChordPatternEnum.THIRTEENTH_MAJ13_a5a9_OMIT11);
+    public static final ChromaticChordPattern SUS4a4_OMIT11 = new ChromaticChordPattern(ChromaticChordPatternEnum.SUS4a4_OMIT11);
+    public static final ChromaticChordPattern SUS2b2_OMIT11 = new ChromaticChordPattern(ChromaticChordPatternEnum.SUS2b2_OMIT11);
+    public static final ChromaticChordPattern SUS2b2b5_OMIT11 = new ChromaticChordPattern(ChromaticChordPatternEnum.SUS2b2b5_OMIT11);
+
+
     ChromaticChordPatternInterface innerPattern;
     private final boolean fixed;
 
