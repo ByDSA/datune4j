@@ -11,14 +11,14 @@ import java.util.*;
 import java.util.function.BiFunction;
 
 public abstract class NormalChordCommon<N extends SymbolicPitch> implements ChordMutableInterface<N> {
-    protected ChordCommon<N> innerChord;
-    protected boolean fixed;
+    ChordCommon<N> innerChord;
+    private boolean fixed;
 
-    protected NormalChordCommon() {
+    NormalChordCommon() {
         fixed = false;
     }
 
-    protected NormalChordCommon( ChordCommon<N> chromaticChordInterface) {
+    NormalChordCommon(ChordCommon<N> chromaticChordInterface) {
         innerChord = chromaticChordInterface;
         fixed = true;
     }
@@ -32,8 +32,13 @@ public abstract class NormalChordCommon<N extends SymbolicPitch> implements Chor
 
 
     private void turnIntoCustomIfNot() {
+        checkInnerNotNull();
         if ( !(innerChord instanceof DiatonicChordCustom) )
             turnInnerIntoCustom();
+    }
+
+    private void checkInnerNotNull() {
+        Objects.requireNonNull(innerChord);
     }
 
     protected abstract void turnInnerIntoCustom();
@@ -131,7 +136,7 @@ public abstract class NormalChordCommon<N extends SymbolicPitch> implements Chor
     }
 
     @Override
-    public Boolean updateWhatIsIt(BiFunction<List<ChromaticChordCustom>, ChordCommon<?>, ChromaticChordCustom> fSelectChord) {
+    public Boolean updateWhatIsIt(BiFunction<List<ChromaticChord>, ChordCommon<?>, ChromaticChord> fSelectChord) {
         return null;
     }
 
@@ -271,6 +276,7 @@ public abstract class NormalChordCommon<N extends SymbolicPitch> implements Chor
 
     @Override
     public final void resetRoot() {
+        checkInnerNotNull();
         exceptionIfFixed();
         turnIntoCustomIfNot();
         ChordMutableInterface.super.resetRoot();
@@ -331,5 +337,9 @@ public abstract class NormalChordCommon<N extends SymbolicPitch> implements Chor
     @Override
     public final int hashCode() {
         return innerChord._hashCode();
+    }
+
+    public List<N> getNotes() {
+        return Collections.unmodifiableList(this);
     }
 }

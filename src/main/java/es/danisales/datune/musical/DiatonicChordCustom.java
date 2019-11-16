@@ -36,7 +36,7 @@ class DiatonicChordCustom extends Chord<Diatonic> implements DiatonicChordInterf
 	}
 
 	@Override
-	public Boolean updateWhatIsIt(BiFunction<List<ChromaticChordCustom>, ChordCommon<?>, ChromaticChordCustom> fSelectChord) {
+	public Boolean updateWhatIsIt(BiFunction<List<ChromaticChord>, ChordCommon<?>, ChromaticChord> fSelectChord) {
 		// TODO Auto-generated method stub
 		return null;
 	}

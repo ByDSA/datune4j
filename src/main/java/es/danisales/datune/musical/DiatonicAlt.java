@@ -7,6 +7,7 @@ import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
+@SuppressWarnings("WeakerAccess")
 public class DiatonicAlt implements SymbolicPitch {
 	public static final DiatonicAlt C = new DiatonicAlt(Diatonic.C, 0);
 	public static final DiatonicAlt D = new DiatonicAlt(Diatonic.D, 0);
@@ -83,7 +84,7 @@ public class DiatonicAlt implements SymbolicPitch {
 		return DiatonicAltAdapter.from(chromatic, diatonic);
 	}
 
-	public static @NonNull DiatonicAlt from(Diatonic diatonic, int alt) {
+	public static @NonNull DiatonicAlt from(@NonNull Diatonic diatonic, int alt) {
 		return new DiatonicAlt(diatonic, alt);
 	}
 
@@ -114,11 +115,15 @@ public class DiatonicAlt implements SymbolicPitch {
 		return Math.abs( altSigned );
 	}
 
-	public DiatonicAlt getNextDiatonic() {
-		return new DiatonicAlt(diatonicBase.next(), semitonesAdded);
+	public @NonNull DiatonicAlt getNextDiatonic() {
+		return new DiatonicAlt(diatonicBase.getNext(), semitonesAdded);
 	}
 
-	public Diatonic getDiatonic() {
+	public @NonNull DiatonicAlt getPreviousDiatonic() {
+		return new DiatonicAlt(diatonicBase.getPrevious(), semitonesAdded);
+	}
+
+	public @NonNull Diatonic getDiatonic() {
 		return diatonicBase;
 	}
 

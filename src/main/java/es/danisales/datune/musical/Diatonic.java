@@ -28,8 +28,16 @@ public enum Diatonic implements PitchDiatonicSingle {
 		return DiatonicAdapter.from( this.intValue() + intervalDiatonic.ordinal() );
 	}
 
-	public Diatonic next() {
+	public Diatonic getShiftedNegative(IntervalDiatonic intervalDiatonic) {
+		return DiatonicAdapter.from( this.intValue() - intervalDiatonic.ordinal() );
+	}
+
+	public Diatonic getNext() {
 		return getShifted(IntervalDiatonic.SECOND);
+	}
+
+	public Diatonic getPrevious() {
+		return getShiftedNegative(IntervalDiatonic.SECOND);
 	}
 
 	/** Calculator **/

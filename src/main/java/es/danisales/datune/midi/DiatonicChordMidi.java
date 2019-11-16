@@ -67,7 +67,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
                     .build();
             Chromatic chromaticCm = Chromatic.from(cm);
             Chromatic lastChromatic = ChromaticAdapter.from( get( size() - 1 ) );
-            if ( size() > 0 && chromaticCm.compareEnharmonicTo(lastChromatic) <= 0 ) {
+            if ( size() > 0 && chromaticCm.ordinal() <= lastChromatic.ordinal()) {
                 o++;
                 cm.shiftOctave( 1 );
             }
@@ -251,7 +251,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
         } catch ( TonalityException e ) {
             clear();
 
-            function = ton.getFunction( ns );
+            function = ton.getFunction( ChromaticChord.from(ns) );
             if ( function == null ) {
                 tonality = TonalityChordRetrieval.searchInModeSameRoot(tonality, ns);
                 metaTonality = tonality;
@@ -1203,13 +1203,13 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
     @Override
     public Boolean updateWhatIsIt() {
         return updateWhatIsIt(
-                (List<ChromaticChordCustom> chords, ChordCommon<?> self) -> {
+                (List<ChromaticChord> chords, ChordCommon<?> self) -> {
                     updateFunctionIfNull();
-                    ChromaticChordCustom ret = ChromaticChordCustom.noneOf();
+                    ChromaticChord ret = ChromaticChord.fromNone();
                     if ( function instanceof DiatonicFunction )
-                        ret.addAll( ChromaticChordInterface.from(tonality, (DiatonicFunction) function ) );
+                        ret.addAll( ChromaticChord.from(tonality, (DiatonicFunction) function ) );
                     else
-                        ret.addAll( ChromaticChordInterface.from(tonality, (ChromaticFunction) function ) );
+                        ret.addAll( ChromaticChord.from(tonality, (ChromaticFunction) function ) );
 
                     assert this.size() == ret.size();
 

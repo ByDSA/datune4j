@@ -7,6 +7,7 @@ import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.utils.ListUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -22,21 +23,21 @@ public interface ChromaticChordInterface extends PitchChromaticChord<Chromatic> 
                 || f == ChromaticFunction.VI || f == ChromaticFunction.VII ) {
             DiatonicAlt r = t.getNote( f.getDegree() );
             Chromatic rChromatic = Chromatic.from(r);
-            ret.addAll( ChromaticChordRetrieval.whichRootIs( rChromatic, ChromaticChordEnum.CHORDS_MAJOR ) );
+            ret.addAll( ChromaticChordRetrieval.whichRootIs( rChromatic, ChromaticChord.CHORDS_MAJOR ) );
         } else if ( f == ChromaticFunction.i || f == ChromaticFunction.ii
                 || f == ChromaticFunction.iii
                 || f == ChromaticFunction.iv || f == ChromaticFunction.v
                 || f == ChromaticFunction.vi || f == ChromaticFunction.vii ) {
             DiatonicAlt r = t.getNote( f.getDegree() );
             Chromatic rChromatic = Chromatic.from(r);
-            ret.addAll( ChromaticChordRetrieval.whichRootIs( rChromatic, ChromaticChordEnum.CHORDS_MINOR ) );
+            ret.addAll( ChromaticChordRetrieval.whichRootIs( rChromatic, ChromaticChord.CHORDS_MINOR ) );
         } else if ( f == ChromaticFunction.I0 || f == ChromaticFunction.II0
                 || f == ChromaticFunction.III0 || f == ChromaticFunction.IV0
                 || f == ChromaticFunction.V0 || f == ChromaticFunction.VI0
                 || f == ChromaticFunction.VII0 ) {
             DiatonicAlt r = t.getNote( f.getDegree() );
             Chromatic rChromatic = Chromatic.from(r);
-            ret.addAll( ChromaticChordRetrieval.whichRootIs( rChromatic, ChromaticChordEnum.CHORDS_DIMINISHED ) );
+            ret.addAll( ChromaticChordRetrieval.whichRootIs( rChromatic, ChromaticChord.CHORDS_DIMINISHED ) );
         } else if ( f == ChromaticFunction.N6 ) {
             DiatonicAlt base = t.getNote( DiatonicDegree.I );
 
@@ -270,21 +271,6 @@ public interface ChromaticChordInterface extends PitchChromaticChord<Chromatic> 
         return ret;
     }
 
-    static @NonNull ChromaticChordInterface from(@NonNull Tonality tonality, @NonNull DiatonicFunction diatonicFunction) {
-        Objects.requireNonNull(tonality);
-        Objects.requireNonNull(diatonicFunction);
-
-        return tonality.getChordFrom(diatonicFunction);
-    }
-
-    static @NonNull ChromaticChordInterface from(Tonality tonality, ChromaticFunction chromaticFunction) {
-        return tonality.getChordFrom(chromaticFunction);
-    }
-
-    static ChromaticChordInterface from(Chromatic... chromatics) {
-        return from( Arrays.asList(chromatics) );
-    }
-
     default ChromaticChordMidi toMidi(int octave, int length) {
         return toMidi( octave, length, Settings.DefaultValues.VELOCITY );
     }
@@ -306,79 +292,6 @@ public interface ChromaticChordInterface extends PitchChromaticChord<Chromatic> 
                 .velocity(velocity)
                 .build();
         return ccm;
-    }
-
-
-
-    default ChromaticChordInterface[] getModalChords(@NonNull Tonality t) {
-        HarmonicFunction f = t.getFunction( this );
-        if ( f == null || f instanceof ChromaticFunction )
-            return null;
-
-        DiatonicFunction fCasted = (DiatonicFunction) f;
-        List<Tonality> ts = t.getModesSameRoot();
-
-        int i = 0;
-        ChromaticChordInterface[] ret = new ChromaticChordInterface[t.size()];
-        for ( Tonality t2 : ts ) {
-            ret[i++] = ChromaticChordInterface.from(t2, fCasted);
-        }
-
-        return ret;
-    }
-
-
-    static PitchChromaticChord<Chromatic> from(DiatonicChord diatonicChord, Tonality t, DiatonicFunction df) {
-        ChromaticChordCustom cc = new ChromaticChordCustom();
-        for ( Diatonic d : diatonicChord ) {
-            Chromatic chromatic = ChromaticAdapter.from(d, t);
-            cc.add(chromatic);
-        }
-
-        if ( df != null )
-            switch ( df ) {
-                case I2:
-                case II2:
-                case III2:
-                case IV2:
-                case V2:
-                case VI2:
-                case VII2:
-                    for ( ChromaticChordEnum c : SetUtils.concat( ChromaticChordEnum.CHORDS_SUS2, ChromaticChordEnum.CHORDS_SUSb2, ChromaticChordEnum.CHORDS_SUSb2b5 ) )
-                        if ( cc.equalsEnharmonic( c ) ) {
-                            return c;
-                        }
-                    break;
-                case I4:
-                case II4:
-                case III4:
-                case IV4:
-                case V4:
-                case VI4:
-                case VII4:
-                    for ( ChromaticChordEnum c : SetUtils.concat( ChromaticChordEnum.CHORDS_SUS4, ChromaticChordEnum.CHORDS_SUSa4 ) )
-                        if ( cc.equalsEnharmonic( c ) ) {
-                            return c;
-                        }
-                    break;
-                case I6:
-                case II6:
-                case III6:
-                case IV6:
-                case V6:
-                case VI6:
-                case VII6:
-                    for ( ChromaticChordEnum c : SetUtils.concat( ChromaticChordEnum.CHORDS_6, ChromaticChordEnum.CHORDS_m6 ) )
-                        if ( cc.equalsEnharmonic( c ) ) {
-                            return c;
-                        }
-                    break;
-            }
-
-        cc.updateWhatIsIt();
-        //assert cc.meta.str != null : "meta.str es null: " + cc.notesToString() + " [" + t + "] [" + df + "] " + t.notesToString();
-
-        return cc;
     }
 
     @Override

@@ -4,7 +4,7 @@ import es.danisales.datune.eventsequences.Instrument;
 import es.danisales.datune.eventsequences.Track;
 import es.danisales.datune.midi.*;
 import es.danisales.datune.midi.Events.Volume;
-import es.danisales.datune.musical.ChromaticChordEnum;
+import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.pitch.ProgressionChromaticChordMidi;
 import es.danisales.datune.tonality.Tonality;
 
@@ -29,15 +29,15 @@ class Main {
 		 */
 
 		ProgressionChromaticChordMidi pcm = new ProgressionChromaticChordMidi(
-			ChromaticChordEnum.C,
-			ChromaticChordEnum.Em,
-			ChromaticChordEnum.F,
-			ChromaticChordEnum.B,
-			ChromaticChordEnum.Am,
-			ChromaticChordEnum.D,
-			ChromaticChordEnum.G,
-			ChromaticChordEnum.Bdim,
-			ChromaticChordEnum.C
+				ChromaticChord.C,
+				ChromaticChord.Em,
+				ChromaticChord.F,
+				ChromaticChord.B,
+				ChromaticChord.Am,
+				ChromaticChord.D,
+				ChromaticChord.G,
+				ChromaticChord.Bdim,
+				ChromaticChord.C
 		);
 
 		PathProgression<ChromaticChordMidi> p2 = new PathProgression( pcm );

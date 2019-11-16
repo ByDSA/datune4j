@@ -3,6 +3,7 @@ package es.danisales.datune.tonality;
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.diatonic.HarmonicFunction;
+import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.ChromaticChordInterface;
 import es.danisales.datune.pitch.PitchChromaticChord;
 
@@ -30,7 +31,7 @@ public class TonalityChordRetrieval {
         for ( Tonality t : ts ) {
             if ( t.equals( tonality ) )
                 continue;
-            HarmonicFunction function = t.getFunction( c );
+            HarmonicFunction function = t.getFunction(ChromaticChord.from(c) );
             if (function instanceof DiatonicFunction) {
                 return t;
             }
@@ -57,9 +58,9 @@ public class TonalityChordRetrieval {
         return null;
     }
 
-    public static List<ChromaticChordInterface> getTriadChordsFrom(Tonality tonality) {
+    public static List<ChromaticChord> getTriadChordsFrom(Tonality tonality) {
         NoDiatonicScaleException.check( tonality.getScale() );
-        List<ChromaticChordInterface> ret = new ArrayList<>();
+        List<ChromaticChord> ret = new ArrayList<>();
         for ( DiatonicDegree diatonicDegree : DiatonicDegree.values() ) {
             DiatonicFunction f = null;
             switch ( diatonicDegree ) {
@@ -84,16 +85,16 @@ public class TonalityChordRetrieval {
                 case VII:
                     f = DiatonicFunction.VII;
             }
-            ChromaticChordInterface chromaticChord = ChromaticChordInterface.from(tonality, f);
+            ChromaticChord chromaticChord = ChromaticChord.from(tonality, f);
             ret.add(chromaticChord);
         }
 
         return ret;
     }
 
-    public static List<PitchChromaticChord> getSeventhChordsFrom(Tonality tonality) {
+    public static List<ChromaticChord> getSeventhChordsFrom(Tonality tonality) {
         NoDiatonicScaleException.check( tonality.getScale() );
-        List<PitchChromaticChord> ret = new ArrayList<>();
+        List<ChromaticChord> ret = new ArrayList<>();
         for (DiatonicDegree diatonicDegree : DiatonicDegree.values()) {
             DiatonicFunction f = null;
             switch ( diatonicDegree ) {
@@ -118,7 +119,7 @@ public class TonalityChordRetrieval {
                 case VII:
                     f = DiatonicFunction.VII7;
             }
-            ChromaticChordInterface chromaticChord = ChromaticChordInterface.from(tonality, f);
+            ChromaticChord chromaticChord = ChromaticChord.from(tonality, f);
             ret.add(chromaticChord);
         }
 

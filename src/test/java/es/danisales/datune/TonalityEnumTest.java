@@ -2,6 +2,7 @@ package es.danisales.datune;
 
 import es.danisales.datune.diatonic.ChromaticFunction;
 import es.danisales.datune.diatonic.DiatonicFunction;
+import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.ChromaticChordInterface;
 import es.danisales.datune.tonality.Tonality;
 import org.junit.Test;
@@ -14,7 +15,7 @@ public class TonalityEnumTest {
 	public void getDiatonicFunction() {
 		Tonality t = Tonality.C;
 		for (DiatonicFunction df : DiatonicFunction.values()) {
-			assertNotNull( ChromaticChordInterface.from( t, df ) );
+			assertNotNull( ChromaticChord.from( t, df ) );
 		}
 	}
 	
@@ -22,7 +23,7 @@ public class TonalityEnumTest {
 	public void getChromaticFunction() {
 		Tonality t = Tonality.C;
 		for (ChromaticFunction cf : ChromaticFunction.values()) {
-			assertNotNull( ChromaticChordInterface.from( t, cf ) );
+			assertNotNull( ChromaticChord.from( t, cf ) );
 		}
 	}
 }

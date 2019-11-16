@@ -2,11 +2,14 @@ package es.danisales.datune.musical;
 
 import es.danisales.datune.pitch.Chord;
 import es.danisales.datune.pitch.PitchChromaticChord;
+import es.danisales.datune.pitch.PitchChromaticSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
+import java.util.Collection;
 import java.util.EnumMap;
 import java.util.EnumSet;
+import java.util.Set;
 
 public class ChromaticChordRetrieval {
     private ChromaticChordRetrieval() {
@@ -29,8 +32,8 @@ public class ChromaticChordRetrieval {
         return chords;
     }
 
-    public static @Nullable <T extends PitchChromaticChord<Chromatic>> T whichRootIs(@NonNull Chromatic chromatic, @NonNull Iterable<T> pcc) {
-        for (T chord : pcc)
+    public static @Nullable ChromaticChord whichRootIs(@NonNull Chromatic chromatic, @NonNull Set<ChromaticChord> pcc) {
+        for (ChromaticChord chord : pcc)
             if (chord.getRoot() == chromatic)
                 return chord;
 

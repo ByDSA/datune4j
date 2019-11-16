@@ -3,7 +3,7 @@ package es.danisales.datune.midi;
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.Quality;
 import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.musical.ChromaticChordCustom;
+import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticSingle;
@@ -40,7 +40,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 					.build();
 			if ( i > 0 ) {
 				int lastElementOctave = ns.get(ns.size()-1).getOctave();
-				if (cs[i].compareEnharmonicTo(cs[i - 1]) < 0)
+				if (cs[i].ordinal() < (cs[i - 1].ordinal()))
 					chromaticMidi.setOctave(lastElementOctave + 1);
 				else
 					chromaticMidi.setOctave(lastElementOctave);
@@ -95,7 +95,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 					.build();
 			Chromatic chromaticCm = ChromaticAdapter.from(cm);
 			Chromatic prevChromatic = ChromaticAdapter.from(This.get(This.size() - 1));
-			if (!(n instanceof PitchOctave) && This.size() > 0 && chromaticCm.compareEnharmonicTo(prevChromatic) <= 0) {
+			if (!(n instanceof PitchOctave) && This.size() > 0 && chromaticCm.ordinal() <= prevChromatic.ordinal()) {
 				cm.shiftOctave(1);
 			}
 
@@ -196,7 +196,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 			for ( ChromaticMidi n2 : out ) {
 				Chromatic chromaticN2 = ChromaticAdapter.from(n2);
 				Chromatic chromaticN = ChromaticAdapter.from(n);
-				if ( chromaticN2.compareEnharmonicTo(chromaticN) == 0 ) {
+				if ( chromaticN2.ordinal() == chromaticN.ordinal() ) {
 					found = true;
 					break;
 				}
@@ -214,7 +214,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 	}
 
 	public String toString() {
-		ChromaticChordCustom ca = ChromaticChordCustom.from( this );
+		ChromaticChord ca = ChromaticChord.from( this );
 
 		return ca.toString();
 	}
@@ -320,7 +320,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 						int lastElementOctave = ns.get(ns.size() - 1).getOctave();
 						Chromatic current = fromChromatic.get(i);
 						Chromatic previous = fromChromatic.get(i - 1);
-						if (current.compareEnharmonicTo(previous) < 0)
+						if (current.ordinal() < previous.ordinal())
 							chromaticMidi.setOctave(lastElementOctave + 1);
 						else
 							chromaticMidi.setOctave(lastElementOctave);

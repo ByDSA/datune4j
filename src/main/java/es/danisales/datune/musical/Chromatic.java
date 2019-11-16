@@ -14,7 +14,10 @@ import es.danisales.utils.MathUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 public enum Chromatic implements PitchChromaticSingle {
 	C, CC, D, DD, E, F, FF, G, GG, A, AA, B;
@@ -96,7 +99,7 @@ public enum Chromatic implements PitchChromaticSingle {
 		return ret;
 	}
 
-	@SuppressWarnings("DuplicatedCode")
+	@SuppressWarnings("Duplicates")
 	public static @NonNull Chromatic from(Diatonic diatonic) {
 		switch (diatonic) {
 			case C: return C;
@@ -168,20 +171,5 @@ public enum Chromatic implements PitchChromaticSingle {
 			d += IntervalChromatic.PERFECT_OCTAVE.getSemitones();
 
 		return d;
-	}
-
-	/** Comparator **/
-
-	@Deprecated
-	private static class EnharmonicComparator implements java.util.Comparator<Chromatic> {
-		@Override
-		public int compare(Chromatic o1, Chromatic o2) {
-			return Integer.compare(o1.ordinal(), o2.ordinal());
-		}
-	}
-
-	@Deprecated
-	public int compareEnharmonicTo(Chromatic otherChromatic) {
-		return new EnharmonicComparator().compare(this, otherChromatic);
 	}
 }

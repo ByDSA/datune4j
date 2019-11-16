@@ -58,11 +58,11 @@ public interface ChordMutableInterface<N extends SymbolicPitch> extends ChordCom
 	// todo: protected
 	default Boolean updateWhatIsIt() {
 		return updateWhatIsIt(
-				(List<ChromaticChordCustom> chords, ChordCommon<?> self) -> chords.get( 0 )
+				(List<ChromaticChord> chords, ChordCommon<?> self) -> chords.get( 0 )
 		);
 	}
 
-	Boolean updateWhatIsIt(BiFunction<List<ChromaticChordCustom>, ChordCommon<?>, ChromaticChordCustom> fSelectChord);
+	Boolean updateWhatIsIt(BiFunction<List<ChromaticChord>, ChordCommon<?>, ChromaticChord> fSelectChord);
 
 	Boolean updateWhatIsItIfNeeded();
 

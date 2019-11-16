@@ -95,4 +95,141 @@ public class ChromaticChordTest {
     @Test
     public void duplicate() {
     }
+
+    /*
+	@Test
+	public void chordUnfuncChords() {
+		assertEquals( 3, ChromaticChordEnum.C.size() );
+
+		for ( ChromaticChord c : ChromaticChord.TRIAD_CHORDS ) {
+			assertEquals( 3, c.size() );
+		}
+
+		for ( ChromaticChord c : ChromaticChord.COMMON_CHORDS ) {
+			assertEquals( true, c.size() > 1 );
+			assertNotEquals(ChordNamer.from(c), null, c.getQuality() );
+			assertNotEquals( ChordNotation.EMPTY_CHORD, c.toString() );
+		}
+
+		for ( ChromaticChord c : ChromaticChord.CHORDS_MAJOR )
+			Assert.assertArrayEquals(
+					new Integer[] {
+							0,
+							4,
+							7
+					}, c.integerNotationFromRoot().toArray()
+			);
+		for ( ChromaticChord c : ChromaticChord.CHORDS_MINOR )
+			Assert.assertArrayEquals(
+					new Integer[] {
+							0,
+							3,
+							7
+					}, c.integerNotationFromRoot().toArray()
+			);
+		for ( ChromaticChord c : ChromaticChord.CHORDS_DIMINISHED )
+			Assert.assertArrayEquals(
+					new Integer[] {
+							0,
+							3,
+							6
+					}, c.integerNotationFromRoot().toArray()
+			);
+		for ( ChromaticChord c : ChromaticChord.CHORDS_AUGMENTED )
+			Assert.assertArrayEquals(
+					new Integer[] {
+							0,
+							4,
+							8
+					}, c.integerNotationFromRoot().toArray()
+			);
+		for ( ChromaticChord c : ChromaticChord.CHORDS_SUS4 )
+			Assert.assertArrayEquals(
+					new Integer[] {
+							0,
+							5,
+							7
+					}, c.integerNotationFromRoot().toArray()
+			);
+		for ( ChromaticChord c : ChromaticChord.CHORDS_SUS2 )
+			Assert.assertArrayEquals(
+					new Integer[] {
+							0,
+							2,
+							7
+					}, c.integerNotationFromRoot().toArray()
+			);
+		for ( ChromaticChord c : ChromaticChord.CHORDS_7 )
+			Assert.assertArrayEquals(
+					new Integer[] {
+							0,
+							4,
+							7,
+							10
+					}, c.integerNotationFromRoot().toArray()
+			);
+		for ( ChromaticChord c : ChromaticChord.CHORDS_7b5 )
+			Assert.assertArrayEquals(
+					new Integer[] {
+							0,
+							4,
+							6,
+							10
+					}, c.integerNotationFromRoot().toArray()
+			);
+		for ( ChromaticChord c : ChromaticChord.CHORDS_7a5 )
+			Assert.assertArrayEquals(
+					new Integer[] {
+							0,
+							4,
+							8,
+							10
+					}, c.integerNotationFromRoot().toArray()
+			);
+		for ( ChromaticChord c : ChromaticChord.CHORDS_Maj7 )
+			Assert.assertArrayEquals(
+					new Integer[] {
+							0,
+							4,
+							7,
+							11
+					}, c.integerNotationFromRoot().toArray()
+			);
+		for ( ChromaticChord c : ChromaticChord.CHORDS_mMaj7 )
+			Assert.assertArrayEquals(
+					new Integer[] {
+							0,
+							3,
+							7,
+							11
+					}, c.integerNotationFromRoot().toArray()
+			);
+		for ( ChromaticChord c : ChromaticChord.CHORDS_m7 )
+			Assert.assertArrayEquals(
+					new Integer[] {
+							0,
+							3,
+							7,
+							10
+					}, c.integerNotationFromRoot().toArray()
+			);
+		for ( ChromaticChord c : ChromaticChord.CHORDS_m7a5 )
+			Assert.assertArrayEquals(
+					new Integer[] {
+							0,
+							3,
+							8,
+							10
+					}, c.integerNotationFromRoot().toArray()
+			);
+		for ( ChromaticChord c : ChromaticChord.CHORDS_m7b5 )
+			Assert.assertArrayEquals(
+					new Integer[] {
+							0,
+							3,
+							6,
+							10
+					}, c.integerNotationFromRoot().toArray()
+			);
+	}*/
 }

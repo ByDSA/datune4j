@@ -118,7 +118,7 @@ public class DiatonicChord extends NormalChordCommon<Diatonic> implements Diaton
     }
 
     @Override
-    public Boolean updateWhatIsIt(BiFunction<List<ChromaticChordCustom>, ChordCommon<?>, ChromaticChordCustom> fSelectChord) {
+    public Boolean updateWhatIsIt(BiFunction<List<ChromaticChord>, ChordCommon<?>, ChromaticChord> fSelectChord) {
         return null;
     }
 

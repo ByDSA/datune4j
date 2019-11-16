@@ -3,6 +3,7 @@ package es.danisales.datune.diatonic;
 import es.danisales.arrays.ArrayUtils;
 import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
+import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -240,7 +241,7 @@ public enum ChromaticFunction implements HarmonicFunction {
 	 * @return the chromatic function
 	 */
 	public static @Nullable ChromaticFunction from(@NonNull PitchChromaticChord c, @NonNull Tonality t) {
-		HarmonicFunction hf = t.getFunction(c);
+		HarmonicFunction hf = t.getFunction(ChromaticChord.from(c));
 		if ( hf instanceof ChromaticFunction )
 			return (ChromaticFunction) hf;
 

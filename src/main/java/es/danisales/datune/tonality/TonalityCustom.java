@@ -9,7 +9,6 @@ import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.musical.*;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
-import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -25,11 +24,11 @@ class TonalityCustom implements Tonality {
 
 	// TODO: no usado
 	class ChromaticChordSet {
-		public ChromaticChordCustom chord;
+		public ChromaticChord chord;
 		public TonalityCustom tonality;
 		public HarmonicFunction	function;
 
-		public ChromaticChordSet(ChromaticChordCustom c, TonalityCustom t, HarmonicFunction f) {
+		public ChromaticChordSet(ChromaticChord c, TonalityCustom t, HarmonicFunction f) {
 			chord = c;
 			tonality = t;
 			function = f;
@@ -38,10 +37,10 @@ class TonalityCustom implements Tonality {
 
 	// Cache
 	private boolean										useCache;
-	private Set<ChromaticChordInterface>							outScaleChords;
-	private HashMap<DiatonicFunction, ChromaticChordInterface>	functionChordsMap;
-	private HashMap<ChromaticFunction, ChromaticChordInterface>	chromaticChordsMap;
-	private HashMap<ChromaticChordInterface, HarmonicFunction> chromaticChordFunctionMap;
+	private Set<ChromaticChord>							outScaleChords;
+	private HashMap<DiatonicFunction, ChromaticChord>	functionChordsMap;
+	private HashMap<ChromaticFunction, ChromaticChord>	chromaticChordsMap;
+	private HashMap<ChromaticChord, HarmonicFunction> chromaticChordFunctionMap;
 
 	private static final int	SIZE_MIN	= 2;
 	private static final int	SIZE_MAX	= 8;
@@ -86,8 +85,9 @@ class TonalityCustom implements Tonality {
 	}
 
 	// todo: private
-	public ChromaticChordInterface getChordFrom(DiatonicFunction f) {
-		ChromaticChordInterface cc = null;
+	@Override
+	public ChromaticChord getChordFrom(DiatonicFunction f) {
+		ChromaticChord cc = null;
 		if ( functionChordsMap != null )
 			cc = functionChordsMap.get( f );
 
@@ -111,21 +111,21 @@ class TonalityCustom implements Tonality {
 			chromaticChordFunctionMap.put( cc, f );*/
 		}
 
-		cc = ChromaticChordInterface.from(cc);
+		cc = ChromaticChord.from(cc);
 
 		return cc;
 	}
 
 	@Override
-	public ChromaticChordInterface getChordFrom(ChromaticFunction f) {
-		ChromaticChordInterface cc = null;
+	public ChromaticChord getChordFrom(ChromaticFunction f) {
+		ChromaticChord cc = null;
 		if ( chromaticChordsMap != null )
 			cc = chromaticChordsMap.get( f );
 
 		if ( cc == null ) {
-			cc = ChromaticChordInterface.from( f, this );
-			if (cc instanceof ChromaticChordCustom)
-				((ChromaticChordCustom)cc).updateWhatIsIt();
+			cc = ChromaticChord.from( this, f );
+			if (cc instanceof ChromaticChord)
+				((ChromaticChord)cc).updateWhatIsIt();
 			assert cc != null : f + " " + TonalityNamer.notesFrom(this);
 
 			if ( chromaticChordsMap == null )
@@ -142,7 +142,7 @@ class TonalityCustom implements Tonality {
 			chromaticChordFunctionMap.putIfAbsent(cc, f);
 		}
 
-		cc = ChromaticChordInterface.from(cc);
+		cc = ChromaticChord.from(cc);
 
 		return cc;
 	}
@@ -307,11 +307,6 @@ class TonalityCustom implements Tonality {
 		return new TonalityCustom( shiftedRoot, getScale() );
 	}
 
-	@Override
-	public boolean has(ChromaticChordInterface from) {
-		return chromaticChordFunctionMap.get(from) != null;
-	}
-
 	public void setScale(@NonNull Scale scale) {
 		this.scale = scale;
 
@@ -342,7 +337,7 @@ class TonalityCustom implements Tonality {
 		return sb.toString();
 	}
 
-	public HarmonicFunction getFunction(ChromaticChordCustom c) {
+	public HarmonicFunction getFunction(ChromaticChord c) {
 		HarmonicFunction hf = getFunction( c, true );
 		if ( hf == null )
 			hf = getFunction( c, false );
@@ -350,12 +345,12 @@ class TonalityCustom implements Tonality {
 	}
 
 	@Override
-	public HarmonicFunction getFunction(PitchChromaticChord c, boolean rename) {
+	public HarmonicFunction getFunction(ChromaticChord c, boolean rename) {
 		createCacheIfNeeded();
-		ChromaticChordCustom c2;
-		c2 = ChromaticChordCustom.from( c );
-		if ( rename )
-			c2.rename( this );
+		ChromaticChord c2;
+		c2 = ChromaticChord.from( c );
+		/*if ( rename )
+			c2.rename( this );*/
 
 		return chromaticChordFunctionMap.get( c2 );
 	}

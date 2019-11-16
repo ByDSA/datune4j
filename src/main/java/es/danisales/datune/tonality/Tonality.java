@@ -80,7 +80,7 @@ public interface Tonality {
             }
 
             chromatic = chromatic.addSemi(step);
-            diatonic = diatonic.next();
+            diatonic = diatonic.getNext();
         }
 
         return notes;
@@ -342,18 +342,16 @@ public interface Tonality {
         return IntervalChromatic.from( id, distSemitones );
     }
 
-    default @Nullable HarmonicFunction getFunction(PitchChromaticChord c) {
+    default @Nullable HarmonicFunction getFunction(ChromaticChord c) {
         HarmonicFunction hf = getFunction( c, true );
         if ( hf == null )
             hf = getFunction( c, false );
         return hf;
     }
 
-    boolean has(ChromaticChordInterface from);
+    ChromaticChord getChordFrom(DiatonicFunction diatonicFunction);
 
-    ChromaticChordInterface getChordFrom(DiatonicFunction diatonicFunction);
-
-    ChromaticChordInterface getChordFrom(ChromaticFunction chromaticFunction);
+    ChromaticChord getChordFrom(ChromaticFunction chromaticFunction);
 
     default boolean has(Chromatic note) {
         return getDegreeFrom( note ) != null;
@@ -389,7 +387,7 @@ public interface Tonality {
 
     @NonNull List<DiatonicAlt> getNotes();
 
-    @Nullable HarmonicFunction getFunction(PitchChromaticChord c, boolean rename);
+    @Nullable HarmonicFunction getFunction(ChromaticChord c, boolean rename);
 
     DiatonicAlt getDiatonicAltFrom(Chromatic chromatic) throws TonalityException;
 }

@@ -1,6 +1,6 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.musical.ChromaticChordEnum;
+import es.danisales.datune.musical.ChromaticChord;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -13,13 +13,13 @@ import static org.junit.Assert.assertEquals;
 public class TonalityRetrievalTest {
     @Test
     public void fromChord() {
-        List<Tonality> ts = TonalityRetrieval.listFromChord( ChromaticChordEnum.C);
+        List<Tonality> ts = TonalityRetrieval.listFromChord( ChromaticChord.C);
         Assert.assertFalse(ts.isEmpty());
     }
 
     @Test
     public void outScaleFromChord() {
-        List<Tonality> ts = TonalityRetrieval.listFromChordOutScale( ChromaticChordEnum.C);
+        List<Tonality> ts = TonalityRetrieval.listFromChordOutScale( ChromaticChord.C);
         Assert.assertFalse(ts.isEmpty());
     }
 

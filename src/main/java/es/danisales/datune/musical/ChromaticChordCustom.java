@@ -11,12 +11,38 @@ import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 import java.util.function.BiFunction;
 
-public class ChromaticChordCustom extends Chord<Chromatic> implements PitchChromaticChord<Chromatic>, ChordMutableInterface<Chromatic>, ChromaticChordInterface {
+class ChromaticChordCustom extends Chord<Chromatic> implements PitchChromaticChord<Chromatic>, ChordMutableInterface<Chromatic>, ChromaticChordInterface {
 	private ChromaticChordMeta meta = new ChromaticChordMeta();
+
 	private static final HashMap<List<Integer>, ArrayList<ChromaticChordCustom>> sameOrderChromatics = new HashMap<>();
+
+	public static <T extends PitchChromaticSingle> @NonNull ChromaticChordCustom from(@NonNull Iterable<T> chord) {
+		ChromaticChordCustom c = new ChromaticChordCustom();
+		for (T t : chord) {
+			Chromatic chromatic = Chromatic.from(t);
+			c.add(chromatic);
+		}
+		return c;
+	}
+
+	public static <N extends PitchSingleMidi> @NonNull ChromaticChordCustom from(@NonNull ChordMidi<N> chord) {
+		ChromaticChordCustom c = new ChromaticChordCustom();
+		for (N t : chord) {
+			Chromatic chromatic = Chromatic.from(t);
+			c.add(chromatic);
+		}
+		return c;
+	}
+
+	public static ChromaticChordCustom noneOf() {
+		return new ChromaticChordCustom();
+	}
 
 	static {
 		for ( ChromaticChordEnum c : ChromaticChordEnum.values() ) {
@@ -40,6 +66,7 @@ public class ChromaticChordCustom extends Chord<Chromatic> implements PitchChrom
 	}
 
 	protected ChromaticChordCustom() { }
+
 	/*
         public <T extends PitchChromaticSingle> void addSemi(Iterable<T> cs) {
             assert cs != null;
@@ -76,12 +103,12 @@ public class ChromaticChordCustom extends Chord<Chromatic> implements PitchChrom
 	}
 
 	@Override
-	public Boolean updateWhatIsIt(BiFunction<List<ChromaticChordCustom>, ChordCommon<?>, ChromaticChordCustom> fSelectChord) {
+	public Boolean updateWhatIsIt(BiFunction<List<ChromaticChord>, ChordCommon<?>, ChromaticChord> fSelectChord) {
 		List<Integer> a = this.toIntegerChromatics();
 		assert ChromaticChordCustom.sameOrderChromatics != null;
-		List<ChromaticChordCustom> foundChords = ChromaticChordCustom.sameOrderChromatics.get( a );
+		List<ChromaticChordCustom> foundCustomChords = ChromaticChordCustom.sameOrderChromatics.get( a );
 
-		if ( foundChords == null ) {
+		if ( foundCustomChords == null ) {
 			assert meta != null;
 			autoName();
 			meta.updated = true;
@@ -90,11 +117,15 @@ public class ChromaticChordCustom extends Chord<Chromatic> implements PitchChrom
 
 		assert fSelectChord != null;
 
-		ChromaticChordCustom foundChord = fSelectChord.apply( foundChords, this );
+		List<ChromaticChord> foundChords = new ArrayList<>();
+		for (ChromaticChordCustom chromaticChordCustom : foundCustomChords)
+			foundChords.add(ChromaticChord.from(chromaticChordCustom));
+
+		ChromaticChord foundChord = fSelectChord.apply( foundChords, this );
 
 		assert foundChord != null;
 
-		this.assignMeta( foundChord );
+		this.assignMeta( (ChromaticChordCustom)foundChord.innerChord );
 
 		assert meta.str != null : ChordNamer.from(foundChord);
 
@@ -105,7 +136,7 @@ public class ChromaticChordCustom extends Chord<Chromatic> implements PitchChrom
 
 	public Boolean updateWhatIsIt() {
 		return updateWhatIsIt(
-				(List<ChromaticChordCustom> chords, ChordCommon<?> self) -> {
+				(List<ChromaticChord> chords, ChordCommon<?> self) -> {
 					return chords.get( 0 );
 				}
 		);
@@ -223,27 +254,5 @@ public class ChromaticChordCustom extends Chord<Chromatic> implements PitchChrom
 		setRootPos( rp );
 
 		return this;
-	}
-
-	public static <T extends PitchChromaticSingle> ChromaticChordCustom from(Iterable<T> chord) {
-		ChromaticChordCustom c = new ChromaticChordCustom();
-		for (T t : chord) {
-			Chromatic chromatic = Chromatic.from(t);
-			c.add(chromatic);
-		}
-		return c;
-	}
-
-	public static <N extends PitchSingleMidi> ChromaticChordCustom from(ChordMidi<N> chord) {
-		ChromaticChordCustom c = new ChromaticChordCustom();
-		for (N t : chord) {
-			Chromatic chromatic = Chromatic.from(t);
-			c.add(chromatic);
-		}
-		return c;
-	}
-
-	public static ChromaticChordCustom noneOf() {
-		return new ChromaticChordCustom();
 	}
 }

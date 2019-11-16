@@ -1,9 +1,17 @@
 package es.danisales.datune.musical;
 
+import com.google.common.collect.ImmutableList;
 import es.danisales.datune.diatonic.ChromaticFunction;
+import es.danisales.datune.diatonic.DiatonicFunction;
+import es.danisales.datune.diatonic.HarmonicFunction;
+import es.danisales.datune.diatonic.Quality;
+import es.danisales.datune.midi.ChromaticChordMidi;
+import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.ChordMutableInterface;
+import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticSingle;
+import es.danisales.datune.tonality.Tonality;
 import es.danisales.utils.ListUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -11,7 +19,7 @@ import java.util.*;
 import java.util.function.BiFunction;
 
 @SuppressWarnings("WeakerAccess")
-public final class ChromaticChord extends NormalChordCommon<Chromatic> implements ChordCommon<Chromatic> {
+public final class ChromaticChord extends NormalChordCommon<Chromatic> implements ChordCommon<Chromatic>, Iterable<Chromatic>, PitchChromaticChord<Chromatic> {
     // Quintas
     public static final ChromaticChord C5 = new ChromaticChord(ChromaticChordEnum.C5);
     public static final ChromaticChord CC5 = new ChromaticChord(ChromaticChordEnum.CC5);
@@ -1907,7 +1915,8 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
             CHORDS_m7a5,
             CHORDS_m7b5,
             CHORDS_7add11,
-            CHORDS_7add13
+            CHORDS_7add13,
+            CHORDS_7sus4
     );
 
     public static final Set<ChromaticChord>	SIXTH_CHORDS	= ListUtils.concatUnmodificable(
@@ -1928,6 +1937,7 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
             CHORDS_9a5,
             CHORDS_9sus4,
             CHORDS_Maj9,
+            CHORDS_mMaj9,
             CHORDS_9add6,
             CHORDS_9a11,
             CHORDS_Maj9a11
@@ -1971,7 +1981,13 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
 
     public static final Set<ChromaticChord>	COMMON_CHORDS	= ListUtils.concatUnmodificable(TRIAD_CHORDS, SEVENTH_CHORDS, SIXTH_CHORDS, NINTH_CHORDS, ELEVENTH_CHORDS, THIRTEENTH_CHORDS, PARTIAL_CHORDS);
 
-    public static @NonNull ChromaticChord from(@NonNull Iterable<? extends PitchChromaticSingle> chromaticChord) {
+    public static @NonNull ChromaticChord fromNone() {
+        ChromaticChord ret = new ChromaticChord();
+        ret.innerChord = ChromaticChordAdapter.from(ImmutableList.of());
+        return ret;
+    }
+
+    public static @NonNull ChromaticChord from(@NonNull Collection<? extends PitchChromaticSingle> chromaticChord) {
         ChromaticChord ret = new ChromaticChord();
         ret.innerChord = ChromaticChordAdapter.from(chromaticChord);
         return ret;
@@ -1985,6 +2001,73 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
 
     private ChromaticChord() {
         super();
+    }
+
+    public static Set<ChromaticChord> values() {
+        return ListUtils.concatUnmodificable(COMMON_CHORDS, UNUSUAL_CHORDS);
+    }
+
+    public static @NonNull ChromaticChord from(@NonNull Tonality tonality, @NonNull DiatonicFunction diatonicFunction) {
+        Objects.requireNonNull(tonality);
+        Objects.requireNonNull(diatonicFunction);
+
+        return tonality.getChordFrom(diatonicFunction);
+    }
+
+    public static @NonNull ChromaticChord from(@NonNull Tonality tonality, @NonNull ChromaticFunction chromaticFunction) {
+        return tonality.getChordFrom(chromaticFunction);
+    }
+
+    public static @NonNull ChromaticChord from(@NonNull DiatonicChord diatonicChord, @NonNull Tonality t, @NonNull DiatonicFunction df) {
+        ChromaticChord cc = ChromaticChord.from(ImmutableList.of());
+        for ( Diatonic d : diatonicChord ) {
+            Chromatic chromatic = ChromaticAdapter.from(d, t);
+            cc.add(chromatic);
+        }
+
+        switch ( df ) {
+            case I2:
+            case II2:
+            case III2:
+            case IV2:
+            case V2:
+            case VI2:
+            case VII2:
+                for ( ChromaticChord c : ListUtils.concatUnmodificable( ChromaticChord.CHORDS_SUS2, ChromaticChord.CHORDS_SUSb2, ChromaticChord.CHORDS_SUSb2b5 ) )
+                    if ( cc.equals( c ) ) {
+                        return c;
+                    }
+                break;
+            case I4:
+            case II4:
+            case III4:
+            case IV4:
+            case V4:
+            case VI4:
+            case VII4:
+                for ( ChromaticChord c : ListUtils.concatUnmodificable( ChromaticChord.CHORDS_SUS4, ChromaticChord.CHORDS_SUSa4 ) )
+                    if ( cc.equals( c ) ) {
+                        return c;
+                    }
+                break;
+            case I6:
+            case II6:
+            case III6:
+            case IV6:
+            case V6:
+            case VI6:
+            case VII6:
+                for ( ChromaticChord c : ListUtils.concatUnmodificable( ChromaticChord.CHORDS_6, ChromaticChord.CHORDS_m6 ) )
+                    if ( cc.equals( c ) ) {
+                        return c;
+                    }
+                break;
+        }
+
+        cc.updateWhatIsIt();
+        //assert cc.meta.str != null : "meta.str es null: " + cc.notesToString() + " [" + t + "] [" + df + "] " + t.notesToString();
+
+        return cc;
     }
 
     @Override
@@ -2040,7 +2123,7 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
     }
 
     @Override
-    public Boolean updateWhatIsIt(BiFunction<List<ChromaticChordCustom>, ChordCommon<?>, ChromaticChordCustom> fSelectChord) {
+    public Boolean updateWhatIsIt(BiFunction<List<ChromaticChord>, ChordCommon<?>, ChromaticChord> fSelectChord) {
         return null;
     }
 
@@ -2049,6 +2132,40 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
         return null;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if ( !(o instanceof ChromaticChord) )
+            return false;
+
+        ChromaticChord casted = (ChromaticChord)o;
+
+        return casted.innerChord.equals(innerChord);
+    }
+
+    public Quality getQuality() {
+        return ((ChromaticChordInterface)innerChord).getQuality();
+    }
+
+    public ChromaticChord[] getModalChords(@NonNull Tonality t) {
+        HarmonicFunction f = t.getFunction( ChromaticChord.from(this) );
+        if ( f == null || f instanceof ChromaticFunction )
+            return null;
+
+        DiatonicFunction fCasted = (DiatonicFunction) f;
+        List<Tonality> ts = t.getModesSameRoot();
+
+        int i = 0;
+        ChromaticChord[] ret = new ChromaticChord[t.size()];
+        for ( Tonality t2 : ts ) {
+            ret[i++] = ChromaticChord.from(t2, fCasted);
+        }
+
+        return ret;
+    }
+
+    public ChromaticChordMidi toMidi() { // todo: remove
+        return null;
+    }
 
 	/*
     @Override

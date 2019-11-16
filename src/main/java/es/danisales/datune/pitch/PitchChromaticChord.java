@@ -4,20 +4,17 @@ import es.danisales.datune.diatonic.Quality;
 import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.musical.ChromaticChordEnum;
-import es.danisales.datune.musical.ChromaticChordCustom;
+import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 public interface PitchChromaticChord<N extends PitchChromaticSingle> extends ChordCommon<N> {
-	static PitchChromaticChord<Chromatic> from(ChromaticChordMidi chromaticChordMidi) {
+	static ChromaticChord from(ChromaticChordMidi chromaticChordMidi) {
 		if (chromaticChordMidi.getRootPos() != 0) {
-			ChromaticChordCustom ns = ChromaticChordCustom.noneOf();
+			ChromaticChord ns = ChromaticChord.fromNone();
 			for ( ChromaticMidi n : chromaticChordMidi ) {
 				Chromatic chromatic = ChromaticAdapter.from(n);
 				ns.add( chromatic );
@@ -28,7 +25,7 @@ public interface PitchChromaticChord<N extends PitchChromaticSingle> extends Cho
 
 			return ns;
 		} else
-			return PitchChromaticChord.of(chromaticChordMidi);
+			return ChromaticChord.from(chromaticChordMidi);
 	}
 
 	default <Array extends PitchChromaticChord<? extends PitchChromaticSingle>> boolean hasSameNotesOrder(Array notes) {
@@ -38,7 +35,7 @@ public interface PitchChromaticChord<N extends PitchChromaticSingle> extends Cho
 		for ( int i = 0; i < size(); i++ ) {
 			Chromatic chromatic = ChromaticAdapter.from( get(i) );
 			Chromatic chromaticOther = ChromaticAdapter.from( notes.get(i) );
-			if ( chromatic.compareEnharmonicTo(chromaticOther) != 0 )
+			if ( chromatic.ordinal() != chromaticOther.ordinal() )
 				return false;
 		}
 
@@ -56,13 +53,13 @@ public interface PitchChromaticChord<N extends PitchChromaticSingle> extends Cho
 		return ret;
 	}
 
-	default boolean equalsEnharmonic(PitchChromaticChord<?> ca) {
+	default boolean equalsEnharmonic(ChromaticChord ca) {
 		if ( size() != ca.size() )
 			return false;
 		for ( int i = 0; i < size(); i++ ) {
 			Chromatic chromatic = ChromaticAdapter.from( get(i) );
 			Chromatic chromaticOther = ChromaticAdapter.from( ca.get(i) );
-			if (chromatic.compareEnharmonicTo(chromaticOther) != 0)
+			if ( chromatic.ordinal() != chromaticOther.ordinal() )
 				return false;
 		}
 
@@ -99,32 +96,7 @@ public interface PitchChromaticChord<N extends PitchChromaticSingle> extends Cho
 		return false;
 	}*/
 
-	default <Array extends PitchChromaticChord<N>> boolean equalsEnharmonicArray(Array[] ccs) {
-		for ( Array c : ccs )
-			if ( equalsEnharmonic( c ) )
-				return true;
-		return false;
-	}
-
-	default <Array extends PitchChromaticChord<N>> boolean equalsArray(Array[] ccs) {
-		for ( Array c : ccs )
-			if ( equals( c ) )
-				return true;
-		return false;
-	}
 
 	@NonNull
 	Quality getQuality();
-
-	static PitchChromaticChord of(PitchChromaticSingle... chord) {
-		return of( Arrays.asList( chord ));
-	}
-
-	static <T extends PitchChromaticSingle> PitchChromaticChord<Chromatic> of(Collection<T> chord) {
-		PitchChromaticChord<Chromatic> c = ChromaticChordEnum.from(chord);
-		if (c == null) {
-			c = ChromaticChordCustom.from( chord );
-		}
-		return c;
-	}
 }

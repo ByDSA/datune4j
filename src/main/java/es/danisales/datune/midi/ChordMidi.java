@@ -4,7 +4,7 @@ import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.midi.Arpegios.Arpegio;
 import es.danisales.datune.midi.Arpegios.ArpegioDefault;
 import es.danisales.datune.midi.Events.EventComplex;
-import es.danisales.datune.musical.ChromaticChordCustom;
+import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.pitch.Chord;
 import es.danisales.datune.pitch.ChordCommon;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -20,7 +20,7 @@ public abstract class ChordMidi<N extends PitchSingleMidi> extends Chord<N>
 	protected Arpegio	arpegio;
 	protected int		length;
 
-	ChromaticChordCustom meta = null;
+	ChromaticChord meta = null;
 
 	<T extends ChordMidi<N>> void assign(@NonNull T c) {
 		Objects.requireNonNull(c);
@@ -165,8 +165,8 @@ public abstract class ChordMidi<N extends PitchSingleMidi> extends Chord<N>
 	}
 
 	@Override
-	public Boolean updateWhatIsIt(BiFunction<List<ChromaticChordCustom>, ChordCommon<?>, ChromaticChordCustom> f) {
-		meta = ChromaticChordCustom.from( this );
+	public Boolean updateWhatIsIt(BiFunction<List<ChromaticChord>, ChordCommon<?>, ChromaticChord> f) {
+		meta = ChromaticChord.from( this );
 		assert f != null;
 		Boolean ret = meta.updateWhatIsIt( f );
 		root = meta.getRootPos();
