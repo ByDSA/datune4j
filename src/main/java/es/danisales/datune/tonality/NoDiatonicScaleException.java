@@ -2,7 +2,7 @@ package es.danisales.datune.tonality;
 
 public class NoDiatonicScaleException extends RuntimeException {
 	public NoDiatonicScaleException(Scale n) {
-		super( "La escala musical " + n +  "no es diat�nica.");
+		super( "La escala musical " + n +  "no es diatónica.");
 	}
 
 	public static void check(Scale s) throws NoDiatonicScaleException {

@@ -9,8 +9,8 @@ import java.util.Collections;
 import java.util.List;
 
 interface ScaleInterface {
-	static @NonNull ScaleInterface of(List<ScaleDistance> values) {
-		ScaleInterface ret = ScaleEnum.of(values);
+	static @NonNull ScaleInterface from(List<ScaleDistance> values) {
+		ScaleInterface ret = ScaleEnum.from(values);
 		if (ret == null)
 			ret = new ScaleCustom( values );
 
@@ -25,31 +25,16 @@ interface ScaleInterface {
 		return sum;
 	}
 
-	default ScaleInterface getMode(DiatonicDegree diatonicDegree) {
+	default  @NonNull ScaleInterface getMode(@NonNull DiatonicDegree diatonicDegree) {
 		List<ScaleDistance> baseValues = new ArrayList<>( this.getCode() );
 		Collections.rotate( baseValues, -diatonicDegree.ordinal() );
-		return ScaleInterface.of( baseValues );
+		return ScaleInterface.from( baseValues );
 	}
 
 	default void sumCheck() {
 		if (sumOf(getCode()) != IntervalChromatic.PERFECT_OCTAVE.getSemitones()) {
 			throw new ScaleBuildingException( this );
 		}
-	}
-
-	/**
-	 * Get all modes fromIndex the scale
-	 * @return the array within all modes fromIndex the scale
-	 */
-	default @NonNull List<ScaleInterface> getAllModes() {
-		List<ScaleInterface> ret = new ArrayList<>();
-		for ( int i = 0; i < size(); i++) {
-			DiatonicDegree diatonicDegree = DiatonicDegree.values()[i];
-			ScaleInterface scaleMode = getMode(diatonicDegree);
-			ret.add(scaleMode);
-		}
-
-		return ret;
 	}
 
 	List<ScaleDistance> getCode();

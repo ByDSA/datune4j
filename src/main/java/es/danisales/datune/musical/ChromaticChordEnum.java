@@ -1239,7 +1239,7 @@ OMIT11
 		return null;
 	}
 
-	private boolean sameChromaticAs(Collection<? extends PitchChromaticSingle> diatonicCollection) {
+	private boolean sameChromaticAs(@NonNull Collection<? extends PitchChromaticSingle> diatonicCollection) {
 		if (notes.size() != diatonicCollection.size())
 			return false;
 

@@ -82,7 +82,7 @@ enum ScaleEnum implements ScaleInterface {
 	}
 
 	@SuppressWarnings("ConstantConditions") // Se crea primero las constantes de ScaleEnum que el map.
-	static @Nullable ScaleEnum of(@NonNull List<ScaleDistance> code) {
+	static @Nullable ScaleEnum from(@NonNull List<ScaleDistance> code) {
 		if (_map == null)
 			return null;
 		Objects.requireNonNull(code);

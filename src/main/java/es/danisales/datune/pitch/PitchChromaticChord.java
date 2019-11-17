@@ -14,7 +14,7 @@ import java.util.List;
 public interface PitchChromaticChord<N extends PitchChromaticSingle> extends ChordCommon<N> {
 	static ChromaticChord from(ChromaticChordMidi chromaticChordMidi) {
 		if (chromaticChordMidi.getRootPos() != 0) {
-			ChromaticChord ns = ChromaticChord.fromNone();
+			ChromaticChord ns = ChromaticChord.createEmpty();
 			for ( ChromaticMidi n : chromaticChordMidi ) {
 				Chromatic chromatic = ChromaticAdapter.from(n);
 				ns.add( chromatic );
@@ -78,7 +78,7 @@ public interface PitchChromaticChord<N extends PitchChromaticSingle> extends Cho
 	 */
 /*
 	default <Array extends PitchChromaticChord<?>> boolean equalsEnharmonicInv(Array cc) {
-		CustomChromaticChord cc2 = CustomChromaticChord.from( cc );
+		CustomChromaticChord cc2 = CustomChromaticChord.fromDistances( cc );
 		for ( int i = 0; i < cc2.size(); i++, cc2.inv() ) {
 			if ( this.equalsEnharmonic( cc2 ) )
 				return true;

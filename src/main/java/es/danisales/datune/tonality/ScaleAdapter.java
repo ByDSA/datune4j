@@ -4,8 +4,7 @@ import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -20,16 +19,34 @@ class ScaleAdapter {
             DiatonicAlt current = notes.get(i);
             DiatonicAlt next = notes.get(i + 1);
             Chromatic nextChromatic = Chromatic.from(next);
-            ton[i] = Chromatic.from(current).distSemitonesTo(nextChromatic);
+            Chromatic currentChromatic = Chromatic.from(current);
+
+            ton[i] = currentChromatic.distSemitonesTo(nextChromatic);
             while ( ton[i] < 0 )
                 ton[i] += Chromatic.NUMBER;
             sum += ton[i];
         }
         int dif = Chromatic.NUMBER - sum;
-        checkArgument(dif > 0);
+        if (dif <= 0) {
+            notes = sort(notes);
+            return fromDiatonicAltList(notes);
+        }
         ton[notes.size() - 1] = dif;
 
-        return Scale.fromIntegers( ton );
+        return Scale.from( ton );
+    }
+
+    private static @NonNull List<DiatonicAlt> sort(@NonNull List<DiatonicAlt> list) {
+        Set<DiatonicAlt> diatonicAltSet = new HashSet<>(list);
+
+        List<DiatonicAlt> ret = new ArrayList<>(diatonicAltSet);
+
+        ret.sort(Comparator.comparing(Chromatic::from));
+
+        while (!ret.get(0).equals(list.get(0)))
+            Collections.rotate(ret,1);
+
+        return ret;
     }
 
     static @NonNull ScaleInterface fromIntegers(int... v) {
@@ -37,7 +54,7 @@ class ScaleAdapter {
         for (int i : v)
             distanceScaleList.add( ScaleDistance.from(i) );
 
-        ScaleInterface s = ScaleEnum.of( distanceScaleList );
+        ScaleInterface s = ScaleEnum.from( distanceScaleList );
         if (s == null)
             s = new ScaleCustom( distanceScaleList );
 

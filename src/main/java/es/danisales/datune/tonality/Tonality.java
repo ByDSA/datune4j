@@ -90,49 +90,6 @@ public interface Tonality {
         return from(t.getRoot(), t.getScale());
     }
 
-    static List<Tonality> getFromChords(boolean outScale, List<ChromaticChordMidi> chords) {
-        checkArgument(chords.size() > 0);
-        List<Tonality> candidates = new ArrayList<>();
-
-        boolean first = true;
-        for ( ChromaticChordMidi chord : chords ) {
-            if ( chord.size() == 0 )
-                continue;
-            ChromaticChordMidi chordCopy = chord.clone();
-
-            List<Tonality> candidatesPrev = candidates;
-
-            do {
-                List<DiatonicChordMidi> possibleChords = chordCopy
-                        .toDiatonicChordMidi( outScale );
-                if ( first ) {
-                    for ( DiatonicChordMidi c : possibleChords ) {
-                        Tonality t = c.getTonality();
-                        if ( !candidates.contains( t ) )
-                            candidates.add( t );
-                    }
-                    first = false;
-                } else {
-                    candidates = new ArrayList<>();
-
-                    for ( DiatonicChordMidi c : possibleChords ) {
-                        for ( Tonality t : candidatesPrev )
-                            if ( ( c.metaTonality.equals( t )
-                                    || c.getTonality().isIntercambioModalOf( t ) )
-                                    && !candidates.contains( t ) )
-                                candidates.add( t );
-                    }
-                }
-
-                if ( candidates.size() == 0 ) {
-                    chordCopy = chordCopy.subList( 0, chordCopy.size() - 1 );
-                }
-            } while ( candidates.size() == 0 && chordCopy.size() > 0 );
-        }
-
-        return candidates;
-    }
-
     default Tonality getRelativeMinor() {
         return TonalityChordRetrieval.getRelativeMinorFrom(this);
     }
@@ -162,19 +119,7 @@ public interface Tonality {
         return getNotes().get(i);
     }
 
-    default boolean isModeOf(Tonality tonality) {
-        if ( size() != tonality.size() )
-            return false;
-
-        for ( DiatonicAlt note : getNotes() )
-            if ( !tonality.has( note ) ) {
-                return false;
-            }
-
-        return true;
-    }
-
-    default boolean isIntercambioModalOf(Tonality t) {
+    default boolean isModeOf(Tonality t) {
         return getScale().isDiatonic() && this.getRoot() == t.getRoot() && !getScale().equals( t.getScale() );
     }
 
@@ -257,12 +202,12 @@ public interface Tonality {
         return getDegreeFrom( note ) != null;
     }
 
-    default boolean hasEnharmonic(Chromatic note) {
+    default boolean has(Chromatic note) {
         return getDegreeFrom( note ) != null;
     }
 
-    default <N extends DiatonicAlt> boolean has(@NonNull Iterable<N> notes) {
-        for ( N n : notes ) {
+    default boolean has(@NonNull Iterable<DiatonicAlt> notes) {
+        for ( DiatonicAlt n : notes ) {
             if ( getDegreeFrom( n ) == null )
                 return false;
         }
@@ -270,8 +215,8 @@ public interface Tonality {
         return true;
     }
 
-    default <N extends Chromatic> boolean hasEnharmonic(@NonNull Iterable<N> notes) {
-        for ( N n : notes ) {
+    default boolean has(@NonNull PitchChromaticChord<Chromatic> notes) {
+        for ( Chromatic n : notes ) {
             if ( getDegreeFrom( n ) == null )
                 return false;
         }
@@ -352,10 +297,6 @@ public interface Tonality {
     ChromaticChord getChordFrom(DiatonicFunction diatonicFunction);
 
     ChromaticChord getChordFrom(ChromaticFunction chromaticFunction);
-
-    default boolean has(Chromatic note) {
-        return getDegreeFrom( note ) != null;
-    }
 
     default boolean has(boolean outScale, @NonNull PitchChromaticChord<? extends PitchChromaticSingle> c) {
         Objects.requireNonNull(c);

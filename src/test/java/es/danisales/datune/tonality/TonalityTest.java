@@ -344,7 +344,7 @@ public class TonalityTest {
                         ChromaticChord.Em7,
                         ChromaticChord.FMaj7,
                         ChromaticChord.G7
-                ), TonalityChordRetrieval.getTriadChordsFrom(t)
+                ), TonalityChordRetrieval.getSeventhChordsFrom(t)
         );
     }
 
@@ -352,53 +352,54 @@ public class TonalityTest {
     public void has() {
         Tonality ton = Tonality.C;
 
-        assertTrue(ton.hasEnharmonic(ChromaticChord.C));
-        assertTrue(ton.hasEnharmonic(ChromaticChord.Dm));
-        assertTrue(ton.hasEnharmonic(ChromaticChord.Em));
-        assertTrue(ton.hasEnharmonic(ChromaticChord.F));
-        assertTrue(ton.hasEnharmonic(ChromaticChord.G));
-        assertTrue(ton.hasEnharmonic(ChromaticChord.Am));
-        assertTrue(ton.hasEnharmonic(ChromaticChord.Bdim));
+        assertTrue(ton.has(ChromaticChord.C));
+        assertTrue(ton.has(ChromaticChord.Dm));
+        assertTrue(ton.has(ChromaticChord.Em));
+        assertTrue(ton.has(ChromaticChord.F));
+        assertTrue(ton.has(ChromaticChord.G));
+        assertTrue(ton.has(ChromaticChord.Am));
+        assertTrue(ton.has(ChromaticChord.Bdim));
 
-        assertTrue(ton.hasEnharmonic(ChromaticChord.Csus2));
-        assertTrue(ton.hasEnharmonic(ChromaticChord.Dsus2));
-        assertTrue(ton.hasEnharmonic(ChromaticChord.Esusb2));
-        assertTrue(ton.hasEnharmonic(ChromaticChord.Fsus2));
-        assertTrue(ton.hasEnharmonic(ChromaticChord.Gsus2));
-        assertTrue(ton.hasEnharmonic(ChromaticChord.Asus2));
-        assertTrue(ton.hasEnharmonic(ChromaticChord.Bsusb2b5));
+        assertTrue(ton.has(ChromaticChord.Csus2));
+        assertTrue(ton.has(ChromaticChord.Dsus2));
+        assertTrue(ton.has(ChromaticChord.Esusb2));
+        assertTrue(ton.has(ChromaticChord.Fsus2));
+        assertTrue(ton.has(ChromaticChord.Gsus2));
+        assertTrue(ton.has(ChromaticChord.Asus2));
+        assertTrue(ton.has(ChromaticChord.Bsusb2b5));
 
-        assertTrue(ton.hasEnharmonic(ChromaticChord.Csus4));
-        assertTrue(ton.hasEnharmonic(ChromaticChord.Dsus4));
-        assertTrue(ton.hasEnharmonic(ChromaticChord.Esus4));
-        assertTrue(ton.hasEnharmonic(ChromaticChord.Fsusa4));
-        assertTrue(ton.hasEnharmonic(ChromaticChord.Gsus4));
-        assertTrue(ton.hasEnharmonic(ChromaticChord.Asus4));
-        assertTrue(ton.hasEnharmonic(ChromaticChord.Bsusa4));
+        assertTrue(ton.has(ChromaticChord.Csus4));
+        assertTrue(ton.has(ChromaticChord.Dsus4));
+        assertTrue(ton.has(ChromaticChord.Esus4));
+        assertTrue(ton.has(ChromaticChord.Fsusa4));
+        assertTrue(ton.has(ChromaticChord.Gsus4));
+        assertTrue(ton.has(ChromaticChord.Asus4));
+        assertFalse(ton.has(ChromaticChord.Bsusa4));
 
-        assertTrue(ton.hasEnharmonic(ChromaticChord.C6));
-        assertTrue(ton.hasEnharmonic(ChromaticChord.Dm6));
-        assertTrue(ton.hasEnharmonic(ChromaticChord.Em6));
-        assertTrue(ton.hasEnharmonic(ChromaticChord.F6));
-        assertTrue(ton.hasEnharmonic(ChromaticChord.G6));
-        assertTrue(ton.hasEnharmonic(ChromaticChord.Am6));
-        assertTrue(ton.hasEnharmonic(ChromaticChord.B6));
+        assertTrue(ton.has(ChromaticChord.C6));
+        assertTrue(ton.has(ChromaticChord.Dm6));
+        assertFalse(ton.has(ChromaticChord.Em6));
+        assertTrue(ton.has(ChromaticChord.F6));
+        assertTrue(ton.has(ChromaticChord.G6));
+        assertFalse(ton.has(ChromaticChord.Am6));
+        assertFalse(ton.has(ChromaticChord.B6));
 
-        assertTrue(ton.hasEnharmonic(ChromaticChord.CMaj7));
-        assertTrue(ton.hasEnharmonic(ChromaticChord.Dm7));
-        assertTrue(ton.hasEnharmonic(ChromaticChord.Em7));
-        assertTrue(ton.hasEnharmonic(ChromaticChord.F7));
-        assertTrue(ton.hasEnharmonic(ChromaticChord.G7));
-        assertTrue(ton.hasEnharmonic(ChromaticChord.Am7));
-        assertTrue(ton.hasEnharmonic(ChromaticChord.B7));
+        assertTrue(ton.has(ChromaticChord.CMaj7));
+        assertTrue(ton.has(ChromaticChord.Dm7));
+        assertTrue(ton.has(ChromaticChord.Em7));
+        assertTrue(ton.has(ChromaticChord.FMaj7));
+        assertTrue(ton.has(ChromaticChord.G7));
+        assertTrue(ton.has(ChromaticChord.Am7));
+        assertFalse(ton.has(ChromaticChord.B7));
+    }
 
-        for (DiatonicFunction df : DiatonicFunction.COMMON)
-            assertTrue(ton.hasEnharmonic(ChromaticChord.from(ton, df)));
-
-        ton = Tonality.Db;
-
-        for (DiatonicFunction df : DiatonicFunction.COMMON)
-            assertTrue(ton.hasEnharmonic(ChromaticChord.from(ton, df)));
+    @Test
+    public void hasFromDiatonicFunction() {
+        for (Tonality t : TonalityEnum.values())
+            for (DiatonicFunction df : DiatonicFunction.COMMON) {
+                ChromaticChord chromaticChord = ChromaticChord.from(t, df);
+                assertTrue(t.toString() + " " + df.toString() + " " + chromaticChord.toString(), t.has(chromaticChord) );
+            }
     }
 
     @Test
@@ -536,6 +537,6 @@ public class TonalityTest {
         assertEquals(DiatonicFunction.VI7, ton.getFunction(ChromaticChord.Am7));
         assertEquals(DiatonicFunction.VII7, ton.getFunction(ChromaticChord.Bm7b5));
         ton = Tonality.Cm;
-        //assertEquals(DiatonicFunction.VII7, ton.getFunction(ChromaticChord.from( ChromaticChord.from(ChromaticChord.AA7).rename(ton) )));
+        //assertEquals(DiatonicFunction.VII7, ton.getFunction(ChromaticChord.fromDistances( ChromaticChord.fromDistances(ChromaticChord.AA7).rename(ton) )));
     }
 }

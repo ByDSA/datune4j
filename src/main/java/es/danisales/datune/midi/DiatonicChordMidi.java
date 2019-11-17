@@ -16,7 +16,7 @@ import java.util.function.Supplier;
 
 public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchDiatonic, DiatonicChordCommon<DiatonicMidi> {
     protected HarmonicFunction	function	= null;
-    public Tonality				metaTonality;
+    public Tonality metaTonality;
 
     protected Tonality tonality;
 
@@ -172,7 +172,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
     public static void showPossibleProgressions(Function<DiatonicChordMidi, Boolean> f, List<ChromaticChordMidi> chordsIn) {
         List<ChromaticChordMidi> chords = reduceDistances( chordsIn );
 
-        List<Tonality> possibleTonalitiesList = Tonality.getFromChords( true, chords );
+        List<Tonality> possibleTonalitiesList = TonalityRetrieval.getFromChords( true, chords );
 
         // DEBUG
         if ( possibleTonalitiesList == null || possibleTonalitiesList.isEmpty() ) {
@@ -307,7 +307,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
         for ( final DiatonicChordMidi i : in )
             if ( meta && i.metaTonality.equals( t ) || !meta && i.getTonality().equals( t ) ) {
                 cs.add( i );
-            } else if ( intercambioModal && i.metaTonality.isIntercambioModalOf( t ) )
+            } else if ( intercambioModal && i.metaTonality.isModeOf( t ) )
                 csModal.add( i );
 
         if ( cs.isEmpty() )
@@ -547,7 +547,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
 
             ChromaticChordMidi ccm = ChromaticChordMidi.from(ccmArray);
 
-            if ( tonality.hasEnharmonic( cc ) )
+            if ( tonality.has( cc ) )
                 add( ccm );
             else {
                 metaTonality = TonalityChordRetrieval.searchInModeSameRoot(tonality, cc);
@@ -1205,7 +1205,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
         return updateWhatIsIt(
                 (List<ChromaticChord> chords, ChordCommon<?> self) -> {
                     updateFunctionIfNull();
-                    ChromaticChord ret = ChromaticChord.fromNone();
+                    ChromaticChord ret = ChromaticChord.createEmpty();
                     if ( function instanceof DiatonicFunction )
                         ret.addAll( ChromaticChord.from(tonality, (DiatonicFunction) function ) );
                     else

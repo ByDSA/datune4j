@@ -7,15 +7,15 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-final class ChromaticChordPatternCustom implements ChromaticChordPatternInterface {
+final class DiatonicChordPatternCustom implements DiatonicChordPatternInterface {
     private List<Integer> pattern;
 
-    private ChromaticChordPatternCustom(Integer... patternArray) {
+    private DiatonicChordPatternCustom(Integer... patternArray) {
         pattern = Arrays.asList(patternArray);
     }
 
-    public static @NonNull ChromaticChordPatternCustom from(Integer... patternArray) {
-        return new ChromaticChordPatternCustom( patternArray );
+    public static @NonNull DiatonicChordPatternCustom from(Integer... patternArray) {
+        return new DiatonicChordPatternCustom( patternArray );
     }
 
     @Override

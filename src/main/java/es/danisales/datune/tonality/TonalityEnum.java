@@ -68,13 +68,20 @@ enum TonalityEnum implements Tonality {
 		if (ret == null)
 			ret = TonalityGetDiatonicFunctionMinor.get(this, diatonicFunction);
 		if (ret == null)
-			throw new RuntimeException("aa");
+			throw new RuntimeException(this + " " +diatonicFunction.toString());
 		return ret;
 	}
 
 	@Override
-	public ChromaticChord getChordFrom(ChromaticFunction chromaticFunction) {
-		return null;
+	public @NonNull ChromaticChord getChordFrom(@NonNull ChromaticFunction chromaticFunction) {
+		Objects.requireNonNull(chromaticFunction);
+
+		ChromaticChord ret = TonalityGetDiatonicFunctionMajor.get(this, chromaticFunction);
+		if (ret == null)
+			ret = TonalityGetDiatonicFunctionMinor.get(this, chromaticFunction);
+		if (ret == null)
+			throw new RuntimeException(this + " " +chromaticFunction.toString());
+		return ret;
 	}
 
 	TonalityEnum(DiatonicAlt noteBase, Scale scale) {

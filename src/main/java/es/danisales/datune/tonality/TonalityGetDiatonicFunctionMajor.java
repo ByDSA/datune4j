@@ -1,8 +1,10 @@
 package es.danisales.datune.tonality;
 
+import es.danisales.datune.diatonic.ChromaticFunction;
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
+import es.danisales.datune.musical.DiatonicChordPattern;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -10,7 +12,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 class TonalityGetDiatonicFunctionMajor {
-	public static @Nullable ChromaticChord get(@NonNull TonalityEnum tonalityEnum, @NonNull DiatonicFunction diatonicFunction) {
+	public static @NonNull ChromaticChord get(@NonNull TonalityEnum tonalityEnum, @NonNull DiatonicFunction diatonicFunction) {
 		Objects.requireNonNull(tonalityEnum);
 		Objects.requireNonNull(diatonicFunction);
 
@@ -57,7 +59,7 @@ class TonalityGetDiatonicFunctionMajor {
 				case IV9: return ChromaticChord.FMaj9;
 				case V9: return ChromaticChord.G9;
 				case VI9: return ChromaticChord.Am9;
-				case VII9: return ChromaticChord.B7b9;
+				case VII9: return ChromaticChord.from( Chromatic.B, DiatonicChordPattern.NINTH, tonalityEnum );
 				case I11: return ChromaticChord.CMaj11;
 				case II11: return ChromaticChord.Dm11;
 				case III11: return ChromaticChord.from( Arrays.asList( Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.F, Chromatic.A ) ); // E7b911
@@ -627,7 +629,7 @@ class TonalityGetDiatonicFunctionMajor {
 				case IV9: return ChromaticChord.from( Arrays.asList( Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C) );
 				case V9: return ChromaticChord.C9;
 				case VI9: return ChromaticChord.Dm9;
-				case VII9: return ChromaticChord.E7b9;
+				case VII9: ChromaticChord.from( Chromatic.E, DiatonicChordPattern.NINTH, tonalityEnum );
 				case I11: return ChromaticChord.FMaj11;
 				case II11: return ChromaticChord.Gm11;
 				case III11: return ChromaticChord.from( Arrays.asList( Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.AA, Chromatic.D) );
@@ -699,7 +701,8 @@ class TonalityGetDiatonicFunctionMajor {
 				case VI9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.D, Chromatic.A, Chromatic.E) );
 				case VII9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.E, Chromatic.AA, Chromatic.F) );
 			} break;
-			case FF: switch(diatonicFunction) {
+			case FF:
+			case Gb: switch(diatonicFunction) {
 				case I: return ChromaticChord.from( Arrays.asList( Chromatic.FF, Chromatic.AA, Chromatic.CC) );
 				case II: return ChromaticChord.from( Arrays.asList( Chromatic.GG, Chromatic.B, Chromatic.DD) );
 				case III: return ChromaticChord.from( Arrays.asList( Chromatic.AA, Chromatic.CC, Chromatic.F) );
@@ -1384,6 +1387,21 @@ class TonalityGetDiatonicFunctionMajor {
 				case VII9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.AA, Chromatic.E, Chromatic.B) );
 			} break;
 		}
+		throw new RuntimeException();
+	}
+
+	public static @Nullable ChromaticChord get(@NonNull TonalityEnum tonalityEnum, @NonNull ChromaticFunction diatonicFunction) {
+		Objects.requireNonNull(tonalityEnum);
+		Objects.requireNonNull(diatonicFunction);
+
+		switch (tonalityEnum) {
+			case C:
+				switch (diatonicFunction) {
+
+				}
+
+		}
+
 		return null;
 	}
 }

@@ -1,5 +1,6 @@
 package es.danisales.datune.tonality;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import es.danisales.arrays.ArrayUtils;
 import es.danisales.datune.diatonic.ChromaticFunction;
 import es.danisales.datune.diatonic.DiatonicDegree;
@@ -15,11 +16,11 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.*;
 
 class TonalityCustom implements Tonality {
-	private DiatonicAlt				root;
-	private Scale					scale;
+	private DiatonicAlt root;
+	private Scale scale;
 
 	/** Temp */
-	private List<DiatonicAlt>				notes;
+	private List<DiatonicAlt> notes;
 	private Map<Chromatic, DiatonicAlt> chromaticDiatonicAltMap;
 
 	// TODO: no usado
@@ -36,14 +37,14 @@ class TonalityCustom implements Tonality {
 	}
 
 	// Cache
-	private boolean										useCache;
-	private Set<ChromaticChord>							outScaleChords;
-	private HashMap<DiatonicFunction, ChromaticChord>	functionChordsMap;
-	private HashMap<ChromaticFunction, ChromaticChord>	chromaticChordsMap;
+	private boolean	useCache;
+	private Set<ChromaticChord> outScaleChords;
+	private HashMap<DiatonicFunction, ChromaticChord> functionChordsMap;
+	private HashMap<ChromaticFunction, ChromaticChord> chromaticChordsMap;
 	private HashMap<ChromaticChord, HarmonicFunction> chromaticChordFunctionMap;
 
-	private static final int	SIZE_MIN	= 2;
-	private static final int	SIZE_MAX	= 8;
+	private static final int SIZE_MIN = 2;
+	private static final int SIZE_MAX = 8;
 
 	private void createCache() {
 		outScaleChords = new HashSet<>();
@@ -90,12 +91,11 @@ class TonalityCustom implements Tonality {
 		ChromaticChord cc = null;
 		if ( functionChordsMap != null )
 			cc = functionChordsMap.get( f );
-
+/*
 		if ( cc == null ) {
-			/*CustomDiatonicChord dc = new CustomDiatonicChord( f );
-			assert dc != null : f + " " + this;
+			DiatonicChord dc = DiatonicChord.from( f );
 
-			cc = CustomChromaticChord.fromIntegers( calculateFrom( dc, f ) );
+			cc = ChromaticChord.from( calculateFrom( dc, f ) );
 			cc.rename( this );
 			//assert cc.meta.str != null : cc.notesToString();
 			if ( functionChordsMap == null )
@@ -108,9 +108,9 @@ class TonalityCustom implements Tonality {
 
 			if ( chromaticChordFunctionMap == null )
 				chromaticChordFunctionMap = new HashMap<>();
-			chromaticChordFunctionMap.put( cc, f );*/
+			chromaticChordFunctionMap.put( cc, f );
 		}
-
+*/
 		cc = ChromaticChord.from(cc);
 
 		return cc;
@@ -245,7 +245,7 @@ class TonalityCustom implements Tonality {
 				tonalityNotes.add( base.getNote( diatonicDegree ) );
 		}
 
-		return new TonalityCustom( notesChord[0], Scale.fromDiatonicAltList( tonalityNotes ) );
+		return new TonalityCustom( notesChord[0], Scale.from( tonalityNotes ) );
 	}
 
 	public DiatonicDegree getDegreeFrom(PitchChromaticSingle note) {
@@ -365,6 +365,6 @@ class TonalityCustom implements Tonality {
 
 	@Override
 	public @NonNull List<DiatonicAlt> getNotes() {
-		return notes; // TODO: clone
+		return Collections.unmodifiableList(notes);
 	}
 }

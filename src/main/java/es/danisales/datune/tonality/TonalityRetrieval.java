@@ -135,7 +135,7 @@ public class TonalityRetrieval {
                 tonalityNotes[i] = base.getNote( diatonicDegree );
         }
 
-        return Tonality.from( notesChord[0], Scale.fromDiatonicAltList( Arrays.asList(tonalityNotes) ) );
+        return Tonality.from( notesChord[0], Scale.from( Arrays.asList(tonalityNotes) ) );
     }
 
     @SuppressWarnings("WeakerAccess")
@@ -216,7 +216,7 @@ public class TonalityRetrieval {
                     for ( DiatonicChordMidi c : possibleChords ) {
                         for ( Tonality t : candidatesPrev )
                             if ( ( c.metaTonality.equals( t )
-                                    || c.getTonality().isIntercambioModalOf( t ) )
+                                    || c.getTonality().isModeOf( t ) )
                                     && !candidates.contains( t ) )
                                 candidates.add( t );
                     }

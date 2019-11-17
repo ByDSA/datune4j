@@ -140,44 +140,48 @@ public class Scale implements Iterable<ScaleDistance> {
 			CHROMATIC
 	));
 
+	/**
+	 * END CONSTANT SCALES
+	 ***************************************************************************************************************/
 
 	ScaleInterface innerScale;
 
-
-	public static @NonNull Scale fromIntegers(int... v) {
+	public static @NonNull Scale from(int... v) {
 		return new Scale( ScaleAdapter.fromIntegers(v) );
 	}
 
-	public static @NonNull Scale of(List<ScaleDistance> values) {
-		return new Scale( ScaleInterface.of( values ) );
+	public static @NonNull Scale fromDistances(@NonNull List<ScaleDistance> scaleDistances) {
+		return new Scale( ScaleInterface.from( scaleDistances ) );
 	}
 
-	public static @NonNull Scale fromDiatonicAltList(@NonNull List<DiatonicAlt> notes) {
+	public static @NonNull Scale from(@NonNull List<DiatonicAlt> notes) {
 		return ScaleAdapter.fromDiatonicAltList(notes);
 	}
 
-
-	Scale(ScaleInterface scaleInterface) {
+	Scale(@NonNull ScaleInterface scaleInterface) {
 		innerScale = scaleInterface;
 	}
 
-	public List<ScaleDistance> getCode() {
+	public @NonNull List<ScaleDistance> getCode() {
 		return innerScale.getCode();
 	}
 
-	public Scale getMode(DiatonicDegree diatonicDegree) {
-		return new Scale(innerScale.getMode(diatonicDegree));
+	public @NonNull Scale getMode(@NonNull DiatonicDegree diatonicDegree) {
+		return Scale.fromDistances(innerScale.getMode(diatonicDegree).getCode());
 	}
 
 	/**
-	 * Get all modes fromIndex the scale
-	 * @return the array within all modes fromIndex the scale
+	 * Get all modes fromDistances the scale
+	 * @return the array within all modes fromDistances the scale
 	 */
 	public @NonNull List<Scale> getAllModes() {
-		List<ScaleInterface> allModesInterface = innerScale.getAllModes();
 		List<Scale> ret = new ArrayList<>();
-		for (ScaleInterface scaleInterface : allModesInterface)
-			ret.add( new Scale(scaleInterface) );
+		for ( int i = 0; i < size(); i++) {
+			DiatonicDegree diatonicDegree = DiatonicDegree.values()[i];
+			Scale scaleMode = getMode(diatonicDegree);
+			ret.add(scaleMode);
+		}
+
 		return ret;
 	}
 
@@ -185,13 +189,18 @@ public class Scale implements Iterable<ScaleDistance> {
 		return innerScale.size();
 	}
 
+	@Override
+	public @NonNull Iterator<ScaleDistance> iterator() {
+		return innerScale.getCode().iterator();
+	}
+
 	public @NonNull ScaleDistance get(DiatonicDegree diatonicDegree) {
 		return innerScale.get(diatonicDegree);
 	}
 
 	/**
-	 * The diatonic scale is obtained fromIntegers a chain fromIntegers six successive fifths
-	 It is either a sequence fromIntegers successive natural notes or a transposition thereof.
+	 * The diatonic scale is obtained from a chain from six successive fifths
+	 It is either a sequence from successive natural notes or a transposition thereof.
 	 It can be written using seven consecutive notes without accidentals on a staff with no key signature or, when transposed, with a conventional key signature or with accidentals.
 	 * @return if it's diatonic
 	 */
@@ -219,10 +228,5 @@ public class Scale implements Iterable<ScaleDistance> {
 	@Override
 	public int hashCode() {
 		return getCode().hashCode();
-	}
-
-	@Override
-	public @NonNull Iterator<ScaleDistance> iterator() {
-		return innerScale.getCode().iterator();
 	}
 }

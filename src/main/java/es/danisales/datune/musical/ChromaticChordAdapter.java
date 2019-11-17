@@ -10,7 +10,7 @@ public class ChromaticChordAdapter {
     private ChromaticChordAdapter() {
     }
 
-    public static <T extends PitchChromaticSingle> @NonNull ChromaticChordInterface from(Collection<T> chord) {
+    public static <T extends PitchChromaticSingle> @NonNull ChromaticChordInterface from(@NonNull Collection<T> chord) {
         ChromaticChordInterface ret = ChromaticChordEnum.from(chord);
         if (ret == null)
             ret = ChromaticChordCustom.from(chord);

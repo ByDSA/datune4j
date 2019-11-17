@@ -1,10 +1,7 @@
 package es.danisales.datune.musical;
 
 import com.google.common.collect.ImmutableList;
-import es.danisales.datune.diatonic.ChromaticFunction;
-import es.danisales.datune.diatonic.DiatonicFunction;
-import es.danisales.datune.diatonic.HarmonicFunction;
-import es.danisales.datune.diatonic.Quality;
+import es.danisales.datune.diatonic.*;
 import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.pitch.ChordCommon;
@@ -888,6 +885,286 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
     public static final ChromaticChord AAMaj13a5a9 = new ChromaticChord(ChromaticChordEnum.AAMaj13a5a9);
     public static final ChromaticChord BMaj13a5a9 = new ChromaticChord(ChromaticChordEnum.BMaj13a5a9);
 
+    // Menor treceava
+    public static final ChromaticChord Cm13omit11 = new ChromaticChord(ChromaticChordEnum.Cm13omit11);
+    public static final ChromaticChord CCm13omit11 = new ChromaticChord(ChromaticChordEnum.CCm13omit11);
+    public static final ChromaticChord Dm13omit11 = new ChromaticChord(ChromaticChordEnum.Dm13omit11);
+    public static final ChromaticChord DDm13omit11 = new ChromaticChord(ChromaticChordEnum.DDm13omit11);
+    public static final ChromaticChord Em13omit11 = new ChromaticChord(ChromaticChordEnum.Em13omit11);
+    public static final ChromaticChord Fm13omit11 = new ChromaticChord(ChromaticChordEnum.Fm13omit11);
+    public static final ChromaticChord FFm13omit11 = new ChromaticChord(ChromaticChordEnum.FFm13omit11);
+    public static final ChromaticChord Gm13omit11 = new ChromaticChord(ChromaticChordEnum.Gm13omit11);
+    public static final ChromaticChord GGm13omit11 = new ChromaticChord(ChromaticChordEnum.GGm13omit11);
+    public static final ChromaticChord Am13omit11 = new ChromaticChord(ChromaticChordEnum.Am13omit11);
+    public static final ChromaticChord AAm13omit11 = new ChromaticChord(ChromaticChordEnum.AAm13omit11);
+    public static final ChromaticChord Bm13omit11 = new ChromaticChord(ChromaticChordEnum.Bm13omit11);
+
+    // Treceava con cuarta suspendida
+    public static final ChromaticChord C13sus4omit11 = new ChromaticChord(ChromaticChordEnum.C13sus4omit11);
+    public static final ChromaticChord CC13sus4omit11 = new ChromaticChord(ChromaticChordEnum.CC13sus4omit11);
+    public static final ChromaticChord D13sus4omit11 = new ChromaticChord(ChromaticChordEnum.D13sus4omit11);
+    public static final ChromaticChord DD13sus4omit11 = new ChromaticChord(ChromaticChordEnum.DD13sus4omit11);
+    public static final ChromaticChord E13sus4omit11 = new ChromaticChord(ChromaticChordEnum.E13sus4omit11);
+    public static final ChromaticChord F13sus4omit11 = new ChromaticChord(ChromaticChordEnum.F13sus4omit11);
+    public static final ChromaticChord FF13sus4omit11 = new ChromaticChord(ChromaticChordEnum.FF13sus4omit11);
+    public static final ChromaticChord G13sus4omit11 = new ChromaticChord(ChromaticChordEnum.G13sus4omit11);
+    public static final ChromaticChord GG13sus4omit11 = new ChromaticChord(ChromaticChordEnum.GG13sus4omit11);
+    public static final ChromaticChord A13sus4omit11 = new ChromaticChord(ChromaticChordEnum.A13sus4omit11);
+    public static final ChromaticChord AA13sus4omit11 = new ChromaticChord(ChromaticChordEnum.AA13sus4omit11);
+    public static final ChromaticChord B13sus4omit11 = new ChromaticChord(ChromaticChordEnum.B13sus4omit11);
+
+    // Treceava con quinta bemol
+    public static final ChromaticChord C13b5omit11 = new ChromaticChord(ChromaticChordEnum.C13b5omit11);
+    public static final ChromaticChord CC13b5omit11 = new ChromaticChord(ChromaticChordEnum.CC13b5omit11);
+    public static final ChromaticChord D13b5omit11 = new ChromaticChord(ChromaticChordEnum.D13b5omit11);
+    public static final ChromaticChord DD13b5omit11 = new ChromaticChord(ChromaticChordEnum.DD13b5omit11);
+    public static final ChromaticChord E13b5omit11 = new ChromaticChord(ChromaticChordEnum.E13b5omit11);
+    public static final ChromaticChord F13b5omit11 = new ChromaticChord(ChromaticChordEnum.F13b5omit11);
+    public static final ChromaticChord FF13b5omit11 = new ChromaticChord(ChromaticChordEnum.FF13b5omit11);
+    public static final ChromaticChord G13b5omit11 = new ChromaticChord(ChromaticChordEnum.G13b5omit11);
+    public static final ChromaticChord GG13b5omit11 = new ChromaticChord(ChromaticChordEnum.GG13b5omit11);
+    public static final ChromaticChord A13b5omit11 = new ChromaticChord(ChromaticChordEnum.A13b5omit11);
+    public static final ChromaticChord AA13b5omit11 = new ChromaticChord(ChromaticChordEnum.AA13b5omit11);
+    public static final ChromaticChord B13b5omit11 = new ChromaticChord(ChromaticChordEnum.B13b5omit11);
+
+    // Treceava con quinta aumentada
+    public static final ChromaticChord C13a5omit11 = new ChromaticChord(ChromaticChordEnum.C13a5omit11);
+    public static final ChromaticChord CC13a5omit11 = new ChromaticChord(ChromaticChordEnum.CC13a5omit11);
+    public static final ChromaticChord D13a5omit11 = new ChromaticChord(ChromaticChordEnum.D13a5omit11);
+    public static final ChromaticChord DD13a5omit11 = new ChromaticChord(ChromaticChordEnum.DD13a5omit11);
+    public static final ChromaticChord E13a5omit11 = new ChromaticChord(ChromaticChordEnum.E13a5omit11);
+    public static final ChromaticChord F13a5omit11 = new ChromaticChord(ChromaticChordEnum.F13a5omit11);
+    public static final ChromaticChord FF13a5omit11 = new ChromaticChord(ChromaticChordEnum.FF13a5omit11);
+    public static final ChromaticChord G13a5omit11 = new ChromaticChord(ChromaticChordEnum.G13a5omit11);
+    public static final ChromaticChord GG13a5omit11 = new ChromaticChord(ChromaticChordEnum.GG13a5omit11);
+    public static final ChromaticChord A13a5omit11 = new ChromaticChord(ChromaticChordEnum.A13a5omit11);
+    public static final ChromaticChord AA13a5omit11 = new ChromaticChord(ChromaticChordEnum.AA13a5omit11);
+    public static final ChromaticChord B13a5omit11 = new ChromaticChord(ChromaticChordEnum.B13a5omit11);
+
+    // Treceava con novena bemol
+    public static final ChromaticChord C13b9omit11 = new ChromaticChord(ChromaticChordEnum.C13b9omit11);
+    public static final ChromaticChord CC13b9omit11 = new ChromaticChord(ChromaticChordEnum.CC13b9omit11);
+    public static final ChromaticChord D13b9omit11 = new ChromaticChord(ChromaticChordEnum.D13b9omit11);
+    public static final ChromaticChord DD13b9omit11 = new ChromaticChord(ChromaticChordEnum.DD13b9omit11);
+    public static final ChromaticChord E13b9omit11 = new ChromaticChord(ChromaticChordEnum.E13b9omit11);
+    public static final ChromaticChord F13b9omit11 = new ChromaticChord(ChromaticChordEnum.F13b9omit11);
+    public static final ChromaticChord FF13b9omit11 = new ChromaticChord(ChromaticChordEnum.FF13b9omit11);
+    public static final ChromaticChord G13b9omit11 = new ChromaticChord(ChromaticChordEnum.G13b9omit11);
+    public static final ChromaticChord GG13b9omit11 = new ChromaticChord(ChromaticChordEnum.GG13b9omit11);
+    public static final ChromaticChord A13b9omit11 = new ChromaticChord(ChromaticChordEnum.A13b9omit11);
+    public static final ChromaticChord AA13b9omit11 = new ChromaticChord(ChromaticChordEnum.AA13b9omit11);
+    public static final ChromaticChord B13b9omit11 = new ChromaticChord(ChromaticChordEnum.B13b9omit11);
+
+    // Treceava con novena aumentada
+    public static final ChromaticChord C13a9omit11 = new ChromaticChord(ChromaticChordEnum.C13a9omit11);
+    public static final ChromaticChord CC13a9omit11 = new ChromaticChord(ChromaticChordEnum.CC13a9omit11);
+    public static final ChromaticChord D13a9omit11 = new ChromaticChord(ChromaticChordEnum.D13a9omit11);
+    public static final ChromaticChord DD13a9omit11 = new ChromaticChord(ChromaticChordEnum.DD13a9omit11);
+    public static final ChromaticChord E13a9omit11 = new ChromaticChord(ChromaticChordEnum.E13a9omit11);
+    public static final ChromaticChord F13a9omit11 = new ChromaticChord(ChromaticChordEnum.F13a9omit11);
+    public static final ChromaticChord FF13a9omit11 = new ChromaticChord(ChromaticChordEnum.FF13a9omit11);
+    public static final ChromaticChord G13a9omit11 = new ChromaticChord(ChromaticChordEnum.G13a9omit11);
+    public static final ChromaticChord GG13a9omit11 = new ChromaticChord(ChromaticChordEnum.GG13a9omit11);
+    public static final ChromaticChord A13a9omit11 = new ChromaticChord(ChromaticChordEnum.A13a9omit11);
+    public static final ChromaticChord AA13a9omit11 = new ChromaticChord(ChromaticChordEnum.AA13a9omit11);
+    public static final ChromaticChord B13a9omit11 = new ChromaticChord(ChromaticChordEnum.B13a9omit11);
+
+    // Treceava con quinta y novena bemoles
+    public static final ChromaticChord C13b5b9omit11 = new ChromaticChord(ChromaticChordEnum.C13b5b9omit11);
+    public static final ChromaticChord CC13b5b9omit11 = new ChromaticChord(ChromaticChordEnum.CC13b5b9omit11);
+    public static final ChromaticChord D13b5b9omit11 = new ChromaticChord(ChromaticChordEnum.D13b5b9omit11);
+    public static final ChromaticChord DD13b5b9omit11 = new ChromaticChord(ChromaticChordEnum.DD13b5b9omit11);
+    public static final ChromaticChord E13b5b9omit11 = new ChromaticChord(ChromaticChordEnum.E13b5b9omit11);
+    public static final ChromaticChord F13b5b9omit11 = new ChromaticChord(ChromaticChordEnum.F13b5b9omit11);
+    public static final ChromaticChord FF13b5b9omit11 = new ChromaticChord(ChromaticChordEnum.FF13b5b9omit11);
+    public static final ChromaticChord G13b5b9omit11 = new ChromaticChord(ChromaticChordEnum.G13b5b9omit11);
+    public static final ChromaticChord GG13b5b9omit11 = new ChromaticChord(ChromaticChordEnum.GG13b5b9omit11);
+    public static final ChromaticChord A13b5b9omit11 = new ChromaticChord(ChromaticChordEnum.A13b5b9omit11);
+    public static final ChromaticChord AA13b5b9omit11 = new ChromaticChord(ChromaticChordEnum.AA13b5b9omit11);
+    public static final ChromaticChord B13b5b9omit11 = new ChromaticChord(ChromaticChordEnum.B13b5b9omit11);
+
+    // Treceava con quinta bemol y novena aumentada
+    public static final ChromaticChord C13b5a9omit11 = new ChromaticChord(ChromaticChordEnum.C13b5a9omit11);
+    public static final ChromaticChord CC13b5a9omit11 = new ChromaticChord(ChromaticChordEnum.CC13b5a9omit11);
+    public static final ChromaticChord D13b5a9omit11 = new ChromaticChord(ChromaticChordEnum.D13b5a9omit11);
+    public static final ChromaticChord DD13b5a9omit11 = new ChromaticChord(ChromaticChordEnum.DD13b5a9omit11);
+    public static final ChromaticChord E13b5a9omit11 = new ChromaticChord(ChromaticChordEnum.E13b5a9omit11);
+    public static final ChromaticChord F13b5a9omit11 = new ChromaticChord(ChromaticChordEnum.F13b5a9omit11);
+    public static final ChromaticChord FF13b5a9omit11 = new ChromaticChord(ChromaticChordEnum.FF13b5a9omit11);
+    public static final ChromaticChord G13b5a9omit11 = new ChromaticChord(ChromaticChordEnum.G13b5a9omit11);
+    public static final ChromaticChord GG13b5a9omit11 = new ChromaticChord(ChromaticChordEnum.GG13b5a9omit11);
+    public static final ChromaticChord A13b5a9omit11 = new ChromaticChord(ChromaticChordEnum.A13b5a9omit11);
+    public static final ChromaticChord AA13b5a9omit11 = new ChromaticChord(ChromaticChordEnum.AA13b5a9omit11);
+    public static final ChromaticChord B13b5a9omit11 = new ChromaticChord(ChromaticChordEnum.B13b5a9omit11);
+
+    // Treceava con quinta aumentada y novena bemol
+    public static final ChromaticChord C13a5b9omit11 = new ChromaticChord(ChromaticChordEnum.C13a5b9omit11);
+    public static final ChromaticChord CC13a5b9omit11 = new ChromaticChord(ChromaticChordEnum.CC13a5b9omit11);
+    public static final ChromaticChord D13a5b9omit11 = new ChromaticChord(ChromaticChordEnum.D13a5b9omit11);
+    public static final ChromaticChord DD13a5b9omit11 = new ChromaticChord(ChromaticChordEnum.DD13a5b9omit11);
+    public static final ChromaticChord E13a5b9omit11 = new ChromaticChord(ChromaticChordEnum.E13a5b9omit11);
+    public static final ChromaticChord F13a5b9omit11 = new ChromaticChord(ChromaticChordEnum.F13a5b9omit11);
+    public static final ChromaticChord FF13a5b9omit11 = new ChromaticChord(ChromaticChordEnum.FF13a5b9omit11);
+    public static final ChromaticChord G13a5b9omit11 = new ChromaticChord(ChromaticChordEnum.G13a5b9omit11);
+    public static final ChromaticChord GG13a5b9omit11 = new ChromaticChord(ChromaticChordEnum.GG13a5b9omit11);
+    public static final ChromaticChord A13a5b9omit11 = new ChromaticChord(ChromaticChordEnum.A13a5b9omit11);
+    public static final ChromaticChord AA13a5b9omit11 = new ChromaticChord(ChromaticChordEnum.AA13a5b9omit11);
+    public static final ChromaticChord B13a5b9omit11 = new ChromaticChord(ChromaticChordEnum.B13a5b9omit11);
+
+    // Treceava con quinta y novena aumentadas
+    public static final ChromaticChord C13a5a9omit11 = new ChromaticChord(ChromaticChordEnum.C13a5a9omit11);
+    public static final ChromaticChord CC13a5a9omit11 = new ChromaticChord(ChromaticChordEnum.CC13a5a9omit11);
+    public static final ChromaticChord D13a5a9omit11 = new ChromaticChord(ChromaticChordEnum.D13a5a9omit11);
+    public static final ChromaticChord DD13a5a9omit11 = new ChromaticChord(ChromaticChordEnum.DD13a5a9omit11);
+    public static final ChromaticChord E13a5a9omit11 = new ChromaticChord(ChromaticChordEnum.E13a5a9omit11);
+    public static final ChromaticChord F13a5a9omit11 = new ChromaticChord(ChromaticChordEnum.F13a5a9omit11);
+    public static final ChromaticChord FF13a5a9omit11 = new ChromaticChord(ChromaticChordEnum.FF13a5a9omit11);
+    public static final ChromaticChord G13a5a9omit11 = new ChromaticChord(ChromaticChordEnum.G13a5a9omit11);
+    public static final ChromaticChord GG13a5a9omit11 = new ChromaticChord(ChromaticChordEnum.GG13a5a9omit11);
+    public static final ChromaticChord A13a5a9omit11 = new ChromaticChord(ChromaticChordEnum.A13a5a9omit11);
+    public static final ChromaticChord AA13a5a9omit11 = new ChromaticChord(ChromaticChordEnum.AA13a5a9omit11);
+    public static final ChromaticChord B13a5a9omit11 = new ChromaticChord(ChromaticChordEnum.B13a5a9omit11);
+
+    // Treceava mayor
+    public static final ChromaticChord CMaj13omit11 = new ChromaticChord(ChromaticChordEnum.CMaj13omit11);
+    public static final ChromaticChord CCMaj13omit11 = new ChromaticChord(ChromaticChordEnum.CCMaj13omit11);
+    public static final ChromaticChord DMaj13omit11 = new ChromaticChord(ChromaticChordEnum.DMaj13omit11);
+    public static final ChromaticChord DDMaj13omit11 = new ChromaticChord(ChromaticChordEnum.DDMaj13omit11);
+    public static final ChromaticChord EMaj13omit11 = new ChromaticChord(ChromaticChordEnum.EMaj13omit11);
+    public static final ChromaticChord FMaj13omit11 = new ChromaticChord(ChromaticChordEnum.FMaj13omit11);
+    public static final ChromaticChord FFMaj13omit11 = new ChromaticChord(ChromaticChordEnum.FFMaj13omit11);
+    public static final ChromaticChord GMaj13omit11 = new ChromaticChord(ChromaticChordEnum.GMaj13omit11);
+    public static final ChromaticChord GGMaj13omit11 = new ChromaticChord(ChromaticChordEnum.GGMaj13omit11);
+    public static final ChromaticChord AMaj13omit11 = new ChromaticChord(ChromaticChordEnum.AMaj13omit11);
+    public static final ChromaticChord AAMaj13omit11 = new ChromaticChord(ChromaticChordEnum.AAMaj13omit11);
+    public static final ChromaticChord BMaj13omit11 = new ChromaticChord(ChromaticChordEnum.BMaj13omit11);
+
+    // Menor treceava mayor
+    public static final ChromaticChord CmMaj13omit11 = new ChromaticChord(ChromaticChordEnum.CmMaj13omit11);
+    public static final ChromaticChord CCmMaj13omit11 = new ChromaticChord(ChromaticChordEnum.CCmMaj13omit11);
+    public static final ChromaticChord DmMaj13omit11 = new ChromaticChord(ChromaticChordEnum.DmMaj13omit11);
+    public static final ChromaticChord DDmMaj13omit11 = new ChromaticChord(ChromaticChordEnum.DDmMaj13omit11);
+    public static final ChromaticChord EmMaj13omit11 = new ChromaticChord(ChromaticChordEnum.EmMaj13omit11);
+    public static final ChromaticChord FmMaj13omit11 = new ChromaticChord(ChromaticChordEnum.FmMaj13omit11);
+    public static final ChromaticChord FFmMaj13omit11 = new ChromaticChord(ChromaticChordEnum.FFmMaj13omit11);
+    public static final ChromaticChord GmMaj13omit11 = new ChromaticChord(ChromaticChordEnum.GmMaj13omit11);
+    public static final ChromaticChord GGmMaj13omit11 = new ChromaticChord(ChromaticChordEnum.GGmMaj13omit11);
+    public static final ChromaticChord AmMaj13omit11 = new ChromaticChord(ChromaticChordEnum.AmMaj13omit11);
+    public static final ChromaticChord AAmMaj13omit11 = new ChromaticChord(ChromaticChordEnum.AAmMaj13omit11);
+    public static final ChromaticChord BmMaj13omit11 = new ChromaticChord(ChromaticChordEnum.BmMaj13omit11);
+
+    // Treceava mayor con quinta bemol
+    public static final ChromaticChord CMaj13b5omit11 = new ChromaticChord(ChromaticChordEnum.CMaj13b5omit11);
+    public static final ChromaticChord CCMaj13b5omit11 = new ChromaticChord(ChromaticChordEnum.CCMaj13b5omit11);
+    public static final ChromaticChord DMaj13b5omit11 = new ChromaticChord(ChromaticChordEnum.DMaj13b5omit11);
+    public static final ChromaticChord DDMaj13b5omit11 = new ChromaticChord(ChromaticChordEnum.DDMaj13b5omit11);
+    public static final ChromaticChord EMaj13b5omit11 = new ChromaticChord(ChromaticChordEnum.EMaj13b5omit11);
+    public static final ChromaticChord FMaj13b5omit11 = new ChromaticChord(ChromaticChordEnum.FMaj13b5omit11);
+    public static final ChromaticChord FFMaj13b5omit11 = new ChromaticChord(ChromaticChordEnum.FFMaj13b5omit11);
+    public static final ChromaticChord GMaj13b5omit11 = new ChromaticChord(ChromaticChordEnum.GMaj13b5omit11);
+    public static final ChromaticChord GGMaj13b5omit11 = new ChromaticChord(ChromaticChordEnum.GGMaj13b5omit11);
+    public static final ChromaticChord AMaj13b5omit11 = new ChromaticChord(ChromaticChordEnum.AMaj13b5omit11);
+    public static final ChromaticChord AAMaj13b5omit11 = new ChromaticChord(ChromaticChordEnum.AAMaj13b5omit11);
+    public static final ChromaticChord BMaj13b5omit11 = new ChromaticChord(ChromaticChordEnum.BMaj13b5omit11);
+
+    // Treceava mayor con quinta aumentada
+    public static final ChromaticChord CMaj13a5omit11 = new ChromaticChord(ChromaticChordEnum.CMaj13a5omit11);
+    public static final ChromaticChord CCMaj13a5omit11 = new ChromaticChord(ChromaticChordEnum.CCMaj13a5omit11);
+    public static final ChromaticChord DMaj13a5omit11 = new ChromaticChord(ChromaticChordEnum.DMaj13a5omit11);
+    public static final ChromaticChord DDMaj13a5omit11 = new ChromaticChord(ChromaticChordEnum.DDMaj13a5omit11);
+    public static final ChromaticChord EMaj13a5omit11 = new ChromaticChord(ChromaticChordEnum.EMaj13a5omit11);
+    public static final ChromaticChord FMaj13a5omit11 = new ChromaticChord(ChromaticChordEnum.FMaj13a5omit11);
+    public static final ChromaticChord FFMaj13a5omit11 = new ChromaticChord(ChromaticChordEnum.FFMaj13a5omit11);
+    public static final ChromaticChord GMaj13a5omit11 = new ChromaticChord(ChromaticChordEnum.GMaj13a5omit11);
+    public static final ChromaticChord GGMaj13a5omit11 = new ChromaticChord(ChromaticChordEnum.GGMaj13a5omit11);
+    public static final ChromaticChord AMaj13a5omit11 = new ChromaticChord(ChromaticChordEnum.AMaj13a5omit11);
+    public static final ChromaticChord AAMaj13a5omit11 = new ChromaticChord(ChromaticChordEnum.AAMaj13a5omit11);
+    public static final ChromaticChord BMaj13a5omit11 = new ChromaticChord(ChromaticChordEnum.BMaj13a5omit11);
+
+    // Treceava mayor con novena bemol
+    public static final ChromaticChord CMaj13b9omit11 = new ChromaticChord(ChromaticChordEnum.CMaj13b9omit11);
+    public static final ChromaticChord CCMaj13b9omit11 = new ChromaticChord(ChromaticChordEnum.CCMaj13b9omit11);
+    public static final ChromaticChord DMaj13b9omit11 = new ChromaticChord(ChromaticChordEnum.DMaj13b9omit11);
+    public static final ChromaticChord DDMaj13b9omit11 = new ChromaticChord(ChromaticChordEnum.DDMaj13b9omit11);
+    public static final ChromaticChord EMaj13b9omit11 = new ChromaticChord(ChromaticChordEnum.EMaj13b9omit11);
+    public static final ChromaticChord FMaj13b9omit11 = new ChromaticChord(ChromaticChordEnum.FMaj13b9omit11);
+    public static final ChromaticChord FFMaj13b9omit11 = new ChromaticChord(ChromaticChordEnum.FFMaj13b9omit11);
+    public static final ChromaticChord GMaj13b9omit11 = new ChromaticChord(ChromaticChordEnum.GMaj13b9omit11);
+    public static final ChromaticChord GGMaj13b9omit11 = new ChromaticChord(ChromaticChordEnum.GGMaj13b9omit11);
+    public static final ChromaticChord AMaj13b9omit11 = new ChromaticChord(ChromaticChordEnum.AMaj13b9omit11);
+    public static final ChromaticChord AAMaj13b9omit11 = new ChromaticChord(ChromaticChordEnum.AAMaj13b9omit11);
+    public static final ChromaticChord BMaj13b9omit11 = new ChromaticChord(ChromaticChordEnum.BMaj13b9omit11);
+
+    // Treceava mayor con novena aumentada
+    public static final ChromaticChord CMaj13a9omit11 = new ChromaticChord(ChromaticChordEnum.CMaj13a9omit11);
+    public static final ChromaticChord CCMaj13a9omit11 = new ChromaticChord(ChromaticChordEnum.CCMaj13a9omit11);
+    public static final ChromaticChord DMaj13a9omit11 = new ChromaticChord(ChromaticChordEnum.DMaj13a9omit11);
+    public static final ChromaticChord DDMaj13a9omit11 = new ChromaticChord(ChromaticChordEnum.DDMaj13a9omit11);
+    public static final ChromaticChord EMaj13a9omit11 = new ChromaticChord(ChromaticChordEnum.EMaj13a9omit11);
+    public static final ChromaticChord FMaj13a9omit11 = new ChromaticChord(ChromaticChordEnum.FMaj13a9omit11);
+    public static final ChromaticChord FFMaj13a9omit11 = new ChromaticChord(ChromaticChordEnum.FFMaj13a9omit11);
+    public static final ChromaticChord GMaj13a9omit11 = new ChromaticChord(ChromaticChordEnum.GMaj13a9omit11);
+    public static final ChromaticChord GGMaj13a9omit11 = new ChromaticChord(ChromaticChordEnum.GGMaj13a9omit11);
+    public static final ChromaticChord AMaj13a9omit11 = new ChromaticChord(ChromaticChordEnum.AMaj13a9omit11);
+    public static final ChromaticChord AAMaj13a9omit11 = new ChromaticChord(ChromaticChordEnum.AAMaj13a9omit11);
+    public static final ChromaticChord BMaj13a9omit11 = new ChromaticChord(ChromaticChordEnum.BMaj13a9omit11);
+
+    // Treceava mayor con quinta y novena bemoles
+    public static final ChromaticChord CMaj13b5b9omit11 = new ChromaticChord(ChromaticChordEnum.CMaj13b5b9omit11);
+    public static final ChromaticChord CCMaj13b5b9omit11 = new ChromaticChord(ChromaticChordEnum.CCMaj13b5b9omit11);
+    public static final ChromaticChord DMaj13b5b9omit11 = new ChromaticChord(ChromaticChordEnum.DMaj13b5b9omit11);
+    public static final ChromaticChord DDMaj13b5b9omit11 = new ChromaticChord(ChromaticChordEnum.DDMaj13b5b9omit11);
+    public static final ChromaticChord EMaj13b5b9omit11 = new ChromaticChord(ChromaticChordEnum.EMaj13b5b9omit11);
+    public static final ChromaticChord FMaj13b5b9omit11 = new ChromaticChord(ChromaticChordEnum.FMaj13b5b9omit11);
+    public static final ChromaticChord FFMaj13b5b9omit11 = new ChromaticChord(ChromaticChordEnum.FFMaj13b5b9omit11);
+    public static final ChromaticChord GMaj13b5b9omit11 = new ChromaticChord(ChromaticChordEnum.GMaj13b5b9omit11);
+    public static final ChromaticChord GGMaj13b5b9omit11 = new ChromaticChord(ChromaticChordEnum.GGMaj13b5b9omit11);
+    public static final ChromaticChord AMaj13b5b9omit11 = new ChromaticChord(ChromaticChordEnum.AMaj13b5b9omit11);
+    public static final ChromaticChord AAMaj13b5b9omit11 = new ChromaticChord(ChromaticChordEnum.AAMaj13b5b9omit11);
+    public static final ChromaticChord BMaj13b5b9omit11 = new ChromaticChord(ChromaticChordEnum.BMaj13b5b9omit11);
+
+    // Treceava mayor con novena aumentada
+    public static final ChromaticChord CMaj13b5a9omit11 = new ChromaticChord(ChromaticChordEnum.CMaj13b5a9omit11);
+    public static final ChromaticChord CCMaj13b5a9omit11 = new ChromaticChord(ChromaticChordEnum.CCMaj13b5a9omit11);
+    public static final ChromaticChord DMaj13b5a9omit11 = new ChromaticChord(ChromaticChordEnum.DMaj13b5a9omit11);
+    public static final ChromaticChord DDMaj13b5a9omit11 = new ChromaticChord(ChromaticChordEnum.DDMaj13b5a9omit11);
+    public static final ChromaticChord EMaj13b5a9omit11 = new ChromaticChord(ChromaticChordEnum.EMaj13b5a9omit11);
+    public static final ChromaticChord FMaj13b5a9omit11 = new ChromaticChord(ChromaticChordEnum.FMaj13b5a9omit11);
+    public static final ChromaticChord FFMaj13b5a9omit11 = new ChromaticChord(ChromaticChordEnum.FFMaj13b5a9omit11);
+    public static final ChromaticChord GMaj13b5a9omit11 = new ChromaticChord(ChromaticChordEnum.GMaj13b5a9omit11);
+    public static final ChromaticChord GGMaj13b5a9omit11 = new ChromaticChord(ChromaticChordEnum.GGMaj13b5a9omit11);
+    public static final ChromaticChord AMaj13b5a9omit11 = new ChromaticChord(ChromaticChordEnum.AMaj13b5a9omit11);
+    public static final ChromaticChord AAMaj13b5a9omit11 = new ChromaticChord(ChromaticChordEnum.AAMaj13b5a9omit11);
+    public static final ChromaticChord BMaj13b5a9omit11 = new ChromaticChord(ChromaticChordEnum.BMaj13b5a9omit11);
+
+    // Treceava mayor con quinta aumentada y novena bemol
+    public static final ChromaticChord CMaj13a5b9omit11 = new ChromaticChord(ChromaticChordEnum.CMaj13a5b9omit11);
+    public static final ChromaticChord CCMaj13a5b9omit11 = new ChromaticChord(ChromaticChordEnum.CCMaj13a5b9omit11);
+    public static final ChromaticChord DMaj13a5b9omit11 = new ChromaticChord(ChromaticChordEnum.DMaj13a5b9omit11);
+    public static final ChromaticChord DDMaj13a5b9omit11 = new ChromaticChord(ChromaticChordEnum.DDMaj13a5b9omit11);
+    public static final ChromaticChord EMaj13a5b9omit11 = new ChromaticChord(ChromaticChordEnum.EMaj13a5b9omit11);
+    public static final ChromaticChord FMaj13a5b9omit11 = new ChromaticChord(ChromaticChordEnum.FMaj13a5b9omit11);
+    public static final ChromaticChord FFMaj13a5b9omit11 = new ChromaticChord(ChromaticChordEnum.FFMaj13a5b9omit11);
+    public static final ChromaticChord GMaj13a5b9omit11 = new ChromaticChord(ChromaticChordEnum.GMaj13a5b9omit11);
+    public static final ChromaticChord GGMaj13a5b9omit11 = new ChromaticChord(ChromaticChordEnum.GGMaj13a5b9omit11);
+    public static final ChromaticChord AMaj13a5b9omit11 = new ChromaticChord(ChromaticChordEnum.AMaj13a5b9omit11);
+    public static final ChromaticChord AAMaj13a5b9omit11 = new ChromaticChord(ChromaticChordEnum.AAMaj13a5b9omit11);
+    public static final ChromaticChord BMaj13a5b9omit11 = new ChromaticChord(ChromaticChordEnum.BMaj13a5b9omit11);
+
+    // Treceava mayor con quinta y novena aumentadas
+    public static final ChromaticChord CMaj13a5a9omit11 = new ChromaticChord(ChromaticChordEnum.CMaj13a5a9omit11);
+    public static final ChromaticChord CCMaj13a5a9omit11 = new ChromaticChord(ChromaticChordEnum.CCMaj13a5a9omit11);
+    public static final ChromaticChord DMaj13a5a9omit11 = new ChromaticChord(ChromaticChordEnum.DMaj13a5a9omit11);
+    public static final ChromaticChord DDMaj13a5a9omit11 = new ChromaticChord(ChromaticChordEnum.DDMaj13a5a9omit11);
+    public static final ChromaticChord EMaj13a5a9omit11 = new ChromaticChord(ChromaticChordEnum.EMaj13a5a9omit11);
+    public static final ChromaticChord FMaj13a5a9omit11 = new ChromaticChord(ChromaticChordEnum.FMaj13a5a9omit11);
+    public static final ChromaticChord FFMaj13a5a9omit11 = new ChromaticChord(ChromaticChordEnum.FFMaj13a5a9omit11);
+    public static final ChromaticChord GMaj13a5a9omit11 = new ChromaticChord(ChromaticChordEnum.GMaj13a5a9omit11);
+    public static final ChromaticChord GGMaj13a5a9omit11 = new ChromaticChord(ChromaticChordEnum.GGMaj13a5a9omit11);
+    public static final ChromaticChord AMaj13a5a9omit11 = new ChromaticChord(ChromaticChordEnum.AMaj13a5a9omit11);
+    public static final ChromaticChord AAMaj13a5a9omit11 = new ChromaticChord(ChromaticChordEnum.AAMaj13a5a9omit11);
+    public static final ChromaticChord BMaj13a5a9omit11 = new ChromaticChord(ChromaticChordEnum.BMaj13a5a9omit11);
+
     public static final ChromaticChord Csusa4 = new ChromaticChord(ChromaticChordEnum.Csusa4);
     public static final ChromaticChord CCsusa4 = new ChromaticChord(ChromaticChordEnum.CCsusa4);
     public static final ChromaticChord Dsusa4 = new ChromaticChord(ChromaticChordEnum.Dsusa4);
@@ -1564,7 +1841,19 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
             ChromaticChord.GGm13,
             ChromaticChord.Am13,
             ChromaticChord.AAm13,
-            ChromaticChord.Bm13
+            ChromaticChord.Bm13,
+            ChromaticChord.Cm13omit11,
+            ChromaticChord.CCm13omit11,
+            ChromaticChord.Dm13omit11,
+            ChromaticChord.DDm13omit11,
+            ChromaticChord.Em13omit11,
+            ChromaticChord.Fm13omit11,
+            ChromaticChord.FFm13omit11,
+            ChromaticChord.Gm13omit11,
+            ChromaticChord.GGm13omit11,
+            ChromaticChord.Am13omit11,
+            ChromaticChord.AAm13omit11,
+            ChromaticChord.Bm13omit11
     )));
 
     public static final Set<ChromaticChord>	CHORDS_13sus4 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
@@ -1579,7 +1868,19 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
             ChromaticChord.GG13sus4,
             ChromaticChord.A13sus4,
             ChromaticChord.AA13sus4,
-            ChromaticChord.B13sus4
+            ChromaticChord.B13sus4,
+            ChromaticChord.C13sus4omit11,
+            ChromaticChord.CC13sus4omit11,
+            ChromaticChord.D13sus4omit11,
+            ChromaticChord.DD13sus4omit11,
+            ChromaticChord.E13sus4omit11,
+            ChromaticChord.F13sus4omit11,
+            ChromaticChord.FF13sus4omit11,
+            ChromaticChord.G13sus4omit11,
+            ChromaticChord.GG13sus4omit11,
+            ChromaticChord.A13sus4omit11,
+            ChromaticChord.AA13sus4omit11,
+            ChromaticChord.B13sus4omit11
     )));
 
     public static final Set<ChromaticChord>	CHORDS_13b5 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
@@ -1594,7 +1895,19 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
             ChromaticChord.GG13b5,
             ChromaticChord.A13b5,
             ChromaticChord.AA13b5,
-            ChromaticChord.B13b5
+            ChromaticChord.B13b5 ,
+            ChromaticChord.C13b5omit11,
+            ChromaticChord.CC13b5omit11,
+            ChromaticChord.D13b5omit11,
+            ChromaticChord.DD13b5omit11,
+            ChromaticChord.E13b5omit11,
+            ChromaticChord.F13b5omit11,
+            ChromaticChord.FF13b5omit11,
+            ChromaticChord.G13b5omit11,
+            ChromaticChord.GG13b5omit11,
+            ChromaticChord.A13b5omit11,
+            ChromaticChord.AA13b5omit11,
+            ChromaticChord.B13b5omit11
     )));
     public static final Set<ChromaticChord>	CHORDS_13a5 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
             ChromaticChord.C13a5,
@@ -1608,7 +1921,19 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
             ChromaticChord.GG13a5,
             ChromaticChord.A13a5,
             ChromaticChord.AA13a5,
-            ChromaticChord.B13a5
+            ChromaticChord.B13a5,
+            ChromaticChord.C13a5omit11,
+            ChromaticChord.CC13a5omit11,
+            ChromaticChord.D13a5omit11,
+            ChromaticChord.DD13a5omit11,
+            ChromaticChord.E13a5omit11,
+            ChromaticChord.F13a5omit11,
+            ChromaticChord.FF13a5omit11,
+            ChromaticChord.G13a5omit11,
+            ChromaticChord.GG13a5omit11,
+            ChromaticChord.A13a5omit11,
+            ChromaticChord.AA13a5omit11,
+            ChromaticChord.B13a5omit11
     )));
 
     public static final Set<ChromaticChord>	CHORDS_13b9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
@@ -1623,7 +1948,19 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
             ChromaticChord.GG13b9,
             ChromaticChord.A13b9,
             ChromaticChord.AA13b9,
-            ChromaticChord.B13b9
+            ChromaticChord.B13b9,
+            ChromaticChord.C13b9omit11,
+            ChromaticChord.CC13b9omit11,
+            ChromaticChord.D13b9omit11,
+            ChromaticChord.DD13b9omit11,
+            ChromaticChord.E13b9omit11,
+            ChromaticChord.F13b9omit11,
+            ChromaticChord.FF13b9omit11,
+            ChromaticChord.G13b9omit11,
+            ChromaticChord.GG13b9omit11,
+            ChromaticChord.A13b9omit11,
+            ChromaticChord.AA13b9omit11,
+            ChromaticChord.B13b9omit11
     )));
     public static final Set<ChromaticChord>	CHORDS_13a9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
             ChromaticChord.C13a9,
@@ -1637,7 +1974,19 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
             ChromaticChord.GG13a9,
             ChromaticChord.A13a9,
             ChromaticChord.AA13a9,
-            ChromaticChord.B13a9
+            ChromaticChord.B13a9,
+            ChromaticChord.C13a9omit11,
+            ChromaticChord.CC13a9omit11,
+            ChromaticChord.D13a9omit11,
+            ChromaticChord.DD13a9omit11,
+            ChromaticChord.E13a9omit11,
+            ChromaticChord.F13a9omit11,
+            ChromaticChord.FF13a9omit11,
+            ChromaticChord.G13a9omit11,
+            ChromaticChord.GG13a9omit11,
+            ChromaticChord.A13a9omit11,
+            ChromaticChord.AA13a9omit11,
+            ChromaticChord.B13a9omit11
     )));
     public static final Set<ChromaticChord>	CHORDS_13b5b9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
             ChromaticChord.C13b5b9,
@@ -1651,7 +2000,19 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
             ChromaticChord.GG13b5b9,
             ChromaticChord.A13b5b9,
             ChromaticChord.AA13b5b9,
-            ChromaticChord.B13b5b9
+            ChromaticChord.B13b5b9,
+            ChromaticChord.C13b5b9omit11,
+            ChromaticChord.CC13b5b9omit11,
+            ChromaticChord.D13b5b9omit11,
+            ChromaticChord.DD13b5b9omit11,
+            ChromaticChord.E13b5b9omit11,
+            ChromaticChord.F13b5b9omit11,
+            ChromaticChord.FF13b5b9omit11,
+            ChromaticChord.G13b5b9omit11,
+            ChromaticChord.GG13b5b9omit11,
+            ChromaticChord.A13b5b9omit11,
+            ChromaticChord.AA13b5b9omit11,
+            ChromaticChord.B13b5b9omit11
     )));
 
     public static final Set<ChromaticChord>	CHORDS_13b5a9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
@@ -1666,7 +2027,19 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
             ChromaticChord.GG13b5a9,
             ChromaticChord.A13b5a9,
             ChromaticChord.AA13b5a9,
-            ChromaticChord.B13b5a9
+            ChromaticChord.B13b5a9,
+            ChromaticChord.C13b5a9omit11,
+            ChromaticChord.CC13b5a9omit11,
+            ChromaticChord.D13b5a9omit11,
+            ChromaticChord.DD13b5a9omit11,
+            ChromaticChord.E13b5a9omit11,
+            ChromaticChord.F13b5a9omit11,
+            ChromaticChord.FF13b5a9omit11,
+            ChromaticChord.G13b5a9omit11,
+            ChromaticChord.GG13b5a9omit11,
+            ChromaticChord.A13b5a9omit11,
+            ChromaticChord.AA13b5a9omit11,
+            ChromaticChord.B13b5a9omit11
     )));
     public static final Set<ChromaticChord>	CHORDS_13a5b9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
             ChromaticChord.C13a5b9,
@@ -1680,7 +2053,19 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
             ChromaticChord.GG13a5b9,
             ChromaticChord.A13a5b9,
             ChromaticChord.AA13a5b9,
-            ChromaticChord.B13a5b9
+            ChromaticChord.B13a5b9,
+            ChromaticChord.C13a5b9omit11,
+            ChromaticChord.CC13a5b9omit11,
+            ChromaticChord.D13a5b9omit11,
+            ChromaticChord.DD13a5b9omit11,
+            ChromaticChord.E13a5b9omit11,
+            ChromaticChord.F13a5b9omit11,
+            ChromaticChord.FF13a5b9omit11,
+            ChromaticChord.G13a5b9omit11,
+            ChromaticChord.GG13a5b9omit11,
+            ChromaticChord.A13a5b9omit11,
+            ChromaticChord.AA13a5b9omit11,
+            ChromaticChord.B13a5b9omit11
     )));
 
     public static final Set<ChromaticChord>	CHORDS_13a5a9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
@@ -1695,7 +2080,19 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
             ChromaticChord.GG13a5a9,
             ChromaticChord.A13a5a9,
             ChromaticChord.AA13a5a9,
-            ChromaticChord.B13a5a9
+            ChromaticChord.B13a5a9,
+            ChromaticChord.C13a5a9omit11,
+            ChromaticChord.CC13a5a9omit11,
+            ChromaticChord.D13a5a9omit11,
+            ChromaticChord.DD13a5a9omit11,
+            ChromaticChord.E13a5a9omit11,
+            ChromaticChord.F13a5a9omit11,
+            ChromaticChord.FF13a5a9omit11,
+            ChromaticChord.G13a5a9omit11,
+            ChromaticChord.GG13a5a9omit11,
+            ChromaticChord.A13a5a9omit11,
+            ChromaticChord.AA13a5a9omit11,
+            ChromaticChord.B13a5a9omit11
     )));
     public static final Set<ChromaticChord>	CHORDS_Maj13 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
             ChromaticChord.CMaj13,
@@ -1709,7 +2106,19 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
             ChromaticChord.GGMaj13,
             ChromaticChord.AMaj13,
             ChromaticChord.AAMaj13,
-            ChromaticChord.BMaj13
+            ChromaticChord.BMaj13,
+            ChromaticChord.CMaj13omit11,
+            ChromaticChord.CCMaj13omit11,
+            ChromaticChord.DMaj13omit11,
+            ChromaticChord.DDMaj13omit11,
+            ChromaticChord.EMaj13omit11,
+            ChromaticChord.FMaj13omit11,
+            ChromaticChord.FFMaj13omit11,
+            ChromaticChord.GMaj13omit11,
+            ChromaticChord.GGMaj13omit11,
+            ChromaticChord.AMaj13omit11,
+            ChromaticChord.AAMaj13omit11,
+            ChromaticChord.BMaj13omit11
     )));
 
     public static final Set<ChromaticChord>	CHORDS_mMaj13 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
@@ -1724,7 +2133,19 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
             ChromaticChord.GGmMaj13,
             ChromaticChord.AmMaj13,
             ChromaticChord.AAmMaj13,
-            ChromaticChord.BmMaj13
+            ChromaticChord.BmMaj13,
+            ChromaticChord.CmMaj13omit11,
+            ChromaticChord.CCmMaj13omit11,
+            ChromaticChord.DmMaj13omit11,
+            ChromaticChord.DDmMaj13omit11,
+            ChromaticChord.EmMaj13omit11,
+            ChromaticChord.FmMaj13omit11,
+            ChromaticChord.FFmMaj13omit11,
+            ChromaticChord.GmMaj13omit11,
+            ChromaticChord.GGmMaj13omit11,
+            ChromaticChord.AmMaj13omit11,
+            ChromaticChord.AAmMaj13omit11,
+            ChromaticChord.BmMaj13omit11
     )));
     public static final Set<ChromaticChord>	CHORDS_Maj13b5 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
             ChromaticChord.CMaj13b5,
@@ -1738,7 +2159,19 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
             ChromaticChord.GGMaj13b5,
             ChromaticChord.AMaj13b5,
             ChromaticChord.AAMaj13b5,
-            ChromaticChord.BMaj13b5
+            ChromaticChord.BMaj13b5,
+            ChromaticChord.CMaj13b5omit11,
+            ChromaticChord.CCMaj13b5omit11,
+            ChromaticChord.DMaj13b5omit11,
+            ChromaticChord.DDMaj13b5omit11,
+            ChromaticChord.EMaj13b5omit11,
+            ChromaticChord.FMaj13b5omit11,
+            ChromaticChord.FFMaj13b5omit11,
+            ChromaticChord.GMaj13b5omit11,
+            ChromaticChord.GGMaj13b5omit11,
+            ChromaticChord.AMaj13b5omit11,
+            ChromaticChord.AAMaj13b5omit11,
+            ChromaticChord.BMaj13b5omit11
     )));
 
     public static final Set<ChromaticChord>	CHORDS_Maj13a5 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
@@ -1753,7 +2186,19 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
             ChromaticChord.GGMaj13a5,
             ChromaticChord.AMaj13a5,
             ChromaticChord.AAMaj13a5,
-            ChromaticChord.BMaj13a5
+            ChromaticChord.BMaj13a5,
+            ChromaticChord.CMaj13a5omit11,
+            ChromaticChord.CCMaj13a5omit11,
+            ChromaticChord.DMaj13a5omit11,
+            ChromaticChord.DDMaj13a5omit11,
+            ChromaticChord.EMaj13a5omit11,
+            ChromaticChord.FMaj13a5omit11,
+            ChromaticChord.FFMaj13a5omit11,
+            ChromaticChord.GMaj13a5omit11,
+            ChromaticChord.GGMaj13a5omit11,
+            ChromaticChord.AMaj13a5omit11,
+            ChromaticChord.AAMaj13a5omit11,
+            ChromaticChord.BMaj13a5omit11
     )));
     public static final Set<ChromaticChord>	CHORDS_Maj13b9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
             ChromaticChord.CMaj13b9,
@@ -1767,7 +2212,19 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
             ChromaticChord.GGMaj13b9,
             ChromaticChord.AMaj13b9,
             ChromaticChord.AAMaj13b9,
-            ChromaticChord.BMaj13b9
+            ChromaticChord.BMaj13b9,
+            ChromaticChord.CMaj13b9omit11,
+            ChromaticChord.CCMaj13b9omit11,
+            ChromaticChord.DMaj13b9omit11,
+            ChromaticChord.DDMaj13b9omit11,
+            ChromaticChord.EMaj13b9omit11,
+            ChromaticChord.FMaj13b9omit11,
+            ChromaticChord.FFMaj13b9omit11,
+            ChromaticChord.GMaj13b9omit11,
+            ChromaticChord.GGMaj13b9omit11,
+            ChromaticChord.AMaj13b9omit11,
+            ChromaticChord.AAMaj13b9omit11,
+            ChromaticChord.BMaj13b9omit11
     )));
 
     public static final Set<ChromaticChord>	CHORDS_Maj13a9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
@@ -1782,7 +2239,19 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
             ChromaticChord.GGMaj13a9,
             ChromaticChord.AMaj13a9,
             ChromaticChord.AAMaj13a9,
-            ChromaticChord.BMaj13a9
+            ChromaticChord.BMaj13a9,
+            ChromaticChord.CMaj13a9omit11,
+            ChromaticChord.CCMaj13a9omit11,
+            ChromaticChord.DMaj13a9omit11,
+            ChromaticChord.DDMaj13a9omit11,
+            ChromaticChord.EMaj13a9omit11,
+            ChromaticChord.FMaj13a9omit11,
+            ChromaticChord.FFMaj13a9omit11,
+            ChromaticChord.GMaj13a9omit11,
+            ChromaticChord.GGMaj13a9omit11,
+            ChromaticChord.AMaj13a9omit11,
+            ChromaticChord.AAMaj13a9omit11,
+            ChromaticChord.BMaj13a9omit11
     )));
 
     public static final Set<ChromaticChord>	CHORDS_Maj13b5b9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
@@ -1797,7 +2266,19 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
             ChromaticChord.GGMaj13b5b9,
             ChromaticChord.AMaj13b5b9,
             ChromaticChord.AAMaj13b5b9,
-            ChromaticChord.BMaj13b5b9
+            ChromaticChord.BMaj13b5b9,
+            ChromaticChord.CMaj13b5b9omit11,
+            ChromaticChord.CCMaj13b5b9omit11,
+            ChromaticChord.DMaj13b5b9omit11,
+            ChromaticChord.DDMaj13b5b9omit11,
+            ChromaticChord.EMaj13b5b9omit11,
+            ChromaticChord.FMaj13b5b9omit11,
+            ChromaticChord.FFMaj13b5b9omit11,
+            ChromaticChord.GMaj13b5b9omit11,
+            ChromaticChord.GGMaj13b5b9omit11,
+            ChromaticChord.AMaj13b5b9omit11,
+            ChromaticChord.AAMaj13b5b9omit11,
+            ChromaticChord.BMaj13b5b9omit11
     )));
 
     public static final Set<ChromaticChord>	CHORDS_Maj13b5a9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
@@ -1812,7 +2293,19 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
             ChromaticChord.GGMaj13b5a9,
             ChromaticChord.AMaj13b5a9,
             ChromaticChord.AAMaj13b5a9,
-            ChromaticChord.BMaj13b5a9
+            ChromaticChord.BMaj13b5a9,
+            ChromaticChord.CMaj13b5a9omit11,
+            ChromaticChord.CCMaj13b5a9omit11,
+            ChromaticChord.DMaj13b5a9omit11,
+            ChromaticChord.DDMaj13b5a9omit11,
+            ChromaticChord.EMaj13b5a9omit11,
+            ChromaticChord.FMaj13b5a9omit11,
+            ChromaticChord.FFMaj13b5a9omit11,
+            ChromaticChord.GMaj13b5a9omit11,
+            ChromaticChord.GGMaj13b5a9omit11,
+            ChromaticChord.AMaj13b5a9omit11,
+            ChromaticChord.AAMaj13b5a9omit11,
+            ChromaticChord.BMaj13b5a9omit11
     )));
 
     public static final Set<ChromaticChord>	CHORDS_Maj13a5b9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
@@ -1827,7 +2320,19 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
             ChromaticChord.GGMaj13a5b9,
             ChromaticChord.AMaj13a5b9,
             ChromaticChord.AAMaj13a5b9,
-            ChromaticChord.BMaj13a5b9
+            ChromaticChord.BMaj13a5b9,
+            ChromaticChord.CMaj13a5b9omit11,
+            ChromaticChord.CCMaj13a5b9omit11,
+            ChromaticChord.DMaj13a5b9omit11,
+            ChromaticChord.DDMaj13a5b9omit11,
+            ChromaticChord.EMaj13a5b9omit11,
+            ChromaticChord.FMaj13a5b9omit11,
+            ChromaticChord.FFMaj13a5b9omit11,
+            ChromaticChord.GMaj13a5b9omit11,
+            ChromaticChord.GGMaj13a5b9omit11,
+            ChromaticChord.AMaj13a5b9omit11,
+            ChromaticChord.AAMaj13a5b9omit11,
+            ChromaticChord.BMaj13a5b9omit11
     )));
 
     public static final Set<ChromaticChord>	CHORDS_Maj13a5a9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
@@ -1842,7 +2347,19 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
             ChromaticChord.GGMaj13a5a9,
             ChromaticChord.AMaj13a5a9,
             ChromaticChord.AAMaj13a5a9,
-            ChromaticChord.BMaj13a5a9
+            ChromaticChord.BMaj13a5a9,
+            ChromaticChord.CMaj13a5a9omit11,
+            ChromaticChord.CCMaj13a5a9omit11,
+            ChromaticChord.DMaj13a5a9omit11,
+            ChromaticChord.DDMaj13a5a9omit11,
+            ChromaticChord.EMaj13a5a9omit11,
+            ChromaticChord.FMaj13a5a9omit11,
+            ChromaticChord.FFMaj13a5a9omit11,
+            ChromaticChord.GMaj13a5a9omit11,
+            ChromaticChord.GGMaj13a5a9omit11,
+            ChromaticChord.AMaj13a5a9omit11,
+            ChromaticChord.AAMaj13a5a9omit11,
+            ChromaticChord.BMaj13a5a9omit11
     )));
 
     public static final Set<ChromaticChord>	CHORDS_SUSa4 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
@@ -1975,13 +2492,21 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
             CHORDS_Maj13a5a9
     );
 
-    public static final Set<ChromaticChord>	PARTIAL_CHORDS			= ListUtils.concatUnmodificable(
+    public static final Set<ChromaticChord>	PARTIAL_CHORDS = ListUtils.concatUnmodificable(
             CHORDS_FIFTH
     );
 
-    public static final Set<ChromaticChord>	COMMON_CHORDS	= ListUtils.concatUnmodificable(TRIAD_CHORDS, SEVENTH_CHORDS, SIXTH_CHORDS, NINTH_CHORDS, ELEVENTH_CHORDS, THIRTEENTH_CHORDS, PARTIAL_CHORDS);
+    public static final Set<ChromaticChord>	COMMON_CHORDS = ListUtils.concatUnmodificable(
+            TRIAD_CHORDS, SEVENTH_CHORDS, SIXTH_CHORDS, NINTH_CHORDS,
+            ELEVENTH_CHORDS, THIRTEENTH_CHORDS, PARTIAL_CHORDS
+    );
 
-    public static @NonNull ChromaticChord fromNone() {
+
+    /*
+     * END CONSTANT CHORDS
+     *****************************************************************************************************************/
+
+    public static @NonNull ChromaticChord createEmpty() {
         ChromaticChord ret = new ChromaticChord();
         ret.innerChord = ChromaticChordAdapter.from(ImmutableList.of());
         return ret;
@@ -1999,12 +2524,17 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
         return ret;
     }
 
-    private ChromaticChord() {
-        super();
-    }
+    public static @NonNull ChromaticChord from(@NonNull Chromatic chromaticBase, @NonNull DiatonicChordPattern diatonicChordPattern, @NonNull Tonality tonality) {
+        int posBase = tonality.getDegreeFrom(chromaticBase).val();
+        ChromaticChord chromaticChord = ChromaticChord.createEmpty();
+        for (Integer diatonic : diatonicChordPattern) {
+            int pos = (posBase + diatonic) % Diatonic.NUMBER;
+            DiatonicAlt diatonicAlt = tonality.getNotes().get(pos);
+            Chromatic chromatic = Chromatic.from(diatonicAlt);
+            chromaticChord.add(chromatic);
+        }
 
-    public static Set<ChromaticChord> values() {
-        return ListUtils.concatUnmodificable(COMMON_CHORDS, UNUSUAL_CHORDS);
+        return chromaticChord;
     }
 
     public static @NonNull ChromaticChord from(@NonNull Tonality tonality, @NonNull DiatonicFunction diatonicFunction) {
@@ -2070,6 +2600,14 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
         return cc;
     }
 
+    private ChromaticChord() {
+        super();
+    }
+
+    public static @NonNull Set<ChromaticChord> values() {
+        return ListUtils.concatUnmodificable(COMMON_CHORDS, UNUSUAL_CHORDS);
+    }
+
     @Override
     protected final void turnIntoEnumIfPossible() {
         ChromaticChordEnum chromaticChordEnum = ChromaticChordEnum.from(innerChord);
@@ -2123,16 +2661,6 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
     }
 
     @Override
-    public Boolean updateWhatIsIt(BiFunction<List<ChromaticChord>, ChordCommon<?>, ChromaticChord> fSelectChord) {
-        return null;
-    }
-
-    @Override
-    public Boolean updateWhatIsItIfNeeded() {
-        return null;
-    }
-
-    @Override
     public boolean equals(Object o) {
         if ( !(o instanceof ChromaticChord) )
             return false;
@@ -2146,21 +2674,14 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
         return ((ChromaticChordInterface)innerChord).getQuality();
     }
 
-    public ChromaticChord[] getModalChords(@NonNull Tonality t) {
-        HarmonicFunction f = t.getFunction( ChromaticChord.from(this) );
-        if ( f == null || f instanceof ChromaticFunction )
-            return null;
+    @Override
+    public Boolean updateWhatIsIt(BiFunction<List<ChromaticChord>, ChordCommon<?>, ChromaticChord> fSelectChord) {
+        return null;
+    }
 
-        DiatonicFunction fCasted = (DiatonicFunction) f;
-        List<Tonality> ts = t.getModesSameRoot();
-
-        int i = 0;
-        ChromaticChord[] ret = new ChromaticChord[t.size()];
-        for ( Tonality t2 : ts ) {
-            ret[i++] = ChromaticChord.from(t2, fCasted);
-        }
-
-        return ret;
+    @Override
+    public Boolean updateWhatIsItIfNeeded() {
+        return null;
     }
 
     public ChromaticChordMidi toMidi() { // todo: remove

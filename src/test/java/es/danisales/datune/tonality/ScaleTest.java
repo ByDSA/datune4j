@@ -40,7 +40,7 @@ public class ScaleTest {
     }
 
     @Test
-    public void of() {
+    public void fromScaleDistances() {
         List<ScaleDistance> listAdded = Collections.unmodifiableList(Arrays.asList(
                 ScaleDistance.WHOLE,
                 ScaleDistance.WHOLE,
@@ -50,14 +50,14 @@ public class ScaleTest {
                 ScaleDistance.WHOLE,
                 ScaleDistance.HALF
         ) );
-        Scale scale = Scale.of(listAdded);
+        Scale scale = Scale.fromDistances(listAdded);
 
         assertEquals(listAdded, scale.getCode());
         assertEquals(7, scale.size());
     }
 
     @Test(expected = ScaleBuildingException.class)
-    public void ofDontSum12() {
+    public void fromScaleDistancesDontSum12() {
         List<ScaleDistance> listAdded = Collections.unmodifiableList(Arrays.asList(
                 ScaleDistance.WHOLE,
                 ScaleDistance.WHOLE,
@@ -67,19 +67,19 @@ public class ScaleTest {
                 ScaleDistance.WHOLE
         ) );
 
-        Scale scale = Scale.of(listAdded);
+        Scale scale = Scale.fromDistances(listAdded);
         assertTrue(scale.getCode().size() < 7);
     }
 
     @Test(expected = ScaleBuildingException.class)
     public void integersDontSum12() {
-        Scale scale = Scale.fromIntegers( 2, 2, 1, 2, 2, 2 );
+        Scale scale = Scale.from( 2, 2, 1, 2, 2, 2 );
         assertTrue(scale.getCode().size() < 7);
     }
 
     @Test
     public void integersChromatic() {
-        Scale scale = Scale.fromIntegers( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 );
+        Scale scale = Scale.from( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 );
         assertEquals(Scale.CHROMATIC, scale);
         assertEquals(Scale.CHROMATIC.hashCode(), scale.hashCode());
         assertEquals(12, scale.getCode().size());
@@ -88,7 +88,7 @@ public class ScaleTest {
     @SuppressWarnings("ConstantConditions")
     @Test
     public void scaleEnumReusable1() {
-        ScaleEnum scaleEnum = ScaleEnum.of(Arrays.asList(
+        ScaleEnum scaleEnum = ScaleEnum.from(Arrays.asList(
                 ScaleDistance.WHOLE,
                 ScaleDistance.WHOLE,
                 ScaleDistance.HALF,
@@ -105,7 +105,7 @@ public class ScaleTest {
 
     @Test
     public void scaleEnumReusableAsInner() {
-        Scale scale = Scale.of(Arrays.asList(
+        Scale scale = Scale.fromDistances(Arrays.asList(
                 ScaleDistance.WHOLE,
                 ScaleDistance.WHOLE,
                 ScaleDistance.HALF,
@@ -123,7 +123,7 @@ public class ScaleTest {
 
     @Test
     public void fromDiatonicAltList1() {
-        Scale scale = Scale.fromDiatonicAltList( Arrays.asList(
+        Scale scale = Scale.from( Arrays.asList(
                 DiatonicAlt.C,
                 DiatonicAlt.D,
                 DiatonicAlt.E,
@@ -139,7 +139,7 @@ public class ScaleTest {
 
     @Test
     public void fromDiatonicAltList2() {
-        Scale scale = Scale.fromDiatonicAltList( Arrays.asList(
+        Scale scale = Scale.from( Arrays.asList(
                 DiatonicAlt.A,
                 DiatonicAlt.B,
                 DiatonicAlt.C,
@@ -152,10 +152,9 @@ public class ScaleTest {
         assertEquals(Scale.MINOR, scale);
         assertEquals(Scale.MINOR.hashCode(), scale.hashCode());
     }
-
     @Test
     public void fromDiatonicAltList3() {
-        Scale scale = Scale.fromDiatonicAltList( Arrays.asList(
+        Scale scale = Scale.from( Arrays.asList(
                 DiatonicAlt.F,
                 DiatonicAlt.G,
                 DiatonicAlt.A,
@@ -167,6 +166,22 @@ public class ScaleTest {
 
         assertEquals(Scale.MAJOR, scale);
         assertEquals(Scale.MAJOR.hashCode(), scale.hashCode());
+    }
+
+    @Test
+    public void fromDiatonicAltListUnordered() {
+        Scale scale = Scale.from( Arrays.asList(
+                DiatonicAlt.A,
+                DiatonicAlt.C,
+                DiatonicAlt.F,
+                DiatonicAlt.D,
+                DiatonicAlt.B,
+                DiatonicAlt.G,
+                DiatonicAlt.E
+        ) );
+
+        assertEquals(Scale.MINOR, scale);
+        assertEquals(Scale.MINOR.hashCode(), scale.hashCode());
     }
 
     @Test
@@ -221,8 +236,8 @@ public class ScaleTest {
                 ScaleDistance.HALF
         );
 
-        Scale scale1 = Scale.of(listAdded);
-        Scale scale2 = Scale.of(listAdded);
+        Scale scale1 = Scale.fromDistances(listAdded);
+        Scale scale2 = Scale.fromDistances(listAdded);
 
         assertEquals(scale1, scale2);
         assertEquals(scale1.hashCode(), scale2.hashCode());
@@ -240,7 +255,7 @@ public class ScaleTest {
                 ScaleDistance.HALF
         ) );
 
-        Scale scale = Scale.of(listAdded);
+        Scale scale = Scale.fromDistances(listAdded);
 
         assertEquals(Scale.MAJOR, scale);
         assertEquals(Scale.MAJOR.hashCode(), scale.hashCode());
@@ -260,13 +275,13 @@ public class ScaleTest {
         for (DiatonicDegree diatonicDegree : DiatonicDegree.values())
             notes.add(s.getNote(diatonicDegree));
 
-        assertEquals(s.getScale(), Scale.fromDiatonicAltList(notes));
-        assertEquals(s.getScale().hashCode(), Scale.fromDiatonicAltList(notes).hashCode());
+        assertEquals(s.getScale(), Scale.from(notes));
+        assertEquals(s.getScale().hashCode(), Scale.from(notes).hashCode());
     }
 
     @Test
     public void fromIntegers() {
-        Scale scale = Scale.fromIntegers( 2, 2, 1, 2, 2, 2, 1 );
+        Scale scale = Scale.from( 2, 2, 1, 2, 2, 2, 1 );
         assertEquals(Arrays.asList(
                 ScaleDistance.WHOLE,
                 ScaleDistance.WHOLE,
@@ -282,7 +297,7 @@ public class ScaleTest {
     public void equalsFromIntegers() {
         Scale a = Scale.MAJOR;
 
-        Scale b = Scale.fromIntegers( 2, 2, 1, 2, 2, 2, 1 );
+        Scale b = Scale.from( 2, 2, 1, 2, 2, 2, 1 );
         assertNotSame(a, b);
         assertEquals(a, b);
         assertEquals(a.hashCode(), b.hashCode());
@@ -291,7 +306,7 @@ public class ScaleTest {
     @Test
     public void equalsFromScaleDistance() {
         Scale a = Scale.MAJOR;
-        Scale b = Scale.of( Arrays.asList(
+        Scale b = Scale.fromDistances( Arrays.asList(
                 ScaleDistance.WHOLE,
                 ScaleDistance.WHOLE,
                 ScaleDistance.HALF,

@@ -22,6 +22,6 @@ public enum ScaleDistance {
             case 3: return WHOLE_HALF;
         }
 
-        throw new RuntimeException();
+        throw new RuntimeException("Value invalid: " + value);
     }
 }

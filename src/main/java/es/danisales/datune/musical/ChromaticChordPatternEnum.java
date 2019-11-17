@@ -44,12 +44,12 @@ enum ChromaticChordPatternEnum implements ChromaticChordPatternInterface {
     NINTH_ADD6(0, 4, 7, 9, 10, 14),
     NINTH_a11(0, 4, 7, 10, 14, 18),
     NINTH_MAJ9_a11(0, 4, 7, 11, 14, 18),
-    ELEVENTH(0, 4, 7, 10, 14, 21),
-    ELEVENTH_MINOR(0, 3, 7, 10, 14, 21),
-    ELEVENTH_b9(0, 4, 7, 10, 13, 21),
-    ELEVENTH_a9(0, 4, 7, 10, 15, 21),
-    ELEVENTH_MAJ11(0, 4, 7, 11, 14, 21),
-    ELEVENTH_MINOR_MAJ11(0, 3, 7, 11, 14, 21),
+    ELEVENTH(0, 4, 7, 10, 14, 17),
+    ELEVENTH_MINOR(0, 3, 7, 10, 14, 17),
+    ELEVENTH_b9(0, 4, 7, 10, 13, 17),
+    ELEVENTH_a9(0, 4, 7, 10, 15, 17),
+    ELEVENTH_MAJ11(0, 4, 7, 11, 14, 17),
+    ELEVENTH_MINOR_MAJ11(0, 3, 7, 11, 14, 17),
     THIRTEENTH_MINOR(0, 3, 7, 10, 14, 17, 21),
     THIRTEENTH_SUS4(0, 5, 7, 10, 14, 17, 21),
     THIRTEENTH_b5(0, 4, 6, 10, 14, 17, 21),
@@ -117,7 +117,7 @@ enum ChromaticChordPatternEnum implements ChromaticChordPatternInterface {
     }
 
     @Override
-    public List<Integer> getPattern() {
+    public List<Integer> getList() {
         return pattern;
     }
 }
