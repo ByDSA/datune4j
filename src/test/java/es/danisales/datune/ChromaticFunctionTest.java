@@ -2,7 +2,7 @@ package es.danisales.datune;
 
 import es.danisales.datune.diatonic.ChromaticFunction;
 import es.danisales.datune.diatonic.DiatonicDegree;
-import es.danisales.datune.diatonic.TonalityDegree;
+import es.danisales.datune.diatonic.RelativeDegree;
 import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.musical.Chromatic;
@@ -41,7 +41,7 @@ public class ChromaticFunctionTest {
 		cc = ChromaticChordInterface.from( ChromaticFunction.ii, ton );
 		dc = cc.toMidi().getDiatonicChordMidi( ton );
 		Chromatic c = ChromaticAdapter.from( dc.getRoot() );
-		TonalityDegree d = ton.getDegreeFrom( c );
+		RelativeDegree d = ton.getDegreeFrom( c );
 		assertEquals( DiatonicDegree.II, d );
 		assertEquals( DiatonicDegree.II, dc.getDegree() );
 		cc = ChromaticChordInterface.from( ChromaticFunction.iii, ton );
@@ -62,10 +62,10 @@ public class ChromaticFunctionTest {
 	}
 /*
 	@Test
-	public void calculateFrom() {
+	public void getAllFrom() {
 		Tonality t = Tonality.C;
 		ChromaticChordEnum cc = ChromaticChordEnum.F5;
-		assertEquals( ChromaticFunction.IV5, ChromaticFunction.calculateFrom( cc, t ) );
+		assertEquals( ChromaticFunction.IV5, ChromaticFunction.getAllFrom( cc, t ) );
 
 		checkTonality( Tonality.C );
 		checkTonality( Tonality.D );
@@ -78,8 +78,8 @@ public class ChromaticFunctionTest {
 		for ( ChromaticFunction cf : ChromaticFunction.ALL ) {
 			if ( cf == ChromaticFunction.V_IV || cf == ChromaticFunction.V7_IV )
 				continue;
-			diatonicChordMidi = ton.calculateFrom( cf ).toDiatonicChordMidi( ton );
-			assertEquals( cf, ChromaticFunction.calculateFrom( diatonicChordMidi ) );
+			diatonicChordMidi = ton.getAllFrom( cf ).toDiatonicChordMidi( ton );
+			assertEquals( cf, ChromaticFunction.getAllFrom( diatonicChordMidi ) );
 		}
 	}*/
 	

@@ -2,7 +2,10 @@ package es.danisales.datune.musical;
 
 import com.google.common.collect.ImmutableList;
 import es.danisales.datune.diatonic.*;
+import es.danisales.datune.midi.ChordMidi;
 import es.danisales.datune.midi.ChromaticChordMidi;
+import es.danisales.datune.midi.DiatonicChordMidi;
+import es.danisales.datune.midi.PitchSingleMidi;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.ChordMutableInterface;
@@ -2525,7 +2528,7 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
     }
 
     public static @NonNull ChromaticChord from(@NonNull Chromatic chromaticBase, @NonNull DiatonicChordPattern diatonicChordPattern, @NonNull Tonality tonality) {
-        int posBase = tonality.getDegreeFrom(chromaticBase).val();
+        int posBase = tonality.getDegreeFrom(chromaticBase).ordinal();
         ChromaticChord chromaticChord = ChromaticChord.createEmpty();
         for (Integer diatonic : diatonicChordPattern) {
             int pos = (posBase + diatonic) % Diatonic.NUMBER;
@@ -2606,6 +2609,10 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
 
     public static @NonNull Set<ChromaticChord> values() {
         return ListUtils.concatUnmodificable(COMMON_CHORDS, UNUSUAL_CHORDS);
+    }
+
+    public static ChromaticChord from(DiatonicChordMidi ns) {
+        return null;
     }
 
     @Override

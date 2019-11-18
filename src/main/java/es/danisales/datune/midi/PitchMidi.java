@@ -1,9 +1,11 @@
 package es.danisales.datune.midi;
 
+import es.danisales.datune.diatonic.ChromaticDegree;
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
+import es.danisales.datune.pitch.AbsoluteDegree;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.others.Codeable;
@@ -417,5 +419,20 @@ public enum PitchMidi implements PitchChromaticSingle, PitchOctaveMidi, Codeable
 		return ChromaticMidi.builder()
 				.pitch(this)
 				.build();
+	}
+
+	@Override
+	public ChromaticDegree getDegree() {
+		return ChromaticDegree.values()[ getChromatic().ordinal() ];
+	}
+
+	@Override
+	public PitchMidi getNext() {
+		return from(getCode()+1);
+	}
+
+	@Override
+	public PitchMidi getPrevious() {
+		return from(getCode()+1);
 	}
 }

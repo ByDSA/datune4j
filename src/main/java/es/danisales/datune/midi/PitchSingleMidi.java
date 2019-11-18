@@ -8,7 +8,7 @@ import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.pitch.SymbolicPitch;
 import es.danisales.others.Codeable;
 
-public interface PitchSingleMidi extends PitchOctaveMidiEditable, EventComplex, Codeable, SymbolicPitch, PitchChromaticSingle {
+public interface PitchSingleMidi extends PitchOctaveMidiEditable, EventComplex, Codeable, SymbolicPitch {
 	@Override
 	default EventSequence getEvents() {
 		EventSequence es = new EventSequence();

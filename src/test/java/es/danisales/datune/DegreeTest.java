@@ -14,13 +14,13 @@ import static org.junit.Assert.assertNotNull;
 public class DegreeTest {
 	@Test
 	public void values() {
-		assertEquals( 0, DiatonicDegree.I.val() );
-		assertEquals( 1, DiatonicDegree.II.val() );
-		assertEquals( 2, DiatonicDegree.III.val() );
-		assertEquals( 3, DiatonicDegree.IV.val() );
-		assertEquals( 4, DiatonicDegree.V.val() );
-		assertEquals( 5, DiatonicDegree.VI.val() );
-		assertEquals( 6, DiatonicDegree.VII.val() );
+		assertEquals( 0, DiatonicDegree.I.ordinal() );
+		assertEquals( 1, DiatonicDegree.II.ordinal() );
+		assertEquals( 2, DiatonicDegree.III.ordinal() );
+		assertEquals( 3, DiatonicDegree.IV.ordinal() );
+		assertEquals( 4, DiatonicDegree.V.ordinal() );
+		assertEquals( 5, DiatonicDegree.VI.ordinal() );
+		assertEquals( 6, DiatonicDegree.VII.ordinal() );
 	}
 	
 	@Test
@@ -52,7 +52,7 @@ public class DegreeTest {
 	public void differentsValues() {
 		Set<Integer> set = new HashSet<>();
 		for(DiatonicDegree d : DiatonicDegree.values())
-			set.add( d.val() );
+			set.add( d.ordinal() );
 		assertEquals(DiatonicDegree.values().length, set.size());
 	}
 	

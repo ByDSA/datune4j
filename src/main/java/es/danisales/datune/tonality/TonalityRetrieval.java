@@ -53,9 +53,9 @@ public class TonalityRetrieval {
             Tonality.Bm
     )));
 
-    private static final Set<Tonality> majorMinorTonalities = Collections.unmodifiableSet(
+    private static final List<Tonality> majorMinorTonalities = Collections.unmodifiableList(
             Stream.concat(majorTonalities.stream(), minorTonalities.stream())
-            .collect(Collectors.toSet())
+            .collect(Collectors.toList())
     );
 
     public static @NonNull Set<Tonality> mainMajor() {
@@ -66,7 +66,7 @@ public class TonalityRetrieval {
         return minorTonalities;
     }
 
-    public static @NonNull Set<Tonality> majorMinor() {
+    static @NonNull List<Tonality> majorMinor() {
         return majorMinorTonalities;
     }
 
@@ -110,7 +110,7 @@ public class TonalityRetrieval {
         for ( int i = 0; i < c.size(); i++ )
             notesChord[i] = c.get( i ).getDiatonicAlt();
 
-        int posChordCorrector = 7 - c.get( 0 ).getDegree().val();
+        int posChordCorrector = 7 - c.get( 0 ).getDegree().ordinal();
 
         // Integer posBaseCorrector = base.getDegreeFrom(notesChord[0]);
         int posBaseCorrector = ( Diatonic.from( notesChord[0] ).ordinal()
@@ -123,7 +123,7 @@ public class TonalityRetrieval {
 
             boolean notFound = true;
             for ( int j = 0; j < notesChord.length; j++ ) {
-                int index = (c.get(j).getDegree().val() + posChordCorrector) % base.getScale().size();
+                int index = (c.get(j).getDegree().ordinal() + posChordCorrector) % base.getScale().size();
                 if (index == i) {
                     tonalityNotes[i] = notesChord[j];
                     notFound = false;

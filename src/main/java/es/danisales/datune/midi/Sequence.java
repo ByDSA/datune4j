@@ -51,7 +51,7 @@ public class Sequence extends BinaryFile {
 			e.printStackTrace();
 		} 
 
-		//calculateFrom and load default instrument and channel lists
+		//getAllFrom and load default instrument and channel lists
 		instr = midiSynth.getDefaultSoundbank().getInstruments();
 		mChannels = midiSynth.getChannels();
 

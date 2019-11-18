@@ -127,4 +127,9 @@ enum ScaleEnum implements ScaleInterface {
 	public @NonNull ScaleDistance get(DiatonicDegree diatonicDegree) {
 		return value.get(diatonicDegree.ordinal());
 	}
+
+	@Override
+	public String toString() {
+		return ScaleNamer.from(this);
+	}
 }

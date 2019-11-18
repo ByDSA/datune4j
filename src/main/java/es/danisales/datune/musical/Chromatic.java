@@ -1,11 +1,13 @@
 package es.danisales.datune.musical;
 
+import es.danisales.datune.diatonic.ChromaticDegree;
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.IntervalDiatonic;
+import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.musical.transformations.DistanceCalculator;
-import es.danisales.datune.musical.transformations.EnharmonicsCalculator;
+import es.danisales.datune.musical.transformations.EnharmonicsRetrieval;
 import es.danisales.datune.musical.transformations.Namer;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.tonality.ScaleDistance;
@@ -127,6 +129,10 @@ public enum Chromatic implements PitchChromaticSingle {
 		return ChromaticAdapter.from(diatonic, tonality);
 	}
 
+	public static Chromatic from(DiatonicMidi t) {
+		return t.getPitchMidi().getChromatic();
+	}
+
 	public Chromatic addSemi(int n) {
 		int index = delimit(ordinal() + n);
 		return values()[index];
@@ -141,7 +147,7 @@ public enum Chromatic implements PitchChromaticSingle {
 	}
 
 	public Set<DiatonicAlt> getEnharmonics(int maxAlts) {
-		return EnharmonicsCalculator.calculateFrom(this, maxAlts);
+		return EnharmonicsRetrieval.getAllFrom(this, maxAlts);
 	}
 
 	private static int delimit(int n) {
@@ -171,5 +177,20 @@ public enum Chromatic implements PitchChromaticSingle {
 			d += IntervalChromatic.PERFECT_OCTAVE.getSemitones();
 
 		return d;
+	}
+
+	@Override
+	public ChromaticDegree getDegree() {
+		return ChromaticDegree.values()[ordinal()];
+	}
+
+	@Override
+	public Chromatic getNext() {
+		return Chromatic.from(ordinal()+1);
+	}
+
+	@Override
+	public Chromatic getPrevious() {
+		return Chromatic.from(ordinal()-1);
 	}
 }

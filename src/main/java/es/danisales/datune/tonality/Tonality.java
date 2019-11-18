@@ -1,7 +1,6 @@
 package es.danisales.datune.tonality;
 
 import es.danisales.datune.diatonic.*;
-import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.musical.*;
 import es.danisales.datune.pitch.PitchChromaticChord;
@@ -10,8 +9,6 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.*;
-
-import static com.google.common.base.Preconditions.checkArgument;
 
 public interface Tonality {
     Tonality C = TonalityEnum.C;
@@ -46,7 +43,15 @@ public interface Tonality {
         return TonalityRetrieval.all();
     }
 
-    static Tonality fromDiatonicChord(@NonNull DiatonicChordMidi c, @NonNull Tonality base) throws TonalityException {
+    static @NonNull List<Tonality> values() {
+        return TonalityRetrieval.majorMinor();
+    }
+
+    /**
+     * END CONSTANT TONALITIES
+     ******************************************************************************/
+
+    static Tonality fromDiatonicChord(@NonNull DiatonicChordMidi c, @NonNull Tonality base) throws TonalityException { // todo
         return TonalityRetrieval.fromDiatonicChord(c, base);
     }
 
@@ -60,30 +65,6 @@ public interface Tonality {
     static Tonality from(Chromatic chromatic, Scale scale) {
         DiatonicAlt diatonicAlt = DiatonicAlt.from(chromatic);
         return from(diatonicAlt, scale);
-    }
-
-
-    static @NonNull List<DiatonicAlt> getNotesFrom(@NonNull final DiatonicAlt noteBase, @NonNull final Scale scale) {
-        List<DiatonicAlt> notes = new ArrayList<>();
-        boolean first = true;
-        Chromatic chromatic = Chromatic.from(noteBase);
-        Diatonic diatonic = noteBase.getDiatonic();
-        for ( ScaleDistance step : scale ) {
-            if (first) {
-                notes.add(noteBase);
-                first = false;
-            } else {
-                if (noteBase.getDiatonic() == diatonic)
-                    break;
-                DiatonicAlt newDiatonicAlt = DiatonicAlt.from(chromatic, diatonic);
-                notes.add(newDiatonicAlt);
-            }
-
-            chromatic = chromatic.addSemi(step);
-            diatonic = diatonic.getNext();
-        }
-
-        return notes;
     }
 
     static Tonality from(@NonNull Tonality t) {
@@ -103,19 +84,23 @@ public interface Tonality {
     }
 
     default boolean isMajor() {
-        return getScale().equals( Scale.MAJOR );
+        return getScale().has(IntervalChromatic.MAJOR_THIRD)
+                && !getScale().has(IntervalChromatic.MINOR_THIRD);
     }
 
     default boolean isMinor() {
-        return getScale().equals( Scale.MINOR );
+        return !getScale().has(IntervalChromatic.MAJOR_THIRD)
+                && getScale().has(IntervalChromatic.MINOR_THIRD);
     }
 
     default int size() {
         return getScale().size();
     }
 
-    default @NonNull DiatonicAlt getNote(@NonNull TonalityDegree diatonicDegree) {
-        int i = diatonicDegree.val();
+    default @NonNull DiatonicAlt getNote(@NonNull RelativeDegree degree) {
+        RelativeDegreeAdapter.checkDegree(this, degree);
+
+        int i = degree.ordinal();
         return getNotes().get(i);
     }
 
@@ -123,16 +108,13 @@ public interface Tonality {
         return getScale().isDiatonic() && this.getRoot() == t.getRoot() && !getScale().equals( t.getScale() );
     }
 
-    default Tonality[] getModes() {
-        Tonality[] ret = new Tonality[size()];
+    default List<Tonality> getModes() {
+        List<Tonality> ret = new ArrayList<>();
 
-        int j = 0;
-        for ( Scale s : getScale().getAllModes() )
-            for ( Chromatic chromatic : Chromatic.values() ) {
-                Tonality t = Tonality.from( chromatic, s );
-                if ( isModeOf( t ) )
-                    ret[j++] = t;
-            }
+        for ( Scale scale : getScale().getModes() ) {
+            Tonality tonality = Tonality.from(getRoot(), scale);
+            ret.add(tonality);
+        }
 
         return ret;
     }
@@ -150,7 +132,7 @@ public interface Tonality {
     default List<Tonality> getModesSameRoot() {
         List<Tonality> ret = new ArrayList<>();
 
-        for ( Scale s : getScale().getAllModes() )
+        for ( Scale s : getScale().getModes() )
             for ( Chromatic chromatic : Chromatic.values() ) {
                 Tonality t = Tonality.from( chromatic, s );
                 if ( isModeOf( t ) ) {
@@ -163,10 +145,10 @@ public interface Tonality {
         return ret;
     }
 
-    default @Nullable TonalityDegree getDegreeFrom(@NonNull DiatonicAlt note) {
+    default @Nullable RelativeDegree getDegreeFrom(@NonNull DiatonicAlt note) {
         Objects.requireNonNull(note, "No se ha especificado nota");
 
-        for ( TonalityDegree diatonicDegree : getDegrees() ) {
+        for ( RelativeDegree diatonicDegree : getDegrees() ) {
             if (getNote(diatonicDegree).equals(note))
                 return diatonicDegree;
         }
@@ -174,14 +156,14 @@ public interface Tonality {
         return null;
     }
 
-    default List<TonalityDegree> getDegrees() {
-        return TonalityDegree.valuesFrom( getNotes().size() );
+    default List<RelativeDegree> getDegrees() {
+        return RelativeDegree.valuesFrom( getNotes().size() );
     }
 
-    default @Nullable TonalityDegree getDegreeFrom(@NonNull Chromatic chromatic) {
+    default @Nullable RelativeDegree getDegreeFrom(@NonNull Chromatic chromatic) {
         Objects.requireNonNull(chromatic, "No se ha especificado nota");
 
-        for ( TonalityDegree diatonicDegree : getDegrees() ) {
+        for ( RelativeDegree diatonicDegree : getDegrees() ) {
             DiatonicAlt degreeDiatonicAlt = getNote(diatonicDegree);
             Chromatic degreeChromatic = Chromatic.from(degreeDiatonicAlt);
             if (degreeChromatic == chromatic)
@@ -193,7 +175,7 @@ public interface Tonality {
 
     /*
      * public Integer getDegreeFrom(int note) { for ( int i = 0; i < size(); i++ ) if
-     * ( calculateFrom( i ).intValue() == note ) return i;
+     * ( getAllFrom( i ).ordinal() == note ) return i;
      *
      * return null; }
      */

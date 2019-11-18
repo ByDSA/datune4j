@@ -1,6 +1,8 @@
 package es.danisales.datune.tonality;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
+import es.danisales.datune.diatonic.IntervalChromatic;
+import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -174,7 +176,7 @@ public class Scale implements Iterable<ScaleDistance> {
 	 * Get all modes fromDistances the scale
 	 * @return the array within all modes fromDistances the scale
 	 */
-	public @NonNull List<Scale> getAllModes() {
+	public @NonNull List<Scale> getModes() {
 		List<Scale> ret = new ArrayList<>();
 		for ( int i = 0; i < size(); i++) {
 			DiatonicDegree diatonicDegree = DiatonicDegree.values()[i];
@@ -183,6 +185,20 @@ public class Scale implements Iterable<ScaleDistance> {
 		}
 
 		return ret;
+	}
+
+	public boolean has(IntervalChromatic intervalChromatic) {
+		int intervalChromaticSemitones = intervalChromatic.getSemitones() % Chromatic.NUMBER;
+		float sum = 0;
+		for (ScaleDistance scaleDistance : innerScale.getCode()) {
+			if ( ScaleDistance.compare(sum, intervalChromaticSemitones) )
+				return true;
+			else if (sum > intervalChromaticSemitones)
+				return false;
+			sum += scaleDistance.getMicrotonalSemitones();
+		}
+
+		return false;
 	}
 
 	public int size() {

@@ -4,10 +4,7 @@ import es.danisales.datune.diatonic.ChromaticFunction;
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.diatonic.HarmonicFunction;
 import es.danisales.datune.midi.ChromaticMidi;
-import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.musical.ChromaticChord;
-import es.danisales.datune.musical.ChromaticChordInterface;
-import es.danisales.datune.musical.DiatonicAlt;
+import es.danisales.datune.musical.*;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -88,7 +85,7 @@ enum TonalityEnum implements Tonality {
 		this.root = noteBase;
 		this.scale = scale;
 
-		notes = Collections.unmodifiableList( Tonality.getNotesFrom(noteBase, scale) );
+		notes = Collections.unmodifiableList( DiatonicAltRetrieval.listFrom(noteBase, scale) );
 
 		//this.functionChordMap = TonalityEnumChordRetrieval.getHarmonicFunctionChomaticChordBiMap(this);
 	}

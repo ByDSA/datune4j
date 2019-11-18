@@ -2,6 +2,7 @@ package es.danisales.datune.musical;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.DiatonicFunction;
+import es.danisales.datune.pitch.AbsoluteDegree;
 import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.ChordMutableInterface;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -125,11 +126,6 @@ public class DiatonicChord extends NormalChordCommon<Diatonic> implements Diaton
     @Override
     public Boolean updateWhatIsItIfNeeded() {
         return null;
-    }
-
-    @Override
-    public final DiatonicDegree getDegree() {
-        return ((DiatonicChordInterface)innerChord).getDegree();
     }
 
     @Override

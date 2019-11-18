@@ -6,9 +6,12 @@ import es.danisales.datune.diatonic.HarmonicFunction;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.ChromaticChordInterface;
 import es.danisales.datune.pitch.PitchChromaticChord;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class TonalityChordRetrieval {
     private TonalityChordRetrieval() {
@@ -40,20 +43,25 @@ public class TonalityChordRetrieval {
         return null;
     }
 
-    public static Tonality getRelativeMinorFrom(Tonality tonality) {
-        Tonality[] rel = tonality.getModes();
-        for ( Tonality s : rel )
-            if ( s.getScale().equals( Scale.MINOR ) )
-                return s;
-
-        return null;
+    public static @Nullable Tonality getRelativeMinorFrom(@NonNull Tonality tonalityBase) {
+        return getRelativeFrom(tonalityBase, Scale.MINOR);
     }
 
-    public static Tonality getRelativeMajorFrom(Tonality tonality) {
-        Tonality[] rel = tonality.getModes();
-        for ( Tonality s : rel )
-            if ( s.getScale().equals( Scale.MAJOR ) )
-                return s;
+    public static @Nullable Tonality getRelativeMajorFrom(@NonNull Tonality tonality) {
+        return getRelativeFrom(tonality, Scale.MAJOR);
+    }
+
+    private static @Nullable Tonality getRelativeFrom(@NonNull Tonality tonalityBase, @NonNull Scale scale) {
+        Objects.requireNonNull(tonalityBase);
+        Objects.requireNonNull(scale);
+
+        if (tonalityBase.getScale().equals(scale))
+            return tonalityBase;
+
+        List<Tonality> modes = tonalityBase.getModes();
+        for ( Tonality tonality : modes )
+            if ( tonality.getScale().equals( scale ) )
+                return tonality;
 
         return null;
     }

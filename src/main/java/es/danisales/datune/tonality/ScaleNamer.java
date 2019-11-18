@@ -2,6 +2,7 @@ package es.danisales.datune.tonality;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,97 +38,121 @@ class ScaleNamer {
         return null;
     }
 
+    public static @NonNull String from(@NonNull ScaleEnum scaleEnum) {
+        switch (scaleEnum) {
+            case MAJOR:
+                return "Mayor";
+            case IONIAN:
+                return "Jónica";
+            case MINOR:
+                return "Menor";
+            case HARMONIC_MINOR:
+                return ScaleEnum.MINOR + " armónica";
+            case MELODIC_MINOR:
+                return ScaleEnum.MINOR + " Melódica";
+            case AEOLIAN:
+                return "Eólica";
+            case DORIAN:
+                return "Dórica";
+            case LOCRIAN:
+                return "Locria";
+            case SUPERLOCRIAN:
+                return "Superlocria";
+            case PHRYGIAN:
+                return "Frigia";
+            case LYDIAN:
+                return "Lidia";
+            case LYDIAN_b7:
+                return ScaleEnum.LYDIAN + " b7";
+            case MIXOLYDIAN:
+                return "Mixolidia";
+            case LOCRIAN_H6:
+                return ScaleEnum.LOCRIAN + " #6";
+            case IONIAN_H5:
+                return ScaleEnum.IONIAN + " #5";
+            case DORIAN_H4:
+                return ScaleEnum.DORIAN + " #4";
+            case UKRANIAN_MINOR_SCALE:
+                break;
+            case MIXOLIDIAN_b9_b13:
+                return ScaleEnum.MIXOLYDIAN + "b9 b13";
+            case MIXOLIDIAN_b13:
+                return ScaleEnum.MIXOLYDIAN + " b13";
+            case LYDIAN_H2:
+                return ScaleEnum.LYDIAN + " #2";
+            case SUPERLOCRIAN_bb7:
+                return "Superlocria bb7";
+            case HARMONIC_MAJOR:
+                return ScaleEnum.MAJOR + " Armónica";
+            case DORIAN_b5:
+                return ScaleEnum.DORIAN + " b5";
+            case PHRYGIAN_b4:
+                return ScaleEnum.PHRYGIAN + " b4";
+            case LYDIAN_b3:
+                return ScaleEnum.LYDIAN + " b3";
+            case MIXOLYDIAN_b2:
+                return ScaleEnum.MIXOLYDIAN + " b2";
+            case AEOLIAN_b1:
+                return ScaleEnum.AEOLIAN + " b1";
+            case LOCRIAN_bb7:
+                return ScaleEnum.LOCRIAN + " bb7";
+            case DORIAN_b2:
+                return ScaleEnum.DORIAN + " b2";
+            case LYDIAN_H5:
+                return ScaleEnum.LYDIAN + " #5";
+            case LOCRIAN_H2:
+                return ScaleEnum.LOCRIAN + " #2";
+            case DOUBLE_HARMONIC:
+                return "Doble Armónica";
+            case LYDIAN_H2_H6:
+                return ScaleEnum.LYDIAN + " #2 #6";
+            case ULTRAPHRYGIAN:
+                return "Ultrafrigia";
+            case HUNGARIAN_MINOR:
+                return "Húngara menor";
+            case ORIENTAL:
+                return "Oriental";
+            case IONIAN_AUGMENTED_H2:
+                return ScaleEnum.IONIAN + " aumentada #2";
+            case LOCRIAN_bb3_bb7:
+                return ScaleEnum.LOCRIAN + " bb3 bb7";
+            case NEAPOLITAN_MINOR:
+                return "Napolitana menor";
+            case NEAPOLITAN_MAJOR:
+                return "Napolitana mayor";
+            case BLUES:
+                break;
+            case WOLE_TONE:
+                break;
+            case PENTATONIC_MINOR: return ScaleEnum.PENTATONIC + " " + ScaleEnum.MINOR;
+            case PENTATONIC: return "Pentatónica";
+            case EGYPCIAN:
+                break;
+            case SUSPENDED:
+                break;
+            case BLUES_MINOR:
+                break;
+            case MAN_GONG:
+                break;
+            case BLUES_MAJOR:
+                break;
+            case YO_SCALE:
+                break;
+            case CHROMATIC: return "Cromática";
+        }
 
-    public static String from(@NonNull Scale s) {
-        ScaleInterface scale = s.innerScale;
-        if ( scale.equals( ScaleEnum.MAJOR ) )
-            return "Mayor";
-        else if ( scale.equals( ScaleEnum.IONIAN ) )
-            return "Jónica";
-        else if ( scale.equals( ScaleEnum.MINOR ) )
-            return "Menor";
-        else if ( scale.equals( ScaleEnum.HARMONIC_MINOR ) )
-            return ScaleEnum.MINOR + " armónica";
-        else if ( scale.equals( ScaleEnum.MELODIC_MINOR ) )
-            return ScaleEnum.MINOR + " melódica";
-        else if ( scale.equals( ScaleEnum.AEOLIAN ) )
-            return "Eólica";
-        else if ( scale.equals( ScaleEnum.DORIAN ) )
-            return "Dórica";
-        else if ( scale.equals( ScaleEnum.LOCRIAN ) )
-            return "Locria";
-        else if ( scale.equals( ScaleEnum.SUPERLOCRIAN ) )
-            return "Superlocria";
-        else if ( scale.equals( ScaleEnum.LYDIAN ) )
-            return "Lidia";
-        else if ( scale.equals( ScaleEnum.LYDIAN_b7 ) )
-            return ScaleEnum.LYDIAN + " b7";
-        else if ( scale.equals( ScaleEnum.MIXOLYDIAN ) )
-            return "Mixolidia";
-        else if ( scale.equals( ScaleEnum.MIXOLIDIAN_b9_b13 ) )
-            return ScaleEnum.MIXOLYDIAN + "b9 b13";
-        else if ( scale.equals( ScaleEnum.MIXOLIDIAN_b13 ) )
-            return ScaleEnum.MIXOLYDIAN + "b13";
-        else if ( scale.equals( ScaleEnum.PHRYGIAN ) )
-            return "Frigia";
-        else if ( scale.equals( ScaleEnum.NEAPOLITAN_MAJOR ) )
-            return "Napolitana mayor";
-        else if ( scale.equals( ScaleEnum.NEAPOLITAN_MINOR ) )
-            return "Napolitana menor";
-        else if ( scale.equals( ScaleEnum.LOCRIAN_H6 ) )
-            return ScaleEnum.LOCRIAN + " #6";
-        else if ( scale.equals( ScaleEnum.IONIAN_H5 ) )
-            return ScaleEnum.IONIAN + " #5";
-        else if ( scale.equals( ScaleEnum.DORIAN_H4 ) )
-            return ScaleEnum.DORIAN + " #4";
-        else if ( scale.equals( ScaleEnum.LYDIAN_H2 ) )
-            return ScaleEnum.LYDIAN + " #2";
-        else if ( scale.equals( ScaleEnum.SUPERLOCRIAN_bb7 ) )
-            return "Superlocria bb7";
-        else if ( scale.equals( ScaleEnum.HARMONIC_MAJOR ) )
-            return ScaleEnum.MAJOR + " Armónica";
-        else if ( scale.equals( ScaleEnum.DORIAN_b5 ) )
-            return ScaleEnum.DORIAN + " b5";
-        else if ( scale.equals( ScaleEnum.PHRYGIAN_b4 ) )
-            return ScaleEnum.PHRYGIAN + " b4";
-        else if ( scale.equals( ScaleEnum.LYDIAN_b3 ) )
-            return ScaleEnum.LYDIAN + " b3";
-        else if ( scale.equals( ScaleEnum.MIXOLYDIAN_b2 ) )
-            return ScaleEnum.MIXOLYDIAN + " b2";
-        else if ( scale.equals( ScaleEnum.AEOLIAN_b1 ) )
-            return ScaleEnum.AEOLIAN + " b1";
-        else if ( scale.equals( ScaleEnum.LOCRIAN_bb7 ) )
-            return ScaleEnum.LOCRIAN + " bb7";
-        else if ( scale.equals( ScaleEnum.MELODIC_MINOR ) )
-            return ScaleEnum.MINOR + " Melódica";
-        else if ( scale.equals( ScaleEnum.DORIAN_b2 ) )
-            return ScaleEnum.DORIAN + " b2";
-        else if ( scale.equals( ScaleEnum.LYDIAN_H5 ) )
-            return ScaleEnum.LYDIAN + " #5";
-        else if ( scale.equals( ScaleEnum.LYDIAN_b7 ) )
-            return ScaleEnum.LYDIAN + " b7";
-        else if ( scale.equals( ScaleEnum.MIXOLIDIAN_b13 ) )
-            return ScaleEnum.MIXOLYDIAN + " b13";
-        else if ( scale.equals( ScaleEnum.LOCRIAN_H2 ) )
-            return ScaleEnum.LOCRIAN + " #2";
-        else if ( scale.equals( ScaleEnum.SUPERLOCRIAN ) )
-            return "Superlocria";
-        else if ( scale.equals( ScaleEnum.DOUBLE_HARMONIC ) )
-            return "Doble Armónica";
-        else if ( scale.equals( ScaleEnum.LYDIAN_H2_H6 ) )
-            return ScaleEnum.LYDIAN + " #2 #6";
-        else if ( scale.equals( ScaleEnum.ULTRAPHRYGIAN ) )
-            return "Ultrafrigia";
-        else if ( scale.equals( ScaleEnum.HUNGARIAN_MINOR ) )
-            return "Húngara menor";
-        else if ( scale.equals( ScaleEnum.ORIENTAL ) )
-            return "Oriental";
-        else if ( scale.equals( ScaleEnum.IONIAN_AUGMENTED_H2 ) )
-            return ScaleEnum.IONIAN + " aumentada #2";
-        else if ( scale.equals( ScaleEnum.LOCRIAN_bb3_bb7 ) )
-            return ScaleEnum.LOCRIAN + " bb3 bb7";
-        else
-            return distOf(s);
+        return scaleEnum.name();
+    }
+
+    public static String from(@NonNull Scale scale) {
+        ScaleInterface scaleInterface = scale.innerScale;
+        if (scaleInterface instanceof ScaleEnum) {
+            ScaleEnum scaleEnum = (ScaleEnum) scaleInterface;
+
+            return from(scaleEnum);
+        }
+
+        return distOf(scale);
     }
 
     public static String alterationsFrom(Scale scale) {

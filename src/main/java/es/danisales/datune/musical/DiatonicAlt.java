@@ -1,6 +1,7 @@
 package es.danisales.datune.musical;
 
 import es.danisales.datune.musical.transformations.Namer;
+import es.danisales.datune.pitch.AbsoluteDegree;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.pitch.SymbolicPitch;
 import es.danisales.datune.tonality.Tonality;
@@ -72,10 +73,10 @@ public class DiatonicAlt implements SymbolicPitch {
 	public static final DiatonicAlt Abbb = new DiatonicAlt(Diatonic.A, -3);
 	public static final DiatonicAlt Bbbb = new DiatonicAlt(Diatonic.B, -3);
 
-	private final int semitonesAdded;
+	private final float semitonesAdded;
 	private final Diatonic diatonicBase;
 
-	private DiatonicAlt(Diatonic diatonicBase, int semitonesAdded) {
+	private DiatonicAlt(Diatonic diatonicBase, float semitonesAdded) {
 		this.diatonicBase = diatonicBase;
 		this.semitonesAdded = semitonesAdded;
 	}
@@ -84,7 +85,7 @@ public class DiatonicAlt implements SymbolicPitch {
 		return DiatonicAltAdapter.from(chromatic, diatonic);
 	}
 
-	public static @NonNull DiatonicAlt from(@NonNull Diatonic diatonic, int alt) {
+	public static @NonNull DiatonicAlt from(@NonNull Diatonic diatonic, float alt) {
 		return new DiatonicAlt(diatonic, alt);
 	}
 
@@ -100,7 +101,15 @@ public class DiatonicAlt implements SymbolicPitch {
 			return null;
 	}
 
+	public static DiatonicAlt from(@NonNull Chromatic chromatic, @NonNull AbsoluteDegree absoluteDegree) {
+		return DiatonicAltAdapter.from(chromatic, absoluteDegree);
+	}
+
 	public int getSemitonesAdded() {
+		return (int)semitonesAdded;
+	}
+
+	public float getMicrotonalSemitonesAdded() {
 		return semitonesAdded;
 	}
 
@@ -108,8 +117,8 @@ public class DiatonicAlt implements SymbolicPitch {
 		return new DiatonicAlt(diatonicBase, semitonesAdded + semis);
 	}
 
-	public int getAlterations() {
-		int altSigned = getSemitonesAdded();
+	public float getAlterations() {
+		float altSigned = getMicrotonalSemitonesAdded();
 		if (altSigned == 0)
 			return 0;
 		return Math.abs( altSigned );
@@ -144,6 +153,6 @@ public class DiatonicAlt implements SymbolicPitch {
 
 	@Override
 	public int hashCode() {
-		return diatonicBase.hashCode() + Integer.hashCode(semitonesAdded);
+		return diatonicBase.hashCode() + Float.hashCode(semitonesAdded);
 	}
 }

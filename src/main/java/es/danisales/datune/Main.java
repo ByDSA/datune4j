@@ -15,7 +15,6 @@ import es.danisales.datune.midi.Events.Volume;
 import es.danisales.datune.midi.Progressions.Progression;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
-import es.danisales.datune.musical.ChromaticChordInterface;
 import es.danisales.datune.pitch.ChordNamer;
 import es.danisales.datune.songs.Power;
 import es.danisales.datune.tonality.*;
@@ -630,7 +629,7 @@ public class Main {
 					}
 				assert degree != null : c + " " + c.getFunction();
 
-				Integer d = degree.val();
+				Integer d = degree.ordinal();
 
 				panels[d][c.size() - 2].add( b );
 

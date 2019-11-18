@@ -16,7 +16,7 @@ public interface PitchChromaticChord<N extends PitchChromaticSingle> extends Cho
 		if (chromaticChordMidi.getRootPos() != 0) {
 			ChromaticChord ns = ChromaticChord.createEmpty();
 			for ( ChromaticMidi n : chromaticChordMidi ) {
-				Chromatic chromatic = ChromaticAdapter.from(n);
+				Chromatic chromatic = Chromatic.from(n);
 				ns.add( chromatic );
 
 				if ( n == chromaticChordMidi.getRoot() )

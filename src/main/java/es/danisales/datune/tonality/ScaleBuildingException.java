@@ -8,10 +8,10 @@ public class ScaleBuildingException extends RuntimeException {
 		super( "La escala no suma " + IntervalChromatic.PERFECT_OCTAVE.getSemitones() + " semitonos, sino " + sum(s) + ": " + ScaleNamer.distOf(new Scale(s)) );
 	}
 
-	private static int sum(ScaleInterface scale) {
-		int s = 0;
+	private static float sum(ScaleInterface scale) {
+		float s = 0f;
 		for (ScaleDistance distanceScale : scale.getCode())
-			s += distanceScale.getSemitones();
+			s += distanceScale.getMicrotonalSemitones();
 
 		return s;
 	}

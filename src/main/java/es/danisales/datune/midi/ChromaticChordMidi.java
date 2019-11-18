@@ -16,6 +16,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements PitchChromaticChord<ChromaticMidi> {
@@ -93,8 +94,8 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 
 			ChromaticMidi cm = builder
 					.build();
-			Chromatic chromaticCm = ChromaticAdapter.from(cm);
-			Chromatic prevChromatic = ChromaticAdapter.from(This.get(This.size() - 1));
+			Chromatic chromaticCm = Chromatic.from(cm);
+			Chromatic prevChromatic = Chromatic.from(This.get(This.size() - 1));
 			if (!(n instanceof PitchOctave) && This.size() > 0 && chromaticCm.ordinal() <= prevChromatic.ordinal()) {
 				cm.shiftOctave(1);
 			}
@@ -103,6 +104,10 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 		}
 
 		return This;
+	}
+
+	public static ChromaticChordMidi from(DiatonicChordMidi c) {
+		return null;
 	}
 
 	public List<DiatonicChordMidi> toDiatonicChordMidi(boolean outScale) {
@@ -125,20 +130,20 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 		return out;
 	}
 	/*
-	public ChromaticMidi calculateFrom(int note, List<ChromaticMidi> ns) {
+	public ChromaticMidi getAllFrom(int note, List<ChromaticMidi> ns) {
 		if ( ns.size() == 0 )
 			return null;
 
 		ChromaticMidi n;
 		if ( note >= ns.size() ) {
-			n = ns.calculateFrom( note % ns.size() );
+			n = ns.getAllFrom( note % ns.size() );
 			n.addMidi( note / ns.size() * ChromaticMidi.NUMBER );
 		} else if ( note < 0 ) {
 			int num = Math.abs( ns.size() + note % ns.size() );
-			n = ns.calculateFrom( num );
+			n = ns.getAllFrom( num );
 			n.addMidi( ( note / ns.size() - 1 ) * ChromaticMidi.NUMBER );
 		} else {
-			n = (ChromaticMidi) ns.calculateFrom( note ).clone();
+			n = (ChromaticMidi) ns.getAllFrom( note ).clone();
 		}
 
 		PitchMidiException.check( n );
@@ -194,8 +199,8 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 		for ( ChromaticMidi n : this ) {
 			boolean found = false;
 			for ( ChromaticMidi n2 : out ) {
-				Chromatic chromaticN2 = ChromaticAdapter.from(n2);
-				Chromatic chromaticN = ChromaticAdapter.from(n);
+				Chromatic chromaticN2 = Chromatic.from(n2);
+				Chromatic chromaticN = Chromatic.from(n);
 				if ( chromaticN2.ordinal() == chromaticN.ordinal() ) {
 					found = true;
 					break;
@@ -214,7 +219,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 	}
 
 	public String toString() {
-		ChromaticChord ca = ChromaticChord.from( this );
+		ChromaticChord ca = ChromaticChord.from( (Collection<? extends PitchChromaticSingle>)this );
 
 		return ca.toString();
 	}

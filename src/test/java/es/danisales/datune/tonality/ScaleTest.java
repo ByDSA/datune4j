@@ -1,6 +1,7 @@
 package es.danisales.datune.tonality;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
+import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.musical.DiatonicAlt;
 import org.junit.Test;
 
@@ -54,6 +55,29 @@ public class ScaleTest {
 
         assertEquals(listAdded, scale.getCode());
         assertEquals(7, scale.size());
+    }
+
+    @Test
+    public void fromScaleDistancesMicrotonal() {
+        List<ScaleDistance> listAdded = Collections.unmodifiableList(Arrays.asList(
+                ScaleDistance.QUARTER,
+                ScaleDistance.HALF,
+                ScaleDistance.HALF,
+                ScaleDistance.HALF,
+                ScaleDistance.HALF,
+                ScaleDistance.HALF,
+                ScaleDistance.HALF,
+                ScaleDistance.HALF,
+                ScaleDistance.HALF,
+                ScaleDistance.HALF,
+                ScaleDistance.HALF,
+                ScaleDistance.HALF,
+                ScaleDistance.QUARTER
+        ) );
+        Scale scale = Scale.fromDistances(listAdded);
+
+        assertEquals(listAdded, scale.getCode());
+        assertEquals(13, scale.size());
     }
 
     @Test(expected = ScaleBuildingException.class)
@@ -188,7 +212,7 @@ public class ScaleTest {
     public void getAllModes() {
         Scale scale = Scale.MAJOR;
 
-        List<Scale> scaleModes = scale.getAllModes();
+        List<Scale> scaleModes = scale.getModes();
 
         assertEquals(7, scaleModes.size());
         assertEquals(Scale.MAJOR, scaleModes.get(0));
@@ -333,5 +357,29 @@ public class ScaleTest {
     public void innerScaleNotNullAll() {
         for (Scale scale : Scale.ALL)
             assertNotNull(scale.innerScale);
+    }
+
+    @Test
+    public void hasIntervalChromatic() {
+        assertTrue(Scale.MAJOR.has(IntervalChromatic.MAJOR_THIRD));
+        assertFalse(Scale.PENTATONIC.has(IntervalChromatic.MAJOR_THIRD));
+        assertFalse(Scale.MAJOR.has(IntervalChromatic.MINOR_THIRD));
+        assertFalse(Scale.PENTATONIC.has(IntervalChromatic.MINOR_THIRD));
+        assertTrue(Scale.MINOR.has(IntervalChromatic.MINOR_THIRD));
+        assertTrue(Scale.PENTATONIC_MINOR.has(IntervalChromatic.MINOR_THIRD));
+        assertTrue(Scale.MAJOR.has(IntervalChromatic.PERFECT_FIFTH));
+        assertTrue(Scale.MINOR.has(IntervalChromatic.PERFECT_FIFTH));
+        assertFalse(Scale.LOCRIAN.has(IntervalChromatic.PERFECT_FIFTH));
+        assertTrue(Scale.LOCRIAN.has(IntervalChromatic.PERFECT_OCTAVE));
+    }
+
+    @Test
+    public void hasIntervalChromaticGreatherThan12() {
+        assertTrue(Scale.MAJOR.has(IntervalChromatic.MAJOR_TENTH));
+        assertFalse(Scale.MAJOR.has(IntervalChromatic.MINOR_TENTH));
+        assertTrue(Scale.MINOR.has(IntervalChromatic.MINOR_TENTH));
+        assertTrue(Scale.MAJOR.has(IntervalChromatic.PERFECT_TWELFTH));
+        assertTrue(Scale.MINOR.has(IntervalChromatic.PERFECT_TWELFTH));
+        assertFalse(Scale.LOCRIAN.has(IntervalChromatic.PERFECT_TWELFTH));
     }
 }

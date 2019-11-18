@@ -1,8 +1,8 @@
 package es.danisales.datune.midi;
 
-import es.danisales.datune.diatonic.DiatonicDegree;
+import es.danisales.datune.diatonic.ChromaticDegree;
 import es.danisales.datune.diatonic.IntervalChromatic;
-import es.danisales.datune.diatonic.TonalityDegree;
+import es.danisales.datune.diatonic.RelativeDegree;
 import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.midi.Events.NoteOff;
 import es.danisales.datune.midi.Events.NoteOn;
@@ -10,6 +10,7 @@ import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.musical.transformations.DistanceCalculator;
 import es.danisales.datune.musical.transformations.Namer;
+import es.danisales.datune.pitch.AbsoluteDegree;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -124,7 +125,7 @@ public final class ChromaticMidi implements PitchSingleMidi, PitchChromaticSingl
 
 	public static String literal(DiatonicAlt diatonicAlt, Tonality tonality) {
 		if ( tonality != null ) {
-			TonalityDegree pos = tonality.getDegreeFrom( diatonicAlt );
+			RelativeDegree pos = tonality.getDegreeFrom( diatonicAlt );
 			if ( pos != null )
 				diatonicAlt = tonality.getNote( pos );
 		}
@@ -132,7 +133,26 @@ public final class ChromaticMidi implements PitchSingleMidi, PitchChromaticSingl
 		return diatonicAlt.toString();
 	}
 
-    public static class Builder extends es.danisales.utils.building.Builder<Builder, ChromaticMidi> {
+	@Override
+	public ChromaticDegree getDegree() {
+		return ChromaticDegree.values()[pitch.getChromatic().ordinal()];
+	}
+
+	@Override
+	public ChromaticMidi getNext() {
+		ChromaticMidi dup = clone();
+		dup.pitch = dup.pitch.getNext();
+		return dup;
+	}
+
+	@Override
+	public ChromaticMidi getPrevious() {
+		ChromaticMidi dup = clone();
+		dup.pitch = dup.pitch.getPrevious();
+		return dup;
+	}
+
+	public static class Builder extends es.danisales.utils.building.Builder<Builder, ChromaticMidi> {
         private PitchMidi _pitch;
         private int _velocity;
         private int _length;

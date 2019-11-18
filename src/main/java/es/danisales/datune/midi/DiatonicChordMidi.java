@@ -284,7 +284,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi> implements PitchD
         if ( function instanceof ChromaticFunction )
             d = ( (ChromaticFunction) function ).getDegree();
         if ( d == null ) {
-            Chromatic c = ChromaticAdapter.from( getRoot() );
+            Chromatic c = Chromatic.from( getRoot() );
             d = (DiatonicDegree)metaTonality.getDegreeFrom( c );
         }
         return d;

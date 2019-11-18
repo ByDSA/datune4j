@@ -17,22 +17,24 @@ interface ScaleInterface {
 		return ret;
 	}
 
-	static int sumOf(List<ScaleDistance> distanceScales) {
-		int sum = 0;
+	static float sumOf(List<ScaleDistance> distanceScales) {
+		float sum = 0;
 		for (ScaleDistance distanceScale : distanceScales)
-			sum += distanceScale.getSemitones();
+			sum += distanceScale.getMicrotonalSemitones();
 
 		return sum;
 	}
 
-	default  @NonNull ScaleInterface getMode(@NonNull DiatonicDegree diatonicDegree) {
+	default @NonNull ScaleInterface getMode(@NonNull DiatonicDegree diatonicDegree) {
 		List<ScaleDistance> baseValues = new ArrayList<>( this.getCode() );
 		Collections.rotate( baseValues, -diatonicDegree.ordinal() );
 		return ScaleInterface.from( baseValues );
 	}
 
 	default void sumCheck() {
-		if (sumOf(getCode()) != IntervalChromatic.PERFECT_OCTAVE.getSemitones()) {
+		float sum = sumOf(getCode());
+		int octaveSemitones = IntervalChromatic.PERFECT_OCTAVE.getSemitones();
+		if ( !ScaleDistance.compare(sum, octaveSemitones) ) {
 			throw new ScaleBuildingException( this );
 		}
 	}

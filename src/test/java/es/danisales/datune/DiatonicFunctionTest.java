@@ -7,7 +7,7 @@ import static org.junit.Assert.assertNotNull;
 
 public class DiatonicFunctionTest {
 	/*@Test
-	public void calculateFrom() {
+	public void getAllFrom() {
 		checkTonality( TonalityEnum.C );
 		checkTonality( TonalityEnum.D );
 		checkTonality( TonalityEnum.Cm );
@@ -17,8 +17,8 @@ public class DiatonicFunctionTest {
 	public void checkTonality(Tonality ton) {
 		DiatonicChordMidi diatonicChordMidi = null;
 		for ( DiatonicFunction df : DiatonicFunction.COMMON ) {
-			diatonicChordMidi = ton.calculateFrom( df ).toDiatonicChordMidi( ton );
-			assertEquals( df, DiatonicFunction.calculateFrom( diatonicChordMidi ) );
+			diatonicChordMidi = ton.getAllFrom( df ).toDiatonicChordMidi( ton );
+			assertEquals( df, DiatonicFunction.getAllFrom( diatonicChordMidi ) );
 		}
 	}
 	*/

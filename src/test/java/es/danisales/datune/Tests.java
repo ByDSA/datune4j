@@ -1,16 +1,12 @@
 package es.danisales.datune;
 
-import es.danisales.datune.diatonic.ChordNotation;
 import es.danisales.datune.diatonic.ChromaticFunction;
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.midi.*;
 import es.danisales.datune.musical.*;
-import es.danisales.datune.pitch.ChordNamer;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
-import es.danisales.datune.tonality.Tonality;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -52,7 +48,7 @@ public class Tests {
 
 	@Test
 	public void chordFunction() {
-		assertEquals( 0, DiatonicFunction.I.getDegree().val() );
+		assertEquals( 0, DiatonicFunction.I.getDegree().ordinal() );
 	}
 
 	@Test
@@ -203,7 +199,7 @@ public class Tests {
 				ChromaticMidi.builder().pitch(Chromatic.E).build(),
 				ChromaticMidi.builder().pitch(Chromatic.G).build()
 		);
-		// assertEquals("", cu.toChordFunc(false).calculateFrom(0).str);
+		// assertEquals("", cu.toChordFunc(false).getAllFrom(0).str);
 	}
 
 	@Test

@@ -7,10 +7,12 @@ import es.danisales.datune.midi.Events.EventComplex;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.pitch.Chord;
 import es.danisales.datune.pitch.ChordCommon;
+import es.danisales.datune.pitch.PitchChromaticSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.BiFunction;
@@ -166,7 +168,7 @@ public abstract class ChordMidi<N extends PitchSingleMidi> extends Chord<N>
 
 	@Override
 	public Boolean updateWhatIsIt(BiFunction<List<ChromaticChord>, ChordCommon<?>, ChromaticChord> f) {
-		meta = ChromaticChord.from( this );
+		meta = ChromaticChord.from( (Collection<? extends PitchChromaticSingle>)this );
 		assert f != null;
 		Boolean ret = meta.updateWhatIsIt( f );
 		root = meta.getRootPos();

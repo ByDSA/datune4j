@@ -285,7 +285,7 @@ class DiatonicChordAdapter {
             return false;
 
         for (int i = 0; i < self.size(); i++) {
-            if (self.get(i).getDiatonic().intValue() != notes.get(i).getDiatonic().intValue())
+            if (self.get(i).getDiatonic().ordinal() != notes.get(i).getDiatonic().ordinal())
                 return false;
         }
 

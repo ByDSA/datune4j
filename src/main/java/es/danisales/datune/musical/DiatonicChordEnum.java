@@ -213,9 +213,4 @@ enum DiatonicChordEnum implements DiatonicChordInterface {
 
 		return diatonicChord;
 	}
-
-	@Override
-	public DiatonicDegree getDegree() {
-		return getRoot().getDegree();
-	}
 }

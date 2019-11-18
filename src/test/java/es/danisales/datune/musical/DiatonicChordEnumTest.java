@@ -210,12 +210,6 @@ public class DiatonicChordEnumTest {
     }
 
     @Test
-    public void getDegree() {
-        for (DiatonicChordEnum diatonicChordEnum : DiatonicChordEnum.values())
-            assertEquals(diatonicChordEnum.toString(), DiatonicDegree.I, diatonicChordEnum.getDegree());
-    }
-
-    @Test
     public void equalsCustomBidirectional() {
         DiatonicChord original = DiatonicChord.TRIAD;
         DiatonicChord other = DiatonicChord.from( Arrays.asList(Diatonic.C, Diatonic.E, Diatonic.G) );

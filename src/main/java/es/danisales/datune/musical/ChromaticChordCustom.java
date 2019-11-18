@@ -34,7 +34,7 @@ class ChromaticChordCustom extends Chord<Chromatic> implements PitchChromaticCho
 	public static <N extends PitchSingleMidi> @NonNull ChromaticChordCustom from(@NonNull ChordMidi<N> chord) {
 		ChromaticChordCustom c = new ChromaticChordCustom();
 		for (N t : chord) {
-			Chromatic chromatic = Chromatic.from(t);
+			Chromatic chromatic = Chromatic.from((PitchChromaticSingle)t);
 			c.add(chromatic);
 		}
 		return c;

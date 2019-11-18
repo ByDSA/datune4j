@@ -1,4 +1,6 @@
 package es.danisales.datune.pitch;
 
-public interface PitchChromaticSingle extends SymbolicPitch {
+import es.danisales.datune.diatonic.ChromaticDegree;
+
+public interface PitchChromaticSingle extends AbsoluteDegree<ChromaticDegree>, SymbolicPitch {
 }

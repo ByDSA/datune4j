@@ -1,6 +1,5 @@
 package es.danisales.datune.tonality;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import es.danisales.arrays.ArrayUtils;
 import es.danisales.datune.diatonic.ChromaticFunction;
 import es.danisales.datune.diatonic.DiatonicDegree;
@@ -22,19 +21,6 @@ class TonalityCustom implements Tonality {
 	/** Temp */
 	private List<DiatonicAlt> notes;
 	private Map<Chromatic, DiatonicAlt> chromaticDiatonicAltMap;
-
-	// TODO: no usado
-	class ChromaticChordSet {
-		public ChromaticChord chord;
-		public TonalityCustom tonality;
-		public HarmonicFunction	function;
-
-		public ChromaticChordSet(ChromaticChord c, TonalityCustom t, HarmonicFunction f) {
-			chord = c;
-			tonality = t;
-			function = f;
-		}
-	}
 
 	// Cache
 	private boolean	useCache;
@@ -67,12 +53,6 @@ class TonalityCustom implements Tonality {
 		this.scale = scale;
 
 		updateNotes();
-
-		if ( notes == null )
-			throw new RuntimeException(
-					"Error inicializando las notas de la tonalidad con note base " + this.root
-							+ " y escala " + this.scale
-			);
 	}
 
 	private void createCacheIfNeeded() {
@@ -95,7 +75,7 @@ class TonalityCustom implements Tonality {
 		if ( cc == null ) {
 			DiatonicChord dc = DiatonicChord.from( f );
 
-			cc = ChromaticChord.from( calculateFrom( dc, f ) );
+			cc = ChromaticChord.from( getAllFrom( dc, f ) );
 			cc.rename( this );
 			//assert cc.meta.str != null : cc.notesToString();
 			if ( functionChordsMap == null )
@@ -175,7 +155,8 @@ class TonalityCustom implements Tonality {
 	}*/
 
 	private void updateNotes() {
-		notes = Tonality.getNotesFrom(root, scale);
+		notes = DiatonicAltRetrieval.listFrom(root, scale);
+		Objects.requireNonNull(notes);
 
 		updateValChromaticMap();
 	}
@@ -193,9 +174,9 @@ class TonalityCustom implements Tonality {
 		List<CustomTonality> ret = new CustomTonality[size()];
 
 		int j = 0;
-		for ( Scale s : scale.getAllModes() )
+		for ( Scale s : scale.getModes() )
 			for ( int i = 0; i < 12; i++ ) {
-				CustomTonality t = new CustomTonality( Chromatic.calculateFrom( i ), s );
+				CustomTonality t = new CustomTonality( Chromatic.getAllFrom( i ), s );
 				if ( isModeOf( t ) ) {
 					t.updateNotes( root );
 					t.minimizeAlterations();
@@ -217,7 +198,7 @@ class TonalityCustom implements Tonality {
 			notesChord[i] = c.get(i).getDiatonicAlt();
 		}
 
-		int posChordCorrector = 7 - c.get( 0 ).getDegree().val();
+		int posChordCorrector = 7 - c.get( 0 ).getDegree().ordinal();
 
 		// Integer posBaseCorrector = base.getDegreeFrom(notesChord[0]);
 		Integer posBaseCorrector = ( Diatonic.from( notesChord[0] ).ordinal()
@@ -233,7 +214,7 @@ class TonalityCustom implements Tonality {
 
 			boolean notFound = true;
 			for ( int j = 0; j < notesChord.length; j++ ) {
-				int index = (c.get(j).getDegree().val() + posChordCorrector) % base.getScale().size();
+				int index = (c.get(j).getDegree().ordinal() + posChordCorrector) % base.getScale().size();
 				if (index == i) {
 					tonalityNotes.add(notesChord[j]);
 					notFound = false;
@@ -267,7 +248,7 @@ class TonalityCustom implements Tonality {
 	}
 	/*
 	 * public Integer getDegreeFrom(int note) { for ( int i = 0; i < size(); i++ ) if
-	 * ( calculateFrom( i ).intValue() == note ) return i;
+	 * ( getAllFrom( i ).ordinal() == note ) return i;
 	 *
 	 * return null; }
 	 */

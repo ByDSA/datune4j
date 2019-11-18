@@ -70,12 +70,6 @@ public class DiatonicChordFixedTest {
     }
 
     @Test
-    public void getDegree() {
-        for (DiatonicChord diatonicChord : DiatonicChord.values())
-            assertEquals(diatonicChord.toString(), DiatonicDegree.I, diatonicChord.getDegree());
-    }
-
-    @Test
     public void size() {
         assertEquals(3, DiatonicChord.TRIAD.size());
     }

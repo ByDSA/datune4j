@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 class TonalityGetDiatonicFunctionMajor {
-	public static @NonNull ChromaticChord get(@NonNull TonalityEnum tonalityEnum, @NonNull DiatonicFunction diatonicFunction) {
+	public static @Nullable ChromaticChord get(@NonNull TonalityEnum tonalityEnum, @NonNull DiatonicFunction diatonicFunction) {
 		Objects.requireNonNull(tonalityEnum);
 		Objects.requireNonNull(diatonicFunction);
 
@@ -1387,7 +1387,8 @@ class TonalityGetDiatonicFunctionMajor {
 				case VII9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.AA, Chromatic.E, Chromatic.B) );
 			} break;
 		}
-		throw new RuntimeException();
+
+		return null;
 	}
 
 	public static @Nullable ChromaticChord get(@NonNull TonalityEnum tonalityEnum, @NonNull ChromaticFunction diatonicFunction) {

@@ -17,7 +17,7 @@ public class DiatonicAdapter {
     }
 
     public static Diatonic from(DiatonicDegree d) {
-        return from( d.val() );
+        return from( d.ordinal() );
     }
 
     public static Diatonic from(int n) {
@@ -65,7 +65,7 @@ public class DiatonicAdapter {
     }
 
     public Diatonic from(ChromaticMidi chromaticMidi, Tonality tonality) throws TonalityException {
-        Chromatic chromatic = ChromaticAdapter.from(chromaticMidi);
+        Chromatic chromatic = Chromatic.from(chromaticMidi);
         DiatonicDegree degree = (DiatonicDegree)tonality.getDegreeFrom( chromatic );
         return Diatonic.from( degree );
     }

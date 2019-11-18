@@ -68,16 +68,6 @@ public class DiatonicChordCustomTest {
     }
 
     @Test
-    public void getDegree() {
-        DiatonicChordCustom diatonicChordCustom = DiatonicChordCustom.from(Arrays.asList(Diatonic.C, Diatonic.E));
-
-        for (int i = 0; i < 8; i++) {
-            assertEquals(i%7, diatonicChordCustom.getDegree().val());
-            diatonicChordCustom.shift(IntervalDiatonic.SECOND);
-        }
-    }
-
-    @Test
     public void getInv() {
         DiatonicChordCustom diatonicChord = DiatonicChordCustom.from( Arrays.asList(Diatonic.E, Diatonic.G, Diatonic.B) );
         diatonicChord.inv();

@@ -6,6 +6,10 @@ public class MathUtils {
     private MathUtils() {
     }
 
+    public static float decimalPart(float f) {
+        return f - (int)f;
+    }
+
     public static int rotativeTrim(int n, int max) {
         n %= max;
         if (n < 0)

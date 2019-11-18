@@ -7,8 +7,7 @@ import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.Diatonic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.musical.transformations.Namer;
-import es.danisales.datune.pitch.PitchChromaticSingle;
-import es.danisales.datune.pitch.PitchDiatonic;
+import es.danisales.datune.pitch.AbsoluteDegree;
 import es.danisales.datune.pitch.PitchDiatonicSingle;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
@@ -17,14 +16,14 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-public class DiatonicMidi implements PitchSingleMidi, PitchDiatonicSingle, PitchChromaticSingle, PitchDiatonic {
-	protected PitchMidi	pitch;
-	protected int	velocity;
-	protected int	length;
+public class DiatonicMidi implements PitchSingleMidi, PitchDiatonicSingle {
+	protected PitchMidi pitch;
+	protected int velocity;
+	protected int length;
 
-	protected DiatonicDegree	degree;
-	protected int		octave;
-	protected Tonality	tonality;
+	protected DiatonicDegree degree;
+	protected int octave;
+	protected Tonality tonality;
 
 	DiatonicMidi() {
 	}
@@ -50,12 +49,12 @@ public class DiatonicMidi implements PitchSingleMidi, PitchDiatonicSingle, Pitch
 	}
 
 	private DiatonicMidi _add(int i) {
-		int degreeInt = getDegree().val() + i;
+		int degreeInt = getDegree().ordinal() + i;
 		int o = ( degreeInt ) / IntervalDiatonic.OCTAVE.ordinal();
 		if ( degreeInt < 0 )
 			o--;
 		DiatonicDegree degree = DiatonicDegree.values()[degreeInt];
-		assert degree != null : getDegree().val() + " " + i;
+		assert degree != null : getDegree().ordinal() + " " + i;
 
 		DiatonicMidi dm = clone();
 		dm.setDegree( degree );
@@ -107,15 +106,35 @@ public class DiatonicMidi implements PitchSingleMidi, PitchDiatonicSingle, Pitch
 		int tonalityLength = n.getTonality().size();
 
 		IntervalDiatonic id = IntervalDiatonic.fromIndex(
-				n.getOctave() * tonalityLength + n.getDegree().val()
-						- ( getOctave() * tonalityLength + getDegree().val() )
+				n.getOctave() * tonalityLength + n.getDegree().ordinal()
+						- ( getOctave() * tonalityLength + getDegree().ordinal() )
 		);
 		int diffSemi = n.getCode() - getCode();
 		return IntervalChromatic.from( id, diffSemi );
 	}
 
+	@Override
 	public DiatonicDegree getDegree() {
 		return degree;
+	}
+
+	@Override
+	public int ordinal() {
+		return getDegree().ordinal();
+	}
+
+	@Override
+	public DiatonicMidi getNext() {
+		DiatonicMidi dup = clone();
+		dup.pitch = dup.pitch.getNext();
+		return dup;
+	}
+
+	@Override
+	public DiatonicMidi getPrevious() {
+		DiatonicMidi dup = clone();
+		dup.pitch = dup.pitch.getPrevious();
+		return dup;
 	}
 
 	public Tonality getTonality() {
