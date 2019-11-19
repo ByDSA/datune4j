@@ -1,21 +1,11 @@
 package es.danisales.datune.eventsequences;
 
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Map;
-
-import es.danisales.datune.midi.Sequence;
-import es.danisales.datune.midi.Events.Event;
-import es.danisales.datune.midi.Events.EventComplex;
-import es.danisales.datune.midi.Events.KeySignatureEvent;
-import es.danisales.datune.midi.Events.MetaEvent;
-import es.danisales.datune.midi.Events.Pan;
-import es.danisales.datune.midi.Events.ProgramChange;
-import es.danisales.datune.midi.Events.TempoEvent;
-import es.danisales.datune.midi.Events.TrackChunk;
-import es.danisales.datune.midi.Events.Volume;
+import es.danisales.datune.midi.Events.*;
 import es.danisales.datune.midi.Progressions.Progression;
+import es.danisales.datune.midi.Sequence;
 import es.danisales.datune.tonality.Tonality;
+
+import java.nio.ByteBuffer;
 
 public class Track extends EventSequence {
 	private int channel;
@@ -45,7 +35,7 @@ public class Track extends EventSequence {
 	public void add(int n, Progression progression) {
 		super.add(n, progression);
 
-		setScale(progression.getScale());
+		setScale(progression.getTonality());
 	}
 
 	public void add(EventComplex eventComplex) {

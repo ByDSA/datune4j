@@ -304,6 +304,16 @@ public class ScaleTest {
     }
 
     @Test
+    public void getNoteFromDiatonicDegree() {
+        Tonality tonality = Tonality.C;
+
+        assertEquals( DiatonicAlt.C, tonality.getRoot() );
+
+        assertEquals( DiatonicAlt.C, tonality.getNote( DiatonicDegree.I ) );
+        assertEquals( DiatonicAlt.D, tonality.getNote( DiatonicDegree.II ) );
+    }
+
+    @Test
     public void fromIntegers() {
         Scale scale = Scale.from( 2, 2, 1, 2, 2, 2, 1 );
         assertEquals(Arrays.asList(

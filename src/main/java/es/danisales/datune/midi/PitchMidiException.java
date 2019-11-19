@@ -1,12 +1,13 @@
 package es.danisales.datune.midi;
 
+@SuppressWarnings("WeakerAccess")
 public class PitchMidiException extends RuntimeException {
 	public PitchMidiException(int n) {
-		super( "La figura musical est� fuera de rango: " + n );
+		super( "La figura musical está fuera de rango: " + n );
 	}
 
 	public PitchMidiException(PitchMidi n) {
-		super( "La figura musical " + n + "est� fuera de rango: " + n.getCode() );
+		super( "La figura musical " + n + "está fuera de rango: " + n.getCode() );
 	}
 
 	public static boolean check(int code) {

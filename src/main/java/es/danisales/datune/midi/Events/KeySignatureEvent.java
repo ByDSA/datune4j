@@ -66,7 +66,7 @@ public class KeySignatureEvent extends MetaEvent {
 		return super.getMetaBytes();
 	}
 	
-	public Tonality getScale() {
+	public Tonality getTonality() {
 		return tonality;
 	}
 

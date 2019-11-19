@@ -4,7 +4,6 @@ import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.diatonic.HarmonicFunction;
 import es.danisales.datune.musical.ChromaticChord;
-import es.danisales.datune.musical.ChromaticChordInterface;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -21,13 +20,13 @@ public class TonalityChordRetrieval {
         List<Tonality> ts;
         if ( tonality.getScale().isDiatonic() ) {
             ts = new ArrayList<>();
-            ts.add( new TonalityCustom( tonality.getRoot(), Scale.MAJOR ) );
-            ts.add( new TonalityCustom( tonality.getRoot(), Scale.MINOR ) );
-            ts.add( new TonalityCustom( tonality.getRoot(), Scale.DORIAN ) );
-            ts.add( new TonalityCustom( tonality.getRoot(), Scale.PHRYGIAN ) );
-            ts.add( new TonalityCustom( tonality.getRoot(), Scale.LYDIAN ) );
-            ts.add( new TonalityCustom( tonality.getRoot(), Scale.MIXOLYDIAN ) );
-            ts.add( new TonalityCustom( tonality.getRoot(), Scale.LOCRIAN ) );
+            ts.add( Tonality.from( tonality.getRoot(), Scale.MAJOR ) );
+            ts.add( Tonality.from( tonality.getRoot(), Scale.MINOR ) );
+            ts.add( Tonality.from( tonality.getRoot(), Scale.DORIAN ) );
+            ts.add( Tonality.from( tonality.getRoot(), Scale.PHRYGIAN ) );
+            ts.add( Tonality.from( tonality.getRoot(), Scale.LYDIAN ) );
+            ts.add( Tonality.from( tonality.getRoot(), Scale.MIXOLYDIAN ) );
+            ts.add( Tonality.from( tonality.getRoot(), Scale.LOCRIAN ) );
         } else
             ts = tonality.getModesSameRoot();
 
@@ -43,8 +42,8 @@ public class TonalityChordRetrieval {
         return null;
     }
 
-    public static @Nullable Tonality getRelativeMinorFrom(@NonNull Tonality tonalityBase) {
-        return getRelativeFrom(tonalityBase, Scale.MINOR);
+    public static @Nullable Tonality getRelativeMinorFrom(@NonNull Tonality tonality) {
+        return getRelativeFrom(tonality, Scale.MINOR);
     }
 
     public static @Nullable Tonality getRelativeMajorFrom(@NonNull Tonality tonality) {

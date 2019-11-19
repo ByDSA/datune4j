@@ -146,7 +146,7 @@ public class Scale implements Iterable<ScaleDistance> {
 	 * END CONSTANT SCALES
 	 ***************************************************************************************************************/
 
-	ScaleInterface innerScale;
+	final ScaleInterface innerScale; // todo: para cambiar ScaleDistance, usar un builder (si se cambia por funciones, dará error de que no suma 12
 
 	public static @NonNull Scale from(int... v) {
 		return new Scale( ScaleAdapter.fromIntegers(v) );

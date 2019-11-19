@@ -3,17 +3,15 @@ package es.danisales.datune.tonality;
 import es.danisales.datune.diatonic.ChromaticFunction;
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.diatonic.HarmonicFunction;
-import es.danisales.datune.midi.ChromaticMidi;
-import es.danisales.datune.musical.*;
-import es.danisales.datune.pitch.PitchChromaticChord;
+import es.danisales.datune.musical.ChromaticChord;
+import es.danisales.datune.musical.DiatonicAlt;
+import es.danisales.datune.musical.DiatonicAltRetrieval;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
-enum TonalityEnum implements Tonality {
+enum TonalityEnum implements TonalityInterface {
 	C( DiatonicAlt.C, Scale.MAJOR ),
 	D( DiatonicAlt.D, Scale.MAJOR ),
 	E( DiatonicAlt.E, Scale.MAJOR ),
@@ -46,7 +44,7 @@ enum TonalityEnum implements Tonality {
 	private final Scale	scale;
 	private final List<DiatonicAlt>	notes;
 
-	static @Nullable Tonality of(@NonNull DiatonicAlt diatonicAlt, @NonNull Scale scale) {
+	static @Nullable TonalityInterface of(@NonNull DiatonicAlt diatonicAlt, @NonNull Scale scale) {
 		Objects.requireNonNull(diatonicAlt);
 		Objects.requireNonNull(scale);
 
@@ -61,9 +59,10 @@ enum TonalityEnum implements Tonality {
 	public @NonNull ChromaticChord getChordFrom(@NonNull DiatonicFunction diatonicFunction) {
 		Objects.requireNonNull(diatonicFunction);
 
-		ChromaticChord ret = TonalityGetDiatonicFunctionMajor.get(this, diatonicFunction);
+		Tonality self = Tonality.from(root, scale);
+		ChromaticChord ret = TonalityGetDiatonicFunctionMajor.get(self, diatonicFunction);
 		if (ret == null)
-			ret = TonalityGetDiatonicFunctionMinor.get(this, diatonicFunction);
+			ret = TonalityGetDiatonicFunctionMinor.get(self, diatonicFunction);
 		if (ret == null)
 			throw new RuntimeException(this + " " +diatonicFunction.toString());
 		return ret;
@@ -73,21 +72,47 @@ enum TonalityEnum implements Tonality {
 	public @NonNull ChromaticChord getChordFrom(@NonNull ChromaticFunction chromaticFunction) {
 		Objects.requireNonNull(chromaticFunction);
 
-		ChromaticChord ret = TonalityGetDiatonicFunctionMajor.get(this, chromaticFunction);
+		ChromaticChord ret = TonalityGetChromaticFunctionMajor.get(this, chromaticFunction);
 		if (ret == null)
-			ret = TonalityGetDiatonicFunctionMinor.get(this, chromaticFunction);
+			ret = TonalityGetChromaticFunctionMinor.get(this, chromaticFunction);
 		if (ret == null)
-			throw new RuntimeException(this + " " +chromaticFunction.toString());
+			throw new RuntimeException("Undefined chord for chromatic function " + chromaticFunction + " in " + this);
 		return ret;
 	}
+
+	private Map<ChromaticChord, List<HarmonicFunction>> cacheMap;
 
 	TonalityEnum(DiatonicAlt noteBase, Scale scale) {
 		this.root = noteBase;
 		this.scale = scale;
 
 		notes = Collections.unmodifiableList( DiatonicAltRetrieval.listFrom(noteBase, scale) );
+	}
 
-		//this.functionChordMap = TonalityEnumChordRetrieval.getHarmonicFunctionChomaticChordBiMap(this);
+	@SuppressWarnings("Duplicates")
+	private void createCache() {
+		cacheMap = new HashMap<>();
+		for (DiatonicFunction diatonicFunction : DiatonicFunction.values()) {
+			Tonality self = Tonality.from(root, scale);
+			ChromaticChord chromaticChord = ChromaticChord.from(self, diatonicFunction);
+			List<HarmonicFunction> list = cacheMap.getOrDefault(chromaticChord, new ArrayList<>());
+			list.add(diatonicFunction);
+			cacheMap.putIfAbsent(chromaticChord, list);
+		}
+
+		// todo: descomentar y precalcular a mano los acordes en TonalityGetDiatonicFunctonMajor
+/*
+		for (ChromaticFunction chromaticFunction : ChromaticFunction.values()) {
+			ChromaticChord chromaticChord = ChromaticChord.from(this, chromaticFunction);
+			List<HarmonicFunction> list = cacheMap.getOrDefault(chromaticChord, new ArrayList<>());
+			list.add(chromaticFunction);
+			cacheMap.putIfAbsent(chromaticChord, list);
+		}*/
+	}
+
+	private void createCacheIfNeeded() {
+		if (cacheMap == null)
+			createCache();
 	}
 
 	public @NonNull Scale getScale() {
@@ -98,23 +123,19 @@ enum TonalityEnum implements Tonality {
 		return root;
 	}
 
-	public String toString() {
-		return ChromaticMidi.literal(root, this) + " " +
-				scale;
-	}
-
 	@Override
 	public @NonNull List<DiatonicAlt> getNotes() {
 		return notes;
 	}
 
-	public HarmonicFunction getFunction(ChromaticChord c, boolean rename) {
-// todo
-		return null;
-	}
+	@Override
+	public HarmonicFunction getFunction(ChromaticChord chromaticChord) {
+		createCacheIfNeeded();
 
-	public DiatonicAlt getDiatonicAltFrom(Chromatic chromatic) throws TonalityException {
-		// todo
-		return null;
+		List<HarmonicFunction> harmonicFunctionList = cacheMap.get(chromaticChord);
+		if (harmonicFunctionList == null)
+			return null;
+
+		return harmonicFunctionList.get(0);
 	}
 }

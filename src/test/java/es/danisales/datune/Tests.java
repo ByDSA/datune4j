@@ -16,34 +16,17 @@ import static org.junit.Assert.*;
 
 public class Tests {
 	@Test
-	public void chromaticDiatonicConversion() throws Exception {
+	public void diatonicAltToDiatonic() {
 		DiatonicAlt c = DiatonicAlt.Cb;
-		assertEquals( Diatonic.C, Diatonic.from( c ) );
-		c = DiatonicAlt.BB;
-		assertEquals( Diatonic.B, Diatonic.from( c ) );
-
-		Diatonic d = Diatonic.B;
-		assertEquals( DiatonicAlt.BB, Chromatic.from(DiatonicAlt.C ) );
-		d = Diatonic.C;
-		assertEquals( Chromatic.C, Chromatic.from(DiatonicAlt.BB) );
+		assertSame( Diatonic.C, Diatonic.from( c ) );
+		assertSame( Diatonic.C, c.getDiatonic() );
 	}
 
 	@Test
-	public void pitchGet() {
-		PitchMidi p = PitchMidi.from( Chromatic.C, 5 );
-		assertEquals( PitchMidi.C5, p );
-
-		p = PitchMidi.from( Chromatic.C, 0 );
-		assertEquals( true, p.equals( PitchMidi.MIN ) );
-
-		p = PitchMidi.from( Chromatic.G, 10 );
-		assertEquals( true, p.equals( PitchMidi.MAX ) );
-
-		ChromaticMidi n = ChromaticMidi.builder()
-				.pitch(Chromatic.C, 5 )
-				.build();
-
-		assertEquals( PitchMidi.C5, n.getCode() );
+	public void diatonicAltToChromatic() {
+		assertEquals( Chromatic.C, Chromatic.from(DiatonicAlt.BB ) );
+		assertEquals( Chromatic.G, Chromatic.from(DiatonicAlt.FFF ) );
+		assertEquals( Chromatic.GG, Chromatic.from(DiatonicAlt.FFFF ) );
 	}
 
 	@Test
@@ -57,7 +40,7 @@ public class Tests {
 				Chromatic.FF, Chromatic.A, Chromatic.CC
 		);
 
-		assertEquals( PitchMidi.FF5, notes.get( 0 ).getCode() );
+		assertEquals( PitchMidi.FF5, notes.get( 0 ).getPitchMidi());
 
 		List<Integer> n = notes.integerNotationFromRoot();
 
@@ -215,23 +198,6 @@ public class Tests {
 
 		List<DiatonicChordMidi> chords = notes.toDiatonicChordMidi( false );
 		assert ( chords.size() > 0 );
-	}
-
-	@Test
-	public void scaleRelative() {
-		Tonality scale = Tonality.E.getRelativeScaleDiatonic( DiatonicDegree.V );
-		assertEquals( Chromatic.B, scale.getRoot() );
-		assertEquals( Tonality.from( Chromatic.B, Scale.MAJOR ).getScale(), scale.getScale() );
-	}
-
-	@Test
-	public void scaleGet() {
-		Tonality s = Tonality.C;
-
-		assertEquals( Chromatic.C, s.getRoot() );
-
-		assertEquals( Chromatic.C, s.getNote( DiatonicDegree.I ) );
-		assertEquals( Chromatic.D, s.getNote( DiatonicDegree.II ) );
 	}
 
 	@Test

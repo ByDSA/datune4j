@@ -102,7 +102,7 @@ public class Progression<This extends Progression> implements EventComplex {
 		return this;
 	}
 
-	public Tonality getScale() {
+	public Tonality getTonality() {
 		return tonality;
 	}
 

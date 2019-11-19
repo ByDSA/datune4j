@@ -1,19 +1,15 @@
 package es.danisales.datune.musical;
 
-import es.danisales.datastructures.SetUtils;
 import es.danisales.datune.diatonic.*;
 import es.danisales.datune.midi.*;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
-import es.danisales.utils.ListUtils;
-import org.checkerframework.checker.nullness.qual.NonNull;
+import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
 
 public interface ChromaticChordInterface extends PitchChromaticChord<Chromatic> {
     static ChromaticChordInterface from(ChromaticFunction f, Tonality t) {
@@ -65,7 +61,7 @@ public interface ChromaticChordInterface extends PitchChromaticChord<Chromatic> 
             DiatonicMidi n = null;
             switch ( f ) {
                 case V_II:
-                    t = Tonality.fromDiatonicChord(
+                    t = Tonality.fromDiatonicChordMidi(
                             new DiatonicChordMidi(
                                     DiatonicFunction.V, t
                                     .getRelativeScaleDiatonic( DiatonicDegree.II )
@@ -73,7 +69,7 @@ public interface ChromaticChordInterface extends PitchChromaticChord<Chromatic> 
                     );
                     break;
                 case V7_II:
-                    t = Tonality.fromDiatonicChord(
+                    t = Tonality.fromDiatonicChordMidi(
                             new DiatonicChordMidi(
                                     DiatonicFunction.V7, t
                                     .getRelativeScaleDiatonic( DiatonicDegree.II )
@@ -81,7 +77,7 @@ public interface ChromaticChordInterface extends PitchChromaticChord<Chromatic> 
                     );
                     break;
                 case V_III:
-                    t = Tonality.fromDiatonicChord(
+                    t = Tonality.fromDiatonicChordMidi(
                             new DiatonicChordMidi(
                                     DiatonicFunction.V, t
                                     .getRelativeScaleDiatonic( DiatonicDegree.III )
@@ -89,7 +85,7 @@ public interface ChromaticChordInterface extends PitchChromaticChord<Chromatic> 
                     );
                     break;
                 case V7_III:
-                    t = Tonality.fromDiatonicChord(
+                    t = Tonality.fromDiatonicChordMidi(
                             new DiatonicChordMidi(
                                     DiatonicFunction.V7, t
                                     .getRelativeScaleDiatonic( DiatonicDegree.III )
@@ -97,7 +93,7 @@ public interface ChromaticChordInterface extends PitchChromaticChord<Chromatic> 
                     );
                     break;
                 case V_IV:
-                    t = Tonality.fromDiatonicChord(
+                    t = Tonality.fromDiatonicChordMidi(
                             new DiatonicChordMidi(
                                     DiatonicFunction.V, t
                                     .getRelativeScaleDiatonic( DiatonicDegree.IV )
@@ -105,7 +101,7 @@ public interface ChromaticChordInterface extends PitchChromaticChord<Chromatic> 
                     );
                     break;
                 case V7_IV:
-                    t = Tonality.fromDiatonicChord(
+                    t = Tonality.fromDiatonicChordMidi(
                             new DiatonicChordMidi(
                                     DiatonicFunction.V7, t
                                     .getRelativeScaleDiatonic( DiatonicDegree.IV )
@@ -113,7 +109,7 @@ public interface ChromaticChordInterface extends PitchChromaticChord<Chromatic> 
                     );
                     break;
                 case V_V:
-                    t = Tonality.fromDiatonicChord(
+                    t = Tonality.fromDiatonicChordMidi(
                             new DiatonicChordMidi(
                                     DiatonicFunction.V, t
                                     .getRelativeScaleDiatonic( DiatonicDegree.V )
@@ -121,7 +117,7 @@ public interface ChromaticChordInterface extends PitchChromaticChord<Chromatic> 
                     );
                     break;
                 case V7_V:
-                    t = Tonality.fromDiatonicChord(
+                    t = Tonality.fromDiatonicChordMidi(
                             new DiatonicChordMidi(
                                     DiatonicFunction.V7, t
                                     .getRelativeScaleDiatonic( DiatonicDegree.V )
@@ -129,7 +125,7 @@ public interface ChromaticChordInterface extends PitchChromaticChord<Chromatic> 
                     );
                     break;
                 case V_VI:
-                    t = Tonality.fromDiatonicChord(
+                    t = Tonality.fromDiatonicChordMidi(
                             new DiatonicChordMidi(
                                     DiatonicFunction.V, t
                                     .getRelativeScaleDiatonic( DiatonicDegree.VI )
@@ -137,7 +133,7 @@ public interface ChromaticChordInterface extends PitchChromaticChord<Chromatic> 
                     );
                     break;
                 case V7_VI:
-                    t = Tonality.fromDiatonicChord(
+                    t = Tonality.fromDiatonicChordMidi(
                             new DiatonicChordMidi(
                                     DiatonicFunction.V7, t
                                     .getRelativeScaleDiatonic( DiatonicDegree.VI )

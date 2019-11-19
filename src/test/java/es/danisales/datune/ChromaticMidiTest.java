@@ -49,4 +49,13 @@ public class ChromaticMidiTest {
 		assertEquals(cm, cm2);
 		
 	}
+
+	@Test
+	public void fromBuilderChromaticAndOctave() {
+		ChromaticMidi n = ChromaticMidi.builder()
+				.pitch(Chromatic.C, 5 )
+				.build();
+
+		assertEquals( PitchMidi.C5, n.getPitchMidi() );
+	}
 }

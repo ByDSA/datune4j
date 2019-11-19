@@ -167,10 +167,6 @@ public enum Chromatic implements PitchChromaticSingle {
 		return DistanceCalculator.calculareInterval(this, n, i);
 	}
 
-	public @Nullable DiatonicAlt rename(@NonNull Tonality ton) {
-		return ton.getDiatonicAltFrom(this);
-	}
-
 	public int distSemitonesTo(@NonNull Chromatic n2) {
 		int d = n2.ordinal() - ordinal();
 		while (d < 0)

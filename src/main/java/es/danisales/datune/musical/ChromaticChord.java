@@ -1,11 +1,11 @@
 package es.danisales.datune.musical;
 
 import com.google.common.collect.ImmutableList;
-import es.danisales.datune.diatonic.*;
-import es.danisales.datune.midi.ChordMidi;
+import es.danisales.datune.diatonic.ChromaticFunction;
+import es.danisales.datune.diatonic.DiatonicFunction;
+import es.danisales.datune.diatonic.Quality;
 import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
-import es.danisales.datune.midi.PitchSingleMidi;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.ChordMutableInterface;
@@ -2694,19 +2694,4 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
     public ChromaticChordMidi toMidi() { // todo: remove
         return null;
     }
-
-	/*
-    @Override
-    public boolean isSus4() {
-        return this.equalsEnharmonicInvArray( ChromaticChordEnum.CHORDS_SUS4 )
-                || this.equalsEnharmonicInvArray( ChromaticChordEnum.CHORDS_SUSa4 );
-    }
-
-    @Override
-    public boolean isSus2() {
-        return this.equalsEnharmonicInvArray( ChromaticChordEnum.CHORDS_SUS2 ) || this.equalsEnharmonicInvArray(
-            ChromaticChordEnum.CHORDS_SUSb2
-                ) || this.equalsEnharmonicInvArray( ChromaticChordEnum.CHORDS_SUSb2b5 );
-    }
-     */
 }

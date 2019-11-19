@@ -2,7 +2,6 @@ package es.danisales.datune.midi;
 
 import es.danisales.datune.tonality.Tonality;
 
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Song extends Sequence {

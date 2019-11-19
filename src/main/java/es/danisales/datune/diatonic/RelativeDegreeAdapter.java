@@ -1,6 +1,5 @@
 package es.danisales.datune.diatonic;
 
-import es.danisales.datune.pitch.AbsoluteDegree;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
 

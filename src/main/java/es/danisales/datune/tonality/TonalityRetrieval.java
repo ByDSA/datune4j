@@ -102,7 +102,7 @@ public class TonalityRetrieval {
         return out;
     }
 
-    static @NonNull Tonality fromDiatonicChord(@NonNull DiatonicChordMidi c, @NonNull Tonality base) {
+    static @NonNull Tonality fromDiatonicChordMidi(@NonNull DiatonicChordMidi c, @NonNull Tonality base) {
         if ( base.size() != 7 )
             throw new RuntimeException( "No tiene 7 notas la escala" );
 
@@ -180,7 +180,7 @@ public class TonalityRetrieval {
 
     public static List<Tonality> getFromChord(boolean outScale, ChromaticChordInterface c) {
         List<Tonality> out = new ArrayList<>();
-        for ( TonalityEnum t : TonalityEnum.values() ) {
+        for ( Tonality t : Tonality.values() ) {
             if ( t.has( outScale, c ) )
                 out.add( t );
         }

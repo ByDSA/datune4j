@@ -1,6 +1,5 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.diatonic.ChromaticFunction;
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
@@ -12,12 +11,12 @@ import java.util.Arrays;
 import java.util.Objects;
 
 class TonalityGetDiatonicFunctionMajor {
-	public static @Nullable ChromaticChord get(@NonNull TonalityEnum tonalityEnum, @NonNull DiatonicFunction diatonicFunction) {
-		Objects.requireNonNull(tonalityEnum);
+	public static @Nullable ChromaticChord get(@NonNull Tonality t, @NonNull DiatonicFunction diatonicFunction) {
+		Objects.requireNonNull(t);
 		Objects.requireNonNull(diatonicFunction);
 
-		switch(tonalityEnum) {
-			case C: switch(diatonicFunction) {
+		if ( t.equals( Tonality.C ) ) {
+			switch(diatonicFunction) {
 				case I: return ChromaticChord.C;
 				case II: return ChromaticChord.Dm;
 				case III: return ChromaticChord.Em;
@@ -59,7 +58,7 @@ class TonalityGetDiatonicFunctionMajor {
 				case IV9: return ChromaticChord.FMaj9;
 				case V9: return ChromaticChord.G9;
 				case VI9: return ChromaticChord.Am9;
-				case VII9: return ChromaticChord.from( Chromatic.B, DiatonicChordPattern.NINTH, tonalityEnum );
+				case VII9: return ChromaticChord.from( Chromatic.B, DiatonicChordPattern.NINTH, t );
 				case I11: return ChromaticChord.CMaj11;
 				case II11: return ChromaticChord.Dm11;
 				case III11: return ChromaticChord.from( Arrays.asList( Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.F, Chromatic.A ) ); // E7b911
@@ -130,8 +129,9 @@ class TonalityGetDiatonicFunctionMajor {
 				case V9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.G, Chromatic.D, Chromatic.A) );
 				case VI9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.A, Chromatic.E, Chromatic.B) );
 				case VII9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.B, Chromatic.F, Chromatic.C) );
-			} break;
-			case Db: switch(diatonicFunction) {
+			}
+		} else if ( t.equals( Tonality.Db) ) {
+			switch(diatonicFunction) {
 				case I: return ChromaticChord.from( Arrays.asList( Chromatic.CC, Chromatic.F, Chromatic.GG) );
 				case II: return ChromaticChord.from( Arrays.asList( Chromatic.DD, Chromatic.FF, Chromatic.AA) );
 				case III: return ChromaticChord.from( Arrays.asList( Chromatic.F, Chromatic.GG, Chromatic.C) );
@@ -244,8 +244,9 @@ class TonalityGetDiatonicFunctionMajor {
 				case V9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.GG, Chromatic.DD, Chromatic.AA) );
 				case VI9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.AA, Chromatic.F, Chromatic.C) );
 				case VII9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.C, Chromatic.FF, Chromatic.CC) );
-			} break;
-			case D: switch(diatonicFunction) {
+			}
+		} else if ( t.equals( Tonality.D ) ) {
+			switch(diatonicFunction) {
 				case I: return ChromaticChord.D;
 				case II: return ChromaticChord.Em;
 				case III: return ChromaticChord.from( Arrays.asList( Chromatic.FF, Chromatic.A, Chromatic.CC) );
@@ -358,8 +359,9 @@ class TonalityGetDiatonicFunctionMajor {
 				case V9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.A, Chromatic.E, Chromatic.B) );
 				case VI9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.B, Chromatic.FF, Chromatic.CC) );
 				case VII9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.CC, Chromatic.G, Chromatic.D) );
-			} break;
-			case Eb: switch(diatonicFunction) {
+			}
+		} else if ( t.equals( Tonality.Eb ) ) {
+			switch(diatonicFunction) {
 				case I: return ChromaticChord.from( Arrays.asList( Chromatic.DD, Chromatic.G, Chromatic.AA) );
 				case II: return ChromaticChord.from( Arrays.asList( Chromatic.F, Chromatic.GG, Chromatic.C) );
 				case III: return ChromaticChord.from( Arrays.asList( Chromatic.G, Chromatic.AA, Chromatic.D) );
@@ -472,8 +474,9 @@ class TonalityGetDiatonicFunctionMajor {
 				case V9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.AA, Chromatic.F, Chromatic.C) );
 				case VI9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.C, Chromatic.G, Chromatic.D) );
 				case VII9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.D, Chromatic.GG, Chromatic.DD) );
-			} break;
-			case E: switch(diatonicFunction) {
+			}
+		} else if ( t.equals( Tonality.E ) ) {
+			switch(diatonicFunction) {
 				case I: return ChromaticChord.E;
 				case II: return ChromaticChord.from( Arrays.asList( Chromatic.FF, Chromatic.A, Chromatic.CC) );
 				case III: return ChromaticChord.from( Arrays.asList( Chromatic.GG, Chromatic.B, Chromatic.DD) );
@@ -586,8 +589,9 @@ class TonalityGetDiatonicFunctionMajor {
 				case V9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.B, Chromatic.FF, Chromatic.CC) );
 				case VI9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.CC, Chromatic.GG, Chromatic.DD) );
 				case VII9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.DD, Chromatic.A, Chromatic.E) );
-			} break;
-			case F: switch(diatonicFunction) {
+			}
+		} else if ( t.equals( Tonality.F ) ) {
+			switch(diatonicFunction) {
 				case I: return ChromaticChord.F;
 				case II: return ChromaticChord.Gm;
 				case III: return ChromaticChord.Am;
@@ -629,7 +633,7 @@ class TonalityGetDiatonicFunctionMajor {
 				case IV9: return ChromaticChord.from( Arrays.asList( Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C) );
 				case V9: return ChromaticChord.C9;
 				case VI9: return ChromaticChord.Dm9;
-				case VII9: ChromaticChord.from( Chromatic.E, DiatonicChordPattern.NINTH, tonalityEnum );
+				case VII9: ChromaticChord.from( Chromatic.E, DiatonicChordPattern.NINTH, t );
 				case I11: return ChromaticChord.FMaj11;
 				case II11: return ChromaticChord.Gm11;
 				case III11: return ChromaticChord.from( Arrays.asList( Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.AA, Chromatic.D) );
@@ -700,9 +704,9 @@ class TonalityGetDiatonicFunctionMajor {
 				case V9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.C, Chromatic.G, Chromatic.D) );
 				case VI9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.D, Chromatic.A, Chromatic.E) );
 				case VII9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.E, Chromatic.AA, Chromatic.F) );
-			} break;
-			case FF:
-			case Gb: switch(diatonicFunction) {
+			}
+		} else if ( t.equals( Tonality.FF ) || t.equals( Tonality.Gb ) ) {
+			switch(diatonicFunction) {
 				case I: return ChromaticChord.from( Arrays.asList( Chromatic.FF, Chromatic.AA, Chromatic.CC) );
 				case II: return ChromaticChord.from( Arrays.asList( Chromatic.GG, Chromatic.B, Chromatic.DD) );
 				case III: return ChromaticChord.from( Arrays.asList( Chromatic.AA, Chromatic.CC, Chromatic.F) );
@@ -815,8 +819,9 @@ class TonalityGetDiatonicFunctionMajor {
 				case V9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.CC, Chromatic.GG, Chromatic.DD) );
 				case VI9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.DD, Chromatic.AA, Chromatic.F) );
 				case VII9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.F, Chromatic.B, Chromatic.FF) );
-			} break;
-			case G: switch(diatonicFunction) {
+			}
+		} else if ( t.equals( Tonality.G ) ) {
+			switch(diatonicFunction) {
 				case I: return ChromaticChord.G;
 				case II: return ChromaticChord.Am;
 				case III: return ChromaticChord.Bm;
@@ -929,8 +934,9 @@ class TonalityGetDiatonicFunctionMajor {
 				case V9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.D, Chromatic.A, Chromatic.E) );
 				case VI9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.E, Chromatic.B, Chromatic.FF) );
 				case VII9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.FF, Chromatic.C, Chromatic.G) );
-			} break;
-			case Ab: switch(diatonicFunction) {
+			}
+		} else if ( t.equals( Tonality.Ab ) ) {
+			switch(diatonicFunction) {
 				case I: return ChromaticChord.from( Arrays.asList( Chromatic.GG, Chromatic.C, Chromatic.DD) );
 				case II: return ChromaticChord.from( Arrays.asList( Chromatic.AA, Chromatic.CC, Chromatic.F) );
 				case III: return ChromaticChord.from( Arrays.asList( Chromatic.C, Chromatic.DD, Chromatic.G) );
@@ -1043,8 +1049,9 @@ class TonalityGetDiatonicFunctionMajor {
 				case V9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.DD, Chromatic.AA, Chromatic.F) );
 				case VI9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.F, Chromatic.C, Chromatic.G) );
 				case VII9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.G, Chromatic.CC, Chromatic.GG) );
-			} break;
-			case A: switch(diatonicFunction) {
+			}
+		} else if ( t.equals( Tonality.A ) ) {
+			switch(diatonicFunction) {
 				case I: return ChromaticChord.A;
 				case II: return ChromaticChord.Bm;
 				case III: return ChromaticChord.from( Arrays.asList( Chromatic.CC, Chromatic.E, Chromatic.GG) );
@@ -1157,8 +1164,9 @@ class TonalityGetDiatonicFunctionMajor {
 				case V9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.E, Chromatic.B, Chromatic.FF) );
 				case VI9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.FF, Chromatic.CC, Chromatic.GG) );
 				case VII9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.GG, Chromatic.D, Chromatic.A) );
-			} break;
-			case Bb: switch(diatonicFunction) {
+			}
+		} else if ( t.equals( Tonality.Bb ) ) {
+			switch(diatonicFunction) {
 				case I: return ChromaticChord.from( Arrays.asList( Chromatic.AA, Chromatic.D, Chromatic.F) );
 				case II: return ChromaticChord.from( Arrays.asList( Chromatic.C, Chromatic.DD, Chromatic.G) );
 				case III: return ChromaticChord.from( Arrays.asList( Chromatic.D, Chromatic.F, Chromatic.A) );
@@ -1271,8 +1279,9 @@ class TonalityGetDiatonicFunctionMajor {
 				case V9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.F, Chromatic.C, Chromatic.G) );
 				case VI9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.G, Chromatic.D, Chromatic.A) );
 				case VII9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.A, Chromatic.DD, Chromatic.AA) );
-			} break;
-			case B: switch(diatonicFunction) {
+			}
+		} else if ( t.equals( Tonality.B ) ) {
+			switch(diatonicFunction) {
 				case I: return ChromaticChord.B;
 				case II: return ChromaticChord.from( Arrays.asList( Chromatic.CC, Chromatic.E, Chromatic.GG) );
 				case III: return ChromaticChord.from( Arrays.asList( Chromatic.DD, Chromatic.FF, Chromatic.AA) );
@@ -1385,22 +1394,7 @@ class TonalityGetDiatonicFunctionMajor {
 				case V9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.FF, Chromatic.CC, Chromatic.GG) );
 				case VI9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.GG, Chromatic.DD, Chromatic.AA) );
 				case VII9_O3_O7: return ChromaticChord.from( Arrays.asList( Chromatic.AA, Chromatic.E, Chromatic.B) );
-			} break;
-		}
-
-		return null;
-	}
-
-	public static @Nullable ChromaticChord get(@NonNull TonalityEnum tonalityEnum, @NonNull ChromaticFunction diatonicFunction) {
-		Objects.requireNonNull(tonalityEnum);
-		Objects.requireNonNull(diatonicFunction);
-
-		switch (tonalityEnum) {
-			case C:
-				switch (diatonicFunction) {
-
-				}
-
+			}
 		}
 
 		return null;

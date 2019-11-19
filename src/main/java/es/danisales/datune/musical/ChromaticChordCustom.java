@@ -7,14 +7,11 @@ import es.danisales.datune.diatonic.Quality;
 import es.danisales.datune.midi.ChordMidi;
 import es.danisales.datune.midi.PitchSingleMidi;
 import es.danisales.datune.pitch.*;
-import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.BiFunction;
 
 class ChromaticChordCustom extends Chord<Chromatic> implements PitchChromaticChord<Chromatic>, ChordMutableInterface<Chromatic>, ChromaticChordInterface {
@@ -235,24 +232,5 @@ class ChromaticChordCustom extends Chord<Chromatic> implements PitchChromaticCho
 
 	public @NonNull Quality getQuality() {
 		return meta.quality;
-	}
-
-	public @Nullable ChromaticChordCustom rename(@NonNull Tonality tonality) {
-		Objects.requireNonNull(tonality);
-
-		int rp = getRootPos();
-		for ( int i = 0; i < size(); i++ ) {
-			Chromatic chromatic = get( i );
-			DiatonicAlt diatonicAlt = chromatic.rename( tonality );
-			if (diatonicAlt == null)
-				return null;
-			Chromatic c2 = Chromatic.from( diatonicAlt );
-
-			set( i, c2 );
-		}
-
-		setRootPos( rp );
-
-		return this;
 	}
 }

@@ -7,7 +7,6 @@ import es.danisales.datune.midi.PitchMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
-import es.danisales.datune.tonality.Tonality;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

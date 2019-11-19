@@ -2,7 +2,6 @@ package es.danisales.datune.midi;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;

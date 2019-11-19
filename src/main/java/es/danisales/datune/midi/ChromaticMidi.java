@@ -10,9 +10,9 @@ import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.musical.transformations.DistanceCalculator;
 import es.danisales.datune.musical.transformations.Namer;
-import es.danisales.datune.pitch.AbsoluteDegree;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityInterface;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class ChromaticMidi implements PitchSingleMidi, PitchChromaticSingle, PitchOctaveMidiEditable {

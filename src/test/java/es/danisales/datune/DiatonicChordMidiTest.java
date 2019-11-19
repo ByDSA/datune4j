@@ -98,7 +98,7 @@ public class DiatonicChordMidiTest {
 
 	@Test
 	public void constructorDiatonicFunc() {
-		Tonality s =Tonality.from( Chromatic.C, Scale.MAJOR );
+		Tonality s = Tonality.from( Chromatic.C, Scale.MAJOR );
 		DiatonicChordMidi c;
 		c = new DiatonicChordMidi( DiatonicFunction.I, 5, s );
 		assertEquals( 3, c.size() );
@@ -400,9 +400,9 @@ public class DiatonicChordMidiTest {
 		c2.setOctave( 6 );
 		assertEquals( c, c2 );
 
-		c.setScaleMinor();
+		c.setMinorScale();
 		assertNotEquals( c, c2 );
-		c2.setScaleMinor();
+		c2.setMinorScale();
 		assertEquals( c, c2 );
 
 		c.setVelocity( 50 );

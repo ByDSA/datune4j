@@ -18,16 +18,6 @@ class Main {
 	static Map map;
 
 	public static void main(String[] args) {
-		/*
-		 * int w = 10; int h = 10;
-		 * 
-		 * map = new Map(w, h);
-		 * 
-		 * for (int i = 0; i < 9; i++) map.addWall(4, i); PathSpace p = new
-		 * PathSpace(map, new PVector(0, 0), new PVector(8, 2)); ArrayList<NodeMap> a =
-		 * p.aStar(); for (NodeMap n : a) System.out.println(n);
-		 */
-
 		ProgressionChromaticChordMidi pcm = new ProgressionChromaticChordMidi(
 				ChromaticChord.C,
 				ChromaticChord.Em,

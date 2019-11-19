@@ -1,13 +1,13 @@
 package es.danisales.datune.midi.Events;
 
+import es.danisales.datune.eventsequences.EventSequence;
+import es.danisales.datune.tonality.Tonality;
+
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
-
-import es.danisales.datune.eventsequences.EventSequence;
-import es.danisales.datune.tonality.Tonality;
 
 public interface EventComplex extends Event {	
 	EventSequence getEvents();
@@ -73,10 +73,10 @@ public interface EventComplex extends Event {
 					((ChannelEvent)me).setChannel(0); // TODO
 				} else if (ev instanceof KeySignatureEvent) {
 					KeySignatureEvent ks = ((KeySignatureEvent)ev);
-					if (scale != null && !ks.getScale().equals(scale)) {
+					if (scale != null && !ks.getTonality().equals(scale)) {
 						me = ks;
 					} else
-						scale.set( ks.getScale() );
+						scale.set( ks.getTonality() );
 				} else if (ev instanceof Event)
 					me = (Event) ev;
 

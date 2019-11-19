@@ -391,7 +391,7 @@ public class Main {
 
 			dcm = p.add( DiatonicFunction.VII );
 			dcm.setLength( Duration.V2 );
-			dcm.setScaleMajor();
+			dcm.setMajorScale();
 			dcm.shiftOctave( -1 );
 		}
 
@@ -486,7 +486,8 @@ public class Main {
 			c1.get( 2 ).shiftOctave( -1 );
 			DiatonicChordMidi c2 = p.add( DiatonicFunction.VII_THIRD );
 			c2.setLength( Duration.V4 * 3 );
-			c2.setScaleMajor().shiftOctave( -1 );
+			c2.setMajorScale();
+			c2.shiftOctave( -1 );
 			DiatonicMidi diatonicMidi1 = c2.get( 0 ).clone();
 			diatonicMidi1.shiftOctave( 1 );
 			c2.add( diatonicMidi1 );
@@ -581,7 +582,7 @@ public class Main {
 				if ( (c.getFunction() instanceof DiatonicFunction
 						&& ( ( (DiatonicFunction) c.getFunction() ).isSus2()
 						|| ( (DiatonicFunction) c.getFunction() ).isSus4() )
-						) && !sus24 )
+				) && !sus24 )
 					continue;
 
 				if (ton.isMajorOrMinor() && !c.getMetatonality().isMajorOrMinor() && !modal)
@@ -920,11 +921,11 @@ public class Main {
 		 * TestProgression p = new TestProgression(Scale.Em, 4, 120, 90) { { Arpegio a =
 		 * new ArpegioAsc(Duration.V1, Duration.V4_3); add(ChordFunction.I).show();
 		 * add(ChordFunction.VI, -1).inv(1).show(); add(ChordFunction.IV,
-		 * -1).setScaleMajor().inv(2).show(); add(ChordFunction.VI, -1).inv(1).show();
+		 * -1).setMajorScale().inv(2).show(); add(ChordFunction.VI, -1).inv(1).show();
 		 * add(ChordFunction.I).show(); add(ChordFunction.VI, -1).inv(1).show();
-		 * add(ChordFunction.VI, -1).setScaleMajor().inv(1).show();
+		 * add(ChordFunction.VI, -1).setMajorScale().inv(1).show();
 		 * add(ChordFunction.VII, -1).setLength(Duration.V2).inv(1).show(); Chord c =
-		 * add(ChordFunction.VII, -1).setScaleMajor().setLength(Duration.V2).show();
+		 * add(ChordFunction.VII, -1).setMajorScale().setLength(Duration.V2).show();
 		 *
 		 * progression.setArpegio(a);
 		 *

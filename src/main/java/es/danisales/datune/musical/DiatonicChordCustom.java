@@ -1,14 +1,10 @@
 package es.danisales.datune.musical;
 
-import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.midi.AddedException;
-import es.danisales.datune.midi.ChromaticMidi;
-import es.danisales.datune.pitch.AbsoluteDegree;
 import es.danisales.datune.pitch.Chord;
 import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.ChordMutableInterface;
-import es.danisales.datune.tonality.Tonality;
 
 import java.util.*;
 import java.util.function.BiFunction;

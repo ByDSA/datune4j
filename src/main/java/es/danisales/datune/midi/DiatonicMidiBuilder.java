@@ -2,8 +2,8 @@ package es.danisales.datune.midi;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.tonality.Tonality;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import es.danisales.utils.building.Builder;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Objects;
 
