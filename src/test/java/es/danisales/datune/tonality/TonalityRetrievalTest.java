@@ -1,9 +1,8 @@
 package es.danisales.datune.tonality;
 
+import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.DiatonicAlt;
-import es.danisales.datune.musical.DiatonicAltRetrieval;
-import es.danisales.datune.musical.transformations.EnharmonicsRetrieval;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -22,7 +21,7 @@ public class TonalityRetrievalTest {
 
     @Test
     public void outScaleFromChord() {
-        List<Tonality> ts = TonalityRetrieval.listFromChordOutScale( ChromaticChord.C);
+        List<Tonality> ts = TonalityRetrieval.listFromChordOutScale(ChromaticChord.C);
         Assert.assertFalse(ts.isEmpty());
     }
 
@@ -99,11 +98,12 @@ public class TonalityRetrievalTest {
 
     @Test
     public void getEnharmonicMinimalAltsFromChromatic() {
-        Tonality target = Tonality.from(DiatonicAlt.FF, Scale.CHROMATIC);
+        Tonality target1 = Tonality.from(Chromatic.FF, Scale.CHROMATIC);
+        Tonality target2 = Tonality.from(DiatonicAlt.Gb, Scale.CHROMATIC);
         Tonality tonality = Tonality.from(DiatonicAlt.EEE, Scale.CHROMATIC);
         Set<Tonality> result = TonalityRetrieval.getEnharmonicMinimalAltsFrom(tonality);
-
-        assertEquals(1, result.size());
-        assertEquals(target, result.iterator().next());
+        assertEquals(2, result.size());
+        assertTrue(result.contains(target1));
+        assertTrue(result.contains(target2));
     }
 }

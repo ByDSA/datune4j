@@ -124,7 +124,7 @@ public interface Tonality {
 
         int ret = 0;
         for ( DiatonicAlt c : getNotes() )
-            ret += c.getAlterations();
+            ret += c.getUnsignedAlterations();
 
         return ret;
     }
@@ -175,7 +175,7 @@ public interface Tonality {
 
     /*
      * public Integer getDegreeFrom(int note) { for ( int i = 0; i < size(); i++ ) if
-     * ( getAllFrom( i ).ordinal() == note ) return i;
+     * ( getFromChromatic( i ).ordinal() == note ) return i;
      *
      * return null; }
      */

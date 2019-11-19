@@ -93,7 +93,7 @@ public enum Chromatic implements PitchChromaticSingle {
 		Chromatic ret = diatonicAltChromaticMap.get(diatonicAlt);
 		if (ret == null) {
 			Diatonic diatonicOriginal = diatonicAlt.getDiatonic();
-			int semitones = diatonicAlt.getSemitonesAdded();
+			int semitones = Math.round(diatonicAlt.getSemitonesAdded() + diatonicAlt.getMicrotonalPartAdded());
 			Chromatic chromaticDiatonicOriginal = Chromatic.from(diatonicOriginal);
 			ret = chromaticDiatonicOriginal.addSemi(semitones);
 		}
@@ -146,8 +146,8 @@ public enum Chromatic implements PitchChromaticSingle {
 		return addSemi(1);
 	}
 
-	public Set<DiatonicAlt> getEnharmonics(int maxAlts) {
-		return EnharmonicsRetrieval.getAllFrom(this, maxAlts);
+	public Set<DiatonicAlt> getEnharmonics(int maxAlts) { // todo: pasar a retrieval
+		return EnharmonicsRetrieval.getFromChromaticMicro(this, 0, maxAlts);
 	}
 
 	private static int delimit(int n) {

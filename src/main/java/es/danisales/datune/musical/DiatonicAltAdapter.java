@@ -7,6 +7,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Objects;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 class DiatonicAltAdapter {
     static @NonNull DiatonicAlt from(@NonNull PitchChromaticSingle pitchChromaticSingle, @NonNull Diatonic diatonic) {
         if (pitchChromaticSingle instanceof Chromatic) {
@@ -20,10 +22,36 @@ class DiatonicAltAdapter {
         throw new RuntimeException("Impossible conversion");
     }
 
-    static @NonNull DiatonicAlt from(@NonNull PitchChromaticSingle pitchChromaticSingle, @NonNull AbsoluteDegree absoluteDegree) {
+    static @NonNull DiatonicAlt from(@NonNull PitchChromaticSingle pitchChromaticSingle, float microPart, @NonNull AbsoluteDegree absoluteDegree) {
+        checkArgument(microPart < 1);
+
         Diatonic diatonic = Diatonic.from(absoluteDegree);
         Objects.requireNonNull(diatonic);
-        return from(pitchChromaticSingle, diatonic);
+
+        DiatonicAlt diatonicAltWithourMicro = DiatonicAlt.from(pitchChromaticSingle, diatonic);
+        if (microPart == 0)
+            return diatonicAltWithourMicro;
+
+        float alt = diatonicAltWithourMicro.getSemitonesAdded() + microPart;
+        return DiatonicAlt.from(diatonicAltWithourMicro.getDiatonic(), alt);
+    }
+
+    static @NonNull DiatonicAlt from(float semis, @NonNull AbsoluteDegree absoluteDegree) {
+        Diatonic diatonic = Diatonic.from(absoluteDegree);
+        Objects.requireNonNull(diatonic);
+
+        return from(semis, diatonic);
+    }
+
+    static @NonNull DiatonicAlt from(float semis, @NonNull Diatonic diatonic) {
+        int semisInt = Math.round(semis);
+        float microPart = semis - semisInt;
+
+        semisInt %= Chromatic.NUMBER;
+
+        Chromatic chromatic = Chromatic.from(semisInt);
+
+        return from(chromatic, microPart, diatonic);
     }
 
     private static @NonNull DiatonicAlt from(@NonNull AbsoluteDegree absoluteDegree, @NonNull Diatonic diatonic) {

@@ -5,7 +5,6 @@ import es.danisales.datune.midi.PitchMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.DiatonicAlt;
-import es.danisales.datune.pitch.AbsoluteDegree;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -294,7 +293,7 @@ public class TonalityTest {
 
         relativeDegree = RelativeDegree.from(8);
 
-        assertEquals(DiatonicAlt.Bb,
+        assertEquals(DiatonicAlt.AA,
                 tonality.getNote(relativeDegree));
     }
 
@@ -309,7 +308,7 @@ public class TonalityTest {
 
         relativeDegree = RelativeDegree.from(8);
 
-        assertEquals(DiatonicAlt.Bb,
+        assertEquals(DiatonicAlt.GG,
                 tonality.getNote(relativeDegree));
     }
 
@@ -336,7 +335,7 @@ public class TonalityTest {
 
         relativeDegree = RelativeDegree.from(8);
 
-        assertEquals(DiatonicAlt.FF,
+        assertEquals(DiatonicAlt.G,
                 tonality.getNote(relativeDegree));
     }
 
@@ -449,7 +448,7 @@ public class TonalityTest {
     }
 
     @Test
-    public void getAlterations() {
+    public void getAlterationsFixedTonalities() {
         assertEquals(0, Tonality.C.getAlterations());
         assertEquals(0, Tonality.Am.getAlterations());
         assertEquals(5, Tonality.Db.getAlterations());
@@ -457,6 +456,14 @@ public class TonalityTest {
         assertEquals(3, Tonality.Eb.getAlterations());
         assertEquals(4, Tonality.E.getAlterations());
         assertEquals(3, Tonality.Cm.getAlterations());
+    }
+
+    @Test
+    public void getAlterationsCustom() {
+        Tonality tonality = Tonality.from(DiatonicAlt.FF, Scale.CHROMATIC);
+        assertEquals(tonality.getNotes().toString(), 5, tonality.getAlterations());
+        tonality = Tonality.from(DiatonicAlt.Gb, Scale.CHROMATIC);
+        assertEquals(tonality.getNotes().toString(), 5, tonality.getAlterations());
     }
 
     @Test

@@ -4,9 +4,15 @@ import es.danisales.datune.musical.transformations.Namer;
 import es.danisales.datune.pitch.AbsoluteDegree;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.pitch.SymbolicPitch;
+import es.danisales.datune.tonality.ScaleDistance;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 @SuppressWarnings("WeakerAccess")
 public class DiatonicAlt implements SymbolicPitch {
@@ -73,12 +79,30 @@ public class DiatonicAlt implements SymbolicPitch {
 	public static final DiatonicAlt Abbb = new DiatonicAlt(Diatonic.A, -3);
 	public static final DiatonicAlt Bbbb = new DiatonicAlt(Diatonic.B, -3);
 
-	private final float semitonesAdded;
-	private final Diatonic diatonicBase;
+	private static final Set<DiatonicAlt> ALL_PRECALC = Collections.unmodifiableSet( new HashSet<>(Arrays.asList(
+			C, D, E, F, G, A, B,
+			CC, DD, EE, FF, GG, AA, BB,
+			CCC, DDD, EEE, FFF, GGG, AAA, BBB,
+			CCCC, DDDD, EEEE, FFFF, GGGG, AAAA, BBBB,
+			CCCCC, DDDDD, EEEEE, FFFFF, GGGGG, AAAAA, BBBBB,
+			Cb, Db, Eb, Fb, Gb, Ab, Bb,
+			Cbb, Dbb, Ebb, Fbb, Gbb, Abb, Bbb,
+			Cbbb, Dbbb, Ebbb, Fbbb, Gbbb, Abbb, Bbbb
+	)));
 
-	private DiatonicAlt(Diatonic diatonicBase, float semitonesAdded) {
+	private static final float TOLERANCE = 0.01f;
+
+	private final int semitonesAdded;
+	private final float microtonalAdded;
+	private final Diatonic diatonicBase;
+	private final float alt;
+
+	private DiatonicAlt(Diatonic diatonicBase, float alt) {
 		this.diatonicBase = diatonicBase;
-		this.semitonesAdded = semitonesAdded;
+		this.alt = alt;
+		this.semitonesAdded = (int)alt;
+		float diff = alt - this.semitonesAdded;
+		this.microtonalAdded = Math.abs(diff) < TOLERANCE ? 0 : diff;
 	}
 
 	public static @NonNull DiatonicAlt from(@NonNull PitchChromaticSingle chromatic, @NonNull Diatonic diatonic) {
@@ -86,7 +110,19 @@ public class DiatonicAlt implements SymbolicPitch {
 	}
 
 	public static @NonNull DiatonicAlt from(@NonNull Diatonic diatonic, float alt) {
+		DiatonicAlt ret = getPrecalc(diatonic, alt);
+		if (ret != null)
+			return ret;
+
 		return new DiatonicAlt(diatonic, alt);
+	}
+
+	private static @Nullable DiatonicAlt getPrecalc(Diatonic diatonic, float alt) {
+		for (DiatonicAlt d : ALL_PRECALC)
+			if (d.getDiatonic().equals(diatonic) && d.getSemitonesAdded() + d.getMicrotonalPartAdded() == alt)
+				return d;
+
+			return null;
 	}
 
 	public static @NonNull DiatonicAlt from(@NonNull PitchChromaticSingle pitchChromaticSingle) {
@@ -98,38 +134,50 @@ public class DiatonicAlt implements SymbolicPitch {
 			if (diatonicAlt.getDiatonic().equals(diatonic))
 				return diatonicAlt;
 
-			return null;
+		return null;
 	}
 
-	public static DiatonicAlt from(@NonNull Chromatic chromatic, @NonNull AbsoluteDegree absoluteDegree) {
-		return DiatonicAltAdapter.from(chromatic, absoluteDegree);
+	public static DiatonicAlt from(@NonNull Chromatic chromatic, float microPart, @NonNull AbsoluteDegree absoluteDegree) {
+		return DiatonicAltAdapter.from(chromatic, microPart, absoluteDegree);
+	}
+
+	public static DiatonicAlt from(float semis, @NonNull AbsoluteDegree absoluteDegree) {
+		return DiatonicAltAdapter.from(semis, absoluteDegree);
 	}
 
 	public int getSemitonesAdded() {
-		return (int)semitonesAdded;
-	}
-
-	public float getMicrotonalSemitonesAdded() {
 		return semitonesAdded;
 	}
 
+	public float getMicrotonalPartAdded() {
+		return microtonalAdded;
+	}
+
+	public @NonNull DiatonicAlt add(ScaleDistance scaleDistance) {
+		return DiatonicAlt.from(diatonicBase, alt + scaleDistance.getMicrotonalSemitones());
+	}
+
+	public @NonNull DiatonicAlt sub(ScaleDistance scaleDistance) {
+		return DiatonicAlt.from(diatonicBase, alt - scaleDistance.getMicrotonalSemitones());
+	}
+
 	public @NonNull DiatonicAlt addSemi(int semis) {
-		return new DiatonicAlt(diatonicBase, semitonesAdded + semis);
+		return DiatonicAlt.from(diatonicBase, alt + semis);
+	}
+
+	public float getUnsignedAlterations() {
+		return Math.abs( getAlterations() );
 	}
 
 	public float getAlterations() {
-		float altSigned = getMicrotonalSemitonesAdded();
+		float altSigned = getSemitonesAdded() + getMicrotonalPartAdded();
 		if (altSigned == 0)
 			return 0;
-		return Math.abs( altSigned );
+		return altSigned;
 	}
 
-	public @NonNull DiatonicAlt getNextDiatonic() {
-		return new DiatonicAlt(diatonicBase.getNext(), semitonesAdded);
-	}
-
-	public @NonNull DiatonicAlt getPreviousDiatonic() {
-		return new DiatonicAlt(diatonicBase.getPrevious(), semitonesAdded);
+	public @NonNull DiatonicAlt getNextDiatonic() { // todo: used only in tunning (revisar tras hacer tunning)
+		return new DiatonicAlt(diatonicBase.getNext(), alt);
 	}
 
 	public @NonNull Diatonic getDiatonic() {
@@ -148,11 +196,13 @@ public class DiatonicAlt implements SymbolicPitch {
 
 		DiatonicAlt casted = (DiatonicAlt)o;
 
-		return this.diatonicBase == casted.diatonicBase && this.semitonesAdded == casted.semitonesAdded;
+		return this.diatonicBase == casted.diatonicBase
+				&& this.semitonesAdded == casted.semitonesAdded
+				&& this.microtonalAdded == casted.microtonalAdded;
 	}
 
 	@Override
 	public int hashCode() {
-		return diatonicBase.hashCode() + Float.hashCode(semitonesAdded);
+		return diatonicBase.hashCode() + Float.hashCode(alt);
 	}
 }

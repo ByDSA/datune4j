@@ -7,7 +7,6 @@ import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.tonality.ScaleDistance;
 import es.danisales.datune.tonality.Tonality;
-import es.danisales.utils.MathUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class Namer {
@@ -17,19 +16,19 @@ public class Namer {
     public static String from(@NonNull DiatonicAlt diatonicAlt) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append( diatonicAlt.getDiatonic() );
-        float alterations = diatonicAlt.getAlterations();
+        float alterations = diatonicAlt.getUnsignedAlterations();
         if (alterations > 0) {
             if (diatonicAlt.getSemitonesAdded() < 0) {
-                for (int i = 0; i < alterations; i++)
+                for (int i = 0; i <= alterations-1; i++)
                     stringBuilder.append(ChordNotation.FLAT);
             } else if (diatonicAlt.getSemitonesAdded() > 0) {
-                for (int i = 0; i < alterations; i++)
+                for (int i = 0; i <= alterations-1; i++)
                     stringBuilder.append(ChordNotation.SHARP);
             }
 
-            float decimalPart = MathUtils.decimalPart(diatonicAlt.getMicrotonalSemitonesAdded());
+            float decimalPart = diatonicAlt.getMicrotonalPartAdded();
             if (Math.abs(decimalPart) > 0) {
-                int quarters = (int)(Math.abs(decimalPart)/ ScaleDistance.QUARTER.getMicrotonalSemitones());
+                int quarters = Math.round(Math.abs(decimalPart)/ ScaleDistance.QUARTER.getMicrotonalSemitones());
                 if (decimalPart < 0)
                     stringBuilder.append("(-").append(quarters).append("q)");
                 else if (decimalPart > 0)

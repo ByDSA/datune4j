@@ -17,39 +17,45 @@ public class EnharmonicsRetrieval {
     private EnharmonicsRetrieval() {
     }
 
-    public static @NonNull Set<DiatonicAlt> getAllFrom(@NonNull DiatonicAlt diatonicAlt, int maxAlterations) {
-        checkArgument(maxAlterations > 0);
-        
+    public static @NonNull Set<DiatonicAlt> getFromDiatonicAlt(@NonNull DiatonicAlt diatonicAlt, int maxAlterations) {
+        checkArgument(maxAlterations >= 0);
+
         Chromatic chromatic = Chromatic.from(diatonicAlt);
-        return getAllFrom(chromatic, maxAlterations);
+        return getFromChromaticMicro(chromatic, diatonicAlt.getMicrotonalPartAdded(), maxAlterations);
     }
 
-    public static @NonNull Set<DiatonicAlt> getAllFrom(@NonNull Chromatic chromatic, int maxAlterations) {
-        checkArgument(maxAlterations > 0);
+    public static @NonNull Set<DiatonicAlt> getFromChromatic(@NonNull Chromatic chromatic, int maxAlt) {
+        return getFromChromaticMicro(chromatic, 0, maxAlt);
+    }
 
-        Set<DiatonicAlt> tmp = new HashSet<>();
+    public static @NonNull Set<DiatonicAlt> getFromChromaticMicro(@NonNull Chromatic chromatic, float micro, int maxAlt) {
+        checkArgument(maxAlt >= 0);
 
-        for (int alt = - maxAlterations; alt <= maxAlterations; alt++)
+        Set<DiatonicAlt> ret = new HashSet<>();
+
+        for (float alt = - maxAlt; alt <= maxAlt; alt++)
             for (Diatonic diatonic : Diatonic.values()) {
-                DiatonicAlt diatonicAlt = DiatonicAlt.from(diatonic, alt);
+                DiatonicAlt diatonicAlt = DiatonicAlt.from(chromatic.ordinal() + alt + micro, diatonic);
                 Chromatic diatonicAltChromatic = Chromatic.from(diatonicAlt);
-                if (diatonicAltChromatic == chromatic)
-                    tmp.add(diatonicAlt);
+                if (diatonicAltChromatic == chromatic && Math.floor(diatonicAlt.getUnsignedAlterations()) <= maxAlt)
+                    ret.add(diatonicAlt);
             }
 
-        return tmp;
+        return ret;
     }
 
     public static @NonNull DiatonicAlt getMinAlts(@NonNull DiatonicAlt diatonicAlt) {
-        Set<DiatonicAlt> set = EnharmonicsRetrieval.getAllFrom(diatonicAlt, 1);
+        Set<DiatonicAlt> set = EnharmonicsRetrieval.getFromDiatonicAlt(diatonicAlt, 1);
         Iterator<DiatonicAlt> iterator = set.iterator();
-        final AtomicReference<DiatonicAlt> ret = new AtomicReference<>( iterator.next() );
+        final AtomicReference<DiatonicAlt> ret = new AtomicReference<>( diatonicAlt );
         iterator.forEachRemaining((DiatonicAlt d) -> {
-            if (d.getAlterations() < ret.get().getAlterations())
+            float retuAlts = ret.get().getUnsignedAlterations();
+            float duAlts = d.getUnsignedAlterations();
+            if (duAlts < retuAlts
+                    || duAlts < diatonicAlt.getUnsignedAlterations() && duAlts == retuAlts && d.getAlterations() > ret.get().getAlterations())
                 ret.set(d);
         });
 
-        return DiatonicAlt.from(ret.get().getDiatonic(),
-                ret.get().getMicrotonalSemitonesAdded() + MathUtils.decimalPart(diatonicAlt.getMicrotonalSemitonesAdded()));
+        return ret.get();
     }
 }

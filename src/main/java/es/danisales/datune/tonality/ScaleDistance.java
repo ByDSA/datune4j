@@ -12,7 +12,7 @@ public enum ScaleDistance {
     }
 
     public int getSemitones() {
-        return (int)value;
+        return Math.round(value);
     }
     public float getMicrotonalSemitones() {
         return value;

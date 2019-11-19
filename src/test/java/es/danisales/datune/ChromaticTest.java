@@ -2,6 +2,7 @@ package es.danisales.datune;
 
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
+import es.danisales.datune.tonality.ScaleDistance;
 import org.junit.Test;
 
 import java.util.List;
@@ -10,6 +11,74 @@ import java.util.Set;
 import static org.junit.Assert.*;
 
 public class ChromaticTest {
+	private void fromDiatonicAltTargetSource(Chromatic target, DiatonicAlt source) {
+		Chromatic actual = Chromatic.from(source);
+		assertSame(target, actual);
+	}
+
+	@Test
+	public void fromDiatonicAlt() {
+		fromDiatonicAltTargetSource(Chromatic.C, DiatonicAlt.C);
+	}
+
+	@Test
+	public void fromDiatonicAlt2() {
+		fromDiatonicAltTargetSource(Chromatic.CC, DiatonicAlt.CC);
+	}
+
+	@Test
+	public void fromDiatonicAlt3() {
+		fromDiatonicAltTargetSource(Chromatic.D, DiatonicAlt.CCC);
+	}
+
+	@Test
+	public void fromDiatonicAlt4() {
+		fromDiatonicAltTargetSource(Chromatic.DD, DiatonicAlt.CCCC);
+	}
+
+	@Test
+	public void fromDiatonicAlt5() {
+		fromDiatonicAltTargetSource(Chromatic.E, DiatonicAlt.CCCCC);
+	}
+
+	@Test
+	public void fromDiatonicAlt6() {
+		fromDiatonicAltTargetSource(Chromatic.C, DiatonicAlt.Dbb);
+	}
+
+	@Test
+	public void fromDiatonicAlt7() {
+		fromDiatonicAltTargetSource(Chromatic.C, DiatonicAlt.BB);
+	}
+
+	@Test
+	public void fromDiatonicAlt8() {
+		fromDiatonicAltTargetSource(Chromatic.DD, DiatonicAlt.Eb);
+	}
+
+	@Test
+	public void fromDiatonicAltMicro() {
+		fromDiatonicAltTargetSource(Chromatic.CC,
+				DiatonicAlt.C.add(ScaleDistance.QUARTER));
+	}
+
+	@Test
+	public void fromDiatonicAltMicro2() {
+		fromDiatonicAltTargetSource(Chromatic.CC,
+				DiatonicAlt.C.add(ScaleDistance.QUARTER).add(ScaleDistance.QUARTER));
+	}
+
+	@Test
+	public void fromDiatonicAltMicro3() {
+		fromDiatonicAltTargetSource(Chromatic.C,
+				DiatonicAlt.C.sub(ScaleDistance.QUARTER));
+	}
+
+	@Test
+	public void fromDiatonicAltMicro4() {
+		fromDiatonicAltTargetSource(Chromatic.B,
+				DiatonicAlt.C.sub(ScaleDistance.QUARTER).sub(ScaleDistance.QUARTER));
+	}
 
 	@Test
 	public void noteName() {
