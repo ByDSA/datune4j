@@ -1,6 +1,5 @@
 package es.danisales.datune.midi;
 
-import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.utils.building.Builder;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -10,9 +9,7 @@ import java.util.Objects;
 import static com.google.common.base.Preconditions.checkArgument;
 
 public final class DiatonicMidiBuilder extends Builder<DiatonicMidiBuilder, DiatonicMidi> {
-    private Tonality tonality;
-    private int octave;
-    private DiatonicDegree diatonicDegree;
+    private PitchDiatonicMidi pitch;
     private int length;
     private int velocity;
 
@@ -26,39 +23,19 @@ public final class DiatonicMidiBuilder extends Builder<DiatonicMidiBuilder, Diat
     public DiatonicMidi build() {
         checkArgument(length > 0);
         checkArgument(velocity > 0);
-        Objects.requireNonNull(tonality);
-        checkArgument(octave > 0);
-        Objects.requireNonNull(diatonicDegree);
+        Objects.requireNonNull(pitch);
+        checkArgument(pitch.octave > 0);
+        Objects.requireNonNull(pitch.degree);
 
-        int dv = diatonicDegree.ordinal();
-        octave += ( dv < 0 && dv % tonality.getScale().size() != 0 ? -1 : 0 );
+        int dv = pitch.degree.ordinal();
+        pitch.octave += ( dv < 0 && dv % pitch.tonality.getScale().size() != 0 ? -1 : 0 );
 
         DiatonicMidi dm = new DiatonicMidi();
         dm.setLength( length );
         dm.setVelocity( velocity );
-        dm.tonality = tonality;
-        dm.octave = octave;
-        dm.degree = diatonicDegree;
-        dm.pitch = PitchMidi.from( diatonicDegree, tonality, octave );
+        dm.pitch = pitch;
 
         return dm;
-    }
-
-    public DiatonicMidiBuilder tonality(@NonNull Tonality tonality) {
-        Objects.requireNonNull(tonality);
-        this.tonality = tonality;
-        return self();
-    }
-
-    public DiatonicMidiBuilder octave(int octave) {
-        this.octave = octave;
-        return self();
-    }
-
-    public DiatonicMidiBuilder diatonicDegree(@NonNull DiatonicDegree diatonicDegree) {
-        Objects.requireNonNull(diatonicDegree);
-        this.diatonicDegree = diatonicDegree;
-        return self();
     }
 
     public DiatonicMidiBuilder length(int length) {
@@ -77,5 +54,16 @@ public final class DiatonicMidiBuilder extends Builder<DiatonicMidiBuilder, Diat
     @Override
     protected DiatonicMidiBuilder self() {
         return this;
+    }
+
+    public DiatonicMidiBuilder fromChromatic(ChromaticMidi chromaticMidi, Tonality tonality) {
+
+        return self();
+    }
+
+    public DiatonicMidiBuilder pitch(PitchDiatonicMidi pitch) {
+        this.pitch = pitch;
+
+        return self();
     }
 }

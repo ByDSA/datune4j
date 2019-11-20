@@ -101,6 +101,7 @@ public enum Diatonic implements PitchDiatonicSingle {
 		return DiatonicAdapter.from( this.ordinal() + intervalDiatonic.ordinal() );
 	}
 
+	@Override
 	public Diatonic getShiftedNegative(IntervalDiatonic intervalDiatonic) {
 		return DiatonicAdapter.from( this.ordinal() - intervalDiatonic.ordinal() );
 	}

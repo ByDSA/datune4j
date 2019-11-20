@@ -3,7 +3,7 @@ package es.danisales.datune;
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.midi.DiatonicMidi;
-import es.danisales.datune.midi.PitchMidi;
+import es.danisales.datune.midi.PitchChromaticMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
@@ -39,27 +39,27 @@ public class DiatonicMidiTest {
 	public void addNegative() {
 		DiatonicMidi n = DiatonicMidi.from( DiatonicDegree.V, Tonality.E, 6 );
 		DiatonicMidi n2 = n.clone().sub( IntervalDiatonic.UNISON );
-		assertEquals( PitchMidi.B6, n2.getCode() );
+		assertEquals( PitchChromaticMidi.B6, n2.getPitch() );
 		n2 = n.clone().sub( IntervalDiatonic.SECOND );
-		assertEquals( PitchMidi.A6, n2.getCode() );
+		assertEquals( PitchChromaticMidi.A6, n2.getPitch() );
 		n2 = n.clone().sub( IntervalDiatonic.THIRD );
-		assertEquals( PitchMidi.GG6, n2.getCode() );
+		assertEquals( PitchChromaticMidi.GG6, n2.getPitch() );
 		n2 = n.clone().sub( IntervalDiatonic.FOURTH );
-		assertEquals( PitchMidi.FF6, n2.getCode() );
+		assertEquals( PitchChromaticMidi.FF6, n2.getPitch() );
 		n2 = n.clone().sub( IntervalDiatonic.FIFTH );
-		assertEquals( PitchMidi.E6, n2.getCode() );
+		assertEquals( PitchChromaticMidi.E6, n2.getPitch() );
 		n2 = n.clone().sub( IntervalDiatonic.SIXTH );
-		assertEquals( PitchMidi.DD6, n2.getCode() );
+		assertEquals( PitchChromaticMidi.DD6, n2.getPitch() );
 		n2 = n.clone().sub( IntervalDiatonic.SEVENTH );
-		assertEquals( PitchMidi.CC6, n2.getCode() );
+		assertEquals( PitchChromaticMidi.CC6, n2.getPitch() );
 		n2 = n.clone().sub( IntervalDiatonic.OCTAVE );
-		assertEquals( PitchMidi.B5, n2.getCode() );
+		assertEquals( PitchChromaticMidi.B5, n2.getPitch() );
 		n2 = n.clone().sub( IntervalDiatonic.NINTH );
-		assertEquals( PitchMidi.A5, n2.getCode() );
+		assertEquals( PitchChromaticMidi.A5, n2.getPitch() );
 		n2 = n.clone().sub( IntervalDiatonic.TENTH );
-		assertEquals( PitchMidi.GG5, n2.getCode() );
+		assertEquals( PitchChromaticMidi.GG5, n2.getPitch() );
 		n2 = n.clone().sub( IntervalDiatonic.ELEVENTH );
-		assertEquals( PitchMidi.FF5, n2.getCode() );
+		assertEquals( PitchChromaticMidi.FF5, n2.getPitch() );
 		
 	}
 
@@ -67,12 +67,12 @@ public class DiatonicMidiTest {
 	public void add() {
 		Tonality s = Tonality.from( Chromatic.FF, Scale.MIXOLYDIAN );
 		DiatonicMidi n = DiatonicMidi.from( DiatonicDegree.I, s, 3 );
-		assertEquals( 42, n.getCode() );
+		assertEquals( 42, n.getPitch() );
 		assertEquals( 3, n.getOctave() );
-		assertEquals( 46, n.clone().add( IntervalDiatonic.THIRD ).getCode() );
-		assertEquals( 49, n.clone().add( IntervalDiatonic.FIFTH ).getCode() );
+		assertEquals( 46, n.clone().add( IntervalDiatonic.THIRD ).getPitch() );
+		assertEquals( 49, n.clone().add( IntervalDiatonic.FIFTH ).getPitch() );
 		assertEquals( 3, n.clone().add( IntervalDiatonic.FIFTH ).getOctave() );
-		assertEquals( 52, n.clone().add( IntervalDiatonic.SEVENTH ).getCode() );
+		assertEquals( 52, n.clone().add( IntervalDiatonic.SEVENTH ).getPitch() );
 	}
 	
 	@Test
@@ -83,7 +83,7 @@ public class DiatonicMidiTest {
 		for ( int i = 0; i < diffM.length; i++ ) {
 			IntervalDiatonic id = IntervalDiatonic.fromIndex( i+1 );
 			DiatonicMidi n2 = n.clone().add( id );
-			int d1 = n2.getCode() - n.getCode();
+			int d1 = n2.getPitch().getCode() - n.getPitch().getCode();
 			int d2 = diffM[i];
 			assertEquals( d2, d1 );
 		}
@@ -94,7 +94,7 @@ public class DiatonicMidiTest {
 		for ( int i = 0; i < diffm.length; i++ ) {
 			IntervalDiatonic id = IntervalDiatonic.fromIndex( i+1 );
 			DiatonicMidi n2 = n.clone().add( id );
-			int d1 = n2.getCode() - n.getCode();
+			int d1 = n2.getPitch().getCode() - n.getPitch().getCode();
 			int d2 = diffm[i];
 			assertEquals( "Error al a�adir " + i + " posiciones a " + n, d2, d1 );
 		}
@@ -113,7 +113,7 @@ public class DiatonicMidiTest {
 		for ( int i = 0; i < r.length; i++ ) {
 			IntervalDiatonic id = IntervalDiatonic.fromIndex( i );
 			DiatonicMidi n2 = n.clone().add( id );
-			int d1 = n2.getCode();
+			int d1 = n2.getPitch().getCode();
 			assertEquals( "Error al añadir " + i + " posiciones a " + n, r[i], d1 );
 		}
 	}

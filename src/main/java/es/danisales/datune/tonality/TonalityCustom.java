@@ -1,16 +1,9 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.diatonic.ChromaticFunction;
 import es.danisales.datune.diatonic.DiatonicDegree;
-import es.danisales.datune.diatonic.DiatonicFunction;
-import es.danisales.datune.diatonic.HarmonicFunction;
-import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.musical.*;
-import es.danisales.datune.musical.transformations.ChromaticAdapter;
-import es.danisales.datune.pitch.PitchChromaticSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.*;
 

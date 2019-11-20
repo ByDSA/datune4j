@@ -6,5 +6,6 @@ import es.danisales.datune.musical.Diatonic;
 
 public interface PitchDiatonicSingle extends AbsoluteDegree<DiatonicDegree>, SymbolicPitch {
 	Diatonic getDiatonic();
-	PitchDiatonicSingle getShifted(IntervalDiatonic i);
+	PitchDiatonicSingle getShifted(IntervalDiatonic intervalDiatonic);
+	PitchDiatonicSingle getShiftedNegative(IntervalDiatonic intervalDiatonic);
 }

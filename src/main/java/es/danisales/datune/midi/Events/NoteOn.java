@@ -2,15 +2,21 @@ package es.danisales.datune.midi.Events;
 
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.DiatonicMidi;
-import es.danisales.datune.midi.PitchSingleMidi;
+import es.danisales.datune.midi.PitchChromaticMidi;
 import es.danisales.datune.midi.Settings;
+import es.danisales.datune.musical.Diatonic;
 
 public class NoteOn extends ChannelEvent {
-	public PitchSingleMidi note; // para toString
+	public ChromaticMidi note; // para toString
 	
-	public NoteOn(PitchSingleMidi n) {
-		this(0, n.getCode(), n.getVelocity());
+	public NoteOn(ChromaticMidi n) {
+		this(0, n.getPitch().getCode(), n.getVelocity());
 		note = n;
+	}
+
+	public NoteOn(DiatonicMidi n) {
+		this(0, PitchChromaticMidi.from(n.getPitch()).getCode(), n.getVelocity());
+		note = ChromaticMidi.from(n);
 	}
 	
 	public NoteOn(int delta, int key, int vel) {

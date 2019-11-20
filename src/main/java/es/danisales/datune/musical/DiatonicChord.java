@@ -1,13 +1,12 @@
 package es.danisales.datune.musical;
 
-import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.DiatonicFunction;
-import es.danisales.datune.pitch.AbsoluteDegree;
 import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.ChordMutableInterface;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
 import java.util.function.BiFunction;
 
 public class DiatonicChord extends NormalChordCommon<Diatonic> implements DiatonicChordCommon<Diatonic>, ChordMutableInterface<Diatonic> {
@@ -27,7 +26,6 @@ public class DiatonicChord extends NormalChordCommon<Diatonic> implements Diaton
     public static final DiatonicChord NINTH_O3_O7 = new DiatonicChord( DiatonicChordEnum.NINTH_O3_O7 );
     public static final DiatonicChord ELEVENTH = new DiatonicChord( DiatonicChordEnum.ELEVENTH );
     public static final DiatonicChord THIRTEENTH = new DiatonicChord( DiatonicChordEnum.THIRTEENTH );
-
 
     public static DiatonicChord[] values() {
         return new DiatonicChord[]{

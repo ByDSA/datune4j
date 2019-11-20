@@ -893,7 +893,7 @@ public class Main {
 				cStr = cStr.replaceAll( "#4", "a4" );
 				cStr = cStr.replaceAll( "#11", "a11" );
 				cStr = cStr.replaceAll( "/", ".over( Chromatic." );
-				if (cStr.contains( ".over(" ))
+				if (cStr.containsPitch( ".over(" ))
 					cStr += " )";
 				if (!cont)
 					sb.append( "case " + f.name() + ": return ChromaticChord." + cStr + ";\n"); // " + c.javaNotes());

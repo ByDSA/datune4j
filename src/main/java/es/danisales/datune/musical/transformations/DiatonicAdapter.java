@@ -3,7 +3,7 @@ package es.danisales.datune.musical.transformations;
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.DiatonicMidi;
-import es.danisales.datune.midi.PitchMidi;
+import es.danisales.datune.midi.PitchChromaticMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.Diatonic;
 import es.danisales.datune.musical.DiatonicAlt;
@@ -70,7 +70,7 @@ public class DiatonicAdapter {
         return Diatonic.from( degree );
     }
 
-    public @Nullable Diatonic from(@NonNull PitchMidi pitchMidi, @NonNull Tonality tonality) {
+    public @Nullable Diatonic from(@NonNull PitchChromaticMidi pitchMidi, @NonNull Tonality tonality) {
         Chromatic chromatic = pitchMidi.getChromatic();
         DiatonicDegree diatonicDegree = (DiatonicDegree)tonality.getDegreeFrom(chromatic);
         if (diatonicDegree == null)

@@ -3,6 +3,7 @@ package es.danisales.datune.eventsequences;
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.midi.Events.Event;
+import es.danisales.datune.midi.PitchDiatonicMidi;
 import es.danisales.datune.midi.Settings.DefaultValues;
 import es.danisales.datune.tonality.Tonality;
 
@@ -37,10 +38,9 @@ public class MelodyDiatonic extends Melody {
 	}
 
 	public DiatonicMidi add(DiatonicDegree degree, int length, int octaveShift, int velocity) {
+		PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(degree, tonality, octave + octaveShift);
 		DiatonicMidi nd = DiatonicMidi.builder()
-				.diatonicDegree(degree)
-				.tonality(tonality)
-				.octave(octave + octaveShift)
+				.pitch(pitchDiatonicMidi)
 				.length(length)
 				.velocity(velocity)
 				.build();

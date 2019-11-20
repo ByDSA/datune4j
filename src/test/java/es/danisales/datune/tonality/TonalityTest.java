@@ -1,7 +1,7 @@
 package es.danisales.datune.tonality;
 
 import es.danisales.datune.diatonic.*;
-import es.danisales.datune.midi.PitchMidi;
+import es.danisales.datune.midi.PitchChromaticMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.DiatonicAlt;
@@ -676,9 +676,9 @@ public class TonalityTest {
     public void getDegree() {
         Tonality ton = Tonality.C;
 
-        assertEquals(DiatonicDegree.I, ton.getDegreeFrom(PitchMidi.C5.getChromatic()));
-        assertEquals(DiatonicDegree.II, ton.getDegreeFrom(PitchMidi.D5.getChromatic()));
-        assertEquals(DiatonicDegree.III, ton.getDegreeFrom(PitchMidi.E6.getChromatic()));
+        assertEquals(DiatonicDegree.I, ton.getDegreeFrom(PitchChromaticMidi.C5.getChromatic()));
+        assertEquals(DiatonicDegree.II, ton.getDegreeFrom(PitchChromaticMidi.D5.getChromatic()));
+        assertEquals(DiatonicDegree.III, ton.getDegreeFrom(PitchChromaticMidi.E6.getChromatic()));
         assertEquals(DiatonicDegree.IV, ton.getDegreeFrom(Chromatic.F));
         assertNull(ton.getDegreeFrom(DiatonicAlt.EEEE));
         assertEquals(DiatonicDegree.V, ton.getDegreeFrom(Chromatic.from(DiatonicAlt.EEEE)));
@@ -817,7 +817,7 @@ public class TonalityTest {
     }
 
     @Test
-    public void getChromaticFunction() { // todo
+    public void getChromaticFunction() {
         Tonality t = Tonality.C;
         for (ChromaticFunction cf : ChromaticFunction.values()) {
             assertNotNull( ChromaticChord.from( t, cf ) );

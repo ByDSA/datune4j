@@ -1,14 +1,21 @@
 package es.danisales.datune.midi.Events;
 
-import es.danisales.datune.midi.PitchSingleMidi;
+import es.danisales.datune.midi.ChromaticMidi;
+import es.danisales.datune.midi.DiatonicMidi;
+import es.danisales.datune.midi.PitchChromaticMidi;
 
 public class NoteOff extends ChannelEvent {
-	public PitchSingleMidi note;
+	public ChromaticMidi note;
 	
-	public NoteOff(PitchSingleMidi n) {
-		this(0, n.getCode(), n.getVelocity());
+	public NoteOff(ChromaticMidi n) {
+		this(0, n.getPitch().getCode(), n.getVelocity());
 		
 		note = n;
+	}
+
+	public NoteOff(DiatonicMidi n) {
+		this(0, PitchChromaticMidi.from(n.getPitch()).getCode(), n.getVelocity());
+		note = ChromaticMidi.from(n);
 	}
 	
 	public NoteOff(int d, int key, int vel) {

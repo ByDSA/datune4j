@@ -15,7 +15,7 @@ public class ChordNamer {
                 sb.append( n );
             }
 
-            sb.append(" | root = ");
+            sb.append(" | rootIndex = ");
             sb.append(chordCommon.getRoot());
             sb.append("(");
             sb.append(chordCommon.getRootPos());

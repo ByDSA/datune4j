@@ -4,33 +4,40 @@ import es.danisales.datune.diatonic.ChromaticDegree;
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.RelativeDegree;
 import es.danisales.datune.eventsequences.EventSequence;
+import es.danisales.datune.midi.Events.EventComplex;
 import es.danisales.datune.midi.Events.NoteOff;
 import es.danisales.datune.midi.Events.NoteOn;
-import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.musical.transformations.DistanceCalculator;
 import es.danisales.datune.musical.transformations.Namer;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.tonality.Tonality;
-import es.danisales.datune.tonality.TonalityInterface;
-import org.checkerframework.checker.nullness.qual.NonNull;
 
-public final class ChromaticMidi implements PitchSingleMidi, PitchChromaticSingle, PitchOctaveMidiEditable {
-	protected PitchMidi	pitch;
-	protected int	velocity;
-	protected int	length;
-	
-	private ChromaticMidi() { }
+public class ChromaticMidi extends Note<PitchChromaticMidi> implements PitchChromaticSingle, PitchOctaveMidiEditable, EventComplex {
+	public static ChromaticMidiBuilder builder() {
+		return new ChromaticMidiBuilder();
+	}
 
-    public static ChromaticMidi from(PitchSingleMidi diatonicMidi) {
+	public static ChromaticMidi from(ChromaticMidi diatonicMidi) {
 		return ChromaticMidi.builder()
-				.pitch(diatonicMidi.getPitchMidi())
+				.pitch(diatonicMidi.getPitch())
 				.velocity(diatonicMidi.getVelocity())
 				.length(diatonicMidi.getLength())
 				.build();
-    }
+	}
 
-    @Override
+	ChromaticMidi() { }
+
+	public static ChromaticMidi from(DiatonicMidi diatonicMidi) {
+		PitchChromaticMidi pitchChromaticMidi = PitchChromaticMidi.from(diatonicMidi.pitch);
+		return ChromaticMidi.builder()
+				.pitch(pitchChromaticMidi)
+				.velocity(diatonicMidi.velocity)
+				.length(diatonicMidi.length)
+				.build();
+	}
+
+	@Override
 	public ChromaticMidi clone() {
 		return ChromaticMidi.builder()
 				.pitch(pitch)
@@ -39,28 +46,8 @@ public final class ChromaticMidi implements PitchSingleMidi, PitchChromaticSingl
 				.build();
 	}
 
-	@Override
-	public PitchMidi getPitchMidi() {
-		return pitch;
-	}
-
 	public int dist(ChromaticMidi cm) {
 		return DistanceCalculator.calculateDistanceInSemitones(this, cm);
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if ( !(o instanceof ChromaticMidi) )
-			return false;
-	
-		ChromaticMidi cm = (ChromaticMidi) o;
-	
-		return velocity == cm.velocity  && pitch.equals( cm.pitch ) && length != cm.length;
-	}
-
-	@Override
-	public int getCode() {
-		return pitch.getCode();
 	}
 
 	@Override
@@ -71,47 +58,25 @@ public final class ChromaticMidi implements PitchSingleMidi, PitchChromaticSingl
 
 		return es;
 	}
-	
-	public int getLength() {
-		return length;
-	}
 
-	public int getVelocity() {
-		return velocity;
-	}
-
-	public int getOctave() {
+	@Override
+	public final int getOctave() {
 		return pitch.getOctave();
 	}
 
-	public static Builder builder() {
-		return new Builder();
-	}
-
-	@Override
-	public ChromaticMidi setVelocity(int v) {
-		velocity = v;
-		return this;
-	}
-
-	@Override
-	public ChromaticMidi setLength(int d) {
-		length = d;
-		return this;
-	}
-
-	@Override
-	public void setOctave(int o) {
-		pitch = pitch.getWithOctave( o );
-	}
-
+	@SuppressWarnings("WeakerAccess")
 	public void shift(IntervalChromatic i) {
 		pitch = pitch.getShift( i );
 	}
 
 	@Override
-	public void shiftOctave(int o) {
+	public final void shiftOctave(int o) {
 		pitch = pitch.getWithShiftOctave( o );
+	}
+
+	@Override
+	public final void setOctave(int o) {
+		pitch = pitch.getWithOctave( o );
 	}
 
 	public String toString(Tonality tonality) {
@@ -134,91 +99,36 @@ public final class ChromaticMidi implements PitchSingleMidi, PitchChromaticSingl
 	}
 
 	@Override
+	public boolean equals(Object o) {
+		if ( !(o instanceof ChromaticMidi) )
+			return false;
+
+		ChromaticMidi chromaticMidi = (ChromaticMidi) o;
+
+		return velocity == chromaticMidi.velocity && pitch.equals( chromaticMidi.pitch) && length != chromaticMidi.length;
+	}
+
+	@Override
+	public int hashCode() {
+		return pitch.hashCode() + 31 * ( Integer.hashCode(velocity) + 37 * Integer.hashCode(length) );
+	}
+
+	@Override
 	public ChromaticDegree getDegree() {
-		return ChromaticDegree.values()[pitch.getChromatic().ordinal()];
+		return pitch.getDegree();
 	}
 
 	@Override
 	public ChromaticMidi getNext() {
-		ChromaticMidi dup = clone();
-		dup.pitch = dup.pitch.getNext();
-		return dup;
+		ChromaticMidi chromaticMidi = ChromaticMidi.from(this);
+		chromaticMidi.pitch = chromaticMidi.pitch.getNext();
+		return chromaticMidi;
 	}
 
 	@Override
 	public ChromaticMidi getPrevious() {
-		ChromaticMidi dup = clone();
-		dup.pitch = dup.pitch.getPrevious();
-		return dup;
+		ChromaticMidi chromaticMidi = ChromaticMidi.from(this);
+		chromaticMidi.pitch = chromaticMidi.pitch.getPrevious();
+		return chromaticMidi;
 	}
-
-	public static class Builder extends es.danisales.utils.building.Builder<Builder, ChromaticMidi> {
-        private PitchMidi _pitch;
-        private int _velocity;
-        private int _length;
-
-        private Builder() {
-            _pitch = PitchMidi.C5;
-            _velocity = Settings.DefaultValues.VELOCITY;
-            _length = Settings.DefaultValues.DURATION_NOTE;
-        }
-
-        public Builder pitch(PitchMidi pitchMidi) {
-            _pitch = pitchMidi;
-
-            return self();
-        }
-
-        public Builder pitch(int code) {
-            return pitch( PitchMidi.from(code) );
-        }
-
-        public Builder pitch(Chromatic chromatic, int octave) {
-            return pitch( PitchMidi.from(chromatic, octave) );
-        }
-
-
-		public Builder pitch(DiatonicAlt diatonicAlt, int octave) {
-        	Chromatic chromatic = Chromatic.from(diatonicAlt);
-			return pitch( PitchMidi.from(chromatic, octave) );
-		}
-
-        public Builder pitch(Chromatic chromatic) {
-            _pitch = PitchMidi.from(chromatic, Settings.DefaultValues.OCTAVE);
-
-            return self();
-        }
-
-        public Builder velocity(int velocity) {
-            _velocity = velocity;
-
-            return self();
-        }
-
-        public Builder length(int length) {
-            _length = length;
-
-            return self();
-        }
-
-        @NonNull
-        @Override
-        public ChromaticMidi build() {
-            ChromaticMidi chromaticMidi = new ChromaticMidi();
-            chromaticMidi.pitch = _pitch;
-            chromaticMidi.length = _length;
-            chromaticMidi.velocity = _velocity;
-            return chromaticMidi;
-        }
-
-        @NonNull
-        @Override
-        protected Builder self() {
-            return this;
-        }
-    }
 }
-
-
-
-

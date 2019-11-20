@@ -1,22 +1,20 @@
 package es.danisales.datune;
 
 import es.danisales.datune.midi.ChromaticChordMidi;
-import es.danisales.datune.midi.PitchMidi;
+import es.danisales.datune.midi.PitchChromaticMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
-import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import org.junit.Assert;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class ChromaticChordMidiTest {
 	@Test
 	public void chromaticChordToMidi() {
 		ChromaticChordMidi ccm = ChromaticChordMidi.from(ChromaticChord.F5);
-		Assert.assertEquals(PitchMidi.F5, ccm.get(0).getPitchMidi());
-		Assert.assertEquals(PitchMidi.C6, ccm.get(1).getPitchMidi());
+		Assert.assertEquals(PitchChromaticMidi.F5, ccm.get(0).getPitch());
+		Assert.assertEquals(PitchChromaticMidi.C6, ccm.get(1).getPitch());
 		assertEquals(0, ccm.getRootPos());
 		Chromatic chromaticCcm0 = Chromatic.from( ccm.get(0) );
 		Chromatic chromaticCcm1 = Chromatic.from( ccm.get(1) );

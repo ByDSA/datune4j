@@ -6,18 +6,18 @@ public class PitchMidiException extends RuntimeException {
 		super( "La figura musical está fuera de rango: " + n );
 	}
 
-	public PitchMidiException(PitchMidi n) {
+	public PitchMidiException(PitchChromaticMidi n) {
 		super( "La figura musical " + n + "está fuera de rango: " + n.getCode() );
 	}
 
 	public static boolean check(int code) {
-		if ( code > PitchMidi.MAX.getCode() || code < PitchMidi.MIN.getCode() )
+		if ( code > PitchChromaticMidi.MAX.getCode() || code < PitchChromaticMidi.MIN.getCode() )
 			throw new PitchMidiException( code );
 
 		return true;
 	}
 
-	public static boolean check(PitchMidi n) {
+	public static boolean check(PitchChromaticMidi n) {
 		return check( n.getCode() );
 	}
 }

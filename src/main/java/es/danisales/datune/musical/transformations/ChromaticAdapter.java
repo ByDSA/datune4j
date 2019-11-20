@@ -1,13 +1,12 @@
 package es.danisales.datune.musical.transformations;
 
-import es.danisales.datune.midi.PitchMidi;
-import es.danisales.datune.midi.PitchSingleMidi;
+import es.danisales.datune.midi.PitchChromaticMidi;
+import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.Diatonic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.tonality.Tonality;
-import es.danisales.datune.tonality.TonalityInterface;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -22,20 +21,20 @@ public class ChromaticAdapter {
         return Chromatic.from(diatonicAlt);
     }
 
-    public static @NonNull Chromatic from(PitchMidi pitchMidi) {
+    public static @NonNull Chromatic from(PitchChromaticMidi pitchMidi) {
         int value = pitchMidi.getCode();
         return Chromatic.from( value % Chromatic.NUMBER );
     }
 
-    public static @NonNull Chromatic from(PitchSingleMidi chromaticMidi) {
-        return from( chromaticMidi.getPitchMidi() );
+    public static @NonNull Chromatic from(ChromaticMidi chromaticMidi) {
+        return from( chromaticMidi.getPitch() );
     }
 
     public static @NonNull Chromatic from(PitchChromaticSingle t) {
-        if (t.getClass().equals(PitchMidi.class))
-            return from((PitchMidi)t);
-        else if (t.getClass().equals(PitchSingleMidi.class))
-            return from((PitchSingleMidi) t);
+        if (t.getClass().equals(PitchChromaticMidi.class))
+            return from((PitchChromaticMidi)t);
+        else if (t.getClass().equals(ChromaticMidi.class))
+            return from((ChromaticMidi) t);
         else if (t.getClass().equals(Chromatic.class))
             return (Chromatic)t;
 

@@ -69,34 +69,6 @@ public interface PitchChromaticChord<N extends PitchChromaticSingle> extends Cho
 		return true;
 	}
 
-	/*
-	 * public boolean equalsEnharmonic(ChromaticChord cc); public boolean
-	 * equalsEnharmonicInv(ChromaticChord cc); public boolean
-	 * equalsEnharmonicInvArray(ChromaticChord[] cc); public boolean
-	 * equalsEnharmonicArray(ChromaticChord[] cc); public boolean
-	 * equalsArray(ChromaticChord[] cc);
-	 */
-/*
-	default <Array extends PitchChromaticChord<?>> boolean equalsEnharmonicInv(Array cc) {
-		CustomChromaticChord cc2 = CustomChromaticChord.fromDistances( cc );
-		for ( int i = 0; i < cc2.size(); i++, cc2.inv() ) {
-			if ( this.equalsEnharmonic( cc2 ) )
-				return true;
-		}
-
-		return false;
-	}
-
-	default <Array extends PitchChromaticChord<NUMBER>> boolean equalsEnharmonicInvArray(Array[] ccs) {
-		for ( Array cc : ccs ) {
-			if ( this.equalsEnharmonicInv( cc ) )
-				return true;
-		}
-
-		return false;
-	}*/
-
-
 	@NonNull
 	Quality getQuality();
 }

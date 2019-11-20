@@ -2,7 +2,6 @@ package es.danisales.datune.musical.transformations;
 
 import es.danisales.datune.diatonic.*;
 import es.danisales.datune.midi.ChromaticMidi;
-import es.danisales.datune.midi.PitchSingleMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.tonality.ScaleDistance;
@@ -61,8 +60,8 @@ public class Namer {
         return from(chromaticMidi, null);
     }
 
-    public static String from(PitchSingleMidi chromaticMidi, Tonality tonality) {
-        Chromatic chromatic = ChromaticAdapter.from(chromaticMidi.getPitchMidi());
+    public static String from(ChromaticMidi chromaticMidi, Tonality tonality) {
+        Chromatic chromatic = ChromaticAdapter.from(chromaticMidi.getPitch());
         DiatonicDegree diatonicDegree = (DiatonicDegree)tonality.getDegreeFrom(chromatic);
         DiatonicAlt diatonicAlt = tonality.getNote(diatonicDegree);
         return ChromaticMidi.literal(diatonicAlt, tonality ) + chromaticMidi.getOctave();

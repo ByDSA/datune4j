@@ -10,6 +10,10 @@ import java.util.*;
 import java.util.function.BiFunction;
 
 class DiatonicChordCustom extends Chord<Diatonic> implements DiatonicChordInterface, ChordMutableInterface<Diatonic> {
+	protected DiatonicChordCustom() {
+		super(new ArrayList<>());
+	}
+
 	public static DiatonicChordCustom from(Collection<Diatonic> diatonics) {
 		DiatonicChordCustom customDiatonicChord = new DiatonicChordCustom();
 		customDiatonicChord.addAll(diatonics);

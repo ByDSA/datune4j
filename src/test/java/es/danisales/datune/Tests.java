@@ -40,7 +40,7 @@ public class Tests {
 				Chromatic.FF, Chromatic.A, Chromatic.CC
 		);
 
-		assertEquals( PitchMidi.FF5, notes.get( 0 ).getPitchMidi());
+		assertEquals( PitchChromaticMidi.FF5, notes.get( 0 ).getPitch());
 
 		List<Integer> n = notes.integerNotationFromRoot();
 
@@ -83,18 +83,18 @@ public class Tests {
 	@Test
 	public void chordInv() {
 		DiatonicChordMidi c = new DiatonicChordMidi( ChromaticFunction.I5, 5, Tonality.C );
-		assertEquals( PitchMidi.G5, c.get( 1 ).getCode() );
-		assertEquals( PitchMidi.C5, c.get( 0 ).getCode() );
+		assertEquals( PitchChromaticMidi.G5, c.get( 1 ).getPitch() );
+		assertEquals( PitchChromaticMidi.C5, c.get( 0 ).getPitch() );
 
 		c = new DiatonicChordMidi( DiatonicFunction.I, 5, Tonality.C );
-		assertEquals( PitchMidi.G5, c.get( 2 ).getCode() );
-		assertEquals( PitchMidi.E5, c.get( 1 ).getCode() );
-		assertEquals( PitchMidi.C5, c.get( 0 ).getCode() );
+		assertEquals( PitchChromaticMidi.G5, c.get( 2 ).getPitch() );
+		assertEquals( PitchChromaticMidi.E5, c.get( 1 ).getPitch() );
+		assertEquals( PitchChromaticMidi.C5, c.get( 0 ).getPitch() );
 		c.inv();
 
-		assertEquals( PitchMidi.C6, c.get( 2 ).getCode() );
-		assertEquals( PitchMidi.G5, c.get( 1 ).getCode() );
-		assertEquals( PitchMidi.E5, c.get( 0 ).getCode() );
+		assertEquals( PitchChromaticMidi.C6, c.get( 2 ).getPitch() );
+		assertEquals( PitchChromaticMidi.G5, c.get( 1 ).getPitch() );
+		assertEquals( PitchChromaticMidi.E5, c.get( 0 ).getPitch() );
 	}
 
 	@Test
@@ -108,9 +108,9 @@ public class Tests {
 				ChromaticMidi.builder().pitch(Chromatic.G).build()
 		);
 
-		int code = notes.get( 0 ).getCode();
+		int code = notes.get( 0 ).getPitch().getCode();
 		for ( int i = 1; i < notes.size(); i++ ) {
-			int code_i = notes.get( i ).getCode();
+			int code_i = notes.get( i ).getPitch().getCode();
 			assertTrue ( code_i >= code );
 			code = code_i;
 		}
@@ -123,8 +123,8 @@ public class Tests {
 		DiatonicChordMidi c1 = new DiatonicChordMidi( DiatonicFunction.I, o, s );
 		DiatonicChordMidi c2 = new DiatonicChordMidi( DiatonicFunction.II, o, s );
 
-		assertEquals( PitchMidi.B5, c1.get( 0 ).getCode() );
-		assertEquals( PitchMidi.CC6, c2.get( 0 ).getCode() );
+		assertEquals( PitchChromaticMidi.B5, c1.get( 0 ).getPitch() );
+		assertEquals( PitchChromaticMidi.CC6, c2.get( 0 ).getPitch() );
 	}
 
 	@Test
@@ -203,7 +203,7 @@ public class Tests {
 	@Test
 	public void addDuplicateChord() {
 		DiatonicChordMidi c = new DiatonicChordMidi( DiatonicFunction.VI_THIRD, Tonality.Gm );
-		assertEquals( PitchMidi.DD6, c.get( 0 ).getCode() );
+		assertEquals( PitchChromaticMidi.DD6, c.get( 0 ).getPitch() );
 		c.addDuplicate( 1 );
 	}
 
@@ -224,20 +224,20 @@ public class Tests {
 
 	@Test
 	public void getCode() {
-		PitchMidi p = PitchMidi.from( 60 );
-		assertEquals( PitchMidi.C5, p );
-		p = PitchMidi.from( Chromatic.C, 5 );
-		assertEquals( PitchMidi.C5, p );
+		PitchChromaticMidi p = PitchChromaticMidi.from( 60 );
+		assertEquals( PitchChromaticMidi.C5, p );
+		p = PitchChromaticMidi.from( Chromatic.C, 5 );
+		assertEquals( PitchChromaticMidi.C5, p );
 		ChromaticMidi n = ChromaticMidi.builder().pitch(Chromatic.C, 5 ).build();
-		assertEquals( PitchMidi.C5, n.getCode() );
+		assertEquals( PitchChromaticMidi.C5, n.getPitch() );
 
 		n = ChromaticMidi.builder().pitch(Chromatic.B, 5 ).build();
-		assertEquals( PitchMidi.B5, n.getCode() );
+		assertEquals( PitchChromaticMidi.B5, n.getPitch() );
 
 		DiatonicMidi n2 = DiatonicMidi.from( DiatonicDegree.I, Tonality.C, 5 );
-		assertEquals( PitchMidi.C5, n2.getCode() );
+		assertEquals( PitchChromaticMidi.C5, n2.getPitch() );
 		n2 = DiatonicMidi.from( DiatonicDegree.VII, Tonality.C, 5 );
-		assertEquals( PitchMidi.B5, n2.getCode() );
+		assertEquals( PitchChromaticMidi.B5, n2.getPitch() );
 	}
 
 	@Test
@@ -252,11 +252,11 @@ public class Tests {
 	public void addDuplicate() {
 		DiatonicChordMidi c = new DiatonicChordMidi( DiatonicFunction.II_THIRD, 6, Tonality.Gm );
 		assertEquals( 2, c.size() );
-		assertEquals( PitchMidi.A6, c.get( 0 ).getCode() );
-		assertEquals( PitchMidi.C7, c.get( 1 ).getCode() );
+		assertEquals( PitchChromaticMidi.A6, c.get( 0 ).getPitch() );
+		assertEquals( PitchChromaticMidi.C7, c.get( 1 ).getPitch() );
 		c.addDuplicate( 1 );
 		assertEquals( 4, c.size() );
-		assertEquals( PitchMidi.A7, c.get( 2 ).getCode() );
-		assertEquals( PitchMidi.C8, c.get( 3 ).getCode() );
+		assertEquals( PitchChromaticMidi.A7, c.get( 2 ).getPitch() );
+		assertEquals( PitchChromaticMidi.C8, c.get( 3 ).getPitch() );
 	}
 }

@@ -40,7 +40,7 @@ public class ChromaticFunctionTest {
 		assertEquals( DiatonicDegree.I, dc.getDegree() );
 		cc = ChromaticChordInterface.from( ChromaticFunction.ii, ton );
 		dc = cc.toMidi().getDiatonicChordMidi( ton );
-		Chromatic c = ChromaticAdapter.from( dc.getRoot() );
+		Chromatic c = Chromatic.from( dc.getRoot() );
 		RelativeDegree d = ton.getDegreeFrom( c );
 		assertEquals( DiatonicDegree.II, d );
 		assertEquals( DiatonicDegree.II, dc.getDegree() );

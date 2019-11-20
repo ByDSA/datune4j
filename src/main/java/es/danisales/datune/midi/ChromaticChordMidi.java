@@ -75,7 +75,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 		ChromaticChordMidi This = new ChromaticChordMidi();
 
 		for (N n : diatonicChordMidi) {
-			ChromaticMidi.Builder builder = ChromaticMidi.builder();
+			ChromaticMidiBuilder builder = ChromaticMidi.builder();
 
 			Chromatic chromaticN = ChromaticAdapter.from(n);
 

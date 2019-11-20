@@ -4,7 +4,9 @@ import es.danisales.datune.diatonic.ChromaticDegree;
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.IntervalDiatonic;
+import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.DiatonicMidi;
+import es.danisales.datune.midi.PitchChromaticMidi;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.musical.transformations.DistanceCalculator;
 import es.danisales.datune.musical.transformations.EnharmonicsRetrieval;
@@ -130,7 +132,11 @@ public enum Chromatic implements PitchChromaticSingle {
 	}
 
 	public static Chromatic from(DiatonicMidi t) {
-		return t.getPitchMidi().getChromatic();
+		return from( PitchChromaticMidi.from(t.getPitch()) );
+	}
+
+	public static Chromatic from(ChromaticMidi chromaticMidi) {
+		return chromaticMidi.getPitch().getChromatic();
 	}
 
 	public Chromatic addSemi(int n) {

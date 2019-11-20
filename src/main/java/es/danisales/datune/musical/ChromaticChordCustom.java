@@ -5,7 +5,7 @@ import es.danisales.datune.diatonic.ChordNotation;
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.Quality;
 import es.danisales.datune.midi.ChordMidi;
-import es.danisales.datune.midi.PitchSingleMidi;
+import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.pitch.*;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -28,7 +28,7 @@ class ChromaticChordCustom extends Chord<Chromatic> implements PitchChromaticCho
 		return c;
 	}
 
-	public static <N extends PitchSingleMidi> @NonNull ChromaticChordCustom from(@NonNull ChordMidi<N> chord) {
+	public static <N extends ChromaticMidi> @NonNull ChromaticChordCustom from(@NonNull ChordMidi<N> chord) {
 		ChromaticChordCustom c = new ChromaticChordCustom();
 		for (N t : chord) {
 			Chromatic chromatic = Chromatic.from((PitchChromaticSingle)t);
@@ -62,7 +62,9 @@ class ChromaticChordCustom extends Chord<Chromatic> implements PitchChromaticCho
 		}
 	}
 
-	protected ChromaticChordCustom() { }
+	protected ChromaticChordCustom() {
+		super(new ArrayList<>());
+	}
 
 	/*
         public <T extends PitchChromaticSingle> void addSemi(Iterable<T> cs) {
@@ -165,7 +167,7 @@ class ChromaticChordCustom extends Chord<Chromatic> implements PitchChromaticCho
 
 		//assert meta.str != null : "meta.str es null: " + notesToString();
 
-		return root + meta.str + invPartString();
+		return rootIndex + meta.str + invPartString();
 	}
 
 	public void autoName() {

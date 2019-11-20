@@ -6,11 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import es.danisales.datune.midi.PitchMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
-import es.danisales.datune.musical.transformations.AlterationsCalculator;
-import es.danisales.datune.musical.transformations.ChromaticAdapter;
 
 public class Tuning {	
 	public final static double MIN_FREQUENCY = 20;

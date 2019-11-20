@@ -107,7 +107,7 @@ public class EventSequence implements Durable, EventComplex {
 			if ( t > time )
 				return false;
 
-			if ( ev instanceof ChromaticMidi ) {
+			if ( ev instanceof ChromaticMidi) {
 				ChromaticMidi nc = (ChromaticMidi) ev;
 
 				if ( t <= time && t + nc.getLength() > time ) {
@@ -129,7 +129,7 @@ public class EventSequence implements Durable, EventComplex {
 		this.forEach( (time, ev) -> {
 			float tf = time / (float) Duration.V1;
 			if ( ev instanceof NoteOn ) {
-				int nc = ( (NoteOn) ev ).note.getCode();
+				int nc = ( (NoteOn) ev ).note.getPitch().getCode();
 				assert nc >= 0;
 				if ( notesOn.get( nc ) == null ) {
 					Queue<Long> q1 = new LinkedList<Long>();
@@ -145,7 +145,7 @@ public class EventSequence implements Durable, EventComplex {
 
 				assert notesOn.get( nc ) != null;
 			} else if ( ev instanceof NoteOff ) {
-				int nc = ( (NoteOff) ev ).note.getCode();
+				int nc = ( (NoteOff) ev ).note.getPitch().getCode();
 				assert nc >= 0;
 
 				Queue<NoteOn> evOnQueue = notesOnEvent.get( nc );
@@ -155,7 +155,7 @@ public class EventSequence implements Durable, EventComplex {
 					NoteOn evOn = evOnQueue.poll();
 					Long onTime = onTimeQueue.poll();
 					ChromaticMidi n = ChromaticMidi.builder()
-							.pitch( PitchMidi.from(nc) )
+							.pitch( PitchChromaticMidi.from(nc) )
 							.length( (int) ( time - onTime ) )
 							.velocity( evOn.note.getVelocity() )
 							.build();
@@ -245,13 +245,7 @@ public class EventSequence implements Durable, EventComplex {
 	public EventSequence clone() {
 		EventSequence es = new EventSequence();
 		this.forEach( (time, ev) -> {
-			try {
-				es.add( time, ev.clone() );
-			} catch ( CloneNotSupportedException e ) {
-				es.add( time, ev );
-				e.printStackTrace();
-			}
-
+			es.add( time, ev.clone() );
 			return true;
 		} );
 		return es;
@@ -275,10 +269,10 @@ public class EventSequence implements Durable, EventComplex {
 					lastTime.set(time);
 					if (ev instanceof NoteOn) {
 						NoteOn n = (NoteOn) ev;
-						Midi.mChannels[0].noteOn(n.note.getCode(), n.note.getVelocity());
+						Midi.mChannels[0].noteOn(n.note.getPitch().getCode(), n.note.getVelocity());
 					} else if (ev instanceof NoteOff) {
 						NoteOff n = (NoteOff) ev;
-						Midi.mChannels[0].noteOff(n.note.getCode());
+						Midi.mChannels[0].noteOff(n.note.getPitch().getCode());
 					}
 
 					return true;
