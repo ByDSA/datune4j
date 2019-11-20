@@ -20,27 +20,6 @@ class TonalityCustom implements TonalityInterface {
 
 	/** Temp */
 	private List<DiatonicAlt> notes;
-	private Map<Chromatic, DiatonicAlt> chromaticDiatonicAltMap;
-
-	// Cache
-	private HashMap<DiatonicFunction, ChromaticChord> functionChordsMap;
-	private HashMap<ChromaticFunction, ChromaticChord> chromaticChordsMap;
-	private HashMap<ChromaticChord, HarmonicFunction> chromaticChordFunctionMap;
-
-	private static final int SIZE_MIN = 2;
-	private static final int SIZE_MAX = 8;
-
-	private void createCache() {
-		chromaticChordFunctionMap = new HashMap<>();
-
-		functionChordsMap = new HashMap<>();
-		for ( DiatonicFunction f : DiatonicFunction.COMMON )
-			functionChordsMap.put( f, getChordFrom( f ) );
-
-		chromaticChordsMap = new HashMap<>();
-		for ( ChromaticFunction f : ChromaticFunction.ALL )
-			chromaticChordsMap.put( f, getChordFrom( f ) );
-	}
 
 	public TonalityCustom(DiatonicAlt noteBase, Scale scale) {
 		this.root = noteBase;
@@ -49,87 +28,16 @@ class TonalityCustom implements TonalityInterface {
 		updateNotes();
 	}
 
-	private void createCacheIfNeeded() {
-		if ( chromaticChordFunctionMap == null )
-			createCache();
-	}
-
 	@Override
 	public TonalityCustom clone() {
 		return new TonalityCustom( root, scale );
 	}
 
-	// todo: private
-	@Override
-	public @NonNull ChromaticChord getChordFrom(DiatonicFunction f) {
-		ChromaticChord cc = null;
-		if ( functionChordsMap != null )
-			cc = functionChordsMap.get( f );
-/*
-		if ( cc == null ) {
-			DiatonicChord dc = DiatonicChord.from( f );
-
-			cc = ChromaticChord.from( getAllFrom( dc, f ) );
-			cc.rename( this );
-			//assert cc.meta.str != null : cc.notesToString();
-			if ( functionChordsMap == null )
-				functionChordsMap = new HashMap<>();
-			functionChordsMap.put( f, cc );
-
-			if ( scaleChords == null )
-				scaleChords = new HashSet<>();
-			scaleChords.addSemi( cc );
-
-			if ( chromaticChordFunctionMap == null )
-				chromaticChordFunctionMap = new HashMap<>();
-			chromaticChordFunctionMap.put( cc, f );
-		}
-*/
-		cc = ChromaticChord.from(cc);
-
-		return cc;
-	}
-
-	@Override
-	public @NonNull ChromaticChord getChordFrom(ChromaticFunction f) {
-		ChromaticChord cc = null;
-		if ( chromaticChordsMap != null )
-			cc = chromaticChordsMap.get( f );
-
-		if ( cc == null ) {
-			Tonality self = Tonality.from(root, scale);
-			cc = ChromaticChord.from( self, f );
-			if (cc instanceof ChromaticChord)
-				((ChromaticChord)cc).updateWhatIsIt();
-
-			if ( chromaticChordsMap == null )
-				chromaticChordsMap = new HashMap<>();
-			chromaticChordsMap.put( f, cc );
-
-			if ( chromaticChordFunctionMap == null )
-				chromaticChordFunctionMap = new HashMap<>();
-			chromaticChordFunctionMap.putIfAbsent(cc, f);
-		}
-
-		cc = ChromaticChord.from(cc);
-
-		return cc;
-	}
-
 	private void updateNotes() {
 		notes = DiatonicAltRetrieval.listFrom(root, scale);
 		Objects.requireNonNull(notes);
-
-		createChromaticToDiatonicAltCache();
 	}
 
-	private void createChromaticToDiatonicAltCache() {
-		chromaticDiatonicAltMap = new HashMap<>();
-		for ( DiatonicAlt diatonicAlt : notes ) {
-			Chromatic chromatic = Chromatic.from(diatonicAlt);
-			chromaticDiatonicAltMap.put(chromatic, diatonicAlt);
-		}
-	}
 
 	public static TonalityCustom createFromChord(DiatonicChordMidi c, Tonality base) throws TonalityException {
 		assert base != null;
@@ -212,21 +120,6 @@ class TonalityCustom implements TonalityInterface {
 
 	public @NonNull DiatonicAlt getRoot() {
 		return root;
-	}
-
-	@Override
-	public @Nullable HarmonicFunction getFunction(@NonNull ChromaticChord chromaticChord) {
-		Objects.requireNonNull(chromaticChord);
-
-		createCacheIfNeeded();
-
-		return chromaticChordFunctionMap.get( chromaticChord );
-	}
-
-	public @Nullable DiatonicAlt getNote(@NonNull Chromatic chromatic) {
-		Objects.requireNonNull(chromatic);
-
-		return chromaticDiatonicAltMap.get( chromatic );
 	}
 
 	@Override

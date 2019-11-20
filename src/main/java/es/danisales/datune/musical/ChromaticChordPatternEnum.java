@@ -92,7 +92,8 @@ enum ChromaticChordPatternEnum implements ChromaticChordPatternInterface {
     THIRTEENTH_MAJ13_a5a9_OMIT11(0, 4, 8, 11, 15, 21),
     SUS4a4(0, 6, 7),
     SUS2b2(0, 1, 7),
-    SUS2b2b5(0, 1, 6);
+    SUS2b2b5(0, 1, 6),
+    N6(5, 8, 13);
 
     private final List<Integer> pattern;
 

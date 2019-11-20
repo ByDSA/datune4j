@@ -91,6 +91,7 @@ public class ChromaticChordPattern extends Pattern<ChromaticChordPatternInterfac
     public static final ChromaticChordPattern SUS4a4 = new ChromaticChordPattern(ChromaticChordPatternEnum.SUS4a4);
     public static final ChromaticChordPattern SUS2b2 = new ChromaticChordPattern(ChromaticChordPatternEnum.SUS2b2);
     public static final ChromaticChordPattern SUS2b2b5 = new ChromaticChordPattern(ChromaticChordPatternEnum.SUS2b2b5);
+    public static final ChromaticChordPattern N6 = new ChromaticChordPattern(ChromaticChordPatternEnum.N6);
 
     private ChromaticChordPattern(ChromaticChordPatternInterface chromaticChordPatternEnum) {
         super(chromaticChordPatternEnum);

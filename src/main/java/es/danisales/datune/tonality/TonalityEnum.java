@@ -55,64 +55,11 @@ enum TonalityEnum implements TonalityInterface {
 		return null;
 	}
 
-	@Override
-	public @NonNull ChromaticChord getChordFrom(@NonNull DiatonicFunction diatonicFunction) {
-		Objects.requireNonNull(diatonicFunction);
-
-		Tonality self = Tonality.from(root, scale);
-		ChromaticChord ret = TonalityGetDiatonicFunctionMajor.get(self, diatonicFunction);
-		if (ret == null)
-			ret = TonalityGetDiatonicFunctionMinor.get(self, diatonicFunction);
-		if (ret == null)
-			throw new RuntimeException(this + " " +diatonicFunction.toString());
-		return ret;
-	}
-
-	@Override
-	public @NonNull ChromaticChord getChordFrom(@NonNull ChromaticFunction chromaticFunction) {
-		Objects.requireNonNull(chromaticFunction);
-
-		ChromaticChord ret = TonalityGetChromaticFunctionMajor.get(this, chromaticFunction);
-		if (ret == null)
-			ret = TonalityGetChromaticFunctionMinor.get(this, chromaticFunction);
-		if (ret == null)
-			throw new RuntimeException("Undefined chord for chromatic function " + chromaticFunction + " in " + this);
-		return ret;
-	}
-
-	private Map<ChromaticChord, List<HarmonicFunction>> cacheMap;
-
 	TonalityEnum(DiatonicAlt noteBase, Scale scale) {
 		this.root = noteBase;
 		this.scale = scale;
 
 		notes = Collections.unmodifiableList( DiatonicAltRetrieval.listFrom(noteBase, scale) );
-	}
-
-	@SuppressWarnings("Duplicates")
-	private void createCache() {
-		cacheMap = new HashMap<>();
-		for (DiatonicFunction diatonicFunction : DiatonicFunction.values()) {
-			Tonality self = Tonality.from(root, scale);
-			ChromaticChord chromaticChord = ChromaticChord.from(self, diatonicFunction);
-			List<HarmonicFunction> list = cacheMap.getOrDefault(chromaticChord, new ArrayList<>());
-			list.add(diatonicFunction);
-			cacheMap.putIfAbsent(chromaticChord, list);
-		}
-
-		// todo: descomentar y precalcular a mano los acordes en TonalityGetDiatonicFunctonMajor
-/*
-		for (ChromaticFunction chromaticFunction : ChromaticFunction.values()) {
-			ChromaticChord chromaticChord = ChromaticChord.from(this, chromaticFunction);
-			List<HarmonicFunction> list = cacheMap.getOrDefault(chromaticChord, new ArrayList<>());
-			list.add(chromaticFunction);
-			cacheMap.putIfAbsent(chromaticChord, list);
-		}*/
-	}
-
-	private void createCacheIfNeeded() {
-		if (cacheMap == null)
-			createCache();
 	}
 
 	public @NonNull Scale getScale() {
@@ -126,16 +73,5 @@ enum TonalityEnum implements TonalityInterface {
 	@Override
 	public @NonNull List<DiatonicAlt> getNotes() {
 		return notes;
-	}
-
-	@Override
-	public HarmonicFunction getFunction(ChromaticChord chromaticChord) {
-		createCacheIfNeeded();
-
-		List<HarmonicFunction> harmonicFunctionList = cacheMap.get(chromaticChord);
-		if (harmonicFunctionList == null)
-			return null;
-
-		return harmonicFunctionList.get(0);
 	}
 }

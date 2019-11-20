@@ -13,10 +13,7 @@ import es.danisales.datune.pitch.PitchChromaticSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Tonality implements Iterable<DiatonicAlt> {
     public static final Tonality C = new Tonality( TonalityEnum.C );
@@ -59,10 +56,15 @@ public class Tonality implements Iterable<DiatonicAlt> {
      * END CONSTANT TONALITIES
      ******************************************************************************/
 
-    TonalityInterface innerTonality;
+    final TonalityInterface innerTonality;
+
+    private Map<Chromatic, DiatonicAlt> chromaticDiatonicAltMap;
+    private Map<ChromaticChord, List<HarmonicFunction>> cacheMap;
 
     private Tonality(TonalityInterface tonalityInterface) {
         innerTonality = tonalityInterface;
+
+        createChromaticToDiatonicAltCache();
     }
 
     public static Tonality fromDiatonicChordMidi(@NonNull DiatonicChordMidi c, @NonNull Tonality base) throws TonalityException { // todo
@@ -238,12 +240,25 @@ public class Tonality implements Iterable<DiatonicAlt> {
         return IntervalChromatic.from( id, distSemitones );
     }
 
-    public ChromaticChord getChordFrom(DiatonicFunction diatonicFunction) {
-        return innerTonality.getChordFrom(diatonicFunction);
+    public @NonNull ChromaticChord getChordFrom(@NonNull DiatonicFunction diatonicFunction) {
+        Objects.requireNonNull(diatonicFunction);
+
+        ChromaticChord ret = TonalityGetDiatonicFunctionMajor.get(this, diatonicFunction);
+        if (ret == null)
+            ret = TonalityGetDiatonicFunctionMinor.get(this, diatonicFunction);
+        if (ret == null)
+            ret = TonalityGetDiatonicFunctionDefault.get(this, diatonicFunction);
+
+        return ret;
     }
 
-    public ChromaticChord getChordFrom(ChromaticFunction chromaticFunction) {
-        return innerTonality.getChordFrom(chromaticFunction);
+    public @NonNull ChromaticChord getChordFrom(@NonNull ChromaticFunction chromaticFunction) {
+        Objects.requireNonNull(chromaticFunction);
+
+        ChromaticChord ret = TonalityGetChromaticFunction.get(this, chromaticFunction);
+        if (ret == null)
+            throw new RuntimeException("Undefined chord for chromatic function " + chromaticFunction + " in " + this);
+        return ret;
     }
 
     public @NonNull Scale getScale() {
@@ -258,8 +273,14 @@ public class Tonality implements Iterable<DiatonicAlt> {
         return innerTonality.getNotes();
     }
 
-    public @Nullable HarmonicFunction getFunction(ChromaticChord chromaticChord) {
-        return innerTonality.getFunction(chromaticChord);
+    public HarmonicFunction getFunction(ChromaticChord chromaticChord) {
+        createCacheIfNeeded();
+
+        List<HarmonicFunction> harmonicFunctionList = cacheMap.get(chromaticChord);
+        if (harmonicFunctionList == null)
+            return null;
+
+        return harmonicFunctionList.get(0);
     }
 
     public boolean has(boolean outScale, @NonNull PitchChromaticChord<? extends PitchChromaticSingle> c) {
@@ -303,6 +324,46 @@ public class Tonality implements Iterable<DiatonicAlt> {
         }
 
         return null;
+    }
+
+    private void createChromaticToDiatonicAltCache() {
+        chromaticDiatonicAltMap = new HashMap<>();
+        for ( DiatonicAlt diatonicAlt : innerTonality.getNotes() ) {
+            Chromatic chromatic = Chromatic.from(diatonicAlt);
+            chromaticDiatonicAltMap.put(chromatic, diatonicAlt);
+        }
+    }
+
+
+    @SuppressWarnings("Duplicates")
+    private void createCache() {
+        cacheMap = new HashMap<>();
+        for (DiatonicFunction diatonicFunction : DiatonicFunction.values()) {
+            ChromaticChord chromaticChord = ChromaticChord.from(this, diatonicFunction);
+            List<HarmonicFunction> list = cacheMap.getOrDefault(chromaticChord, new ArrayList<>());
+            list.add(diatonicFunction);
+            cacheMap.putIfAbsent(chromaticChord, list);
+        }
+
+        // todo: descomentar y precalcular a mano los acordes en TonalityGetDiatonicFunctonMajor
+/*
+		for (ChromaticFunction chromaticFunction : ChromaticFunction.values()) {
+			ChromaticChord chromaticChord = ChromaticChord.from(this, chromaticFunction);
+			List<HarmonicFunction> list = cacheMap.getOrDefault(chromaticChord, new ArrayList<>());
+			list.add(chromaticFunction);
+			cacheMap.putIfAbsent(chromaticChord, list);
+		}*/
+    }
+
+    private void createCacheIfNeeded() {
+        if (cacheMap == null)
+            createCache();
+    }
+
+    public @Nullable DiatonicAlt getNote(@NonNull Chromatic chromatic) {
+        Objects.requireNonNull(chromatic);
+
+        return chromaticDiatonicAltMap.get( chromatic );
     }
 
     @Override

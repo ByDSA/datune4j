@@ -16,8 +16,4 @@ public class ChromaticChordAdapter {
             ret = ChromaticChordCustom.from(chord);
         return ret;
     }
-
-    public static ChromaticChordInterface from(ChromaticFunction f) {
-        return null; // todo
-    }
 }

@@ -16,15 +16,9 @@ import java.util.List;
 import java.util.Objects;
 
 public interface TonalityInterface {
-    @NonNull ChromaticChord getChordFrom(DiatonicFunction diatonicFunction);
-
-    @NonNull ChromaticChord getChordFrom(ChromaticFunction chromaticFunction);
-
     @NonNull Scale getScale();
 
     @NonNull DiatonicAlt getRoot();
 
     @NonNull List<DiatonicAlt> getNotes();
-
-    @Nullable HarmonicFunction getFunction(ChromaticChord chromaticChord);
 }

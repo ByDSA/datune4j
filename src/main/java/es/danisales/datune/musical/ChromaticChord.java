@@ -2521,12 +2521,6 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
         return ret;
     }
 
-    public static @NonNull ChromaticChord from(@NonNull ChromaticFunction f) {
-        ChromaticChord ret = new ChromaticChord();
-        ret.innerChord = ChromaticChordAdapter.from(f);
-        return ret;
-    }
-
     public static @NonNull ChromaticChord from(@NonNull Chromatic chromaticBase, @NonNull DiatonicChordPattern diatonicChordPattern, @NonNull Tonality tonality) {
         int posBase = tonality.getDegreeFrom(chromaticBase).ordinal();
         ChromaticChord chromaticChord = ChromaticChord.createEmpty();
@@ -2534,6 +2528,18 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
             int pos = (posBase + diatonic) % Diatonic.NUMBER;
             DiatonicAlt diatonicAlt = tonality.getNotes().get(pos);
             Chromatic chromatic = Chromatic.from(diatonicAlt);
+            chromaticChord.add(chromatic);
+        }
+
+        return chromaticChord;
+    }
+
+    public static @NonNull ChromaticChord from(@NonNull Chromatic chromaticBase, @NonNull ChromaticChordPattern chromaticChordPattern) {
+        int posBase = chromaticBase.ordinal();
+        ChromaticChord chromaticChord = ChromaticChord.createEmpty();
+        for (Integer diatonic : chromaticChordPattern) {
+            int pos = (posBase + diatonic) % Chromatic.NUMBER;
+            Chromatic chromatic = Chromatic.from(pos);
             chromaticChord.add(chromatic);
         }
 

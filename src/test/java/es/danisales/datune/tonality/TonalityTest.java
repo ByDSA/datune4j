@@ -329,7 +329,7 @@ public class TonalityTest {
                 ScaleDistance.HALF
         ));
         Tonality tonality = Tonality.from(DiatonicAlt.C, scale);
-        System.out.println(tonality.getNotes());
+
         assertEquals(DiatonicAlt.C,
                 tonality.getNote(relativeDegree));
 
@@ -751,16 +751,16 @@ public class TonalityTest {
 
         assertTrue(ChromaticChord.from(ton, ChromaticFunction.SUBV7_V).equalsEnharmonic(ChromaticChord.GG7));
 
-        assertTrue(ChromaticChord.from(ton, ChromaticFunction.SUBV7_VI).equalsEnharmonic(ChromaticChord.AA7));
+        assertTrue(ChromaticChord.from(ton, ChromaticFunction.SUBV7_VI).toString(), ChromaticChord.from(ton, ChromaticFunction.SUBV7_VI).equalsEnharmonic(ChromaticChord.AA7));
 
         ChromaticChord c = ChromaticChord.CC.duplicate();
         c.inv();
+
         assertEquals(
                 c, ChromaticChord.from(ton, ChromaticFunction.N6)
         );
 
-        // TODO:
-        // V7ALT
+        assertTrue(ChromaticChord.from(ton, ChromaticFunction.V7ALT).equalsEnharmonic(ChromaticChord.Gm7b5));
 
         ton = Tonality.Cm;
 
