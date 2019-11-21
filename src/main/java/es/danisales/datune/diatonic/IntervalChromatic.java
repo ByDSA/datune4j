@@ -1,5 +1,6 @@
 package es.danisales.datune.diatonic;
 
+import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.transformations.Namer;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -7,7 +8,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import java.util.HashSet;
 import java.util.Set;
 
-public enum IntervalChromatic {
+public enum IntervalChromatic implements Interval {
     PERFECT_UNISON(0, Quality.PERFECT), DIMINISHED_SECOND(0, Quality.DIMINISHED),
     MINOR_SECOND(1, Quality.MINOR), AUGMENTED_UNISON(1, Quality.AUGMENTED),
     MAJOR_SECOND(2, Quality.MAJOR), DIMINISHED_THIRD(2, Quality.DIMINISHED),
@@ -52,7 +53,7 @@ public enum IntervalChromatic {
     }
 
     public boolean isCompound() {
-        return (this.getSemitones() > 12 || this == DIMINISHED_NINTH);
+        return (getSemitones() > Chromatic.NUMBER || this == DIMINISHED_NINTH);
     }
 
     public static @NonNull Set<IntervalChromatic> from(@NonNull IntervalDiatonic intervalDiatonic) {

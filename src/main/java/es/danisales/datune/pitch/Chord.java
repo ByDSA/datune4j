@@ -1,17 +1,19 @@
 package es.danisales.datune.pitch;
 
 import es.danisales.datastructures.ListProxy;
+import es.danisales.datune.diatonic.Interval;
+import es.danisales.datune.diatonic.RelativeDegree;
 import es.danisales.datune.midi.AddedException;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
-import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Chord<N extends SymbolicPitch> extends ListProxy<N> implements List<N>, ChordMutableInterface<N> {
+public abstract class Chord<N extends AbsoluteDegree<D, I>, D extends RelativeDegree, I extends Interval> extends ListProxy<N> implements ChordMutableInterface<N, D, I> {
 	protected int rootIndex = -1;
-	private List<N> innerList;
+	private final List<N> innerList;
 
 	protected Chord(List<N> listAdapter) {
 		super(listAdapter);
@@ -20,28 +22,14 @@ public abstract class Chord<N extends SymbolicPitch> extends ListProxy<N> implem
 	}
 
 	@Override
-	public abstract Chord<N> duplicate();
+	public abstract Chord<N, D, I> duplicate();
 
 	@Override
-	public boolean add(@Nonnull N note) {
+	public boolean add(@NonNull N note) {
 		Objects.requireNonNull(note);
 		innerList.add( note );
 		resetRootIfNeeded();
 		return true;
-	}
-
-	@Override
-	public boolean addAll(@Nonnull Collection<? extends N> collection) {
-		boolean ret = innerList.addAll(collection);
-
-		resetRootIfNeeded();
-
-		return ret;
-	}
-
-	@Override
-	public void sort(Comparator<? super N> comparator) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -51,7 +39,21 @@ public abstract class Chord<N extends SymbolicPitch> extends ListProxy<N> implem
 	}
 
 	@Override
-	public N remove(int n) {
+	public boolean addAll(@NonNull Collection<? extends N> collection) {
+		boolean ret = innerList.addAll(collection);
+
+		resetRootIfNeeded();
+
+		return ret;
+	}
+
+	@Override
+	public final void sort(Comparator<? super N> comparator) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public final N remove(int n) {
 		N root = getRoot();
 		N ret = innerList.remove( n );
 		if ( ret == root )
@@ -74,7 +76,7 @@ public abstract class Chord<N extends SymbolicPitch> extends ListProxy<N> implem
 	}
 
 	@Override
-	public void setRootPos(int n) {
+	public final void setRootPos(int n) {
 		if ( indexOutArray(n, this) )
 			throw new ArrayIndexOutOfBoundsException();
 
@@ -82,7 +84,7 @@ public abstract class Chord<N extends SymbolicPitch> extends ListProxy<N> implem
 	}
 
 	@Override
-	public @Nonnull N getRoot() {
+	public final @NonNull N getRoot() {
 		return get(rootIndex);
 	}
 
@@ -98,7 +100,12 @@ public abstract class Chord<N extends SymbolicPitch> extends ListProxy<N> implem
 
 		Chord chordCasted = (Chord) o;
 
-		return super.equals(o) && getRoot().equals( chordCasted.getRoot() );
+		return innerList.equals(chordCasted.innerList) && rootIndex == chordCasted.rootIndex;
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode() + 31 * rootIndex;
 	}
 
 	@Override

@@ -1,13 +1,14 @@
 package es.danisales.datune.musical;
 
 import es.danisales.datune.diatonic.IntervalDiatonic;
+import es.danisales.datune.diatonic.IntervalPentatonic;
 import es.danisales.datune.diatonic.PentatonicDegree;
 import es.danisales.datune.musical.transformations.PentatonicAdapter;
 import es.danisales.datune.pitch.AbsoluteDegree;
 import es.danisales.utils.MathUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public enum Pentatonic implements AbsoluteDegree<PentatonicDegree> {
+public enum Pentatonic implements AbsoluteDegree<PentatonicDegree, IntervalPentatonic> {
 	C, D, E, G, A;
 
 	public static final int NUMBER = 5;
@@ -44,6 +45,18 @@ public enum Pentatonic implements AbsoluteDegree<PentatonicDegree> {
 	public Pentatonic getPrevious() {
 		int index = (NUMBER + ordinal() - 1) % NUMBER;
 		return values()[index];
+	}
+
+	@Override
+	public Pentatonic getShifted(IntervalPentatonic intervalPentatonic) {
+		int i = (ordinal() + intervalPentatonic.ordinal()) % NUMBER;
+		return values()[i];
+	}
+
+	@Override
+	public Pentatonic getShiftedNegative(IntervalPentatonic intervalPentatonic) {
+		int i = (ordinal() - intervalPentatonic.ordinal()) % NUMBER;
+		return values()[i];
 	}
 
 	/** Calculator **/

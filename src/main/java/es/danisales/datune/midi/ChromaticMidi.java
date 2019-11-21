@@ -13,7 +13,7 @@ import es.danisales.datune.musical.transformations.Namer;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.tonality.Tonality;
 
-public class ChromaticMidi extends Note<PitchChromaticMidi> implements PitchChromaticSingle, PitchOctaveMidiEditable, EventComplex {
+public class ChromaticMidi extends Note<PitchChromaticMidi, ChromaticDegree, IntervalChromatic> implements PitchChromaticSingle, PitchOctaveMidiEditable, EventComplex {
 	public static ChromaticMidiBuilder builder() {
 		return new ChromaticMidiBuilder();
 	}
@@ -130,5 +130,15 @@ public class ChromaticMidi extends Note<PitchChromaticMidi> implements PitchChro
 		ChromaticMidi chromaticMidi = ChromaticMidi.from(this);
 		chromaticMidi.pitch = chromaticMidi.pitch.getPrevious();
 		return chromaticMidi;
+	}
+
+	@Override
+	public ChromaticMidi getShifted(IntervalChromatic intervalChromatic) {
+		return null;
+	}
+
+	@Override
+	public ChromaticMidi getShiftedNegative(IntervalChromatic intervalChromatic) {
+		return null;
 	}
 }

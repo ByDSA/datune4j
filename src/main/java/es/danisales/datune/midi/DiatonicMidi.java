@@ -19,7 +19,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Objects;
 
-public final class DiatonicMidi extends Note<PitchDiatonicMidi> implements PitchDiatonicSingle, SymbolicPitch, PitchOctaveMidiEditable, EventComplex {
+public final class DiatonicMidi extends Note<PitchDiatonicMidi, DiatonicDegree, IntervalDiatonic> implements PitchDiatonicSingle, SymbolicPitch, PitchOctaveMidiEditable, EventComplex {
 	DiatonicMidi() {
 	}
 

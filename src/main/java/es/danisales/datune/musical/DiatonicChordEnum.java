@@ -1,6 +1,7 @@
 package es.danisales.datune.musical;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
+import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.midi.AddedException;
 import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.PitchDiatonicSingle;
@@ -207,10 +208,20 @@ enum DiatonicChordEnum implements DiatonicChordInterface {
 		return diatonicChord;
 	}
 
-	public static DiatonicChord add(DiatonicChordEnum diatonicChordEnum, ChordCommon<Diatonic> cs) throws AddedException {
+	public static DiatonicChord add(DiatonicChordEnum diatonicChordEnum, ChordCommon<Diatonic, DiatonicDegree, IntervalDiatonic> cs) throws AddedException {
 		DiatonicChord diatonicChord = DiatonicChord.from(diatonicChordEnum);
 		diatonicChord.addAll( cs );
 
 		return diatonicChord;
+	}
+
+	@Override
+	public DiatonicChordInterface getShifted(IntervalDiatonic intervalDiatonic) {
+		return null;
+	}
+
+	@Override
+	public DiatonicChordInterface getShiftedNegative(IntervalDiatonic intervalDiatonic) {
+		return null;
 	}
 }

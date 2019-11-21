@@ -6,7 +6,7 @@ import es.danisales.datune.musical.Diatonic;
 import es.danisales.datune.pitch.PitchDiatonicSingle;
 import es.danisales.datune.tonality.Tonality;
 
-public class PitchDiatonicMidi implements PitchDiatonicSingle, PitchMidiInterface {
+public class PitchDiatonicMidi implements PitchDiatonicSingle, PitchMidiInterface<DiatonicDegree, IntervalDiatonic> {
 	protected DiatonicDegree degree;
 	protected int octave;
 	protected Tonality tonality;

@@ -1,5 +1,6 @@
 package es.danisales.datune.pitch;
 
+import es.danisales.datune.diatonic.Interval;
 import es.danisales.datune.diatonic.RelativeDegree;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.Diatonic;
@@ -54,6 +55,22 @@ public class AbsoluteDegreeAdapter {
                 public AbsoluteDegree getPrevious() {
                     int index = limit(currentIndex-1);
                     return absoluteDegrees[index];
+                }
+
+                @Override
+                public AbsoluteDegree getShifted(Interval interval) {
+                    AbsoluteDegree self = this;
+                    for (int i = 0; i < interval.ordinal(); i++)
+                        self = self.getNext();
+                    return self;
+                }
+
+                @Override
+                public AbsoluteDegree getShiftedNegative(Interval interval) {
+                    AbsoluteDegree self = this;
+                    for (int i = 0; i < interval.ordinal(); i++)
+                        self = self.getPrevious();
+                    return self;
                 }
 
                 @Override

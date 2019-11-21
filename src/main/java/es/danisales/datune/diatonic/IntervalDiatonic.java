@@ -1,9 +1,10 @@
 package es.danisales.datune.diatonic;
 
+import es.danisales.datune.musical.Diatonic;
 import es.danisales.datune.musical.transformations.Namer;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public enum IntervalDiatonic {
+public enum IntervalDiatonic implements Interval {
     UNISON, SECOND, THIRD, FOURTH, FIFTH, SIXTH, SEVENTH,
     OCTAVE, NINTH, TENTH, ELEVENTH, TWELFTH, THIRTEENTH, FOURTEENTH,
     FIFTEENTH;
@@ -95,5 +96,10 @@ public enum IntervalDiatonic {
 
     public String toString() {
         return "Intervalo de " + Namer.from(this);
+    }
+
+    @Override
+    public boolean isCompound() {
+        return ordinal() > Diatonic.NUMBER;
     }
 }

@@ -1,14 +1,13 @@
 package es.danisales.datune.midi;
 
+import es.danisales.datune.diatonic.Interval;
+import es.danisales.datune.diatonic.RelativeDegree;
 import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.midi.Arpegios.Arpegio;
 import es.danisales.datune.midi.Arpegios.ArpegioDefault;
 import es.danisales.datune.midi.Events.EventComplex;
 import es.danisales.datune.musical.ChromaticChord;
-import es.danisales.datune.pitch.Chord;
-import es.danisales.datune.pitch.ChordCommon;
-import es.danisales.datune.pitch.PitchChromaticSingle;
-import es.danisales.datune.pitch.PitchOctaveEditable;
+import es.danisales.datune.pitch.*;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -18,7 +17,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.BiFunction;
 
-public abstract class ChordMidi<N extends Note<? extends PitchMidiInterface>> extends Chord<N>
+public abstract class ChordMidi<N extends Note<? extends PitchMidiInterface<D, I>, D, I>, D extends RelativeDegree, I extends Interval> extends Chord<N, D, I>
 		implements Durable, PitchOctaveMidiEditable, EventComplex {
 	protected Arpegio	arpegio;
 	protected int		length;
@@ -29,7 +28,7 @@ public abstract class ChordMidi<N extends Note<? extends PitchMidiInterface>> ex
 		super(new ArrayList<>());
 	}
 
-	<T extends ChordMidi<N>> void assign(@NonNull T c) {
+	<T extends ChordMidi<N, D, I>> void assign(@NonNull T c) {
 		Objects.requireNonNull(c);
 		clear();
 		this.addAll(c);
@@ -175,25 +174,7 @@ public abstract class ChordMidi<N extends Note<? extends PitchMidiInterface>> ex
 				;//|| !sameOctave && hasSameNotesOrder( notes );
 	}
 
-	@Override
-	public Boolean updateWhatIsIt(BiFunction<List<ChromaticChord>, ChordCommon<?>, ChromaticChord> f) {
-		meta = ChromaticChord.from( (Collection<? extends PitchChromaticSingle>)this );
-		assert f != null;
-		Boolean ret = meta.updateWhatIsIt( f );
-		rootIndex = meta.getRootPos();
-		return ret;
-	}
-
-	@Override
-	public Boolean updateWhatIsItIfNeeded() {
-		boolean ret = meta == null || !this.equals( meta );
-		if ( ret )
-			updateWhatIsIt();
-
-		return ret;
-	}
-
-	private <T extends ChordMidi<N>> List<T> _getAllInversions() {
+	private <T extends ChordMidi<N, D, I>> List<T> _getAllInversions() {
 		List<T> ret = new ArrayList<>();
 
 		ret.add( (T) this.clone() );
@@ -207,7 +188,7 @@ public abstract class ChordMidi<N extends Note<? extends PitchMidiInterface>> ex
 		return ret;
 	}
 
-	public <T extends ChordMidi<N>> List<T> getAllDispositionsWithInv() {
+	public <T extends ChordMidi<N, D, I>> List<T> getAllDispositionsWithInv() {
 		List<T> ret = new ArrayList<>();
 		List<T> bases = _getAllInversions();
 		for ( T c : bases )
@@ -217,17 +198,17 @@ public abstract class ChordMidi<N extends Note<? extends PitchMidiInterface>> ex
 	}
 
 	@Override
-	public List<ChordMidi<N>> getAllInversions() {
-		ChordMidi<N> c =  clone();
+	public List<ChordMidi<N, D, I>> getAllInversions() {
+		ChordMidi<N, D, I> c =  clone();
 		c.setMinOctave();
 		c.minimize();
 
 		return c.getAllDispositionsSub( true, 0, true );
 	}
 
-	protected abstract <T extends ChordMidi<N>> T newChord();
+	protected abstract <T extends ChordMidi<N, D, I>> T newChord();
 
-	protected <T extends ChordMidi<N>> List<T> getAllDispositionsSub(boolean sub, int level, boolean first) {
+	protected <T extends ChordMidi<N, D, I>> List<T> getAllDispositionsSub(boolean sub, int level, boolean first) {
 		ArrayList<T> ret = new ArrayList<>();
 		assert size() > 0;
 
@@ -286,10 +267,10 @@ public abstract class ChordMidi<N extends Note<? extends PitchMidiInterface>> ex
 	public void minimizeDistanceTo(@NonNull ChordMidi cIn) {
 		Objects.requireNonNull(cIn);
 
-		List<ChordMidi<N>> ret = getAllDispositionsWithInv();
+		List<ChordMidi<N, D, I>> ret = getAllDispositionsWithInv();
 		int minDist = 9999;
-		ChordMidi<N> minDistChord = null;
-		for ( ChordMidi<N> c : ret ) {
+		ChordMidi<N, D, I> minDistChord = null;
+		for ( ChordMidi<N, D, I> c : ret ) {
 			int d = (int) Math.abs( cIn.dist( c ) );
 			if ( d < minDist ) {
 				minDist = d;
@@ -299,11 +280,11 @@ public abstract class ChordMidi<N extends Note<? extends PitchMidiInterface>> ex
 		assign( minDistChord );
 	}
 
-	public int dist(ChordMidi<N> n) {
+	public int dist(ChordMidi<N, D, I> n) {
 		return dist( n, true );
 	}
 
-	protected int dist(ChordMidi<N> n, boolean bidirectional) {
+	protected int dist(ChordMidi<N, D, I> n, boolean bidirectional) {
 		int d = 0;
 
 		for ( N i : this ) {
@@ -343,7 +324,7 @@ public abstract class ChordMidi<N extends Note<? extends PitchMidiInterface>> ex
 	}
 
 	@Override
-	public ChordMidi<N> clone() { // todo
+	public ChordMidi<N, D, I> clone() { // todo
 		return null;
 	}
 }

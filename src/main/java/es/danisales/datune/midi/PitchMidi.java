@@ -7,31 +7,33 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-public final class PitchMidi implements PitchChromaticSingle, PitchOctaveMidiEditable {
+public final class PitchMidi implements PitchChromaticSingle, PitchOctaveMidiEditable, Cloneable {
     private int cents;
     private PitchChromaticMidi pitchChromaticMidi;
 
     private PitchMidi() {
     }
 
-    public static PitchMidi from(PitchChromaticMidi pitchMidiEnum) {
-       return from(pitchMidiEnum, 0);
+    public static PitchMidi from(PitchChromaticMidi pitchChromaticMidi) {
+       return from(pitchChromaticMidi, 0);
     }
 
-    public static PitchMidi from(PitchChromaticMidi pitchMidiEnum, int cents) {
+    public static PitchMidi from(PitchChromaticMidi pitchChromaticMidi, int cents) {
         checkArgument(cents < 100 && cents >= 0);
 
         PitchMidi ret = new PitchMidi();
-        ret.pitchChromaticMidi = pitchMidiEnum;
+        ret.pitchChromaticMidi = pitchChromaticMidi;
         ret.cents = cents;
 
         return ret;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public PitchChromaticMidi getPitchChromaticMidi() {
         return pitchChromaticMidi;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public int getCents() {
         return cents;
     }
@@ -60,6 +62,26 @@ public final class PitchMidi implements PitchChromaticSingle, PitchOctaveMidiEdi
         ret.pitchChromaticMidi = pitchChromaticMidi.getPrevious();
         ret.cents = cents;
         return ret;
+    }
+
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @Override
+    public PitchMidi clone() {
+        return PitchMidi.from(pitchChromaticMidi, cents);
+    }
+
+    @Override
+    public PitchMidi getShifted(IntervalChromatic intervalChromatic) {
+        PitchMidi pitchMidi = clone();
+        pitchMidi.pitchChromaticMidi = pitchMidi.pitchChromaticMidi.getShift(intervalChromatic);
+        return pitchMidi;
+    }
+
+    @Override
+    public PitchMidi getShiftedNegative(IntervalChromatic intervalChromatic) {
+        PitchMidi pitchMidi = clone();
+        pitchMidi.pitchChromaticMidi = pitchMidi.pitchChromaticMidi.getShiftNegative(intervalChromatic);
+        return pitchMidi;
     }
 
     @Override

@@ -1,20 +1,23 @@
 package es.danisales.datune.musical;
 
+import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.midi.AddedException;
 import es.danisales.datune.pitch.Chord;
-import es.danisales.datune.pitch.ChordCommon;
-import es.danisales.datune.pitch.ChordMutableInterface;
+import es.danisales.datune.pitch.PitchDiatonic;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
-import java.util.*;
-import java.util.function.BiFunction;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
-class DiatonicChordCustom extends Chord<Diatonic> implements DiatonicChordInterface, ChordMutableInterface<Diatonic> {
+class DiatonicChordCustom extends Chord<Diatonic, DiatonicDegree, IntervalDiatonic> implements DiatonicChordInterface {
 	protected DiatonicChordCustom() {
 		super(new ArrayList<>());
 	}
 
-	public static DiatonicChordCustom from(Collection<Diatonic> diatonics) {
+	public static @NonNull DiatonicChordCustom from(@NonNull Collection<Diatonic> diatonics) {
 		DiatonicChordCustom customDiatonicChord = new DiatonicChordCustom();
 		customDiatonicChord.addAll(diatonics);
 		if (diatonics instanceof DiatonicChordCommon) {
@@ -32,25 +35,15 @@ class DiatonicChordCustom extends Chord<Diatonic> implements DiatonicChordInterf
 	}
 
 	@Override
+	public void shiftNegative(IntervalDiatonic intervalDiatonic) {
+		for ( int i = 0; i < size(); i++ ) {
+			set( i, get( i ).getShiftedNegative( intervalDiatonic ) );
+		}
+	}
+
+	@Override
 	public List<DiatonicChordCustom> getAllInversions(){
 		return super.getAllInversions();
-	}
-
-	@Override
-	public Boolean updateWhatIsIt(BiFunction<List<ChromaticChord>, ChordCommon<?>, ChromaticChord> fSelectChord) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Boolean updateWhatIsItIfNeeded() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public DiatonicChordCustom add(Diatonic... cs) throws AddedException {
-		this.addAll(Arrays.asList(cs));
-		return this;
 	}
 
 	@Override
@@ -66,6 +59,24 @@ class DiatonicChordCustom extends Chord<Diatonic> implements DiatonicChordInterf
 	@SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
 	@Override
 	public boolean equals(Object o) {
-		return DiatonicChordAdapter.equals(this, o);
+		return DiatonicChordInterfaceAdapter.equals(this, o);
+	}
+
+	@Override
+	public DiatonicChordCustom getShifted(IntervalDiatonic intervalDiatonic) {
+		DiatonicChordCustom diatonicChordCustom = new DiatonicChordCustom();
+		for (int i = 0; i < size(); i++)
+			diatonicChordCustom.add( get(i).getShifted(intervalDiatonic) );
+
+		return diatonicChordCustom;
+	}
+
+	@Override
+	public PitchDiatonic getShiftedNegative(IntervalDiatonic intervalDiatonic) {
+		DiatonicChordCustom diatonicChordCustom = new DiatonicChordCustom();
+		for (int i = 0; i < size(); i++)
+			diatonicChordCustom.add( get(i).getShiftedNegative(intervalDiatonic) );
+
+		return diatonicChordCustom;
 	}
 }

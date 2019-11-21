@@ -1,7 +1,9 @@
 package es.danisales.datune.musical;
 
+import es.danisales.datune.diatonic.ChromaticDegree;
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.diatonic.HarmonicFunction;
+import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.pitch.Chord;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.tonality.Tonality;
@@ -66,7 +68,7 @@ public class ChromaticChordRetrieval {
         return e.equals( ee );
     }
 
-    public static <A extends Chord<Chromatic>> boolean hasSameNotesOrder(A notes1, A notes2) {
+    public static <A extends Chord<Chromatic, ChromaticDegree, IntervalChromatic>> boolean hasSameNotesOrder(A notes1, A notes2) {
         if ( notes1.size() != notes2.size() ||  notes1.size() == 0 )
             return false;
 

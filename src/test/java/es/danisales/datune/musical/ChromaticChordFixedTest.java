@@ -22,6 +22,11 @@ public class ChromaticChordFixedTest {
     }
 
     @Test
+    public void same() {
+        assertSame(ChromaticChordEnum.C5, ChromaticChord.C5.innerChord);
+    }
+
+    @Test
     public void getAllInversions() {
         List<ChromaticChord> chromaticChordList = ChromaticChord.C.getAllInversions();
 

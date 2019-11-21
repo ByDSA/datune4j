@@ -4,8 +4,10 @@ import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.musical.Diatonic;
 
-public interface PitchDiatonicSingle extends AbsoluteDegree<DiatonicDegree>, SymbolicPitch {
+public interface PitchDiatonicSingle extends AbsoluteDegree<DiatonicDegree, IntervalDiatonic>, PitchDiatonic, SymbolicPitch {
 	Diatonic getDiatonic();
-	PitchDiatonicSingle getShifted(IntervalDiatonic intervalDiatonic);
-	PitchDiatonicSingle getShiftedNegative(IntervalDiatonic intervalDiatonic);
+	@Override PitchDiatonicSingle getNext();
+	@Override PitchDiatonicSingle getPrevious();
+	@Override PitchDiatonicSingle getShifted(IntervalDiatonic intervalDiatonic);
+	@Override PitchDiatonicSingle getShiftedNegative(IntervalDiatonic intervalDiatonic);
 }

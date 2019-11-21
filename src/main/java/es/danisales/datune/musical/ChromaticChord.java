@@ -1,9 +1,7 @@
 package es.danisales.datune.musical;
 
 import com.google.common.collect.ImmutableList;
-import es.danisales.datune.diatonic.ChromaticFunction;
-import es.danisales.datune.diatonic.DiatonicFunction;
-import es.danisales.datune.diatonic.Quality;
+import es.danisales.datune.diatonic.*;
 import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
@@ -16,10 +14,10 @@ import es.danisales.utils.ListUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.*;
-import java.util.function.BiFunction;
 
 @SuppressWarnings("WeakerAccess")
-public final class ChromaticChord extends NormalChordCommon<Chromatic> implements ChordCommon<Chromatic>, Iterable<Chromatic>, PitchChromaticChord<Chromatic> {
+public final class ChromaticChord extends NormalChordCommon<Chromatic, ChromaticDegree, IntervalChromatic>
+        implements ChordCommon<Chromatic, ChromaticDegree, IntervalChromatic>, Iterable<Chromatic>, PitchChromaticChord<Chromatic> {
     // Quintas
     public static final ChromaticChord C5 = new ChromaticChord(ChromaticChordEnum.C5);
     public static final ChromaticChord CC5 = new ChromaticChord(ChromaticChordEnum.CC5);
@@ -2511,13 +2509,13 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
 
     public static @NonNull ChromaticChord createEmpty() {
         ChromaticChord ret = new ChromaticChord();
-        ret.innerChord = ChromaticChordAdapter.from(ImmutableList.of());
+        ret.innerChord = ChromaticChordInterfaceAdapter.from(ImmutableList.of());
         return ret;
     }
 
     public static @NonNull ChromaticChord from(@NonNull Collection<? extends PitchChromaticSingle> chromaticChord) {
         ChromaticChord ret = new ChromaticChord();
-        ret.innerChord = ChromaticChordAdapter.from(chromaticChord);
+        ret.innerChord = ChromaticChordInterfaceAdapter.from(chromaticChord);
         return ret;
     }
 
@@ -2603,7 +2601,7 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
                 break;
         }
 
-        cc.updateWhatIsIt();
+        WhatIsIt.updateWhatIsIt((ChromaticChordCustom)cc.innerChord);
         //assert cc.meta.str != null : "meta.str es null: " + cc.notesToString() + " [" + t + "] [" + df + "] " + t.notesToString();
 
         return cc;
@@ -2622,7 +2620,7 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
     }
 
     @Override
-    protected final void turnIntoEnumIfPossible() {
+    protected final void turnInnerChordIntoEnumIfPossible() {
         ChromaticChordEnum chromaticChordEnum = ChromaticChordEnum.from(innerChord);
         if (chromaticChordEnum != null)
             innerChord = chromaticChordEnum;
@@ -2644,18 +2642,20 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
     }
 
     @Override
-    protected final ChordMutableInterface<Chromatic> castCustom(ChordCommon<Chromatic> chord) {
+    protected final ChordMutableInterface<Chromatic, ChromaticDegree, IntervalChromatic> castCustom(ChordCommon<Chromatic, ChromaticDegree, IntervalChromatic> chord) {
         return (ChromaticChordCustom)innerChord;
     }
 
     @Override
     protected final ChromaticChord create() {
-        return new ChromaticChord();
+        ChromaticChord chromaticChord = new ChromaticChord();
+        chromaticChord.innerChord = new ChromaticChordCustom();
+        return chromaticChord;
     }
 
     @Override
-    protected final ChordCommon<Chromatic> createInnerFrom(ChordCommon<Chromatic> chord) {
-        return ChromaticChordAdapter.from(chord);
+    protected final ChordCommon<Chromatic, ChromaticDegree, IntervalChromatic> createInnerFrom(ChordCommon<Chromatic, ChromaticDegree, IntervalChromatic> chord) {
+        return ChromaticChordInterfaceAdapter.from(chord);
     }
 
     private ChromaticChord(ChromaticChordInterface chromaticChordInterface) {
@@ -2687,17 +2687,19 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic> implement
         return ((ChromaticChordInterface)innerChord).getQuality();
     }
 
-    @Override
-    public Boolean updateWhatIsIt(BiFunction<List<ChromaticChord>, ChordCommon<?>, ChromaticChord> fSelectChord) {
-        return null;
-    }
-
-    @Override
-    public Boolean updateWhatIsItIfNeeded() {
-        return null;
-    }
-
     public ChromaticChordMidi toMidi() { // todo: remove
         return null;
+    }
+
+    @Override
+    public void shift(IntervalChromatic intervalChromatic) {
+        for (int i = 0; i < size(); i++)
+            set(i, get(i).getShifted(intervalChromatic) );
+    }
+
+    @Override
+    public void shiftNegative(IntervalChromatic intervalChromatic) {
+        for (int i = 0; i < size(); i++)
+            set(i, get(i).getShiftedNegative(intervalChromatic) );
     }
 }

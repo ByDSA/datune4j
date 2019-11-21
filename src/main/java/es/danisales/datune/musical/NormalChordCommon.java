@@ -1,29 +1,33 @@
 package es.danisales.datune.musical;
 
 import com.sun.istack.internal.NotNull;
+import es.danisales.datastructures.ListProxy;
+import es.danisales.datune.diatonic.Interval;
+import es.danisales.datune.diatonic.RelativeDegree;
+import es.danisales.datune.pitch.AbsoluteDegree;
 import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.ChordMutableInterface;
-import es.danisales.datune.pitch.SymbolicPitch;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.*;
-import java.util.function.BiFunction;
 
-public abstract class NormalChordCommon<N extends SymbolicPitch> implements ChordMutableInterface<N> {
-    ChordCommon<N> innerChord;
+public abstract class NormalChordCommon<N extends AbsoluteDegree<D, I>, D extends RelativeDegree, I extends Interval> extends ListProxy<N> implements ChordMutableInterface<N, D, I> {
+    ChordCommon<N, D, I> innerChord;
     private boolean fixed;
 
     NormalChordCommon() {
+        super(new ArrayList<>());
         fixed = false;
     }
 
-    NormalChordCommon(ChordCommon<N> chromaticChordInterface) {
+    NormalChordCommon(ChordCommon<N, D, I> chromaticChordInterface) {
+        super(chromaticChordInterface);
         innerChord = chromaticChordInterface;
         fixed = true;
     }
 
-    protected abstract void turnIntoEnumIfPossible();
+    protected abstract void turnInnerChordIntoEnumIfPossible();
 
     private void exceptionIfFixed() {
         if (fixed)
@@ -45,9 +49,61 @@ public abstract class NormalChordCommon<N extends SymbolicPitch> implements Chor
 
     protected abstract boolean isEnum();
     protected abstract boolean isCustom();
-    protected abstract ChordMutableInterface<N> castCustom(ChordCommon<N> chord);
-    protected abstract NormalChordCommon<N> create();
-    protected abstract ChordCommon<N> createInnerFrom(ChordCommon<N> chord);
+    protected abstract ChordMutableInterface<N, D, I> castCustom(ChordCommon<N, D, I> chord);
+    protected abstract NormalChordCommon<N, D, I> create();
+    protected abstract ChordCommon<N, D, I> createInnerFrom(ChordCommon<N, D, I> chord);
+
+
+    @Override
+    public void shift(I interval) {
+        exceptionIfFixed();
+
+        turnInnerIntoCustom();
+
+        for (int i = 0; i < size(); i++)
+            innerChord.set(i, (N)get(i).getShifted(interval));
+
+        turnInnerChordIntoEnumIfPossible();
+    }
+
+    private List<N> getShiftedInto(I interval) {
+        List<N> list = new ArrayList<>();
+        for (int i = 0; i < size(); i++)
+            list.add( (N)get(i).getShifted(interval) );
+
+        return list;
+    }
+
+    public NormalChordCommon<N, D, I> getShifted(I interval) {
+        List<N> list = getShiftedInto(interval);
+
+        NormalChordCommon<N, D, I> diatonicChord = create();
+        diatonicChord.innerChord.addAll(list);
+        diatonicChord.setRootPos(getRootPos());
+        diatonicChord.turnInnerChordIntoEnumIfPossible();
+
+        return diatonicChord;
+    }
+
+    @Override
+    public void shiftNegative(I interval) {
+        exceptionIfFixed();
+
+        for (int i = 0; i < size(); i++)
+            set( i, (N)get(i).getShiftedNegative(interval) );
+
+        turnInnerChordIntoEnumIfPossible();
+    }
+
+    public NormalChordCommon<N, D, I> getShiftedNegative(I interval) {
+        NormalChordCommon<N, D, I> diatonicChord = create();
+        for (int i = 0; i < size(); i++)
+            diatonicChord.add( (N)get(i).getShiftedNegative(interval) );
+
+        diatonicChord.turnInnerChordIntoEnumIfPossible();
+
+        return diatonicChord;
+    }
 
     @Override
     public final void inv(int n) {
@@ -59,26 +115,26 @@ public abstract class NormalChordCommon<N extends SymbolicPitch> implements Chor
         if (isCustom()) {
             castCustom(innerChord).inv(n);
             if (getRootPos() == 0)
-                turnIntoEnumIfPossible();
+                turnInnerChordIntoEnumIfPossible();
         }
     }
 
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<? extends ChordCommon<N>> getAllInversions() {
-        List<ChordMutableInterface<N>> customDiatonicChords = getAllInversionsRaw();
+    public List<? extends ChordCommon<N, D, I>> getAllInversions() {
+        List<ChordMutableInterface<N, D, I>> customDiatonicChords = getAllInversionsRaw();
 
         return createListFrom(customDiatonicChords);
     }
 
-    private List<ChordMutableInterface<N>> getAllInversionsRaw() {
-        List<ChordMutableInterface<N>> customDiatonicChords;
+    private List<ChordMutableInterface<N, D, I>> getAllInversionsRaw() {
+        List<ChordMutableInterface<N, D, I>> customDiatonicChords;
 
         if (isCustom()) {
             customDiatonicChords = castCustom(innerChord).getAllInversions();
         } else {
-            ChordCommon<N> tmp = innerChord;
+            ChordCommon<N, D, I> tmp = innerChord;
             turnInnerIntoCustom();
             customDiatonicChords = castCustom(innerChord).getAllInversions();
             innerChord = tmp;
@@ -87,12 +143,12 @@ public abstract class NormalChordCommon<N extends SymbolicPitch> implements Chor
         return customDiatonicChords;
     }
 
-    private List<NormalChordCommon<N>> createListFrom(List<ChordMutableInterface<N>> list) {
-        List<NormalChordCommon<N>> ret = new ArrayList<>();
-        for (ChordCommon<N> customChromaticChord : list) {
-            NormalChordCommon<N> chromaticChord = create();
+    private List<NormalChordCommon<N, D, I>> createListFrom(List<ChordMutableInterface<N, D, I>> list) {
+        List<NormalChordCommon<N, D, I>> ret = new ArrayList<>();
+        for (ChordCommon<N, D, I> customChromaticChord : list) {
+            NormalChordCommon<N, D, I> chromaticChord = create();
             chromaticChord.innerChord = customChromaticChord;
-            chromaticChord.turnIntoEnumIfPossible();
+            chromaticChord.turnInnerChordIntoEnumIfPossible();
             ret.add(chromaticChord);
         }
 
@@ -111,10 +167,10 @@ public abstract class NormalChordCommon<N extends SymbolicPitch> implements Chor
     }
 
     @Override
-    public NormalChordCommon<N> duplicate() {
-        NormalChordCommon<N> normalChordCommon = create();
+    public NormalChordCommon<N, D, I> duplicate() {
+        NormalChordCommon<N, D, I> normalChordCommon = create();
         normalChordCommon.innerChord = innerChord.duplicate();
-        normalChordCommon.turnIntoEnumIfPossible();
+        normalChordCommon.turnInnerChordIntoEnumIfPossible();
         return normalChordCommon;
     }
 
@@ -132,17 +188,7 @@ public abstract class NormalChordCommon<N extends SymbolicPitch> implements Chor
             castCustom(innerChord).setRootPos(pos);
         }
 
-        turnIntoEnumIfPossible();
-    }
-
-    @Override
-    public Boolean updateWhatIsIt(BiFunction<List<ChromaticChord>, ChordCommon<?>, ChromaticChord> fSelectChord) {
-        return null;
-    }
-
-    @Override
-    public Boolean updateWhatIsItIfNeeded() {
-        return null;
+        turnInnerChordIntoEnumIfPossible();
     }
 
     @Override
@@ -166,12 +212,6 @@ public abstract class NormalChordCommon<N extends SymbolicPitch> implements Chor
         return innerChord.iterator();
     }
 
-    @Override
-    @NonNull
-    public Object[] toArray() {
-        return innerChord.toArray();
-    }
-
     @SuppressWarnings("SuspiciousToArrayCall")
     @Override
     @NonNull
@@ -184,7 +224,7 @@ public abstract class NormalChordCommon<N extends SymbolicPitch> implements Chor
         exceptionIfFixed();
         turnIntoCustomIfNot();
         boolean ret = innerChord.add(n);
-        turnIntoEnumIfPossible();
+        turnInnerChordIntoEnumIfPossible();
 
         return ret;
     }
@@ -194,7 +234,7 @@ public abstract class NormalChordCommon<N extends SymbolicPitch> implements Chor
         exceptionIfFixed();
         turnIntoCustomIfNot();
         boolean ret = innerChord.remove(o);
-        turnIntoEnumIfPossible();
+        turnInnerChordIntoEnumIfPossible();
 
         return ret;
     }
@@ -204,7 +244,7 @@ public abstract class NormalChordCommon<N extends SymbolicPitch> implements Chor
         exceptionIfFixed();
         turnIntoCustomIfNot();
         innerChord.add(index, element);
-        turnIntoEnumIfPossible();
+        turnInnerChordIntoEnumIfPossible();
     }
 
     @Override
@@ -212,7 +252,7 @@ public abstract class NormalChordCommon<N extends SymbolicPitch> implements Chor
         exceptionIfFixed();
         turnIntoCustomIfNot();
         N ret = innerChord.remove(index);
-        turnIntoEnumIfPossible();
+        turnInnerChordIntoEnumIfPossible();
         return ret;
     }
 
@@ -226,7 +266,7 @@ public abstract class NormalChordCommon<N extends SymbolicPitch> implements Chor
         exceptionIfFixed();
         turnIntoCustomIfNot();
         boolean ret = innerChord.addAll(c);
-        turnIntoEnumIfPossible();
+        turnInnerChordIntoEnumIfPossible();
 
         return ret;
     }
@@ -236,7 +276,7 @@ public abstract class NormalChordCommon<N extends SymbolicPitch> implements Chor
         exceptionIfFixed();
         turnIntoCustomIfNot();
         boolean ret = innerChord.addAll(index, c);
-        turnIntoEnumIfPossible();
+        turnInnerChordIntoEnumIfPossible();
 
         return ret;
     }
@@ -246,7 +286,7 @@ public abstract class NormalChordCommon<N extends SymbolicPitch> implements Chor
         exceptionIfFixed();
         turnIntoCustomIfNot();
         boolean ret = innerChord.removeAll(c);
-        turnIntoEnumIfPossible();
+        turnInnerChordIntoEnumIfPossible();
 
         return ret;
     }
@@ -257,7 +297,7 @@ public abstract class NormalChordCommon<N extends SymbolicPitch> implements Chor
         exceptionIfFixed();
         turnIntoCustomIfNot();
         boolean ret = innerChord.removeAll(c);
-        turnIntoEnumIfPossible();
+        turnInnerChordIntoEnumIfPossible();
 
         return ret;
     }
@@ -278,9 +318,10 @@ public abstract class NormalChordCommon<N extends SymbolicPitch> implements Chor
     public final void resetRoot() {
         checkInnerNotNull();
         exceptionIfFixed();
+
         turnIntoCustomIfNot();
         ChordMutableInterface.super.resetRoot();
-        turnIntoEnumIfPossible();
+        turnInnerChordIntoEnumIfPossible();
     }
 
     @Override
@@ -296,7 +337,7 @@ public abstract class NormalChordCommon<N extends SymbolicPitch> implements Chor
         if (isCustom())
             old = innerChord.set(index, element);
 
-        turnIntoEnumIfPossible();
+        turnInnerChordIntoEnumIfPossible();
 
         return old;
     }
@@ -340,6 +381,6 @@ public abstract class NormalChordCommon<N extends SymbolicPitch> implements Chor
     }
 
     public List<N> getNotes() {
-        return Collections.unmodifiableList(this);
+        return Collections.unmodifiableList(this.subList(0, size()));
     }
 }

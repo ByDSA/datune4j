@@ -7,11 +7,11 @@ import java.util.Collection;
 
 interface DiatonicChordInterface extends DiatonicChordCommon<Diatonic> {
 	static @NonNull DiatonicChordInterface from(@NonNull Collection<Diatonic> diatonicChord) {
-		return DiatonicChordAdapter.from(diatonicChord);
+		return DiatonicChordInterfaceAdapter.from(diatonicChord);
 	}
 	
 	static @NonNull DiatonicChordInterface from(@NonNull DiatonicFunction f) {
-		return DiatonicChordAdapter.from(f);
+		return DiatonicChordInterfaceAdapter.from(f);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package es.danisales.datune.musical;
 
+import es.danisales.datune.diatonic.IntervalDiatonic;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -57,6 +58,13 @@ public class DiatonicChordFixedTest {
 
     @Test
     public void duplicate() {
+        DiatonicChord diatonicChord = DiatonicChord.TRIAD.duplicate();
+        assertEquals(DiatonicChord.TRIAD, diatonicChord);
+        assertSame(DiatonicChord.TRIAD.innerChord, diatonicChord.innerChord);
+    }
+
+    @Test
+    public void setIndex() {
         DiatonicChord diatonicChord = DiatonicChord.TRIAD.duplicate();
         diatonicChord.set(1, Diatonic.D);
         assertEquals(DiatonicChord.SUS2, diatonicChord);
@@ -200,7 +208,7 @@ public class DiatonicChordFixedTest {
     @Test
     public void indexOf() {
         for (DiatonicChord diatonicChord : DiatonicChord.values())
-            assertEquals(0, diatonicChord.indexOf(Diatonic.C));
+            assertEquals(diatonicChord.getNotes().toString(), 0, diatonicChord.indexOf(Diatonic.C));
     }
 
     @Test
@@ -359,5 +367,37 @@ public class DiatonicChordFixedTest {
         DiatonicChord diatonicChord = DiatonicChord.from( Arrays.asList(Diatonic.C, Diatonic.E, Diatonic.G) );
         diatonicChord.add(3,Diatonic.B);
         assertSame(DiatonicChord.SEVENTH.innerChord, diatonicChord.innerChord);
+    }
+
+    @Test
+    public void getShifted() {
+        DiatonicChord diatonicChord = DiatonicChord.TRIAD.getShifted(IntervalDiatonic.FIFTH);
+        diatonicChord.inv();
+        assertEquals(3, diatonicChord.size());
+        assertEquals(Diatonic.B, diatonicChord.get(0));
+        assertEquals(Diatonic.D, diatonicChord.get(1));
+        assertEquals(Diatonic.G, diatonicChord.get(2));
+        assertEquals(2, diatonicChord.getRootPos());
+    }
+
+    @Test
+    public void getShiftedNegative() {
+        DiatonicChord diatonicChord = DiatonicChord.TRIAD.getShiftedNegative(IntervalDiatonic.FOURTH);
+        diatonicChord.inv();
+        assertEquals(3, diatonicChord.size());
+        assertEquals(Diatonic.B, diatonicChord.get(0));
+        assertEquals(Diatonic.D, diatonicChord.get(1));
+        assertEquals(Diatonic.G, diatonicChord.get(2));
+        assertEquals(2, diatonicChord.getRootPos());
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void shift() {
+        DiatonicChord.TRIAD.shift(IntervalDiatonic.FIFTH);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void shiftNegative() {
+        DiatonicChord.TRIAD.shiftNegative(IntervalDiatonic.FIFTH);
     }
 }

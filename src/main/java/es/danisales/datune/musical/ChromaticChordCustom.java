@@ -1,89 +1,34 @@
 package es.danisales.datune.musical;
 
 import com.google.common.collect.ImmutableList;
-import es.danisales.datune.diatonic.ChordNotation;
-import es.danisales.datune.diatonic.IntervalChromatic;
-import es.danisales.datune.diatonic.Quality;
+import es.danisales.datune.diatonic.*;
 import es.danisales.datune.midi.ChordMidi;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.pitch.*;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.BiFunction;
 
-class ChromaticChordCustom extends Chord<Chromatic> implements PitchChromaticChord<Chromatic>, ChordMutableInterface<Chromatic>, ChromaticChordInterface {
-	private ChromaticChordMeta meta = new ChromaticChordMeta();
-
-	private static final HashMap<List<Integer>, ArrayList<ChromaticChordCustom>> sameOrderChromatics = new HashMap<>();
+class ChromaticChordCustom extends Chord<Chromatic, ChromaticDegree, IntervalChromatic> implements PitchChromaticChord<Chromatic>, ChromaticChordInterface {
+	ChromaticChordMeta meta = new ChromaticChordMeta();
 
 	public static <T extends PitchChromaticSingle> @NonNull ChromaticChordCustom from(@NonNull Iterable<T> chord) {
 		ChromaticChordCustom c = new ChromaticChordCustom();
+
 		for (T t : chord) {
 			Chromatic chromatic = Chromatic.from(t);
 			c.add(chromatic);
 		}
+
 		return c;
 	}
 
-	public static <N extends ChromaticMidi> @NonNull ChromaticChordCustom from(@NonNull ChordMidi<N> chord) {
-		ChromaticChordCustom c = new ChromaticChordCustom();
-		for (N t : chord) {
-			Chromatic chromatic = Chromatic.from((PitchChromaticSingle)t);
-			c.add(chromatic);
-		}
-		return c;
-	}
-
-	public static ChromaticChordCustom noneOf() {
-		return new ChromaticChordCustom();
-	}
-
-	static {
-		for ( ChromaticChordEnum c : ChromaticChordEnum.values() ) {
-			//m.updated = true;
-			for ( int i = 0; i < c.size(); i++ ) {
-				ChromaticChordCustom c2 = new ChromaticChordCustom();
-				c2.addAll( c );
-				if ( i > 0 )
-					c2.inv( i );
-				List<Integer> array = c2.toIntegerChromatics();
-				// System.out.println(Arrays.toString(listOf) + c2);
-				ArrayList<ChromaticChordCustom> arrayListChords = sameOrderChromatics.get( array );
-				if ( arrayListChords == null )
-					arrayListChords = new ArrayList<>();
-
-				//assert c2.meta.str != null : c2.notesToString();
-				arrayListChords.add( c2 );
-				sameOrderChromatics.put( array, arrayListChords );
-			}
-		}
-	}
-
-	protected ChromaticChordCustom() {
+	ChromaticChordCustom() {
 		super(new ArrayList<>());
-	}
-
-	/*
-        public <T extends PitchChromaticSingle> void addSemi(Iterable<T> cs) {
-            assert cs != null;
-            for ( T cc : cs ) {
-                assert cc != null;
-                Chromatic c = cc.getChromatic();
-                addSemi( c );
-            }
-        }
-    */
-
-	public List<Integer> toIntegerChromatics() {
-		Integer[] out = new Integer[size()];
-		for ( int i = 0; i < size(); i++ ) {
-			out[i] = get( i ).ordinal();
-		}
-
-		return ImmutableList.copyOf(out);
 	}
 
 	public ChromaticChordCustom assignMeta(ChromaticChordCustom c) {
@@ -101,54 +46,6 @@ class ChromaticChordCustom extends Chord<Chromatic> implements PitchChromaticCho
 		return customChromaticChord;
 	}
 
-	@Override
-	public Boolean updateWhatIsIt(BiFunction<List<ChromaticChord>, ChordCommon<?>, ChromaticChord> fSelectChord) {
-		List<Integer> a = this.toIntegerChromatics();
-		assert ChromaticChordCustom.sameOrderChromatics != null;
-		List<ChromaticChordCustom> foundCustomChords = ChromaticChordCustom.sameOrderChromatics.get( a );
-
-		if ( foundCustomChords == null ) {
-			assert meta != null;
-			autoName();
-			meta.updated = true;
-			return null;
-		}
-
-		assert fSelectChord != null;
-
-		List<ChromaticChord> foundChords = new ArrayList<>();
-		for (ChromaticChordCustom chromaticChordCustom : foundCustomChords)
-			foundChords.add(ChromaticChord.from(chromaticChordCustom));
-
-		ChromaticChord foundChord = fSelectChord.apply( foundChords, this );
-
-		assert foundChord != null;
-
-		this.assignMeta( (ChromaticChordCustom)foundChord.innerChord );
-
-		assert meta.str != null : ChordNamer.from(foundChord);
-
-		meta.updated = true;
-
-		return true;
-	}
-
-	public Boolean updateWhatIsIt() {
-		return updateWhatIsIt(
-				(List<ChromaticChord> chords, ChordCommon<?> self) -> {
-					return chords.get( 0 );
-				}
-		);
-	}
-
-	public Boolean updateWhatIsItIfNeeded() {
-		assert meta != null;
-		if ( !meta.updated )
-			return updateWhatIsIt();
-
-		return false;
-	}
-
 	public String invPartString() {
 		if ( getInversionNumber() > 0 )
 			return "/" + get( 0 ).toString();
@@ -163,15 +60,13 @@ class ChromaticChordCustom extends Chord<Chromatic> implements PitchChromaticCho
 
 		if (true)
 			return ChordNamer.from(this);
-		updateWhatIsItIfNeeded();
-
-		//assert meta.str != null : "meta.str es null: " + notesToString();
+		WhatIsIt.updateWhatIsItIfNeeded(this);
 
 		return rootIndex + meta.str + invPartString();
 	}
 
 	public void autoName() {
-		List<Integer> array = this.integerNotationFromRoot();
+		ChromaticChordPattern array = ChromaticChordPattern.from(this);
 
 		meta.str = "";
 		if ( array.size() >= 3 )
@@ -234,5 +129,15 @@ class ChromaticChordCustom extends Chord<Chromatic> implements PitchChromaticCho
 
 	public @NonNull Quality getQuality() {
 		return meta.quality;
+	}
+
+	@Override
+	public void shift(IntervalChromatic interval) {
+
+	}
+
+	@Override
+	public void shiftNegative(IntervalChromatic interval) {
+
 	}
 }

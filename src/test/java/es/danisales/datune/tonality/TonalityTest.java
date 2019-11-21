@@ -763,7 +763,6 @@ public class TonalityTest {
         assertTrue(ChromaticChord.from(ton, ChromaticFunction.V7ALT).equalsEnharmonic(ChromaticChord.Gm7b5));
 
         ton = Tonality.Cm;
-
         assertTrue(ChromaticChord.from(ton, DiatonicFunction.VII7).equalsEnharmonic(ChromaticChord.AA7));
 
         ton = Tonality.Db;

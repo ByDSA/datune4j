@@ -24,6 +24,11 @@ public class ChromaticChordEnumTest {
 	}
 
 	@Test
+	public void testSomeValues() {
+		assertEquals(Arrays.asList(Chromatic.C, Chromatic.G), ChromaticChordEnum.C5);
+	}
+
+	@Test
 	public void fromListNotFound() {
 		ChromaticChordEnum chromaticChordEnum = ChromaticChordEnum.from( Arrays.asList(Chromatic.C, Chromatic.D, Chromatic.E) );
 		assertNull( chromaticChordEnum );

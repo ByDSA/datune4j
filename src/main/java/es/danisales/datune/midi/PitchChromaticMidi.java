@@ -6,11 +6,9 @@ import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.pitch.PitchChromaticSingle;
-import es.danisales.datune.pitch.PitchOctave;
-import es.danisales.datune.pitch.PitchOctaveEditable;
 import es.danisales.datune.tonality.Tonality;
 
-public enum PitchChromaticMidi implements PitchChromaticSingle, PitchMidiInterface {
+public enum PitchChromaticMidi implements PitchChromaticSingle, PitchMidiInterface<ChromaticDegree, IntervalChromatic> {
 	C0, CC0, D0, DD0, E0, F0, FF0, G0, GG0, A0, AA0, B0,
 	C1, CC1, D1, DD1, E1, F1, FF1, G1, GG1, A1, AA1, B1,
 	C2, CC2, D2, DD2, E2, F2, FF2, G2, GG2, A2, AA2, B2,
@@ -389,6 +387,10 @@ public enum PitchChromaticMidi implements PitchChromaticSingle, PitchMidiInterfa
 		return getShift( i.getSemitones() );
 	}
 
+	public PitchChromaticMidi getShiftNegative(IntervalChromatic i) {
+		return getShift( -i.getSemitones() );
+	}
+
 	public static PitchChromaticMidi from(PitchDiatonicMidi pitchDiatonicMidi) {
 		Tonality tonality = pitchDiatonicMidi.tonality;
 		DiatonicDegree degree = pitchDiatonicMidi.degree;
@@ -430,6 +432,16 @@ public enum PitchChromaticMidi implements PitchChromaticSingle, PitchMidiInterfa
 	@Override
 	public PitchChromaticMidi getPrevious() {
 		return from(getCode()-1);
+	}
+
+	@Override
+	public PitchChromaticMidi getShifted(IntervalChromatic intervalChromatic) {
+		return PitchChromaticMidi.from(ordinal() + intervalChromatic.getSemitones());
+	}
+
+	@Override
+	public PitchChromaticMidi getShiftedNegative(IntervalChromatic intervalChromatic) {
+		return PitchChromaticMidi.from(ordinal() - intervalChromatic.getSemitones());
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package es.danisales.datune.midi;
 
+import es.danisales.datune.diatonic.ChromaticDegree;
+import es.danisales.datune.diatonic.Interval;
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.Quality;
 import es.danisales.datune.musical.Chromatic;
@@ -19,7 +21,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements PitchChromaticChord<ChromaticMidi> {
+public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, ChromaticDegree, IntervalChromatic>
+		implements PitchChromaticChord<ChromaticMidi> {
 	protected ChromaticChordMidi() { }
 
 	public static ChromaticChordMidi newEmpty() {
@@ -129,28 +132,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 
 		return out;
 	}
-	/*
-	public ChromaticMidi getAllFrom(int note, List<ChromaticMidi> ns) {
-		if ( ns.size() == 0 )
-			return null;
 
-		ChromaticMidi n;
-		if ( note >= ns.size() ) {
-			n = ns.getAllFrom( note % ns.size() );
-			n.addMidi( note / ns.size() * ChromaticMidi.NUMBER );
-		} else if ( note < 0 ) {
-			int num = Math.abs( ns.size() + note % ns.size() );
-			n = ns.getAllFrom( num );
-			n.addMidi( ( note / ns.size() - 1 ) * ChromaticMidi.NUMBER );
-		} else {
-			n = (ChromaticMidi) ns.getAllFrom( note ).clone();
-		}
-
-		PitchMidiException.check( n );
-
-		return n;
-	}
-	 */
 	public void compact() {
 		for ( int i = 1; i < this.size(); i++ ) {
 			int dist = this.get( i - 1 ).dist( this.get( i ) );
@@ -179,6 +161,11 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 	@Override
 	public ChromaticChordMidi duplicate() {
 		return ChromaticChordMidi.from(this);
+	}
+
+	@Override
+	public ChromaticMidi set(int index, ChromaticMidi element) {
+		return null;
 	}
 
 	@Override
@@ -230,6 +217,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 	}
 
 	@Override
+	@NonNull
 	public Quality getQuality() {
 		return meta.getQuality();
 	}
@@ -253,6 +241,18 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi> implements Pitc
 
 	public static Builder builder() {
 		return new Builder();
+	}
+
+	@Override
+	public void shift(IntervalChromatic intervalChromatic) {
+		for (ChromaticMidi chromaticMidi : this)
+			chromaticMidi.pitch = chromaticMidi.getPitch().getShift(intervalChromatic);
+	}
+
+	@Override
+	public void shiftNegative(IntervalChromatic intervalChromatic) {
+		for (ChromaticMidi chromaticMidi : this)
+			chromaticMidi.pitch = chromaticMidi.getPitch().getShiftNegative(intervalChromatic);
 	}
 
 	public static class Builder extends es.danisales.utils.building.Builder<ChromaticChordMidi.Builder, ChromaticChordMidi> {

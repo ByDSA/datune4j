@@ -195,4 +195,14 @@ public enum Chromatic implements PitchChromaticSingle {
 	public Chromatic getPrevious() {
 		return Chromatic.from(ordinal()-1);
 	}
+
+	@Override
+    public Chromatic getShifted(IntervalChromatic intervalChromatic) {
+		return Chromatic.from(ordinal() + intervalChromatic.getSemitones());
+    }
+
+	@Override
+	public Chromatic getShiftedNegative(IntervalChromatic intervalChromatic) {
+		return Chromatic.from(ordinal() - intervalChromatic.getSemitones());
+	}
 }

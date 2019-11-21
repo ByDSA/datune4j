@@ -1,5 +1,7 @@
 package es.danisales.datune.pitch;
 
+import es.danisales.datune.diatonic.ChromaticDegree;
+import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.Quality;
 import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.ChromaticMidi;
@@ -11,7 +13,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface PitchChromaticChord<N extends PitchChromaticSingle> extends ChordCommon<N> {
+public interface PitchChromaticChord<N extends PitchChromaticSingle> extends ChordCommon<N, ChromaticDegree, IntervalChromatic> {
 	static ChromaticChord from(ChromaticChordMidi chromaticChordMidi) {
 		if (chromaticChordMidi.getRootPos() != 0) {
 			ChromaticChord ns = ChromaticChord.createEmpty();

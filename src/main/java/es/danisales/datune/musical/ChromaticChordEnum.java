@@ -1203,7 +1203,7 @@ OMIT11
 	Bsusb2b5(ChromaticChordMeta.SUS2b2b5, Chromatic.B);
 
 
-	static EnumTreeSet<Chromatic, ChromaticChordEnum> chordTree;
+	static EnumTreeSet<Chromatic, ChromaticChordEnum> chordTree; // todo: mirar para qué sirve esto
 
 	static {
 		chordTree = new EnumTreeSet<>( Chromatic.class, ChromaticChordEnum.class );
@@ -1231,15 +1231,15 @@ OMIT11
 		meta = chromaticChordMeta;
 	}
 
-	public static @Nullable ChromaticChordEnum from(@NonNull Collection<? extends PitchChromaticSingle> chromaticCollection) {
+	static @Nullable ChromaticChordEnum from(@NonNull Collection<? extends PitchChromaticSingle> chromaticCollection) {
 		for (ChromaticChordEnum chromaticChordEnum : ChromaticChordEnum.values())
-			if (chromaticChordEnum.sameChromaticAs(chromaticCollection))
+			if (chromaticChordEnum.hasSameContentAs(chromaticCollection))
 				return chromaticChordEnum;
 
 		return null;
 	}
 
-	private boolean sameChromaticAs(@NonNull Collection<? extends PitchChromaticSingle> diatonicCollection) {
+	private boolean hasSameContentAs(@NonNull Collection<? extends PitchChromaticSingle> diatonicCollection) {
 		if (notes.size() != diatonicCollection.size())
 			return false;
 
