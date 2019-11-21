@@ -2,13 +2,11 @@ package es.danisales.datune.musical;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.IntervalDiatonic;
-import es.danisales.datune.midi.AddedException;
 import es.danisales.datune.pitch.Chord;
 import es.danisales.datune.pitch.PitchDiatonic;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -54,6 +52,20 @@ class DiatonicChordCustom extends Chord<Diatonic, DiatonicDegree, IntervalDiaton
 	@Override
 	public DiatonicChordCustom duplicate() {
 		return DiatonicChordCustom.from(this);
+	}
+
+	@Override
+	public @NonNull DiatonicChordCustom getInv(int i) {
+		DiatonicChordCustom diatonicChordCustom = duplicate();
+		diatonicChordCustom.inv(i);
+		return diatonicChordCustom;
+	}
+
+	@Override
+	public @NonNull DiatonicChordCustom getWithRootPos(int i) {
+		DiatonicChordCustom diatonicChordCustom = duplicate();
+		diatonicChordCustom.setRootPos(i);
+		return diatonicChordCustom;
 	}
 
 	@SuppressWarnings("EqualsWhichDoesntCheckParameterClass")

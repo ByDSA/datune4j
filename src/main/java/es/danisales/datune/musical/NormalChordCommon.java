@@ -1,6 +1,5 @@
 package es.danisales.datune.musical;
 
-import com.sun.istack.internal.NotNull;
 import es.danisales.datastructures.ListProxy;
 import es.danisales.datune.diatonic.Interval;
 import es.danisales.datune.diatonic.RelativeDegree;
@@ -207,7 +206,7 @@ public abstract class NormalChordCommon<N extends AbsoluteDegree<D, I>, D extend
     }
 
     @Override
-    @NotNull
+    @NonNull
     public final Iterator<N> iterator() {
         return innerChord.iterator();
     }

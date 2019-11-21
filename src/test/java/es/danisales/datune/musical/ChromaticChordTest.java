@@ -50,19 +50,38 @@ public class ChromaticChordTest {
     }
 
     @Test
-    public void names() {
+    public void namesFixed() {
         assertEquals( "C", ChromaticChord.C.toString() );
+        assertEquals( "Cm", ChromaticChord.Cm.toString() );
+        assertEquals( "C7", ChromaticChord.C7.toString() );
+        assertEquals( "C13#5#9", ChromaticChord.C13a5a9.toString() );
+    }
 
+    @Test
+    public void namesFrom() {
         ChromaticChord cc = ChromaticChord.from(
                 Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G)
         );
 
         assertEquals( "C", cc.toString() );
 
-        assertEquals( "Cm", ChromaticChord.Cm.toString() );
-        assertEquals( "C7", ChromaticChord.C7.toString() );
+        cc = ChromaticChord.from(
+                Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.AA)
+        );
+        assertEquals( "C7", cc.toString() );
+    }
+
+    @Test
+    public void namesInv() {
+        ChromaticChord chromaticChord = ChromaticChord.C.duplicate();
+        chromaticChord.inv();
+        assertEquals("C/E", chromaticChord.toString());
+    }
+
+    @Test
+    public void names() {
+        ChromaticChord cc;
         DiatonicChordMidi ccm = new DiatonicChordMidi( DiatonicFunction.I, Tonality.C );
-        cc.inv();
         assertEquals(
                 "C/E (C)", ccm.toString()
         );

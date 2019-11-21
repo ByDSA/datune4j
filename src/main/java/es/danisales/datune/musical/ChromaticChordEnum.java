@@ -1,7 +1,10 @@
 package es.danisales.datune.musical;
 
 import es.danisales.datastructures.EnumTreeSet;
+import es.danisales.datune.diatonic.ChromaticDegree;
+import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.Quality;
+import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -1276,6 +1279,20 @@ OMIT11
 	@Override
 	public int getInversionNumber() {
 		return 0;
+	}
+
+	@Override
+	public @NonNull ChromaticChordInterface getInv(int i) {
+		ChromaticChord chromaticChord = ChromaticChord.from(this);
+		chromaticChord.inv(i);
+		return (ChromaticChordInterface)chromaticChord.innerChord;
+	}
+
+	@Override
+	public @NonNull ChromaticChordInterface getWithRootPos(int i) {
+		ChromaticChord chromaticChord = ChromaticChord.from(this);
+		chromaticChord.setRootPos(i);
+		return (ChromaticChordInterface)chromaticChord.innerChord;
 	}
 
 	@Override

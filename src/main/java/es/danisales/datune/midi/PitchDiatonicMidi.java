@@ -18,6 +18,21 @@ public class PitchDiatonicMidi implements PitchDiatonicSingle, PitchMidiInterfac
 		return from(pitchDiatonicMidi.degree, pitchDiatonicMidi.tonality, pitchDiatonicMidi.octave);
 	}
 
+	public static PitchDiatonicMidi from(DiatonicDegree diatonicDegree, Tonality tonality, int octave) {
+		PitchDiatonicMidi ret = new PitchDiatonicMidi();
+		ret.degree = diatonicDegree;
+		ret.tonality = tonality;
+		ret.octave = octave;
+
+		ret.checkRange();
+
+		return ret;
+	}
+
+	private void checkRange() {
+		PitchChromaticMidi pitchChromaticMidi = PitchChromaticMidi.from(this);
+	}
+
 	public PitchDiatonicMidi getWithShiftOctave(int o) {
 		return getWithOctave(octave + o);
 	}
@@ -29,15 +44,6 @@ public class PitchDiatonicMidi implements PitchDiatonicSingle, PitchMidiInterfac
 	@Override
 	public int getOctave() {
 		return octave;
-	}
-
-	public static PitchDiatonicMidi from(DiatonicDegree diatonicDegree, Tonality tonality, int octave) {
-		PitchDiatonicMidi ret = new PitchDiatonicMidi();
-		ret.degree = diatonicDegree;
-		ret.tonality = tonality;
-		ret.octave = octave;
-
-		return ret;
 	}
 
 	@Override

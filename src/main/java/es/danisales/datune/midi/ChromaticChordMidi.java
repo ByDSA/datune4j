@@ -7,6 +7,7 @@ import es.danisales.datune.diatonic.Quality;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
+import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.pitch.PitchOctave;
@@ -161,6 +162,23 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, ChromaticDegree
 	@Override
 	public ChromaticChordMidi duplicate() {
 		return ChromaticChordMidi.from(this);
+	}
+
+	@Override
+	public @NonNull ChromaticChordMidi getInv(int i) {
+		ChromaticChordMidi chromaticChordMidi = new ChromaticChordMidi();
+		chromaticChordMidi.addAll(this);
+		chromaticChordMidi.setRootPos(getRootPos());
+		chromaticChordMidi.inv(i);
+		return chromaticChordMidi;
+	}
+
+	@Override
+	public @NonNull ChromaticChordMidi getWithRootPos(int i) {
+		ChromaticChordMidi chromaticChordMidi = new ChromaticChordMidi();
+		chromaticChordMidi.addAll(this);
+		chromaticChordMidi.setRootPos(i);
+		return chromaticChordMidi;
 	}
 
 	@Override

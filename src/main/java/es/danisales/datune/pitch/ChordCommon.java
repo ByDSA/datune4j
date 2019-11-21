@@ -2,14 +2,14 @@ package es.danisales.datune.pitch;
 
 import es.danisales.datune.diatonic.Interval;
 import es.danisales.datune.diatonic.RelativeDegree;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.List;
 
 // Para las cosas comunes de los chord mutables y los chord inmutables
 public interface ChordCommon<N extends AbsoluteDegree<D, I>, D extends RelativeDegree, I extends Interval> extends List<N> {
 	int getRootPos();
-	@Nullable N getRoot();
+	@NonNull N getRoot();
 	default int getInversionNumber() {
 		int rootPos = getRootPos();
 		if (rootPos >= 0)
@@ -31,4 +31,9 @@ public interface ChordCommon<N extends AbsoluteDegree<D, I>, D extends RelativeD
 
 		return result;
 	}
+
+
+	// todo: move to a builder
+	@NonNull ChordCommon<N, D, I> getInv(int i);
+	@NonNull ChordCommon<N, D, I> getWithRootPos(int i);
 }

@@ -142,6 +142,20 @@ public final class DiatonicChord extends NormalChordCommon<Diatonic, DiatonicDeg
     }
 
     @Override
+    public @NonNull DiatonicChord getInv(int i) {
+        DiatonicChord diatonicChord = duplicate();
+        diatonicChord.inv(i);
+        return diatonicChord;
+    }
+
+    @Override
+    public @NonNull ChordCommon<Diatonic, DiatonicDegree, IntervalDiatonic> getWithRootPos(int i) {
+        DiatonicChord diatonicChord = duplicate();
+        diatonicChord.setRootPos(i);
+        return diatonicChord;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if ( !(o instanceof DiatonicChord) )
             return false;

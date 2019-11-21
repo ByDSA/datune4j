@@ -1,17 +1,13 @@
 package es.danisales.datune.musical;
 
-import com.google.common.collect.ImmutableList;
-import es.danisales.datune.diatonic.*;
-import es.danisales.datune.midi.ChordMidi;
-import es.danisales.datune.midi.ChromaticMidi;
+import es.danisales.datune.diatonic.ChordNotation;
+import es.danisales.datune.diatonic.ChromaticDegree;
+import es.danisales.datune.diatonic.IntervalChromatic;
+import es.danisales.datune.diatonic.Quality;
 import es.danisales.datune.pitch.*;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.function.BiFunction;
 
 class ChromaticChordCustom extends Chord<Chromatic, ChromaticDegree, IntervalChromatic> implements PitchChromaticChord<Chromatic>, ChromaticChordInterface {
 	ChromaticChordMeta meta = new ChromaticChordMeta();
@@ -46,6 +42,20 @@ class ChromaticChordCustom extends Chord<Chromatic, ChromaticDegree, IntervalChr
 		return customChromaticChord;
 	}
 
+	@Override
+	public @NonNull ChromaticChordCustom getInv(int i) {
+		ChromaticChordCustom chromaticChordCustom = duplicate();
+		chromaticChordCustom.inv(i);
+		return chromaticChordCustom;
+	}
+
+	@Override
+	public @NonNull ChordCommon<Chromatic, ChromaticDegree, IntervalChromatic> getWithRootPos(int i) {
+		ChromaticChordCustom chromaticChordCustom = duplicate();
+		chromaticChordCustom.setRootPos(i);
+		return chromaticChordCustom;
+	}
+
 	public String invPartString() {
 		if ( getInversionNumber() > 0 )
 			return "/" + get( 0 ).toString();
@@ -58,11 +68,10 @@ class ChromaticChordCustom extends Chord<Chromatic, ChromaticDegree, IntervalChr
 		if ( size() == 0 )
 			return ChordNotation.EMPTY_CHORD;
 
-		if (true)
 			return ChordNamer.from(this);
-		WhatIsIt.updateWhatIsItIfNeeded(this);
+		/*WhatIsIt.updateWhatIsItIfNeeded(this);
 
-		return rootIndex + meta.str + invPartString();
+		return rootIndex + meta.str + invPartString();*/
 	}
 
 	public void autoName() {

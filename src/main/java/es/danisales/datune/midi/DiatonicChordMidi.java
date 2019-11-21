@@ -5,10 +5,7 @@ import es.danisales.datune.diatonic.*;
 import es.danisales.datune.midi.Settings.DefaultValues;
 import es.danisales.datune.musical.*;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
-import es.danisales.datune.pitch.Chord;
-import es.danisales.datune.pitch.PitchChromaticChord;
-import es.danisales.datune.pitch.PitchChromaticSingle;
-import es.danisales.datune.pitch.PitchDiatonic;
+import es.danisales.datune.pitch.*;
 import es.danisales.datune.tonality.*;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -1023,6 +1020,23 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, DiatonicDegree, I
     @Override
     public DiatonicChordMidi duplicate() { // todo
         return null;
+    }
+
+    @Override
+    public @NonNull DiatonicChordMidi getInv(int i) {
+        DiatonicChordMidi diatonicChordMidi = new DiatonicChordMidi();
+        diatonicChordMidi.addAll(this);
+        diatonicChordMidi.setRootPos( this.getRootPos() );
+        diatonicChordMidi.inv(i);
+        return diatonicChordMidi;
+    }
+
+    @Override
+    public @NonNull DiatonicChordMidi getWithRootPos(int i) {
+            DiatonicChordMidi diatonicChordMidi = new DiatonicChordMidi();
+            diatonicChordMidi.addAll(this);
+            diatonicChordMidi.setRootPos( i );
+            return diatonicChordMidi;
     }
 
     public boolean add(@NonNull DiatonicMidi n) throws AddedException {
