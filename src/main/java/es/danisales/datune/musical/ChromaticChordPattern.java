@@ -124,7 +124,7 @@ public class ChromaticChordPattern extends Pattern<ChromaticChordPatternInterfac
         if ( chromaticChordBase.getRootPos() == 0 )
             return from((List<Chromatic>)chromaticChordBase);
         else {
-            ChromaticChord chromaticChord = chromaticChordBase.duplicate();
+            ChromaticChord chromaticChord = chromaticChordBase.clone();
             chromaticChord.inv(chromaticChord.getRootPos());
             return from((List<Chromatic>)chromaticChord);
         }

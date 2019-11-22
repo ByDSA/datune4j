@@ -13,7 +13,4 @@ interface DiatonicChordInterface extends DiatonicChordCommon<Diatonic> {
 	static @NonNull DiatonicChordInterface from(@NonNull DiatonicFunction f) {
 		return DiatonicChordInterfaceAdapter.from(f);
 	}
-
-	@Override
-	DiatonicChordInterface duplicate();
 }

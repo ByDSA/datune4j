@@ -149,7 +149,7 @@ public class DiatonicChordCustomTest {
     @Test
     public void duplicate() {
         DiatonicChordCustom diatonicChordCustom = DiatonicChordCustom.from(Arrays.asList(Diatonic.C, Diatonic.E));
-        DiatonicChordCustom duplicated = diatonicChordCustom.duplicate();
+        DiatonicChordCustom duplicated = diatonicChordCustom.clone();
 
         assertEquals(diatonicChordCustom, duplicated);
         assertNotSame(diatonicChordCustom, duplicated);

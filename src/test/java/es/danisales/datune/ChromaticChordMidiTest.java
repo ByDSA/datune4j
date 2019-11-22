@@ -3,7 +3,6 @@ package es.danisales.datune;
 import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.PitchChromaticMidi;
-import es.danisales.datune.midi.PitchOctaveMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
 import org.junit.Assert;

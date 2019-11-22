@@ -1,5 +1,6 @@
 package es.danisales.datune.midi;
 
+import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.musical.Chromatic;
 import org.junit.Test;
 
@@ -14,35 +15,65 @@ public class PitchChromaticMidiTest {
     }
 
     @Test
-    public void getWithShiftOctave() {
-        assertSame( PitchChromaticMidi.C6, PitchChromaticMidi.C5.getWithShiftOctave(1) );
-        assertSame( PitchChromaticMidi.C4, PitchChromaticMidi.C5.getWithShiftOctave(-1) );
+    public void shiftOctave() {
+        PitchChromaticMidi pitchChromaticMidi = PitchChromaticMidi.C5.clone();
+        pitchChromaticMidi.shiftOctave(1);
+        assertEquals(PitchChromaticMidi.C6, pitchChromaticMidi);
+
+        pitchChromaticMidi = PitchChromaticMidi.C5.clone();
+        pitchChromaticMidi.shiftOctave(-1);
+        assertEquals(PitchChromaticMidi.C4, pitchChromaticMidi);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void shiftOctaveFixed() {
+        PitchChromaticMidi.C5.shiftOctave(1);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void shiftOctaveFixed2() {
+        PitchChromaticMidi.C5.shiftOctave(-1);
     }
 
     @Test(expected = PitchMidiException.class)
-    public void getWithShiftOctaveInvalid() {
-        PitchChromaticMidi.C10.getWithShiftOctave(1);
+    public void shiftOctaveInvalid() {
+        PitchChromaticMidi.C10.clone().shiftOctave(1);
     }
 
     @Test(expected = PitchMidiException.class)
-    public void getWithShiftOctaveInvalid2() {
-        PitchChromaticMidi.C0.getWithShiftOctave(-1);
+    public void shiftOctaveInvalid2() {
+        PitchChromaticMidi.C0.clone().shiftOctave(-1);
     }
 
     @Test
-    public void getWithOctave() {
-        assertEquals( PitchChromaticMidi.C10, PitchChromaticMidi.C5.getWithOctave(10) );
-        assertEquals( PitchChromaticMidi.C0, PitchChromaticMidi.C5.getWithOctave(0) );
+    public void setOctave() {
+        PitchChromaticMidi pitchChromaticMidi = PitchChromaticMidi.C5.clone();
+        pitchChromaticMidi.setOctave(10);
+        assertEquals(PitchChromaticMidi.C10, pitchChromaticMidi);
+
+        pitchChromaticMidi = PitchChromaticMidi.C5.clone();
+        pitchChromaticMidi.setOctave(0);
+        assertEquals(PitchChromaticMidi.C0, pitchChromaticMidi);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void setOctaveFixed() {
+        PitchChromaticMidi.C5.setOctave(1);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void setOctave2Fixed() {
+        PitchChromaticMidi.A5.setOctave(9);
     }
 
     @Test(expected = PitchMidiException.class)
-    public void getWithOctaveInvalid() {
-        PitchChromaticMidi.C5.getWithOctave(-1);
+    public void setOctaveInvalid() {
+        PitchChromaticMidi.C5.clone().setOctave(-1);
     }
 
     @Test(expected = PitchMidiException.class)
-    public void getWithOctaveInvalid2() {
-        PitchChromaticMidi.A5.getWithOctave(10);
+    public void setOctaveInvalid2() {
+        PitchChromaticMidi.A5.clone().setOctave(10);
     }
 
     @Test
@@ -76,9 +107,9 @@ public class PitchChromaticMidiTest {
 
     @Test
     public void fromCode() {
-        assertSame( PitchChromaticMidi.C5, PitchChromaticMidi.from(60) );
-        assertSame( PitchChromaticMidi.MIN, PitchChromaticMidi.from(0) );
-        assertSame( PitchChromaticMidi.MAX, PitchChromaticMidi.from(127) );
+        assertEquals(PitchChromaticMidi.C5, PitchChromaticMidi.from(60));
+        assertEquals(PitchChromaticMidi.MIN, PitchChromaticMidi.from(0));
+        assertEquals(PitchChromaticMidi.MAX, PitchChromaticMidi.from(127));
     }
 
     @Test(expected = PitchMidiException.class)
@@ -93,47 +124,56 @@ public class PitchChromaticMidiTest {
 
     @Test
     public void getShift() {
-        assertSame( PitchChromaticMidi.C6, PitchChromaticMidi.B4.getShift(13) );
-        assertSame( PitchChromaticMidi.B4, PitchChromaticMidi.C6.getShift(-13) );
+        PitchChromaticMidi pitchChromaticMidi = PitchChromaticMidi.B4.clone();
+        pitchChromaticMidi.shift(IntervalChromatic.MINOR_NINTH);
+        assertEquals(PitchChromaticMidi.C6, pitchChromaticMidi);
+
+        pitchChromaticMidi = PitchChromaticMidi.C6.clone();
+        pitchChromaticMidi.shiftNegative(IntervalChromatic.MINOR_NINTH);
+        assertEquals(PitchChromaticMidi.B4, pitchChromaticMidi);
     }
 
     @Test(expected = PitchMidiException.class)
     public void getShiftInvalid() {
-        PitchChromaticMidi.B4.getShift(-130);
+        PitchChromaticMidi.C0.clone().shiftNegative(IntervalChromatic.MINOR_SECOND);
     }
 
     @Test(expected = PitchMidiException.class)
     public void getShiftInvalid2() {
-        PitchChromaticMidi.B4.getShift(130);
+        PitchChromaticMidi.G10.clone().shift(IntervalChromatic.MINOR_SECOND);
     }
 
     @Test
-    public void getDegree() {
+    public void next() {
+        PitchChromaticMidi pitchChromaticMidi = PitchChromaticMidi.C5.clone();
+        pitchChromaticMidi.next();
+        assertEquals(PitchChromaticMidi.CC5, pitchChromaticMidi);
     }
 
     @Test
-    public void getNext() {
-        assertSame( PitchChromaticMidi.CC5, PitchChromaticMidi.C5.getNext() );
+    public void next2() {
+        PitchChromaticMidi pitchChromaticMidi = PitchChromaticMidi.B4.clone();
+        pitchChromaticMidi.next();
+        assertEquals(PitchChromaticMidi.C5, pitchChromaticMidi);
     }
 
     @Test
-    public void getNext2() {
-        assertSame( PitchChromaticMidi.C5, PitchChromaticMidi.B4.getNext() );
+    public void previous() {
+        PitchChromaticMidi pitchChromaticMidi = PitchChromaticMidi.CC5.clone();
+        pitchChromaticMidi.previous();
+        assertEquals(PitchChromaticMidi.C5, pitchChromaticMidi);
     }
 
     @Test
-    public void getPrevious() {
-        assertSame( PitchChromaticMidi.C5, PitchChromaticMidi.CC5.getPrevious() );
-    }
-
-    @Test
-    public void getPrevious2() {
-        assertSame( PitchChromaticMidi.B4, PitchChromaticMidi.C5.getPrevious() );
+    public void previous2() {
+        PitchChromaticMidi pitchChromaticMidi = PitchChromaticMidi.C5.clone();
+        pitchChromaticMidi.previous();
+        assertEquals(PitchChromaticMidi.B4, pitchChromaticMidi);
     }
 
     @Test(expected = PitchMidiException.class)
-    public void getPreviousFails() {
-        PitchChromaticMidi.MIN.getPrevious();
+    public void previousFails() {
+        PitchChromaticMidi.MIN.clone().previous();
     }
 
     @Test

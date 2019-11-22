@@ -1,13 +1,9 @@
 package es.danisales.datune.midi;
 
-import es.danisales.datune.diatonic.Interval;
-import es.danisales.datune.diatonic.RelativeDegree;
 import es.danisales.datune.midi.Events.EventComplex;
-import es.danisales.datune.pitch.AbsoluteDegree;
 import es.danisales.datune.pitch.SymbolicPitch;
 
-public abstract class Note<P extends PitchMidiInterface<D, I>, D extends RelativeDegree, I extends Interval>
-        implements PitchOctaveMidiEditable, SymbolicPitch, EventComplex, AbsoluteDegree<D, I> {
+public abstract class Note<P extends PitchMidiInterface> implements SymbolicPitch, EventComplex {
     protected int velocity;
     protected int length;
     protected P pitch;
@@ -32,5 +28,5 @@ public abstract class Note<P extends PitchMidiInterface<D, I>, D extends Relativ
         return pitch;
     }
 
-    public abstract Note<P, D, I> clone();
+    public abstract Note<P> clone();
 }

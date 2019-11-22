@@ -3,17 +3,12 @@ package es.danisales.datune.midi;
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.musical.Diatonic;
-import es.danisales.datune.pitch.PitchDiatonicSingle;
-import es.danisales.datune.pitch.PitchOctave;
 import es.danisales.datune.tonality.Tonality;
 
-public class PitchDiatonicMidi implements PitchDiatonicSingle, PitchOctave, PitchMidiInterface<DiatonicDegree, IntervalDiatonic> {
+public class PitchDiatonicMidi implements PitchOctaveMidiEditable, PitchMidiInterface<IntervalDiatonic> {
 	protected DiatonicDegree degree;
 	protected int octave;
 	protected Tonality tonality;
-
-	public static final int MIN_OCTAVE = 0;
-	public static final int MAX_OCTAVE = 10;
 
 	public static PitchDiatonicMidi from(PitchDiatonicMidi pitchDiatonicMidi) {
 		return from(pitchDiatonicMidi.degree, pitchDiatonicMidi.tonality, pitchDiatonicMidi.octave);
@@ -31,15 +26,7 @@ public class PitchDiatonicMidi implements PitchDiatonicSingle, PitchOctave, Pitc
 	}
 
 	private void checkRange() {
-		PitchChromaticMidi pitchChromaticMidi = PitchChromaticMidi.from(this);
-	}
-
-	public PitchDiatonicMidi getWithShiftOctave(int o) {
-		return getWithOctave(octave + o);
-	}
-
-	public PitchDiatonicMidi getWithOctave(int o) {
-		return from(degree, tonality, o);
+		PitchChromaticMidi.from(this);
 	}
 
 	@Override
@@ -47,47 +34,45 @@ public class PitchDiatonicMidi implements PitchDiatonicSingle, PitchOctave, Pitc
 		return octave;
 	}
 
-	@Override
-	public PitchDiatonicMidi getShifted(IntervalDiatonic intervalDiatonic) {
-		return getShifted(intervalDiatonic, 1);
-	}
-
-	@Override
-	public PitchDiatonicMidi getShiftedNegative(IntervalDiatonic intervalDiatonic) {
-		return getShifted(intervalDiatonic, -1);
-	}
-
-	private PitchDiatonicMidi getShifted(IntervalDiatonic intervalDiatonic, int signFactor) {
+	private void shift(IntervalDiatonic intervalDiatonic, int signFactor) {
 		int intervalDiatonicDegreeIndex = intervalDiatonic.ordinal();
 		int totalIndex = degree.ordinal() + intervalDiatonicDegreeIndex * signFactor;
 		int degreeIndex = totalIndex % Diatonic.NUMBER;
-		DiatonicDegree diatonicDegree = DiatonicDegree.values()[degreeIndex];
-		int newOctave = totalIndex / Diatonic.NUMBER;
-		return PitchDiatonicMidi.from(diatonicDegree, tonality, newOctave);
+		degree = DiatonicDegree.values()[degreeIndex];
+		octave = totalIndex / Diatonic.NUMBER;
 	}
 
-	@Override
-	public DiatonicDegree getDegree() {
-		return degree;
-	}
-
-	@Override
-	public PitchDiatonicMidi getNext() {
-		return getShifted(IntervalDiatonic.SECOND);
-	}
-
-	@Override
-	public PitchDiatonicMidi getPrevious() {
-		return getShiftedNegative(IntervalDiatonic.SECOND);
-	}
-
-	@Override
 	public Diatonic getDiatonic() {
 		return tonality.getNote(degree).getDiatonic();
 	}
 
 	@Override
-	public PitchDiatonicMidi getWithShiftedOctave(int octave) {
-		return getWithOctave(this.octave + octave);
+	public void shiftOctave(int octaveShift) {
+		setOctave(octave + octaveShift);
+	}
+
+	@Override
+	public void next() {
+		shift(IntervalDiatonic.SECOND);
+	}
+
+	@Override
+	public void previous() {
+		shiftNegative(IntervalDiatonic.SECOND);
+	}
+
+	@Override
+	public void shift(IntervalDiatonic intervalDiatonic) {
+		shift(intervalDiatonic, 1);
+	}
+
+	@Override
+	public void shiftNegative(IntervalDiatonic intervalDiatonic) {
+		shift(intervalDiatonic, -1);
+	}
+
+	@Override
+	public void setOctave(int octave) {
+		this.octave = octave;
 	}
 }

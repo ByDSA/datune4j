@@ -58,14 +58,14 @@ public class DiatonicChordFixedTest {
 
     @Test
     public void duplicate() {
-        DiatonicChord diatonicChord = DiatonicChord.TRIAD.duplicate();
+        DiatonicChord diatonicChord = DiatonicChord.TRIAD.clone();
         assertEquals(DiatonicChord.TRIAD, diatonicChord);
         assertSame(DiatonicChord.TRIAD.innerChord, diatonicChord.innerChord);
     }
 
     @Test
     public void setIndex() {
-        DiatonicChord diatonicChord = DiatonicChord.TRIAD.duplicate();
+        DiatonicChord diatonicChord = DiatonicChord.TRIAD.clone();
         diatonicChord.set(1, Diatonic.D);
         assertEquals(DiatonicChord.SUS2, diatonicChord);
         assertSame(DiatonicChord.SUS2.innerChord, diatonicChord.innerChord);

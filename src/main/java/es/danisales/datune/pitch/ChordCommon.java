@@ -1,13 +1,11 @@
 package es.danisales.datune.pitch;
 
-import es.danisales.datune.diatonic.Interval;
-import es.danisales.datune.diatonic.RelativeDegree;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.List;
 
 // Para las cosas comunes de los chord mutables y los chord inmutables
-public interface ChordCommon<N extends AbsoluteDegree<D, I>, D extends RelativeDegree, I extends Interval> extends List<N> {
+public interface ChordCommon<N> extends List<N> {
 	int getRootPos();
 	@NonNull N getRoot();
 	default int getInversionNumber() {
@@ -17,7 +15,7 @@ public interface ChordCommon<N extends AbsoluteDegree<D, I>, D extends RelativeD
 		else
 			return -1;
 	}
-	ChordCommon<N, D, I> duplicate(); // Si se usa clone, no se puede definir como default en la interfaz p. ej. DiatonicChordInterface
+    //ChordCommon<N, I> duplicate(); // Si se usa clone, no se puede definir como default en la interfaz p. ej. DiatonicChordInterface
 
 	default int _hashCode() { // si se usa hashCode normal, no se puede usar en enum, donde no se peude sobreescribir
 		if (size() == 0)
@@ -34,6 +32,7 @@ public interface ChordCommon<N extends AbsoluteDegree<D, I>, D extends RelativeD
 
 
 	// todo: move to a builder
-	@NonNull ChordCommon<N, D, I> getInv(int i);
-	@NonNull ChordCommon<N, D, I> getWithRootPos(int i);
+    @NonNull ChordCommon<N> getInv(int i);
+
+    @NonNull ChordCommon<N> getWithRootPos(int i);
 }

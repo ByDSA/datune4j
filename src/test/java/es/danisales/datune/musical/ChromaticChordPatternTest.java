@@ -23,7 +23,7 @@ public class ChromaticChordPatternTest {
 
     @Test
     public void fromChromaticChordInv() {
-        ChromaticChord chromaticChord = ChromaticChord.C.duplicate();
+        ChromaticChord chromaticChord = ChromaticChord.C.clone();
         chromaticChord.inv();
         ChromaticChordPattern chromaticChordPattern = ChromaticChordPattern.from(chromaticChord);
         ChromaticChordPattern reference = ChromaticChordPattern.from(ChromaticChord.C);

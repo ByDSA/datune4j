@@ -19,7 +19,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Objects;
 
-public final class DiatonicMidi extends Note<PitchDiatonicMidi, DiatonicDegree, IntervalDiatonic> implements PitchDiatonicSingle, SymbolicPitch, PitchOctaveMidiEditable, EventComplex {
+public final class DiatonicMidi extends Note<PitchDiatonicMidi> implements PitchDiatonicSingle, SymbolicPitch, PitchOctaveMidiEditable, EventComplex {
 	DiatonicMidi() {
 	}
 
@@ -56,13 +56,13 @@ public final class DiatonicMidi extends Note<PitchDiatonicMidi, DiatonicDegree, 
 	}
 
 	@Override
-	public void shiftOctave(int i) {
-		pitch.octave += i;
+	public void shiftOctave(int octaveShift) {
+		pitch.octave += octaveShift;
 	}
 
 	@Override
-	public void setOctave(int o) {
-		pitch.octave = o;
+	public void setOctave(int octave) {
+		pitch.octave = octave;
 	}
 
 	public DiatonicMidi add(IntervalDiatonic i) {
@@ -120,14 +120,14 @@ public final class DiatonicMidi extends Note<PitchDiatonicMidi, DiatonicDegree, 
 	@Override
 	public DiatonicMidi getNext() {
 		DiatonicMidi dup = clone();
-		dup.pitch = dup.pitch.getNext();
+		dup.pitch.next();
 		return dup;
 	}
 
 	@Override
 	public DiatonicMidi getPrevious() {
 		DiatonicMidi dup = clone();
-		dup.pitch = dup.pitch.getPrevious();
+		dup.pitch.previous();
 		return dup;
 	}
 
@@ -157,14 +157,14 @@ public final class DiatonicMidi extends Note<PitchDiatonicMidi, DiatonicDegree, 
 	@Override
 	public PitchDiatonicSingle getShifted(IntervalDiatonic intervalDiatonic) {
 		DiatonicMidi diatonicMidi = DiatonicMidi.from(this);
-		diatonicMidi.pitch = pitch.getShifted(intervalDiatonic);
+		pitch.shift(intervalDiatonic);
 		return diatonicMidi;
 	}
 
 	@Override
 	public PitchDiatonicSingle getShiftedNegative(IntervalDiatonic intervalDiatonic) {
 		DiatonicMidi diatonicMidi = DiatonicMidi.from(this);
-		diatonicMidi.pitch = pitch.getShiftedNegative(intervalDiatonic);
+		pitch.shiftNegative(intervalDiatonic);
 		return diatonicMidi;
 	}
 

@@ -1,7 +1,6 @@
 package es.danisales.datune.midi.Events;
 
 import es.danisales.datune.eventsequences.Track;
-import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.tonality.Scale;
@@ -112,8 +111,8 @@ public class KeySignatureEvent extends MetaEvent {
 		Scale scale = tonality.getScale();
 		DiatonicAlt note = tonality.getRoot();
 		StringBuilder sb = new StringBuilder();
-		
-		sb.append("KeySignature: " + ChromaticMidi.literal(note, tonality));
+
+        sb.append("KeySignature: " + note);
 
 		if (scale.equals(Scale.MAJOR)) {
 			sb.append(" Mayor");

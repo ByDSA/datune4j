@@ -1,15 +1,17 @@
 package es.danisales.datune.musical;
 
 import es.danisales.datune.diatonic.ChordNotation;
-import es.danisales.datune.diatonic.ChromaticDegree;
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.Quality;
-import es.danisales.datune.pitch.*;
+import es.danisales.datune.pitch.Chord;
+import es.danisales.datune.pitch.ChordCommon;
+import es.danisales.datune.pitch.PitchChromaticChord;
+import es.danisales.datune.pitch.PitchChromaticSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
 
-class ChromaticChordCustom extends Chord<Chromatic, ChromaticDegree, IntervalChromatic> implements PitchChromaticChord<Chromatic>, ChromaticChordInterface {
+class ChromaticChordCustom extends Chord<Chromatic, IntervalChromatic> implements PitchChromaticChord<Chromatic>, ChromaticChordInterface {
 	ChromaticChordMeta meta = new ChromaticChordMeta();
 
 	public static <T extends PitchChromaticSingle> @NonNull ChromaticChordCustom from(@NonNull Iterable<T> chord) {
@@ -34,22 +36,22 @@ class ChromaticChordCustom extends Chord<Chromatic, ChromaticDegree, IntervalChr
 	}
 
 	@Override
-	public ChromaticChordCustom duplicate() {
-		ChromaticChordCustom customChromaticChord = ChromaticChordInterface.super.duplicate();
+	public ChromaticChordCustom clone() {
+		ChromaticChordCustom customChromaticChord = ChromaticChordCustom.from(this);
 		customChromaticChord.assignMeta( this );
 		return customChromaticChord;
 	}
 
 	@Override
 	public @NonNull ChromaticChordCustom getInv(int i) {
-		ChromaticChordCustom chromaticChordCustom = duplicate();
+		ChromaticChordCustom chromaticChordCustom = clone();
 		chromaticChordCustom.inv(i);
 		return chromaticChordCustom;
 	}
 
 	@Override
-	public @NonNull ChordCommon<Chromatic, ChromaticDegree, IntervalChromatic> getWithRootPos(int i) {
-		ChromaticChordCustom chromaticChordCustom = duplicate();
+	public @NonNull ChordCommon<Chromatic> getWithRootPos(int i) {
+		ChromaticChordCustom chromaticChordCustom = clone();
 		chromaticChordCustom.setRootPos(i);
 		return chromaticChordCustom;
 	}

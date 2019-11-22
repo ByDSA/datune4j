@@ -1,6 +1,5 @@
 package es.danisales.datune.musical;
 
-import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.pitch.ChordCommon;
@@ -11,8 +10,8 @@ import java.util.Collection;
 import java.util.List;
 
 @SuppressWarnings("WeakerAccess")
-public final class DiatonicChord extends NormalChordCommon<Diatonic, DiatonicDegree, IntervalDiatonic>
-        implements DiatonicChordCommon<Diatonic>, ChordMutableInterface<Diatonic, DiatonicDegree, IntervalDiatonic> {
+public final class DiatonicChord extends NormalChordCommon<Diatonic, IntervalDiatonic>
+        implements DiatonicChordCommon<Diatonic>, ChordMutableInterface<Diatonic, IntervalDiatonic> {
     public static final DiatonicChord TRIAD = new DiatonicChord( DiatonicChordEnum.TRIAD );
     public static final DiatonicChord THIRD = new DiatonicChord( DiatonicChordEnum.THIRD );
     public static final DiatonicChord SUS2 = new DiatonicChord( DiatonicChordEnum.SUS2 );
@@ -116,7 +115,7 @@ public final class DiatonicChord extends NormalChordCommon<Diatonic, DiatonicDeg
     }
 
     @Override
-    protected final ChordMutableInterface<Diatonic, DiatonicDegree, IntervalDiatonic> castCustom(ChordCommon<Diatonic, DiatonicDegree, IntervalDiatonic> chord) {
+    protected final ChordMutableInterface<Diatonic, IntervalDiatonic> castCustom(ChordCommon<Diatonic> chord) {
         return (DiatonicChordCustom)innerChord;
     }
 
@@ -128,7 +127,7 @@ public final class DiatonicChord extends NormalChordCommon<Diatonic, DiatonicDeg
     }
 
     @Override
-    protected ChordCommon<Diatonic, DiatonicDegree, IntervalDiatonic> createInnerFrom(ChordCommon<Diatonic, DiatonicDegree, IntervalDiatonic> chord) {
+    protected ChordCommon<Diatonic> createInnerFrom(ChordCommon<Diatonic> chord) {
         return DiatonicChordInterfaceAdapter.from(chord);
     }
 
@@ -139,20 +138,20 @@ public final class DiatonicChord extends NormalChordCommon<Diatonic, DiatonicDeg
     }
 
     @Override
-    public final DiatonicChord duplicate() {
-        return (DiatonicChord)super.duplicate();
+    public DiatonicChord clone() {
+        return (DiatonicChord) super.clone();
     }
 
     @Override
     public @NonNull DiatonicChord getInv(int i) {
-        DiatonicChord diatonicChord = duplicate();
+        DiatonicChord diatonicChord = clone();
         diatonicChord.inv(i);
         return diatonicChord;
     }
 
     @Override
-    public @NonNull ChordCommon<Diatonic, DiatonicDegree, IntervalDiatonic> getWithRootPos(int i) {
-        DiatonicChord diatonicChord = duplicate();
+    public @NonNull ChordCommon<Diatonic> getWithRootPos(int i) {
+        DiatonicChord diatonicChord = clone();
         diatonicChord.setRootPos(i);
         return diatonicChord;
     }

@@ -4,26 +4,26 @@ import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.tonality.Tonality;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class PitchDiatonicMidiTest {
     @Test
     public void fromTonalityOctave() {
         PitchDiatonicMidi pitchMidi = PitchDiatonicMidi.from(DiatonicDegree.I, Tonality.C, 5);
         PitchChromaticMidi pitchChromaticMidi = PitchChromaticMidi.from(pitchMidi);
-        assertSame(PitchChromaticMidi.C5, pitchChromaticMidi);
+        assertEquals(PitchChromaticMidi.C5, pitchChromaticMidi);
 
         pitchMidi = PitchDiatonicMidi.from(DiatonicDegree.III, Tonality.Am, 5);
         pitchChromaticMidi = PitchChromaticMidi.from(pitchMidi);
-        assertSame(PitchChromaticMidi.C6, pitchChromaticMidi);
+        assertEquals(PitchChromaticMidi.C6, pitchChromaticMidi);
 
         pitchMidi = PitchDiatonicMidi.from(DiatonicDegree.I, Tonality.C, 10);
         pitchChromaticMidi = PitchChromaticMidi.from(pitchMidi);
-        assertSame(PitchChromaticMidi.C10, pitchChromaticMidi);
+        assertEquals(PitchChromaticMidi.C10, pitchChromaticMidi);
 
         pitchMidi = PitchDiatonicMidi.from(DiatonicDegree.III, Tonality.Am, -1);
         pitchChromaticMidi = PitchChromaticMidi.from(pitchMidi);
-        assertSame(PitchChromaticMidi.C0, pitchChromaticMidi);
+        assertEquals(PitchChromaticMidi.C0, pitchChromaticMidi);
     }
 
     @Test(expected = PitchMidiException.class)

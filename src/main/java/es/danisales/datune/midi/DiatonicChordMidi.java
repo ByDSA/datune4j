@@ -5,7 +5,10 @@ import es.danisales.datune.diatonic.*;
 import es.danisales.datune.midi.Settings.DefaultValues;
 import es.danisales.datune.musical.*;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
-import es.danisales.datune.pitch.*;
+import es.danisales.datune.pitch.Chord;
+import es.danisales.datune.pitch.PitchChromaticChord;
+import es.danisales.datune.pitch.PitchChromaticSingle;
+import es.danisales.datune.pitch.PitchDiatonic;
 import es.danisales.datune.tonality.*;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -15,7 +18,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, DiatonicDegree, IntervalDiatonic, PitchDiatonicMidi> implements PitchDiatonic, DiatonicChordCommon<DiatonicMidi> {
+public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDiatonic, PitchDiatonicMidi> implements PitchDiatonic, DiatonicChordCommon<DiatonicMidi> {
     protected HarmonicFunction	function	= null;
     public Tonality metaTonality;
 
@@ -337,7 +340,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, DiatonicDegree, I
                     .build();
             add( n );
             ChromaticMidi n2 = n.clone();
-            n2.shift( IntervalChromatic.PERFECT_FIFTH );
+            n2.getPitch().shift(IntervalChromatic.PERFECT_FIFTH);
             //assert !n.equalsEnharmonic( n2 ) : n2;
             add( n2 );
         } else if ( ArrayUtils.contains( t, ChromaticFunction.TENSIONS ) ) {
@@ -976,9 +979,9 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, DiatonicDegree, I
     }
 
     @Override
-    public void shiftOctave(int o) {
+    public void shiftOctave(int octaveShift) {
         for ( DiatonicMidi n : this )
-            n.shiftOctave( o );
+            n.shiftOctave(octaveShift);
     }
 
     public static ArrayList<DiatonicChordMidi> shiftOctave(ArrayList<DiatonicChordMidi> a, int o) {
@@ -1015,11 +1018,6 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, DiatonicDegree, I
     public void setMajorScale() {
         Tonality newTonality = Tonality.from(tonality.getRoot(), Scale.MAJOR);
         setTonality( newTonality );
-    }
-
-    @Override
-    public DiatonicChordMidi duplicate() { // todo
-        return null;
     }
 
     @Override
@@ -1073,7 +1071,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, DiatonicDegree, I
         PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(lastPitch);
         pitchDiatonicMidi.degree = pos;
         if (lastPitch.degree.ordinal() > pitchDiatonicMidi.degree.ordinal())
-            pitchDiatonicMidi = pitchDiatonicMidi.getWithShiftedOctave(1);
+            pitchDiatonicMidi.shiftOctave(1);
         DiatonicMidi ns = DiatonicMidi.builder()
                 .pitch(pitchDiatonicMidi)
                 .length(DefaultValues.LENGTH_CHORD)

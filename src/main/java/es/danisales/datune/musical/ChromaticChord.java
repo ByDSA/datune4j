@@ -1,7 +1,10 @@
 package es.danisales.datune.musical;
 
 import com.google.common.collect.ImmutableList;
-import es.danisales.datune.diatonic.*;
+import es.danisales.datune.diatonic.ChromaticFunction;
+import es.danisales.datune.diatonic.DiatonicFunction;
+import es.danisales.datune.diatonic.IntervalChromatic;
+import es.danisales.datune.diatonic.Quality;
 import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
@@ -16,8 +19,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.*;
 
 @SuppressWarnings("WeakerAccess")
-public final class ChromaticChord extends NormalChordCommon<Chromatic, ChromaticDegree, IntervalChromatic>
-        implements ChordCommon<Chromatic, ChromaticDegree, IntervalChromatic>, Iterable<Chromatic>, PitchChromaticChord<Chromatic> {
+public final class ChromaticChord extends NormalChordCommon<Chromatic, IntervalChromatic>
+        implements ChordCommon<Chromatic>, Iterable<Chromatic>, PitchChromaticChord<Chromatic> {
     // Quintas
     public static final ChromaticChord C5 = new ChromaticChord(ChromaticChordEnum.C5);
     public static final ChromaticChord CC5 = new ChromaticChord(ChromaticChordEnum.CC5);
@@ -2644,7 +2647,7 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic, Chromatic
     }
 
     @Override
-    protected final ChordMutableInterface<Chromatic, ChromaticDegree, IntervalChromatic> castCustom(ChordCommon<Chromatic, ChromaticDegree, IntervalChromatic> chord) {
+    protected final ChordMutableInterface<Chromatic, IntervalChromatic> castCustom(ChordCommon<Chromatic> chord) {
         return (ChromaticChordCustom)innerChord;
     }
 
@@ -2656,7 +2659,7 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic, Chromatic
     }
 
     @Override
-    protected final ChordCommon<Chromatic, ChromaticDegree, IntervalChromatic> createInnerFrom(ChordCommon<Chromatic, ChromaticDegree, IntervalChromatic> chord) {
+    protected final ChordCommon<Chromatic> createInnerFrom(ChordCommon<Chromatic> chord) {
         return ChromaticChordInterfaceAdapter.from(chord);
     }
 
@@ -2671,8 +2674,8 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic, Chromatic
     }
 
     @Override
-    public final ChromaticChord duplicate() {
-        return (ChromaticChord)super.duplicate();
+    public final ChromaticChord clone() {
+        return (ChromaticChord) super.clone();
     }
 
     @Override

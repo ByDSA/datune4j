@@ -69,7 +69,7 @@ public class ChromaticChordCustomTest {
 		ChromaticChordCustom ca = ChromaticChordCustom.from(
 				Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G)
 		);
-		ChromaticChordCustom ca2 = ca.duplicate();
+		ChromaticChordCustom ca2 = ca.clone();
 
 		assertEquals(ca.getRootPos(), ca2.getRootPos());
 		assertEquals(ca.size(), ca2.size());

@@ -32,11 +32,11 @@ public class WhatIsIt {
         patternToChromaticChords.put( array, arrayListChords );
     }
 
-    public static void updateWhatIsIt(ChromaticChord chromaticChord, BiFunction<List<ChromaticChord>, ChordCommon<?, ?, ?>, ChromaticChord> fSelectChord) {
+    public static void updateWhatIsIt(ChromaticChord chromaticChord, BiFunction<List<ChromaticChord>, ChordCommon<?>, ChromaticChord> fSelectChord) {
         updateWhatIsIt((ChromaticChordCustom)chromaticChord.innerChord, fSelectChord);
     }
 
-    public static void updateWhatIsIt(ChromaticChordCustom chromaticChordCustom1, BiFunction<List<ChromaticChord>, ChordCommon<?, ?, ?>, ChromaticChord> fSelectChord) {
+    public static void updateWhatIsIt(ChromaticChordCustom chromaticChordCustom1, BiFunction<List<ChromaticChord>, ChordCommon<?>, ChromaticChord> fSelectChord) {
         ChromaticChordPattern integerChromatics = ChromaticChordPattern.from(chromaticChordCustom1);
 
         List<ChromaticChordCustom> foundCustomChords = patternToChromaticChords.get( integerChromatics );
@@ -60,7 +60,7 @@ public class WhatIsIt {
 
     public static void updateWhatIsIt(ChromaticChordCustom chromaticChordCustom) {
         updateWhatIsIt(chromaticChordCustom,
-                (List<ChromaticChord> chords, ChordCommon<?, ?, ?> self) -> chords.get( 0 )
+                (List<ChromaticChord> chords, ChordCommon<?> self) -> chords.get(0)
         );
     }
 

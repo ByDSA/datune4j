@@ -1,13 +1,12 @@
 package es.danisales.datune.pitch;
 
 import es.danisales.datune.diatonic.Interval;
-import es.danisales.datune.diatonic.RelativeDegree;
 
 public class ChordNamer {
     private ChordNamer() {
     }
 
-    public static <N extends AbsoluteDegree<D, I>, D extends RelativeDegree, I extends Interval> String from(ChordCommon<N, D, I> chordCommon) {
+    public static <N, I extends Interval> String from(ChordCommon<N> chordCommon) {
         StringBuilder sb = new StringBuilder();
         boolean first = true;
         for (N n : chordCommon) {

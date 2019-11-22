@@ -51,7 +51,7 @@ public class DiatonicChordPattern extends Pattern<DiatonicChordPatternInterface>
         if ( diatonicChord.getRootPos() == 0 )
             return from((List<Diatonic>)diatonicChord);
         else {
-            DiatonicChord chromaticChord = diatonicChord.duplicate();
+            DiatonicChord chromaticChord = diatonicChord.clone();
             chromaticChord.inv(chromaticChord.getRootPos());
             return from((List<Diatonic>)chromaticChord);
         }

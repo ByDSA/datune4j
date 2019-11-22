@@ -58,7 +58,7 @@ public class DiatonicChordEnumTest {
     public void getInv() {
         DiatonicChord diatonicChordInv = DiatonicChord.from( Arrays.asList(Diatonic.E, Diatonic.G, Diatonic.C) );
         diatonicChordInv.setRootPos(2);
-        DiatonicChord dc = DiatonicChord.TRIAD.duplicate();
+        DiatonicChord dc = DiatonicChord.TRIAD.clone();
         dc.inv();
 
         assertEquals(diatonicChordInv, dc);
@@ -68,7 +68,7 @@ public class DiatonicChordEnumTest {
     public void getInv2() {
         DiatonicChord diatonicChordInv = DiatonicChord.from( Arrays.asList(Diatonic.G, Diatonic.C, Diatonic.E) );
         diatonicChordInv.setRootPos(1);
-        DiatonicChord dc = DiatonicChord.TRIAD.duplicate();
+        DiatonicChord dc = DiatonicChord.TRIAD.clone();
         dc.inv(2);
         assertEquals(diatonicChordInv, dc);
     }
@@ -220,7 +220,7 @@ public class DiatonicChordEnumTest {
     @Test
     public void duplicate() {
         DiatonicChord original = DiatonicChord.TRIAD;
-        DiatonicChord duplicated = original.duplicate();
+        DiatonicChord duplicated = original.clone();
 
         assertEquals(original, duplicated);
         assertNotSame(original, duplicated);
@@ -230,7 +230,7 @@ public class DiatonicChordEnumTest {
     @Test
     public void duplicateWithChange() {
         DiatonicChord original = DiatonicChord.TRIAD;
-        DiatonicChord duplicated = original.duplicate();
+        DiatonicChord duplicated = original.clone();
         duplicated.inv();
 
         assertNotEquals(original, duplicated);

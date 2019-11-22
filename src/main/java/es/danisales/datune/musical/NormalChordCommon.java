@@ -3,7 +3,6 @@ package es.danisales.datune.musical;
 import es.danisales.datastructures.ListProxy;
 import es.danisales.datune.diatonic.ChordNotation;
 import es.danisales.datune.diatonic.Interval;
-import es.danisales.datune.diatonic.RelativeDegree;
 import es.danisales.datune.pitch.AbsoluteDegree;
 import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.ChordMutableInterface;
@@ -13,10 +12,8 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.*;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
-public abstract class NormalChordCommon<N extends AbsoluteDegree<D, I>, D extends RelativeDegree, I extends Interval> extends ListProxy<N> implements ChordMutableInterface<N, D, I> {
-    ChordCommon<N, D, I> innerChord;
+abstract class NormalChordCommon<N extends AbsoluteDegree<?, I>, I extends Interval> extends ListProxy<N> implements ChordMutableInterface<N, I> {
+    ChordCommon<N> innerChord;
     private boolean fixed;
 
     NormalChordCommon() {
@@ -24,7 +21,7 @@ public abstract class NormalChordCommon<N extends AbsoluteDegree<D, I>, D extend
         fixed = false;
     }
 
-    NormalChordCommon(ChordCommon<N, D, I> chromaticChordInterface) {
+    NormalChordCommon(ChordCommon<N> chromaticChordInterface) {
         super(chromaticChordInterface);
         innerChord = chromaticChordInterface;
         fixed = true;
@@ -52,9 +49,12 @@ public abstract class NormalChordCommon<N extends AbsoluteDegree<D, I>, D extend
 
     protected abstract boolean isEnum();
     protected abstract boolean isCustom();
-    protected abstract ChordMutableInterface<N, D, I> castCustom(ChordCommon<N, D, I> chord);
-    protected abstract NormalChordCommon<N, D, I> create();
-    protected abstract ChordCommon<N, D, I> createInnerFrom(ChordCommon<N, D, I> chord);
+
+    protected abstract ChordMutableInterface<N, I> castCustom(ChordCommon<N> chord);
+
+    protected abstract NormalChordCommon<N, I> create();
+
+    protected abstract ChordCommon<N> createInnerFrom(ChordCommon<N> chord);
 
 
     @Override
@@ -64,23 +64,24 @@ public abstract class NormalChordCommon<N extends AbsoluteDegree<D, I>, D extend
         turnInnerIntoCustom();
 
         for (int i = 0; i < size(); i++)
-            innerChord.set(i, (N)get(i).getShifted(interval));
+            set(i, (N) get(i).getShifted(interval));
 
         turnInnerChordIntoEnumIfPossible();
     }
 
     private List<N> getShiftedInto(I interval) {
         List<N> list = new ArrayList<>();
-        for (int i = 0; i < size(); i++)
-            list.add( (N)get(i).getShifted(interval) );
+        for (int i = 0; i < size(); i++) {
+            list.add((N) get(i).getShifted(interval));
+        }
 
         return list;
     }
 
-    public NormalChordCommon<N, D, I> getShifted(I interval) {
+    public NormalChordCommon<N, I> getShifted(I interval) {
         List<N> list = getShiftedInto(interval);
 
-        NormalChordCommon<N, D, I> diatonicChord = create();
+        NormalChordCommon<N, I> diatonicChord = create();
         diatonicChord.innerChord.addAll(list);
         diatonicChord.setRootPos(getRootPos());
         diatonicChord.turnInnerChordIntoEnumIfPossible();
@@ -93,15 +94,16 @@ public abstract class NormalChordCommon<N extends AbsoluteDegree<D, I>, D extend
         exceptionIfFixed();
 
         for (int i = 0; i < size(); i++)
-            set( i, (N)get(i).getShiftedNegative(interval) );
+            set(i, (N) get(i).getShiftedNegative(interval));
 
         turnInnerChordIntoEnumIfPossible();
     }
 
-    public NormalChordCommon<N, D, I> getShiftedNegative(I interval) {
-        NormalChordCommon<N, D, I> diatonicChord = create();
-        for (int i = 0; i < size(); i++)
-            diatonicChord.add( (N)get(i).getShiftedNegative(interval) );
+    public NormalChordCommon<N, I> getShiftedNegative(I interval) {
+        NormalChordCommon<N, I> diatonicChord = create();
+        for (int i = 0; i < size(); i++) {
+            diatonicChord.add((N) get(i).getShiftedNegative(interval));
+        }
 
         diatonicChord.turnInnerChordIntoEnumIfPossible();
 
@@ -125,19 +127,19 @@ public abstract class NormalChordCommon<N extends AbsoluteDegree<D, I>, D extend
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<? extends ChordCommon<N, D, I>> getAllInversions() {
-        List<ChordMutableInterface<N, D, I>> customDiatonicChords = getAllInversionsRaw();
+    public List<? extends ChordCommon<N>> getAllInversions() {
+        List<ChordMutableInterface<N, I>> customDiatonicChords = getAllInversionsRaw();
 
         return createListFrom(customDiatonicChords);
     }
 
-    private List<ChordMutableInterface<N, D, I>> getAllInversionsRaw() {
-        List<ChordMutableInterface<N, D, I>> customDiatonicChords;
+    private List<ChordMutableInterface<N, I>> getAllInversionsRaw() {
+        List<ChordMutableInterface<N, I>> customDiatonicChords;
 
         if (isCustom()) {
             customDiatonicChords = castCustom(innerChord).getAllInversions();
         } else {
-            ChordCommon<N, D, I> tmp = innerChord;
+            ChordCommon<N> tmp = innerChord;
             turnInnerIntoCustom();
             customDiatonicChords = castCustom(innerChord).getAllInversions();
             innerChord = tmp;
@@ -146,10 +148,10 @@ public abstract class NormalChordCommon<N extends AbsoluteDegree<D, I>, D extend
         return customDiatonicChords;
     }
 
-    private List<NormalChordCommon<N, D, I>> createListFrom(List<ChordMutableInterface<N, D, I>> list) {
-        List<NormalChordCommon<N, D, I>> ret = new ArrayList<>();
-        for (ChordCommon<N, D, I> customChromaticChord : list) {
-            NormalChordCommon<N, D, I> chromaticChord = create();
+    private List<NormalChordCommon<N, I>> createListFrom(List<ChordMutableInterface<N, I>> list) {
+        List<NormalChordCommon<N, I>> ret = new ArrayList<>();
+        for (ChordCommon<N> customChromaticChord : list) {
+            NormalChordCommon<N, I> chromaticChord = create();
             chromaticChord.innerChord = customChromaticChord;
             chromaticChord.turnInnerChordIntoEnumIfPossible();
             ret.add(chromaticChord);
@@ -170,12 +172,12 @@ public abstract class NormalChordCommon<N extends AbsoluteDegree<D, I>, D extend
     }
 
     @Override
-    public NormalChordCommon<N, D, I> duplicate() {
-        NormalChordCommon<N, D, I> normalChordCommon = create();
+    public NormalChordCommon<N, I> clone() {
+        NormalChordCommon<N, I> normalChordCommon = create();
         if (isEnum())
             normalChordCommon.innerChord = innerChord;
         else {
-            normalChordCommon.innerChord = innerChord.duplicate();
+            normalChordCommon.innerChord = ((ChordMutableInterface) innerChord).clone();
             normalChordCommon.turnInnerChordIntoEnumIfPossible();
         }
         return normalChordCommon;
@@ -386,7 +388,7 @@ public abstract class NormalChordCommon<N extends AbsoluteDegree<D, I>, D extend
                 return ChordNotation.EMPTY_CHORD;
 
             if (getRootPos() != 0) {
-                NormalChordCommon<N, D, I> normalChordCommon = duplicate();
+                NormalChordCommon<N, I> normalChordCommon = clone();
                 normalChordCommon.inv(getRootPos());
                 if (normalChordCommon.isEnum())
                     return normalChordCommon.toString() + "/" + get(0).toString();

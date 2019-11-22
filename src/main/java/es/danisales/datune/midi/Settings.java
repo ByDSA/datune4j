@@ -3,7 +3,6 @@ package es.danisales.datune.midi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
-import es.danisales.datune.tonality.TonalityInterface;
 
 public class Settings {
 	public static final int VELOCITY_MAX = 127;

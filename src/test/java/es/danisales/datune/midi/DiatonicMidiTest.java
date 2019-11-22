@@ -1,9 +1,7 @@
-package es.danisales.datune;
+package es.danisales.datune.midi;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.IntervalDiatonic;
-import es.danisales.datune.midi.DiatonicMidi;
-import es.danisales.datune.midi.PitchChromaticMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
@@ -34,32 +32,44 @@ public class DiatonicMidiTest {
 		14,
 		15
 	};
+
+    @Test
+    public void fromChromaticMidi() {
+        ChromaticMidi cm = ChromaticMidi.builder().pitch(Chromatic.F).build();
+        DiatonicMidi dm = DiatonicMidi.builder().fromChromatic(cm, Tonality.C).build();
+        Chromatic chromaticDm = Chromatic.from(dm);
+        assertEquals(Chromatic.F, chromaticDm);
+        cm = ChromaticMidi.builder().pitch(Chromatic.C).build();
+        dm = DiatonicMidi.builder().fromChromatic(cm, Tonality.C).build();
+        chromaticDm = Chromatic.from(dm);
+        assertEquals(Chromatic.C, chromaticDm);
+    }
 	
 	@Test
 	public void addNegative() {
 		DiatonicMidi n = DiatonicMidi.from( DiatonicDegree.V, Tonality.E, 6 );
 		DiatonicMidi n2 = n.clone().sub( IntervalDiatonic.UNISON );
-		assertEquals( PitchChromaticMidi.B6, n2.getPitch() );
+        assertEquals(PitchChromaticMidiInmutable.B6, n2.getPitch());
 		n2 = n.clone().sub( IntervalDiatonic.SECOND );
-		assertEquals( PitchChromaticMidi.A6, n2.getPitch() );
+        assertEquals(PitchChromaticMidiInmutable.A6, n2.getPitch());
 		n2 = n.clone().sub( IntervalDiatonic.THIRD );
-		assertEquals( PitchChromaticMidi.GG6, n2.getPitch() );
+        assertEquals(PitchChromaticMidiInmutable.GG6, n2.getPitch());
 		n2 = n.clone().sub( IntervalDiatonic.FOURTH );
-		assertEquals( PitchChromaticMidi.FF6, n2.getPitch() );
+        assertEquals(PitchChromaticMidiInmutable.FF6, n2.getPitch());
 		n2 = n.clone().sub( IntervalDiatonic.FIFTH );
-		assertEquals( PitchChromaticMidi.E6, n2.getPitch() );
+        assertEquals(PitchChromaticMidiInmutable.E6, n2.getPitch());
 		n2 = n.clone().sub( IntervalDiatonic.SIXTH );
-		assertEquals( PitchChromaticMidi.DD6, n2.getPitch() );
+        assertEquals(PitchChromaticMidiInmutable.DD6, n2.getPitch());
 		n2 = n.clone().sub( IntervalDiatonic.SEVENTH );
-		assertEquals( PitchChromaticMidi.CC6, n2.getPitch() );
+        assertEquals(PitchChromaticMidiInmutable.CC6, n2.getPitch());
 		n2 = n.clone().sub( IntervalDiatonic.OCTAVE );
-		assertEquals( PitchChromaticMidi.B5, n2.getPitch() );
+        assertEquals(PitchChromaticMidiInmutable.B5, n2.getPitch());
 		n2 = n.clone().sub( IntervalDiatonic.NINTH );
-		assertEquals( PitchChromaticMidi.A5, n2.getPitch() );
+        assertEquals(PitchChromaticMidiInmutable.A5, n2.getPitch());
 		n2 = n.clone().sub( IntervalDiatonic.TENTH );
-		assertEquals( PitchChromaticMidi.GG5, n2.getPitch() );
+        assertEquals(PitchChromaticMidiInmutable.GG5, n2.getPitch());
 		n2 = n.clone().sub( IntervalDiatonic.ELEVENTH );
-		assertEquals( PitchChromaticMidi.FF5, n2.getPitch() );
+        assertEquals(PitchChromaticMidiInmutable.FF5, n2.getPitch());
 		
 	}
 

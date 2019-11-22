@@ -6,11 +6,11 @@ import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.DiatonicMidi;
-import es.danisales.datune.midi.PitchChromaticMidi;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.musical.transformations.DistanceCalculator;
 import es.danisales.datune.musical.transformations.EnharmonicsRetrieval;
 import es.danisales.datune.musical.transformations.Namer;
+import es.danisales.datune.pitch.AbsoluteDegree;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.tonality.ScaleDistance;
 import es.danisales.datune.tonality.Tonality;
@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-public enum Chromatic implements PitchChromaticSingle {
+public enum Chromatic implements PitchChromaticSingle, AbsoluteDegree<ChromaticDegree, IntervalChromatic> {
 	C, CC, D, DD, E, F, FF, G, GG, A, AA, B;
 
     public static final int NUMBER = values().length;
@@ -131,8 +131,9 @@ public enum Chromatic implements PitchChromaticSingle {
 		return ChromaticAdapter.from(diatonic, tonality);
 	}
 
-	public static Chromatic from(DiatonicMidi t) {
-		return from( PitchChromaticMidi.from(t.getPitch()) );
+	public static Chromatic from(DiatonicMidi diatonicMidi) {
+		ChromaticMidi chromaticMidi = ChromaticMidi.from(diatonicMidi);
+		return from(chromaticMidi);
 	}
 
 	public static Chromatic from(ChromaticMidi chromaticMidi) {

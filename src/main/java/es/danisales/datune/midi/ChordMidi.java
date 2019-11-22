@@ -1,7 +1,6 @@
 package es.danisales.datune.midi;
 
 import es.danisales.datune.diatonic.Interval;
-import es.danisales.datune.diatonic.RelativeDegree;
 import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.midi.Arpegios.Arpegio;
 import es.danisales.datune.midi.Arpegios.ArpegioDefault;
@@ -16,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class ChordMidi<N extends Note<P, D, I>, D  extends RelativeDegree, I extends Interval, P extends PitchMidiInterface<D, I>> extends Chord<N, D, I>
+public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends PitchMidiInterface> extends Chord<N, I>
 		implements Durable, PitchOctaveMidiEditable, PitchOctave, EventComplex {
 	protected Arpegio	arpegio;
 	protected int		length;
@@ -27,7 +26,7 @@ public abstract class ChordMidi<N extends Note<P, D, I>, D  extends RelativeDegr
 		super(new ArrayList<>());
 	}
 
-	<T extends ChordMidi<N, D, I, P>> void assign(@NonNull T c) {
+	<T extends ChordMidi<N, I, P>> void assign(@NonNull T c) {
 		Objects.requireNonNull(c);
 		clear();
 		this.addAll(c);
@@ -133,14 +132,14 @@ public abstract class ChordMidi<N extends Note<P, D, I>, D  extends RelativeDegr
 	}
 
 	@Override
-	public void shiftOctave(int o) {
+	public void shiftOctave(int octaveShift) {
 		for ( N n : this )
-			n.pitch = (P)n.pitch.getWithShiftedOctave( o );
+			n.pitch.shiftOctave(octaveShift);
 	}
 
 	@Override
-	public void setOctave(int o) {
-		int diff = o - getOctave();
+	public void setOctave(int octave) {
+		int diff = octave - getOctave();
 		shiftOctave( diff );
 	}
 
@@ -173,7 +172,7 @@ public abstract class ChordMidi<N extends Note<P, D, I>, D  extends RelativeDegr
 				;//|| !sameOctave && hasSameNotesOrder( notes );
 	}
 
-	private <T extends ChordMidi<N, D, I, P>> List<T> _getAllInversions() {
+	private <T extends ChordMidi<N, I, P>> List<T> _getAllInversions() {
 		List<T> ret = new ArrayList<>();
 
 		ret.add( (T) this.clone() );
@@ -187,7 +186,7 @@ public abstract class ChordMidi<N extends Note<P, D, I>, D  extends RelativeDegr
 		return ret;
 	}
 
-	public <T extends ChordMidi<N, D, I, P>> List<T> getAllDispositionsWithInv() {
+	public <T extends ChordMidi<N, I, P>> List<T> getAllDispositionsWithInv() {
 		List<T> ret = new ArrayList<>();
 		List<T> bases = _getAllInversions();
 		for ( T c : bases )
@@ -197,17 +196,17 @@ public abstract class ChordMidi<N extends Note<P, D, I>, D  extends RelativeDegr
 	}
 
 	@Override
-	public List<ChordMidi<N, D, I, P>> getAllInversions() {
-		ChordMidi<N, D, I, P> c =  clone();
+	public List<ChordMidi<N, I, P>> getAllInversions() {
+		ChordMidi<N, I, P> c = clone();
 		c.setMinOctave();
 		c.minimize();
 
 		return c.getAllDispositionsSub( true, 0, true );
 	}
 
-	protected abstract <T extends ChordMidi<N, D, I, P>> T newChord();
+	protected abstract <T extends ChordMidi<N, I, P>> T newChord();
 
-	protected <T extends ChordMidi<N, D, I, P>> List<T> getAllDispositionsSub(boolean sub, int level, boolean first) {
+	protected <T extends ChordMidi<N, I, P>> List<T> getAllDispositionsSub(boolean sub, int level, boolean first) {
 		ArrayList<T> ret = new ArrayList<>();
 		assert size() > 0;
 
@@ -244,7 +243,7 @@ public abstract class ChordMidi<N extends Note<P, D, I>, D  extends RelativeDegr
 					}
 				}
 
-				get( 0 ).pitch = (P)get( 0 ).pitch.getWithShiftedOctave( 1 );
+				get(0).pitch.shiftOctave(1);
 				first = false;
 			}
 		} catch ( PitchMidiException e ) {
@@ -259,17 +258,17 @@ public abstract class ChordMidi<N extends Note<P, D, I>, D  extends RelativeDegr
 			N note = get( i );
 			N prev = get( i - 1 );
 			while ( note.pitch.getCode() - 12 > prev.pitch.getCode() )
-				note.pitch = (P)note.pitch.getWithShiftedOctave( -1 );
+				note.pitch.shiftOctave(-1);
 		}
 	}
 
 	public void minimizeDistanceTo(@NonNull ChordMidi cIn) {
 		Objects.requireNonNull(cIn);
 
-		List<ChordMidi<N, D, I, P>> ret = getAllDispositionsWithInv();
+		List<ChordMidi<N, I, P>> ret = getAllDispositionsWithInv();
 		int minDist = 9999;
-		ChordMidi<N, D, I, P> minDistChord = null;
-		for ( ChordMidi<N, D, I, P> c : ret ) {
+		ChordMidi<N, I, P> minDistChord = null;
+		for (ChordMidi<N, I, P> c : ret) {
 			int d = (int) Math.abs( cIn.dist( c ) );
 			if ( d < minDist ) {
 				minDist = d;
@@ -279,11 +278,11 @@ public abstract class ChordMidi<N extends Note<P, D, I>, D  extends RelativeDegr
 		assign( minDistChord );
 	}
 
-	public int dist(ChordMidi<N, D, I, P> n) {
+	public int dist(ChordMidi<N, I, P> n) {
 		return dist( n, true );
 	}
 
-	protected int dist(ChordMidi<N, D, I, P> n, boolean bidirectional) {
+	protected int dist(ChordMidi<N, I, P> n, boolean bidirectional) {
 		int d = 0;
 
 		for ( N i : this ) {
@@ -323,7 +322,7 @@ public abstract class ChordMidi<N extends Note<P, D, I>, D  extends RelativeDegr
 	}
 
 	@Override
-	public ChordMidi<N, D, I, P> clone() { // todo
+	public ChordMidi<N, I, P> clone() { // todo
 		return null;
 	}
 }

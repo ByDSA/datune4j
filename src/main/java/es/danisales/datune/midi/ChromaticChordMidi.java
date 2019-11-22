@@ -1,6 +1,5 @@
 package es.danisales.datune.midi;
 
-import es.danisales.datune.diatonic.ChromaticDegree;
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.Quality;
 import es.danisales.datune.musical.Chromatic;
@@ -20,7 +19,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, ChromaticDegree, IntervalChromatic, PitchChromaticMidi>
+public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, IntervalChromatic, PitchChromaticMidi>
 		implements PitchChromaticChord<ChromaticMidi> {
 	protected ChromaticChordMidi() { }
 
@@ -44,9 +43,9 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, ChromaticDegree
 			if ( i > 0 ) {
 				int lastElementOctave = ns.get(ns.size()-1).getPitch().getOctave();
 				if (cs[i].ordinal() < (cs[i - 1].ordinal()))
-					chromaticMidi.setOctave(lastElementOctave + 1);
+					chromaticMidi.getPitch().setOctave(lastElementOctave + 1);
 				else
-					chromaticMidi.setOctave(lastElementOctave);
+					chromaticMidi.getPitch().setOctave(lastElementOctave);
 			}
 			ns.add( chromaticMidi );
 		}
@@ -99,7 +98,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, ChromaticDegree
 			Chromatic chromaticCm = Chromatic.from(cm);
 			Chromatic prevChromatic = Chromatic.from(This.get(This.size() - 1));
 			if (!(n instanceof PitchOctave) && This.size() > 0 && chromaticCm.ordinal() <= prevChromatic.ordinal()) {
-				cm.shiftOctave(1);
+				cm.getPitch().shiftOctave(1);
 			}
 
 			This.add(cm);
@@ -136,10 +135,10 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, ChromaticDegree
 		for ( int i = 1; i < this.size(); i++ ) {
 			int dist = this.get( i - 1 ).distTo( this.get( i ) );
 			assert dist != 0 : "Se reptite alguna nota " + dist;
-			assert dist > 0 : "Las notas no est�n ordenadas " + this.get( i - 1 ) + " "
+			assert dist > 0 : "Las notas no están ordenadas " + this.get(i - 1) + " "
 					+ this.get( i );
 			if ( dist > IntervalChromatic.PERFECT_OCTAVE.getSemitones() )
-				this.get( i ).shiftOctave( -dist / IntervalChromatic.PERFECT_OCTAVE.getSemitones() );
+				this.get(i).getPitch().shiftOctave(-dist / IntervalChromatic.PERFECT_OCTAVE.getSemitones());
 		}
 	}
 
@@ -155,11 +154,6 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, ChromaticDegree
 		c.length = length;
 
 		return c;
-	}
-
-	@Override
-	public ChromaticChordMidi duplicate() {
-		return ChromaticChordMidi.from(this);
 	}
 
 	@Override
@@ -262,13 +256,13 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, ChromaticDegree
 	@Override
 	public void shift(IntervalChromatic intervalChromatic) {
 		for (ChromaticMidi chromaticMidi : this)
-			chromaticMidi.pitch = chromaticMidi.getPitch().getShift(intervalChromatic);
+			chromaticMidi.getPitch().shift(intervalChromatic);
 	}
 
 	@Override
 	public void shiftNegative(IntervalChromatic intervalChromatic) {
 		for (ChromaticMidi chromaticMidi : this)
-			chromaticMidi.pitch = chromaticMidi.getPitch().getShiftNegative(intervalChromatic);
+			chromaticMidi.getPitch().shiftNegative(intervalChromatic);
 	}
 
 	public static class Builder extends es.danisales.utils.building.Builder<ChromaticChordMidi.Builder, ChromaticChordMidi> {
@@ -342,9 +336,9 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, ChromaticDegree
 						Chromatic current = fromChromatic.get(i);
 						Chromatic previous = fromChromatic.get(i - 1);
 						if (current.ordinal() < previous.ordinal())
-							chromaticMidi.setOctave(lastElementOctave + 1);
+							chromaticMidi.getPitch().setOctave(lastElementOctave + 1);
 						else
-							chromaticMidi.setOctave(lastElementOctave);
+							chromaticMidi.getPitch().setOctave(lastElementOctave);
 					}
 					ns.add(chromaticMidi);
 				}

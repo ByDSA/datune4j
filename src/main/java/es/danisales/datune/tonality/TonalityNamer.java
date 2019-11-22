@@ -1,6 +1,5 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.log.string.Logging;
 
@@ -16,7 +15,7 @@ public class TonalityNamer {
     public static String notesFrom(Tonality tonality) {
         StringBuilder sb = new StringBuilder();
         for (DiatonicAlt diatonicAlt : tonality.getNotes()) {
-            sb.append(ChromaticMidi.literal(diatonicAlt, tonality)).append(" ");
+            sb.append(diatonicAlt).append(" ");
         }
 
         return sb.toString();

@@ -4,7 +4,6 @@ import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.midi.PitchChromaticMidi;
 import es.danisales.datune.midi.Settings;
-import es.danisales.datune.musical.Diatonic;
 
 public class NoteOn extends ChannelEvent {
 	public ChromaticMidi note; // para toString

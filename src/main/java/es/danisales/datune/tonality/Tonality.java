@@ -1,7 +1,6 @@
 package es.danisales.datune.tonality;
 
 import es.danisales.datune.diatonic.*;
-import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
@@ -395,7 +394,7 @@ public class Tonality implements Iterable<DiatonicAlt> {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append( ChromaticMidi.literal( getRoot(), this ) + " " );
+        sb.append(getRoot()).append(" ");
 
         sb.append( getScale() );
 

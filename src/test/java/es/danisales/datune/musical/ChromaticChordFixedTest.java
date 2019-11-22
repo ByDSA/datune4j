@@ -67,7 +67,7 @@ public class ChromaticChordFixedTest {
 
     @Test
     public void duplicate() {
-        ChromaticChord chromaticChord = ChromaticChord.C.duplicate();
+        ChromaticChord chromaticChord = ChromaticChord.C.clone();
         chromaticChord.set(1, Chromatic.D);
         assertEquals(ChromaticChord.Csus2, chromaticChord);
         assertSame(ChromaticChord.Csus2.innerChord, chromaticChord.innerChord);

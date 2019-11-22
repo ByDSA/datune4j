@@ -1,6 +1,9 @@
 package es.danisales.datune.musical;
 
-import es.danisales.datune.diatonic.*;
+import es.danisales.datune.diatonic.ChromaticFunction;
+import es.danisales.datune.diatonic.DiatonicDegree;
+import es.danisales.datune.diatonic.DiatonicFunction;
+import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.midi.*;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.tonality.Scale;
@@ -286,10 +289,5 @@ public interface ChromaticChordInterface extends PitchChromaticChord<Chromatic> 
                 .velocity(velocity)
                 .build();
         return ccm;
-    }
-
-    @Override
-    default ChromaticChordCustom duplicate() {
-        return ChromaticChordCustom.from(this);
     }
 }

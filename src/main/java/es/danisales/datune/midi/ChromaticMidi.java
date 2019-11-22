@@ -1,20 +1,14 @@
 package es.danisales.datune.midi;
 
-import es.danisales.datune.diatonic.ChromaticDegree;
-import es.danisales.datune.diatonic.IntervalChromatic;
-import es.danisales.datune.diatonic.RelativeDegree;
 import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.midi.Events.EventComplex;
 import es.danisales.datune.midi.Events.NoteOff;
 import es.danisales.datune.midi.Events.NoteOn;
-import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.musical.transformations.DistanceCalculator;
-import es.danisales.datune.musical.transformations.Namer;
 import es.danisales.datune.pitch.PitchChromaticSingle;
-import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public final class ChromaticMidi extends Note<PitchChromaticMidi, ChromaticDegree, IntervalChromatic> implements PitchChromaticSingle, EventComplex {
+public final class ChromaticMidi extends Note<PitchChromaticMidi> implements PitchChromaticSingle, EventComplex {
 	public static ChromaticMidiBuilder builder() {
 		return new ChromaticMidiBuilder();
 	}
@@ -39,6 +33,7 @@ public final class ChromaticMidi extends Note<PitchChromaticMidi, ChromaticDegre
 				.build();
 	}
 
+	@SuppressWarnings("WeakerAccess")
 	public int distTo(@NonNull ChromaticMidi cm) {
 		return DistanceCalculator.calculateDistanceInSemitones(this, cm);
 	}
@@ -52,37 +47,9 @@ public final class ChromaticMidi extends Note<PitchChromaticMidi, ChromaticDegre
 		return es;
 	}
 
-	public void shift(IntervalChromatic i) {
-		pitch = pitch.getShift( i );
-	}
-
-	@Override
-	public final void shiftOctave(int o) {
-		pitch = pitch.getWithShiftOctave( o );
-	}
-
-	@Override
-	public final void setOctave(int o) {
-		pitch = pitch.getWithOctave( o );
-	}
-
-	public String toString(Tonality tonality) {
-		return Namer.from(this, tonality);
-	}
-
 	@Override
 	public String toString() {
 		return pitch + " (vel=" + velocity + ", length=" + length + ")";// Namer.from(this);
-	}
-
-	public static String literal(DiatonicAlt diatonicAlt, Tonality tonality) {
-		if ( tonality != null ) {
-			RelativeDegree pos = tonality.getDegreeFrom( diatonicAlt );
-			if ( pos != null )
-				diatonicAlt = tonality.getNote( pos );
-		}
-
-		return diatonicAlt.toString();
 	}
 
 	@Override
@@ -98,34 +65,5 @@ public final class ChromaticMidi extends Note<PitchChromaticMidi, ChromaticDegre
 	@Override
 	public int hashCode() {
 		return pitch.hashCode() + 31 * ( Integer.hashCode(velocity) + 37 * Integer.hashCode(length) );
-	}
-
-	@Override
-	public ChromaticDegree getDegree() {
-		return pitch.getDegree();
-	}
-
-	@Override
-	public ChromaticMidi getNext() {
-		ChromaticMidi chromaticMidi = clone();
-		chromaticMidi.pitch = chromaticMidi.pitch.getNext();
-		return chromaticMidi;
-	}
-
-	@Override
-	public ChromaticMidi getPrevious() {
-		ChromaticMidi chromaticMidi = clone();
-		chromaticMidi.pitch = chromaticMidi.pitch.getPrevious();
-		return chromaticMidi;
-	}
-
-	@Override
-	public ChromaticMidi getShifted(IntervalChromatic intervalChromatic) {
-		return null;
-	}
-
-	@Override
-	public ChromaticMidi getShiftedNegative(IntervalChromatic intervalChromatic) {
-		return null;
 	}
 }

@@ -1,16 +1,16 @@
 package es.danisales.datune.musical;
 
-import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.pitch.Chord;
 import es.danisales.datune.pitch.PitchDiatonic;
+import es.danisales.datune.pitch.PitchMutable;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-class DiatonicChordCustom extends Chord<Diatonic, DiatonicDegree, IntervalDiatonic> implements DiatonicChordInterface {
+class DiatonicChordCustom extends Chord<Diatonic, IntervalDiatonic> implements DiatonicChordInterface, PitchMutable<IntervalDiatonic> {
 	protected DiatonicChordCustom() {
 		super(new ArrayList<>());
 	}
@@ -32,7 +32,6 @@ class DiatonicChordCustom extends Chord<Diatonic, DiatonicDegree, IntervalDiaton
 		}
 	}
 
-	@Override
 	public void shiftNegative(IntervalDiatonic intervalDiatonic) {
 		for ( int i = 0; i < size(); i++ ) {
 			set( i, get( i ).getShiftedNegative( intervalDiatonic ) );
@@ -50,20 +49,20 @@ class DiatonicChordCustom extends Chord<Diatonic, DiatonicDegree, IntervalDiaton
 	}
 
 	@Override
-	public DiatonicChordCustom duplicate() {
+	public DiatonicChordCustom clone() {
 		return DiatonicChordCustom.from(this);
 	}
 
 	@Override
 	public @NonNull DiatonicChordCustom getInv(int i) {
-		DiatonicChordCustom diatonicChordCustom = duplicate();
+		DiatonicChordCustom diatonicChordCustom = clone();
 		diatonicChordCustom.inv(i);
 		return diatonicChordCustom;
 	}
 
 	@Override
 	public @NonNull DiatonicChordCustom getWithRootPos(int i) {
-		DiatonicChordCustom diatonicChordCustom = duplicate();
+		DiatonicChordCustom diatonicChordCustom = clone();
 		diatonicChordCustom.setRootPos(i);
 		return diatonicChordCustom;
 	}

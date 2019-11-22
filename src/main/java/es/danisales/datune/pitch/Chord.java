@@ -2,7 +2,6 @@ package es.danisales.datune.pitch;
 
 import es.danisales.datastructures.ListProxy;
 import es.danisales.datune.diatonic.Interval;
-import es.danisales.datune.diatonic.RelativeDegree;
 import es.danisales.datune.midi.AddedException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -11,7 +10,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Chord<N extends AbsoluteDegree<D, I>, D extends RelativeDegree, I extends Interval> extends ListProxy<N> implements ChordMutableInterface<N, D, I> {
+public abstract class Chord<N extends SymbolicPitch, I extends Interval> extends ListProxy<N> implements ChordMutableInterface<N, I> {
 	protected int rootIndex = -1;
 	private final List<N> innerList;
 
@@ -22,7 +21,7 @@ public abstract class Chord<N extends AbsoluteDegree<D, I>, D extends RelativeDe
 	}
 
 	@Override
-	public abstract Chord<N, D, I> duplicate();
+	public abstract Chord<N, I> clone();
 
 	@Override
 	public boolean add(@NonNull N note) {

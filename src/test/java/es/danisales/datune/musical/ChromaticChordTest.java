@@ -1,7 +1,5 @@
 package es.danisales.datune.musical;
 
-import es.danisales.datune.diatonic.DiatonicFunction;
-import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.tonality.Tonality;
 import org.junit.Assert;
 import org.junit.Test;
@@ -25,7 +23,7 @@ public class ChromaticChordTest {
 
     @Test
     public void inv() {
-        ChromaticChord chromaticChord = ChromaticChord.Gsus4.duplicate();
+        ChromaticChord chromaticChord = ChromaticChord.Gsus4.clone();
         chromaticChord.inv();
         assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -101,7 +99,7 @@ public class ChromaticChordTest {
 
     @Test
     public void namesInv() {
-        ChromaticChord chromaticChord = ChromaticChord.C.duplicate();
+        ChromaticChord chromaticChord = ChromaticChord.C.clone();
         chromaticChord.inv();
         assertEquals("C/E", chromaticChord.toString());
         chromaticChord.inv();
@@ -109,15 +107,15 @@ public class ChromaticChordTest {
         chromaticChord.inv();
         assertEquals("C", chromaticChord.toString());
 
-        chromaticChord = ChromaticChord.F5.duplicate();
+        chromaticChord = ChromaticChord.F5.clone();
         chromaticChord.inv();
         assertEquals( "F5/C", chromaticChord.toString() );
 
-        chromaticChord = ChromaticChord.Csus2.duplicate();
+        chromaticChord = ChromaticChord.Csus2.clone();
         chromaticChord.inv();
         assertEquals( "Csus2/D", chromaticChord.toString() );
 
-        chromaticChord = ChromaticChord.Gsus4.duplicate();
+        chromaticChord = ChromaticChord.Gsus4.clone();
         chromaticChord.inv();
         assertEquals( "Gsus4/C", chromaticChord.toString() );
     }
@@ -125,7 +123,7 @@ public class ChromaticChordTest {
     @Test
     public void sameNotesAndDifferentRootAreDifferent() {
         ChromaticChord Csus2 = ChromaticChord.Csus2;
-        ChromaticChord Gsus4_inv = ChromaticChord.Gsus4.duplicate();
+        ChromaticChord Gsus4_inv = ChromaticChord.Gsus4.clone();
         Gsus4_inv.inv();
         assertEquals(Csus2.getNotes(), Gsus4_inv.getNotes());
         assertNotEquals(Csus2.getRootPos(), Gsus4_inv.getRootPos());
@@ -161,9 +159,9 @@ public class ChromaticChordTest {
     }
 
     @Test
-    public void duplicateCustom() {
+    public void cloneCustom() {
         ChromaticChord chromaticChord = ChromaticChord.from( Arrays.asList(Chromatic.C, Chromatic.D, Chromatic.E ));
-        ChromaticChord duplicatedChromaticChord = chromaticChord.duplicate();
+        ChromaticChord duplicatedChromaticChord = chromaticChord.clone();
 
         assertEquals(chromaticChord, duplicatedChromaticChord);
 
@@ -176,14 +174,14 @@ public class ChromaticChordTest {
     public void duplicateCustomInv() {
         ChromaticChord chromaticChord = ChromaticChord.from( Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.D ));
         chromaticChord.inv();
-        ChromaticChord duplicatedChromaticChord = chromaticChord.duplicate();
+        ChromaticChord duplicatedChromaticChord = chromaticChord.clone();
 
         assertEquals(chromaticChord, duplicatedChromaticChord);
     }
 
     @Test
     public void duplicateEnum() {
-        ChromaticChord chromaticChord = ChromaticChord.C.duplicate();
+        ChromaticChord chromaticChord = ChromaticChord.C.clone();
         assertEquals(ChromaticChord.C.innerChord, chromaticChord.innerChord);
 
 
@@ -194,7 +192,7 @@ public class ChromaticChordTest {
 
     @Test
     public void set() {
-        ChromaticChord chromaticChord = ChromaticChord.C.duplicate();
+        ChromaticChord chromaticChord = ChromaticChord.C.clone();
         assertEquals(ChromaticChord.C.innerChord, chromaticChord.innerChord);
 
         chromaticChord.set(1, Chromatic.DD);

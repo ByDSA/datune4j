@@ -1,7 +1,7 @@
 package es.danisales.datune.musical.transformations;
 
-import es.danisales.datune.midi.PitchChromaticMidi;
 import es.danisales.datune.midi.ChromaticMidi;
+import es.danisales.datune.midi.PitchChromaticMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.Diatonic;
 import es.danisales.datune.musical.DiatonicAlt;
@@ -33,8 +33,6 @@ public class ChromaticAdapter {
     public static @NonNull Chromatic from(PitchChromaticSingle t) {
         if (t.getClass().equals(PitchChromaticMidi.class))
             return from((PitchChromaticMidi)t);
-        else if (t.getClass().equals(ChromaticMidi.class))
-            return from((ChromaticMidi) t);
         else if (t.getClass().equals(Chromatic.class))
             return (Chromatic)t;
 

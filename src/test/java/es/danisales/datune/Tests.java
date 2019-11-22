@@ -1,15 +1,14 @@
 package es.danisales.datune;
 
-import es.danisales.datune.diatonic.ChromaticFunction;
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.midi.*;
-import es.danisales.datune.musical.*;
-import es.danisales.datune.tonality.Scale;
+import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.musical.Diatonic;
+import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.tonality.Tonality;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
