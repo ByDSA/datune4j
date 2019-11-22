@@ -64,7 +64,7 @@ public class Namer {
         Chromatic chromatic = ChromaticAdapter.from(chromaticMidi.getPitch());
         DiatonicDegree diatonicDegree = (DiatonicDegree)tonality.getDegreeFrom(chromatic);
         DiatonicAlt diatonicAlt = tonality.getNote(diatonicDegree);
-        return ChromaticMidi.literal(diatonicAlt, tonality ) + chromaticMidi.getOctave();
+        return ChromaticMidi.literal(diatonicAlt, tonality ) + chromaticMidi.getPitch().getOctave();
     }
 
     public static @NonNull String from(@NonNull IntervalDiatonic intervalDiatonic) {

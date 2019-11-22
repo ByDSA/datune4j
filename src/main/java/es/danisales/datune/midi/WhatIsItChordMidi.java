@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.function.BiFunction;
 
 public class WhatIsItChordMidi {
-    public static <N extends Note<? extends PitchMidiInterface<D, I>, D, I>, D extends RelativeDegree, I extends Interval>
-    void updateWhatIsIt(@NonNull ChordMidi<N, D, I> chordMidi, BiFunction<List<ChromaticChord>, ChordCommon<?, ?, ?>, ChromaticChord> f) {
+    public static <N extends Note<P, D, I>, D extends RelativeDegree, I extends Interval, P extends PitchMidiInterface<D, I>>
+    void updateWhatIsIt(@NonNull ChordMidi<N, D, I, P> chordMidi, BiFunction<List<ChromaticChord>, ChordCommon<?, ?, ?>, ChromaticChord> f) {
         chordMidi.meta = ChromaticChord.from( (Collection<? extends PitchChromaticSingle>)chordMidi );
         assert f != null;
         WhatIsIt.updateWhatIsIt(chordMidi.meta, f );

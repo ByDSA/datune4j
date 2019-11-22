@@ -16,7 +16,7 @@ class DiatonicMidiAdapter {
             }
 
             else {
-                int octaveNote = chromaticMidi.getOctave();
+                int octaveNote = chromaticMidi.getPitch().getOctave();
                 PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(pos, tonality, chromaticMidi.getPitch().getOctave());
                 DiatonicMidi ns = DiatonicMidi.builder()
                         .pitch(pitchDiatonicMidi)

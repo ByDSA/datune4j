@@ -1,13 +1,11 @@
 package es.danisales.datune.midi;
 
 import es.danisales.datune.diatonic.ChromaticDegree;
-import es.danisales.datune.diatonic.Interval;
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.Quality;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.transformations.ChromaticAdapter;
-import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.pitch.PitchOctave;
@@ -22,7 +20,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, ChromaticDegree, IntervalChromatic>
+public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, ChromaticDegree, IntervalChromatic, PitchChromaticMidi>
 		implements PitchChromaticChord<ChromaticMidi> {
 	protected ChromaticChordMidi() { }
 
@@ -44,7 +42,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, ChromaticDegree
 					.pitch(cs[i])
 					.build();
 			if ( i > 0 ) {
-				int lastElementOctave = ns.get(ns.size()-1).getOctave();
+				int lastElementOctave = ns.get(ns.size()-1).getPitch().getOctave();
 				if (cs[i].ordinal() < (cs[i - 1].ordinal()))
 					chromaticMidi.setOctave(lastElementOctave + 1);
 				else
@@ -136,7 +134,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, ChromaticDegree
 
 	public void compact() {
 		for ( int i = 1; i < this.size(); i++ ) {
-			int dist = this.get( i - 1 ).dist( this.get( i ) );
+			int dist = this.get( i - 1 ).distTo( this.get( i ) );
 			assert dist != 0 : "Se reptite alguna nota " + dist;
 			assert dist > 0 : "Las notas no est�n ordenadas " + this.get( i - 1 ) + " "
 					+ this.get( i );
@@ -340,7 +338,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, ChromaticDegree
 							.pitch(fromChromatic.get(i))
 							.build();
 					if (i > 0) {
-						int lastElementOctave = ns.get(ns.size() - 1).getOctave();
+						int lastElementOctave = ns.get(ns.size() - 1).getPitch().getOctave();
 						Chromatic current = fromChromatic.get(i);
 						Chromatic previous = fromChromatic.get(i - 1);
 						if (current.ordinal() < previous.ordinal())

@@ -68,10 +68,10 @@ public class DiatonicMidiTest {
 		Tonality s = Tonality.from( Chromatic.FF, Scale.MIXOLYDIAN );
 		DiatonicMidi n = DiatonicMidi.from( DiatonicDegree.I, s, 3 );
 		assertEquals( 42, n.getPitch() );
-		assertEquals( 3, n.getOctave() );
+		assertEquals( 3, n.getPitch().getOctave() );
 		assertEquals( 46, n.clone().add( IntervalDiatonic.THIRD ).getPitch() );
 		assertEquals( 49, n.clone().add( IntervalDiatonic.FIFTH ).getPitch() );
-		assertEquals( 3, n.clone().add( IntervalDiatonic.FIFTH ).getOctave() );
+		assertEquals( 3, n.clone().add( IntervalDiatonic.FIFTH ).getPitch().getOctave() );
 		assertEquals( 52, n.clone().add( IntervalDiatonic.SEVENTH ).getPitch() );
 	}
 	

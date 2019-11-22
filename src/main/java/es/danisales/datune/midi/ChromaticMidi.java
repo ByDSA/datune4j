@@ -10,26 +10,16 @@ import es.danisales.datune.midi.Events.NoteOn;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.musical.transformations.DistanceCalculator;
 import es.danisales.datune.musical.transformations.Namer;
-import es.danisales.datune.pitch.ChordNamer;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.tonality.Tonality;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
-public class ChromaticMidi extends Note<PitchChromaticMidi, ChromaticDegree, IntervalChromatic> implements PitchChromaticSingle, PitchOctaveMidiEditable, EventComplex {
+public final class ChromaticMidi extends Note<PitchChromaticMidi, ChromaticDegree, IntervalChromatic> implements PitchChromaticSingle, EventComplex {
 	public static ChromaticMidiBuilder builder() {
 		return new ChromaticMidiBuilder();
 	}
 
-	public static ChromaticMidi from(ChromaticMidi diatonicMidi) {
-		return ChromaticMidi.builder()
-				.pitch(diatonicMidi.getPitch())
-				.velocity(diatonicMidi.getVelocity())
-				.length(diatonicMidi.getLength())
-				.build();
-	}
-
-	ChromaticMidi() { }
-
-	public static ChromaticMidi from(DiatonicMidi diatonicMidi) {
+	public static @NonNull ChromaticMidi from(@NonNull DiatonicMidi diatonicMidi) {
 		PitchChromaticMidi pitchChromaticMidi = PitchChromaticMidi.from(diatonicMidi.pitch);
 		return ChromaticMidi.builder()
 				.pitch(pitchChromaticMidi)
@@ -38,8 +28,10 @@ public class ChromaticMidi extends Note<PitchChromaticMidi, ChromaticDegree, Int
 				.build();
 	}
 
+	ChromaticMidi() { }
+
 	@Override
-	public ChromaticMidi clone() {
+	public @NonNull ChromaticMidi clone() {
 		return ChromaticMidi.builder()
 				.pitch(pitch)
 				.velocity(velocity)
@@ -47,7 +39,7 @@ public class ChromaticMidi extends Note<PitchChromaticMidi, ChromaticDegree, Int
 				.build();
 	}
 
-	public int dist(ChromaticMidi cm) {
+	public int distTo(@NonNull ChromaticMidi cm) {
 		return DistanceCalculator.calculateDistanceInSemitones(this, cm);
 	}
 
@@ -58,11 +50,6 @@ public class ChromaticMidi extends Note<PitchChromaticMidi, ChromaticDegree, Int
 		es.add( length, new NoteOff( this ) );
 
 		return es;
-	}
-
-	@Override
-	public final int getOctave() {
-		return pitch.getOctave();
 	}
 
 	public void shift(IntervalChromatic i) {
@@ -120,14 +107,14 @@ public class ChromaticMidi extends Note<PitchChromaticMidi, ChromaticDegree, Int
 
 	@Override
 	public ChromaticMidi getNext() {
-		ChromaticMidi chromaticMidi = ChromaticMidi.from(this);
+		ChromaticMidi chromaticMidi = clone();
 		chromaticMidi.pitch = chromaticMidi.pitch.getNext();
 		return chromaticMidi;
 	}
 
 	@Override
 	public ChromaticMidi getPrevious() {
-		ChromaticMidi chromaticMidi = ChromaticMidi.from(this);
+		ChromaticMidi chromaticMidi = clone();
 		chromaticMidi.pitch = chromaticMidi.pitch.getPrevious();
 		return chromaticMidi;
 	}

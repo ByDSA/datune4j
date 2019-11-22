@@ -56,7 +56,7 @@ public class ChromaticChordMidiTest {
 		ChromaticChordMidi ccm = ChromaticChordMidi.from(ChromaticChord.C5);
 		Assert.assertEquals(5, ccm.getOctave());
 		ccm.setMinOctave();
-		Assert.assertEquals(PitchOctaveMidi.MIN_OCTAVE, ccm.getOctave());
+		Assert.assertEquals(PitchChromaticMidi.MIN_OCTAVE, ccm.getOctave());
 	}
 
 	@Test
@@ -113,7 +113,7 @@ public class ChromaticChordMidiTest {
 		ccm.shiftOctave(-1);
 		Assert.assertEquals(4, ccm.getOctave());
 		ccm.setMinOctave();
-		Assert.assertEquals(PitchOctaveMidi.MIN_OCTAVE, ccm.getOctave());
+		Assert.assertEquals(PitchChromaticMidi.MIN_OCTAVE, ccm.getOctave());
 		ccm.shiftOctave(1);
 		Assert.assertEquals(1, ccm.getOctave());
 	}

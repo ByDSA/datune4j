@@ -5,7 +5,7 @@ import es.danisales.datune.diatonic.RelativeDegree;
 import es.danisales.datune.pitch.ChordNamer;
 
 public class AddedException extends RuntimeException {
-	public <N extends Note<? extends PitchMidiInterface<D, I>, D, I>, D extends RelativeDegree, I extends Interval> AddedException(N n, ChordMidi<N, D, I> c) {
+	public <N extends Note<P, D, I>, D extends RelativeDegree, I extends Interval, P extends PitchMidiInterface<D, I>> AddedException(N n, ChordMidi<N, D, I, P> c) {
 		super("Ya existe en el acorde (" + ChordNamer.from(c) + ") la nota que se intenta añadir (" + n + ")");
 	}
 

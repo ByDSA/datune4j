@@ -4,9 +4,10 @@ import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.musical.Diatonic;
 import es.danisales.datune.pitch.PitchDiatonicSingle;
+import es.danisales.datune.pitch.PitchOctave;
 import es.danisales.datune.tonality.Tonality;
 
-public class PitchDiatonicMidi implements PitchDiatonicSingle, PitchMidiInterface<DiatonicDegree, IntervalDiatonic> {
+public class PitchDiatonicMidi implements PitchDiatonicSingle, PitchOctave, PitchMidiInterface<DiatonicDegree, IntervalDiatonic> {
 	protected DiatonicDegree degree;
 	protected int octave;
 	protected Tonality tonality;
@@ -86,12 +87,7 @@ public class PitchDiatonicMidi implements PitchDiatonicSingle, PitchMidiInterfac
 	}
 
 	@Override
-	public void shiftOctave(int o) {
-		octave += o;
-	}
-
-	@Override
-	public void setOctave(int o) {
-		octave = o;
+	public PitchDiatonicMidi getWithShiftedOctave(int octave) {
+		return getWithOctave(this.octave + octave);
 	}
 }

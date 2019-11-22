@@ -100,8 +100,8 @@ public final class DiatonicMidi extends Note<PitchDiatonicMidi, DiatonicDegree, 
 		int tonalityLength = n.getTonality().size();
 
 		IntervalDiatonic id = IntervalDiatonic.fromIndex(
-				n.getOctave() * tonalityLength + n.getDegree().ordinal()
-						- ( getOctave() * tonalityLength + getDegree().ordinal() )
+				n.getPitch().getOctave() * tonalityLength + n.getDegree().ordinal()
+						- ( getPitch().getOctave() * tonalityLength + getDegree().ordinal() )
 		);
 		int diffSemi = PitchChromaticMidi.from(n.pitch).getCode() - PitchChromaticMidi.from(pitch).getCode();
 		return IntervalChromatic.from( id, diffSemi );
@@ -192,10 +192,5 @@ public final class DiatonicMidi extends Note<PitchDiatonicMidi, DiatonicDegree, 
 		es.add( length, new NoteOff( this ) );
 
 		return es;
-	}
-
-	@Override
-	public int getOctave() {
-		return pitch.octave;
 	}
 }

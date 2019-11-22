@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, DiatonicDegree, IntervalDiatonic> implements PitchDiatonic, DiatonicChordCommon<DiatonicMidi> {
+public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, DiatonicDegree, IntervalDiatonic, PitchDiatonicMidi> implements PitchDiatonic, DiatonicChordCommon<DiatonicMidi> {
     protected HarmonicFunction	function	= null;
     public Tonality metaTonality;
 
@@ -1073,7 +1073,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, DiatonicDegree, I
         PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(lastPitch);
         pitchDiatonicMidi.degree = pos;
         if (lastPitch.degree.ordinal() > pitchDiatonicMidi.degree.ordinal())
-            pitchDiatonicMidi.shiftOctave(1);
+            pitchDiatonicMidi = pitchDiatonicMidi.getWithShiftedOctave(1);
         DiatonicMidi ns = DiatonicMidi.builder()
                 .pitch(pitchDiatonicMidi)
                 .length(DefaultValues.LENGTH_CHORD)

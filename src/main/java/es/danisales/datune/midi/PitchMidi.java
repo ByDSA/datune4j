@@ -3,11 +3,12 @@ package es.danisales.datune.midi;
 import es.danisales.datune.diatonic.ChromaticDegree;
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.pitch.PitchChromaticSingle;
+import es.danisales.datune.pitch.PitchOctave;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-public final class PitchMidi implements PitchChromaticSingle, PitchOctaveMidiEditable, Cloneable {
+public final class PitchMidi implements PitchChromaticSingle, PitchOctave, PitchOctaveMidiEditable, Cloneable {
     private int cents;
     private PitchChromaticMidi pitchChromaticMidi;
 
