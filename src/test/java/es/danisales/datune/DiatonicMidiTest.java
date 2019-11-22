@@ -117,6 +117,14 @@ public class DiatonicMidiTest {
 			assertEquals( "Error al añadir " + i + " posiciones a " + n, r[i], d1 );
 		}
 	}
+
+	@Test
+	public void getDegree() {
+		DiatonicMidi n2 = DiatonicMidi.from( DiatonicDegree.I, Tonality.C, 5 );
+		assertEquals( DiatonicDegree.I, n2.getDegree() );
+		n2 = DiatonicMidi.from( DiatonicDegree.VII, Tonality.C, 5 );
+		assertEquals( DiatonicDegree.VII, n2.getDegree() );
+	}
 	
 	@Test
 	public void equals() {

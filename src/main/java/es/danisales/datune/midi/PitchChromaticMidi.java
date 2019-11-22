@@ -413,12 +413,6 @@ public enum PitchChromaticMidi implements PitchChromaticSingle, PitchMidiInterfa
 		return Chromatic.NUMBER * octave + chromatic.ordinal();
 	}
 
-	public ChromaticMidi toMidi() {
-		return ChromaticMidi.builder()
-				.pitch(this)
-				.build();
-	}
-
 	@Override
 	public ChromaticDegree getDegree() {
 		return ChromaticDegree.values()[ getChromatic().ordinal() ];

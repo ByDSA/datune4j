@@ -99,7 +99,7 @@ public class Tuning {
 		});
 
 		for (NoteFreq nn : notes)
-			//if (nn.note.getAlterations() == 0)
+			//if (nn.note.getAlterationsNumber() == 0)
 				System.out.println(nn);
 	}
 

@@ -14,7 +14,7 @@ public final class DiatonicMidiBuilder extends Builder<DiatonicMidiBuilder, Diat
     private int velocity;
 
     DiatonicMidiBuilder() {
-        length = Settings.DefaultValues.DURATION_NOTE;
+        length = Settings.DefaultValues.LENGTH_NOTE;
         velocity = Settings.DefaultValues.VELOCITY;
     }
 

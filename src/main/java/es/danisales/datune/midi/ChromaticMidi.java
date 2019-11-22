@@ -10,6 +10,7 @@ import es.danisales.datune.midi.Events.NoteOn;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.musical.transformations.DistanceCalculator;
 import es.danisales.datune.musical.transformations.Namer;
+import es.danisales.datune.pitch.ChordNamer;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.tonality.Tonality;
 
@@ -64,7 +65,6 @@ public class ChromaticMidi extends Note<PitchChromaticMidi, ChromaticDegree, Int
 		return pitch.getOctave();
 	}
 
-	@SuppressWarnings("WeakerAccess")
 	public void shift(IntervalChromatic i) {
 		pitch = pitch.getShift( i );
 	}
@@ -85,7 +85,7 @@ public class ChromaticMidi extends Note<PitchChromaticMidi, ChromaticDegree, Int
 
 	@Override
 	public String toString() {
-		return Namer.from(this);
+		return pitch + " (vel=" + velocity + ", length=" + length + ")";// Namer.from(this);
 	}
 
 	public static String literal(DiatonicAlt diatonicAlt, Tonality tonality) {
@@ -105,7 +105,7 @@ public class ChromaticMidi extends Note<PitchChromaticMidi, ChromaticDegree, Int
 
 		ChromaticMidi chromaticMidi = (ChromaticMidi) o;
 
-		return velocity == chromaticMidi.velocity && pitch.equals( chromaticMidi.pitch) && length != chromaticMidi.length;
+		return pitch.equals( chromaticMidi.pitch) && velocity == chromaticMidi.velocity && length == chromaticMidi.length;
 	}
 
 	@Override

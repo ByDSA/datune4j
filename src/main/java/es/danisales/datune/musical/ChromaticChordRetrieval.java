@@ -34,7 +34,7 @@ public class ChromaticChordRetrieval {
     }
 
     public @Nullable Set<ChromaticChord> getModalChords(@NonNull ChromaticChord chromaticChordBase, @NonNull Tonality tonalityBase) {
-        HarmonicFunction f = tonalityBase.getFunction(chromaticChordBase);
+        HarmonicFunction f = tonalityBase.getFunctionFrom(chromaticChordBase);
         if ( !(f instanceof DiatonicFunction) )
             return null;
 

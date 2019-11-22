@@ -158,7 +158,7 @@ public class TonalityRetrieval {
 
         int minAlts = Integer.MAX_VALUE;
         for (Tonality currentTonality : enharmonicTonalities) {
-            int currentAlts = currentTonality.getAlterations();
+            int currentAlts = currentTonality.getAlterationsNumber();
             if (currentAlts < minAlts) {
                 ret.clear();
                 minAlts = currentAlts;

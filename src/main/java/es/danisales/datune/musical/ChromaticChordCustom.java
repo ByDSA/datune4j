@@ -27,12 +27,10 @@ class ChromaticChordCustom extends Chord<Chromatic, ChromaticDegree, IntervalChr
 		super(new ArrayList<>());
 	}
 
-	public ChromaticChordCustom assignMeta(ChromaticChordCustom c) {
+	void assignMeta(@NonNull ChromaticChordCustom c) {
 		setRootPos( c.getRootPos() );
 		this.meta = new ChromaticChordMeta( c.meta.quality, c.meta.str, c.meta.getPattern() );
 		this.meta.updated = c.meta.updated;
-
-		return this;
 	}
 
 	@Override
@@ -54,24 +52,6 @@ class ChromaticChordCustom extends Chord<Chromatic, ChromaticDegree, IntervalChr
 		ChromaticChordCustom chromaticChordCustom = duplicate();
 		chromaticChordCustom.setRootPos(i);
 		return chromaticChordCustom;
-	}
-
-	public String invPartString() {
-		if ( getInversionNumber() > 0 )
-			return "/" + get( 0 ).toString();
-		else
-			return "";
-	}
-
-	@Override
-	public String toString() {
-		if ( size() == 0 )
-			return ChordNotation.EMPTY_CHORD;
-
-			return ChordNamer.from(this);
-		/*WhatIsIt.updateWhatIsItIfNeeded(this);
-
-		return rootIndex + meta.str + invPartString();*/
 	}
 
 	public void autoName() {

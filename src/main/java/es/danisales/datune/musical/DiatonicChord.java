@@ -93,6 +93,8 @@ public final class DiatonicChord extends NormalChordCommon<Diatonic, DiatonicDeg
 
     @Override
     protected final void turnInnerChordIntoEnumIfPossible() {
+        if (getRootPos() != 0)
+            return;
         DiatonicChordEnum diatonicChordEnum = DiatonicChordEnum.from(innerChord);
         if (diatonicChordEnum != null)
             innerChord = diatonicChordEnum;

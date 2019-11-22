@@ -2,7 +2,6 @@ package es.danisales.datune.musical;
 
 import es.danisales.datune.diatonic.*;
 import es.danisales.datune.midi.*;
-import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
@@ -271,7 +270,7 @@ public interface ChromaticChordInterface extends PitchChromaticChord<Chromatic> 
     }
 
     default ChromaticChordMidi toMidi(int octave) {
-        return toMidi( octave, Settings.DefaultValues.DURATION_CHORD );
+        return toMidi( octave, Settings.DefaultValues.LENGTH_CHORD);
     }
 
     default ChromaticChordMidi toMidi() {

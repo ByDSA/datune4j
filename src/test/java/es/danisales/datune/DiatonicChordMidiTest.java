@@ -5,7 +5,6 @@ import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.midi.*;
 import es.danisales.datune.musical.*;
-import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.pitch.ChordNamer;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
@@ -94,6 +93,18 @@ public class DiatonicChordMidiTest {
 		assertEquals( 2, c.size() );
 		assertEquals( PitchChromaticMidi.AA5, c.get( 0 ).getPitch() );
 		assertEquals( PitchChromaticMidi.F6, c.get( 1 ).getPitch() );
+	}
+
+	@Test
+	public void addDuplicate() {
+		DiatonicChordMidi c = new DiatonicChordMidi( DiatonicFunction.II_THIRD, 6, Tonality.Gm );
+		assertEquals( 2, c.size() );
+		assertEquals( PitchChromaticMidi.A6, c.get( 0 ).getPitch() );
+		assertEquals( PitchChromaticMidi.C7, c.get( 1 ).getPitch() );
+		c.addDuplicate( 1 );
+		assertEquals( 4, c.size() );
+		assertEquals( PitchChromaticMidi.A7, c.get( 2 ).getPitch() );
+		assertEquals( PitchChromaticMidi.C8, c.get( 3 ).getPitch() );
 	}
 
 	@Test
@@ -237,6 +248,11 @@ public class DiatonicChordMidiTest {
 
 	@Test
 	public void names() {
+		DiatonicChordMidi ccm = new DiatonicChordMidi( DiatonicFunction.I, Tonality.C );
+		assertEquals(
+				"C/E (C)", ccm.toString()
+		);
+
 		assertEquals( "C", ChromaticChord.C.toString() );
 
 		DiatonicChordMidi dcm = new DiatonicChordMidi( DiatonicFunction.I, Tonality.C );
@@ -271,6 +287,119 @@ public class DiatonicChordMidiTest {
 		);
 		dcm = new DiatonicChordMidi( Tonality.C, cc );
 		assertEquals( "Csus2 (I2)", dcm.toString() );
+	}
+
+
+	@Test
+	public void addDuplicateChord() {
+		DiatonicChordMidi c = new DiatonicChordMidi( DiatonicFunction.VI_THIRD, Tonality.Gm );
+		assertEquals( PitchChromaticMidi.DD6, c.get( 0 ).getPitch() );
+		c.addDuplicate( 1 );
+	}
+
+	@Test
+	public void chordSameNote() {
+		DiatonicMidi n1 = DiatonicMidi.from( DiatonicDegree.I, Tonality.C, 5 );
+		DiatonicMidi n2 = DiatonicMidi.from( DiatonicDegree.II, Tonality.C, 5 );
+		DiatonicMidi n3 = DiatonicMidi.from( DiatonicDegree.III, Tonality.C, 5 );
+
+		boolean error = false;
+		DiatonicChordMidi c2 = new DiatonicChordMidi( n2, n3 );
+		try {
+			c2.add( n1 );
+		} catch ( Exception e ) {
+			e.printStackTrace();
+			error = true;
+		}
+
+		assertEquals( false, error );
+
+		try {
+			c2.add( n2 );
+			c2.add( n3 );
+		} catch ( AddedException e ) {
+			error = true;
+		}
+
+		assertEquals( true, error );
+	}
+
+
+	@Test
+	public void makeChord() {
+		Tonality s = Tonality.B;
+		int o = 5;
+		DiatonicChordMidi c1 = new DiatonicChordMidi( DiatonicFunction.I, o, s );
+		DiatonicChordMidi c2 = new DiatonicChordMidi( DiatonicFunction.II, o, s );
+
+		assertEquals( PitchChromaticMidi.B5, c1.get( 0 ).getPitch() );
+		assertEquals( PitchChromaticMidi.CC6, c2.get( 0 ).getPitch() );
+	}
+
+	@Test
+	public void scaleByChord() {
+		Tonality s = Tonality.C;
+		DiatonicChordMidi c = new DiatonicChordMidi( ChromaticFunction.V7_IV, 5, s );
+
+		assertEquals(
+				Tonality.from( Chromatic.C, Scale.MIXOLYDIAN ).getScale(), c.getTonality().getScale()
+		);
+
+		c = new DiatonicChordMidi( ChromaticFunction.V7_V, 5, Tonality.E );
+		assertEquals(
+				Tonality.from( Chromatic.FF, Scale.MIXOLYDIAN ).getScale(), c.getTonality().getScale()
+		);
+	}
+
+	@Test
+	public void toChordUnfunc() {
+		DiatonicChordMidi c = ( new DiatonicChordMidi( DiatonicFunction.IV6, 5, Tonality.C ) );
+		c.inv(3);
+
+		ChromaticChordMidi cc = c.toChromaticChordMidi();
+	}
+
+	@Test
+	public void toChordFunc() {
+		DiatonicChordMidi c = ( new DiatonicChordMidi( DiatonicFunction.IV6, 5, Tonality.C ) );
+		c.inv(3);
+
+		List<DiatonicChordMidi> chords = c.toChromaticChordMidi().toDiatonicChordMidi( false );
+	}
+
+	@Test
+	public void whatIsIt() {
+		DiatonicChordMidi c = ( new DiatonicChordMidi( DiatonicFunction.IV6, 5, Tonality.C ) );
+		c.inv(3);
+
+		List<DiatonicChordMidi> chords = c.toChromaticChordMidi().toDiatonicChordMidi( false );
+
+		int s1 = chords.size();
+		assertEquals( 50, s1 );
+
+		chords = c.toChromaticChordMidi().toDiatonicChordMidi( true );
+		int s2 = chords.size();
+
+		assertNotEquals( s1, s2 );
+		assertEquals( 75, s2 );
+	}
+
+
+	@Test
+	public void chordInv() {
+		DiatonicChordMidi c = new DiatonicChordMidi( ChromaticFunction.I5, 5, Tonality.C );
+		assertEquals( PitchChromaticMidi.G5, c.get( 1 ).getPitch() );
+		assertEquals( PitchChromaticMidi.C5, c.get( 0 ).getPitch() );
+
+		c = new DiatonicChordMidi( DiatonicFunction.I, 5, Tonality.C );
+		assertEquals( PitchChromaticMidi.G5, c.get( 2 ).getPitch() );
+		assertEquals( PitchChromaticMidi.E5, c.get( 1 ).getPitch() );
+		assertEquals( PitchChromaticMidi.C5, c.get( 0 ).getPitch() );
+		c.inv();
+
+		assertEquals( PitchChromaticMidi.C6, c.get( 2 ).getPitch() );
+		assertEquals( PitchChromaticMidi.G5, c.get( 1 ).getPitch() );
+		assertEquals( PitchChromaticMidi.E5, c.get( 0 ).getPitch() );
 	}
 
 	@Test
@@ -412,12 +541,12 @@ public class DiatonicChordMidiTest {
 
 		c = new DiatonicChordMidi( Tonality.C );
 		c2 = new DiatonicChordMidi( Tonality.C );
-		c.add( PitchChromaticMidi.C5.toMidi() );
-		c.add( PitchChromaticMidi.E5.toMidi() );
-		c.add( PitchChromaticMidi.G5.toMidi() );
-		c2.add( PitchChromaticMidi.C5.toMidi() );
-		c2.add( PitchChromaticMidi.E5.toMidi() );
-		c2.add( PitchChromaticMidi.G5.toMidi() );
+		c.add( ChromaticMidi.builder().pitch( PitchChromaticMidi.C5 ).build() );
+		c.add( ChromaticMidi.builder().pitch( PitchChromaticMidi.E5 ).build() );
+		c.add( ChromaticMidi.builder().pitch( PitchChromaticMidi.G5 ).build() );
+		c2.add( ChromaticMidi.builder().pitch( PitchChromaticMidi.C5 ).build() );
+		c2.add( ChromaticMidi.builder().pitch( PitchChromaticMidi.E5 ).build() );
+		c2.add( ChromaticMidi.builder().pitch( PitchChromaticMidi.G5 ).build() );
 		assertEquals( c, c2 );
 
 		c = new DiatonicChordMidi( DiatonicFunction.I, 5, Tonality.Am );
@@ -433,7 +562,7 @@ public class DiatonicChordMidiTest {
 		ChromaticChordMidi ccm = c.toChromaticChordMidi();
 		assertEquals( Duration.V1, ccm.get(0).getLength() );
 		assertEquals( c.get( 0 ).getLength(), ccm.get( 0 ).getLength() );
-		assertEquals( Settings.DefaultValues.DURATION_CHORD, c.get( 0 ).getLength() );
+		assertEquals( Settings.DefaultValues.LENGTH_CHORD, c.get( 0 ).getLength() );
 		assertEquals( c.get( 0 ).getLength(), c.get( 0 ).clone().getLength() );
 
 		List<DiatonicChordMidi> chords = ccm.toDiatonicChordMidi( false );

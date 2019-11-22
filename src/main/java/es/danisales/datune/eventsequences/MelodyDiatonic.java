@@ -61,7 +61,7 @@ public class MelodyDiatonic extends Melody {
 	}
 
 	public DiatonicMidi add(DiatonicDegree degree) {
-		return add(degree, DefaultValues.DURATION_NOTE, DefaultValues.VELOCITY);
+		return add(degree, DefaultValues.LENGTH_NOTE, DefaultValues.VELOCITY);
 	}
 
 	public Melody setTonality(Tonality t) {
@@ -112,7 +112,7 @@ public class MelodyDiatonic extends Melody {
 
 	@Override
 	public MelodyDiatonic clone() {
-		MelodyDiatonic md = new MelodyDiatonic(octave, Tonality.from( tonality ));
+		MelodyDiatonic md = new MelodyDiatonic(octave, tonality.clone());
 		
 		int d = 0;
 		for (DiatonicMidi nd : notesDiatonic) {

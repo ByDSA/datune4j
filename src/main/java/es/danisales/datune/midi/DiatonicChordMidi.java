@@ -64,7 +64,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, DiatonicDegree, I
     }
 
     public DiatonicChordMidi(HarmonicFunction t, int o, Tonality s) {
-        this( t, o, s, Settings.DefaultValues.DURATION_CHORD );
+        this( t, o, s, Settings.DefaultValues.LENGTH_CHORD);
     }
 
     public DiatonicChordMidi(HarmonicFunction f, int o, Tonality ton, int len) {
@@ -227,14 +227,14 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, DiatonicDegree, I
                 Chromatic chromaticPcs = ChromaticAdapter.from(pcs);
                 ChromaticMidi cm = ChromaticMidi.builder()
                         .pitch(chromaticPcs)
-                        .length(DefaultValues.DURATION_CHORD)
+                        .length(DefaultValues.LENGTH_CHORD)
                         .build();
                 add( cm );
             }
         } catch ( TonalityException e ) {
             clear();
 
-            function = ton.getFunction( ChromaticChord.from(ns) );
+            function = ton.getFunctionFrom( ChromaticChord.from(ns) );
             if ( function == null ) {
                 tonality = TonalityChordRetrieval.searchInModeSameRoot(tonality, ns);
                 metaTonality = tonality;
@@ -333,7 +333,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, DiatonicDegree, I
 
             ChromaticMidi n = ChromaticMidi.builder()
                     .pitch( tonality.getNote( d ), octave )
-                    .length(DefaultValues.DURATION_CHORD)
+                    .length(DefaultValues.LENGTH_CHORD)
                     .build();
             add( n );
             ChromaticMidi n2 = n.clone();
@@ -1076,7 +1076,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, DiatonicDegree, I
             pitchDiatonicMidi.shiftOctave(1);
         DiatonicMidi ns = DiatonicMidi.builder()
                 .pitch(pitchDiatonicMidi)
-                .length(DefaultValues.DURATION_CHORD)
+                .length(DefaultValues.LENGTH_CHORD)
                 .velocity(DefaultValues.VELOCITY)
                 .build();
         add( ns );

@@ -1,10 +1,7 @@
 package es.danisales.datune.musical;
 
 import es.danisales.datastructures.EnumTreeSet;
-import es.danisales.datune.diatonic.ChromaticDegree;
-import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.Quality;
-import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -1236,13 +1233,13 @@ OMIT11
 
 	static @Nullable ChromaticChordEnum from(@NonNull Collection<? extends PitchChromaticSingle> chromaticCollection) {
 		for (ChromaticChordEnum chromaticChordEnum : ChromaticChordEnum.values())
-			if (chromaticChordEnum.hasSameContentAs(chromaticCollection))
+			if (chromaticChordEnum.hasSameNotesAs(chromaticCollection))
 				return chromaticChordEnum;
 
 		return null;
 	}
 
-	private boolean hasSameContentAs(@NonNull Collection<? extends PitchChromaticSingle> diatonicCollection) {
+	private boolean hasSameNotesAs(@NonNull Collection<? extends PitchChromaticSingle> diatonicCollection) {
 		if (notes.size() != diatonicCollection.size())
 			return false;
 
@@ -1343,8 +1340,8 @@ OMIT11
 
 	@Override
 	@NonNull
-	public ChromaticChord subList(int fromIndex, int toIndex) {
-		return ChromaticChord.from( notes.subList( fromIndex, toIndex ) );
+	public List<Chromatic> subList(int fromIndex, int toIndex) {
+		return notes.subList( fromIndex, toIndex );
 	}
 
 	@Override
@@ -1422,5 +1419,10 @@ OMIT11
 	public boolean addAll(int index, @NonNull Collection<? extends Chromatic> c) {
 		excep();
 		return false;
+	}
+
+	@Override
+	public String toString() {
+		return getRoot() + meta.str;
 	}
 }

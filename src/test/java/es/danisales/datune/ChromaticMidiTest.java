@@ -1,10 +1,7 @@
 package es.danisales.datune;
 
-import es.danisales.datune.midi.ChromaticMidi;
-import es.danisales.datune.midi.DiatonicMidi;
-import es.danisales.datune.midi.PitchChromaticMidi;
+import es.danisales.datune.midi.*;
 import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.tonality.Tonality;
 import org.junit.Test;
 
@@ -40,13 +37,62 @@ public class ChromaticMidiTest {
 		chromaticDm = Chromatic.from(dm);
 		assertEquals(Chromatic.C, chromaticDm);
 	}
-	
+
+	@Test
+	public void builder() {
+		ChromaticMidi chromaticMidi = ChromaticMidi.builder()
+				.pitch(PitchChromaticMidi.C5)
+				.length(Duration.V1)
+				.velocity(64)
+				.build();
+
+		assertEquals(PitchChromaticMidi.C5, chromaticMidi.getPitch());
+		assertEquals(64, chromaticMidi.getVelocity());
+		assertEquals(Duration.V1, chromaticMidi.getLength());
+	}
+
+	@Test
+	public void builderPitch() {
+		ChromaticMidi chromaticMidi = ChromaticMidi.builder()
+				.pitch(PitchChromaticMidi.C5)
+				.build();
+
+		assertEquals(PitchChromaticMidi.C5, chromaticMidi.getPitch());
+		assertEquals(Settings.DefaultValues.VELOCITY, chromaticMidi.getVelocity());
+		assertEquals(Settings.DefaultValues.LENGTH_NOTE, chromaticMidi.getLength());
+	}
+
+	@Test
+	public void builderWithoutParams() {
+		ChromaticMidi chromaticMidi = ChromaticMidi.builder()
+				.build();
+
+		assertEquals(Settings.DefaultValues.PITCH_CHROMATIC_MIDI, chromaticMidi.getPitch());
+		assertEquals(Settings.DefaultValues.VELOCITY, chromaticMidi.getVelocity());
+		assertEquals(Settings.DefaultValues.LENGTH_NOTE, chromaticMidi.getLength());
+	}
+
 	@Test
 	public void equals() {
-		ChromaticMidi cm = PitchChromaticMidi.C5.toMidi();
-		ChromaticMidi cm2 = cm.clone();
+		ChromaticMidi chromaticMidi = ChromaticMidi.builder()
+				.pitch(PitchChromaticMidi.C5)
+				.build();
+
+		ChromaticMidi chromaticMidi2 = ChromaticMidi.builder()
+				.pitch(PitchChromaticMidi.C5)
+				.build();
 		
-		assertEquals(cm, cm2);
+		assertEquals(chromaticMidi, chromaticMidi2);
+	}
+
+	@Test
+	public void cloneTest() {
+		ChromaticMidi chromaticMidi = ChromaticMidi.builder()
+				.pitch(PitchChromaticMidi.C5)
+				.build();
+		ChromaticMidi clonedChromaticMidi1 = chromaticMidi.clone();
+
+		assertEquals(chromaticMidi, clonedChromaticMidi1);
 	}
 
 	@Test

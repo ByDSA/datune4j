@@ -10,9 +10,9 @@ public class ChromaticMidiBuilder extends es.danisales.utils.building.Builder<Ch
     private int length;
 
     ChromaticMidiBuilder() {
-        pitchChromaticMidi = PitchChromaticMidi.C5;
+        pitchChromaticMidi = Settings.DefaultValues.PITCH_CHROMATIC_MIDI;
         velocity = Settings.DefaultValues.VELOCITY;
-        length = Settings.DefaultValues.DURATION_NOTE;
+        length = Settings.DefaultValues.LENGTH_NOTE;
     }
 
     public ChromaticMidiBuilder pitch(PitchChromaticMidi pitchMidiEnum) {

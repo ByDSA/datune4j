@@ -10,7 +10,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
- * Funciones crom�ticas
+ * Funciones cromáticas
  */
 public enum ChromaticFunction implements HarmonicFunction {
 	/** Mayores */
@@ -34,18 +34,8 @@ public enum ChromaticFunction implements HarmonicFunction {
 	/** V7 de... */
 	V7_II, V7_III, V7_IV, V7_V, V7_VI,
 
-	/** The subv7. */
-	SUBV7,
-	/** The subv7 ii. */
-	SUBV7_II,
-	/** The subv7 iii. */
-	SUBV7_III,
-	/** The subv7 iv. */
-	SUBV7_IV,
-	/** The subv7 v. */
-	SUBV7_V,
-	/** The subv7 vi. */
-	SUBV7_VI,
+	/** SUBV7 */
+	SUBV7, SUBV7_II, SUBV7_III, SUBV7_IV, SUBV7_V, SUBV7_VI,
 
 	/** The v7alt. */
 	V7ALT;
@@ -128,10 +118,43 @@ public enum ChromaticFunction implements HarmonicFunction {
 	public static final ChromaticFunction[] ALL = ArrayUtils
 			.concat( POWER_CHORDS, TENSIONS );
 
-	/* (non-Javadoc)
-	 * @see java.lang.Enum#toString()
+	/**
+	 * FIN CONSTANTES
+	 **********************************************************************************************************/
+
+	/**
+	 * Gets the chromatic function fromIndex a chromatic chord and a tonality
+	 *
+	 * @param chromaticChord chromatic chord
+	 * @param tonality tonality
+	 * @return the chromatic function
 	 */
-	public String toString() {
+	public static @Nullable ChromaticFunction from(@NonNull PitchChromaticChord chromaticChord, @NonNull Tonality tonality) {
+		HarmonicFunction hf = tonality.getFunctionFrom(ChromaticChord.from(chromaticChord));
+		if ( hf instanceof ChromaticFunction )
+			return (ChromaticFunction) hf;
+
+		return null;
+	}
+
+	/**
+	 * Gets the harmonic function from a diatonic chord with a tonality
+	 *
+	 * @param diatonicChordMidi the diatonic chord midi
+	 * @return the harmonic function
+	 */
+	public static HarmonicFunction from(DiatonicChordMidi diatonicChordMidi) {
+		ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.from(diatonicChordMidi);
+		return ChromaticFunction
+				.from( chromaticChordMidi, Tonality.from(diatonicChordMidi.metaTonality.getRoot(), diatonicChordMidi.metaTonality.getScale()) );
+	}
+
+	@Deprecated
+	public DiatonicDegree getDegree() {
+		return DiatonicDegree.from(this);
+	}
+
+	public @NonNull String toString() {
 		switch ( this ) {
 			case V7_II:
 				return "V7/II";
@@ -231,40 +254,5 @@ public enum ChromaticFunction implements HarmonicFunction {
 		}
 
 		return null;
-	}
-
-	/**
-	 * Gets the chromatic function fromIndex a chromatic chord and a tonality
-	 *
-	 * @param c chromatic chord
-	 * @param t tonality
-	 * @return the chromatic function
-	 */
-	public static @Nullable ChromaticFunction from(@NonNull PitchChromaticChord c, @NonNull Tonality t) {
-		HarmonicFunction hf = t.getFunction(ChromaticChord.from(c));
-		if ( hf instanceof ChromaticFunction )
-			return (ChromaticFunction) hf;
-
-		return null;
-	}
-
-	/**
-	 * Gets the harmonic function fromIndex a diatonic chord with a tonality
-	 *
-	 * @param diatonicChordMidi the diatonic chord midi
-	 * @return the harmonic function
-	 */
-	public static HarmonicFunction from(DiatonicChordMidi diatonicChordMidi) {
-		ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.from(diatonicChordMidi);
-		return ChromaticFunction
-				.from( chromaticChordMidi, Tonality.from(diatonicChordMidi.metaTonality.getRoot(), diatonicChordMidi.metaTonality.getScale()) );
-	}
-
-	/* (non-Javadoc)
-	 * @see diatonic.HarmonicFunction#getDegreeFrom()
-	 */
-	@Deprecated
-	public DiatonicDegree getDegree() {
-		return DiatonicDegree.from(this);
 	}
 }

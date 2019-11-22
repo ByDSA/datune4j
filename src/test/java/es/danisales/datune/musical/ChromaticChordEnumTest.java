@@ -155,8 +155,8 @@ public class ChromaticChordEnumTest {
 
 	@Test
 	public void subList() {
-		assertEquals( ChromaticChord.C, ChromaticChordEnum.C7.subList( 0, 3 ) );
-		assertEquals( ChromaticChord.Edim, ChromaticChordEnum.C7.subList( 1, 4 ) );
+		assertEquals( ChromaticChord.C.getNotes(), ChromaticChordEnum.C7.subList( 0, 3 ) );
+		assertEquals( ChromaticChord.Edim.getNotes(), ChromaticChordEnum.C7.subList( 1, 4 ) );
 	}
 
 	@Test

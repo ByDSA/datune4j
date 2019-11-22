@@ -291,6 +291,20 @@ public class ScaleTest {
         assertEquals(Scale.MAJOR.hashCode(), Scale.IONIAN.hashCode());
     }
 
+    @Test
+    public void getCode() {
+        assertEquals(
+                Arrays.asList(
+                        ScaleDistance.WHOLE,
+                        ScaleDistance.HALF,
+                        ScaleDistance.WHOLE,
+                        ScaleDistance.WHOLE,
+                        ScaleDistance.HALF,
+                        ScaleDistance.WHOLE,
+                        ScaleDistance.WHOLE
+                ), Scale.MINOR.getCode()
+        );
+    }
 
     @Test
     public void fromDiatonicAltList() {

@@ -74,6 +74,16 @@ enum DiatonicChordEnum implements DiatonicChordInterface {
 	}
 
 	@Override
+	public @NonNull DiatonicChordInterface getInv(int i) {
+		return null;
+	}
+
+	@Override
+	public @NonNull DiatonicChordInterface getWithRootPos(int i) {
+		return null;
+	}
+
+	@Override
 	public boolean add(Diatonic e) {
 		excep();
 		return false;

@@ -2621,6 +2621,8 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic, Chromatic
 
     @Override
     protected final void turnInnerChordIntoEnumIfPossible() {
+        if (getRootPos() != 0)
+            return;
         ChromaticChordEnum chromaticChordEnum = ChromaticChordEnum.from(innerChord);
         if (chromaticChordEnum != null)
             innerChord = chromaticChordEnum;

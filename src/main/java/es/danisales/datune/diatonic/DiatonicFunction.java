@@ -408,7 +408,7 @@ public enum DiatonicFunction implements HarmonicFunction {
 		checkArgument(c.metaTonality!= null);
 		Tonality ton = c.getMetatonality();
 		PitchChromaticChord c1 = ChromaticChordMidi.from(c);
-		HarmonicFunction hf = ton.getFunction(ChromaticChord.from(c1) );
+		HarmonicFunction hf = ton.getFunctionFrom(ChromaticChord.from(c1) );
 		if ( hf instanceof DiatonicFunction )
 			return (DiatonicFunction) hf;
 		else

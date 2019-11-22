@@ -1,15 +1,19 @@
 package es.danisales.datune.musical;
 
 import es.danisales.datastructures.ListProxy;
+import es.danisales.datune.diatonic.ChordNotation;
 import es.danisales.datune.diatonic.Interval;
 import es.danisales.datune.diatonic.RelativeDegree;
 import es.danisales.datune.pitch.AbsoluteDegree;
 import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.ChordMutableInterface;
+import es.danisales.datune.pitch.ChordNamer;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.*;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 public abstract class NormalChordCommon<N extends AbsoluteDegree<D, I>, D extends RelativeDegree, I extends Interval> extends ListProxy<N> implements ChordMutableInterface<N, D, I> {
     ChordCommon<N, D, I> innerChord;
@@ -168,8 +172,12 @@ public abstract class NormalChordCommon<N extends AbsoluteDegree<D, I>, D extend
     @Override
     public NormalChordCommon<N, D, I> duplicate() {
         NormalChordCommon<N, D, I> normalChordCommon = create();
-        normalChordCommon.innerChord = innerChord.duplicate();
-        normalChordCommon.turnInnerChordIntoEnumIfPossible();
+        if (isEnum())
+            normalChordCommon.innerChord = innerChord;
+        else {
+            normalChordCommon.innerChord = innerChord.duplicate();
+            normalChordCommon.turnInnerChordIntoEnumIfPossible();
+        }
         return normalChordCommon;
     }
 
@@ -371,7 +379,20 @@ public abstract class NormalChordCommon<N extends AbsoluteDegree<D, I>, D extend
 
     @Override
     public final String toString() {
-        return innerChord.toString();
+        if (isEnum()) {
+            return innerChord.toString();
+        } else {
+            if ( size() == 0 )
+                return ChordNotation.EMPTY_CHORD;
+
+            if (getRootPos() != 0) {
+                NormalChordCommon<N, D, I> normalChordCommon = duplicate();
+                normalChordCommon.inv(getRootPos());
+                if (normalChordCommon.isEnum())
+                    return normalChordCommon.toString() + "/" + get(0).toString();
+            }
+            return ChordNamer.from(this);
+        }
     }
 
     @Override
