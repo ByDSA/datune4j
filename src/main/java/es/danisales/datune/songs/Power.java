@@ -9,6 +9,7 @@ import es.danisales.datune.midi.Arpegios.ArpegioDefault;
 import es.danisales.datune.midi.Arpegios.ArpegioDesc;
 import es.danisales.datune.midi.Arpegios.ArpegioPowerGuitars;
 import es.danisales.datune.midi.DiatonicChordMidi;
+import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.midi.Duration;
 import es.danisales.datune.midi.Events.EventComplex;
 import es.danisales.datune.midi.Events.Pan;
@@ -114,7 +115,8 @@ public class Power extends Song {
 			} else if (i == 6) {
 				l.add(i*Duration.V1 + 0, 3, Duration.V4+Duration.V8);
 				l.add(i*Duration.V1 + Duration.V4+Duration.V8, 2, Duration.V8);
-				l.add(i*Duration.V1 + Duration.V2, 1, Duration.V2_3).shiftPos(IntervalDiatonic.SECOND);
+                DiatonicMidi dm = l.add(i * Duration.V1 + Duration.V2, 1, Duration.V2_3);
+                dm.getPitch().shift(IntervalDiatonic.SECOND);
 				l.add(i*Duration.V1 + Duration.V2+Duration.V2_3, 2, Duration.V2_3);
 				l.add(i*Duration.V1 + Duration.V2+2*Duration.V2_3, 3, Duration.V2_3);
 			} else if (i == 7) {

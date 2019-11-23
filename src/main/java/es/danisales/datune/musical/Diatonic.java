@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-public enum Diatonic implements PitchDiatonicSingle {
+public enum Diatonic implements PitchDiatonicSingle, AbsoluteDegree<DiatonicDegree, IntervalDiatonic> {
 	C, D, E, F, G, A, B;
 
 	public static final int NUMBER = 7;
@@ -128,10 +128,5 @@ public enum Diatonic implements PitchDiatonicSingle {
 		d = MathUtils.rotativeTrim(d, Diatonic.NUMBER);
 
 		return IntervalDiatonic.values()[d];
-	}
-
-	@Override
-	public Diatonic getDiatonic() {
-		return this;
 	}
 }

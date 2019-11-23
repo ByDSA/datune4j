@@ -80,6 +80,6 @@ public class DiatonicAdapter {
     }
 
     public Diatonic from(DiatonicMidi diatonicMidi) {
-        return Diatonic.from( diatonicMidi.getDegree() );
+        return Diatonic.from(diatonicMidi.getPitch().getDegree());
     }
 }

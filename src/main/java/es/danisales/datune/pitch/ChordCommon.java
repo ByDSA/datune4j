@@ -29,10 +29,4 @@ public interface ChordCommon<N> extends List<N> {
 
 		return result;
 	}
-
-
-	// todo: move to a builder
-    @NonNull ChordCommon<N> getInv(int i);
-
-    @NonNull ChordCommon<N> getWithRootPos(int i);
 }

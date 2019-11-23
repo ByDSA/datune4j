@@ -101,9 +101,9 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 	}
 
 	public boolean containsPitch(@NonNull N nIn) {
-		int nInCode = nIn.pitch.getCode();
+        int nInCode = nIn.pitch.getMidiCode();
 		for ( N n : this )
-			if ( n.pitch.getCode() == nInCode )
+            if (n.pitch.getMidiCode() == nInCode)
 				return true;
 
 		return false;
@@ -150,7 +150,7 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 
 	void sortByPitch() {
 		this.sort(
-				(N n1, N n2) -> ( n1.pitch.getCode() > n2.pitch.getCode() ? 1
+                (N n1, N n2) -> (n1.pitch.getMidiCode() > n2.pitch.getMidiCode() ? 1
 						: ( n1 == n2 ? 0 : -1 ) )
 		);
 	}
@@ -214,7 +214,7 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 			ret.add( (T) clone() );
 
 		try {
-			while ( ( size() > 1 && get( 0 ).pitch.getCode() < get( 1 ).pitch.getCode()
+            while ((size() > 1 && get(0).pitch.getMidiCode() < get(1).pitch.getMidiCode()
 					|| size() == 1 ) ) {
 				if ( !first ) {
 					T d = (T) clone();
@@ -257,7 +257,7 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 		for ( int i = 1; i < size(); i++ ) {
 			N note = get( i );
 			N prev = get( i - 1 );
-			while ( note.pitch.getCode() - 12 > prev.pitch.getCode() )
+            while (note.pitch.getMidiCode() - 12 > prev.pitch.getMidiCode())
 				note.pitch.shiftOctave(-1);
 		}
 	}
@@ -289,7 +289,7 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 			int localMin = 9999;
 			assert n.size() > 0;
 			for ( N j : n ) {
-				int m = Math.abs( j.pitch.getCode() - i.pitch.getCode() );
+                int m = Math.abs(j.pitch.getMidiCode() - i.pitch.getMidiCode());
 				if ( m < localMin )
 					localMin = m;
 			}

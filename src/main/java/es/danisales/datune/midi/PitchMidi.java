@@ -53,6 +53,6 @@ public final class PitchMidi implements PitchChromaticSingle, Cloneable {
 
     @Override
     public int hashCode() {
-        return pitchChromaticMidi.getCode() * 100 + cents;
+        return pitchChromaticMidi.getMidiCode() * 100 + cents;
     }
 }

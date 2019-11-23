@@ -12,6 +12,6 @@ public class DistanceCalculator {
     }
 
     public static int calculateDistanceInSemitones(ChromaticMidi from, ChromaticMidi to) {
-        return to.getPitch().getCode() - from.getPitch().getCode();
+        return to.getPitch().getMidiCode() - from.getPitch().getMidiCode();
     }
 }

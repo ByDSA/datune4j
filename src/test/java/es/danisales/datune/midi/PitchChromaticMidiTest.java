@@ -78,14 +78,14 @@ public class PitchChromaticMidiTest {
 
     @Test
     public void getCodeLimits() {
-        assertEquals(0, PitchChromaticMidi.MIN.getCode());
-        assertEquals(127, PitchChromaticMidi.MAX.getCode());
+        assertEquals(0, PitchChromaticMidi.MIN.getMidiCode());
+        assertEquals(127, PitchChromaticMidi.MAX.getMidiCode());
     }
 
     @Test
     public void getCode() {
-        assertEquals(60, PitchChromaticMidi.C5.getCode());
-        assertEquals(72, PitchChromaticMidi.C6.getCode());
+        assertEquals(60, PitchChromaticMidi.C5.getMidiCode());
+        assertEquals(72, PitchChromaticMidi.C6.getMidiCode());
     }
 
     @Test

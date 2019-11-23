@@ -17,7 +17,8 @@ import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.pitch.ChordNamer;
 import es.danisales.datune.songs.Power;
-import es.danisales.datune.tonality.*;
+import es.danisales.datune.tonality.Scale;
+import es.danisales.datune.tonality.Tonality;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.swing.*;
@@ -413,7 +414,7 @@ public class Main {
 			DiatonicChordMidi c = p.getChordAtTime( i );
 			DiatonicMidi nd = c.get( sr.nextInt( c.size() * 2 ) ).clone();
 			nd.setLength( next );
-			nd.shiftOctave( 1 );
+            nd.getPitch().shiftOctave(1);
 			/*
 			 * if (i % Duration.V1 >= 3*Duration.V4) nd.shiftPos(1);
 			 */
@@ -453,7 +454,7 @@ public class Main {
 			c.inv( 0 );
 			c.shiftOctave( 0 );
 			DiatonicMidi diatonicMidi =  c.get( 1 ).clone();
-			diatonicMidi.shiftOctave( 1 );
+            diatonicMidi.getPitch().shiftOctave(1);
 			c.add(diatonicMidi);
 
 			c = p.add( DiatonicFunction.VII );
@@ -483,13 +484,13 @@ public class Main {
 			c1.setLength( Duration.V4 * 3 );
 			c1.inv( 0 );
 			c1.shiftOctave( 0 );
-			c1.get( 2 ).shiftOctave( -1 );
+            c1.get(2).getPitch().shiftOctave(-1);
 			DiatonicChordMidi c2 = p.add( DiatonicFunction.VII_THIRD );
 			c2.setLength( Duration.V4 * 3 );
 			c2.setMajorScale();
 			c2.shiftOctave( -1 );
 			DiatonicMidi diatonicMidi1 = c2.get( 0 ).clone();
-			diatonicMidi1.shiftOctave( 1 );
+            diatonicMidi1.getPitch().shiftOctave(1);
 			c2.add( diatonicMidi1 );
 			c2 = p.add( DiatonicFunction.I );
 			c2.inv( -1 );

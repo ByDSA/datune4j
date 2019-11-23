@@ -31,8 +31,8 @@ public class TonalityException extends RuntimeException {
 
 	public TonalityException(DiatonicMidi n1, DiatonicMidi n2) {
 		super(
-			"Las nota " + n1 + " de tonalidad " + n1.getTonality() + " y " + n2
-			+ " de tonalidad " + n2.getTonality()
+                "Las nota " + n1 + " de tonalidad " + n1.getPitch().getTonality() + " y " + n2
+                        + " de tonalidad " + n2.getPitch().getTonality()
 			+ " pertenecen a diferentes tonalidades."
 				);
 	}

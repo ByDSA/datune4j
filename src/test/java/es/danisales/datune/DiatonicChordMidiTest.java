@@ -263,7 +263,7 @@ public class DiatonicChordMidiTest {
 		assertEquals( "Cm (C)", dcm.toString() );
 		dcm = new DiatonicChordMidi( DiatonicFunction.I, Tonality.C );
 		dcm.inv();
-		
+
 		assertEquals( "C/E (C)", dcm.toString() );
 		dcm.inv();
 		assertEquals( "C/G (C)", dcm.toString() );
@@ -299,9 +299,15 @@ public class DiatonicChordMidiTest {
 
 	@Test
 	public void chordSameNote() {
-		DiatonicMidi n1 = DiatonicMidi.from( DiatonicDegree.I, Tonality.C, 5 );
-		DiatonicMidi n2 = DiatonicMidi.from( DiatonicDegree.II, Tonality.C, 5 );
-		DiatonicMidi n3 = DiatonicMidi.from( DiatonicDegree.III, Tonality.C, 5 );
+        DiatonicMidi n1 = DiatonicMidi.builder()
+                .pitch(DiatonicDegree.I, Tonality.C, 5)
+                .build();
+        DiatonicMidi n2 = DiatonicMidi.builder()
+                .pitch(DiatonicDegree.II, Tonality.C, 5)
+                .build();
+        DiatonicMidi n3 = DiatonicMidi.builder()
+                .pitch(DiatonicDegree.III, Tonality.C, 5)
+                .build();
 
 		boolean error = false;
 		DiatonicChordMidi c2 = new DiatonicChordMidi( n2, n3 );
@@ -482,11 +488,11 @@ public class DiatonicChordMidiTest {
 		assertEquals( ChromaticChord.FFm, ChromaticChordInterface.from(dcm) );
 
 		assertEquals(
-			DiatonicChord.from(Arrays.asList( Diatonic.D, Diatonic.F, Diatonic.A) ), DiatonicChord.from( DiatonicFunction.II )
+                DiatonicChord.from(Arrays.asList(Diatonic.D, Diatonic.F, Diatonic.A)), DiatonicChord.from(DiatonicFunction.II)
 		);
 
 		assertEquals(
-			ChromaticChord.GGdim, ChromaticChordInterface.from( DiatonicChord.from( DiatonicFunction.II ), Tonality.FFm )
+                ChromaticChord.GGdim, ChromaticChordInterface.from(DiatonicChord.from(DiatonicFunction.II), Tonality.FFm)
 		);
 /*
 		assertEquals(
@@ -574,7 +580,7 @@ public class DiatonicChordMidiTest {
 		assertEquals( c.getLength(), c2.getLength() );
 		assertEquals( ChordNamer.from(c), ChordNamer.from(c2) );
 		assertEquals( c.get( 0 ).getPitch(), c2.get( 0 ).getPitch() );
-		assertEquals( c.get( 0 ).getDegree(), c2.get( 0 ).getDegree() );
+        assertEquals(c.get(0).getPitch().getDegree(), c2.get(0).getPitch().getDegree());
 		assertEquals( c.get( 0 ).getLength(), c.get( 0 ).clone().getLength() );
 		assertEquals( c.get( 0 ).getLength(), c2.get( 0 ).getLength() );
 		assertEquals( c.get( 0 ).getVelocity(), c2.get( 0 ).getVelocity() );

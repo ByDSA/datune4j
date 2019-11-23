@@ -11,7 +11,7 @@ public class PitchMidiException extends RuntimeException {
 	}
 
 	public static boolean check(int code) {
-		if ( code > PitchChromaticMidi.MAX.getCode() || code < PitchChromaticMidi.MIN.getCode() )
+        if (code > PitchChromaticMidi.MAX.getMidiCode() || code < PitchChromaticMidi.MIN.getMidiCode())
 			throw new PitchMidiException( code );
 
 		return true;

@@ -1,11 +1,40 @@
 package es.danisales.datune.midi;
 
+import es.danisales.datune.diatonic.DiatonicDegree;
+import es.danisales.datune.tonality.Tonality;
 import org.junit.Test;
 
+import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 public class ChromaticMidiTest {
+	@Test
+	public void builder() {
+		ChromaticMidi chromaticMidi = ChromaticMidi.builder()
+				.pitch(Settings.DefaultValues.PITCH_CHROMATIC_MIDI)
+				.build();
+
+		assertEquals(Settings.DefaultValues.LENGTH_NOTE, chromaticMidi.getLength());
+		assertEquals(Settings.DefaultValues.VELOCITY, chromaticMidi.getVelocity());
+		assertEquals(Settings.DefaultValues.PITCH_CHROMATIC_MIDI, chromaticMidi.getPitch());
+	}
+
+	@Test
+	public void fromDiatonicMidi() {
+		DiatonicMidi diatonicMidi = DiatonicMidi.builder()
+				.pitch(PitchDiatonicMidi.from(DiatonicDegree.I, Tonality.C, 5))
+				.length(Duration.V16)
+				.velocity(32)
+				.build();
+
+		ChromaticMidi chromaticMidi = ChromaticMidi.from(diatonicMidi);
+
+		assertEquals(PitchChromaticMidi.C5, chromaticMidi.getPitch());
+		assertEquals(Duration.V16, chromaticMidi.getLength());
+		assertEquals(32, chromaticMidi.getVelocity());
+	}
+
 	@Test
 	public void privateConstructor() {
 		ChromaticMidi chromaticMidi = new ChromaticMidi();
@@ -49,6 +78,11 @@ public class ChromaticMidiTest {
 	}
 
 	@Test
+	public void getEvents() {
+		fail();
+	}
+
+	@Test
 	public void equals() {
 		ChromaticMidi builtChromaticMidi = ChromaticMidi.builder()
 				.pitch(PitchChromaticMidi.C5)
@@ -59,5 +93,25 @@ public class ChromaticMidiTest {
 				.build();
 
 		assertEquals(builtChromaticMidi, builtChromaticMidi2);
+	}
+
+	@Test
+	public void toStringTest() {
+		ChromaticMidi chromaticMidi = ChromaticMidi.builder()
+				.pitch(60)
+				.build();
+
+		assertEquals("C5 (vel=127, length=960)", chromaticMidi.toString());
+	}
+
+	@Test
+	public void hashCodeTest() {
+		ChromaticMidi chromaticMidi = ChromaticMidi.builder()
+				.pitch(60)
+				.build();
+		ChromaticMidi clonedChromaticMidi = chromaticMidi.clone();
+
+		assertEquals(chromaticMidi, clonedChromaticMidi);
+		assertEquals(chromaticMidi.hashCode(), clonedChromaticMidi.hashCode());
 	}
 }

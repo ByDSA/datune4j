@@ -157,23 +157,6 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, IntervalChromat
 	}
 
 	@Override
-	public @NonNull ChromaticChordMidi getInv(int i) {
-		ChromaticChordMidi chromaticChordMidi = new ChromaticChordMidi();
-		chromaticChordMidi.addAll(this);
-		chromaticChordMidi.setRootPos(getRootPos());
-		chromaticChordMidi.inv(i);
-		return chromaticChordMidi;
-	}
-
-	@Override
-	public @NonNull ChromaticChordMidi getWithRootPos(int i) {
-		ChromaticChordMidi chromaticChordMidi = new ChromaticChordMidi();
-		chromaticChordMidi.addAll(this);
-		chromaticChordMidi.setRootPos(i);
-		return chromaticChordMidi;
-	}
-
-	@Override
 	public ChromaticMidi set(int index, ChromaticMidi element) {
 		return null;
 	}

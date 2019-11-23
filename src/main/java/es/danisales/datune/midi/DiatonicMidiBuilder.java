@@ -1,5 +1,6 @@
 package es.danisales.datune.midi;
 
+import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.utils.building.Builder;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -56,14 +57,15 @@ public final class DiatonicMidiBuilder extends Builder<DiatonicMidiBuilder, Diat
         return this;
     }
 
-    public DiatonicMidiBuilder fromChromatic(ChromaticMidi chromaticMidi, Tonality tonality) {
-
-        return self();
-    }
-
     public DiatonicMidiBuilder pitch(PitchDiatonicMidi pitch) {
         this.pitch = pitch;
 
         return self();
+    }
+
+    public DiatonicMidiBuilder pitch(DiatonicDegree diatonicDegree, Tonality tonality, int octave) {
+        PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(diatonicDegree, tonality, octave);
+
+        return pitch(pitchDiatonicMidi);
     }
 }

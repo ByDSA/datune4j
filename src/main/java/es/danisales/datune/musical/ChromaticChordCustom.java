@@ -4,7 +4,6 @@ import es.danisales.datune.diatonic.ChordNotation;
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.Quality;
 import es.danisales.datune.pitch.Chord;
-import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -40,20 +39,6 @@ class ChromaticChordCustom extends Chord<Chromatic, IntervalChromatic> implement
 		ChromaticChordCustom customChromaticChord = ChromaticChordCustom.from(this);
 		customChromaticChord.assignMeta( this );
 		return customChromaticChord;
-	}
-
-	@Override
-	public @NonNull ChromaticChordCustom getInv(int i) {
-		ChromaticChordCustom chromaticChordCustom = clone();
-		chromaticChordCustom.inv(i);
-		return chromaticChordCustom;
-	}
-
-	@Override
-	public @NonNull ChordCommon<Chromatic> getWithRootPos(int i) {
-		ChromaticChordCustom chromaticChordCustom = clone();
-		chromaticChordCustom.setRootPos(i);
-		return chromaticChordCustom;
 	}
 
 	public void autoName() {

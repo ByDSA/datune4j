@@ -1279,20 +1279,6 @@ OMIT11
 	}
 
 	@Override
-	public @NonNull ChromaticChordInterface getInv(int i) {
-		ChromaticChord chromaticChord = ChromaticChord.from(this);
-		chromaticChord.inv(i);
-		return (ChromaticChordInterface)chromaticChord.innerChord;
-	}
-
-	@Override
-	public @NonNull ChromaticChordInterface getWithRootPos(int i) {
-		ChromaticChord chromaticChord = ChromaticChord.from(this);
-		chromaticChord.setRootPos(i);
-		return (ChromaticChordInterface)chromaticChord.innerChord;
-	}
-
-	@Override
 	@NonNull
 	public Quality getQuality() {
 		return meta.quality;

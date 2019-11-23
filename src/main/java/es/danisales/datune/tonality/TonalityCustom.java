@@ -2,10 +2,15 @@ package es.danisales.datune.tonality;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.midi.DiatonicChordMidi;
-import es.danisales.datune.musical.*;
+import es.danisales.datune.musical.Diatonic;
+import es.danisales.datune.musical.DiatonicAlt;
+import es.danisales.datune.musical.DiatonicAltRetrieval;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 class TonalityCustom implements TonalityInterface {
 	private DiatonicAlt root;
@@ -39,16 +44,16 @@ class TonalityCustom implements TonalityInterface {
 
 		DiatonicAlt[] notesChord = new DiatonicAlt[c.size()];
 		for ( int i = 0; i < c.size(); i++ ) {
-			notesChord[i] = c.get(i).getDiatonicAlt();
+            notesChord[i] = c.get(i).getPitch().getDiatonicAlt();
 		}
 
-		int posChordCorrector = 7 - c.get( 0 ).getDegree().ordinal();
+        int posChordCorrector = 7 - c.get(0).getPitch().getDegree().ordinal();
 
 		// Integer posBaseCorrector = base.getDegreeFrom(notesChord[0]);
 		Integer posBaseCorrector = ( Diatonic.from( notesChord[0] ).ordinal()
 				- Diatonic.from( base.getRoot() ).ordinal() + 7 ) % 7;
 		if ( posBaseCorrector == null ) {
-			DiatonicAlt chromatic = c.get(0).getDiatonicAlt();
+            DiatonicAlt chromatic = c.get(0).getPitch().getDiatonicAlt();
 			throw new TonalityException(chromatic, base);
 		}
 
@@ -58,7 +63,7 @@ class TonalityCustom implements TonalityInterface {
 
 			boolean notFound = true;
 			for ( int j = 0; j < notesChord.length; j++ ) {
-				int index = (c.get(j).getDegree().ordinal() + posChordCorrector) % base.getScale().size();
+                int index = (c.get(j).getPitch().getDegree().ordinal() + posChordCorrector) % base.getScale().size();
 				if (index == i) {
 					tonalityNotes.add(notesChord[j]);
 					notFound = false;

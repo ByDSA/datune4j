@@ -108,9 +108,9 @@ public class TonalityRetrieval {
 
         DiatonicAlt[] notesChord = new DiatonicAlt[c.size()];
         for ( int i = 0; i < c.size(); i++ )
-            notesChord[i] = c.get( i ).getDiatonicAlt();
+            notesChord[i] = c.get(i).getPitch().getDiatonicAlt();
 
-        int posChordCorrector = 7 - c.get( 0 ).getDegree().ordinal();
+        int posChordCorrector = 7 - c.get(0).getPitch().getDegree().ordinal();
 
         // Integer posBaseCorrector = base.getDegreeFrom(notesChord[0]);
         int posBaseCorrector = ( Diatonic.from( notesChord[0] ).ordinal()
@@ -123,7 +123,7 @@ public class TonalityRetrieval {
 
             boolean notFound = true;
             for ( int j = 0; j < notesChord.length; j++ ) {
-                int index = (c.get(j).getDegree().ordinal() + posChordCorrector) % base.getScale().size();
+                int index = (c.get(j).getPitch().getDegree().ordinal() + posChordCorrector) % base.getScale().size();
                 if (index == i) {
                     tonalityNotes[i] = notesChord[j];
                     notFound = false;

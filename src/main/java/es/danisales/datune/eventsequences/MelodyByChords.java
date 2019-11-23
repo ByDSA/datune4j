@@ -32,7 +32,7 @@ public class MelodyByChords extends Melody {
 
 	public DiatonicMidi add(int t, int p, int d) {
 		DiatonicChordMidi c = getChord(t);
-		DiatonicMidi n = (DiatonicMidi)c.getFromBase(p).clone();
+		DiatonicMidi n = c.getFromBase(p).clone();
 		n.setLength(d);
 
 		notes.add(t, n);

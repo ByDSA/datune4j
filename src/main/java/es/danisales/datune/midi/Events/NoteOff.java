@@ -1,24 +1,17 @@
 package es.danisales.datune.midi.Events;
 
-import es.danisales.datune.midi.ChromaticMidi;
-import es.danisales.datune.midi.DiatonicMidi;
-import es.danisales.datune.midi.PitchChromaticMidi;
+import es.danisales.datune.midi.Note;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 public class NoteOff extends ChannelEvent {
-	public ChromaticMidi note;
-	
-	public NoteOff(ChromaticMidi n) {
-		this(0, n.getPitch().getCode(), n.getVelocity());
-		
+    private Note note;
+
+    public NoteOff(Note n) {
+        this(0, n.getPitch().getMidiCode(), n.getVelocity());
 		note = n;
 	}
 
-	public NoteOff(DiatonicMidi n) {
-		this(0, PitchChromaticMidi.from(n.getPitch()).getCode(), n.getVelocity());
-		note = ChromaticMidi.from(n);
-	}
-	
-	public NoteOff(int d, int key, int vel) {
+    private NoteOff(int d, int key, int vel) {
 		super(d, (byte)(0x80));
 		
 		byte code = (byte)key;
@@ -35,7 +28,12 @@ public class NoteOff extends ChannelEvent {
 	public String toString() {
 		return "NoteOff " + note;
 	}
-	
+
+    public @Nullable Note getNote() {
+        return note;
+    }
+
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
 	@Override
 	public NoteOff clone() {
 		NoteOff r = new NoteOff(note.clone());

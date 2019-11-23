@@ -87,9 +87,9 @@ public class ChromaticChordMidiTest {
 				ChromaticMidi.builder().pitch(Chromatic.G).build()
 		);
 
-		int code = notes.get( 0 ).getPitch().getCode();
+        int code = notes.get(0).getPitch().getMidiCode();
 		for ( int i = 1; i < notes.size(); i++ ) {
-			int code_i = notes.get( i ).getPitch().getCode();
+            int code_i = notes.get(i).getPitch().getMidiCode();
 			assertTrue ( code_i >= code );
 			code = code_i;
 		}

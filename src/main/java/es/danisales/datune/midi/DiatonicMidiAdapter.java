@@ -25,7 +25,7 @@ class DiatonicMidiAdapter {
                         .build();
 
                 int octaveNoteScaleNote = ns.pitch.getOctave();
-                ns.shiftOctave( octaveNote - octaveNoteScaleNote );
+                ns.getPitch().shiftOctave(octaveNote - octaveNoteScaleNote);
 
                 return ns;
             }

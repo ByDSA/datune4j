@@ -1,21 +1,15 @@
 package es.danisales.datune.eventsequences;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Queue;
-import java.util.TreeMap;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.function.BiFunction;
-import java.util.function.Function;
-
 import es.danisales.datune.midi.*;
 import es.danisales.datune.midi.Events.Event;
 import es.danisales.datune.midi.Events.EventComplex;
 import es.danisales.datune.midi.Events.NoteOff;
 import es.danisales.datune.midi.Events.NoteOn;
+
+import java.util.*;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public class EventSequence implements Durable, EventComplex {
 	protected TreeMap<Long, ArrayList<Event>>	map;
@@ -129,7 +123,7 @@ public class EventSequence implements Durable, EventComplex {
 		this.forEach( (time, ev) -> {
 			float tf = time / (float) Duration.V1;
 			if ( ev instanceof NoteOn ) {
-				int nc = ( (NoteOn) ev ).note.getPitch().getCode();
+                int nc = ((NoteOn) ev).getNote().getPitch().getMidiCode();
 				assert nc >= 0;
 				if ( notesOn.get( nc ) == null ) {
 					Queue<Long> q1 = new LinkedList<Long>();
@@ -145,7 +139,7 @@ public class EventSequence implements Durable, EventComplex {
 
 				assert notesOn.get( nc ) != null;
 			} else if ( ev instanceof NoteOff ) {
-				int nc = ( (NoteOff) ev ).note.getPitch().getCode();
+                int nc = ((NoteOff) ev).getNote().getPitch().getMidiCode();
 				assert nc >= 0;
 
 				Queue<NoteOn> evOnQueue = notesOnEvent.get( nc );
@@ -157,7 +151,7 @@ public class EventSequence implements Durable, EventComplex {
 					ChromaticMidi n = ChromaticMidi.builder()
 							.pitch( PitchChromaticMidi.from(nc) )
 							.length( (int) ( time - onTime ) )
-							.velocity( evOn.note.getVelocity() )
+                            .velocity(evOn.getNote().getVelocity())
 							.build();
 					es.add( onTime, n );
 
@@ -257,28 +251,28 @@ public class EventSequence implements Durable, EventComplex {
 	}
 
 	public void play() {
-		Thread r = new Thread() {
-			public void run() {
-				AtomicLong lastTime = new AtomicLong(0);
-				EventSequence s2 = getBasicEvents();
-				s2.forEach((Long time, Event ev) -> {
-					long diff = time - lastTime.get();
-					if (diff > 0)
-						try { Thread.sleep(diff);
-						} catch( InterruptedException e ) { }
-					lastTime.set(time);
-					if (ev instanceof NoteOn) {
-						NoteOn n = (NoteOn) ev;
-						Midi.mChannels[0].noteOn(n.note.getPitch().getCode(), n.note.getVelocity());
-					} else if (ev instanceof NoteOff) {
-						NoteOff n = (NoteOff) ev;
-						Midi.mChannels[0].noteOff(n.note.getPitch().getCode());
-					}
+        Thread r = new Thread(() -> {
+            AtomicLong lastTime = new AtomicLong(0);
+            EventSequence s2 = getBasicEvents();
+            s2.forEach((Long time, Event ev) -> {
+                long diff = time - lastTime.get();
+                if (diff > 0)
+                    try {
+                        Thread.sleep(diff);
+                    } catch (InterruptedException e) {
+                    }
+                lastTime.set(time);
+                if (ev instanceof NoteOn) {
+                    NoteOn n = (NoteOn) ev;
+                    Midi.mChannels[0].noteOn(n.getNote().getPitch().getMidiCode(), n.getNote().getVelocity());
+                } else if (ev instanceof NoteOff) {
+                    NoteOff n = (NoteOff) ev;
+                    Midi.mChannels[0].noteOff(n.getNote().getPitch().getMidiCode());
+                }
 
-					return true;
-				});
-			}
-		};
+                return true;
+            });
+        });
 		r.start();
 	}
 }

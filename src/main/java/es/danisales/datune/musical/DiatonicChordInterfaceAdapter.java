@@ -2,7 +2,6 @@ package es.danisales.datune.musical;
 
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.diatonic.IntervalDiatonic;
-import es.danisales.datune.pitch.PitchDiatonicSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Collection;
@@ -12,15 +11,14 @@ class DiatonicChordInterfaceAdapter {
     private DiatonicChordInterfaceAdapter() {
     }
 
-    public static @NonNull DiatonicChordInterface from(@NonNull Collection<? extends PitchDiatonicSingle> diatonicChord) {
+    public static @NonNull DiatonicChordInterface from(@NonNull Collection<Diatonic> diatonicChord) {
         Objects.requireNonNull(diatonicChord);
 
         DiatonicChordInterface ret = DiatonicChordEnum.from(diatonicChord);
         if (ret == null) {
             ret = new DiatonicChordCustom();
-            for (PitchDiatonicSingle diatonic : diatonicChord) {
-                Diatonic c = diatonic.getDiatonic();
-                ret.add(c);
+            for (Diatonic diatonic : diatonicChord) {
+                ret.add(diatonic);
             }
             if (diatonicChord instanceof DiatonicChordCustom) {
                 DiatonicChordCustom retCustom = (DiatonicChordCustom)ret;
@@ -285,7 +283,7 @@ class DiatonicChordInterfaceAdapter {
             return false;
 
         for (int i = 0; i < self.size(); i++) {
-            if (self.get(i).getDiatonic().ordinal() != notes.get(i).getDiatonic().ordinal())
+            if (self.get(i).ordinal() != notes.get(i).ordinal())
                 return false;
         }
 

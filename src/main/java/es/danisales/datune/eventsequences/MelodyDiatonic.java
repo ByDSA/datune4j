@@ -69,14 +69,14 @@ public class MelodyDiatonic extends Melody {
 		tonality = t;
 
 		for(DiatonicMidi nd : notesDiatonic)
-			nd.setTonality(t);
+            nd.getPitch().setTonality(t);
 
 		return this;
 	}
 
 	public Melody shiftOctave(int o) {
 		for (DiatonicMidi c : notesDiatonic) {
-			c.shiftOctave(o);
+            c.getPitch().shiftOctave(o);
 		}
 
 		return this;

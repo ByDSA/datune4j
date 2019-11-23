@@ -1,9 +1,6 @@
 package es.danisales.datune.midi;
 
-import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.midi.Events.EventComplex;
-import es.danisales.datune.midi.Events.NoteOff;
-import es.danisales.datune.midi.Events.NoteOn;
 import es.danisales.datune.musical.transformations.DistanceCalculator;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -24,6 +21,11 @@ public final class ChromaticMidi extends Note<PitchChromaticMidi> implements Pit
 
 	ChromaticMidi() { }
 
+    @SuppressWarnings("WeakerAccess")
+    public int distTo(@NonNull ChromaticMidi chromaticMidi) {
+        return DistanceCalculator.calculateDistanceInSemitones(this, chromaticMidi);
+    }
+
 	@Override
 	public @NonNull ChromaticMidi clone() {
 		return ChromaticMidi.builder()
@@ -33,23 +35,9 @@ public final class ChromaticMidi extends Note<PitchChromaticMidi> implements Pit
 				.build();
 	}
 
-	@SuppressWarnings("WeakerAccess")
-	public int distTo(@NonNull ChromaticMidi cm) {
-		return DistanceCalculator.calculateDistanceInSemitones(this, cm);
-	}
-
-	@Override
-	public EventSequence getEvents() {
-		EventSequence es = new EventSequence();
-		es.add( 0, new NoteOn( this ) );
-		es.add( length, new NoteOff( this ) );
-
-		return es;
-	}
-
 	@Override
 	public String toString() {
-		return pitch + " (vel=" + velocity + ", length=" + length + ")";// Namer.from(this);
+        return pitch + " (vel=" + velocity + ", length=" + length + ")";
 	}
 
 	@Override

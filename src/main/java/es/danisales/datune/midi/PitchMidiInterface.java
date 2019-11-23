@@ -3,14 +3,8 @@ package es.danisales.datune.midi;
 import es.danisales.datune.diatonic.Interval;
 import es.danisales.datune.pitch.PitchOctave;
 
-public interface PitchMidiInterface<I extends Interval>
-        extends PitchOctave {
-    default int getCode() { // provisional
-        if (this instanceof PitchChromaticMidi)
-            return this.getCode();
-        else
-            throw new RuntimeException();
-    }
+public interface PitchMidiInterface<I extends Interval> extends PitchOctave {
+    int getMidiCode();
 
     void shiftOctave(int i);
 

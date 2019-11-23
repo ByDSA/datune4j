@@ -2679,20 +2679,6 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic, IntervalC
     }
 
     @Override
-    public @NonNull ChromaticChord getInv(int i) {
-        ChromaticChord chromaticChord = ChromaticChord.from(this);
-        chromaticChord.inv();
-        return chromaticChord;
-    }
-
-    @Override
-    public @NonNull ChromaticChord getWithRootPos(int i) {
-        ChromaticChord chromaticChord = ChromaticChord.from(this);
-        chromaticChord.setRootPos(i);
-        return chromaticChord;
-    }
-
-    @Override
     public boolean equals(Object o) {
         if ( !(o instanceof ChromaticChord) )
             return false;

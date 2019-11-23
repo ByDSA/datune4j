@@ -1,6 +1,5 @@
 package es.danisales.datune.midi;
 
-import es.danisales.io.binary.BinaryFile;
 import es.danisales.datune.eventsequences.DrumsTrack;
 import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.eventsequences.Instrument;
@@ -9,6 +8,7 @@ import es.danisales.datune.midi.Events.Header;
 import es.danisales.datune.midi.Events.NoteOff;
 import es.danisales.datune.midi.Events.NoteOn;
 import es.danisales.datune.midi.Events.TempoEvent;
+import es.danisales.io.binary.BinaryFile;
 
 import javax.sound.midi.*;
 import java.io.File;
@@ -92,7 +92,7 @@ public class Sequence extends BinaryFile {
 
 			for(Map.Entry<Long, ArrayList<Event>> entry : e.getMap().entrySet()) {
 				Long key = entry.getKey();
-				ArrayList<Event> value = entry.getCode();
+				ArrayList<Event> value = entry.getMidiCode();
 
 				for(Event ev : value) {
 					if (ev instanceof KeySignatureEvent)
@@ -134,7 +134,7 @@ public class Sequence extends BinaryFile {
 				if (it.hasNext() ) {
 					Map.Entry<Long, ArrayList<Event>> entry = it.nextDiatonic();
 					Long key = entry.getKey();
-					ArrayList<Event> value = entry.getCode();
+					ArrayList<Event> value = entry.getMidiCode();
 					if (key > ms)
 						break;
 

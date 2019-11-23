@@ -80,9 +80,13 @@ public class Tests {
 		n = ChromaticMidi.builder().pitch(Chromatic.B, 5 ).build();
 		assertEquals( PitchChromaticMidi.B5, n.getPitch() );
 
-		DiatonicMidi n2 = DiatonicMidi.from( DiatonicDegree.I, Tonality.C, 5 );
+        DiatonicMidi n2 = DiatonicMidi.builder()
+                .pitch(DiatonicDegree.I, Tonality.C, 5)
+                .build();
 		assertEquals( PitchChromaticMidi.C5, n2.getPitch() );
-		n2 = DiatonicMidi.from( DiatonicDegree.VII, Tonality.C, 5 );
+        n2 = DiatonicMidi.builder()
+                .pitch(DiatonicDegree.VII, Tonality.C, 5)
+                .build();
 		assertEquals( PitchChromaticMidi.B5, n2.getPitch() );
 	}
 }

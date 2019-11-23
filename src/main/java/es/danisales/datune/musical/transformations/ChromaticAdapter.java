@@ -22,7 +22,7 @@ public class ChromaticAdapter {
     }
 
     public static @NonNull Chromatic from(PitchChromaticMidi pitchMidi) {
-        int value = pitchMidi.getCode();
+        int value = pitchMidi.getMidiCode();
         return Chromatic.from( value % Chromatic.NUMBER );
     }
 

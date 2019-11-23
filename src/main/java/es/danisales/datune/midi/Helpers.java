@@ -8,7 +8,7 @@ public class Helpers {
 	}
 
 	public static int dist(NoteScale n1, NoteScale n2) {
-		return n2.getCode() - n1.getCode();
+		return n2.getMidiCode() - n1.getMidiCode();
 	}
 
 	public static int octave(NoteScale n1, NoteScale n2) {

@@ -362,7 +362,7 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
     }
 
     @Override
-    public int getCode() {
+    public int getMidiCode() {
         return immutable.getCode();
     }
 
@@ -406,5 +406,10 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
         PitchChromaticMidi pitchChromaticMidi = (PitchChromaticMidi) o;
 
         return pitchChromaticMidi.immutable == immutable;
+    }
+
+    @Override
+    public int hashCode() {
+        return immutable.hashCode();
     }
 }
