@@ -6,6 +6,7 @@ import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.pitch.AbsoluteDegree;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.pitch.PitchOctave;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 enum PitchChromaticMidiInmutable implements PitchChromaticSingle, PitchOctave, AbsoluteDegree<ChromaticDegree, IntervalChromatic> {
     C0, CC0, D0, DD0, E0, F0, FF0, G0, GG0, A0, AA0, B0,
@@ -48,7 +49,7 @@ enum PitchChromaticMidiInmutable implements PitchChromaticSingle, PitchOctave, A
         return from(n, o);
     }
 
-    public static PitchChromaticMidiInmutable from(Chromatic chromatic, int octave) {
+    public static @Nullable PitchChromaticMidiInmutable from(Chromatic chromatic, int octave) {
         switch (octave) {
             case 0:
                 switch (chromatic) {
@@ -362,8 +363,7 @@ enum PitchChromaticMidiInmutable implements PitchChromaticSingle, PitchOctave, A
                         return null;
                 }
             default:
-                int code = getCodeNoTestLimits(chromatic, octave);
-                throw new PitchMidiException(code);
+                return null;
         }
     }
 

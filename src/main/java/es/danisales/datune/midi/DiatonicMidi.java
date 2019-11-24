@@ -47,20 +47,20 @@ public final class DiatonicMidi extends Note<PitchDiatonicMidi> implements Pitch
 	@Override
 	public DiatonicMidi clone() {
 		return builder()
-				.pitch(pitch)
+                .pitch(pitch.clone())
 				.length(length)
 				.velocity(velocity)
 				.build();
 	}
 
-	public String toString(Tonality tonality) {
-		ChromaticMidi chromatidMidi = ChromaticMidi.from(this);
-		return Namer.from(chromatidMidi, tonality);
-	}
-
 	@Override
 	public String toString() {
-		return toString( pitch.tonality ) + " (" + pitch.degree + ")";
+        StringBuilder stringBuilder = new StringBuilder();
+        ChromaticMidi chromatidMidi = ChromaticMidi.from(this);
+        stringBuilder.append(Namer.from(chromatidMidi, pitch.tonality));
+        stringBuilder.append(" (").append(pitch.degree).append(")");
+
+        return stringBuilder.toString();
 	}
 
 	@Override

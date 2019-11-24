@@ -55,7 +55,7 @@ public class TonalityRetrieval {
 
     private static final List<Tonality> majorMinorTonalities = Collections.unmodifiableList(
             Stream.concat(majorTonalities.stream(), minorTonalities.stream())
-            .collect(Collectors.toList())
+                    .collect(Collectors.toList())
     );
 
     public static @NonNull Set<Tonality> mainMajor() {
@@ -201,8 +201,10 @@ public class TonalityRetrieval {
             List<Tonality> candidatesPrev = candidates;
 
             do {
-                List<DiatonicChordMidi> possibleChords = chordCopy
-                        .toDiatonicChordMidi( outScale );
+                List<DiatonicChordMidi> possibleChords = DiatonicChordMidi.fromChromaticChordMidi(
+                        chordCopy,
+                        outScale
+                );
                 if ( first ) {
                     for ( DiatonicChordMidi c : possibleChords ) {
                         Tonality t = c.getTonality();
@@ -223,7 +225,9 @@ public class TonalityRetrieval {
                 }
 
                 if ( candidates.isEmpty() ) {
-                    chordCopy = chordCopy.subList( 0, chordCopy.size() - 1 );
+                    chordCopy = ChromaticChordMidi.from(
+                            chordCopy.subList(0, chordCopy.size() - 1)
+                    );
                 }
             } while ( candidates.isEmpty() && !chordCopy.isEmpty() );
         }

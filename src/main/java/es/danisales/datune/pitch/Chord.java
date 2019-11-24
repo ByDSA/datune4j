@@ -2,11 +2,9 @@ package es.danisales.datune.pitch;
 
 import es.danisales.datastructures.ListProxy;
 import es.danisales.datune.diatonic.Interval;
-import es.danisales.datune.midi.AddedException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,7 +30,7 @@ public abstract class Chord<N extends SymbolicPitch, I extends Interval> extends
 	}
 
 	@Override
-	public void add(int n, N note) throws AddedException {
+	public void add(int n, N note) {
 		innerList.add( n, note );
 		resetRootIfNeeded();
 	}
@@ -44,11 +42,6 @@ public abstract class Chord<N extends SymbolicPitch, I extends Interval> extends
 		resetRootIfNeeded();
 
 		return ret;
-	}
-
-	@Override
-	public final void sort(Comparator<? super N> comparator) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override

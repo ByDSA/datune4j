@@ -243,4 +243,15 @@ public class ChromaticChordEnumTest {
 	public void addAll2() {
 		ChromaticChordEnum.C.addAll( 0, ChromaticChordEnum.D );
 	}
+
+    @Test
+    public void content() {
+        ChromaticChordEnum chromaticChordEnum = ChromaticChordEnum.B9;
+        assertSame(5, chromaticChordEnum.size());
+        assertSame(Chromatic.B, chromaticChordEnum.get(0));
+        assertSame(Chromatic.DD, chromaticChordEnum.get(1));
+        assertSame(Chromatic.FF, chromaticChordEnum.get(2));
+        assertSame(Chromatic.A, chromaticChordEnum.get(3));
+        assertSame(Chromatic.CC, chromaticChordEnum.get(4));
+    }
 }

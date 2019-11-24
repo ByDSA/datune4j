@@ -29,7 +29,7 @@ public final class ChromaticMidi extends Note<PitchChromaticMidi> implements Pit
 	@Override
 	public @NonNull ChromaticMidi clone() {
 		return ChromaticMidi.builder()
-				.pitch(pitch)
+                .pitch(pitch.clone())
 				.velocity(velocity)
 				.length(length)
 				.build();

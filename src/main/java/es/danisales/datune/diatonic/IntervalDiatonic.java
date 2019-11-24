@@ -3,6 +3,7 @@ package es.danisales.datune.diatonic;
 import es.danisales.datune.musical.Diatonic;
 import es.danisales.datune.musical.transformations.Namer;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 public enum IntervalDiatonic implements Interval {
     UNISON, SECOND, THIRD, FOURTH, FIFTH, SIXTH, SEVENTH,
@@ -101,5 +102,19 @@ public enum IntervalDiatonic implements Interval {
     @Override
     public boolean isCompound() {
         return ordinal() > Diatonic.NUMBER;
+    }
+
+    public @Nullable IntervalDiatonic getNext() {
+        int index = ordinal() + 1;
+        if (index >= values().length)
+            return null;
+        return values()[index];
+    }
+
+    public @Nullable IntervalDiatonic getPrevious() {
+        int index = ordinal() - 1;
+        if (index < 0)
+            return null;
+        return values()[index];
     }
 }

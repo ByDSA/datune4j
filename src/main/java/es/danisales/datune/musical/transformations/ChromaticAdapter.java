@@ -35,6 +35,8 @@ public class ChromaticAdapter {
             return from((PitchChromaticMidi)t);
         else if (t.getClass().equals(Chromatic.class))
             return (Chromatic)t;
+        else if (t.getClass().equals(ChromaticMidi.class))
+            return ((ChromaticMidi) t).getPitch().getChromatic();
 
         throw new RuntimeException("Undefined for class " + t.getClass());
     }

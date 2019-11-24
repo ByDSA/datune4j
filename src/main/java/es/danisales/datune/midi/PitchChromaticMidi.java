@@ -7,6 +7,7 @@ import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 @SuppressWarnings("WeakerAccess")
 public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInterface<IntervalChromatic> {
@@ -290,34 +291,55 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
         return pitchChromaticMidi;
     }
 
-    public static PitchChromaticMidi from(PitchDiatonicMidi pitchDiatonicMidi) {
+    public static @Nullable PitchChromaticMidi from(PitchDiatonicMidi pitchDiatonicMidi) {
         Tonality tonality = pitchDiatonicMidi.tonality;
         DiatonicDegree degree = pitchDiatonicMidi.degree;
-        int octave = pitchDiatonicMidi.octave;
 
         DiatonicAlt diatonicAlt = tonality.getNote(degree);
         Chromatic chromatic = Chromatic.from(diatonicAlt);
-        int code = getCodeNoTestLimits(chromatic, octave);
-        DiatonicAlt root = tonality.getRoot();
-        Chromatic rootChromatic = Chromatic.from(root);
-        DiatonicAlt degreeDiatonicAlt = tonality.getNote(degree);
-        Chromatic degreeChromatic = Chromatic.from(degreeDiatonicAlt);
-        if (degreeChromatic.ordinal() < rootChromatic.ordinal())
-            code += Chromatic.NUMBER;
 
-        return from(code);
+        int octave = pitchDiatonicMidi.octave;
+        octave += octaveCorrector(tonality, degree);
+
+        return from(chromatic, octave);
     }
 
-    private static int getCodeNoTestLimits(Chromatic chromatic, int octave) {
-        return Chromatic.NUMBER * octave + chromatic.ordinal();
+    private static int octaveCorrector(Tonality tonality, DiatonicDegree diatonicDegree) {
+        int octave = 0;
+
+        DiatonicAlt diatonicAlt = tonality.getNote(diatonicDegree);
+        Chromatic chromaticWithoutAlts = Chromatic.from(diatonicAlt.getDiatonic());
+        float semis = chromaticWithoutAlts.ordinal() + diatonicAlt.getAlterations();
+        while (semis < 0) {
+            octave--;
+            semis += Chromatic.NUMBER;
+        }
+        while (semis >= Chromatic.NUMBER) {
+            octave++;
+            semis -= Chromatic.NUMBER;
+        }
+
+        DiatonicAlt root = tonality.getRoot();
+        Chromatic rootChromatic = Chromatic.from(root);
+        Chromatic chromatic = Chromatic.from(diatonicAlt);
+        if (chromatic.ordinal() < rootChromatic.ordinal())
+            octave++;
+
+        return octave;
     }
 
     public static PitchChromaticMidi from(int code) {
-        return new PitchChromaticMidi(PitchChromaticMidiInmutable.from(code));
+        PitchChromaticMidi pitchChromaticMidi = new PitchChromaticMidi();
+        pitchChromaticMidi.immutable = PitchChromaticMidiInmutable.from(code);
+        return pitchChromaticMidi;
     }
 
-    public static @NonNull PitchChromaticMidi from(@NonNull Chromatic chromatic, int octave) {
-        return new PitchChromaticMidi(PitchChromaticMidiInmutable.from(chromatic, octave));
+    public static @Nullable PitchChromaticMidi from(@NonNull Chromatic chromatic, int octave) {
+        PitchChromaticMidi pitchChromaticMidi = new PitchChromaticMidi();
+        pitchChromaticMidi.immutable = PitchChromaticMidiInmutable.from(chromatic, octave);
+        if (pitchChromaticMidi.immutable == null)
+            return null;
+        return pitchChromaticMidi;
     }
 
     private PitchChromaticMidi(PitchChromaticMidiInmutable pitchChromaticMidiInmutable) {

@@ -104,4 +104,14 @@ public class DiatonicDegreeTest {
             assertNotNull(diatonicDegree);
         }
     }
+
+    @Test
+    public void getNext() {
+        assertSame(DiatonicDegree.I, DiatonicDegree.VII.getNext());
+    }
+
+    @Test
+    public void getPrevious() {
+        assertSame(DiatonicDegree.VII, DiatonicDegree.I.getPrevious());
+    }
 }

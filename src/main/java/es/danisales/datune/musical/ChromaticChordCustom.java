@@ -9,6 +9,7 @@ import es.danisales.datune.pitch.PitchChromaticSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 class ChromaticChordCustom extends Chord<Chromatic, IntervalChromatic> implements PitchChromaticChord<Chromatic>, ChromaticChordInterface {
 	ChromaticChordMeta meta = new ChromaticChordMeta();
@@ -27,6 +28,11 @@ class ChromaticChordCustom extends Chord<Chromatic, IntervalChromatic> implement
 	ChromaticChordCustom() {
 		super(new ArrayList<>());
 	}
+
+    @Override
+    public void sort(Comparator<? super Chromatic> comparator) {
+        throw new UnsupportedOperationException();
+    }
 
 	void assignMeta(@NonNull ChromaticChordCustom c) {
 		setRootPos( c.getRootPos() );

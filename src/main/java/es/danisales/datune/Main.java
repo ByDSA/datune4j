@@ -577,7 +577,10 @@ public class Main {
 				cs.add( ChromaticChord.from(ton, chromaticFunction) );
 			for ( ChromaticChord c1 : cs ) {
 				System.out.println(c1);
-				DiatonicChordMidi c = c1.toMidi().getDiatonicChordMidi( ton );
+                DiatonicChordMidi c = DiatonicChordMidi.fromChromaticChordMidi(
+                        c1.toMidi(),
+                        ton
+                );
 				System.out.println( c.getFunction()  + " " + (c.getFunction() instanceof DiatonicFunction) + " " + c.metaTonality + " " + c.getTonality());
 				assert c.getFunction() != null : c;
 				if ( (c.getFunction() instanceof DiatonicFunction

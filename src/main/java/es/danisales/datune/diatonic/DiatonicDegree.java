@@ -236,4 +236,14 @@ public enum DiatonicDegree implements RelativeDegree {
 
 		throw new RuntimeException("Impossible");
 	}
+
+    public DiatonicDegree getNext() { // todo: move to RelativeDegree
+        int index = (ordinal() + 1) % DiatonicDegree.values().length;
+        return values()[index];
+    }
+
+    public DiatonicDegree getPrevious() { // todo: move to RelativeDegree
+        int index = (ordinal() - 1 + DiatonicDegree.values().length) % DiatonicDegree.values().length;
+        return values()[index];
+    }
 }

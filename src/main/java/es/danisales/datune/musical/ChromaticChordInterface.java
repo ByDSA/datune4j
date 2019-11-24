@@ -249,7 +249,7 @@ public interface ChromaticChordInterface extends PitchChromaticChord<Chromatic> 
     }
 
     static ChromaticChordInterface from(DiatonicChordMidi diatonicChordMidi) {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.from(diatonicChordMidi);
+        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.fromDiatonicChordMidi(diatonicChordMidi);
         return ChromaticChordInterface.from(chromaticChordMidi);
     }
 

@@ -11,9 +11,7 @@ import es.danisales.datune.pitch.PitchOctave;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends PitchMidiInterface> extends Chord<N, I>
 		implements Durable, PitchOctaveMidiEditable, PitchOctave, EventComplex {
@@ -22,17 +20,22 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 
 	ChromaticChord meta = null;
 
-	protected ChordMidi() {
+    ChordMidi() {
 		super(new ArrayList<>());
 	}
 
-	<T extends ChordMidi<N, I, P>> void assign(@NonNull T c) {
-		Objects.requireNonNull(c);
-		clear();
-		this.addAll(c);
-		arpegio = c.arpegio;
-		length = c.length;
-	}
+    @Deprecated
+    protected abstract <T extends ChordMidi<N, I, P>> T newChord();
+
+    @Deprecated
+        // deprecated or private
+    <T extends ChordMidi<N, I, P>> void assign(@NonNull T c) {
+        Objects.requireNonNull(c);
+        clear();
+        this.addAll(c);
+        arpegio = c.arpegio;
+        length = c.length;
+    }
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -76,12 +79,12 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 	@Override
 	public int getLength() {
 		if ( arpegio == null )
-			return maxNoteLength();
+            return getMaxNoteLength();
 		else
 			return arpegio.getLength();
 	}
 
-	private int maxNoteLength() {
+    private int getMaxNoteLength() {
 		int max = length;
 		for ( N n : this )
 			max = Math.max( max, n.getLength() );
@@ -100,18 +103,32 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 		arpegio.setChord( this );
 	}
 
-	public boolean containsPitch(@NonNull N nIn) {
+    @SuppressWarnings("WeakerAccess")
+    public boolean containsPitch(@NonNull Object o) {
+        if (!(o instanceof Note))
+            return false;
+
+        Note nIn = (Note) o;
         int nInCode = nIn.pitch.getMidiCode();
-		for ( N n : this )
-            if (n.pitch.getMidiCode() == nInCode)
+        for (N note : this)
+            if (note.pitch.getMidiCode() == nInCode)
 				return true;
 
 		return false;
 	}
 
+    @SuppressWarnings("WeakerAccess")
+    public boolean containsPitchAll(@NonNull Collection<?> c) {
+        for (N note : this)
+            if (!containsPitch(note))
+                return false;
+
+        return true;
+    }
+
 	@Override
 	public boolean add(@NonNull N n) throws AddedException {
-		if ( !containsPitch( n ) )
+        if (!contains(n))
 			super.add( n );
 		else
 			throw new AddedException( n, this );
@@ -120,6 +137,26 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 
 		return true;
 	}
+
+    @Override
+    public boolean addAll(@NonNull Collection<? extends N> collection) {
+        boolean ret = super.addAll(collection);
+        sortByPitch();
+        return ret;
+    }
+
+    @Override
+    public void add(int n, N chromaticMidi) throws AddedException {
+        super.add(n, chromaticMidi);
+        sortByPitch();
+    }
+
+    @SuppressWarnings("unchecked")
+    void sortByPitch() {
+        this.sort(
+                Comparator.comparing(Note::getPitch)
+        );
+    }
 
 	public void setVelocity(int v) {
 		for ( N n : this )
@@ -148,12 +185,7 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 		return get( 0 ).pitch.getOctave();
 	}
 
-	void sortByPitch() {
-		this.sort(
-                (N n1, N n2) -> (n1.pitch.getMidiCode() > n2.pitch.getMidiCode() ? 1
-						: ( n1 == n2 ? 0 : -1 ) )
-		);
-	}
+    // todo: move to transforms
 
 	public <A extends List<N>> boolean hasSameNotesOrderSameOctave(A notes) {
 		if ( size() != notes.size() || size() == 0 )
@@ -166,11 +198,13 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 
 		return true;
 	}
+    // todo: move to transforms
 
 	public <A extends List<N>> boolean hasSameNotesOrder(boolean sameOctave, A notes) {
 		return sameOctave && hasSameNotesOrderSameOctave( notes )
 				;//|| !sameOctave && hasSameNotesOrder( notes );
 	}
+    // todo: move to transforms
 
 	private <T extends ChordMidi<N, I, P>> List<T> _getAllInversions() {
 		List<T> ret = new ArrayList<>();
@@ -185,6 +219,7 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 
 		return ret;
 	}
+    // todo: move to transforms
 
 	public <T extends ChordMidi<N, I, P>> List<T> getAllDispositionsWithInv() {
 		List<T> ret = new ArrayList<>();
@@ -194,6 +229,7 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 
 		return ret;
 	}
+    // todo: move to transforms
 
 	@Override
 	public List<ChordMidi<N, I, P>> getAllInversions() {
@@ -204,8 +240,7 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 		return c.getAllDispositionsSub( true, 0, true );
 	}
 
-	protected abstract <T extends ChordMidi<N, I, P>> T newChord();
-
+    // todo: move to transforms
 	protected <T extends ChordMidi<N, I, P>> List<T> getAllDispositionsSub(boolean sub, int level, boolean first) {
 		ArrayList<T> ret = new ArrayList<>();
 		assert size() > 0;
@@ -253,36 +288,38 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 		return ret;
 	}
 
-	public void minimize() {
-		for ( int i = 1; i < size(); i++ ) {
-			N note = get( i );
-			N prev = get( i - 1 );
+    // todo: move to transforms
+    public void minimize() {
+        for (int i = 1; i < size(); i++) {
+            N note = get( i );
+            N prev = get( i - 1 );
             while (note.pitch.getMidiCode() - 12 > prev.pitch.getMidiCode())
-				note.pitch.shiftOctave(-1);
-		}
-	}
+                note.pitch.shiftOctave(-1);
+        }
+    }
 
-	public void minimizeDistanceTo(@NonNull ChordMidi cIn) {
-		Objects.requireNonNull(cIn);
+    // todo: move to transforms
+    public void minimizeDistanceTo(@NonNull ChordMidi cIn) {
+        Objects.requireNonNull(cIn);
 
-		List<ChordMidi<N, I, P>> ret = getAllDispositionsWithInv();
-		int minDist = 9999;
-		ChordMidi<N, I, P> minDistChord = null;
-		for (ChordMidi<N, I, P> c : ret) {
-			int d = (int) Math.abs( cIn.dist( c ) );
-			if ( d < minDist ) {
-				minDist = d;
-				minDistChord = c;
-			}
-		}
-		assign( minDistChord );
-	}
+        List<ChordMidi<N, I, P>> ret = getAllDispositionsWithInv();
+        int minDist = 9999;
+        ChordMidi<N, I, P> minDistChord = null;
+        for (ChordMidi<N, I, P> c : ret) {
+            int d = (int) Math.abs( cIn.dist( c ) );
+            if ( d < minDist ) {
+                minDist = d;
+                minDistChord = c;
+            }
+        }
+        assign( minDistChord );
+    }
 
-	public int dist(ChordMidi<N, I, P> n) {
+    public int dist(@NonNull ChordMidi<N, I, P> n) {
 		return dist( n, true );
 	}
 
-	protected int dist(ChordMidi<N, I, P> n, boolean bidirectional) {
+    protected int dist(@NonNull ChordMidi<N, I, P> n, boolean bidirectional) {
 		int d = 0;
 
 		for ( N i : this ) {
@@ -303,6 +340,16 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 		return d;
 	}
 
+    void setArpegioIfNull() {
+        if (arpegio == null)
+            setArpegio(new ArpegioDefault());
+    }
+
+    @Override
+    public ChordMidi<N, I, P> clone() { // todo
+        return null;
+    }
+
 	@Override
 	public boolean equals(Object o) {
 		if ( !( o instanceof ChordMidi ) )
@@ -314,15 +361,5 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 			return false;
 
 		return super.equals(cm) && (arpegio == null || arpegio.equals(cm.arpegio)) && length == cm.length;
-	}
-
-	protected void setArpegioIfNull() {
-		if ( arpegio == null )
-			setArpegio( new ArpegioDefault() );
-	}
-
-	@Override
-	public ChordMidi<N, I, P> clone() { // todo
-		return null;
 	}
 }

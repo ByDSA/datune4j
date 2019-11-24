@@ -11,6 +11,7 @@ import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.pitch.PitchDiatonic;
 import es.danisales.datune.tonality.*;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -39,6 +40,35 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDiatonic,
 
         for (DiatonicMidi dm : ns)
             add( dm );
+    }
+
+    public static List<DiatonicChordMidi> fromChromaticChordMidi(ChromaticChordMidi chromaticChordMidi, boolean outScale) {
+        List<Tonality> tonalities;
+        if (outScale)
+            tonalities = TonalityRetrieval.listFromChordOutScale(chromaticChordMidi);
+        else
+            tonalities = TonalityRetrieval.listFromChord(chromaticChordMidi);
+
+        if (tonalities.size() == 0)
+            return new ArrayList<>();
+
+        ChromaticChordMidi usingChord = chromaticChordMidi.clone();
+        // usingChord.updateWhatIsItIfNeeded();
+
+        ArrayList<DiatonicChordMidi> out = new ArrayList<>();
+        for (Tonality t : tonalities)
+            out.add(new DiatonicChordMidi(t, usingChord));
+
+        return out;
+    }
+
+    public static @Nullable DiatonicChordMidi fromChromaticChordMidi(ChromaticChordMidi chromaticChordMidi, Tonality tonality) {
+        List<DiatonicChordMidi> diatonicChordMidiList = fromChromaticChordMidi(chromaticChordMidi, true);
+        for (DiatonicChordMidi diatonicChordMidi : diatonicChordMidiList)
+            if (diatonicChordMidi.tonality.equals(tonality))
+                return diatonicChordMidi;
+
+        return null;
     }
 
     public DiatonicChordMidi(Collection<DiatonicAlt> chord, Tonality tonality, int octave, int length, int velocity) {
@@ -123,8 +153,10 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDiatonic,
     }
 
     public static void showWhatIsIt(boolean outscale, Supplier<Boolean> f, ChromaticMidi... notes) {
-        List<DiatonicChordMidi> chords = ChromaticChordMidi.from( notes )
-                .toDiatonicChordMidi( outscale );
+        List<DiatonicChordMidi> chords = DiatonicChordMidi.fromChromaticChordMidi(
+                ChromaticChordMidi.from(notes),
+                outscale
+        );
 
         if ( chords.isEmpty() ) {
             System.out.print( "La sucesión de notas no es nada:" );
@@ -1093,19 +1125,6 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDiatonic,
         return metaTonality;
     }
 
-    public ChromaticChordMidi toChromaticChordMidi() {
-        ChromaticChordMidi c = new ChromaticChordMidi();
-        for ( DiatonicMidi n : this ) {
-            ChromaticMidi nChromatic = ChromaticMidi.from(n);
-            c.add(nChromatic);
-        }
-        c.arpegio = arpegio;
-        c.length = length;
-        c.setRootPos( getRootPos() );
-
-        return c;
-    }
-
     @Override
     public String toString() {
         if ( size() == 0 )
@@ -1163,10 +1182,6 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDiatonic,
 
         return super.equals( dcm ) && getFunction().equals( dcm.getFunction() )
                 && metaTonality.equals( dcm.metaTonality );
-    }
-
-    public ChromaticChordMidi getChromaticChordMidi() {
-        return this.toChromaticChordMidi();
     }
 
     @Override

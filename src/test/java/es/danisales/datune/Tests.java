@@ -1,6 +1,5 @@
 package es.danisales.datune;
 
-import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.midi.*;
 import es.danisales.datune.musical.Chromatic;
@@ -44,14 +43,17 @@ public class Tests {
 			notes.add(chromaticMidi);
 		}
 
-		List<DiatonicChordMidi> chords = notes.toDiatonicChordMidi( false );
+        List<DiatonicChordMidi> chords = DiatonicChordMidi.fromChromaticChordMidi(
+                notes,
+                false
+        );
 		assert ( chords.size() > 0 );
 	}
 
 
 	@Test
 	public void dist() {
-		ChromaticChordMidi notes = ChromaticChordMidi.of(
+        ChromaticChordMidi notes = ChromaticChordMidi.from(
 				Chromatic.FF, Chromatic.A, Chromatic.CC
 		);
 
@@ -66,27 +68,5 @@ public class Tests {
 						7
 				}, n.toArray()
 		);
-	}
-
-	@Test
-	public void getCode() {
-		PitchChromaticMidi p = PitchChromaticMidi.from( 60 );
-		assertEquals( PitchChromaticMidi.C5, p );
-		p = PitchChromaticMidi.from( Chromatic.C, 5 );
-		assertEquals( PitchChromaticMidi.C5, p );
-		ChromaticMidi n = ChromaticMidi.builder().pitch(Chromatic.C, 5 ).build();
-		assertEquals( PitchChromaticMidi.C5, n.getPitch() );
-
-		n = ChromaticMidi.builder().pitch(Chromatic.B, 5 ).build();
-		assertEquals( PitchChromaticMidi.B5, n.getPitch() );
-
-        DiatonicMidi n2 = DiatonicMidi.builder()
-                .pitch(DiatonicDegree.I, Tonality.C, 5)
-                .build();
-		assertEquals( PitchChromaticMidi.C5, n2.getPitch() );
-        n2 = DiatonicMidi.builder()
-                .pitch(DiatonicDegree.VII, Tonality.C, 5)
-                .build();
-		assertEquals( PitchChromaticMidi.B5, n2.getPitch() );
 	}
 }

@@ -7,9 +7,10 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 
-class DiatonicChordCustom extends Chord<Diatonic, IntervalDiatonic> implements DiatonicChordInterface, PitchMutable<IntervalDiatonic> {
+final class DiatonicChordCustom extends Chord<Diatonic, IntervalDiatonic> implements DiatonicChordInterface, PitchMutable<IntervalDiatonic> {
 	protected DiatonicChordCustom() {
 		super(new ArrayList<>());
 	}
@@ -24,6 +25,11 @@ class DiatonicChordCustom extends Chord<Diatonic, IntervalDiatonic> implements D
 		}
 		return customDiatonicChord;
 	}
+
+    @Override
+    public void sort(Comparator<? super Diatonic> comparator) {
+        throw new UnsupportedOperationException();
+    }
 
 	public void shift(IntervalDiatonic intervalDiatonic) {
 		for ( int i = 0; i < size(); i++ ) {
