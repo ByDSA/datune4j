@@ -23,22 +23,19 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 
 	ChromaticChord meta = null;
 
-    ChordMidi() {
+	ChordMidi() {
 		super(new ArrayList<>());
 	}
 
-    @Deprecated
-	public abstract <T extends ChordMidi<N, I, P>> T newChord();
+	protected abstract <T extends ChordMidi<N, I, P>> T newChord();
 
-    @Deprecated
-        // deprecated or private
-	public <T extends ChordMidi<N, I, P>> void assign(@NonNull T c) {
-        Objects.requireNonNull(c);
-        clear();
-        this.addAll(c);
-        arpegio = c.arpegio;
-        length = c.length;
-    }
+	<T extends ChordMidi<N, I, P>> void assign(@NonNull T c) {
+		Objects.requireNonNull(c);
+		clear();
+		this.addAll(c);
+		arpegio = c.arpegio;
+		length = c.length;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -79,15 +76,7 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 		return es;
 	}
 
-	@Override
-	public int getLength() {
-		if ( arpegio == null )
-            return getMaxNoteLength();
-		else
-			return arpegio.getLength();
-	}
-
-    private int getMaxNoteLength() {
+	private int getMaxNoteLength() {
 		int max = length;
 		for ( N n : this )
 			max = Math.max( max, n.getLength() );
@@ -106,32 +95,32 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 		arpegio.setChord( this );
 	}
 
-    @SuppressWarnings("WeakerAccess")
-    public boolean containsPitch(@NonNull Object o) {
-        if (!(o instanceof Note))
-            return false;
+	@SuppressWarnings("WeakerAccess")
+	public boolean containsPitch(@NonNull Object o) {
+		if (!(o instanceof Note))
+			return false;
 
-        Note nIn = (Note) o;
-        int nInCode = nIn.pitch.getMidiCode();
-        for (N note : this)
-            if (note.pitch.getMidiCode() == nInCode)
+		Note nIn = (Note) o;
+		int nInCode = nIn.pitch.getMidiCode();
+		for (N note : this)
+			if (note.pitch.getMidiCode() == nInCode)
 				return true;
 
 		return false;
 	}
 
-    @SuppressWarnings("WeakerAccess")
-    public boolean containsPitchAll(@NonNull Collection<?> c) {
-        for (N note : this)
-            if (!containsPitch(note))
-                return false;
+	@SuppressWarnings("WeakerAccess")
+	public boolean containsPitchAll(@NonNull Collection<N> c) {
+		for (N note : c)
+			if (!containsPitch(note))
+				return false;
 
-        return true;
-    }
+		return true;
+	}
 
 	@Override
 	public boolean add(@NonNull N n) throws AddedException {
-        if (!contains(n))
+		if (!containsPitch(n))
 			super.add( n );
 		else
 			throw new AddedException( n, this );
@@ -141,29 +130,41 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 		return true;
 	}
 
-    @Override
-    public boolean addAll(@NonNull Collection<? extends N> collection) {
-        boolean ret = super.addAll(collection);
-        sortByPitch();
-        return ret;
-    }
+	@Override
+	public boolean addAll(@NonNull Collection<? extends N> collection) {
+		boolean ret = super.addAll(collection);
+		sortByPitch();
+		return ret;
+	}
 
-    @Override
-    public void add(int n, N chromaticMidi) throws AddedException {
-        super.add(n, chromaticMidi);
-        sortByPitch();
-    }
+	@Override
+	public void add(int n, N chromaticMidi) throws AddedException {
+		super.add(n, chromaticMidi);
+		sortByPitch();
+	}
 
-    @SuppressWarnings("unchecked")
-    void sortByPitch() {
-        this.sort(
-                Comparator.comparing(Note::getPitch)
-        );
-    }
+	@SuppressWarnings("unchecked")
+	void sortByPitch() {
+		this.sort(
+				Comparator.comparing(Note::getPitch)
+		);
+	}
 
 	public void setVelocity(int v) {
 		for ( N n : this )
 			n.setVelocity( (int) Math.round( n.getVelocity() * v / 100.0 ) );
+	}
+
+	public int getVelocity() {
+		return getMaxNoteVelocity();
+	}
+
+	private int getMaxNoteVelocity() {
+		int max = -1;
+		for (N n : this)
+			max = Math.max(max, n.getVelocity());
+
+		return max;
 	}
 
 	@Override
@@ -172,34 +173,42 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 	}
 
 	@Override
-	public void shiftOctave(int octaveShift) {
-		for ( N n : this )
-			n.pitch.shiftOctave(octaveShift);
+	public int getLength() {
+		if (arpegio == null)
+			return getMaxNoteLength();
+		else
+			return arpegio.getLength();
 	}
 
 	@Override
-	public void setOctave(int octave) {
-		int diff = octave - getOctave();
+	public void shiftOctave(int octaveShift) {
+		for ( N n : this )
+			n.getPitch().shiftOctave(octaveShift);
+	}
+
+	@Override
+	public void setOctave(int newOctave) {
+		int diff = newOctave - getOctave();
 		shiftOctave( diff );
 	}
 
 	@Override
 	public int getOctave() {
-		return get( 0 ).pitch.getOctave();
+		return get(0).getPitch().getOctave();
 	}
 
-    public int dist(@NonNull ChordMidi<N, I, P> n) {
+	public <N2 extends Note<?>> int dist(@NonNull ChordMidi<N2, ?, ?> n) {
 		return dist( n, true );
 	}
 
-    protected int dist(@NonNull ChordMidi<N, I, P> n, boolean bidirectional) {
+	protected <N2 extends Note<?>> int dist(@NonNull ChordMidi<N2, ?, ?> n, boolean bidirectional) {
 		int d = 0;
 
 		for ( N i : this ) {
 			int localMin = 9999;
 			assert n.size() > 0;
-			for ( N j : n ) {
-                int m = Math.abs(j.pitch.getMidiCode() - i.pitch.getMidiCode());
+			for (N2 j : n) {
+				int m = Math.abs(j.pitch.getMidiCode() - i.pitch.getMidiCode());
 				if ( m < localMin )
 					localMin = m;
 			}
@@ -213,15 +222,25 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 		return d;
 	}
 
-    void setArpegioIfNull() {
-        if (arpegio == null)
-            setArpegio(new ArpegioDefault());
-    }
+	void setArpegioIfNull() {
+		if (arpegio == null)
+			setArpegio(new ArpegioDefault());
+	}
 
-    @Override
-    public ChordMidi<N, I, P> clone() { // todo
-        return null;
-    }
+	@SuppressWarnings("unchecked")
+	@Override
+	public ChordMidi<N, I, P> clone() {
+		ChordMidi<N, I, P> chordMidi = newChord();
+
+		for (N n : this)
+			chordMidi.add((N) n.clone());
+
+		if (arpegio != null)
+			chordMidi.arpegio = arpegio.clone();
+		chordMidi.length = length;
+
+		return chordMidi;
+	}
 
 	@Override
 	public boolean equals(Object o) {

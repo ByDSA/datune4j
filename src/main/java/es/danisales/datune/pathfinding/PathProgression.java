@@ -1,7 +1,7 @@
 package es.danisales.datune.pathfinding;
 
 import es.danisales.datune.midi.ChordMidi;
-import es.danisales.datune.musical.ChordTransformations;
+import es.danisales.datune.midi.ChordMidiTransformations;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +23,10 @@ public class PathProgression<N extends ChordMidi> extends Path<NodeProgression> 
 	public <A extends ArrayList<ChordMidi>> PathProgression(A array) {
 		super(new NodeProgression(array.get(0)), new NodeProgression(array.get(array.size()-1)));
 		assert array.size() > 2;
-		nodes = new ArrayList();
+		nodes = new ArrayList<>();
 
 		for (int i = 1; i < array.size()-1; i++) {
-            List<ChordMidi> cs = ChordTransformations.getAllDispositionsWithInv(array.get(i));
+			List<ChordMidi> cs = ChordMidiTransformations.getAllDispositionsWithInv(array.get(i));
 			List<NodeProgression> ns = new ArrayList<>();
 			for (ChordMidi c : cs) {
 				ns.add( new NodeProgression(c) );

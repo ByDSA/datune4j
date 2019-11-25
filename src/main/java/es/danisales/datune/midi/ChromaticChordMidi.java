@@ -86,16 +86,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, IntervalChromat
 
     @Override
     public @NonNull ChromaticChordMidi clone() {
-        ChromaticChordMidi c = new ChromaticChordMidi();
-
-        for (ChromaticMidi n : this)
-            c.add(n.clone());
-
-        if (arpegio != null)
-            c.arpegio = arpegio.clone();
-        c.length = length;
-
-        return c;
+        return (ChromaticChordMidi) super.clone();
     }
 
     @Override

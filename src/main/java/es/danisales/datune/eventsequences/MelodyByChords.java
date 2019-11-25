@@ -4,12 +4,12 @@ import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.midi.Duration;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class MelodyByChords extends Melody {
-	protected ArrayList<DiatonicChordMidi> chords;
+    protected List<DiatonicChordMidi> chords;
 
-	public MelodyByChords(ArrayList<DiatonicChordMidi> c) {
+    public MelodyByChords(List<DiatonicChordMidi> c) {
 		chords = c;
 	}
 

@@ -659,7 +659,7 @@ public class Main {
 							pressed = model.isPressed();
 							if ( pressed ) {
 								if ( lastPlayed.get() != null ) {
-									ChordTransformations.minimizeDistanceTo(c, lastPlayed.get());
+									ChordMidiTransformations.minimizeDistanceTo(c, lastPlayed.get());
 								}
 
 								lastPlayed.set( c );

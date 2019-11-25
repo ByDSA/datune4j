@@ -8,17 +8,15 @@ import es.danisales.datune.midi.Arpegios.ArpegioAsc;
 import es.danisales.datune.midi.Arpegios.ArpegioDefault;
 import es.danisales.datune.midi.Arpegios.ArpegioDesc;
 import es.danisales.datune.midi.Arpegios.ArpegioPowerGuitars;
-import es.danisales.datune.midi.DiatonicChordMidi;
-import es.danisales.datune.midi.DiatonicMidi;
-import es.danisales.datune.midi.Duration;
+import es.danisales.datune.midi.*;
 import es.danisales.datune.midi.Events.EventComplex;
 import es.danisales.datune.midi.Events.Pan;
 import es.danisales.datune.midi.Events.Volume;
 import es.danisales.datune.midi.Progressions.Progression;
-import es.danisales.datune.midi.Song;
+import es.danisales.datune.musical.ChordTransformations;
 import es.danisales.datune.tonality.Tonality;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Power extends Song {
 	Track channelGuitars1;
@@ -93,7 +91,7 @@ public class Power extends Song {
 	}
 
 	EventComplex startMelody() {
-		ArrayList<DiatonicChordMidi> chords = DiatonicChordMidi.shiftOctave( DiatonicChordMidi.duplicate( startProgression.getChords() ), 2);
+		List<DiatonicChordMidi> chords = ChordMidiTransformations.shiftOctaveList(ChordTransformations.duplicateList(startProgression.getChords()), 2);
 
 		MelodyByChords l = new MelodyByChords(chords);
 
