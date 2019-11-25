@@ -108,7 +108,7 @@ public class TonalityTest {
 
     @Test
     public void fromDiatonicChordMidi() { // todo
-        //Tonality tonality = Tonality.fromDiatonicChordMidi();
+        //Tonality tonality = Tonality.from();
     }
 
     @Test

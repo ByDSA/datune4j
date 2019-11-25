@@ -2,11 +2,7 @@ package es.danisales.datune.tonality;
 
 import es.danisales.datune.diatonic.*;
 import es.danisales.datune.midi.DiatonicChordMidi;
-import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.musical.ChromaticChord;
-import es.danisales.datune.musical.ChromaticChordInterface;
-import es.danisales.datune.musical.DiatonicAlt;
-import es.danisales.datune.musical.transformations.ChromaticAdapter;
+import es.danisales.datune.musical.*;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;

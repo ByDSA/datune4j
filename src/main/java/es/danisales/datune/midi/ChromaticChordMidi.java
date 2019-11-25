@@ -44,7 +44,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, IntervalChromat
         return ChromaticChordMidiAdapter.from(iterable);
     }
 
-    public static @NonNull ChromaticChordMidi fromDiatonicChordMidi(@NonNull DiatonicChordMidi diatonicChordMidi) {
+    public static @NonNull ChromaticChordMidi from(@NonNull DiatonicChordMidi diatonicChordMidi) {
         return ChromaticChordMidiAdapter.fromDiatonicChordMidi(diatonicChordMidi);
     }
 
@@ -61,31 +61,6 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, IntervalChromat
         }
 	}
 
-	// TODO: SE PUEDE PONER COMO DEFAULT
-	@Override
-	public ChromaticChordMidi removeHigherDuplicates() {
-		ChromaticChordMidi out = new ChromaticChordMidi();
-		for ( ChromaticMidi n : this ) {
-			boolean found = false;
-			for ( ChromaticMidi n2 : out ) {
-				Chromatic chromaticN2 = Chromatic.from(n2);
-				Chromatic chromaticN = Chromatic.from(n);
-				if ( chromaticN2.ordinal() == chromaticN.ordinal() ) {
-					found = true;
-					break;
-				}
-			}
-
-			if ( !found )
-				out.add( n );
-		}
-
-		this.clear();
-        this.addAll(out);
-
-		return this;
-	}
-
 	@Override
 	@NonNull
 	public Quality getQuality() {
@@ -93,7 +68,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, IntervalChromat
 	}
 
 	@Override
-	protected ChromaticChordMidi newChord() {
+    public ChromaticChordMidi newChord() {
 		return new ChromaticChordMidi();
 	}
 

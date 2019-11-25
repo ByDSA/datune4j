@@ -1,8 +1,6 @@
-package es.danisales.datune.musical.transformations;
+package es.danisales.datune.musical;
 
 import es.danisales.datune.diatonic.PentatonicDegree;
-import es.danisales.datune.musical.DiatonicAlt;
-import es.danisales.datune.musical.Pentatonic;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
 

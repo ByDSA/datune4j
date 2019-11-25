@@ -2,7 +2,7 @@ package es.danisales.datune.midi;
 
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.musical.transformations.ChromaticAdapter;
+import es.danisales.datune.musical.ChromaticAdapter;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

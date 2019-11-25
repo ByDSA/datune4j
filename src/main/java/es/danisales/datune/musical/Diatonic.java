@@ -2,7 +2,6 @@ package es.danisales.datune.musical;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.IntervalDiatonic;
-import es.danisales.datune.musical.transformations.DiatonicAdapter;
 import es.danisales.datune.pitch.AbsoluteDegree;
 import es.danisales.datune.pitch.AbsoluteDegreeAdapter;
 import es.danisales.datune.pitch.PitchDiatonicSingle;

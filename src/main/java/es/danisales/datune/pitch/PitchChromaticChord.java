@@ -4,8 +4,8 @@ import es.danisales.datune.diatonic.Quality;
 import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.musical.ChromaticAdapter;
 import es.danisales.datune.musical.ChromaticChord;
-import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;

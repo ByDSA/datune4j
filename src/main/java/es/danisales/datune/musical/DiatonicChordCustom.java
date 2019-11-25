@@ -8,10 +8,9 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.List;
 
 final class DiatonicChordCustom extends Chord<Diatonic, IntervalDiatonic> implements DiatonicChordInterface, PitchMutable<IntervalDiatonic> {
-	protected DiatonicChordCustom() {
+	DiatonicChordCustom() {
 		super(new ArrayList<>());
 	}
 
@@ -41,16 +40,6 @@ final class DiatonicChordCustom extends Chord<Diatonic, IntervalDiatonic> implem
 		for ( int i = 0; i < size(); i++ ) {
 			set( i, get( i ).getShiftedNegative( intervalDiatonic ) );
 		}
-	}
-
-	@Override
-	public List<DiatonicChordCustom> getAllInversions(){
-		return super.getAllInversions();
-	}
-
-	@Override
-	public DiatonicChordCustom removeHigherDuplicates() {
-		return (DiatonicChordCustom)super.removeHigherDuplicates();
 	}
 
 	@Override

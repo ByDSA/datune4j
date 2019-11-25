@@ -4,7 +4,7 @@ import es.danisales.arrays.ArrayUtils;
 import es.danisales.datune.diatonic.*;
 import es.danisales.datune.midi.Settings.DefaultValues;
 import es.danisales.datune.musical.*;
-import es.danisales.datune.musical.transformations.ChromaticAdapter;
+import es.danisales.datune.musical.transformations.ChordChecker;
 import es.danisales.datune.pitch.Chord;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticSingle;
@@ -912,16 +912,17 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDiatonic,
     }
 
     public static boolean contains(List<DiatonicChordMidi> chords, boolean sameOctave, boolean sameTonality, DiatonicChordMidi c) {
-        for ( DiatonicChordMidi ccc : chords )
-            if ( sameTonality && ccc.isSameChordNotesAndTonality( sameOctave, c )
-                    || !sameTonality && ccc.hasSameNotesOrder( sameOctave, c ) )
+        for (DiatonicChordMidi ccc : chords) {
+            if (sameTonality && ccc.isSameChordNotesAndTonality(sameOctave, c)
+                    || !sameTonality && ChordChecker.hasSameNotesOrder(ccc, sameOctave, c))
                 return true;
+        }
 
         return false;
     }
 
     public boolean isSameChordNotesAndTonality(boolean sameOctave, DiatonicChordMidi notes) {
-        return hasSameNotesOrder( sameOctave, notes ) && tonality.equals( notes.tonality );
+        return ChordChecker.hasSameNotesOrder(this, sameOctave, notes) && tonality.equals(notes.tonality);
     }
 
     public DiatonicMidi get(int note, List<DiatonicMidi> ns) {
@@ -1186,12 +1187,11 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDiatonic,
 
     @Override
     public int getInversionNumber() {
-        // TODO Auto-generated method stub
         return -1;
     }
 
     @Override
-    protected DiatonicChordMidi newChord() {
+    public DiatonicChordMidi newChord() {
         return new DiatonicChordMidi();
     }
 

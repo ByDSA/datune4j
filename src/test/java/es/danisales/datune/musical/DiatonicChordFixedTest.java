@@ -24,7 +24,7 @@ public class DiatonicChordFixedTest {
 
     @Test
     public void getAllInversions() {
-        List<DiatonicChord> diatonicChordList = DiatonicChord.TRIAD.getAllInversions();
+        List<DiatonicChord> diatonicChordList = ChordTransformations.getAllInversionsFrom(DiatonicChord.TRIAD);
 
         assertEquals(3, diatonicChordList.size());
 

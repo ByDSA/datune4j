@@ -13,6 +13,7 @@ import es.danisales.datune.midi.Events.NoteOff;
 import es.danisales.datune.midi.Events.NoteOn;
 import es.danisales.datune.midi.Events.Volume;
 import es.danisales.datune.midi.Progressions.Progression;
+import es.danisales.datune.musical.ChordTransformations;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.pitch.ChordNamer;
@@ -527,7 +528,7 @@ public class Main {
 			ChromaticChordMidi notes = EventSequence.whatNotesArePlaying(
 					es, (int) ( Duration.V1 * ( i * 0.5 + offset ) + Duration.V16 )
 			);
-			notes.removeHigherDuplicates();
+			ChordTransformations.removeHigherDuplicates(notes);
 			css.add( notes );
 		}
 
@@ -658,7 +659,7 @@ public class Main {
 							pressed = model.isPressed();
 							if ( pressed ) {
 								if ( lastPlayed.get() != null ) {
-									c.minimizeDistanceTo( lastPlayed.get() );
+									ChordTransformations.minimizeDistanceTo(c, lastPlayed.get());
 								}
 
 								lastPlayed.set( c );

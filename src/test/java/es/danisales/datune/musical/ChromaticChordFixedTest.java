@@ -28,7 +28,7 @@ public class ChromaticChordFixedTest {
 
     @Test
     public void getAllInversions() {
-        List<ChromaticChord> chromaticChordList = ChromaticChord.C.getAllInversions();
+        List<ChromaticChord> chromaticChordList = ChordTransformations.getAllInversionsFrom(ChromaticChord.C);
 
         assertEquals(3, chromaticChordList.size());
 

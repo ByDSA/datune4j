@@ -11,7 +11,10 @@ import es.danisales.datune.pitch.PitchOctave;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.Objects;
 
 public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends PitchMidiInterface> extends Chord<N, I>
 		implements Durable, PitchOctaveMidiEditable, PitchOctave, EventComplex {
@@ -25,11 +28,11 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 	}
 
     @Deprecated
-    protected abstract <T extends ChordMidi<N, I, P>> T newChord();
+	public abstract <T extends ChordMidi<N, I, P>> T newChord();
 
     @Deprecated
         // deprecated or private
-    <T extends ChordMidi<N, I, P>> void assign(@NonNull T c) {
+	public <T extends ChordMidi<N, I, P>> void assign(@NonNull T c) {
         Objects.requireNonNull(c);
         clear();
         this.addAll(c);
@@ -184,136 +187,6 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 	public int getOctave() {
 		return get( 0 ).pitch.getOctave();
 	}
-
-    // todo: move to transforms
-
-	public <A extends List<N>> boolean hasSameNotesOrderSameOctave(A notes) {
-		if ( size() != notes.size() || size() == 0 )
-			return false;
-
-		for ( int i = 0; i < size(); i++ ) {
-			if ( get( i ) != notes.get( i ) )
-				return false;
-		}
-
-		return true;
-	}
-    // todo: move to transforms
-
-	public <A extends List<N>> boolean hasSameNotesOrder(boolean sameOctave, A notes) {
-		return sameOctave && hasSameNotesOrderSameOctave( notes )
-				;//|| !sameOctave && hasSameNotesOrder( notes );
-	}
-    // todo: move to transforms
-
-	private <T extends ChordMidi<N, I, P>> List<T> _getAllInversions() {
-		List<T> ret = new ArrayList<>();
-
-		ret.add( (T) this.clone() );
-
-		T last = (T)this;
-		for ( int i = 0; i < size(); i++ ) {
-			ret.add( last );
-			last.inv();
-		}
-
-		return ret;
-	}
-    // todo: move to transforms
-
-	public <T extends ChordMidi<N, I, P>> List<T> getAllDispositionsWithInv() {
-		List<T> ret = new ArrayList<>();
-		List<T> bases = _getAllInversions();
-		for ( T c : bases )
-			ret.addAll( (List<T>) c.getAllInversions() );
-
-		return ret;
-	}
-    // todo: move to transforms
-
-	@Override
-	public List<ChordMidi<N, I, P>> getAllInversions() {
-		ChordMidi<N, I, P> c = clone();
-		c.setMinOctave();
-		c.minimize();
-
-		return c.getAllDispositionsSub( true, 0, true );
-	}
-
-    // todo: move to transforms
-	protected <T extends ChordMidi<N, I, P>> List<T> getAllDispositionsSub(boolean sub, int level, boolean first) {
-		ArrayList<T> ret = new ArrayList<>();
-		assert size() > 0;
-
-		if ( first && level == 0 )
-			ret.add( (T) clone() );
-
-		try {
-            while ((size() > 1 && get(0).pitch.getMidiCode() < get(1).pitch.getMidiCode()
-					|| size() == 1 ) ) {
-				if ( !first ) {
-					T d = (T) clone();
-					ret.add( d );
-				}
-
-				if ( sub && size() > 1 ) {
-					// Copia acorde desde la segunda a la �ltima nota
-					T subChord = newChord();
-					for ( int j = 1; j < size(); j++ )
-						subChord.add( (N)get( j ).clone() );
-
-					List<T> subCombinations = subChord.clone()
-							.getAllDispositionsSub( true, level + 1, first );
-					for ( T subCombination : subCombinations ) {
-						// Forma listOf superChord = [listOf[0] + subChordcombination]
-						T superChord = newChord();
-						superChord.add( (N)get( 0 ).clone() );
-						superChord.addAll( subCombination.clone() );
-
-						// Combinaciones de 'n�mero' dentro del listOf superChord = ['n�mero' +
-						// subChordcombination]
-						List<T> superCombinations = superChord.clone()
-								.getAllDispositionsSub( false, level, false );
-						ret.addAll( superCombinations );
-					}
-				}
-
-				get(0).pitch.shiftOctave(1);
-				first = false;
-			}
-		} catch ( PitchMidiException e ) {
-
-		}
-
-		return ret;
-	}
-
-    // todo: move to transforms
-    public void minimize() {
-        for (int i = 1; i < size(); i++) {
-            N note = get( i );
-            N prev = get( i - 1 );
-            while (note.pitch.getMidiCode() - 12 > prev.pitch.getMidiCode())
-                note.pitch.shiftOctave(-1);
-        }
-    }
-
-    // todo: move to transforms
-    public void minimizeDistanceTo(@NonNull ChordMidi cIn) {
-        Objects.requireNonNull(cIn);
-
-        List<ChordMidi<N, I, P>> ret = getAllDispositionsWithInv();
-        int minDist = 9999;
-        ChordMidi<N, I, P> minDistChord = null;
-        for (ChordMidi<N, I, P> c : ret) {
-            int d = (int) Math.abs( cIn.dist( c ) );
-            if ( d < minDist ) {
-                minDist = d;
-                minDistChord = c;
-            }
-        }
-        assign( minDistChord );
-    }
 
     public int dist(@NonNull ChordMidi<N, I, P> n) {
 		return dist( n, true );

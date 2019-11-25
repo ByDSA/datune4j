@@ -2,13 +2,7 @@ package es.danisales.datune;
 
 import es.danisales.datune.diatonic.ChromaticFunction;
 import es.danisales.datune.diatonic.DiatonicDegree;
-import es.danisales.datune.diatonic.RelativeDegree;
-import es.danisales.datune.midi.ChromaticChordMidi;
-import es.danisales.datune.midi.DiatonicChordMidi;
-import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
-import es.danisales.datune.musical.ChromaticChord;
-import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.tonality.Tonality;
 import org.junit.Test;
 

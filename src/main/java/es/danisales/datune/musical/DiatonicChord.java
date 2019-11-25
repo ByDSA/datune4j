@@ -2,12 +2,13 @@ package es.danisales.datune.musical;
 
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.diatonic.IntervalDiatonic;
+import es.danisales.datune.midi.DiatonicChordMidi;
+import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.ChordMutableInterface;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Collection;
-import java.util.List;
 
 @SuppressWarnings("WeakerAccess")
 public final class DiatonicChord extends NormalChordCommon<Diatonic, IntervalDiatonic>
@@ -53,6 +54,13 @@ public final class DiatonicChord extends NormalChordCommon<Diatonic, IntervalDia
     public static @NonNull DiatonicChord from(@NonNull Collection<Diatonic> diatonicChord) {
         DiatonicChord ret = new DiatonicChord();
         ret.innerChord = DiatonicChordInterfaceAdapter.from(diatonicChord);
+        return ret;
+    }
+
+    public static @NonNull DiatonicChord from(@NonNull DiatonicChordMidi diatonicChordMidi) {
+        DiatonicChord ret = new DiatonicChord();
+        for (DiatonicMidi diatonicMidi : diatonicChordMidi)
+            ret.add(diatonicMidi.getPitch().getDiatonic());
         return ret;
     }
 
@@ -129,12 +137,6 @@ public final class DiatonicChord extends NormalChordCommon<Diatonic, IntervalDia
     @Override
     protected ChordCommon<Diatonic> createInnerFrom(ChordCommon<Diatonic> chord) {
         return DiatonicChordInterfaceAdapter.from(chord);
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public final List<DiatonicChord> getAllInversions() {
-        return (List<DiatonicChord>)super.getAllInversions();
     }
 
     @Override

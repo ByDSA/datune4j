@@ -2,8 +2,6 @@ package es.danisales.datune.musical;
 
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.diatonic.HarmonicFunction;
-import es.danisales.datune.diatonic.IntervalChromatic;
-import es.danisales.datune.pitch.Chord;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -65,17 +63,5 @@ public class ChromaticChordRetrieval {
         ee.addAll(chord);
 
         return e.equals( ee );
-    }
-
-    public static <A extends Chord<Chromatic, IntervalChromatic>> boolean hasSameNotesOrder(A notes1, A notes2) {
-        if ( notes1.size() != notes2.size() ||  notes1.size() == 0 )
-            return false;
-
-        for ( int i = 0; i <  notes1.size(); i++ ) {
-            if (  notes1.get( i ) != notes2.get( i ) )
-                return false;
-        }
-
-        return true;
     }
 }

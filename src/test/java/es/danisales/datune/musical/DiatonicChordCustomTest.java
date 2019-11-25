@@ -176,7 +176,7 @@ public class DiatonicChordCustomTest {
     @Test
     public void getAllInversions() {
         DiatonicChordCustom diatonicChord = DiatonicChordCustom.from( Arrays.asList(Diatonic.G, Diatonic.C, Diatonic.E) );
-        List<DiatonicChordCustom> customDiatonicChords = diatonicChord.getAllInversions();
+        List<DiatonicChordCustom> customDiatonicChords = ChordTransformations.getAllInversionsFrom(diatonicChord);
 
         DiatonicChordCustom inv1 = DiatonicChordCustom.from(diatonicChord);
         inv1.inv();

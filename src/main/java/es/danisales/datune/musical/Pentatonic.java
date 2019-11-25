@@ -3,7 +3,6 @@ package es.danisales.datune.musical;
 import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.diatonic.IntervalPentatonic;
 import es.danisales.datune.diatonic.PentatonicDegree;
-import es.danisales.datune.musical.transformations.PentatonicAdapter;
 import es.danisales.datune.pitch.AbsoluteDegree;
 import es.danisales.utils.MathUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;

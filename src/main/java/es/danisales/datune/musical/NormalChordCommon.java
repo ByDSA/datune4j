@@ -12,7 +12,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.*;
 
-abstract class NormalChordCommon<N extends AbsoluteDegree<?, I>, I extends Interval> extends ListProxy<N> implements ChordMutableInterface<N, I> {
+public abstract class NormalChordCommon<N extends AbsoluteDegree<?, I>, I extends Interval> extends ListProxy<N> implements ChordMutableInterface<N, I> {
     ChordCommon<N> innerChord;
     private boolean fixed;
 
@@ -122,42 +122,6 @@ abstract class NormalChordCommon<N extends AbsoluteDegree<?, I>, I extends Inter
             if (getRootPos() == 0)
                 turnInnerChordIntoEnumIfPossible();
         }
-    }
-
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<? extends ChordCommon<N>> getAllInversions() {
-        List<ChordMutableInterface<N, I>> customDiatonicChords = getAllInversionsRaw();
-
-        return createListFrom(customDiatonicChords);
-    }
-
-    private List<ChordMutableInterface<N, I>> getAllInversionsRaw() {
-        List<ChordMutableInterface<N, I>> customDiatonicChords;
-
-        if (isCustom()) {
-            customDiatonicChords = castCustom(innerChord).getAllInversions();
-        } else {
-            ChordCommon<N> tmp = innerChord;
-            turnInnerIntoCustom();
-            customDiatonicChords = castCustom(innerChord).getAllInversions();
-            innerChord = tmp;
-        }
-
-        return customDiatonicChords;
-    }
-
-    private List<NormalChordCommon<N, I>> createListFrom(List<ChordMutableInterface<N, I>> list) {
-        List<NormalChordCommon<N, I>> ret = new ArrayList<>();
-        for (ChordCommon<N> customChromaticChord : list) {
-            NormalChordCommon<N, I> chromaticChord = create();
-            chromaticChord.innerChord = customChromaticChord;
-            chromaticChord.turnInnerChordIntoEnumIfPossible();
-            ret.add(chromaticChord);
-        }
-
-        return ret;
     }
 
     @Override

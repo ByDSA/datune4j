@@ -144,7 +144,7 @@ public class ChromaticChordTest {
 
     @Test
     public void getAllInversions() {
-        List<ChromaticChord> listChromaticChords = ChromaticChord.C.getAllInversions();
+        List<ChromaticChord> listChromaticChords = ChordTransformations.getAllInversionsFrom(ChromaticChord.C);
 
         ChromaticChord original = ChromaticChord.from( Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G) );
         ChromaticChord inv1 = ChromaticChord.from( Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.C) );

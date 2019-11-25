@@ -7,7 +7,6 @@ import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.Quality;
 import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
-import es.danisales.datune.musical.transformations.ChromaticAdapter;
 import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.ChordMutableInterface;
 import es.danisales.datune.pitch.PitchChromaticChord;
@@ -2665,12 +2664,6 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic, IntervalC
 
     private ChromaticChord(ChromaticChordInterface chromaticChordInterface) {
         super(chromaticChordInterface);
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public final List<ChromaticChord> getAllInversions() {
-        return (List<ChromaticChord>)super.getAllInversions();
     }
 
     @Override

@@ -1,10 +1,7 @@
-package es.danisales.datune.musical.transformations;
+package es.danisales.datune.musical;
 
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.PitchChromaticMidi;
-import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.musical.Diatonic;
-import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
