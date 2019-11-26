@@ -532,7 +532,7 @@ public class Main {
 			css.add( notes );
 		}
 
-		DiatonicChordMidi.showPossibleProgressionsMajorMinor( css );
+        DiatonicChordMidiTransformations.showPossibleProgressionsMajorMinor(css);
 
 		return song;
 	}

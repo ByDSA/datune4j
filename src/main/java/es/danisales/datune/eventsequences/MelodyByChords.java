@@ -1,6 +1,7 @@
 package es.danisales.datune.eventsequences;
 
 import es.danisales.datune.midi.DiatonicChordMidi;
+import es.danisales.datune.midi.DiatonicChordMidiChecker;
 import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.midi.Duration;
 
@@ -32,7 +33,7 @@ public class MelodyByChords extends Melody {
 
 	public DiatonicMidi add(int t, int p, int d) {
 		DiatonicChordMidi c = getChord(t);
-		DiatonicMidi n = c.getFromBase(p).clone();
+        DiatonicMidi n = DiatonicChordMidiChecker.getFromBase(c, p).clone();
 		n.setLength(d);
 
 		notes.add(t, n);

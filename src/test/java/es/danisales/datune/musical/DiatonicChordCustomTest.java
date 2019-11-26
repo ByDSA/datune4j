@@ -22,7 +22,7 @@ public class DiatonicChordCustomTest {
 
     @Test
     public void shift() {
-        DiatonicChordCustom diatonicChordCustom = DiatonicChordCustom.from(DiatonicChordEnum.TRIAD);
+        DiatonicChordCustom diatonicChordCustom = DiatonicChordCustom.from(DiatonicChordEnum.C_TRIAD);
         diatonicChordCustom.setRootPos(1);
         diatonicChordCustom.shift( IntervalDiatonic.SECOND );
         assertEquals( 3, diatonicChordCustom.size() );
@@ -34,7 +34,7 @@ public class DiatonicChordCustomTest {
 
     @Test
     public void shiftOctave() {
-        DiatonicChordCustom diatonicChordCustom = DiatonicChordCustom.from(DiatonicChordEnum.TRIAD);
+        DiatonicChordCustom diatonicChordCustom = DiatonicChordCustom.from(DiatonicChordEnum.C_TRIAD);
         diatonicChordCustom.setRootPos(1);
         DiatonicChordCustom reference = DiatonicChordCustom.from(diatonicChordCustom);
         diatonicChordCustom.shift( IntervalDiatonic.OCTAVE );
@@ -43,7 +43,7 @@ public class DiatonicChordCustomTest {
 
     @Test
     public void shiftOctaveMultipleShift() {
-        DiatonicChordCustom diatonicChordCustom = DiatonicChordCustom.from(DiatonicChordEnum.TRIAD);
+        DiatonicChordCustom diatonicChordCustom = DiatonicChordCustom.from(DiatonicChordEnum.C_TRIAD);
         diatonicChordCustom.setRootPos(1);
         DiatonicChordCustom reference = DiatonicChordCustom.from(diatonicChordCustom);
         for (int i = 0; i < 7; i++)

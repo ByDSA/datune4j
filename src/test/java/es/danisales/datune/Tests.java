@@ -35,7 +35,10 @@ public class Tests {
 	@Test
 	public void whatIsItStatic() {
 		Tonality s = Tonality.C;
-		DiatonicChordMidi c = new DiatonicChordMidi( DiatonicFunction.I, 5, s );
+        DiatonicChordMidi c = DiatonicChordMidi.builder()
+                .from(DiatonicFunction.I, s)
+                .octave(5)
+                .build();
 
 		ChromaticChordMidi notes = ChromaticChordMidi.newEmpty();
 		for ( DiatonicMidi n : c ) {

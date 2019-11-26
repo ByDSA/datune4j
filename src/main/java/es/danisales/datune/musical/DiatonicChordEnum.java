@@ -9,22 +9,22 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import java.util.*;
 
 enum DiatonicChordEnum implements DiatonicChordInterface {
-	TRIAD(Diatonic.C, Diatonic.E, Diatonic.G),
-	THIRD(Diatonic.C, Diatonic.E),
-	SUS2(Diatonic.C, Diatonic.D, Diatonic.G),
-	SUS2_O5(Diatonic.C, Diatonic.D),
-	SUS4(Diatonic.C, Diatonic.F, Diatonic.G),
-	SUS4_O5(Diatonic.C, Diatonic.F),
-	SIXTH(Diatonic.C, Diatonic.E, Diatonic.G, Diatonic.A),
-	SIXTH_O5(Diatonic.C, Diatonic.E, Diatonic.A),
-	SEVENTH(Diatonic.C, Diatonic.E, Diatonic.G, Diatonic.B),
-	SEVENTH_O3(Diatonic.C, Diatonic.G, Diatonic.B),
-	SEVENTH_O5(Diatonic.C, Diatonic.E, Diatonic.B),
-	NINTH(Diatonic.C, Diatonic.E, Diatonic.G, Diatonic.B, Diatonic.D),
-	NINTH_O7(Diatonic.C, Diatonic.E, Diatonic.G, Diatonic.D),
-	NINTH_O3_O7(Diatonic.C, Diatonic.G, Diatonic.D),
-	ELEVENTH(Diatonic.C, Diatonic.E, Diatonic.G, Diatonic.B, Diatonic.D, Diatonic.F),
-	THIRTEENTH(Diatonic.C, Diatonic.E, Diatonic.G, Diatonic.B, Diatonic.D, Diatonic.F, Diatonic.A);
+    C_TRIAD(Diatonic.C, Diatonic.E, Diatonic.G),
+    C_THIRD(Diatonic.C, Diatonic.E),
+    C_SUS2(Diatonic.C, Diatonic.D, Diatonic.G),
+    C_SUS2_O5(Diatonic.C, Diatonic.D),
+    C_SUS4(Diatonic.C, Diatonic.F, Diatonic.G),
+    C_SUS4_O5(Diatonic.C, Diatonic.F),
+    C_SIXTH(Diatonic.C, Diatonic.E, Diatonic.G, Diatonic.A),
+    C_SIXTH_O5(Diatonic.C, Diatonic.E, Diatonic.A),
+    C_SEVENTH(Diatonic.C, Diatonic.E, Diatonic.G, Diatonic.B),
+    C_SEVENTH_O3(Diatonic.C, Diatonic.G, Diatonic.B),
+    C_SEVENTH_O5(Diatonic.C, Diatonic.E, Diatonic.B),
+    C_NINTH(Diatonic.C, Diatonic.E, Diatonic.G, Diatonic.B, Diatonic.D),
+    C_NINTH_O7(Diatonic.C, Diatonic.E, Diatonic.G, Diatonic.D),
+    C_NINTH_O3_O7(Diatonic.C, Diatonic.G, Diatonic.D),
+    C_ELEVENTH(Diatonic.C, Diatonic.E, Diatonic.G, Diatonic.B, Diatonic.D, Diatonic.F),
+    C_THIRTEENTH(Diatonic.C, Diatonic.E, Diatonic.G, Diatonic.B, Diatonic.D, Diatonic.F, Diatonic.A);
 
 	private final List<Diatonic> notes;
 

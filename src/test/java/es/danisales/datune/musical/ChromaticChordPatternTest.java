@@ -64,7 +64,7 @@ public class ChromaticChordPatternTest {
     public void sameEnum() {
         ChromaticChordPattern chromaticChordPattern = ChromaticChordPattern.from(0, 4, 7);
 
-        assertSame(chromaticChordPattern.innerPattern, ChromaticChordPattern.TRIAD_MAJOR.innerPattern);
+        assertSame(chromaticChordPattern.numbersPattern, ChromaticChordPattern.TRIAD_MAJOR.numbersPattern);
     }
 
     @Test

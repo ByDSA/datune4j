@@ -36,6 +36,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                 diatonicChordMidi.shiftOctave(1);
         } else if (function instanceof DiatonicFunction)
             diatonicChordMidi.diatonicFunctionProcess((DiatonicFunction) function, octave);
+
         if (arpegio == null)
             diatonicChordMidi.setArpegio(new ArpegioDefault());
         else

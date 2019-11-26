@@ -14,9 +14,9 @@ public class DiatonicChordTest {
     public void invNotSameRoot() {
         DiatonicChord diatonicChord = DiatonicChord.from( Arrays.asList(Diatonic.G, Diatonic.C, Diatonic.E) );
         diatonicChord.inv();
-        assertNotSame(DiatonicChordEnum.TRIAD, diatonicChord.innerChord);
-        assertEquals(DiatonicChord.TRIAD.getNotes(), diatonicChord.getNotes());
-        assertNotEquals(DiatonicChord.TRIAD, diatonicChord);
+        assertNotSame(DiatonicChordEnum.C_TRIAD, diatonicChord.innerChord);
+        assertEquals(DiatonicChord.C_TRIAD.getNotes(), diatonicChord.getNotes());
+        assertNotEquals(DiatonicChord.C_TRIAD, diatonicChord);
     }
 
     @Test
@@ -24,35 +24,35 @@ public class DiatonicChordTest {
         DiatonicChord diatonicChord = DiatonicChord.from( Arrays.asList(Diatonic.G, Diatonic.C, Diatonic.E) );
         diatonicChord.inv();
         diatonicChord.setRootPos(0);
-        assertEquals(DiatonicChord.TRIAD, diatonicChord);
-        assertSame(DiatonicChordEnum.TRIAD, diatonicChord.innerChord);
+        assertEquals(DiatonicChord.C_TRIAD, diatonicChord);
+        assertSame(DiatonicChordEnum.C_TRIAD, diatonicChord.innerChord);
     }
 
     @Test
     public void fromCollection() {
         List<Diatonic> diatonicList = Arrays.asList(Diatonic.C, Diatonic.E, Diatonic.G, Diatonic.B, Diatonic.D);
         DiatonicChord diatonicChord = DiatonicChord.from(diatonicList);
-        assertEquals(DiatonicChord.NINTH, diatonicChord);
-        assertSame(DiatonicChord.NINTH.innerChord, diatonicChord.innerChord);
+        assertEquals(DiatonicChord.C_NINTH, diatonicChord);
+        assertSame(DiatonicChord.C_NINTH.innerChord, diatonicChord.innerChord);
     }
 
     @Test
     public void fromDiatonicFunction() {
-        DiatonicChord diatonicChord = DiatonicChord.from(DiatonicFunction.I);
-        assertEquals(DiatonicChord.TRIAD, diatonicChord);
-        assertSame(DiatonicChord.TRIAD.innerChord, diatonicChord.innerChord);
+        DiatonicChord diatonicChord = DiatonicChord.from(DiatonicFunction.I, Diatonic.C);
+        assertEquals(DiatonicChord.C_TRIAD, diatonicChord);
+        assertSame(DiatonicChord.C_TRIAD.innerChord, diatonicChord.innerChord);
     }
 
     @Test
     public void fromDiatonicFunction2() {
-        DiatonicChord diatonicChord = DiatonicChord.from(DiatonicFunction.I9);
-        assertEquals(DiatonicChord.NINTH, diatonicChord);
-        assertSame(DiatonicChord.NINTH.innerChord, diatonicChord.innerChord);
+        DiatonicChord diatonicChord = DiatonicChord.from(DiatonicFunction.I9, Diatonic.C);
+        assertEquals(DiatonicChord.C_NINTH, diatonicChord);
+        assertSame(DiatonicChord.C_NINTH.innerChord, diatonicChord.innerChord);
     }
 
     @Test
     public void fromDiatonicFunction3() {
-        DiatonicChord diatonicChord = DiatonicChord.from(DiatonicFunction.V7);
-        assertEquals(DiatonicChord.SEVENTH.getShifted(IntervalDiatonic.FIFTH), diatonicChord);
+        DiatonicChord diatonicChord = DiatonicChord.from(DiatonicFunction.V7, Diatonic.C);
+        assertEquals(DiatonicChord.C_SEVENTH.getShifted(IntervalDiatonic.FIFTH), diatonicChord);
     }
 }

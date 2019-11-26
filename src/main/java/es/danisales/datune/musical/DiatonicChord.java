@@ -13,41 +13,41 @@ import java.util.Collection;
 @SuppressWarnings("WeakerAccess")
 public final class DiatonicChord extends NormalChordCommon<Diatonic, IntervalDiatonic>
         implements DiatonicChordCommon<Diatonic>, ChordMutableInterface<Diatonic, IntervalDiatonic> {
-    public static final DiatonicChord TRIAD = new DiatonicChord( DiatonicChordEnum.TRIAD );
-    public static final DiatonicChord THIRD = new DiatonicChord( DiatonicChordEnum.THIRD );
-    public static final DiatonicChord SUS2 = new DiatonicChord( DiatonicChordEnum.SUS2 );
-    public static final DiatonicChord SUS2_O5 = new DiatonicChord( DiatonicChordEnum.SUS2_O5 );
-    public static final DiatonicChord SUS4 = new DiatonicChord( DiatonicChordEnum.SUS4 );
-    public static final DiatonicChord SUS4_O5 = new DiatonicChord( DiatonicChordEnum.SUS4_O5 );
-    public static final DiatonicChord SIXTH = new DiatonicChord( DiatonicChordEnum.SIXTH );
-    public static final DiatonicChord SIXTH_O5 = new DiatonicChord( DiatonicChordEnum.SIXTH_O5 );
-    public static final DiatonicChord SEVENTH = new DiatonicChord( DiatonicChordEnum.SEVENTH );
-    public static final DiatonicChord SEVENTH_O3 = new DiatonicChord( DiatonicChordEnum.SEVENTH_O3 );
-    public static final DiatonicChord SEVENTH_O5 = new DiatonicChord( DiatonicChordEnum.SEVENTH_O5 );
-    public static final DiatonicChord NINTH = new DiatonicChord( DiatonicChordEnum.NINTH );
-    public static final DiatonicChord NINTH_O7 = new DiatonicChord( DiatonicChordEnum.NINTH_O7 );
-    public static final DiatonicChord NINTH_O3_O7 = new DiatonicChord( DiatonicChordEnum.NINTH_O3_O7 );
-    public static final DiatonicChord ELEVENTH = new DiatonicChord( DiatonicChordEnum.ELEVENTH );
-    public static final DiatonicChord THIRTEENTH = new DiatonicChord( DiatonicChordEnum.THIRTEENTH );
+    public static final DiatonicChord C_TRIAD = new DiatonicChord(DiatonicChordEnum.C_TRIAD);
+    public static final DiatonicChord C_THIRD = new DiatonicChord(DiatonicChordEnum.C_THIRD);
+    public static final DiatonicChord C_SUS2 = new DiatonicChord(DiatonicChordEnum.C_SUS2);
+    public static final DiatonicChord C_SUS2_O5 = new DiatonicChord(DiatonicChordEnum.C_SUS2_O5);
+    public static final DiatonicChord C_SUS4 = new DiatonicChord(DiatonicChordEnum.C_SUS4);
+    public static final DiatonicChord C_SUS4_O5 = new DiatonicChord(DiatonicChordEnum.C_SUS4_O5);
+    public static final DiatonicChord C_SIXTH = new DiatonicChord(DiatonicChordEnum.C_SIXTH);
+    public static final DiatonicChord C_SIXTH_O5 = new DiatonicChord(DiatonicChordEnum.C_SIXTH_O5);
+    public static final DiatonicChord C_SEVENTH = new DiatonicChord(DiatonicChordEnum.C_SEVENTH);
+    public static final DiatonicChord C_SEVENTH_O3 = new DiatonicChord(DiatonicChordEnum.C_SEVENTH_O3);
+    public static final DiatonicChord C_SEVENTH_O5 = new DiatonicChord(DiatonicChordEnum.C_SEVENTH_O5);
+    public static final DiatonicChord C_NINTH = new DiatonicChord(DiatonicChordEnum.C_NINTH);
+    public static final DiatonicChord C_NINTH_O7 = new DiatonicChord(DiatonicChordEnum.C_NINTH_O7);
+    public static final DiatonicChord C_NINTH_O3_O7 = new DiatonicChord(DiatonicChordEnum.C_NINTH_O3_O7);
+    public static final DiatonicChord C_ELEVENTH = new DiatonicChord(DiatonicChordEnum.C_ELEVENTH);
+    public static final DiatonicChord C_THIRTEENTH = new DiatonicChord(DiatonicChordEnum.C_THIRTEENTH);
 
     public static DiatonicChord[] values() {
         return new DiatonicChord[]{
-                TRIAD,
-                THIRD,
-                SUS2,
-                SUS2_O5,
-                SUS4,
-                SUS4_O5,
-                SIXTH,
-                SIXTH_O5,
-                SEVENTH,
-                SEVENTH_O3,
-                SEVENTH_O5,
-                NINTH,
-                NINTH_O7,
-                NINTH_O3_O7,
-                ELEVENTH,
-                THIRTEENTH
+                C_TRIAD,
+                C_THIRD,
+                C_SUS2,
+                C_SUS2_O5,
+                C_SUS4,
+                C_SUS4_O5,
+                C_SIXTH,
+                C_SIXTH_O5,
+                C_SEVENTH,
+                C_SEVENTH_O3,
+                C_SEVENTH_O5,
+                C_NINTH,
+                C_NINTH_O7,
+                C_NINTH_O3_O7,
+                C_ELEVENTH,
+                C_THIRTEENTH
         };
     }
 
@@ -64,18 +64,29 @@ public final class DiatonicChord extends NormalChordCommon<Diatonic, IntervalDia
         return ret;
     }
 
-    public static @NonNull DiatonicChord from(@NonNull DiatonicFunction f) {
-        DiatonicChord ret = new DiatonicChord();
-        ret.innerChord = DiatonicChordInterfaceAdapter.from(f);
-        return ret;
-    }
-
     private DiatonicChord() {
         super();
     }
 
     private DiatonicChord(DiatonicChordInterface scaleInterface) {
         super(scaleInterface);
+    }
+
+    public static DiatonicChord from(DiatonicFunction diatonicFunction, Diatonic diatonic) {
+        DiatonicChordPattern diatonicChordPattern = DiatonicChordPattern.from(diatonicFunction);
+        return DiatonicChord.from(diatonic, diatonicChordPattern);
+    }
+
+    private static DiatonicChord from(Diatonic diatonic, DiatonicChordPattern diatonicChordPattern) {
+        DiatonicChord diatonicChord = new DiatonicChord();
+        for (Integer i : diatonicChordPattern) {
+            Diatonic diatonicAdd = diatonic;
+            for (int j = 0; j < diatonicChordPattern.get(i); j++) {
+                diatonicAdd = diatonicAdd.getShifted(IntervalDiatonic.SECOND);
+            }
+        }
+
+        return diatonicChord;
     }
 
     @Override

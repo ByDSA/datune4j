@@ -256,8 +256,8 @@ public class Power extends Song {
 				DiatonicChordMidi c = (DiatonicChordMidi) cad.getChords().get(i);
 				if (i == 0) {
 					c.addInterval(IntervalDiatonic.NINTH);
-					//c.addInterval(IntervalDiatonic.SIXTH);
-					//c.addInterval(IntervalDiatonic.SEVENTH);
+                    //c.addInterval(IntervalDiatonic.C_SIXTH);
+                    //c.addInterval(IntervalDiatonic.C_SEVENTH);
 					System.out.println(c);
 				} else {
 					//c.addInterval(IntervalDiatonic.TENTH);

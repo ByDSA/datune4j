@@ -1,17 +1,17 @@
 package es.danisales.datune.midi.Progressions;
 
-import java.util.ArrayList;
-
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.diatonic.HarmonicFunction;
 import es.danisales.datune.eventsequences.EventSequence;
-import es.danisales.datune.midi.DiatonicChordMidi;
-import es.danisales.datune.midi.Duration;
 import es.danisales.datune.midi.Arpegios.Arpegio;
 import es.danisales.datune.midi.Arpegios.ArpegioDefault;
+import es.danisales.datune.midi.DiatonicChordMidi;
+import es.danisales.datune.midi.Duration;
 import es.danisales.datune.midi.Events.EventComplex;
 import es.danisales.datune.midi.Events.KeySignatureEvent;
 import es.danisales.datune.tonality.Tonality;
+
+import java.util.ArrayList;
 
 public class Progression<This extends Progression> implements EventComplex {
 	protected Tonality tonality;
@@ -43,7 +43,10 @@ public class Progression<This extends Progression> implements EventComplex {
 		DiatonicChordMidi c = null;
 		o += octave;
 
-		c = new DiatonicChordMidi(t, o, tonality);
+        c = DiatonicChordMidi.builder()
+                .from(t, tonality)
+                .octave(o)
+                .build();
 
 		nodes.set(n, c);
 
@@ -70,7 +73,10 @@ public class Progression<This extends Progression> implements EventComplex {
 		DiatonicChordMidi c;
 		o += octave;
 
-		c = new DiatonicChordMidi(t, o, tonality);
+        c = DiatonicChordMidi.builder()
+                .from(t, tonality)
+                .octave(o)
+                .build();
 
 		return add(c);
 	}

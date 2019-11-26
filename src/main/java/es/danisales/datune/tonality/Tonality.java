@@ -313,7 +313,11 @@ public class Tonality implements Iterable<DiatonicAlt> {
         else if ( outScale ) {
             for ( ChromaticFunction f : ChromaticFunction.ALL ) {
                 try {
-                    ChromaticChordInterface c2 = ChromaticChordInterface.from( new DiatonicChordMidi( f, this ) );
+                    ChromaticChordInterface c2 = ChromaticChordInterface.from(
+                            DiatonicChordMidi.builder()
+                                    .from(f, this)
+                                    .build()
+                    );
                     if ( c.hasSameNotesOrder( c2 ) )
                         return true;
                 } catch ( TonalityException ignored) {
@@ -362,12 +366,12 @@ public class Tonality implements Iterable<DiatonicAlt> {
         }
 
         cacheChromaticMap = new HashMap<>();
-		for (ChromaticFunction chromaticFunction : ChromaticFunction.values()) {
-			ChromaticChord chromaticChord = ChromaticChord.from(this, chromaticFunction);
-			List<ChromaticFunction> list = cacheChromaticMap.getOrDefault(chromaticChord, new ArrayList<>());
-			list.add(chromaticFunction);
-			cacheChromaticMap.putIfAbsent(chromaticChord, list);
-		}
+        for (ChromaticFunction chromaticFunction : ChromaticFunction.values()) {
+            ChromaticChord chromaticChord = ChromaticChord.from(this, chromaticFunction);
+            List<ChromaticFunction> list = cacheChromaticMap.getOrDefault(chromaticChord, new ArrayList<>());
+            list.add(chromaticFunction);
+            cacheChromaticMap.putIfAbsent(chromaticChord, list);
+        }
     }
 
     private void createCacheIfNeeded() {
@@ -406,7 +410,7 @@ public class Tonality implements Iterable<DiatonicAlt> {
 
         return getRoot().equals(otherCasted.getRoot()) && getScale().equals(otherCasted.getScale());
     }
-    
+
     @Override
     public int hashCode() {
         return getRoot().hashCode() + 31*getScale().hashCode();
