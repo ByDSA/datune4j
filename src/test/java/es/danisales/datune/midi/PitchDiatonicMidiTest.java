@@ -240,9 +240,26 @@ public class PitchDiatonicMidiTest {
     }
 
     @Test
+    public void shiftPos() {
+        PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(DiatonicDegree.VI, Tonality.Gm, 5);
+        assertNotNull(pitchDiatonicMidi);
+
+        pitchDiatonicMidi.shift(2);
+        assertEquals(DiatonicDegree.I, pitchDiatonicMidi.degree);
+        assertEquals(6, pitchDiatonicMidi.octave);
+    }
+
+    @Test
     public void getMidiCode() {
         PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(DiatonicDegree.I, Tonality.C, 5);
         assertNotNull(pitchDiatonicMidi);
         assertEquals(60, pitchDiatonicMidi.getMidiCode());
+    }
+
+    @Test
+    public void getMidiCode2() {
+        PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(DiatonicDegree.VI, Tonality.Gm, 5);
+        assertNotNull(pitchDiatonicMidi);
+        assertEquals(75, pitchDiatonicMidi.getMidiCode());
     }
 }

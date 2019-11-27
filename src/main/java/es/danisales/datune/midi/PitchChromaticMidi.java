@@ -397,6 +397,12 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
         immutable = immutable.getShift(intervalChromatic);
     }
 
+    @Override
+    public void shift(int pos) {
+        excepIfFixed();
+        immutable = immutable.getShift(pos);
+    }
+
     public void shiftNegative(IntervalChromatic intervalChromatic) {
         excepIfFixed();
         immutable = immutable.getShiftNegative(intervalChromatic);

@@ -75,7 +75,7 @@ class TonalityCustom implements TonalityInterface {
 				tonalityNotes.add( base.getNote( diatonicDegree ) );
 		}
 
-		return new TonalityCustom( notesChord[0], Scale.from( tonalityNotes ) );
+        return new TonalityCustom(notesChord[0], Scale.fromDiatonicAlt(tonalityNotes));
 	}
 
 	@Override

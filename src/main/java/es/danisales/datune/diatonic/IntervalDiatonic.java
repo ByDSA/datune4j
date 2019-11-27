@@ -21,6 +21,28 @@ public enum IntervalDiatonic implements Interval {
         return (n < 0 ? -n : n) % (IntervalDiatonic.values().length);
     }
 
+    @SuppressWarnings("Duplicates")
+    public static @NonNull IntervalDiatonic from(DiatonicDegree diatonicDegree) {
+        switch (diatonicDegree) {
+            case I:
+                return UNISON;
+            case II:
+                return SECOND;
+            case III:
+                return THIRD;
+            case IV:
+                return FOURTH;
+            case V:
+                return FIFTH;
+            case VI:
+                return SIXTH;
+            case VII:
+                return SEVENTH;
+        }
+
+        throw new RuntimeException("Impossible");
+    }
+
     public static @NonNull IntervalDiatonic from(@NonNull IntervalChromatic intervalChromatic) {
         switch (intervalChromatic) {
             case AUGMENTED_UNISON:

@@ -14,6 +14,6 @@ public class RelativeDegreeAdapter {
         }
 
         throw new RuntimeException("TonalityDegree de tipo " + degree.getClass()
-                + ". Esperado " + tonality.getDegrees().get(0).getClass() + ".");
+                + ". Esperado " + tonality.getDegrees().get(0).getClass() + " (" + tonality.size() + ").");
     }
 }

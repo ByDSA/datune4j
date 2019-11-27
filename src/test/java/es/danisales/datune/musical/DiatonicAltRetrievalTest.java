@@ -9,7 +9,8 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 public class DiatonicAltRetrievalTest {
 
@@ -32,7 +33,7 @@ public class DiatonicAltRetrievalTest {
     @Test
     public void getNoteAbsoluteDegree3() {
         RelativeDegree relativeDegree = RelativeDegree.from(0);
-        Scale scale = Scale.from(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+        Scale scale = Scale.fromIntegers(Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
         Tonality tonality = Tonality.from(DiatonicAlt.C, scale);
         System.out.println(tonality.getNotes());
         assertEquals(DiatonicAlt.C,

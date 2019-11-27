@@ -37,15 +37,27 @@ public class DiatonicChordTest {
     }
 
     @Test
+    public void toStringTest() {
+        assertEquals("C_TRIAD", DiatonicChord.C_TRIAD.toString());
+    }
+
+    @Test
+    public void toStringTest2() {
+        DiatonicChord diatonicChord = DiatonicChord.from(Diatonic.C, DiatonicChordPattern.TRIAD);
+        assertEquals("C_TRIAD", diatonicChord.toString());
+    }
+
+    @Test
     public void fromDiatonicFunction() {
-        DiatonicChord diatonicChord = DiatonicChord.from(DiatonicFunction.I, Diatonic.C);
+        DiatonicChord diatonicChord = DiatonicChord.from(Diatonic.C, DiatonicChordPattern.TRIAD);
+        assertNotNull(diatonicChord.innerChord);
         assertEquals(DiatonicChord.C_TRIAD, diatonicChord);
         assertSame(DiatonicChord.C_TRIAD.innerChord, diatonicChord.innerChord);
     }
 
     @Test
     public void fromDiatonicFunction2() {
-        DiatonicChord diatonicChord = DiatonicChord.from(DiatonicFunction.I9, Diatonic.C);
+        DiatonicChord diatonicChord = DiatonicChord.from(Diatonic.C, DiatonicChordPattern.NINTH);
         assertEquals(DiatonicChord.C_NINTH, diatonicChord);
         assertSame(DiatonicChord.C_NINTH.innerChord, diatonicChord.innerChord);
     }

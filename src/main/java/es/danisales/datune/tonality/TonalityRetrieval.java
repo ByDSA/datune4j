@@ -135,7 +135,9 @@ public class TonalityRetrieval {
                 tonalityNotes[i] = base.getNote( diatonicDegree );
         }
 
-        return Tonality.from( notesChord[0], Scale.from( Arrays.asList(tonalityNotes) ) );
+        List<DiatonicAlt> notes = Arrays.asList(tonalityNotes);
+        Scale scale = Scale.fromDiatonicAlt(notes);
+        return Tonality.from(notesChord[0], scale);
     }
 
     @SuppressWarnings("WeakerAccess")

@@ -34,6 +34,7 @@ public class ChromaticChordPatternTest {
     @Test(expected = UnsupportedOperationException.class)
     public void iteratorRemove() {
         Iterator<Integer> iterator = ChromaticChordPattern.TRIAD_MAJOR.iterator();
+        iterator.next();
         iterator.remove();
     }
 
@@ -71,12 +72,12 @@ public class ChromaticChordPatternTest {
     public void hashCodeTest() {
         List<Integer> list = Arrays.asList(0, 4, 7);
 
-        assertEquals(list.hashCode(), ChromaticChordPattern.TRIAD_MAJOR.hashCode());
+        assertEquals(list.hashCode() + 31 * Boolean.hashCode(true), ChromaticChordPattern.TRIAD_MAJOR.hashCode());
     }
 
     @Test
     public void toStringTest() {
-        assertEquals("TRIAD_MAJOR", ChromaticChordPattern.TRIAD_MAJOR.toString());
+        assertEquals("[0, 4, 7]", ChromaticChordPattern.TRIAD_MAJOR.toString());
         assertEquals("[0, 2, 4]", ChromaticChordPattern.from(Arrays.asList(Chromatic.C, Chromatic.D, Chromatic.E)).toString());
     }
 

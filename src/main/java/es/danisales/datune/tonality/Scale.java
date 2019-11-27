@@ -148,7 +148,7 @@ public class Scale implements Iterable<ScaleDistance> {
 
 	final ScaleInterface innerScale; // todo: para cambiar ScaleDistance, usar un builder (si se cambia por funciones, dará error de que no suma 12
 
-	public static @NonNull Scale from(int... v) {
+    public static @NonNull Scale fromIntegers(List<Integer> v) {
 		return new Scale( ScaleAdapter.fromIntegers(v) );
 	}
 
@@ -156,7 +156,7 @@ public class Scale implements Iterable<ScaleDistance> {
 		return new Scale( ScaleInterface.from( scaleDistances ) );
 	}
 
-	public static @NonNull Scale from(@NonNull List<DiatonicAlt> notes) {
+    public static @NonNull Scale fromDiatonicAlt(@NonNull List<DiatonicAlt> notes) {
 		return ScaleAdapter.fromDiatonicAltList(notes);
 	}
 
@@ -215,8 +215,8 @@ public class Scale implements Iterable<ScaleDistance> {
 	}
 
 	/**
-	 * The diatonic scale is obtained from a chain from six successive fifths
-	 It is either a sequence from successive natural notes or a transposition thereof.
+     * The diatonic scale is obtained fromDiatonicAlt a chain fromDiatonicAlt six successive fifths
+     It is either a sequence fromDiatonicAlt successive natural notes or a transposition thereof.
 	 It can be written using seven consecutive notes without accidentals on a staff with no key signature or, when transposed, with a conventional key signature or with accidentals.
 	 * @return if it's diatonic
 	 */

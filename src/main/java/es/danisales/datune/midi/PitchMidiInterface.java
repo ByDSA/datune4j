@@ -23,4 +23,6 @@ public interface PitchMidiInterface<I extends Interval> extends PitchOctave, Clo
     default int compareTo(@NonNull PitchMidiInterface<?> pitchMidiInterface) {
         return Integer.compare(this.getMidiCode(), pitchMidiInterface.getMidiCode());
     }
+
+    void shift(int pos);
 }

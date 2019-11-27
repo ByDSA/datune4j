@@ -319,25 +319,25 @@ public class Main {
 
 			/*
 			 *
-			 * m.add(Degree.I, Duration.V4); m.add(Degree.V, Duration.V4, -1);
+             * m.addAll(Degree.I, Duration.V4); m.addAll(Degree.V, Duration.V4, -1);
 			 *
-			 * m.add(Degree.III, Duration.V4); m.add(Degree.I, Duration.V8); m.add(Degree.V,
+             * m.addAll(Degree.III, Duration.V4); m.addAll(Degree.I, Duration.V8); m.addAll(Degree.V,
 			 * Duration.V8);
 			 *
-			 * m.add(Degree.IV, Duration.V8); m.add(Degree.III, Duration.V8);
-			 * m.add(Degree.II, Duration.V8); m.add(Degree.I, Duration.V8);
+             * m.addAll(Degree.IV, Duration.V8); m.addAll(Degree.III, Duration.V8);
+             * m.addAll(Degree.II, Duration.V8); m.addAll(Degree.I, Duration.V8);
 			 *
-			 * m.add(Degree.I, Duration.V8); m.add(Degree.VII, Duration.V8, -1);
-			 * m.add(Degree.VI, Duration.V8, -1); m.add(Degree.V, Duration.V8, -1);
+             * m.addAll(Degree.I, Duration.V8); m.addAll(Degree.VII, Duration.V8, -1);
+             * m.addAll(Degree.VI, Duration.V8, -1); m.addAll(Degree.V, Duration.V8, -1);
 			 *
-			 * m.add(Degree.I, Duration.V4); m.add(Degree.II, Duration.V4);
+             * m.addAll(Degree.I, Duration.V4); m.addAll(Degree.II, Duration.V4);
 			 *
-			 * m.add(Degree.III, Duration.V4 + Duration.V8); m.add(Degree.V, Duration.V8);
+             * m.addAll(Degree.III, Duration.V4 + Duration.V8); m.addAll(Degree.V, Duration.V8);
 			 *
-			 * m.add(Degree.IV, Duration.V8); m.add(Degree.III, Duration.V8);
-			 * m.add(Degree.II, Duration.V8); m.add(Degree.I, Duration.V8);
+             * m.addAll(Degree.IV, Duration.V8); m.addAll(Degree.III, Duration.V8);
+             * m.addAll(Degree.II, Duration.V8); m.addAll(Degree.I, Duration.V8);
 			 *
-			 * m.add(Degree.V, Duration.V2);
+             * m.addAll(Degree.V, Duration.V2);
 			 */
 		}
 
@@ -371,10 +371,10 @@ public class Main {
 
 		for ( int i = 0; i < 1; i++ ) {
 			/*
-			 * p.add(ChordFunction.I).setLength(Duration.V1);
-			 * p.add(ChordFunction.V).setLength(Duration.V1).inv(-2);
-			 * p.add(ChordFunction.VI).setLength(Duration.V1).inv(-2);
-			 * p.add(ChordFunction.IV).setLength(Duration.V1).inv(-1);
+             * p.addAll(ChordFunction.I).setLength(Duration.V1);
+             * p.addAll(ChordFunction.V).setLength(Duration.V1).inv(-2);
+             * p.addAll(ChordFunction.VI).setLength(Duration.V1).inv(-2);
+             * p.addAll(ChordFunction.IV).setLength(Duration.V1).inv(-1);
 			 */
 			p.add( DiatonicFunction.I ).setLength( Duration.V1 );
 			DiatonicChordMidi dcm = p.add( DiatonicFunction.VI );
@@ -817,7 +817,7 @@ public class Main {
 		/*
 		 * EventSequence e = new EventSequence(); int t = 0; for(ChordFunc c :
 		 * Tonality.C.getAllChords()) { System.out.println(c);
-		 * c.setLength(Duration.V8); e.add(t++*Duration.V4, c); }
+         * c.setLength(Duration.V8); e.addAll(t++*Duration.V4, c); }
 		 */
 
 		/*
@@ -857,18 +857,18 @@ public class Main {
 		
 /*
 		ArrayList<CustomTonality> ts = new ArrayList<>();
-		ts.add( new CustomTonality(Chromatic.C, ScaleEnum.MINOR) );
-		ts.add( new CustomTonality(Chromatic.CC, ScaleEnum.MINOR) );
-		ts.add( new CustomTonality(Chromatic.D, ScaleEnum.MINOR) );
-		ts.add( new CustomTonality(Chromatic.DD, ScaleEnum.MINOR) );
-		ts.add( new CustomTonality(Chromatic.E, ScaleEnum.MINOR) );
-		ts.add( new CustomTonality(Chromatic.F, ScaleEnum.MINOR) );
-		ts.add( new CustomTonality(Chromatic.FF, ScaleEnum.MINOR) );
-		ts.add( new CustomTonality(Chromatic.G, ScaleEnum.MINOR) );
-		ts.add( new CustomTonality(Chromatic.GG, ScaleEnum.MINOR) );
-		ts.add( new CustomTonality(Chromatic.A, ScaleEnum.MINOR) );
-		ts.add( new CustomTonality(Chromatic.AA, ScaleEnum.MINOR) );
-		ts.add( new CustomTonality(Chromatic.B, ScaleEnum.MINOR) );
+		ts.addAll( new CustomTonality(Chromatic.C, ScaleEnum.MINOR) );
+		ts.addAll( new CustomTonality(Chromatic.CC, ScaleEnum.MINOR) );
+		ts.addAll( new CustomTonality(Chromatic.D, ScaleEnum.MINOR) );
+		ts.addAll( new CustomTonality(Chromatic.DD, ScaleEnum.MINOR) );
+		ts.addAll( new CustomTonality(Chromatic.E, ScaleEnum.MINOR) );
+		ts.addAll( new CustomTonality(Chromatic.F, ScaleEnum.MINOR) );
+		ts.addAll( new CustomTonality(Chromatic.FF, ScaleEnum.MINOR) );
+		ts.addAll( new CustomTonality(Chromatic.G, ScaleEnum.MINOR) );
+		ts.addAll( new CustomTonality(Chromatic.GG, ScaleEnum.MINOR) );
+		ts.addAll( new CustomTonality(Chromatic.A, ScaleEnum.MINOR) );
+		ts.addAll( new CustomTonality(Chromatic.AA, ScaleEnum.MINOR) );
+		ts.addAll( new CustomTonality(Chromatic.B, ScaleEnum.MINOR) );
 
 		StringBuilder sb = new StringBuilder();
 		for (CustomTonality t : ts ) {
@@ -924,13 +924,13 @@ public class Main {
 
 		/*
 		 * TestProgression p = new TestProgression(Scale.Em, 4, 120, 90) { { Arpegio a =
-		 * new ArpegioAsc(Duration.V1, Duration.V4_3); add(ChordFunction.I).show();
-		 * add(ChordFunction.VI, -1).inv(1).show(); add(ChordFunction.IV,
-		 * -1).setMajorScale().inv(2).show(); add(ChordFunction.VI, -1).inv(1).show();
-		 * add(ChordFunction.I).show(); add(ChordFunction.VI, -1).inv(1).show();
-		 * add(ChordFunction.VI, -1).setMajorScale().inv(1).show();
-		 * add(ChordFunction.VII, -1).setLength(Duration.V2).inv(1).show(); Chord c =
-		 * add(ChordFunction.VII, -1).setMajorScale().setLength(Duration.V2).show();
+         * new ArpegioAsc(Duration.V1, Duration.V4_3); addAll(ChordFunction.I).show();
+         * addAll(ChordFunction.VI, -1).inv(1).show(); addAll(ChordFunction.IV,
+         * -1).setMajorScale().inv(2).show(); addAll(ChordFunction.VI, -1).inv(1).show();
+         * addAll(ChordFunction.I).show(); addAll(ChordFunction.VI, -1).inv(1).show();
+         * addAll(ChordFunction.VI, -1).setMajorScale().inv(1).show();
+         * addAll(ChordFunction.VII, -1).setLength(Duration.V2).inv(1).show(); Chord c =
+         * addAll(ChordFunction.VII, -1).setMajorScale().setLength(Duration.V2).show();
 		 *
 		 * progression.setArpegio(a);
 		 *
@@ -946,8 +946,8 @@ public class Main {
 		 */
 
 		/*
-		 * ArrayList<Note> notes = new ArrayList<Note>(); notes.add( new Note(Note.E) );
-		 * notes.add( new Note(Note.GG) ); notes.add( (Note)new Note(Note.B) );
+         * ArrayList<Note> notes = new ArrayList<Note>(); notes.addAll( new Note(Note.E) );
+         * notes.addAll( new Note(Note.GG) ); notes.addAll( (Note)new Note(Note.B) );
 		 *
 		 * ArrayList<Chord> chords = Chord.whatIsIt(notes);
 		 * System.out.println("Encontrados " + chords.size() + " acordes!"); for(Chord
@@ -992,7 +992,7 @@ public class Main {
 		 * addChord(Chord.V) .setLength(Note.V2); } }; p.setChordArpegio( new
 		 * ArpegioV4() );
 		 *
-		 * channel.add(p); sequence.add(channel); } };
+         * channel.addAll(p); sequence.addAll(channel); } };
 		 */
 
 		/*
@@ -1071,13 +1071,13 @@ public class Main {
 		 *
 		 * Progression pp = ((Progression)p.duplicate()).setScale(scale);
 		 *
-		 * channel.add(j*pp.getDuration(), pp);
+         * channel.addAll(j*pp.getDuration(), pp);
 		 *
 		 * Progression p2p = ((Progression)p2.duplicate()).setScale(scale);
 		 *
-		 * strings.add(Note.V4 + j*p2p.getDuration(), p2p); } strings.setVolume(100);
+         * strings.addAll(Note.V4 + j*p2p.getDuration(), p2p); } strings.setVolume(100);
 		 *
-		 * sequence.add(channel); sequence.add(strings); } };
+         * sequence.addAll(channel); sequence.addAll(strings); } };
 		 */
 
 		if ( p != null ) {
@@ -1094,14 +1094,14 @@ public class Main {
  * Sequence seq = new Sequence(180); Track c = new Track(0, 50); Track c2 = new
  * Track(1, 2); Track c3 = new Track(2, 10); Track c4 = new Track(3, 61);
  *
- * seq.add(c); c.setVolume(Volume.MAX); seq.add(c2); c2.setVolume(Volume.MAX);
- * c3.setPan((Pan.LEFT*2+Pan.MID)/3); seq.add(c3);
- * c3.setPan((Pan.RIGHT*2+Pan.MID)/3); seq.add(c4); int end = 7; for(int i = 0;
+ * seq.addAll(c); c.setVolume(Volume.MAX); seq.addAll(c2); c2.setVolume(Volume.MAX);
+ * c3.setPan((Pan.LEFT*2+Pan.MID)/3); seq.addAll(c3);
+ * c3.setPan((Pan.RIGHT*2+Pan.MID)/3); seq.addAll(c4); int end = 7; for(int i = 0;
  * i < end; i++) { if (Note.D+i == 12) octave++;
  *
  * Scale s = new Scale(Note.D+i, Tonality.MAJOR); c.setScale(8*i*Note.V1, s);
  * Progression l = new Pachelbel(s, octave-1, Pachelbel.NORMAL);
- * c.add(8*i*Note.V1, l); if (i == end-1) c.addFunction(8*i*Note.V1,
+ * c.addAll(8*i*Note.V1, l); if (i == end-1) c.addFunction(8*i*Note.V1,
  * Volume.class, new LinealFunction(Volume.MAX, Volume.MIN), Note.V1*8); if (i >
  * 1 && i < end-2) { Progression ll;
  *
@@ -1112,24 +1112,24 @@ public class Main {
  * octave+1, Pachelbel.NORMAL); c4.addFunction(8*i*Note.V1, Pan.class, new
  * CosFunction(Note.V1, Note.V1*8), Note.V1*8); }
  *
- * ll.setChordArpegio(new ArpegioV2_3(3)); c4.add(8*i*Note.V1, ll); }
+ * ll.setChordArpegio(new ArpegioV2_3(3)); c4.addAll(8*i*Note.V1, ll); }
  *
  *
  * if (i > 0 && i < end-1) { Progression l2 = new Pachelbel(s, octave,
- * Pachelbel.ARPEGIO); c2.add(8*i*Note.V1, l2); }
+ * Pachelbel.ARPEGIO); c2.addAll(8*i*Note.V1, l2); }
  *
  * if (i > 1 && i < end-3) { Progression l3 = new Pachelbel(s, octave+2,
  * Pachelbel.NORMAL); l3.setChordArpegio(new ArpegioAscDescV8(3, 8));
- * c3.add(8*i*Note.V1, l3); } }
+ * c3.addAll(8*i*Note.V1, l3); } }
  */
 
 /*
  * Scale s = new Scale(Note.D, Tonality.MAJOR); Progression l = new
- * Progression(s, 5) { { add(Chord.I); add(Chord.vi); add(Chord.iii);
- * add(Chord.V); add(Chord.I);
+ * Progression(s, 5) { { addAll(Chord.I); addAll(Chord.vi); addAll(Chord.iii);
+ * addAll(Chord.V); addAll(Chord.I);
  *
  * setChordArpegio(new ArpegioV2_3(3)); setChordArpegio(4, new
- * ArpegioDefault(3)); } }; c.add(0, l);
+ * ArpegioDefault(3)); } }; c.addAll(0, l);
  */
 /*
  * int octave = 5; int note = Note.A;
@@ -1137,62 +1137,62 @@ public class Main {
  * Sequence seq = new Sequence(120); Track c = new Track(0, 50); Track c2 = new
  * Track(2, 62); Track c3 = new Track(1, 19); c3.setVolume(Volume.MAX);
  * c.setPan((Pan.LEFT*3+Pan.MID)/4); c3.setPan((Pan.RIGHT*3+Pan.MID)/4);
- * seq.add(c); seq.add(c2); seq.add(c3); Scale s = new Scale(note,
+ * seq.addAll(c); seq.addAll(c2); seq.addAll(c3); Scale s = new Scale(note,
  * Tonality.MINOR); for(int i = 0; i < 4; i++) { Progression l = new
  * Progression(s, octave-1) { { // F# G# A B C# D E F# G# A# B C# D# F
- * add(Chord.I); // F# A C# I III V
+ * addAll(Chord.I); // F# A C# I III V
  *
- * add(Chord.VI).inv(2); // F# A D I-III-VI VI 2� inv
+ * addAll(Chord.VI).inv(2); // F# A D I-III-VI VI 2� inv
  *
- * add(Chord.IV).inv(); // F# B D I IV VI IV 1� inv
+ * addAll(Chord.IV).inv(); // F# B D I IV VI IV 1� inv
  *
- * add(Chord.VII, -1).setLength(Note.V2); // E G# B VII II IV VII
+ * addAll(Chord.VII, -1).setLength(Note.V2); // E G# B VII II IV VII
  *
- * add(Chord.VII, -1, s.getMajor()).setLength(Note.V2); // F G# B 3�m 5�� } };
- * c.add(Note.V1*4*i, l);
+ * addAll(Chord.VII, -1, s.getMajor()).setLength(Note.V2); // F G# B 3�m 5�� } };
+ * c.addAll(Note.V1*4*i, l);
  *
- * c2.setScale(s); int pre = Note.V1*4*i + Note.V4 + Note.V8; c2.add(pre, new
- * NoteScale(4, octave, s, Note.V16)); c2.add(pre + Note.V16, new NoteScale(3,
- * octave, s, Note.V16)); c2.add(pre + Note.V8, new NoteScale(4, octave, s,
- * Note.V4)); c2.add(pre + Note.V8 + Note.V4, new NoteScale(0, octave, s,
+ * c2.setScale(s); int pre = Note.V1*4*i + Note.V4 + Note.V8; c2.addAll(pre, new
+ * NoteScale(4, octave, s, Note.V16)); c2.addAll(pre + Note.V16, new NoteScale(3,
+ * octave, s, Note.V16)); c2.addAll(pre + Note.V8, new NoteScale(4, octave, s,
+ * Note.V4)); c2.addAll(pre + Note.V8 + Note.V4, new NoteScale(0, octave, s,
  * Note.V4));
  *
- * c2.add(pre + Note.V1, new NoteScale(5, octave, s, Note.V16)); c2.add(pre +
- * Note.V1 + Note.V16, new NoteScale(4, octave, s, Note.V16)); c2.add(pre +
- * Note.V1 + Note.V8, new NoteScale(5, octave, s, Note.V8)); c2.add(pre +
- * Note.V1 + Note.V8*2, new NoteScale(4, octave, s, Note.V8)); c2.add(pre +
+ * c2.addAll(pre + Note.V1, new NoteScale(5, octave, s, Note.V16)); c2.addAll(pre +
+ * Note.V1 + Note.V16, new NoteScale(4, octave, s, Note.V16)); c2.addAll(pre +
+ * Note.V1 + Note.V8, new NoteScale(5, octave, s, Note.V8)); c2.addAll(pre +
+ * Note.V1 + Note.V8*2, new NoteScale(4, octave, s, Note.V8)); c2.addAll(pre +
  * Note.V1 + Note.V8*3, new NoteScale(3, octave, s, Note.V4+Note.V8));
  *
- * c2.add(pre + Note.V1*2, new NoteScale(5, octave, s, Note.V16)); c2.add(pre +
- * Note.V1*2 + Note.V16, new NoteScale(4, octave, s, Note.V16)); c2.add(pre +
- * Note.V1*2 + Note.V8, new NoteScale(5, octave, s, Note.V4)); c2.add(pre +
+ * c2.addAll(pre + Note.V1*2, new NoteScale(5, octave, s, Note.V16)); c2.addAll(pre +
+ * Note.V1*2 + Note.V16, new NoteScale(4, octave, s, Note.V16)); c2.addAll(pre +
+ * Note.V1*2 + Note.V8, new NoteScale(5, octave, s, Note.V4)); c2.addAll(pre +
  * Note.V1*2 + Note.V8 + Note.V4, new NoteScale(0, octave, s, Note.V4));
  *
- * c2.add(pre + Note.V1*3, new NoteScale(3, octave, s, Note.V16)); c2.add(pre +
- * Note.V1*3 + Note.V16, new NoteScale(2, octave, s, Note.V16)); c2.add(pre +
- * Note.V1*3 + Note.V8, new NoteScale(3, octave, s, Note.V8)); c2.add(pre +
+ * c2.addAll(pre + Note.V1*3, new NoteScale(3, octave, s, Note.V16)); c2.addAll(pre +
+ * Note.V1*3 + Note.V16, new NoteScale(2, octave, s, Note.V16)); c2.addAll(pre +
+ * Note.V1*3 + Note.V8, new NoteScale(3, octave, s, Note.V8)); c2.addAll(pre +
  * Note.V1*3 + Note.V8 + Note.V8, new NoteScale(2, octave, s, Note.V8));
- * c2.add(pre + Note.V1*3 + Note.V8 + Note.V8*2, new NoteScale(1, octave, s,
- * Note.V8)); c2.add(pre + Note.V1*3 + Note.V8 + Note.V8*3, new NoteScale(3,
- * octave, s, Note.V8)); c2.add(pre + Note.V1*3 + Note.V8 + Note.V8*4, new
+ * c2.addAll(pre + Note.V1*3 + Note.V8 + Note.V8*2, new NoteScale(1, octave, s,
+ * Note.V8)); c2.addAll(pre + Note.V1*3 + Note.V8 + Note.V8*3, new NoteScale(3,
+ * octave, s, Note.V8)); c2.addAll(pre + Note.V1*3 + Note.V8 + Note.V8*4, new
  * NoteScale(2, octave, s, Note.V4));
  *
  * Progression l2 = new Progression(s, octave-1) { { // F# G# A B C# D E F# G#
- * A# B C# D# F add(Chord.I); // F# A C# I III V
+ * A# B C# D# F addAll(Chord.I); // F# A C# I III V
  *
- * add(Chord.VI) .inv(2); // F# A D I-III-VI VI 2� inv
+ * addAll(Chord.VI) .inv(2); // F# A D I-III-VI VI 2� inv
  *
- * add(Chord.IV) .inv(); // F# B D I IV VI IV 1� inv
+ * addAll(Chord.IV) .inv(); // F# B D I IV VI IV 1� inv
  *
- * add(Chord.VII, -1) .setLength(Note.V2); // E G# B VII II IV VII
+ * addAll(Chord.VII, -1) .setLength(Note.V2); // E G# B VII II IV VII
  *
- * add(Chord.VII, -1, s.getMajor()) .setLength(Note.V2); // F G# B 3�m 5��
+ * addAll(Chord.VII, -1, s.getMajor()) .setLength(Note.V2); // F G# B 3�m 5��
  *
  * setChordArpegio(new ArpegioAscDesc(3, Note.V1, Note.V16)); setChordArpegio(3,
  * new ArpegioAscDesc(3, Note.V1, Note.V16)); setChordArpegio(4, new
  * ArpegioAscDesc(3, Note.V1, Note.V16));
  *
- * } }; c3.add(Note.V1*4*i, l2);
+ * } }; c3.addAll(Note.V1*4*i, l2);
  *
  *
  *
@@ -1201,26 +1201,26 @@ public class Main {
 
 /*
  * for(int i = 0; i < 4; i++) { Progression l = new Progression(s, octave) { {
- * add(Chord.I);
+ * addAll(Chord.I);
  *
- * add(Chord.IV).inv(1);
+ * addAll(Chord.IV).inv(1);
  *
- * add(Chord.VII).inv(2);
+ * addAll(Chord.VII).inv(2);
  *
- * add(Chord.III).inv(1);
+ * addAll(Chord.III).inv(1);
  *
- * add(Chord.VI).inv(2);
+ * addAll(Chord.VI).inv(2);
  *
- * add(Chord.II).inv(1);
+ * addAll(Chord.II).inv(1);
  *
- * add(Chord.V, 0) .inv(2) .setLength(Note.V2);
+ * addAll(Chord.V, 0) .inv(2) .setLength(Note.V2);
  *
- * add(Chord.VII, 0, s.getMajor()) .inv(2) .setLength(Note.V2);
+ * addAll(Chord.VII, 0, s.getMajor()) .inv(2) .setLength(Note.V2);
  *
- * add(Chord.I, 1) .inv(2);
+ * addAll(Chord.I, 1) .inv(2);
  *
  * setChordArpegio(new ArpegioAscDesc(3, Note.V1, Note.V16)); } };
- * c.add(Note.V1*8*i, l); }
+ * c.addAll(Note.V1*8*i, l); }
  */
 
 /*
@@ -1228,31 +1228,31 @@ public class Main {
  * int[]{Chord.I, Chord.IV, Chord.V}; int[] secondary = new int[]{Chord.II,
  * Chord.III, Chord.VI};
  *
- * add(primary[0]); for (int i = 0; i < 10; i++) { int rnd = new
- * SecureRandom().nextInt(primary.size); add(primary[rnd]); rnd = new
- * SecureRandom().nextInt(secondary.size); add(secondary[rnd]); rnd = new
- * SecureRandom().nextInt(primary.size); add(primary[rnd]);
- * add(Chord.VII).inv(2); }
+ * addAll(primary[0]); for (int i = 0; i < 10; i++) { int rnd = new
+ * SecureRandom().nextInt(primary.size); addAll(primary[rnd]); rnd = new
+ * SecureRandom().nextInt(secondary.size); addAll(secondary[rnd]); rnd = new
+ * SecureRandom().nextInt(primary.size); addAll(primary[rnd]);
+ * addAll(Chord.VII).inv(2); }
  *
- * setChordArpegio(new ArpegioAscDesc(3, Note.V1, Note.V16)); } }; c.add(0, l);
+ * setChordArpegio(new ArpegioAscDesc(3, Note.V1, Note.V16)); } }; c.addAll(0, l);
  */
 
 /*
- * add(Chord.I);
+ * addAll(Chord.I);
  *
- * add(Chord.V).inv(2);
+ * addAll(Chord.V).inv(2);
  *
- * add(Chord.VI).inv(2);
+ * addAll(Chord.VI).inv(2);
  *
- * add(Chord.IV).inv(1);
+ * addAll(Chord.IV).inv(1);
  *
- * add(Chord.I).inv(1);
+ * addAll(Chord.I).inv(1);
  *
- * add(Chord.IV).inv(2);
+ * addAll(Chord.IV).inv(2);
  *
- * add(Chord.VI).inv(2);
+ * addAll(Chord.VI).inv(2);
  *
- * add(Chord.V).inv(2);
+ * addAll(Chord.V).inv(2);
  */
 
 // setChordArpegio(new ArpegioAscDesc(3, Note.V1, Note.V8));

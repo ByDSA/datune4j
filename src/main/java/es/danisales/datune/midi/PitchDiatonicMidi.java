@@ -40,6 +40,7 @@ public class PitchDiatonicMidi implements PitchOctaveMidiEditable, PitchMidiInte
 	}
 
     @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @NonNull
     @Override
     public PitchDiatonicMidi clone() {
         return PitchDiatonicMidiAdapter.fromUncheck(degree, tonality, octave);
@@ -67,14 +68,23 @@ public class PitchDiatonicMidi implements PitchOctaveMidiEditable, PitchMidiInte
 		shift(intervalDiatonic, 1);
 	}
 
+    @Override
+    public void shift(int pos) {
+        shift(pos, 1);
+    }
+
 	@Override
 	public void shiftNegative(IntervalDiatonic intervalDiatonic) {
 		shift(intervalDiatonic, -1);
 	}
 
-	private void shift(IntervalDiatonic intervalDiatonic, int signFactor) {
-		int intervalDiatonicDegreeIndex = intervalDiatonic.ordinal();
-		int totalIndex = degree.ordinal() + intervalDiatonicDegreeIndex * signFactor;
+    private void shift(IntervalDiatonic intervalDiatonic, int signFactor) {
+        int intervalDiatonicDegreeIndex = intervalDiatonic.ordinal();
+        shift(intervalDiatonicDegreeIndex, signFactor);
+    }
+
+    private void shift(int intervalDiatonicDegreeIndex, int signFactor) {
+        int totalIndex = degree.ordinal() + intervalDiatonicDegreeIndex * signFactor;
         octave += totalIndex / Diatonic.NUMBER;
         if (totalIndex < 0)
             octave--;

@@ -34,7 +34,6 @@ public abstract class NormalChordCommon<N extends AbsoluteDegree<?, I>, I extend
             throw new UnsupportedOperationException();
     }
 
-
     private void turnIntoCustomIfNot() {
         checkInnerNotNull();
         if ( !(innerChord instanceof DiatonicChordCustom) )

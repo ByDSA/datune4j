@@ -97,13 +97,13 @@ public class ScaleTest {
 
     @Test(expected = ScaleBuildingException.class)
     public void integersDontSum12() {
-        Scale scale = Scale.from( 2, 2, 1, 2, 2, 2 );
+        Scale scale = Scale.fromIntegers(Arrays.asList(2, 2, 1, 2, 2, 2));
         assertTrue(scale.getCode().size() < 7);
     }
 
     @Test
     public void integersChromatic() {
-        Scale scale = Scale.from( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 );
+        Scale scale = Scale.fromIntegers(Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
         assertEquals(Scale.CHROMATIC, scale);
         assertEquals(Scale.CHROMATIC.hashCode(), scale.hashCode());
         assertEquals(12, scale.getCode().size());
@@ -147,7 +147,7 @@ public class ScaleTest {
 
     @Test
     public void fromDiatonicAltList1() {
-        Scale scale = Scale.from( Arrays.asList(
+        Scale scale = Scale.fromDiatonicAlt(Arrays.asList(
                 DiatonicAlt.C,
                 DiatonicAlt.D,
                 DiatonicAlt.E,
@@ -163,7 +163,7 @@ public class ScaleTest {
 
     @Test
     public void fromDiatonicAltList2() {
-        Scale scale = Scale.from( Arrays.asList(
+        Scale scale = Scale.fromDiatonicAlt(Arrays.asList(
                 DiatonicAlt.A,
                 DiatonicAlt.B,
                 DiatonicAlt.C,
@@ -178,7 +178,7 @@ public class ScaleTest {
     }
     @Test
     public void fromDiatonicAltList3() {
-        Scale scale = Scale.from( Arrays.asList(
+        Scale scale = Scale.fromDiatonicAlt(Arrays.asList(
                 DiatonicAlt.F,
                 DiatonicAlt.G,
                 DiatonicAlt.A,
@@ -194,7 +194,7 @@ public class ScaleTest {
 
     @Test
     public void fromDiatonicAltListUnordered() {
-        Scale scale = Scale.from( Arrays.asList(
+        Scale scale = Scale.fromDiatonicAlt(Arrays.asList(
                 DiatonicAlt.A,
                 DiatonicAlt.C,
                 DiatonicAlt.F,
@@ -205,7 +205,45 @@ public class ScaleTest {
         ) );
 
         assertEquals(Scale.MINOR, scale);
-        assertEquals(Scale.MINOR.hashCode(), scale.hashCode());
+    }
+
+    @Test
+    public void fromDuplicatedNotes() {
+        Scale scale = Scale.fromDiatonicAlt(Arrays.asList(
+                DiatonicAlt.A,
+                DiatonicAlt.C,
+                DiatonicAlt.A,
+                DiatonicAlt.F,
+                DiatonicAlt.D,
+                DiatonicAlt.B,
+                DiatonicAlt.B,
+                DiatonicAlt.G,
+                DiatonicAlt.G,
+                DiatonicAlt.E,
+                DiatonicAlt.E
+        ));
+
+        assertEquals(Scale.MINOR, scale);
+    }
+
+    @Test
+    public void fromDuplicatedNotesEnharmonic() {
+        Scale scale = Scale.fromDiatonicAlt(Arrays.asList(
+                DiatonicAlt.A,
+                DiatonicAlt.BB,
+                DiatonicAlt.C,
+                DiatonicAlt.Gbb,
+                DiatonicAlt.F,
+                DiatonicAlt.D,
+                DiatonicAlt.B,
+                DiatonicAlt.Cb,
+                DiatonicAlt.G,
+                DiatonicAlt.AAA,
+                DiatonicAlt.E,
+                DiatonicAlt.E
+        ));
+
+        assertEquals(Scale.MINOR, scale);
     }
 
     @Test
@@ -313,8 +351,8 @@ public class ScaleTest {
         for (DiatonicDegree diatonicDegree : DiatonicDegree.values())
             notes.add(s.getNote(diatonicDegree));
 
-        assertEquals(s.getScale(), Scale.from(notes));
-        assertEquals(s.getScale().hashCode(), Scale.from(notes).hashCode());
+        assertEquals(s.getScale(), Scale.fromDiatonicAlt(notes));
+        assertEquals(s.getScale().hashCode(), Scale.fromDiatonicAlt(notes).hashCode());
     }
 
     @Test
@@ -329,7 +367,7 @@ public class ScaleTest {
 
     @Test
     public void fromIntegers() {
-        Scale scale = Scale.from( 2, 2, 1, 2, 2, 2, 1 );
+        Scale scale = Scale.fromIntegers(Arrays.asList(2, 2, 1, 2, 2, 2, 1));
         assertEquals(Arrays.asList(
                 ScaleDistance.WHOLE,
                 ScaleDistance.WHOLE,
@@ -345,7 +383,7 @@ public class ScaleTest {
     public void equalsFromIntegers() {
         Scale a = Scale.MAJOR;
 
-        Scale b = Scale.from( 2, 2, 1, 2, 2, 2, 1 );
+        Scale b = Scale.fromIntegers(Arrays.asList(2, 2, 1, 2, 2, 2, 1));
         assertNotSame(a, b);
         assertEquals(a, b);
         assertEquals(a.hashCode(), b.hashCode());

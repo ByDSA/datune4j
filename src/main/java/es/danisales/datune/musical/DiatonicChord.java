@@ -1,5 +1,6 @@
 package es.danisales.datune.musical;
 
+import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.midi.DiatonicChordMidi;
@@ -72,19 +73,26 @@ public final class DiatonicChord extends NormalChordCommon<Diatonic, IntervalDia
         super(scaleInterface);
     }
 
-    public static DiatonicChord from(DiatonicFunction diatonicFunction, Diatonic diatonic) {
+    public static @NonNull DiatonicChord from(DiatonicFunction diatonicFunction, Diatonic diatonic) {
         DiatonicChordPattern diatonicChordPattern = DiatonicChordPattern.from(diatonicFunction);
-        return DiatonicChord.from(diatonic, diatonicChordPattern);
+        DiatonicDegree diatonicDegree = DiatonicDegree.from(diatonicFunction);
+        IntervalDiatonic intervalDiatonic = IntervalDiatonic.from(diatonicDegree);
+        Diatonic diatonicShifted = diatonic.getShifted(intervalDiatonic);
+        return DiatonicChord.from(diatonicShifted, diatonicChordPattern);
     }
 
-    private static DiatonicChord from(Diatonic diatonic, DiatonicChordPattern diatonicChordPattern) {
+    public static @NonNull DiatonicChord from(@NonNull Diatonic diatonic, @NonNull DiatonicChordPattern diatonicChordPattern) {
         DiatonicChord diatonicChord = new DiatonicChord();
+        diatonicChord.innerChord = new DiatonicChordCustom();
         for (Integer i : diatonicChordPattern) {
             Diatonic diatonicAdd = diatonic;
-            for (int j = 0; j < diatonicChordPattern.get(i); j++) {
+            for (int j = 0; j < i; j++) {
                 diatonicAdd = diatonicAdd.getShifted(IntervalDiatonic.SECOND);
             }
+            diatonicChord.innerChord.add(diatonicAdd);
         }
+
+        diatonicChord.turnInnerChordIntoEnumIfPossible();
 
         return diatonicChord;
     }

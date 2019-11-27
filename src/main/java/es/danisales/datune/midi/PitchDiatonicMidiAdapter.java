@@ -92,7 +92,7 @@ class PitchDiatonicMidiAdapter {
         return pitchChromaticMidiRootWithoutAlts.getOctave();
     }
 
-    static PitchDiatonicMidi fromUncheck(@NonNull DiatonicDegree diatonicDegree, @NonNull Tonality tonality, int octave) {
+    static @NonNull PitchDiatonicMidi fromUncheck(@NonNull DiatonicDegree diatonicDegree, @NonNull Tonality tonality, int octave) {
         PitchDiatonicMidi ret = new PitchDiatonicMidi();
         ret.degree = diatonicDegree;
         ret.tonality = tonality;

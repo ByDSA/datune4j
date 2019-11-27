@@ -1,63 +1,93 @@
 package es.danisales.datune.tonality;
 
+import com.google.common.base.Preconditions;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.*;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
 class ScaleAdapter {
     private ScaleAdapter() {
     }
 
     static @NonNull Scale fromDiatonicAltList(@NonNull List<DiatonicAlt> notes) {
-        int[] ton = new int[notes.size()];
+        List<Integer> ton = new ArrayList<>();
         int sum = 0;
         for ( int i = 0; i < notes.size() - 1; i++ ) {
             DiatonicAlt current = notes.get(i);
+            Chromatic currentChromatic = Chromatic.from(current);
             DiatonicAlt next = notes.get(i + 1);
             Chromatic nextChromatic = Chromatic.from(next);
-            Chromatic currentChromatic = Chromatic.from(current);
 
-            ton[i] = currentChromatic.distSemitonesTo(nextChromatic);
-            while ( ton[i] < 0 )
-                ton[i] += Chromatic.NUMBER;
-            sum += ton[i];
+            int newInt = currentChromatic.distSemitonesTo(nextChromatic);
+            ton.add(newInt);
+
+            sum += newInt;
+            if (sum >= Chromatic.NUMBER)
+                break;
         }
-        int dif = Chromatic.NUMBER - sum;
-        if (dif <= 0) {
-            notes = sort(notes);
+
+        if (sum >= Chromatic.NUMBER) {
+            notes = getSorted(notes);
             return fromDiatonicAltList(notes);
         }
-        ton[notes.size() - 1] = dif;
+        ton.add(Chromatic.NUMBER - sum);
 
-        return Scale.from( ton );
+        return Scale.fromIntegers(ton);
     }
 
-    private static @NonNull List<DiatonicAlt> sort(@NonNull List<DiatonicAlt> list) {
-        Set<DiatonicAlt> diatonicAltSet = new HashSet<>(list);
-
-        List<DiatonicAlt> ret = new ArrayList<>(diatonicAltSet);
-
-        ret.sort(Comparator.comparing(Chromatic::from));
-
-        while (!ret.get(0).equals(list.get(0)))
-            Collections.rotate(ret,1);
-
+    private static List<DiatonicAlt> getWithRemovedDuplicates(List<DiatonicAlt> list) {
+        Set<DiatonicAlt> set = new LinkedHashSet<>(list);
+        Set<Chromatic> added = new LinkedHashSet<>();
+        List<DiatonicAlt> ret = new ArrayList<>();
+        for (DiatonicAlt diatonicAlt : set) {
+            Chromatic chromatic = Chromatic.from(diatonicAlt);
+            if (!added.contains(chromatic)) {
+                ret.add(diatonicAlt);
+                added.add(chromatic);
+            }
+        }
         return ret;
     }
 
-    static @NonNull ScaleInterface fromIntegers(int... v) {
+    private static List<DiatonicAlt> getSorted(@NonNull List<DiatonicAlt> list) {
+        list = getWithRemovedDuplicates(list);
+        DiatonicAlt prevFirst = list.get(0);
+
+        list.sort(Comparator.comparing(Chromatic::from));
+
+        int rotationIndex = list.indexOf(prevFirst);
+        Collections.rotate(list, -rotationIndex);
+
+        Preconditions.checkState(prevFirst == list.get(0), "Expected: " + prevFirst + " Actual: " + list.get(0));
+
+        return list;
+    }
+
+    static @NonNull ScaleInterface fromIntegers(List<Integer> v) {
+        List<ScaleDistance> distanceScaleList = getScaleDistanceListFromIntegersList(v);
+
+        return fromScaleDistanceList(distanceScaleList);
+    }
+
+    private static @NonNull ScaleInterface fromScaleDistanceList(List<ScaleDistance> scaleDistanceList) {
+        ScaleInterface scaleInterface = ScaleEnum.from(scaleDistanceList);
+        if (scaleInterface == null)
+            scaleInterface = new ScaleCustom(scaleDistanceList);
+
+        return scaleInterface;
+    }
+
+    private static List<ScaleDistance> getScaleDistanceListFromIntegersList(List<Integer> v) {
         List<ScaleDistance> distanceScaleList = new ArrayList<>();
-        for (int i : v)
-            distanceScaleList.add( ScaleDistance.from(i) );
+        for (int i : v) {
+            if (i == 0)
+                System.out.println(v);
+            ScaleDistance scaleDistance = ScaleDistance.from(i);
+            distanceScaleList.add(scaleDistance);
+        }
 
-        ScaleInterface s = ScaleEnum.from( distanceScaleList );
-        if (s == null)
-            s = new ScaleCustom( distanceScaleList );
-
-        return s;
+        return distanceScaleList;
     }
 }

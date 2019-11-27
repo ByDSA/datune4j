@@ -14,6 +14,7 @@ public class Pattern implements List<Integer>, PatternInterface, Cloneable {
     }
 
     Pattern() {
+        numbersPattern = new ArrayList<>();
         fixed = false;
     }
 
