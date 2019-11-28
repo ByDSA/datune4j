@@ -39,7 +39,7 @@ public class PentatonicAdapter {
         return n;
     }
 
-    public static Pentatonic from(DiatonicAlt diatonicAlt, Tonality ton) {
+    public static Pentatonic from(DiatonicAlt diatonicAlt, Tonality ton) throws TonalityException {
         PentatonicDegree pos = (PentatonicDegree)ton.getDegreeFrom(diatonicAlt);
         if (pos == null)
             throw new TonalityException(diatonicAlt, ton);

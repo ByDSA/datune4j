@@ -3,12 +3,12 @@ package es.danisales.datune.midi;
 import es.danisales.datune.diatonic.ChromaticDegree;
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.pitch.AbsoluteDegree;
+import es.danisales.datune.pitch.PitchAbsoluteDegree;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.pitch.PitchOctave;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
-enum PitchChromaticMidiInmutable implements PitchChromaticSingle, PitchOctave, AbsoluteDegree<ChromaticDegree, IntervalChromatic> {
+enum PitchChromaticMidiInmutable implements PitchChromaticSingle, PitchOctave, PitchAbsoluteDegree<ChromaticDegree, IntervalChromatic> {
     C0, CC0, D0, DD0, E0, F0, FF0, G0, GG0, A0, AA0, B0,
     C1, CC1, D1, DD1, E1, F1, FF1, G1, GG1, A1, AA1, B1,
     C2, CC2, D2, DD2, E2, F2, FF2, G2, GG2, A2, AA2, B2,
@@ -25,11 +25,11 @@ enum PitchChromaticMidiInmutable implements PitchChromaticSingle, PitchOctave, A
         return Chromatic.from(ordinal() % Chromatic.NUMBER);
     }
 
-    public PitchChromaticMidiInmutable getWithShiftOctave(int o) {
+    public PitchChromaticMidiInmutable getWithShiftOctave(int o) throws PitchMidiException {
         return from(getCode() + Chromatic.NUMBER * o);
     }
 
-    public PitchChromaticMidiInmutable getWithOctave(int o) {
+    public PitchChromaticMidiInmutable getWithOctave(int o) throws PitchMidiException {
         return from(getCode() % Chromatic.NUMBER + Chromatic.NUMBER * o);
     }
 
@@ -42,14 +42,20 @@ enum PitchChromaticMidiInmutable implements PitchChromaticSingle, PitchOctave, A
         return ordinal() / Chromatic.NUMBER;
     }
 
-    public static PitchChromaticMidiInmutable from(int code) {
-        PitchMidiException.check(code);
+    public static PitchChromaticMidiInmutable from(int code) throws PitchMidiException {
+        checkCodeBoundaries(code);
+
         Chromatic n = Chromatic.from(code % Chromatic.NUMBER);
         int o = code / Chromatic.NUMBER;
         return from(n, o);
     }
 
-    public static @Nullable PitchChromaticMidiInmutable from(Chromatic chromatic, int octave) {
+    private static void checkCodeBoundaries(int code) throws PitchMidiException {
+        if (code < PitchChromaticMidi.MIN.getMidiCode() || code > PitchChromaticMidi.MAX.getMidiCode())
+            throw new PitchMidiException(code);
+    }
+
+    public static @NonNull PitchChromaticMidiInmutable from(Chromatic chromatic, int octave) throws PitchMidiException {
         switch (octave) {
             case 0:
                 switch (chromatic) {
@@ -359,23 +365,24 @@ enum PitchChromaticMidiInmutable implements PitchChromaticSingle, PitchOctave, A
                         return PitchChromaticMidiInmutable.FF10;
                     case G:
                         return PitchChromaticMidiInmutable.G10;
-                    default:
-                        return null;
                 }
-            default:
-                return null;
         }
+
+        throw new PitchMidiException(chromatic, octave);
     }
 
-    public PitchChromaticMidiInmutable getShift(int i) {
+    @NonNull
+    public PitchChromaticMidiInmutable getShift(int i) throws PitchMidiException {
         return PitchChromaticMidiInmutable.from(getCode() + i);
     }
 
-    public PitchChromaticMidiInmutable getShift(IntervalChromatic i) {
+    @NonNull
+    public PitchChromaticMidiInmutable getShift(IntervalChromatic i) throws PitchMidiException {
         return getShift(i.getSemitones());
     }
 
-    public PitchChromaticMidiInmutable getShiftNegative(IntervalChromatic i) {
+    @NonNull
+    public PitchChromaticMidiInmutable getShiftNegative(IntervalChromatic i) throws PitchMidiException {
         return getShift(-i.getSemitones());
     }
 
@@ -389,22 +396,22 @@ enum PitchChromaticMidiInmutable implements PitchChromaticSingle, PitchOctave, A
     }
 
     @Override
-    public PitchChromaticMidiInmutable getNext() {
+    public @NonNull PitchChromaticMidiInmutable getNext() throws PitchMidiException {
         return from(getCode() + 1);
     }
 
     @Override
-    public PitchChromaticMidiInmutable getPrevious() {
+    public @NonNull PitchChromaticMidiInmutable getPrevious() throws PitchMidiException {
         return from(getCode() - 1);
     }
 
     @Override
-    public PitchChromaticMidiInmutable getShifted(IntervalChromatic intervalChromatic) {
+    public @NonNull PitchChromaticMidiInmutable getShifted(IntervalChromatic intervalChromatic) throws PitchMidiException {
         return PitchChromaticMidiInmutable.from(ordinal() + intervalChromatic.getSemitones());
     }
 
     @Override
-    public PitchChromaticMidiInmutable getShiftedNegative(IntervalChromatic intervalChromatic) {
+    public @NonNull PitchChromaticMidiInmutable getShiftedNegative(IntervalChromatic intervalChromatic) throws PitchMidiException {
         return PitchChromaticMidiInmutable.from(ordinal() - intervalChromatic.getSemitones());
     }
 }

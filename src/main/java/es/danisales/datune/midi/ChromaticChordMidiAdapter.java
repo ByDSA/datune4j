@@ -10,7 +10,7 @@ class ChromaticChordMidiAdapter {
     private ChromaticChordMidiAdapter() {
     }
 
-    public static @NonNull ChromaticChordMidi fromChromatics(Chromatic[] chromatics) {
+    public static @NonNull ChromaticChordMidi fromChromatics(Chromatic[] chromatics) throws PitchMidiException {
         ChromaticChordMidi ns = new ChromaticChordMidi();
         for (int i = 0; i < chromatics.length; i++) {
             ChromaticMidi chromaticMidi = ChromaticMidi.builder()
@@ -28,7 +28,7 @@ class ChromaticChordMidiAdapter {
         return ns;
     }
 
-    public static <N extends PitchChromaticSingle> @NonNull ChromaticChordMidi from(Iterable<N> iterable) {
+    public static <N extends PitchChromaticSingle> @NonNull ChromaticChordMidi from(Iterable<N> iterable) throws PitchMidiException {
         ChromaticChordMidi self = new ChromaticChordMidi();
 
         for (N n : iterable) {
@@ -68,7 +68,7 @@ class ChromaticChordMidiAdapter {
         return self;
     }
 
-    public static @NonNull ChromaticChordMidi fromDiatonicChordMidi(@NonNull DiatonicChordMidi diatonicChordMidi) {
+    public static @NonNull ChromaticChordMidi fromDiatonicChordMidi(@NonNull DiatonicChordMidi diatonicChordMidi) throws PitchMidiException {
         ChromaticChordMidi chromaticChordMidi = new ChromaticChordMidi();
         for (DiatonicMidi diatonicMidi : diatonicChordMidi) {
             ChromaticMidi nChromatic = ChromaticMidi.from(diatonicMidi);

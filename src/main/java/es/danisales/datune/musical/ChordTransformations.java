@@ -3,10 +3,10 @@ package es.danisales.datune.musical;
 import es.danisales.datune.diatonic.Interval;
 import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.ChromaticMidi;
-import es.danisales.datune.pitch.AbsoluteDegree;
 import es.danisales.datune.pitch.Chord;
 import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.ChordMutableInterface;
+import es.danisales.datune.pitch.CyclicAbsoluteDegree;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,13 +65,13 @@ public class ChordTransformations {
     }
 
     @SuppressWarnings("unchecked")
-    public static <N extends AbsoluteDegree<?, I>, I extends Interval> List<? extends ChordCommon<N>> getAllInversions(NormalChordCommon<N, I> normalChordCommon) {
+    public static <N extends CyclicAbsoluteDegree<?, I>, I extends Interval> List<? extends ChordCommon<N>> getAllInversions(NormalChordCommon<N, I> normalChordCommon) {
         List<ChordMutableInterface<N, I>> customDiatonicChords = getAllInversionsRaw(normalChordCommon);
 
         return createListFrom(normalChordCommon, customDiatonicChords);
     }
 
-    private static <N extends AbsoluteDegree<?, I>, I extends Interval> List<ChordMutableInterface<N, I>> getAllInversionsRaw(NormalChordCommon<N, I> normalChordCommon) {
+    private static <N extends CyclicAbsoluteDegree<?, I>, I extends Interval> List<ChordMutableInterface<N, I>> getAllInversionsRaw(NormalChordCommon<N, I> normalChordCommon) {
         List<ChordMutableInterface<N, I>> customDiatonicChords;
 
         if (normalChordCommon.isCustom()) {
@@ -86,7 +86,7 @@ public class ChordTransformations {
         return customDiatonicChords;
     }
 
-    private static <N extends AbsoluteDegree<?, I>, I extends Interval> List<NormalChordCommon<N, I>> createListFrom(NormalChordCommon<N, I> self, List<ChordMutableInterface<N, I>> list) {
+    private static <N extends CyclicAbsoluteDegree<?, I>, I extends Interval> List<NormalChordCommon<N, I>> createListFrom(NormalChordCommon<N, I> self, List<ChordMutableInterface<N, I>> list) {
         List<NormalChordCommon<N, I>> ret = new ArrayList<>();
         for (ChordCommon<N> customChromaticChord : list) {
             NormalChordCommon<N, I> chromaticChord = self.create();

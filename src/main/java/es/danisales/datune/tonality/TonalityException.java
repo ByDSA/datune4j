@@ -1,12 +1,13 @@
 package es.danisales.datune.tonality;
 
+import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.pitch.ChordNamer;
 import es.danisales.datune.pitch.PitchChromaticChord;
 
-public class TonalityException extends RuntimeException {
+public class TonalityException extends Exception {
 	public TonalityException(DiatonicAlt diatonicAlt, Tonality tonality) {
 		super(
 			"La nota " + diatonicAlt + " no pertenece a la tonalidad " + tonality + ": "
@@ -36,4 +37,8 @@ public class TonalityException extends RuntimeException {
 			+ " pertenecen a diferentes tonalidades."
 				);
 	}
+
+    public TonalityException(DiatonicDegree diatonicDegree, Tonality tonality, int octave) {
+        super(diatonicDegree + " " + tonality + " " + octave);
+    }
 }

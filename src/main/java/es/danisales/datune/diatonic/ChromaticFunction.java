@@ -1,13 +1,14 @@
 package es.danisales.datune.diatonic;
 
 import es.danisales.arrays.ArrayUtils;
-import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.musical.ChromaticChord;
-import es.danisales.datune.pitch.PitchChromaticChord;
+import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
+
+import java.util.Collection;
 
 /**
  * Funciones cromáticas
@@ -125,12 +126,15 @@ public enum ChromaticFunction implements HarmonicFunction {
 	/**
 	 * Gets the chromatic function fromIndex a chromatic chord and a tonality
 	 *
-	 * @param chromaticChord chromatic chord
+     * @param pitchChromaticChord chromatic chord
 	 * @param tonality tonality
 	 * @return the chromatic function
 	 */
-	public static @Nullable ChromaticFunction from(@NonNull PitchChromaticChord chromaticChord, @NonNull Tonality tonality) {
-		HarmonicFunction hf = tonality.getFunctionFrom(ChromaticChord.from(chromaticChord));
+    public static @Nullable ChromaticFunction from(@NonNull Collection<? extends PitchChromaticSingle> pitchChromaticChord, @NonNull Tonality tonality) {
+        ChromaticChord chromaticChord = ChromaticChord.builder()
+                .fromList(pitchChromaticChord)
+                .build();
+        HarmonicFunction hf = tonality.getFunctionFrom(chromaticChord);
 		if ( hf instanceof ChromaticFunction )
 			return (ChromaticFunction) hf;
 
@@ -144,9 +148,9 @@ public enum ChromaticFunction implements HarmonicFunction {
 	 * @return the harmonic function
 	 */
 	public static HarmonicFunction from(DiatonicChordMidi diatonicChordMidi) {
-		ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.from(diatonicChordMidi);
+        ChromaticChord chromaticChord = ChromaticChord.from(diatonicChordMidi);
 		return ChromaticFunction
-				.from( chromaticChordMidi, Tonality.from(diatonicChordMidi.metaTonality.getRoot(), diatonicChordMidi.metaTonality.getScale()) );
+                .from(chromaticChord, Tonality.from(diatonicChordMidi.metaTonality.getRoot(), diatonicChordMidi.metaTonality.getScale()));
 	}
 
 	@Deprecated

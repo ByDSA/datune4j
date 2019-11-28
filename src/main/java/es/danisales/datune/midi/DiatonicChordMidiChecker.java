@@ -1,8 +1,6 @@
 package es.danisales.datune.midi;
 
-import es.danisales.datune.diatonic.DiatonicFunction;
-import es.danisales.datune.diatonic.IntervalChromatic;
-import es.danisales.datune.diatonic.IntervalDiatonic;
+import es.danisales.datune.diatonic.*;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.transformations.ChordChecker;
 import es.danisales.datune.tonality.Tonality;
@@ -29,11 +27,11 @@ public class DiatonicChordMidiChecker {
     }
 
 
-    public static ArrayList<ChromaticMidi> commonNotes(DiatonicChordMidi self, DiatonicChordMidi c) {
+    public static ArrayList<ChromaticMidi> commonNotes(DiatonicChordMidi self, DiatonicChordMidi c) throws PitchMidiException {
         return commonNotes(self, c, false);
     }
 
-    public static ArrayList<ChromaticMidi> commonNotes(DiatonicChordMidi self, DiatonicChordMidi c, boolean sameOctave) {
+    public static ArrayList<ChromaticMidi> commonNotes(DiatonicChordMidi self, DiatonicChordMidi c, boolean sameOctave) throws PitchMidiException {
         ArrayList<ChromaticMidi> ret = new ArrayList<ChromaticMidi>();
 
         for (DiatonicMidi nscale1 : self) {
@@ -78,7 +76,10 @@ public class DiatonicChordMidiChecker {
     }
 
     public static DiatonicChordMidi relative(DiatonicChordMidi self, DiatonicFunction diatonicFunction) {
-        Tonality tonality = self.tonality.getRelativeScaleDiatonic(self.get(0).getPitch().getDegree());
+        RelativeDegree relativeDegree = self.get(0).getPitch().getDegree();
+        if (!(relativeDegree instanceof DiatonicDegree))
+            return null;
+        Tonality tonality = self.tonality.getRelativeScaleDiatonic((DiatonicDegree) relativeDegree);
 
         return DiatonicChordMidi.builder()
                 .from(diatonicFunction, tonality)

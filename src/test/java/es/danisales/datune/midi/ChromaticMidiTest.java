@@ -21,7 +21,7 @@ public class ChromaticMidiTest {
 	}
 
 	@Test
-	public void fromDiatonicMidi() {
+	public void fromDiatonicMidi() throws PitchMidiException {
 		DiatonicMidi diatonicMidi = DiatonicMidi.builder()
 				.pitch(PitchDiatonicMidi.from(DiatonicDegree.I, Tonality.C, 5))
 				.length(Duration.V16)
@@ -96,7 +96,7 @@ public class ChromaticMidiTest {
 	}
 
 	@Test
-	public void toStringTest() {
+	public void toStringTest() throws PitchMidiException {
 		ChromaticMidi chromaticMidi = ChromaticMidi.builder()
 				.pitch(60)
 				.build();
@@ -105,7 +105,7 @@ public class ChromaticMidiTest {
 	}
 
 	@Test
-	public void hashCodeTest() {
+	public void hashCodeTest() throws PitchMidiException {
 		ChromaticMidi chromaticMidi = ChromaticMidi.builder()
 				.pitch(60)
 				.build();

@@ -21,28 +21,32 @@ public class ChromaticMidiBuilder extends es.danisales.utils.building.Builder<Ch
         return self();
     }
 
-    public ChromaticMidiBuilder pitch(PitchMidi pitchMidi) {
+    public ChromaticMidiBuilder pitch(PitchMidi pitchMidi) throws PitchMidiException {
         pitchChromaticMidi = PitchChromaticMidi.from(pitchMidi);
 
         return self();
     }
 
-    public ChromaticMidiBuilder pitch(int code) {
+    public ChromaticMidiBuilder pitch(int code) throws PitchMidiException {
         return pitch( PitchChromaticMidi.from(code) );
     }
 
-    public ChromaticMidiBuilder pitch(Chromatic chromatic, int octave) {
+    public ChromaticMidiBuilder pitch(Chromatic chromatic, int octave) throws PitchMidiException {
         return pitch( PitchChromaticMidi.from(chromatic, octave) );
     }
 
 
-    public ChromaticMidiBuilder pitch(DiatonicAlt diatonicAlt, int octave) {
+    public ChromaticMidiBuilder pitch(DiatonicAlt diatonicAlt, int octave) throws PitchMidiException {
         Chromatic chromatic = Chromatic.from(diatonicAlt);
         return pitch( PitchChromaticMidi.from(chromatic, octave) );
     }
 
     public ChromaticMidiBuilder pitch(Chromatic chromatic) {
-        pitchChromaticMidi = PitchChromaticMidi.from(chromatic, Settings.DefaultValues.OCTAVE);
+        try {
+            pitchChromaticMidi = PitchChromaticMidi.from(chromatic, Settings.DefaultValues.OCTAVE);
+        } catch (PitchMidiException e) {
+            throw new RuntimeException("Impossible!");
+        }
 
         return self();
     }

@@ -3,6 +3,7 @@ package es.danisales.datune.tonality;
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
+import es.danisales.datune.midi.PitchMidiException;
 import es.danisales.datune.musical.ChromaticChordInterface;
 import es.danisales.datune.musical.Diatonic;
 import es.danisales.datune.musical.DiatonicAlt;
@@ -227,9 +228,13 @@ public class TonalityRetrieval {
                 }
 
                 if ( candidates.isEmpty() ) {
-                    chordCopy = ChromaticChordMidi.from(
-                            chordCopy.subList(0, chordCopy.size() - 1)
-                    );
+                    try {
+                        chordCopy = ChromaticChordMidi.from(
+                                chordCopy.subList(0, chordCopy.size() - 1)
+                        );
+                    } catch (PitchMidiException e) {
+                        throw new RuntimeException(); // todo: hacer con ChromaticChord, sin midi
+                    }
                 }
             } while ( candidates.isEmpty() && !chordCopy.isEmpty() );
         }

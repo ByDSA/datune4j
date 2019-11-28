@@ -33,7 +33,8 @@ public class TonalityChordRetrieval {
         for ( Tonality t : ts ) {
             if ( t.equals( tonality ) )
                 continue;
-            HarmonicFunction function = t.getFunctionFrom(ChromaticChord.from(c) );
+            ChromaticChord chromaticChord = ChromaticChord.builder().fromList(c).build();
+            HarmonicFunction function = t.getFunctionFrom(chromaticChord);
             if (function instanceof DiatonicFunction) {
                 return t;
             }
@@ -92,7 +93,7 @@ public class TonalityChordRetrieval {
                 case VII:
                     f = DiatonicFunction.VII;
             }
-            ChromaticChord chromaticChord = ChromaticChord.from(tonality, f);
+            ChromaticChord chromaticChord = ChromaticChord.builder().tonality(tonality).diatonicFunction(f).build();
             ret.add(chromaticChord);
         }
 
@@ -126,7 +127,7 @@ public class TonalityChordRetrieval {
                 case VII:
                     f = DiatonicFunction.VII7;
             }
-            ChromaticChord chromaticChord = ChromaticChord.from(tonality, f);
+            ChromaticChord chromaticChord = ChromaticChord.builder().tonality(tonality).diatonicFunction(f).build();
             ret.add(chromaticChord);
         }
 

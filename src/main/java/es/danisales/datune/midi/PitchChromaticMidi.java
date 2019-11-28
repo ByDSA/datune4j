@@ -1,13 +1,12 @@
 package es.danisales.datune.midi;
 
 import es.danisales.datune.diatonic.ChromaticDegree;
-import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.IntervalChromatic;
+import es.danisales.datune.diatonic.RelativeDegree;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 @SuppressWarnings("WeakerAccess")
 public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInterface<IntervalChromatic> {
@@ -281,7 +280,7 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
     private PitchChromaticMidiInmutable immutable;
     private final boolean fixed;
 
-    public static @NonNull PitchChromaticMidi from(@NonNull PitchMidi pitchMidi) {
+    public static @NonNull PitchChromaticMidi from(@NonNull PitchMidi pitchMidi) throws PitchMidiException {
         PitchChromaticMidiInmutable pitchChromaticMidiInmutable = pitchMidi.getPitchChromaticMidi().immutable;
         PitchChromaticMidi pitchChromaticMidi = new PitchChromaticMidi();
         pitchChromaticMidi.immutable = pitchChromaticMidiInmutable;
@@ -291,9 +290,9 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
         return pitchChromaticMidi;
     }
 
-    public static @Nullable PitchChromaticMidi from(PitchDiatonicMidi pitchDiatonicMidi) {
+    public static @NonNull PitchChromaticMidi from(PitchDiatonicMidi pitchDiatonicMidi) throws PitchMidiException {
         Tonality tonality = pitchDiatonicMidi.tonality;
-        DiatonicDegree degree = pitchDiatonicMidi.degree;
+        RelativeDegree degree = pitchDiatonicMidi.degree;
 
         DiatonicAlt diatonicAlt = tonality.getNote(degree);
         Chromatic chromatic = Chromatic.from(diatonicAlt);
@@ -304,7 +303,7 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
         return from(chromatic, octave);
     }
 
-    private static int octaveCorrector(Tonality tonality, DiatonicDegree diatonicDegree) {
+    private static int octaveCorrector(Tonality tonality, RelativeDegree diatonicDegree) {
         int octave = 0;
 
         DiatonicAlt diatonicAlt = tonality.getNote(diatonicDegree);
@@ -328,17 +327,15 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
         return octave;
     }
 
-    public static PitchChromaticMidi from(int code) {
+    public static PitchChromaticMidi from(int code) throws PitchMidiException {
         PitchChromaticMidi pitchChromaticMidi = new PitchChromaticMidi();
         pitchChromaticMidi.immutable = PitchChromaticMidiInmutable.from(code);
         return pitchChromaticMidi;
     }
 
-    public static @Nullable PitchChromaticMidi from(@NonNull Chromatic chromatic, int octave) {
+    public static @NonNull PitchChromaticMidi from(@NonNull Chromatic chromatic, int octave) throws PitchMidiException {
         PitchChromaticMidi pitchChromaticMidi = new PitchChromaticMidi();
         pitchChromaticMidi.immutable = PitchChromaticMidiInmutable.from(chromatic, octave);
-        if (pitchChromaticMidi.immutable == null)
-            return null;
         return pitchChromaticMidi;
     }
 
@@ -368,12 +365,14 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
             throw new UnsupportedOperationException();
     }
 
-    public void next() {
+    @Override
+    public void next() throws PitchMidiException {
         excepIfFixed();
         immutable = immutable.getNext();
     }
 
-    public void previous() {
+    @Override
+    public void previous() throws PitchMidiException {
         excepIfFixed();
         immutable = immutable.getPrevious();
     }
@@ -392,30 +391,31 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
         return immutable.getChromatic();
     }
 
-    public void shift(IntervalChromatic intervalChromatic) {
+    @Override
+    public void shift(IntervalChromatic intervalChromatic) throws PitchMidiException {
         excepIfFixed();
         immutable = immutable.getShift(intervalChromatic);
     }
 
     @Override
-    public void shift(int pos) {
+    public void shift(int pos) throws PitchMidiException {
         excepIfFixed();
         immutable = immutable.getShift(pos);
     }
 
-    public void shiftNegative(IntervalChromatic intervalChromatic) {
+    public void shiftNegative(IntervalChromatic intervalChromatic) throws PitchMidiException {
         excepIfFixed();
         immutable = immutable.getShiftNegative(intervalChromatic);
     }
 
     @Override
-    public void shiftOctave(int octaveShift) {
+    public void shiftOctave(int octaveShift) throws PitchMidiException {
         excepIfFixed();
         immutable = immutable.getWithShiftOctave(octaveShift);
     }
 
     @Override
-    public void setOctave(int octave) {
+    public void setOctave(int octave) throws PitchMidiException {
         excepIfFixed();
         immutable = immutable.getWithOctave(octave);
     }

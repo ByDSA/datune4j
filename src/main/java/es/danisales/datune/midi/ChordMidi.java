@@ -182,8 +182,13 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 
 	@Override
 	public void shiftOctave(int octaveShift) {
-		for ( N n : this )
-			n.getPitch().shiftOctave(octaveShift);
+        for (N n : this) {
+            try {
+                n.getPitch().shiftOctave(octaveShift);
+            } catch (PitchMidiException e) {
+                throw new RuntimeException();
+            }
+        }
 	}
 
 	@Override

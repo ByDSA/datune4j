@@ -12,7 +12,6 @@ import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.pitch.PitchDiatonic;
 import es.danisales.datune.tonality.*;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.List;
 import java.util.Objects;
@@ -30,10 +29,6 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDiatonic,
         return DiatonicChordMidiAdapter.fromChromaticChordMidi(chromaticChordMidi, outScale);
     }
 
-    public static @Nullable DiatonicChordMidi fromChromaticChordMidi(ChromaticChordMidi chromaticChordMidi, Tonality tonality) {
-        return DiatonicChordMidiAdapter.fromChromaticChordMidi(chromaticChordMidi, tonality);
-    }
-
     public static DiatonicChordMidi from(List<DiatonicMidi> diatonicMidiList) {
         DiatonicChordMidi diatonicChordMidi = new DiatonicChordMidi();
 
@@ -42,11 +37,6 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDiatonic,
         diatonicChordMidi.addAll(diatonicMidiList);
 
         return diatonicChordMidi;
-    }
-
-    public static DiatonicChordMidi from(ChromaticChord chromaticChord, Tonality tonality) {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.from(chromaticChord);
-        return DiatonicChordMidi.fromChromaticChordMidi(chromaticChordMidi, tonality);
     }
 
     protected DiatonicChordMidi() {
@@ -76,7 +66,8 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDiatonic,
         } catch ( TonalityException e ) {
             clear();
 
-            function = ton.getFunctionFrom( ChromaticChord.from(ns) );
+            ChromaticChord chromaticChord = ChromaticChord.builder().fromList(ns).build();
+            function = ton.getFunctionFrom(chromaticChord);
             if ( function == null ) {
                 tonality = TonalityChordRetrieval.searchInModeSameRoot(tonality, ns);
                 metaTonality = tonality;
@@ -84,11 +75,14 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDiatonic,
                 tonality = TonalityRetrieval.listFromChord( ns ).get( 0 );
 
             if ( tonality == null )
-                throw new TonalityException( ns, ton );
+                throw new RuntimeException();
 
-            ChromaticChordMidi c = ChromaticChordMidi.from(ns);
-
-            addAll(c);
+            try {
+                ChromaticChordMidi c = ChromaticChordMidi.from(ns);
+                addAll(c);
+            } catch (TonalityException | PitchMidiException e1) {
+                throw new RuntimeException();
+            }
         }
 
         Chord c = ( (Chord) ns );
@@ -105,9 +99,9 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDiatonic,
     }
 
     public void add(ChromaticMidi chromaticMidi) throws TonalityException {
-        DiatonicMidi diatonicMidi = DiatonicMidi.from(chromaticMidi, tonality);
-        if (diatonicMidi == null)
-            throw new TonalityException(chromaticMidi.getPitch().getChromatic(), tonality);
+        DiatonicMidi diatonicMidi = DiatonicMidi.builder()
+                .from(chromaticMidi, tonality)
+                .build();
         add(diatonicMidi);
     }
 
@@ -139,7 +133,11 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDiatonic,
             d = ( (ChromaticFunction) function ).getDegree();
         if ( d == null ) {
             Chromatic c = Chromatic.from( getRoot() );
-            d = (DiatonicDegree)metaTonality.getDegreeFrom( c );
+            try {
+                d = (DiatonicDegree) metaTonality.getDegreeFrom(c);
+            } catch (TonalityException e) {
+                throw new RuntimeException();
+            }
         }
         return d;
     }
@@ -203,12 +201,16 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDiatonic,
 
     public void addInterval(@NonNull IntervalDiatonic interval) throws AddedException {
         Objects.requireNonNull(interval);
-        add(DiatonicDegree.add(getRoot().getPitch().getDegree(), interval));
+        RelativeDegree relativeDegree = getRoot().getPitch().getDegree();
+        if (!(relativeDegree instanceof DiatonicDegree))
+            throw new RuntimeException();
+
+        add(DiatonicDegree.add((DiatonicDegree) relativeDegree, interval));
     }
 
     public void add(@NonNull DiatonicDegree pos) throws AddedException {
         PitchDiatonicMidi lastPitch =  get(size()-1).pitch;
-        PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(lastPitch);
+        PitchDiatonicMidi pitchDiatonicMidi = lastPitch.clone();
         pitchDiatonicMidi.degree = pos;
         if (lastPitch.degree.ordinal() > pitchDiatonicMidi.degree.ordinal())
             pitchDiatonicMidi.shiftOctave(1);

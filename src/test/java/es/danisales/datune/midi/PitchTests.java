@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 
 public class PitchTests {
 	@Test
-	public void shift() {
+	public void shift() throws PitchMidiException {
         assertEquals(60, PitchChromaticMidi.C5.getMidiCode());
 		PitchChromaticMidi p = PitchChromaticMidi.C5.clone();
 		p.shift(IntervalChromatic.MAJOR_THIRD);
@@ -18,7 +18,7 @@ public class PitchTests {
 	}
 
 	@Test
-	public void setOctave() {
+	public void setOctave() throws PitchMidiException {
         assertEquals(60, PitchChromaticMidi.C5.getMidiCode());
 		PitchChromaticMidi p = PitchChromaticMidi.C5.clone();
 		p.setOctave(4);
@@ -27,7 +27,7 @@ public class PitchTests {
 	}
 
 	@Test
-	public void shiftOctave() {
+	public void shiftOctave() throws PitchMidiException {
         assertEquals(60, PitchChromaticMidi.C5.getMidiCode());
 		PitchChromaticMidi p = PitchChromaticMidi.C5.clone();
 		p.shiftOctave(1);
@@ -36,7 +36,7 @@ public class PitchTests {
 	}
 
 	@Test
-	public void get() {
+	public void get() throws PitchMidiException {
 		assertEquals( PitchChromaticMidi.GG5, PitchChromaticMidi.from( Chromatic.GG, 5 ) );
 		assertEquals( 5, PitchChromaticMidi.GG5.getOctave() );
 		assertEquals( PitchChromaticMidi.GG5, PitchChromaticMidi.from( Chromatic.GG, PitchChromaticMidi.GG5.getOctave() ) );

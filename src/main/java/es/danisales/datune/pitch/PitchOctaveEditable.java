@@ -1,7 +1,7 @@
 package es.danisales.datune.pitch;
 
 public interface PitchOctaveEditable {
-    void shiftOctave(int octaveShift);
+    <E extends PitchException> void shiftOctave(int octaveShift) throws E;
 
-    void setOctave(int octave);
+    <E extends PitchException> void setOctave(int octave) throws E;
 }

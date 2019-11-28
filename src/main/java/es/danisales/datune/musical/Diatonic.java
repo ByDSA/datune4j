@@ -2,8 +2,8 @@ package es.danisales.datune.musical;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.IntervalDiatonic;
-import es.danisales.datune.pitch.AbsoluteDegree;
-import es.danisales.datune.pitch.AbsoluteDegreeAdapter;
+import es.danisales.datune.pitch.CyclicAbsoluteDegree;
+import es.danisales.datune.pitch.CyclicAbsoluteDegreeAdapter;
 import es.danisales.datune.pitch.PitchDiatonicSingle;
 import es.danisales.utils.MathUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-public enum Diatonic implements PitchDiatonicSingle, AbsoluteDegree<DiatonicDegree, IntervalDiatonic> {
+public enum Diatonic implements PitchDiatonicSingle, CyclicAbsoluteDegree<DiatonicDegree, IntervalDiatonic> {
 	C, D, E, F, G, A, B;
 
 	public static final int NUMBER = 7;
@@ -27,12 +27,12 @@ public enum Diatonic implements PitchDiatonicSingle, AbsoluteDegree<DiatonicDegr
 		return DiatonicAdapter.from(diatonicAlt);
 	}
 
-	private static final Map<Integer, Function<AbsoluteDegree, Diatonic>> mapConversor = new HashMap<>();
+    private static final Map<Integer, Function<CyclicAbsoluteDegree, Diatonic>> mapConversor = new HashMap<>();
 
 	static {
-		mapConversor.put(7, (AbsoluteDegree absoluteDegree) -> (Diatonic) absoluteDegree);
+        mapConversor.put(7, (CyclicAbsoluteDegree absoluteDegree) -> (Diatonic) absoluteDegree);
 
-		mapConversor.put(12, (AbsoluteDegree absoluteDegree) -> {
+        mapConversor.put(12, (CyclicAbsoluteDegree absoluteDegree) -> {
 			Chromatic chromatic = (Chromatic) absoluteDegree;
 
 			switch (chromatic) {
@@ -60,7 +60,7 @@ public enum Diatonic implements PitchDiatonicSingle, AbsoluteDegree<DiatonicDegr
 			return null;
 		});
 
-		mapConversor.put(5, (AbsoluteDegree absoluteDegree) -> {
+        mapConversor.put(5, (CyclicAbsoluteDegree absoluteDegree) -> {
 			Pentatonic pentatonic = (Pentatonic) absoluteDegree;
 
 			switch (pentatonic) {
@@ -75,18 +75,18 @@ public enum Diatonic implements PitchDiatonicSingle, AbsoluteDegree<DiatonicDegr
 		});
 	}
 
-	public static Diatonic from(@NonNull AbsoluteDegree absoluteDegree) {
-		Integer number = AbsoluteDegreeAdapter.getNumber(absoluteDegree);
-		Function<AbsoluteDegree, Diatonic> f = mapConversor.get(number);
+    public static Diatonic from(@NonNull CyclicAbsoluteDegree absoluteDegree) {
+        Integer number = CyclicAbsoluteDegreeAdapter.getNumber(absoluteDegree);
+        Function<CyclicAbsoluteDegree, Diatonic> f = mapConversor.get(number);
 		if (f == null)
 			f = Diatonic::defaultAbsoluteDegreeFunction;
 		return f.apply(absoluteDegree);
 	}
 
-	private static Diatonic defaultAbsoluteDegreeFunction(AbsoluteDegree absoluteDegree) {
+    private static Diatonic defaultAbsoluteDegreeFunction(CyclicAbsoluteDegree absoluteDegree) {
 		int index = absoluteDegree.getDegree().ordinal();
 
-		int absoluteDegreeNumber = AbsoluteDegreeAdapter.getNumber(absoluteDegree);
+        int absoluteDegreeNumber = CyclicAbsoluteDegreeAdapter.getNumber(absoluteDegree);
 		if (absoluteDegreeNumber > Diatonic.NUMBER)
 			index = (int)Math.round((double) (Diatonic.NUMBER) / absoluteDegreeNumber * index) % Diatonic.NUMBER;
 

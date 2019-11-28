@@ -6,6 +6,7 @@ import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.tonality.ScaleDistance;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class Namer {
@@ -56,15 +57,9 @@ public class Namer {
         throw new RuntimeException("Impossible");
     }
 
-    public static String from(ChromaticMidi chromaticMidi) {
-        return from(chromaticMidi, null);
-    }
-
-    public static String from(ChromaticMidi chromaticMidi, Tonality tonality) {
+    public static String from(@NonNull ChromaticMidi chromaticMidi, @NonNull Tonality tonality) throws TonalityException {
         Chromatic chromatic = Chromatic.from(chromaticMidi);
         DiatonicDegree diatonicDegree = (DiatonicDegree)tonality.getDegreeFrom(chromatic);
-        if (diatonicDegree == null)
-            return null;
         DiatonicAlt diatonicAlt = tonality.getNote(diatonicDegree);
         return diatonicAlt.toString() + chromaticMidi.getPitch().getOctave();
     }

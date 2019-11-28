@@ -14,7 +14,11 @@ import static org.junit.Assert.assertNotEquals;
 public class ChromaticChordTest {
     @Test
     public void fromChromaticDiatonicChordTonality() {
-        ChromaticChord chromaticChord = ChromaticChord.from( Chromatic.B, DiatonicChordPattern.NINTH, Tonality.C );
+        ChromaticChord chromaticChord = ChromaticChord.builder()
+                .chromaticBase(Chromatic.B)
+                .diatonicChordPattern(DiatonicChordPattern.NINTH)
+                .tonality(Tonality.C)
+                .build();
         assertEquals( Arrays.asList(
                 Chromatic.B, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C),
                 chromaticChord.getNotes()
@@ -85,15 +89,15 @@ public class ChromaticChordTest {
 
     @Test
     public void namesFrom() {
-        ChromaticChord cc = ChromaticChord.from(
+        ChromaticChord cc = ChromaticChord.builder().fromList(
                 Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G)
-        );
+        ).build();
 
         assertEquals( "C", cc.toString() );
 
-        cc = ChromaticChord.from(
+        cc = ChromaticChord.builder().fromList(
                 Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.AA)
-        );
+        ).build();
         assertEquals( "C7", cc.toString() );
     }
 
@@ -132,7 +136,7 @@ public class ChromaticChordTest {
 
     @Test
     public void from() {
-        ChromaticChord chromaticChord = ChromaticChord.from( Arrays.asList(Chromatic.C, Chromatic.D, Chromatic.E) );
+        ChromaticChord chromaticChord = ChromaticChord.builder().fromList(Arrays.asList(Chromatic.C, Chromatic.D, Chromatic.E)).build();
         assertNotNull(chromaticChord);
 
         assertEquals(3, chromaticChord.size());
@@ -146,10 +150,10 @@ public class ChromaticChordTest {
     public void getAllInversions() {
         List<ChromaticChord> listChromaticChords = ChordTransformations.getAllInversionsFrom(ChromaticChord.C);
 
-        ChromaticChord original = ChromaticChord.from( Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G) );
-        ChromaticChord inv1 = ChromaticChord.from( Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.C) );
+        ChromaticChord original = ChromaticChord.builder().fromList(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G)).build();
+        ChromaticChord inv1 = ChromaticChord.builder().fromList(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.C)).build();
         inv1.setRootPos(2);
-        ChromaticChord inv2 = ChromaticChord.from( Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E) );
+        ChromaticChord inv2 = ChromaticChord.builder().fromList(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E)).build();
         inv2.setRootPos(1);
 
         assertEquals(3, listChromaticChords.size());
@@ -160,7 +164,7 @@ public class ChromaticChordTest {
 
     @Test
     public void cloneCustom() {
-        ChromaticChord chromaticChord = ChromaticChord.from( Arrays.asList(Chromatic.C, Chromatic.D, Chromatic.E ));
+        ChromaticChord chromaticChord = ChromaticChord.builder().fromList(Arrays.asList(Chromatic.C, Chromatic.D, Chromatic.E)).build();
         ChromaticChord duplicatedChromaticChord = chromaticChord.clone();
 
         assertEquals(chromaticChord, duplicatedChromaticChord);
@@ -172,7 +176,7 @@ public class ChromaticChordTest {
 
     @Test
     public void duplicateCustomInv() {
-        ChromaticChord chromaticChord = ChromaticChord.from( Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.D ));
+        ChromaticChord chromaticChord = ChromaticChord.builder().fromList(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.D)).build();
         chromaticChord.inv();
         ChromaticChord duplicatedChromaticChord = chromaticChord.clone();
 

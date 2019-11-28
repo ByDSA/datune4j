@@ -1,13 +1,13 @@
 package es.danisales.datune.musical;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
+import es.danisales.datune.diatonic.RelativeDegree;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.midi.PitchChromaticMidi;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 public class DiatonicAdapter {
     private DiatonicAdapter() {
@@ -52,7 +52,7 @@ public class DiatonicAdapter {
         return diatonicAlt.getDiatonic();
     }
 
-    public static Diatonic from(DiatonicAlt diatonicAlt, Tonality ton) {
+    public static Diatonic from(DiatonicAlt diatonicAlt, Tonality ton) throws TonalityException {
         DiatonicDegree pos = (DiatonicDegree)ton.getDegreeFrom(diatonicAlt);
         if (pos == null)
             throw new TonalityException(diatonicAlt, ton);
@@ -67,16 +67,18 @@ public class DiatonicAdapter {
         return Diatonic.from( degree );
     }
 
-    public @Nullable Diatonic from(@NonNull PitchChromaticMidi pitchMidi, @NonNull Tonality tonality) {
+    public @NonNull Diatonic from(@NonNull PitchChromaticMidi pitchMidi, @NonNull Tonality tonality) throws TonalityException {
         Chromatic chromatic = pitchMidi.getChromatic();
         DiatonicDegree diatonicDegree = (DiatonicDegree)tonality.getDegreeFrom(chromatic);
-        if (diatonicDegree == null)
-            return null;
         DiatonicAlt diatonicAlt = tonality.getNote(diatonicDegree);
         return diatonicAlt.getDiatonic();
     }
 
     public Diatonic from(DiatonicMidi diatonicMidi) {
-        return Diatonic.from(diatonicMidi.getPitch().getDegree());
+        RelativeDegree relativeDegree = diatonicMidi.getPitch().getDegree();
+        if (relativeDegree instanceof DiatonicDegree)
+            return Diatonic.from((DiatonicDegree) relativeDegree);
+        else
+            return null;
     }
 }

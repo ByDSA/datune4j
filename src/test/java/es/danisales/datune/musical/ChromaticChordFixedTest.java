@@ -32,15 +32,21 @@ public class ChromaticChordFixedTest {
 
         assertEquals(3, chromaticChordList.size());
 
-        ChromaticChord inv1 = ChromaticChord.from( Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.C) );
+        ChromaticChord inv1 = ChromaticChord.builder()
+                .fromList(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.C))
+                .build();
         inv1.setRootPos(2);
 
-        ChromaticChord inv2 = ChromaticChord.from( Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E) );
+        ChromaticChord inv2 = ChromaticChord.builder()
+                .fromList(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E))
+                .build();
         inv2.setRootPos(1);
 
         assertEquals(
                 Arrays.asList(
-                        ChromaticChord.from( Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G) ),
+                        ChromaticChord.builder()
+                                .fromList(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G))
+                                .build(),
                         inv1,
                         inv2
                 ),
@@ -282,7 +288,9 @@ public class ChromaticChordFixedTest {
 
     @Test
     public void toStringTestManually() {
-        ChromaticChord chromaticChord = ChromaticChord.from( Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E) );
+        ChromaticChord chromaticChord = ChromaticChord.builder()
+                .fromList(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E))
+                .build();
         chromaticChord.inv();
         chromaticChord.resetRoot();
         assertEquals("C", chromaticChord.toString());
@@ -290,7 +298,9 @@ public class ChromaticChordFixedTest {
 
     @Test
     public void equals() {
-        ChromaticChord chromaticChord = ChromaticChord.from( Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E) );
+        ChromaticChord chromaticChord = ChromaticChord.builder()
+                .fromList(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E))
+                .build();
         chromaticChord.inv();
         chromaticChord.resetRoot();
         assertEquals(ChromaticChord.C, chromaticChord);
@@ -299,7 +309,9 @@ public class ChromaticChordFixedTest {
 
     @Test
     public void hashCodeTest() {
-        ChromaticChord chromaticChord = ChromaticChord.from( Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E) );
+        ChromaticChord chromaticChord = ChromaticChord.builder()
+                .fromList(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E))
+                .build();
         chromaticChord.inv();
         chromaticChord.resetRoot();
         assertEquals(ChromaticChord.C.hashCode(), chromaticChord.hashCode());
@@ -307,20 +319,26 @@ public class ChromaticChordFixedTest {
 
     @Test
     public void hashCodeTestDifferentRoot() {
-        ChromaticChord chromaticChord = ChromaticChord.from( Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E) );
+        ChromaticChord chromaticChord = ChromaticChord.builder()
+                .fromList(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E))
+                .build();
         chromaticChord.inv();
         assertNotEquals(ChromaticChord.C.hashCode(), chromaticChord.hashCode());
     }
 
     @Test
     public void hashCodeTestDifferentOrder() {
-        ChromaticChord chromaticChord = ChromaticChord.from( Arrays.asList(Chromatic.E, Chromatic.C, Chromatic.G) );
+        ChromaticChord chromaticChord = ChromaticChord.builder()
+                .fromList(Arrays.asList(Chromatic.E, Chromatic.C, Chromatic.G))
+                .build();
         assertNotEquals(ChromaticChord.C.hashCode(), chromaticChord.hashCode());
     }
 
     @Test
     public void sameAfterResetRoot() {
-        ChromaticChord chromaticChord = ChromaticChord.from( Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E) );
+        ChromaticChord chromaticChord = ChromaticChord.builder()
+                .fromList(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E))
+                .build();
         chromaticChord.inv();
         chromaticChord.resetRoot();
         assertNotSame(ChromaticChord.C, chromaticChord);
@@ -329,7 +347,9 @@ public class ChromaticChordFixedTest {
 
     @Test
     public void sameAfterInv() {
-        ChromaticChord chromaticChord = ChromaticChord.from( Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E) );
+        ChromaticChord chromaticChord = ChromaticChord.builder()
+                .fromList(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E))
+                .build();
         chromaticChord.setRootPos(1);
         chromaticChord.inv();
         assertSame(ChromaticChord.C.innerChord, chromaticChord.innerChord);
@@ -337,35 +357,45 @@ public class ChromaticChordFixedTest {
 
     @Test
     public void sameAfterSet() {
-        ChromaticChord chromaticChord = ChromaticChord.from( Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G) );
+        ChromaticChord chromaticChord = ChromaticChord.builder()
+                .fromList(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G))
+                .build();
         chromaticChord.set(1, Chromatic.D);
         assertSame(ChromaticChord.Csus2.innerChord, chromaticChord.innerChord);
     }
 
     @Test
     public void sameAfterAdd() {
-        ChromaticChord chromaticChord = ChromaticChord.from( Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G) );
+        ChromaticChord chromaticChord = ChromaticChord.builder()
+                .fromList(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G))
+                .build();
         chromaticChord.add(Chromatic.AA);
         assertSame(ChromaticChord.C7.innerChord, chromaticChord.innerChord);
     }
 
     @Test
     public void sameAfterRemove() {
-        ChromaticChord chromaticChord = ChromaticChord.from( Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.AA) );
+        ChromaticChord chromaticChord = ChromaticChord.builder()
+                .fromList(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.AA))
+                .build();
         chromaticChord.remove(Chromatic.AA);
         assertSame(ChromaticChord.C.innerChord, chromaticChord.innerChord);
     }
 
     @Test
     public void sameAfterRemove2() {
-        ChromaticChord chromaticChord = ChromaticChord.from( Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.GG) );
+        ChromaticChord chromaticChord = ChromaticChord.builder()
+                .fromList(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.GG))
+                .build();
         chromaticChord.remove(2);
         assertSame(ChromaticChord.Caug.innerChord, chromaticChord.innerChord);
     }
 
     @Test
     public void sameAfterAddPos() {
-        ChromaticChord chromaticChord = ChromaticChord.from( Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.AA) );
+        ChromaticChord chromaticChord = ChromaticChord.builder()
+                .fromList(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.AA))
+                .build();
         chromaticChord.add(2, Chromatic.G);
         assertSame(ChromaticChord.C7.innerChord, chromaticChord.innerChord);
     }

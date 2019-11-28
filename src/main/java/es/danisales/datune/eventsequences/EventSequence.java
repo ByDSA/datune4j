@@ -146,10 +146,17 @@ public class EventSequence implements Durable, EventComplex {
 				Queue<Long> onTimeQueue = notesOn.get( nc );
 
 				if ( evOnQueue != null && onTimeQueue != null ) {
+                    PitchChromaticMidi pitchChromaticMidi;
+                    try {
+                        pitchChromaticMidi = PitchChromaticMidi.from(nc);
+                    } catch (PitchMidiException e) {
+                        e.printStackTrace();
+                        throw new RuntimeException();
+                    }
 					NoteOn evOn = evOnQueue.poll();
 					Long onTime = onTimeQueue.poll();
 					ChromaticMidi n = ChromaticMidi.builder()
-							.pitch( PitchChromaticMidi.from(nc) )
+                            .pitch(pitchChromaticMidi)
 							.length( (int) ( time - onTime ) )
                             .velocity(evOn.getNote().getVelocity())
 							.build();

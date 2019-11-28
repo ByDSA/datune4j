@@ -9,20 +9,20 @@ public interface PitchMidiInterface<I extends Interval> extends PitchOctave, Clo
 
     int getMidiCode();
 
-    void shiftOctave(int i);
+    void shiftOctave(int i) throws PitchMidiException;
 
-    void next();
+    void next() throws PitchMidiException;
 
-    void previous();
+    void previous() throws PitchMidiException;
 
-    void shift(I intervalDiatonic);
+    void shift(I intervalDiatonic) throws PitchMidiException;
 
-    void shiftNegative(I intervalDiatonic);
+    void shiftNegative(I intervalDiatonic) throws PitchMidiException;
 
     @Override
     default int compareTo(@NonNull PitchMidiInterface<?> pitchMidiInterface) {
         return Integer.compare(this.getMidiCode(), pitchMidiInterface.getMidiCode());
     }
 
-    void shift(int pos);
+    void shift(int pos) throws PitchMidiException;
 }

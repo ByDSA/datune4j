@@ -9,7 +9,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.Objects;
 
-class TonalityGetChromaticFunction {
+public class TonalityGetChromaticFunction {
 	private static @Nullable ChromaticChordPattern getChromaticChordPatternFromChromaticFunction(@NonNull ChromaticFunction chromaticFunction) {
 		switch (chromaticFunction) {
 			case I:
@@ -116,12 +116,14 @@ class TonalityGetChromaticFunction {
 				ChromaticChordPattern chromaticChordPattern = getChromaticChordPatternFromChromaticFunction(chromaticFunction);
 				if (tonality.size() == Diatonic.NUMBER)
 					noteBase = getNoteBaseFromChromaticFunctionAndTonality(tonality, chromaticFunction);
-
 				Objects.requireNonNull(noteBase);
 				Objects.requireNonNull(chromaticChordPattern);
 
 				Chromatic noteBaseChromatic = Chromatic.from(noteBase);
-				ChromaticChord ret = ChromaticChord.from(noteBaseChromatic, chromaticChordPattern);
+                ChromaticChord ret = ChromaticChord.builder()
+                        .chromaticBase(noteBaseChromatic)
+                        .chromaticChordPattern(chromaticChordPattern)
+                        .build();
 
 				if (chromaticFunction == ChromaticFunction.N6)
 					ret.setRootPos(2);
@@ -147,13 +149,16 @@ class TonalityGetChromaticFunction {
 				DiatonicFunction diatonicFunction = getDiatonicFunctionFromChromaticFunction(chromaticFunction);
 				tonality = getTonalityFromChromaticFunction(tonality, chromaticFunction);
 
-				return ChromaticChord.from(tonality, diatonicFunction);
+                return ChromaticChord.builder()
+                        .tonality(tonality)
+                        .diatonicFunction(diatonicFunction)
+                        .build();
 		}
 
 		return null;
 	}
 
-	private static @NonNull Tonality getTonalityFromChromaticFunction(Tonality tonality, ChromaticFunction chromaticFunction) {
+    public static @NonNull Tonality getTonalityFromChromaticFunction(Tonality tonality, ChromaticFunction chromaticFunction) {
 		switch (chromaticFunction) {
 			case V_II:
 			case V7_II:
@@ -180,31 +185,46 @@ class TonalityGetChromaticFunction {
 				Chromatic newRootChromatic = Chromatic.from(newRoot).addSemi(6);
 				return Tonality.from(newRootChromatic, Scale.LYDIAN_b7);
 			case SUBV7_II:
-				ChromaticChord chromaticChord = ChromaticChord.from(tonality, ChromaticFunction.V7_II);
+                ChromaticChord chromaticChord = ChromaticChord.builder()
+                        .tonality(tonality)
+                        .chromaticFunction(ChromaticFunction.V7_II)
+                        .build();
 				newRootChromatic = chromaticChord.get(0).addSemi(6);
 				return Tonality.from(newRootChromatic, Scale.LYDIAN_b7);
 			case SUBV7_III:
-				chromaticChord = ChromaticChord.from(tonality, ChromaticFunction.V7_III);
+                chromaticChord = ChromaticChord.builder()
+                        .tonality(tonality)
+                        .chromaticFunction(ChromaticFunction.V7_III)
+                        .build();
 				newRootChromatic = chromaticChord.get(0).addSemi(6);
 				return Tonality.from(newRootChromatic, Scale.LYDIAN_b7);
 			case SUBV7_IV:
-				chromaticChord = ChromaticChord.from(tonality, ChromaticFunction.V7_IV);
+                chromaticChord = ChromaticChord.builder()
+                        .tonality(tonality)
+                        .chromaticFunction(ChromaticFunction.V7_IV)
+                        .build();
 				newRootChromatic = chromaticChord.get(0).addSemi(6);
 				return Tonality.from(newRootChromatic, Scale.LYDIAN_b7);
 			case SUBV7_V:
-				chromaticChord = ChromaticChord.from(tonality, ChromaticFunction.V7_V);
+                chromaticChord = ChromaticChord.builder()
+                        .tonality(tonality)
+                        .chromaticFunction(ChromaticFunction.V7_V)
+                        .build();
 				newRootChromatic = chromaticChord.get(0).addSemi(6);
 				return Tonality.from(newRootChromatic, Scale.LYDIAN_b7);
 			case SUBV7_VI:
-				chromaticChord = ChromaticChord.from(tonality, ChromaticFunction.V7_VI);
+                chromaticChord = ChromaticChord.builder()
+                        .tonality(tonality)
+                        .chromaticFunction(ChromaticFunction.V7_VI)
+                        .build();
 				newRootChromatic = chromaticChord.get(0).addSemi(6);
 				return Tonality.from(newRootChromatic, Scale.LYDIAN_b7);
 			case V7ALT:
 				newRoot = tonality.getNote(DiatonicDegree.V);
 				return Tonality.from(newRoot, Scale.SUPERLOCRIAN);
+            default:
+                return tonality;
 		}
-
-		throw new RuntimeException();
 	}
 
 	private static @NonNull DiatonicAlt getNoteBaseFromChromaticFunctionAndTonality(Tonality tonality, @NonNull ChromaticFunction chromaticFunction) {
@@ -248,6 +268,6 @@ class TonalityGetChromaticFunction {
 				return tonality.getNote(DiatonicDegree.I);
 		}
 
-		throw new RuntimeException();
+        throw new RuntimeException(tonality + " " + chromaticFunction);
 	}
 }

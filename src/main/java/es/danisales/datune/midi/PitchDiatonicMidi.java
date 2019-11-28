@@ -2,32 +2,37 @@ package es.danisales.datune.midi;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.IntervalDiatonic;
+import es.danisales.datune.diatonic.RelativeDegree;
 import es.danisales.datune.musical.Diatonic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityException;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.Objects;
 
 public class PitchDiatonicMidi implements PitchOctaveMidiEditable, PitchMidiInterface<IntervalDiatonic> {
-	protected DiatonicDegree degree;
+    protected RelativeDegree degree;
 	protected int octave;
 	protected Tonality tonality;
 
 	public static PitchDiatonicMidi from(PitchDiatonicMidi pitchDiatonicMidi) {
-		return from(pitchDiatonicMidi.degree, pitchDiatonicMidi.tonality, pitchDiatonicMidi.octave);
-	}
+        try {
+            return from(pitchDiatonicMidi.degree, pitchDiatonicMidi.tonality, pitchDiatonicMidi.octave);
+        } catch (PitchMidiException e) {
+            throw new RuntimeException("Impossible!");
+        }
+    }
 
-	public static @Nullable PitchDiatonicMidi from(@NonNull DiatonicDegree diatonicDegree, @NonNull Tonality tonality, int octave) {
+    public static @NonNull PitchDiatonicMidi from(@NonNull RelativeDegree diatonicDegree, @NonNull Tonality tonality, int octave) throws PitchMidiException {
         return PitchDiatonicMidiAdapter.from(diatonicDegree, tonality, octave);
 	}
 
-	public static @Nullable PitchDiatonicMidi from(@NonNull PitchChromaticMidi pitchChromaticMidi, @NonNull Tonality tonality) {
+    public static @NonNull PitchDiatonicMidi from(@NonNull PitchChromaticMidi pitchChromaticMidi, @NonNull Tonality tonality) throws TonalityException {
         return PitchDiatonicMidiAdapter.from(pitchChromaticMidi, tonality);
 	}
 
-	public @NonNull DiatonicDegree getDegree() {
+    public @NonNull RelativeDegree getDegree() {
 		return degree;
 	}
 
@@ -46,10 +51,15 @@ public class PitchDiatonicMidi implements PitchOctaveMidiEditable, PitchMidiInte
         return PitchDiatonicMidiAdapter.fromUncheck(degree, tonality, octave);
     }
 
-    @SuppressWarnings("ConstantConditions")
     @Override
     public int getMidiCode() {
-        PitchChromaticMidi pitchChromaticMidi = PitchChromaticMidi.from(this);
+        PitchChromaticMidi pitchChromaticMidi;
+        try {
+            pitchChromaticMidi = PitchChromaticMidi.from(this);
+        } catch (PitchMidiException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
         return pitchChromaticMidi.getMidiCode();
     }
 

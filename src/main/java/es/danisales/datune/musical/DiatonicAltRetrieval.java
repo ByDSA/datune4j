@@ -1,7 +1,7 @@
 package es.danisales.datune.musical;
 
 import es.danisales.datune.musical.transformations.EnharmonicsRetrieval;
-import es.danisales.datune.pitch.AbsoluteDegree;
+import es.danisales.datune.pitch.CyclicAbsoluteDegree;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.ScaleDistance;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -55,7 +55,7 @@ public class DiatonicAltRetrieval {
         retNotes.add(noteBase);
 
         DiatonicAlt newDiatonicAlt;
-        AbsoluteDegree absoluteDegree = AbsoluteDegree.from(noteBase, scale.size());
+        CyclicAbsoluteDegree absoluteDegree = CyclicAbsoluteDegree.from(noteBase, scale.size());
         float semis = Chromatic.from(noteBase.getDiatonic()).ordinal() + noteBase.getAlterations();
 
         for (int i = 0; i < scale.size()-1; i++) {

@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 
 public class ChromaticMidiBuilderTest {
     @Test
-    public void fromChromaticAndOctave() {
+    public void fromChromaticAndOctave() throws PitchMidiException {
         ChromaticMidi n = ChromaticMidi.builder()
                 .pitch(Chromatic.C, 5)
                 .build();
@@ -16,7 +16,7 @@ public class ChromaticMidiBuilderTest {
     }
 
     @Test
-    public void pitchChromaticOctave() {
+    public void pitchChromaticOctave() throws PitchMidiException {
         ChromaticMidi n = ChromaticMidi.builder()
                 .pitch(Chromatic.C, 5)
                 .build();

@@ -3,6 +3,7 @@ package es.danisales.datune.midi;
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityException;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertNotNull;
@@ -11,12 +12,12 @@ import static org.junit.Assert.assertNotSame;
 
 public class DiatonicMidiTest {
 	@Test
-	public void fromChromaticMidi() {
+	public void fromChromaticMidi() throws TonalityException, PitchMidiException {
         ChromaticMidi chromaticMidi = ChromaticMidi.builder()
                 .pitch(PitchChromaticMidi.F5)
 				.build();
 
-        DiatonicMidi diatonicMidi = DiatonicMidi.from(chromaticMidi, Tonality.C);
+		DiatonicMidi diatonicMidi = DiatonicMidi.builder().from(chromaticMidi, Tonality.C).build();
         assertNotNull(diatonicMidi);
         assertEquals(
                 PitchDiatonicMidi.from(DiatonicDegree.IV, Tonality.C, 5),
@@ -27,7 +28,7 @@ public class DiatonicMidiTest {
 	}
 
 	@Test
-    public void aa() {
+	public void aa() throws TonalityException, PitchMidiException {
 		DiatonicMidi n = DiatonicMidi.builder()
                 .pitch(DiatonicDegree.I, Tonality.C, 4)
 				.build();
@@ -35,7 +36,7 @@ public class DiatonicMidiTest {
 	}
 
 	@Test
-	public void noteScaleAdd() {
+	public void noteScaleAdd() throws TonalityException, PitchMidiException {
         Tonality s = Tonality.C;
 		DiatonicMidi n = DiatonicMidi.builder()
 				.pitch(DiatonicDegree.I, s, 4)
@@ -67,7 +68,7 @@ public class DiatonicMidiTest {
     }
 
     @Test
-    public void noteScaleAdd2() {
+	public void noteScaleAdd2() throws TonalityException, PitchMidiException {
         Tonality s = Tonality.FFm;
         DiatonicMidi n = DiatonicMidi.builder()
                 .pitch(DiatonicDegree.I, s, 4)
@@ -99,7 +100,7 @@ public class DiatonicMidiTest {
     }
 
     @Test
-    public void noteScaleAdd3() {
+	public void noteScaleAdd3() throws TonalityException, PitchMidiException {
         Tonality s = Tonality.FFm;
         DiatonicMidi n = DiatonicMidi.builder()
 				.pitch(DiatonicDegree.VI, s, 4)
@@ -130,7 +131,7 @@ public class DiatonicMidiTest {
 	}
 
 	@Test
-	public void equals() {
+	public void equals() throws TonalityException, PitchMidiException {
 		DiatonicMidi dm = DiatonicMidi.builder()
 				.pitch(DiatonicDegree.I, Tonality.C, 5)
 				.build();
@@ -142,7 +143,7 @@ public class DiatonicMidiTest {
 	}
 
 	@Test
-	public void cloneTest() {
+	public void cloneTest() throws TonalityException, PitchMidiException {
 		DiatonicMidi dm = DiatonicMidi.builder()
 				.pitch(DiatonicDegree.I, Tonality.C, 5)
 				.build();

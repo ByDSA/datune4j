@@ -14,7 +14,7 @@ import java.util.List;
 public interface PitchChromaticChord<N extends PitchChromaticSingle> extends ChordCommon<N> {
 	static ChromaticChord from(ChromaticChordMidi chromaticChordMidi) {
 		if (chromaticChordMidi.getRootPos() != 0) {
-			ChromaticChord ns = ChromaticChord.createEmpty();
+            ChromaticChord ns = ChromaticChord.builder().build();
 			for ( ChromaticMidi n : chromaticChordMidi ) {
 				Chromatic chromatic = Chromatic.from(n);
 				ns.add( chromatic );
@@ -25,7 +25,7 @@ public interface PitchChromaticChord<N extends PitchChromaticSingle> extends Cho
 
 			return ns;
 		} else
-			return ChromaticChord.from(chromaticChordMidi);
+            return ChromaticChord.builder().fromList(chromaticChordMidi).build();
 	}
 
 	default <Array extends PitchChromaticChord<? extends PitchChromaticSingle>> boolean hasSameNotesOrder(Array notes) {

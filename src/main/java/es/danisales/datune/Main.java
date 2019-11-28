@@ -319,25 +319,25 @@ public class Main {
 
 			/*
 			 *
-             * m.addAll(Degree.I, Duration.V4); m.addAll(Degree.V, Duration.V4, -1);
+			 * m.addAll(Degree.I, Duration.V4); m.addAll(Degree.V, Duration.V4, -1);
 			 *
-             * m.addAll(Degree.III, Duration.V4); m.addAll(Degree.I, Duration.V8); m.addAll(Degree.V,
+			 * m.addAll(Degree.III, Duration.V4); m.addAll(Degree.I, Duration.V8); m.addAll(Degree.V,
 			 * Duration.V8);
 			 *
-             * m.addAll(Degree.IV, Duration.V8); m.addAll(Degree.III, Duration.V8);
-             * m.addAll(Degree.II, Duration.V8); m.addAll(Degree.I, Duration.V8);
+			 * m.addAll(Degree.IV, Duration.V8); m.addAll(Degree.III, Duration.V8);
+			 * m.addAll(Degree.II, Duration.V8); m.addAll(Degree.I, Duration.V8);
 			 *
-             * m.addAll(Degree.I, Duration.V8); m.addAll(Degree.VII, Duration.V8, -1);
-             * m.addAll(Degree.VI, Duration.V8, -1); m.addAll(Degree.V, Duration.V8, -1);
+			 * m.addAll(Degree.I, Duration.V8); m.addAll(Degree.VII, Duration.V8, -1);
+			 * m.addAll(Degree.VI, Duration.V8, -1); m.addAll(Degree.V, Duration.V8, -1);
 			 *
-             * m.addAll(Degree.I, Duration.V4); m.addAll(Degree.II, Duration.V4);
+			 * m.addAll(Degree.I, Duration.V4); m.addAll(Degree.II, Duration.V4);
 			 *
-             * m.addAll(Degree.III, Duration.V4 + Duration.V8); m.addAll(Degree.V, Duration.V8);
+			 * m.addAll(Degree.III, Duration.V4 + Duration.V8); m.addAll(Degree.V, Duration.V8);
 			 *
-             * m.addAll(Degree.IV, Duration.V8); m.addAll(Degree.III, Duration.V8);
-             * m.addAll(Degree.II, Duration.V8); m.addAll(Degree.I, Duration.V8);
+			 * m.addAll(Degree.IV, Duration.V8); m.addAll(Degree.III, Duration.V8);
+			 * m.addAll(Degree.II, Duration.V8); m.addAll(Degree.I, Duration.V8);
 			 *
-             * m.addAll(Degree.V, Duration.V2);
+			 * m.addAll(Degree.V, Duration.V2);
 			 */
 		}
 
@@ -371,10 +371,10 @@ public class Main {
 
 		for ( int i = 0; i < 1; i++ ) {
 			/*
-             * p.addAll(ChordFunction.I).setLength(Duration.V1);
-             * p.addAll(ChordFunction.V).setLength(Duration.V1).inv(-2);
-             * p.addAll(ChordFunction.VI).setLength(Duration.V1).inv(-2);
-             * p.addAll(ChordFunction.IV).setLength(Duration.V1).inv(-1);
+			 * p.addAll(ChordFunction.I).setLength(Duration.V1);
+			 * p.addAll(ChordFunction.V).setLength(Duration.V1).inv(-2);
+			 * p.addAll(ChordFunction.VI).setLength(Duration.V1).inv(-2);
+			 * p.addAll(ChordFunction.IV).setLength(Duration.V1).inv(-1);
 			 */
 			p.add( DiatonicFunction.I ).setLength( Duration.V1 );
 			DiatonicChordMidi dcm = p.add( DiatonicFunction.VI );
@@ -415,7 +415,7 @@ public class Main {
 			DiatonicChordMidi c = p.getChordAtTime( i );
 			DiatonicMidi nd = c.get( sr.nextInt( c.size() * 2 ) ).clone();
 			nd.setLength( next );
-            nd.getPitch().shiftOctave(1);
+			nd.getPitch().shiftOctave(1);
 			/*
 			 * if (i % Duration.V1 >= 3*Duration.V4) nd.shiftPos(1);
 			 */
@@ -455,7 +455,7 @@ public class Main {
 			c.inv( 0 );
 			c.shiftOctave( 0 );
 			DiatonicMidi diatonicMidi =  c.get( 1 ).clone();
-            diatonicMidi.getPitch().shiftOctave(1);
+			diatonicMidi.getPitch().shiftOctave(1);
 			c.add(diatonicMidi);
 
 			c = p.add( DiatonicFunction.VII );
@@ -485,13 +485,13 @@ public class Main {
 			c1.setLength( Duration.V4 * 3 );
 			c1.inv( 0 );
 			c1.shiftOctave( 0 );
-            c1.get(2).getPitch().shiftOctave(-1);
+			c1.get(2).getPitch().shiftOctave(-1);
 			DiatonicChordMidi c2 = p.add( DiatonicFunction.VII_THIRD );
 			c2.setLength( Duration.V4 * 3 );
 			c2.setMajorScale();
 			c2.shiftOctave( -1 );
 			DiatonicMidi diatonicMidi1 = c2.get( 0 ).clone();
-            diatonicMidi1.getPitch().shiftOctave(1);
+			diatonicMidi1.getPitch().shiftOctave(1);
 			c2.add( diatonicMidi1 );
 			c2 = p.add( DiatonicFunction.I );
 			c2.inv( -1 );
@@ -532,7 +532,7 @@ public class Main {
 			css.add( notes );
 		}
 
-        DiatonicChordMidiTransformations.showPossibleProgressionsMajorMinor(css);
+		DiatonicChordMidiTransformations.showPossibleProgressionsMajorMinor(css);
 
 		return song;
 	}
@@ -573,15 +573,24 @@ public class Main {
 			java.util.List<ChromaticChord> fs = new ArrayList<>();
 			java.util.Set<ChromaticChord> cs = new HashSet<>();
 			for (DiatonicFunction diatonicFunction : DiatonicFunction.values())
-				cs.add( ChromaticChord.from(ton, diatonicFunction) );
+				cs.add(
+						ChromaticChord.builder()
+								.tonality(ton)
+								.diatonicFunction(diatonicFunction)
+								.build()
+				);
 			for (ChromaticFunction chromaticFunction : ChromaticFunction.values())
-				cs.add( ChromaticChord.from(ton, chromaticFunction) );
+				cs.add(
+						ChromaticChord.builder()
+								.tonality(ton)
+								.chromaticFunction(chromaticFunction)
+								.build()
+				);
 			for ( ChromaticChord c1 : cs ) {
 				System.out.println(c1);
-                DiatonicChordMidi c = DiatonicChordMidi.fromChromaticChordMidi(
-                        c1.toMidi(),
-                        ton
-                );
+				DiatonicChordMidi c = DiatonicChordMidi.builder()
+						.from(c1, ton)
+						.build();
 				System.out.println( c.getFunction()  + " " + (c.getFunction() instanceof DiatonicFunction) + " " + c.metaTonality + " " + c.getTonality());
 				assert c.getFunction() != null : c;
 				if ( (c.getFunction() instanceof DiatonicFunction
@@ -817,7 +826,7 @@ public class Main {
 		/*
 		 * EventSequence e = new EventSequence(); int t = 0; for(ChordFunc c :
 		 * Tonality.C.getAllChords()) { System.out.println(c);
-         * c.setLength(Duration.V8); e.addAll(t++*Duration.V4, c); }
+		 * c.setLength(Duration.V8); e.addAll(t++*Duration.V4, c); }
 		 */
 
 		/*
@@ -852,7 +861,7 @@ public class Main {
 
 
 		for (DiatonicFunction f : DiatonicFunction.values() ) {
-			System.out.println( f.name() + " " + ChromaticChord.from(Tonality.C, f ) );
+			System.out.println(f.name() + " " + ChromaticChord.builder().tonality(Tonality.C).diatonicFunction(f).build());
 		}
 		
 /*
@@ -924,13 +933,13 @@ public class Main {
 
 		/*
 		 * TestProgression p = new TestProgression(Scale.Em, 4, 120, 90) { { Arpegio a =
-         * new ArpegioAsc(Duration.V1, Duration.V4_3); addAll(ChordFunction.I).show();
-         * addAll(ChordFunction.VI, -1).inv(1).show(); addAll(ChordFunction.IV,
-         * -1).setMajorScale().inv(2).show(); addAll(ChordFunction.VI, -1).inv(1).show();
-         * addAll(ChordFunction.I).show(); addAll(ChordFunction.VI, -1).inv(1).show();
-         * addAll(ChordFunction.VI, -1).setMajorScale().inv(1).show();
-         * addAll(ChordFunction.VII, -1).setLength(Duration.V2).inv(1).show(); Chord c =
-         * addAll(ChordFunction.VII, -1).setMajorScale().setLength(Duration.V2).show();
+		 * new ArpegioAsc(Duration.V1, Duration.V4_3); addAll(ChordFunction.I).show();
+		 * addAll(ChordFunction.VI, -1).inv(1).show(); addAll(ChordFunction.IV,
+		 * -1).setMajorScale().inv(2).show(); addAll(ChordFunction.VI, -1).inv(1).show();
+		 * addAll(ChordFunction.I).show(); addAll(ChordFunction.VI, -1).inv(1).show();
+		 * addAll(ChordFunction.VI, -1).setMajorScale().inv(1).show();
+		 * addAll(ChordFunction.VII, -1).setLength(Duration.V2).inv(1).show(); Chord c =
+		 * addAll(ChordFunction.VII, -1).setMajorScale().setLength(Duration.V2).show();
 		 *
 		 * progression.setArpegio(a);
 		 *
@@ -946,8 +955,8 @@ public class Main {
 		 */
 
 		/*
-         * ArrayList<Note> notes = new ArrayList<Note>(); notes.addAll( new Note(Note.E) );
-         * notes.addAll( new Note(Note.GG) ); notes.addAll( (Note)new Note(Note.B) );
+		 * ArrayList<Note> notes = new ArrayList<Note>(); notes.addAll( new Note(Note.E) );
+		 * notes.addAll( new Note(Note.GG) ); notes.addAll( (Note)new Note(Note.B) );
 		 *
 		 * ArrayList<Chord> chords = Chord.whatIsIt(notes);
 		 * System.out.println("Encontrados " + chords.size() + " acordes!"); for(Chord
@@ -992,7 +1001,7 @@ public class Main {
 		 * addChord(Chord.V) .setLength(Note.V2); } }; p.setChordArpegio( new
 		 * ArpegioV4() );
 		 *
-         * channel.addAll(p); sequence.addAll(channel); } };
+		 * channel.addAll(p); sequence.addAll(channel); } };
 		 */
 
 		/*
@@ -1071,13 +1080,13 @@ public class Main {
 		 *
 		 * Progression pp = ((Progression)p.duplicate()).setScale(scale);
 		 *
-         * channel.addAll(j*pp.getDuration(), pp);
+		 * channel.addAll(j*pp.getDuration(), pp);
 		 *
 		 * Progression p2p = ((Progression)p2.duplicate()).setScale(scale);
 		 *
-         * strings.addAll(Note.V4 + j*p2p.getDuration(), p2p); } strings.setVolume(100);
+		 * strings.addAll(Note.V4 + j*p2p.getDuration(), p2p); } strings.setVolume(100);
 		 *
-         * sequence.addAll(channel); sequence.addAll(strings); } };
+		 * sequence.addAll(channel); sequence.addAll(strings); } };
 		 */
 
 		if ( p != null ) {

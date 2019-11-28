@@ -33,7 +33,7 @@ public class Tests {
 	}
 
 	@Test
-	public void whatIsItStatic() {
+    public void whatIsItStatic() throws PitchMidiException {
 		Tonality s = Tonality.C;
         DiatonicChordMidi c = DiatonicChordMidi.builder()
                 .from(DiatonicFunction.I, s)
@@ -55,7 +55,7 @@ public class Tests {
 
 
 	@Test
-	public void dist() {
+    public void dist() throws PitchMidiException {
         ChromaticChordMidi notes = ChromaticChordMidi.from(
 				Chromatic.FF, Chromatic.A, Chromatic.CC
 		);

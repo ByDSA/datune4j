@@ -4,6 +4,7 @@ import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.midi.Events.Event;
 import es.danisales.datune.midi.PitchDiatonicMidi;
+import es.danisales.datune.midi.PitchMidiException;
 import es.danisales.datune.midi.Settings.DefaultValues;
 import es.danisales.datune.tonality.Tonality;
 
@@ -21,24 +22,29 @@ public class MelodyDiatonic extends Melody {
 
 	public MelodyDiatonic(int o, Tonality t) {
 		super();
-		
+
 		notesDiatonic = new ArrayList<DiatonicMidi>();
-		
+
 		octave = o;
 		if (t != null)
 			setTonality(t);
 	}
-	
+
 	public DiatonicMidi add(DiatonicMidi note) {
 		notes.add(seek, note);
 		notesDiatonic.add(note);
 		seek += note.getLength();
-		
-		return note;
+
+        return note;
 	}
 
 	public DiatonicMidi add(DiatonicDegree degree, int length, int octaveShift, int velocity) {
-		PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(degree, tonality, octave + octaveShift);
+        PitchDiatonicMidi pitchDiatonicMidi = null;
+        try {
+            pitchDiatonicMidi = PitchDiatonicMidi.from(degree, tonality, octave + octaveShift);
+        } catch (PitchMidiException e) {
+            e.printStackTrace();
+        }
 		DiatonicMidi nd = DiatonicMidi.builder()
 				.pitch(pitchDiatonicMidi)
 				.length(length)
@@ -55,8 +61,8 @@ public class MelodyDiatonic extends Melody {
 	public DiatonicMidi add(DiatonicDegree degree, int duration, int vel) {
 		return add(degree, duration, 0, vel);
 	}
-	
-	public DiatonicMidi add(DiatonicDegree degree, int duration) {
+
+    public DiatonicMidi add(DiatonicDegree degree, int duration) {
 		return add(degree, duration, 0, DefaultValues.VELOCITY);
 	}
 
@@ -113,8 +119,8 @@ public class MelodyDiatonic extends Melody {
 	@Override
 	public MelodyDiatonic clone() {
 		MelodyDiatonic md = new MelodyDiatonic(octave, tonality.clone());
-		
-		int d = 0;
+
+        int d = 0;
 		for (DiatonicMidi nd : notesDiatonic) {
 			DiatonicMidi nd2 = nd.clone();
 			//md.addSemi(d, nd);

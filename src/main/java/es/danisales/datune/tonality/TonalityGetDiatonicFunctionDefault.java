@@ -17,7 +17,11 @@ public class TonalityGetDiatonicFunctionDefault {
             throw new RuntimeException(tonality + " " +diatonicFunction.toString());
 
         Chromatic noteBaseChromatic = Chromatic.from(noteBase);
-        return ChromaticChord.from(noteBaseChromatic, diatonicChordPattern, tonality);
+        return ChromaticChord.builder()
+                .chromaticBase(noteBaseChromatic)
+                .diatonicChordPattern(diatonicChordPattern)
+                .tonality(tonality)
+                .build();
     }
 
     private static DiatonicAlt getNoteBaseFrom(Tonality tonality, DiatonicFunction diatonicFunction) {

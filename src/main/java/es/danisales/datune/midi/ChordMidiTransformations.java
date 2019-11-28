@@ -1,7 +1,6 @@
 package es.danisales.datune.midi;
 
 import es.danisales.datune.diatonic.Interval;
-import es.danisales.datune.musical.Chromatic;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
@@ -75,12 +74,17 @@ public class ChordMidiTransformations {
         return ret;
     }
 
+    @SuppressWarnings("InfiniteLoopStatement")
     public static <N extends Note<?>> void minimize(ChordMidi<N, ?, ?> chordMidi) {
         for (int i = 1; i < chordMidi.size(); i++) {
             N note = chordMidi.get(i);
             N prev = chordMidi.get(i - 1);
-            while (note.getPitch().getMidiCode() - Chromatic.NUMBER > prev.getPitch().getMidiCode())
-                note.getPitch().shiftOctave(-1);
+
+            try {
+                while (true)
+                    note.getPitch().shiftOctave(-1);
+            } catch (PitchMidiException ignored) {
+            }
         }
     }
 

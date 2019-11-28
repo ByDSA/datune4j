@@ -3,16 +3,16 @@ package es.danisales.datune.musical;
 import es.danisales.datastructures.ListProxy;
 import es.danisales.datune.diatonic.ChordNotation;
 import es.danisales.datune.diatonic.Interval;
-import es.danisales.datune.pitch.AbsoluteDegree;
 import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.ChordMutableInterface;
 import es.danisales.datune.pitch.ChordNamer;
+import es.danisales.datune.pitch.CyclicAbsoluteDegree;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.*;
 
-public abstract class NormalChordCommon<N extends AbsoluteDegree<?, I>, I extends Interval> extends ListProxy<N> implements ChordMutableInterface<N, I> {
+public abstract class NormalChordCommon<N extends CyclicAbsoluteDegree<?, I>, I extends Interval> extends ListProxy<N> implements ChordMutableInterface<N, I> {
     ChordCommon<N> innerChord;
     private boolean fixed;
 

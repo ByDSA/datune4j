@@ -76,10 +76,21 @@ public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Build
                     int lastElementOctave = ns.get(ns.size() - 1).getPitch().getOctave();
                     Chromatic current = fromChromatic.get(i);
                     Chromatic previous = fromChromatic.get(i - 1);
-                    if (current.ordinal() < previous.ordinal())
-                        chromaticMidi.getPitch().setOctave(lastElementOctave + 1);
-                    else
-                        chromaticMidi.getPitch().setOctave(lastElementOctave);
+                    if (current.ordinal() <= previous.ordinal()) {
+                        try {
+                            chromaticMidi.getPitch().setOctave(lastElementOctave + 1);
+                        } catch (PitchMidiException e) {
+                            e.printStackTrace();
+                            throw new RuntimeException();
+                        }
+                    } else {
+                        try {
+                            chromaticMidi.getPitch().setOctave(lastElementOctave);
+                        } catch (PitchMidiException e) {
+                            e.printStackTrace();
+                            throw new RuntimeException("Impossible!");
+                        }
+                    }
                 }
                 ns.add(chromaticMidi);
             }

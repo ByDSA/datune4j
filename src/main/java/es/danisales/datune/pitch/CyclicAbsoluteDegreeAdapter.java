@@ -13,11 +13,11 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
-public class AbsoluteDegreeAdapter {
-    private AbsoluteDegreeAdapter() {
+public class CyclicAbsoluteDegreeAdapter {
+    private CyclicAbsoluteDegreeAdapter() {
     }
 
-    static Map<Integer, Function<DiatonicAlt, AbsoluteDegree>> conversorMap = new HashMap<>();
+    static Map<Integer, Function<DiatonicAlt, CyclicAbsoluteDegree>> conversorMap = new HashMap<>();
 
     static {
         conversorMap.put(5, Pentatonic::from);
@@ -25,19 +25,19 @@ public class AbsoluteDegreeAdapter {
         conversorMap.put(12, Chromatic::from);
     }
 
-    public static AbsoluteDegree from(DiatonicAlt noteBase, int size) {
-        Function<DiatonicAlt, AbsoluteDegree> f = conversorMap.get(size);
+    public static CyclicAbsoluteDegree from(DiatonicAlt noteBase, int size) {
+        Function<DiatonicAlt, CyclicAbsoluteDegree> f = conversorMap.get(size);
         if (f != null)
             return f.apply(noteBase);
 
         return createDegree(noteBase, size);
     }
 
-    public static @NonNull AbsoluteDegree from(int degree, int size) {
-        AbsoluteDegree[] absoluteDegrees = new AbsoluteDegree[size];
+    public static @NonNull CyclicAbsoluteDegree from(int degree, int size) {
+        CyclicAbsoluteDegree[] CyclicAbsoluteDegrees = new CyclicAbsoluteDegree[size];
 
         for (AtomicInteger ai = new AtomicInteger(0); ai.get() < size; ai.incrementAndGet()) {
-            absoluteDegrees[ai.get()] = new AbsoluteDegree() {
+            CyclicAbsoluteDegrees[ai.get()] = new CyclicAbsoluteDegree() {
                 int currentIndex = ai.get();
 
                 @Override
@@ -46,28 +46,28 @@ public class AbsoluteDegreeAdapter {
                 }
 
                 @Override
-                public AbsoluteDegree getNext() {
+                public CyclicAbsoluteDegree getNext() {
                     int index = limit(currentIndex+1);
-                    return absoluteDegrees[index];
+                    return CyclicAbsoluteDegrees[index];
                 }
 
                 @Override
-                public AbsoluteDegree getPrevious() {
+                public CyclicAbsoluteDegree getPrevious() {
                     int index = limit(currentIndex-1);
-                    return absoluteDegrees[index];
+                    return CyclicAbsoluteDegrees[index];
                 }
 
                 @Override
-                public AbsoluteDegree getShifted(Interval interval) {
-                    AbsoluteDegree self = this;
+                public CyclicAbsoluteDegree getShifted(Interval interval) {
+                    CyclicAbsoluteDegree self = this;
                     for (int i = 0; i < interval.ordinal(); i++)
                         self = self.getNext();
                     return self;
                 }
 
                 @Override
-                public AbsoluteDegree getShiftedNegative(Interval interval) {
-                    AbsoluteDegree self = this;
+                public CyclicAbsoluteDegree getShiftedNegative(Interval interval) {
+                    CyclicAbsoluteDegree self = this;
                     for (int i = 0; i < interval.ordinal(); i++)
                         self = self.getPrevious();
                     return self;
@@ -84,20 +84,20 @@ public class AbsoluteDegreeAdapter {
             };
         }
 
-        return absoluteDegrees[degree];
+        return CyclicAbsoluteDegrees[degree];
     }
 
-    public static int getNumber(AbsoluteDegree absoluteDegreeBase) {
+    public static int getNumber(CyclicAbsoluteDegree CyclicAbsoluteDegreeBase) {
         int i = 0;
-        AbsoluteDegree absoluteDegree = absoluteDegreeBase;
-        while (i == 0 || absoluteDegree != absoluteDegreeBase) {
+        CyclicAbsoluteDegree CyclicAbsoluteDegree = CyclicAbsoluteDegreeBase;
+        while (i == 0 || CyclicAbsoluteDegree != CyclicAbsoluteDegreeBase) {
             i++;
-            absoluteDegree = absoluteDegree.getNext();
+            CyclicAbsoluteDegree = CyclicAbsoluteDegree.getNext();
         }
         return i;
     }
 
-    static AbsoluteDegree createDegree(DiatonicAlt noteBase, int size) {
+    static CyclicAbsoluteDegree createDegree(DiatonicAlt noteBase, int size) {
         int retIndex = noteBase.getDiatonic().ordinal() % size;
         return from(retIndex, size);
     }

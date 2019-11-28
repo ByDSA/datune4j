@@ -10,7 +10,7 @@ public final class ChromaticMidi extends Note<PitchChromaticMidi> implements Pit
 		return new ChromaticMidiBuilder();
 	}
 
-	public static @NonNull ChromaticMidi from(@NonNull DiatonicMidi diatonicMidi) {
+    public static @NonNull ChromaticMidi from(@NonNull DiatonicMidi diatonicMidi) throws PitchMidiException {
 		PitchChromaticMidi pitchChromaticMidi = PitchChromaticMidi.from(diatonicMidi.pitch);
 		return ChromaticMidi.builder()
 				.pitch(pitchChromaticMidi)

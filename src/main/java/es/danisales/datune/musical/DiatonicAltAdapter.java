@@ -1,7 +1,7 @@
 package es.danisales.datune.musical;
 
 import es.danisales.datune.midi.ChromaticMidi;
-import es.danisales.datune.pitch.AbsoluteDegree;
+import es.danisales.datune.pitch.CyclicAbsoluteDegree;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -12,17 +12,17 @@ import static com.google.common.base.Preconditions.checkArgument;
 class DiatonicAltAdapter {
     static @NonNull DiatonicAlt from(@NonNull PitchChromaticSingle pitchChromaticSingle, @NonNull Diatonic diatonic) {
         if (pitchChromaticSingle instanceof Chromatic) {
-            return from((AbsoluteDegree) pitchChromaticSingle, diatonic);
+            return from((CyclicAbsoluteDegree) pitchChromaticSingle, diatonic);
         } else if (pitchChromaticSingle instanceof ChromaticMidi) {
             ChromaticMidi chromaticMidi = (ChromaticMidi) pitchChromaticSingle;
-            AbsoluteDegree chromatic = Chromatic.from(chromaticMidi);
+            CyclicAbsoluteDegree chromatic = Chromatic.from(chromaticMidi);
             return from(chromatic, diatonic);
         }
 
         throw new RuntimeException("Impossible conversion");
     }
 
-    static @NonNull DiatonicAlt from(@NonNull PitchChromaticSingle pitchChromaticSingle, float microPart, @NonNull AbsoluteDegree absoluteDegree) {
+    static @NonNull DiatonicAlt from(@NonNull PitchChromaticSingle pitchChromaticSingle, float microPart, @NonNull CyclicAbsoluteDegree absoluteDegree) {
         checkArgument(microPart < 1);
 
         Diatonic diatonic = Diatonic.from(absoluteDegree);
@@ -36,7 +36,7 @@ class DiatonicAltAdapter {
         return DiatonicAlt.from(diatonicAltWithourMicro.getDiatonic(), alt);
     }
 
-    static @NonNull DiatonicAlt from(float semis, @NonNull AbsoluteDegree absoluteDegree) {
+    static @NonNull DiatonicAlt from(float semis, @NonNull CyclicAbsoluteDegree absoluteDegree) {
         Diatonic diatonic = Diatonic.from(absoluteDegree);
         Objects.requireNonNull(diatonic);
 
@@ -54,7 +54,7 @@ class DiatonicAltAdapter {
         return from(chromatic, microPart, diatonic);
     }
 
-    private static @NonNull DiatonicAlt from(@NonNull AbsoluteDegree absoluteDegree, @NonNull Diatonic diatonic) {
+    private static @NonNull DiatonicAlt from(@NonNull CyclicAbsoluteDegree absoluteDegree, @NonNull Diatonic diatonic) {
         Objects.requireNonNull(diatonic);
         Objects.requireNonNull(absoluteDegree);
 

@@ -10,28 +10,28 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.Arrays;
 
 public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, IntervalChromatic, PitchChromaticMidi>
-		implements PitchChromaticChord<ChromaticMidi> {
+        implements PitchChromaticChord<ChromaticMidi> {
 
     public static ChromaticChordMidiBuilder builder() {
         return new ChromaticChordMidiBuilder();
     }
 
-	public static ChromaticChordMidi newEmpty() {
-		return new ChromaticChordMidi();
-	}
+    public static ChromaticChordMidi newEmpty() {
+        return new ChromaticChordMidi();
+    }
 
-    public static @NonNull ChromaticChordMidi from(@NonNull Chromatic... chromatics) {
+    public static @NonNull ChromaticChordMidi from(@NonNull Chromatic... chromatics) throws PitchMidiException {
         return ChromaticChordMidiAdapter.fromChromatics(chromatics);
-	}
+    }
 
-	public static @NonNull ChromaticChordMidi from(@NonNull ChromaticMidi... ns) {
-		ChromaticChordMidi ccm = new ChromaticChordMidi();
-		ccm.addAll( Arrays.asList(ns) );
+    public static @NonNull ChromaticChordMidi from(@NonNull ChromaticMidi... ns) {
+        ChromaticChordMidi ccm = new ChromaticChordMidi();
+        ccm.addAll(Arrays.asList(ns));
 
-		return ccm;
-	}
+        return ccm;
+    }
 
-    public static ChromaticChordMidi from(@NonNull PitchChromaticSingle... ns) {
+    public static ChromaticChordMidi from(@NonNull PitchChromaticSingle... ns) throws PitchMidiException {
         Chromatic[] chromatics = new Chromatic[ns.length];
         for (int i = 0; i < ns.length; i++) {
             chromatics[i] = Chromatic.from(ns[i]);
@@ -40,49 +40,69 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, IntervalChromat
         return from(chromatics);
     }
 
-    public static <N extends PitchChromaticSingle> ChromaticChordMidi from(Iterable<N> iterable) {
+    public static <N extends PitchChromaticSingle> ChromaticChordMidi from(Iterable<N> iterable) throws PitchMidiException {
         return ChromaticChordMidiAdapter.from(iterable);
     }
 
-    public static @NonNull ChromaticChordMidi from(@NonNull DiatonicChordMidi diatonicChordMidi) {
+    public static @NonNull ChromaticChordMidi from(@NonNull DiatonicChordMidi diatonicChordMidi) throws PitchMidiException {
         return ChromaticChordMidiAdapter.fromDiatonicChordMidi(diatonicChordMidi);
     }
 
     protected ChromaticChordMidi() {
     }
 
-	public void compact() {
-		for ( int i = 1; i < this.size(); i++ ) {
+    public void compact() {
+        for (int i = 1; i < this.size(); i++) {
             int distFromPrevious = this.get(i - 1).distTo(this.get(i));
-            if (distFromPrevious > IntervalChromatic.PERFECT_OCTAVE.getSemitones())
-                get(i).getPitch().shiftOctave(
-                        -distFromPrevious / IntervalChromatic.PERFECT_OCTAVE.getSemitones()
-                );
+            if (distFromPrevious > IntervalChromatic.PERFECT_OCTAVE.getSemitones()) {
+                try {
+                    get(i).getPitch().shiftOctave(
+                            -distFromPrevious / IntervalChromatic.PERFECT_OCTAVE.getSemitones()
+                    );
+                } catch (PitchMidiException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException("Impossible!");
+                }
+            }
         }
-	}
+    }
 
-	@Override
-	@NonNull
-	public Quality getQuality() {
-		return meta.getQuality();
-	}
+    @Override
+    @NonNull
+    public Quality getQuality() {
+        return meta.getQuality();
+    }
 
-	@Override
+    @Override
     public ChromaticChordMidi newChord() {
-		return new ChromaticChordMidi();
-	}
+        return new ChromaticChordMidi();
+    }
 
-	@Override
-	public void shift(IntervalChromatic intervalChromatic) {
-		for (ChromaticMidi chromaticMidi : this)
-			chromaticMidi.getPitch().shift(intervalChromatic);
-	}
+    @Override
+    public void shift(IntervalChromatic intervalChromatic) {
+        try {
+            for (ChromaticMidi chromaticMidi : this) {
 
-	@Override
-	public void shiftNegative(IntervalChromatic intervalChromatic) {
-		for (ChromaticMidi chromaticMidi : this)
-			chromaticMidi.getPitch().shiftNegative(intervalChromatic);
-	}
+                chromaticMidi.getPitch().shift(intervalChromatic);
+            }
+        } catch (PitchMidiException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public void shiftNegative(IntervalChromatic intervalChromatic) {
+        try {
+            for (ChromaticMidi chromaticMidi : this) {
+
+                chromaticMidi.getPitch().shiftNegative(intervalChromatic);
+            }
+        } catch (PitchMidiException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+    }
 
     @Override
     public @NonNull ChromaticChordMidi clone() {
@@ -96,5 +116,5 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, IntervalChromat
             stringBuilder.append(chromaticMidi.toString()).append("\n");
 
         return stringBuilder.toString();
-	}
+    }
 }

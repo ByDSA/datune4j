@@ -129,7 +129,7 @@ public class Scale implements Iterable<ScaleDistance> {
 			LOCRIAN_bb3_bb7,
 			NEAPOLITAN_MINOR,
 			NEAPOLITAN_MAJOR,
-			BLUES,
+            BLUES/*,
 			WOLE_TONE,
 			PENTATONIC_MINOR,
 			PENTATONIC,
@@ -139,7 +139,7 @@ public class Scale implements Iterable<ScaleDistance> {
 			MAN_GONG,
 			BLUES_MAJOR,
 			YO_SCALE,
-			CHROMATIC
+			CHROMATIC*/
 	));
 
 	/**

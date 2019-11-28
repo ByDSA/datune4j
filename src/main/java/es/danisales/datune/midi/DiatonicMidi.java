@@ -5,25 +5,11 @@ import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.midi.Events.EventComplex;
 import es.danisales.datune.musical.transformations.Namer;
 import es.danisales.datune.pitch.PitchDiatonicSingle;
-import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 public final class DiatonicMidi extends Note<PitchDiatonicMidi> implements PitchDiatonicSingle, EventComplex {
 	public static DiatonicMidiBuilder builder() {
 		return new DiatonicMidiBuilder();
-	}
-
-	public static @Nullable DiatonicMidi from(ChromaticMidi chromaticMidi, Tonality tonality) {
-		PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(chromaticMidi.pitch, tonality);
-		if (pitchDiatonicMidi == null)
-			return null;
-
-		return DiatonicMidi.builder()
-				.pitch(pitchDiatonicMidi)
-				.length(chromaticMidi.length)
-				.velocity(chromaticMidi.velocity)
-				.build();
 	}
 
 	DiatonicMidi() {
@@ -55,12 +41,19 @@ public final class DiatonicMidi extends Note<PitchDiatonicMidi> implements Pitch
 
 	@Override
 	public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        ChromaticMidi chromatidMidi = ChromaticMidi.from(this);
-        stringBuilder.append(Namer.from(chromatidMidi, pitch.tonality));
-        stringBuilder.append(" (").append(pitch.degree).append(")");
+        try {
+            StringBuilder stringBuilder = new StringBuilder();
+            ChromaticMidi chromatidMidi = ChromaticMidi.from(this);
 
-        return stringBuilder.toString();
+            stringBuilder.append(Namer.from(chromatidMidi, pitch.tonality));
+
+            stringBuilder.append(" (").append(pitch.degree).append(")");
+
+            return stringBuilder.toString();
+        } catch (TonalityException | PitchMidiException e) {
+            e.printStackTrace();
+            return null;
+        }
 	}
 
 	@Override

@@ -40,7 +40,10 @@ public class ChromaticChordRetrieval {
 
         Set<ChromaticChord> ret = new HashSet<>();
         for ( Tonality tonality : tonalitiesSameRoot ) {
-            ChromaticChord chromaticChord = ChromaticChord.from(tonality, diatonicFunction);
+            ChromaticChord chromaticChord = ChromaticChord.builder()
+                    .tonality(tonality)
+                    .diatonicFunction(diatonicFunction)
+                    .build();
             ret.add(chromaticChord);
         }
 
