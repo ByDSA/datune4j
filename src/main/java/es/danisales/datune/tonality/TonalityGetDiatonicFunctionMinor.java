@@ -18,7 +18,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Ddim;
                 case III:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA))
                             .build();
                 case IV:
                     return ChromaticChord.Fm;
@@ -26,45 +26,45 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Gm;
                 case VI:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD))
                             .build();
                 case VII:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F))
                             .build();
                 case I2:
                     return ChromaticChord.Csus2;
                 case II2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.DD, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.DD, Chromatic.GG))
                             .build();
                 case III2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.F, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.F, Chromatic.AA))
                             .build();
                 case IV2:
                     return ChromaticChord.Fsus2;
                 case V2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.GG, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.GG, Chromatic.D))
                             .build();
                 case VI2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.AA, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.AA, Chromatic.DD))
                             .build();
                 case VII2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.C, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.C, Chromatic.F))
                             .build();
                 case I4:
                     return ChromaticChord.Csus4;
                 case II4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.G, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.G, Chromatic.GG))
                             .build();
                 case III4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.GG, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.GG, Chromatic.AA))
                             .build();
                 case IV4:
                     return ChromaticChord.Fsus4;
@@ -72,37 +72,37 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Gsus4;
                 case VI4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.D, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.D, Chromatic.DD))
                             .build();
                 case VII4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.DD, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.DD, Chromatic.F))
                             .build();
                 case I6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.GG))
                             .build();
                 case II6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.GG, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.GG, Chromatic.AA))
                             .build();
                 case III6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.C))
                             .build();
                 case IV6:
                     return ChromaticChord.Fm6;
                 case V6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.DD))
                             .build();
                 case VI6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.F))
                             .build();
                 case VII6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.G))
                             .build();
                 case I7:
                     return ChromaticChord.Cm7;
@@ -110,7 +110,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Dm7b5;
                 case III7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.D))
                             .build();
                 case IV7:
                     return ChromaticChord.Fm7;
@@ -118,11 +118,11 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Gm7;
                 case VI7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.G))
                             .build();
                 case VII7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.GG))
                             .build();
                 case I9:
                     return ChromaticChord.Cm9;
@@ -133,316 +133,316 @@ class TonalityGetDiatonicFunctionMinor {
                             .build();
                 case III9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F))
                             .build();
                 case IV9:
                     return ChromaticChord.Fm9;
                 case V9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.GG))
                             .build();
                 case VI9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA))
                             .build();
                 case VII9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.GG, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.GG, Chromatic.C))
                             .build();
                 case I11:
                     return ChromaticChord.Cm11;
                 case II11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.G))
                             .build();
                 case III11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.GG))
                             .build();
                 case IV11:
                     return ChromaticChord.Fm11;
                 case V11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.GG, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.GG, Chromatic.C))
                             .build();
                 case VI11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.D))
                             .build();
                 case VII11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD))
                             .build();
                 case I13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.GG))
                             .build();
                 case II13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA))
                             .build();
                 case III13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.GG, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.GG, Chromatic.C))
                             .build();
                 case IV13:
                     return ChromaticChord.Fm13;
                 case V13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD))
                             .build();
                 case VI13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F))
                             .build();
                 case VII13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.G))
                             .build();
                 case I_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.D))
                             .build();
                 case II_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.DD))
                             .build();
                 case III_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.F))
                             .build();
                 case IV_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.G))
                             .build();
                 case V_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.GG))
                             .build();
                 case VI_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.AA))
                             .build();
                 case VII_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.C))
                             .build();
                 case I_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.DD))
                             .build();
                 case II_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.F))
                             .build();
                 case III_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.G))
                             .build();
                 case IV_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.GG))
                             .build();
                 case V_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.AA))
                             .build();
                 case VI_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.C))
                             .build();
                 case VII_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.D))
                             .build();
                 case I_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.F))
                             .build();
                 case II_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.G))
                             .build();
                 case III_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.GG))
                             .build();
                 case IV_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.AA))
                             .build();
                 case V_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.C))
                             .build();
                 case VI_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.D))
                             .build();
                 case VII_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.DD))
                             .build();
                 case I6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.GG))
                             .build();
                 case II6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.AA))
                             .build();
                 case III6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.C))
                             .build();
                 case IV6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.D))
                             .build();
                 case V6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.DD))
                             .build();
                 case VI6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.F))
                             .build();
                 case VII6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.G))
                             .build();
                 case I7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.AA))
                             .build();
                 case II7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.C))
                             .build();
                 case III7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.D))
                             .build();
                 case IV7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.DD))
                             .build();
                 case V7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.F))
                             .build();
                 case VI7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.G))
                             .build();
                 case VII7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.GG))
                             .build();
                 case I7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.G, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.G, Chromatic.AA))
                             .build();
                 case II7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.GG, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.GG, Chromatic.C))
                             .build();
                 case III7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.AA, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.AA, Chromatic.D))
                             .build();
                 case IV7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.C, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.C, Chromatic.DD))
                             .build();
                 case V7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.D, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.D, Chromatic.F))
                             .build();
                 case VI7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.DD, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.DD, Chromatic.G))
                             .build();
                 case VII7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.F, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.F, Chromatic.GG))
                             .build();
                 case I9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.D))
                             .build();
                 case II9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.GG, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.GG, Chromatic.DD))
                             .build();
                 case III9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.F))
                             .build();
                 case IV9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.G))
                             .build();
                 case V9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.GG))
                             .build();
                 case VI9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.AA))
                             .build();
                 case VII9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.C))
                             .build();
                 case I9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.G, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.G, Chromatic.D))
                             .build();
                 case II9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.GG, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.GG, Chromatic.DD))
                             .build();
                 case III9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.AA, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.AA, Chromatic.F))
                             .build();
                 case IV9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.C, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.C, Chromatic.G))
                             .build();
                 case V9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.D, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.D, Chromatic.GG))
                             .build();
                 case VI9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.DD, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.DD, Chromatic.AA))
                             .build();
                 case VII9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.F, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.F, Chromatic.C))
                             .build();
             }
         } else if (t.equals(Tonality.CCm)) {
             switch (f) {
                 case I:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG))
                             .build();
                 case II:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.A))
                             .build();
                 case III:
                     return ChromaticChord.E;
                 case IV:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC))
                             .build();
                 case V:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD))
                             .build();
                 case VI:
                     return ChromaticChord.A;
@@ -450,21 +450,21 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.B;
                 case I2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.DD, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.DD, Chromatic.GG))
                             .build();
                 case II2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.E, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.E, Chromatic.A))
                             .build();
                 case III2:
                     return ChromaticChord.Esus2;
                 case IV2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.GG, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.GG, Chromatic.CC))
                             .build();
                 case V2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.A, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.A, Chromatic.DD))
                             .build();
                 case VI2:
                     return ChromaticChord.Asus2;
@@ -472,45 +472,45 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Bsus2;
                 case I4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.FF, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.FF, Chromatic.GG))
                             .build();
                 case II4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.GG, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.GG, Chromatic.A))
                             .build();
                 case III4:
                     return ChromaticChord.Esus4;
                 case IV4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.B, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.B, Chromatic.CC))
                             .build();
                 case V4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.CC, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.CC, Chromatic.DD))
                             .build();
                 case VI4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.DD, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.DD, Chromatic.E))
                             .build();
                 case VII4:
                     return ChromaticChord.Bsus4;
                 case I6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.A))
                             .build();
                 case II6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.A, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.A, Chromatic.B))
                             .build();
                 case III6:
                     return ChromaticChord.E6;
                 case IV6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.DD))
                             .build();
                 case V6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.E))
                             .build();
                 case VI6:
                     return ChromaticChord.A6;
@@ -518,21 +518,21 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.B6;
                 case I7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B))
                             .build();
                 case II7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.A, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.A, Chromatic.CC))
                             .build();
                 case III7:
                     return ChromaticChord.EMaj7;
                 case IV7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E))
                             .build();
                 case V7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF))
                             .build();
                 case VI7:
                     return ChromaticChord.AMaj7;
@@ -540,21 +540,21 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.B7;
                 case I9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.DD))
                             .build();
                 case II9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E))
                             .build();
                 case III9:
                     return ChromaticChord.EMaj9;
                 case IV9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.GG))
                             .build();
                 case V9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.A))
                             .build();
                 case VI9:
                     return ChromaticChord.AMaj9;
@@ -562,279 +562,279 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.B9;
                 case I11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF))
                             .build();
                 case II11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.GG))
                             .build();
                 case III11:
                     return ChromaticChord.EMaj11;
                 case IV11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B))
                             .build();
                 case V11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.A, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.A, Chromatic.CC))
                             .build();
                 case VI11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.DD))
                             .build();
                 case VII11:
                     return ChromaticChord.B11;
                 case I13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.A))
                             .build();
                 case II13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B))
                             .build();
                 case III13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.A, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.A, Chromatic.CC))
                             .build();
                 case IV13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.DD))
                             .build();
                 case V13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E))
                             .build();
                 case VI13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF))
                             .build();
                 case VII13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.GG))
                             .build();
                 case I_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.DD))
                             .build();
                 case II_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.E))
                             .build();
                 case III_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.FF))
                             .build();
                 case IV_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.GG))
                             .build();
                 case V_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.A))
                             .build();
                 case VI_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.B))
                             .build();
                 case VII_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.CC))
                             .build();
                 case I_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E))
                             .build();
                 case II_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF))
                             .build();
                 case III_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.GG))
                             .build();
                 case IV_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A))
                             .build();
                 case V_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B))
                             .build();
                 case VI_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.CC))
                             .build();
                 case VII_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.DD))
                             .build();
                 case I_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.FF))
                             .build();
                 case II_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.GG))
                             .build();
                 case III_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.A))
                             .build();
                 case IV_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.B))
                             .build();
                 case V_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.CC))
                             .build();
                 case VI_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.DD))
                             .build();
                 case VII_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.E))
                             .build();
                 case I6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.A))
                             .build();
                 case II6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.B))
                             .build();
                 case III6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.GG, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.GG, Chromatic.CC))
                             .build();
                 case IV6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.DD))
                             .build();
                 case V6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.E))
                             .build();
                 case VI6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.CC, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.CC, Chromatic.FF))
                             .build();
                 case VII6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.DD, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.DD, Chromatic.GG))
                             .build();
                 case I7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.B))
                             .build();
                 case II7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.CC))
                             .build();
                 case III7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.GG, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.GG, Chromatic.DD))
                             .build();
                 case IV7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.E))
                             .build();
                 case V7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.FF))
                             .build();
                 case VI7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.CC, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.CC, Chromatic.GG))
                             .build();
                 case VII7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.DD, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.DD, Chromatic.A))
                             .build();
                 case I7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.GG, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.GG, Chromatic.B))
                             .build();
                 case II7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.A, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.A, Chromatic.CC))
                             .build();
                 case III7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.B, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.B, Chromatic.DD))
                             .build();
                 case IV7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.CC, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.CC, Chromatic.E))
                             .build();
                 case V7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.DD, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.DD, Chromatic.FF))
                             .build();
                 case VI7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.E, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.E, Chromatic.GG))
                             .build();
                 case VII7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.FF, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.FF, Chromatic.A))
                             .build();
                 case I9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.DD))
                             .build();
                 case II9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.A, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.A, Chromatic.E))
                             .build();
                 case III9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.FF))
                             .build();
                 case IV9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.GG))
                             .build();
                 case V9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.A))
                             .build();
                 case VI9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.B))
                             .build();
                 case VII9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.CC))
                             .build();
                 case I9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.GG, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.GG, Chromatic.DD))
                             .build();
                 case II9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.A, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.A, Chromatic.E))
                             .build();
                 case III9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.B, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.B, Chromatic.FF))
                             .build();
                 case IV9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.CC, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.CC, Chromatic.GG))
                             .build();
                 case V9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.DD, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.DD, Chromatic.A))
                             .build();
                 case VI9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.E, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.E, Chromatic.B))
                             .build();
                 case VII9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.FF, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.FF, Chromatic.CC))
                             .build();
             }
         } else if (t.equals(Tonality.Dm)) {
@@ -851,7 +851,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Am;
                 case VI:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F))
                             .build();
                 case VII:
                     return ChromaticChord.C;
@@ -859,7 +859,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Dsus2;
                 case II2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.F, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.F, Chromatic.AA))
                             .build();
                 case III2:
                     return ChromaticChord.Fsus2;
@@ -867,11 +867,11 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Gsus2;
                 case V2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.AA, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.AA, Chromatic.E))
                             .build();
                 case VI2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.C, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.C, Chromatic.F))
                             .build();
                 case VII2:
                     return ChromaticChord.Csus2;
@@ -879,7 +879,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Dsus4;
                 case II4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.A, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.A, Chromatic.AA))
                             .build();
                 case III4:
                     return ChromaticChord.Fsus4;
@@ -889,17 +889,17 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Asus4;
                 case VI4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.E, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.E, Chromatic.F))
                             .build();
                 case VII4:
                     return ChromaticChord.Csus4;
                 case I6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.AA))
                             .build();
                 case II6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.AA, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.AA, Chromatic.C))
                             .build();
                 case III6:
                     return ChromaticChord.F6;
@@ -907,11 +907,11 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Gm6;
                 case V6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.F))
                             .build();
                 case VI6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.G))
                             .build();
                 case VII6:
                     return ChromaticChord.C6;
@@ -927,7 +927,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Am7;
                 case VI7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.A))
                             .build();
                 case VII7:
                     return ChromaticChord.C7;
@@ -945,11 +945,11 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Gm9;
                 case V9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.AA))
                             .build();
                 case VI9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C))
                             .build();
                 case VII9:
                     return ChromaticChord.C9;
@@ -957,7 +957,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Dm11;
                 case II11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.A))
                             .build();
                 case III11:
                     return ChromaticChord.FMaj11;
@@ -965,704 +965,704 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Gm11;
                 case V11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.AA, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.AA, Chromatic.D))
                             .build();
                 case VI11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.E))
                             .build();
                 case VII11:
                     return ChromaticChord.C11;
                 case I13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.AA))
                             .build();
                 case II13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C))
                             .build();
                 case III13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.AA, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.AA, Chromatic.D))
                             .build();
                 case IV13:
                     return ChromaticChord.Gm13;
                 case V13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F))
                             .build();
                 case VI13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G))
                             .build();
                 case VII13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.A))
                             .build();
                 case I_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.E))
                             .build();
                 case II_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.F))
                             .build();
                 case III_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.G))
                             .build();
                 case IV_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.A))
                             .build();
                 case V_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.AA))
                             .build();
                 case VI_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.C))
                             .build();
                 case VII_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.D))
                             .build();
                 case I_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.F))
                             .build();
                 case II_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.G))
                             .build();
                 case III_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.A))
                             .build();
                 case IV_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.AA))
                             .build();
                 case V_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.C))
                             .build();
                 case VI_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.D))
                             .build();
                 case VII_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.E))
                             .build();
                 case I_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.G))
                             .build();
                 case II_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.A))
                             .build();
                 case III_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.AA))
                             .build();
                 case IV_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.C))
                             .build();
                 case V_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.D))
                             .build();
                 case VI_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.E))
                             .build();
                 case VII_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.F))
                             .build();
                 case I6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.AA))
                             .build();
                 case II6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.C))
                             .build();
                 case III6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.A, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.A, Chromatic.D))
                             .build();
                 case IV6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.E))
                             .build();
                 case V6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.F))
                             .build();
                 case VI6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.G))
                             .build();
                 case VII6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.A))
                             .build();
                 case I7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.C))
                             .build();
                 case II7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.D))
                             .build();
                 case III7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.A, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.A, Chromatic.E))
                             .build();
                 case IV7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.F))
                             .build();
                 case V7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.G))
                             .build();
                 case VI7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.A))
                             .build();
                 case VII7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.AA))
                             .build();
                 case I7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.A, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.A, Chromatic.C))
                             .build();
                 case II7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.AA, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.AA, Chromatic.D))
                             .build();
                 case III7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.C, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.C, Chromatic.E))
                             .build();
                 case IV7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.D, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.D, Chromatic.F))
                             .build();
                 case V7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.E, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.E, Chromatic.G))
                             .build();
                 case VI7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.F, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.F, Chromatic.A))
                             .build();
                 case VII7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.G, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.G, Chromatic.AA))
                             .build();
                 case I9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.E))
                             .build();
                 case II9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.AA, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.AA, Chromatic.F))
                             .build();
                 case III9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.G))
                             .build();
                 case IV9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.A))
                             .build();
                 case V9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.AA))
                             .build();
                 case VI9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.C))
                             .build();
                 case VII9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.D))
                             .build();
                 case I9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.A, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.A, Chromatic.E))
                             .build();
                 case II9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.AA, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.AA, Chromatic.F))
                             .build();
                 case III9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.C, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.C, Chromatic.G))
                             .build();
                 case IV9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.D, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.D, Chromatic.A))
                             .build();
                 case V9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.E, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.E, Chromatic.AA))
                             .build();
                 case VI9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.F, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.F, Chromatic.C))
                             .build();
                 case VII9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.G, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.G, Chromatic.D))
                             .build();
             }
         } else if (t.equals(Tonality.Ebm) || t.equals(Tonality.DDm)) {
             switch (f) {
                 case I:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA))
                             .build();
                 case II:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.B))
                             .build();
                 case III:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC))
                             .build();
                 case IV:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD))
                             .build();
                 case V:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F))
                             .build();
                 case VI:
                     return ChromaticChord.B;
                 case VII:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG))
                             .build();
                 case I2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.F, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.F, Chromatic.AA))
                             .build();
                 case II2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.FF, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.FF, Chromatic.B))
                             .build();
                 case III2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.GG, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.GG, Chromatic.CC))
                             .build();
                 case IV2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.AA, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.AA, Chromatic.DD))
                             .build();
                 case V2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.B, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.B, Chromatic.F))
                             .build();
                 case VI2:
                     return ChromaticChord.Bsus2;
                 case VII2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.DD, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.DD, Chromatic.GG))
                             .build();
                 case I4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.GG, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.GG, Chromatic.AA))
                             .build();
                 case II4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.AA, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.AA, Chromatic.B))
                             .build();
                 case III4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.B, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.B, Chromatic.CC))
                             .build();
                 case IV4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.CC, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.CC, Chromatic.DD))
                             .build();
                 case V4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.DD, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.DD, Chromatic.F))
                             .build();
                 case VI4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.F, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.F, Chromatic.FF))
                             .build();
                 case VII4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.FF, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.FF, Chromatic.GG))
                             .build();
                 case I6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.B))
                             .build();
                 case II6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.B, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.B, Chromatic.CC))
                             .build();
                 case III6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.DD))
                             .build();
                 case IV6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.F))
                             .build();
                 case V6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.FF))
                             .build();
                 case VI6:
                     return ChromaticChord.B6;
                 case VII6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.AA))
                             .build();
                 case I7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC))
                             .build();
                 case II7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.B, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.B, Chromatic.DD))
                             .build();
                 case III7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F))
                             .build();
                 case IV7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF))
                             .build();
                 case V7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG))
                             .build();
                 case VI7:
                     return ChromaticChord.BMaj7;
                 case VII7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.B))
                             .build();
                 case I9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F))
                             .build();
                 case II9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF))
                             .build();
                 case III9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG))
                             .build();
                 case IV9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.AA))
                             .build();
                 case V9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.B))
                             .build();
                 case VI9:
                     return ChromaticChord.BMaj9;
                 case VII9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.B, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.B, Chromatic.DD))
                             .build();
                 case I11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG))
                             .build();
                 case II11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.AA))
                             .build();
                 case III11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.B))
                             .build();
                 case IV11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC))
                             .build();
                 case V11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.B, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.B, Chromatic.DD))
                             .build();
                 case VI11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F))
                             .build();
                 case VII11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF))
                             .build();
                 case I13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.B))
                             .build();
                 case II13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC))
                             .build();
                 case III13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.B, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.B, Chromatic.DD))
                             .build();
                 case IV13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F))
                             .build();
                 case V13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF))
                             .build();
                 case VI13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG))
                             .build();
                 case VII13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.AA))
                             .build();
                 case I_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.F))
                             .build();
                 case II_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.FF))
                             .build();
                 case III_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.GG))
                             .build();
                 case IV_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.AA))
                             .build();
                 case V_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.B))
                             .build();
                 case VI_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.CC))
                             .build();
                 case VII_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.DD))
                             .build();
                 case I_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF))
                             .build();
                 case II_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.GG))
                             .build();
                 case III_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.AA))
                             .build();
                 case IV_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B))
                             .build();
                 case V_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC))
                             .build();
                 case VI_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.DD))
                             .build();
                 case VII_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.F))
                             .build();
                 case I_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.GG))
                             .build();
                 case II_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.AA))
                             .build();
                 case III_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.B))
                             .build();
                 case IV_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.CC))
                             .build();
                 case V_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.DD))
                             .build();
                 case VI_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.F))
                             .build();
                 case VII_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.FF))
                             .build();
                 case I6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.B))
                             .build();
                 case II6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.CC))
                             .build();
                 case III6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.DD))
                             .build();
                 case IV6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.F))
                             .build();
                 case V6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.FF))
                             .build();
                 case VI6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.DD, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.DD, Chromatic.GG))
                             .build();
                 case VII6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.AA))
                             .build();
                 case I7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.CC))
                             .build();
                 case II7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.DD))
                             .build();
                 case III7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.F))
                             .build();
                 case IV7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.FF))
                             .build();
                 case V7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.GG))
                             .build();
                 case VI7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.DD, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.DD, Chromatic.AA))
                             .build();
                 case VII7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.B))
                             .build();
                 case I7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.AA, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.AA, Chromatic.CC))
                             .build();
                 case II7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.B, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.B, Chromatic.DD))
                             .build();
                 case III7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.CC, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.CC, Chromatic.F))
                             .build();
                 case IV7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.DD, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.DD, Chromatic.FF))
                             .build();
                 case V7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.F, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.F, Chromatic.GG))
                             .build();
                 case VI7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.FF, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.FF, Chromatic.AA))
                             .build();
                 case VII7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.GG, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.GG, Chromatic.B))
                             .build();
                 case I9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.F))
                             .build();
                 case II9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.B, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.B, Chromatic.FF))
                             .build();
                 case III9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.GG))
                             .build();
                 case IV9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.AA))
                             .build();
                 case V9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.B))
                             .build();
                 case VI9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.CC))
                             .build();
                 case VII9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.DD))
                             .build();
                 case I9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.AA, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.AA, Chromatic.F))
                             .build();
                 case II9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.B, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.B, Chromatic.FF))
                             .build();
                 case III9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.CC, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.CC, Chromatic.GG))
                             .build();
                 case IV9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.DD, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.DD, Chromatic.AA))
                             .build();
                 case V9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.F, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.F, Chromatic.B))
                             .build();
                 case VI9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.FF, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.FF, Chromatic.CC))
                             .build();
                 case VII9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.GG, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.GG, Chromatic.DD))
                             .build();
             }
         } else if (t.equals(Tonality.Em)) {
@@ -1671,7 +1671,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Em;
                 case II:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.C))
                             .build();
                 case III:
                     return ChromaticChord.G;
@@ -1687,7 +1687,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Esus2;
                 case II2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.G, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.G, Chromatic.C))
                             .build();
                 case III2:
                     return ChromaticChord.Gsus2;
@@ -1695,7 +1695,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Asus2;
                 case V2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.C, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.C, Chromatic.FF))
                             .build();
                 case VI2:
                     return ChromaticChord.Csus2;
@@ -1705,7 +1705,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Esus4;
                 case II4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.B, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.B, Chromatic.C))
                             .build();
                 case III4:
                     return ChromaticChord.Gsus4;
@@ -1715,17 +1715,17 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Bsus4;
                 case VI4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.FF, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.FF, Chromatic.G))
                             .build();
                 case VII4:
                     return ChromaticChord.Dsus4;
                 case I6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.C))
                             .build();
                 case II6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.C, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.C, Chromatic.D))
                             .build();
                 case III6:
                     return ChromaticChord.G6;
@@ -1733,7 +1733,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Am6;
                 case V6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.G))
                             .build();
                 case VI6:
                     return ChromaticChord.C6;
@@ -1743,7 +1743,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Em7;
                 case II7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.C, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.C, Chromatic.E))
                             .build();
                 case III7:
                     return ChromaticChord.GMaj7;
@@ -1759,7 +1759,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Em9;
                 case II9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G))
                             .build();
                 case III9:
                     return ChromaticChord.GMaj9;
@@ -1767,7 +1767,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Am9;
                 case V9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.C))
                             .build();
                 case VI9:
                     return ChromaticChord.CMaj9;
@@ -1777,7 +1777,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Em11;
                 case II11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.B))
                             .build();
                 case III11:
                     return ChromaticChord.GMaj11;
@@ -1785,263 +1785,263 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Am11;
                 case V11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.C, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.C, Chromatic.E))
                             .build();
                 case VI11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.FF))
                             .build();
                 case VII11:
                     return ChromaticChord.D11;
                 case I13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.C))
                             .build();
                 case II13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D))
                             .build();
                 case III13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.C, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.C, Chromatic.E))
                             .build();
                 case IV13:
                     return ChromaticChord.Am13;
                 case V13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G))
                             .build();
                 case VI13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.A))
                             .build();
                 case VII13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.B))
                             .build();
                 case I_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.FF))
                             .build();
                 case II_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.G))
                             .build();
                 case III_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.A))
                             .build();
                 case IV_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.B))
                             .build();
                 case V_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.C))
                             .build();
                 case VI_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.D))
                             .build();
                 case VII_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.E))
                             .build();
                 case I_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.G))
                             .build();
                 case II_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A))
                             .build();
                 case III_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.B))
                             .build();
                 case IV_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.C))
                             .build();
                 case V_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.D))
                             .build();
                 case VI_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.E))
                             .build();
                 case VII_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.FF))
                             .build();
                 case I_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.A))
                             .build();
                 case II_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.B))
                             .build();
                 case III_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.C))
                             .build();
                 case IV_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.D))
                             .build();
                 case V_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.E))
                             .build();
                 case VI_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.FF))
                             .build();
                 case VII_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.G))
                             .build();
                 case I6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.C))
                             .build();
                 case II6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.D))
                             .build();
                 case III6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.B, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.B, Chromatic.E))
                             .build();
                 case IV6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.FF))
                             .build();
                 case V6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.G))
                             .build();
                 case VI6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.A))
                             .build();
                 case VII6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.FF, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.FF, Chromatic.B))
                             .build();
                 case I7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.D))
                             .build();
                 case II7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.E))
                             .build();
                 case III7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.B, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.B, Chromatic.FF))
                             .build();
                 case IV7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.G))
                             .build();
                 case V7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.A))
                             .build();
                 case VI7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.B))
                             .build();
                 case VII7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.FF, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.FF, Chromatic.C))
                             .build();
                 case I7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.B, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.B, Chromatic.D))
                             .build();
                 case II7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.C, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.C, Chromatic.E))
                             .build();
                 case III7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.D, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.D, Chromatic.FF))
                             .build();
                 case IV7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.E, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.E, Chromatic.G))
                             .build();
                 case V7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.FF, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.FF, Chromatic.A))
                             .build();
                 case VI7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.G, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.G, Chromatic.B))
                             .build();
                 case VII7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.A, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.A, Chromatic.C))
                             .build();
                 case I9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.FF))
                             .build();
                 case II9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.C, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.C, Chromatic.G))
                             .build();
                 case III9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.A))
                             .build();
                 case IV9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.B))
                             .build();
                 case V9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.C))
                             .build();
                 case VI9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.D))
                             .build();
                 case VII9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.E))
                             .build();
                 case I9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.B, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.B, Chromatic.FF))
                             .build();
                 case II9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.C, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.C, Chromatic.G))
                             .build();
                 case III9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.D, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.D, Chromatic.A))
                             .build();
                 case IV9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.E, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.E, Chromatic.B))
                             .build();
                 case V9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.FF, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.FF, Chromatic.C))
                             .build();
                 case VI9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.G, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.G, Chromatic.D))
                             .build();
                 case VII9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.A, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.A, Chromatic.E))
                             .build();
             }
         } else if (t.equals(Tonality.Fm)) {
@@ -2052,99 +2052,99 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Gdim;
                 case III:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD))
                             .build();
                 case IV:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F))
                             .build();
                 case V:
                     return ChromaticChord.Cm;
                 case VI:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG))
                             .build();
                 case VII:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA))
                             .build();
                 case I2:
                     return ChromaticChord.Fsus2;
                 case II2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.GG, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.GG, Chromatic.CC))
                             .build();
                 case III2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.AA, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.AA, Chromatic.DD))
                             .build();
                 case IV2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.C, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.C, Chromatic.F))
                             .build();
                 case V2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.CC, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.CC, Chromatic.G))
                             .build();
                 case VI2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.DD, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.DD, Chromatic.GG))
                             .build();
                 case VII2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.F, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.F, Chromatic.AA))
                             .build();
                 case I4:
                     return ChromaticChord.Fsus4;
                 case II4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.CC))
                             .build();
                 case III4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.CC, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.CC, Chromatic.DD))
                             .build();
                 case IV4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.DD, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.DD, Chromatic.F))
                             .build();
                 case V4:
                     return ChromaticChord.Csus4;
                 case VI4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.G, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.G, Chromatic.GG))
                             .build();
                 case VII4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.GG, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.GG, Chromatic.AA))
                             .build();
                 case I6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.CC))
                             .build();
                 case II6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.CC, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.CC, Chromatic.DD))
                             .build();
                 case III6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.F))
                             .build();
                 case IV6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.G))
                             .build();
                 case V6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.GG))
                             .build();
                 case VI6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.AA))
                             .build();
                 case VII6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.C))
                             .build();
                 case I7:
                     return ChromaticChord.Fm7;
@@ -2152,21 +2152,21 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Gm7b5;
                 case III7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.G))
                             .build();
                 case IV7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG))
                             .build();
                 case V7:
                     return ChromaticChord.Cm7;
                 case VI7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C))
                             .build();
                 case VII7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.CC))
                             .build();
                 case I9:
                     return ChromaticChord.Fm9;
@@ -2178,312 +2178,312 @@ class TonalityGetDiatonicFunctionMinor {
                             .build();
                 case III9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA))
                             .build();
                 case IV9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C))
                             .build();
                 case V9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.CC))
                             .build();
                 case VI9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD))
                             .build();
                 case VII9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.CC, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.CC, Chromatic.F))
                             .build();
                 case I11:
                     return ChromaticChord.Fm11;
                 case II11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C))
                             .build();
                 case III11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.CC))
                             .build();
                 case IV11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD))
                             .build();
                 case V11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.CC, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.CC, Chromatic.F))
                             .build();
                 case VI11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.G))
                             .build();
                 case VII11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG))
                             .build();
                 case I13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.CC))
                             .build();
                 case II13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD))
                             .build();
                 case III13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.CC, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.CC, Chromatic.F))
                             .build();
                 case IV13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.G))
                             .build();
                 case V13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG))
                             .build();
                 case VI13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA))
                             .build();
                 case VII13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C))
                             .build();
                 case I_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.G))
                             .build();
                 case II_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.GG))
                             .build();
                 case III_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.AA))
                             .build();
                 case IV_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.C))
                             .build();
                 case V_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.CC))
                             .build();
                 case VI_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.DD))
                             .build();
                 case VII_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.F))
                             .build();
                 case I_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.GG))
                             .build();
                 case II_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.AA))
                             .build();
                 case III_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.C))
                             .build();
                 case IV_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC))
                             .build();
                 case V_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.DD))
                             .build();
                 case VI_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.F))
                             .build();
                 case VII_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.G))
                             .build();
                 case I_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.AA))
                             .build();
                 case II_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.C))
                             .build();
                 case III_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.CC))
                             .build();
                 case IV_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.DD))
                             .build();
                 case V_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.F))
                             .build();
                 case VI_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.G))
                             .build();
                 case VII_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.GG))
                             .build();
                 case I6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.CC))
                             .build();
                 case II6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.DD))
                             .build();
                 case III6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.F))
                             .build();
                 case IV6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.G))
                             .build();
                 case V6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.GG))
                             .build();
                 case VI6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.AA))
                             .build();
                 case VII6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.C))
                             .build();
                 case I7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.DD))
                             .build();
                 case II7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.F))
                             .build();
                 case III7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.G))
                             .build();
                 case IV7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.GG))
                             .build();
                 case V7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.AA))
                             .build();
                 case VI7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.C))
                             .build();
                 case VII7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.CC))
                             .build();
                 case I7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.C, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.C, Chromatic.DD))
                             .build();
                 case II7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.CC, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.CC, Chromatic.F))
                             .build();
                 case III7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.DD, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.DD, Chromatic.G))
                             .build();
                 case IV7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.F, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.F, Chromatic.GG))
                             .build();
                 case V7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.G, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.G, Chromatic.AA))
                             .build();
                 case VI7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.GG, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.GG, Chromatic.C))
                             .build();
                 case VII7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.AA, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.AA, Chromatic.CC))
                             .build();
                 case I9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.G))
                             .build();
                 case II9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.CC, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.CC, Chromatic.GG))
                             .build();
                 case III9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.AA))
                             .build();
                 case IV9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.C))
                             .build();
                 case V9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.CC))
                             .build();
                 case VI9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.DD))
                             .build();
                 case VII9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.F))
                             .build();
                 case I9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.C, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.C, Chromatic.G))
                             .build();
                 case II9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.CC, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.CC, Chromatic.GG))
                             .build();
                 case III9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.DD, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.DD, Chromatic.AA))
                             .build();
                 case IV9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.F, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.F, Chromatic.C))
                             .build();
                 case V9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.G, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.G, Chromatic.CC))
                             .build();
                 case VI9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.GG, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.GG, Chromatic.DD))
                             .build();
                 case VII9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.AA, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.AA, Chromatic.F))
                             .build();
             }
         } else if (t.equals(Tonality.FFm)) {
             switch (f) {
                 case I:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC))
                             .build();
                 case II:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.D))
                             .build();
                 case III:
                     return ChromaticChord.A;
@@ -2491,7 +2491,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Bm;
                 case V:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG))
                             .build();
                 case VI:
                     return ChromaticChord.D;
@@ -2499,11 +2499,11 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.E;
                 case I2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.GG, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.GG, Chromatic.CC))
                             .build();
                 case II2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.A, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.A, Chromatic.D))
                             .build();
                 case III2:
                     return ChromaticChord.Asus2;
@@ -2511,7 +2511,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Bsus2;
                 case V2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.D, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.D, Chromatic.GG))
                             .build();
                 case VI2:
                     return ChromaticChord.Dsus2;
@@ -2519,11 +2519,11 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Esus2;
                 case I4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.B, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.B, Chromatic.CC))
                             .build();
                 case II4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.CC, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.CC, Chromatic.D))
                             .build();
                 case III4:
                     return ChromaticChord.Asus4;
@@ -2531,21 +2531,21 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Bsus4;
                 case V4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.FF, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.FF, Chromatic.GG))
                             .build();
                 case VI4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.GG, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.GG, Chromatic.A))
                             .build();
                 case VII4:
                     return ChromaticChord.Esus4;
                 case I6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.D))
                             .build();
                 case II6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.D, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.D, Chromatic.E))
                             .build();
                 case III6:
                     return ChromaticChord.A6;
@@ -2553,7 +2553,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Bm6;
                 case V6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.A))
                             .build();
                 case VI6:
                     return ChromaticChord.D6;
@@ -2561,11 +2561,11 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.E6;
                 case I7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E))
                             .build();
                 case II7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.D, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.D, Chromatic.FF))
                             .build();
                 case III7:
                     return ChromaticChord.AMaj7;
@@ -2573,7 +2573,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Bm7;
                 case V7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B))
                             .build();
                 case VI7:
                     return ChromaticChord.DMaj7;
@@ -2581,11 +2581,11 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.E7;
                 case I9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.GG))
                             .build();
                 case II9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.A))
                             .build();
                 case III9:
                     return ChromaticChord.AMaj9;
@@ -2593,7 +2593,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Bm9;
                 case V9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.D))
                             .build();
                 case VI9:
                     return ChromaticChord.DMaj9;
@@ -2601,11 +2601,11 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.E9;
                 case I11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B))
                             .build();
                 case II11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.CC))
                             .build();
                 case III11:
                     return ChromaticChord.AMaj11;
@@ -2613,263 +2613,263 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Bm11;
                 case V11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.D, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.D, Chromatic.FF))
                             .build();
                 case VI11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.GG))
                             .build();
                 case VII11:
                     return ChromaticChord.E11;
                 case I13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.D))
                             .build();
                 case II13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E))
                             .build();
                 case III13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.D, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.D, Chromatic.FF))
                             .build();
                 case IV13:
                     return ChromaticChord.Bm13;
                 case V13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.A))
                             .build();
                 case VI13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B))
                             .build();
                 case VII13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.CC))
                             .build();
                 case I_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.GG))
                             .build();
                 case II_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.A))
                             .build();
                 case III_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.B))
                             .build();
                 case IV_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.CC))
                             .build();
                 case V_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.D))
                             .build();
                 case VI_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.E))
                             .build();
                 case VII_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.FF))
                             .build();
                 case I_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A))
                             .build();
                 case II_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B))
                             .build();
                 case III_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.CC))
                             .build();
                 case IV_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.D))
                             .build();
                 case V_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E))
                             .build();
                 case VI_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.FF))
                             .build();
                 case VII_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.GG))
                             .build();
                 case I_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.B))
                             .build();
                 case II_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.CC))
                             .build();
                 case III_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.D))
                             .build();
                 case IV_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.E))
                             .build();
                 case V_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.FF))
                             .build();
                 case VI_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.GG))
                             .build();
                 case VII_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.A))
                             .build();
                 case I6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.D))
                             .build();
                 case II6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.E))
                             .build();
                 case III6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.CC, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.CC, Chromatic.FF))
                             .build();
                 case IV6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.GG))
                             .build();
                 case V6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.A))
                             .build();
                 case VI6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.FF, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.FF, Chromatic.B))
                             .build();
                 case VII6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.GG, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.GG, Chromatic.CC))
                             .build();
                 case I7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.E))
                             .build();
                 case II7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.FF))
                             .build();
                 case III7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.CC, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.CC, Chromatic.GG))
                             .build();
                 case IV7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.A))
                             .build();
                 case V7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.B))
                             .build();
                 case VI7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.FF, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.FF, Chromatic.CC))
                             .build();
                 case VII7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.GG, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.GG, Chromatic.D))
                             .build();
                 case I7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.CC, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.CC, Chromatic.E))
                             .build();
                 case II7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.D, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.D, Chromatic.FF))
                             .build();
                 case III7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.E, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.E, Chromatic.GG))
                             .build();
                 case IV7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.FF, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.FF, Chromatic.A))
                             .build();
                 case V7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.GG, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.GG, Chromatic.B))
                             .build();
                 case VI7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.A, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.A, Chromatic.CC))
                             .build();
                 case VII7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.B, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.B, Chromatic.D))
                             .build();
                 case I9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.GG))
                             .build();
                 case II9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.D, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.D, Chromatic.A))
                             .build();
                 case III9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.B))
                             .build();
                 case IV9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.CC))
                             .build();
                 case V9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.D))
                             .build();
                 case VI9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.E))
                             .build();
                 case VII9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.FF))
                             .build();
                 case I9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.CC, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.CC, Chromatic.GG))
                             .build();
                 case II9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.D, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.D, Chromatic.A))
                             .build();
                 case III9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.E, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.E, Chromatic.B))
                             .build();
                 case IV9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.FF, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.FF, Chromatic.CC))
                             .build();
                 case V9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.GG, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.GG, Chromatic.D))
                             .build();
                 case VI9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.A, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.A, Chromatic.E))
                             .build();
                 case VII9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.B, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.B, Chromatic.FF))
                             .build();
             }
         } else if (t.equals(Tonality.Gm)) {
@@ -2880,7 +2880,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Adim;
                 case III:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F))
                             .build();
                 case IV:
                     return ChromaticChord.Cm;
@@ -2888,7 +2888,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Dm;
                 case VI:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA))
                             .build();
                 case VII:
                     return ChromaticChord.F;
@@ -2896,21 +2896,21 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Gsus2;
                 case II2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.AA, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.AA, Chromatic.DD))
                             .build();
                 case III2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.C, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.C, Chromatic.F))
                             .build();
                 case IV2:
                     return ChromaticChord.Csus2;
                 case V2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.DD, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.DD, Chromatic.A))
                             .build();
                 case VI2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.F, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.F, Chromatic.AA))
                             .build();
                 case VII2:
                     return ChromaticChord.Fsus2;
@@ -2918,11 +2918,11 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Gsus4;
                 case II4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.D, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.D, Chromatic.DD))
                             .build();
                 case III4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.DD, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.DD, Chromatic.F))
                             .build();
                 case IV4:
                     return ChromaticChord.Csus4;
@@ -2930,31 +2930,31 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Dsus4;
                 case VI4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.A, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.A, Chromatic.AA))
                             .build();
                 case VII4:
                     return ChromaticChord.Fsus4;
                 case I6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.DD))
                             .build();
                 case II6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.DD, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.DD, Chromatic.F))
                             .build();
                 case III6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.G))
                             .build();
                 case IV6:
                     return ChromaticChord.Cm6;
                 case V6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.AA))
                             .build();
                 case VI6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.C))
                             .build();
                 case VII6:
                     return ChromaticChord.F6;
@@ -2964,7 +2964,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Am7b5;
                 case III7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.A))
                             .build();
                 case IV7:
                     return ChromaticChord.Cm7;
@@ -2972,7 +2972,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Dm7;
                 case VI7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.D))
                             .build();
                 case VII7:
                     return ChromaticChord.F7;
@@ -2986,17 +2986,17 @@ class TonalityGetDiatonicFunctionMinor {
                             .build();
                 case III9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C))
                             .build();
                 case IV9:
                     return ChromaticChord.Cm9;
                 case V9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.DD))
                             .build();
                 case VI9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F))
                             .build();
                 case VII9:
                     return ChromaticChord.F9;
@@ -3004,700 +3004,700 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Gm11;
                 case II11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.D))
                             .build();
                 case III11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.DD))
                             .build();
                 case IV11:
                     return ChromaticChord.Cm11;
                 case V11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.DD, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.DD, Chromatic.G))
                             .build();
                 case VI11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.A))
                             .build();
                 case VII11:
                     return ChromaticChord.F11;
                 case I13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.DD))
                             .build();
                 case II13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F))
                             .build();
                 case III13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.DD, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.DD, Chromatic.G))
                             .build();
                 case IV13:
                     return ChromaticChord.Cm13;
                 case V13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA))
                             .build();
                 case VI13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C))
                             .build();
                 case VII13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.D))
                             .build();
                 case I_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.A))
                             .build();
                 case II_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.AA))
                             .build();
                 case III_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.C))
                             .build();
                 case IV_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.D))
                             .build();
                 case V_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.DD))
                             .build();
                 case VI_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.F))
                             .build();
                 case VII_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.G))
                             .build();
                 case I_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.AA))
                             .build();
                 case II_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.C))
                             .build();
                 case III_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.D))
                             .build();
                 case IV_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.DD))
                             .build();
                 case V_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.F))
                             .build();
                 case VI_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.G))
                             .build();
                 case VII_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.A))
                             .build();
                 case I_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.C))
                             .build();
                 case II_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.D))
                             .build();
                 case III_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.DD))
                             .build();
                 case IV_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.F))
                             .build();
                 case V_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.G))
                             .build();
                 case VI_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.A))
                             .build();
                 case VII_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.AA))
                             .build();
                 case I6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.DD))
                             .build();
                 case II6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.F))
                             .build();
                 case III6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.G))
                             .build();
                 case IV6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.A))
                             .build();
                 case V6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.AA))
                             .build();
                 case VI6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.C))
                             .build();
                 case VII6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.A, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.A, Chromatic.D))
                             .build();
                 case I7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.F))
                             .build();
                 case II7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.G))
                             .build();
                 case III7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.A))
                             .build();
                 case IV7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.AA))
                             .build();
                 case V7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.C))
                             .build();
                 case VI7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.D))
                             .build();
                 case VII7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.A, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.A, Chromatic.DD))
                             .build();
                 case I7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.D, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.D, Chromatic.F))
                             .build();
                 case II7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.DD, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.DD, Chromatic.G))
                             .build();
                 case III7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.F, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.F, Chromatic.A))
                             .build();
                 case IV7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.G, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.G, Chromatic.AA))
                             .build();
                 case V7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.A, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.A, Chromatic.C))
                             .build();
                 case VI7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.AA, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.AA, Chromatic.D))
                             .build();
                 case VII7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.C, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.C, Chromatic.DD))
                             .build();
                 case I9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.D, Chromatic.A))
                             .build();
                 case II9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.DD, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.DD, Chromatic.AA))
                             .build();
                 case III9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.C))
                             .build();
                 case IV9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.G, Chromatic.D))
                             .build();
                 case V9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.DD))
                             .build();
                 case VI9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.F))
                             .build();
                 case VII9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.G))
                             .build();
                 case I9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.D, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.D, Chromatic.A))
                             .build();
                 case II9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.DD, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.DD, Chromatic.AA))
                             .build();
                 case III9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.F, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.F, Chromatic.C))
                             .build();
                 case IV9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.G, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.G, Chromatic.D))
                             .build();
                 case V9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.A, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.A, Chromatic.DD))
                             .build();
                 case VI9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.AA, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.AA, Chromatic.F))
                             .build();
                 case VII9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.C, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.C, Chromatic.G))
                             .build();
             }
         } else if (t.equals(Tonality.GGm)) {
             switch (f) {
                 case I:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD))
                             .build();
                 case II:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.E))
                             .build();
                 case III:
                     return ChromaticChord.B;
                 case IV:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG))
                             .build();
                 case V:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA))
                             .build();
                 case VI:
                     return ChromaticChord.E;
                 case VII:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC))
                             .build();
                 case I2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.AA, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.AA, Chromatic.DD))
                             .build();
                 case II2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.B, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.B, Chromatic.E))
                             .build();
                 case III2:
                     return ChromaticChord.Bsus2;
                 case IV2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.DD, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.DD, Chromatic.GG))
                             .build();
                 case V2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.E, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.E, Chromatic.AA))
                             .build();
                 case VI2:
                     return ChromaticChord.Esus2;
                 case VII2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.GG, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.GG, Chromatic.CC))
                             .build();
                 case I4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.CC, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.CC, Chromatic.DD))
                             .build();
                 case II4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.DD, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.DD, Chromatic.E))
                             .build();
                 case III4:
                     return ChromaticChord.Bsus4;
                 case IV4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.FF, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.FF, Chromatic.GG))
                             .build();
                 case V4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.GG, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.GG, Chromatic.AA))
                             .build();
                 case VI4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.AA, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.AA, Chromatic.B))
                             .build();
                 case VII4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.B, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.B, Chromatic.CC))
                             .build();
                 case I6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.E))
                             .build();
                 case II6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.E, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.E, Chromatic.FF))
                             .build();
                 case III6:
                     return ChromaticChord.B6;
                 case IV6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.AA))
                             .build();
                 case V6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.B))
                             .build();
                 case VI6:
                     return ChromaticChord.E6;
                 case VII6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.DD))
                             .build();
                 case I7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF))
                             .build();
                 case II7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.E, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.E, Chromatic.GG))
                             .build();
                 case III7:
                     return ChromaticChord.BMaj7;
                 case IV7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B))
                             .build();
                 case V7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC))
                             .build();
                 case VI7:
                     return ChromaticChord.EMaj7;
                 case VII7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.E))
                             .build();
                 case I9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.AA))
                             .build();
                 case II9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B))
                             .build();
                 case III9:
                     return ChromaticChord.BMaj9;
                 case IV9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.DD))
                             .build();
                 case V9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.E))
                             .build();
                 case VI9:
                     return ChromaticChord.EMaj9;
                 case VII9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.E, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.E, Chromatic.GG))
                             .build();
                 case I11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC))
                             .build();
                 case II11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.DD))
                             .build();
                 case III11:
                     return ChromaticChord.BMaj11;
                 case IV11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF))
                             .build();
                 case V11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.E, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.E, Chromatic.GG))
                             .build();
                 case VI11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.AA))
                             .build();
                 case VII11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B))
                             .build();
                 case I13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.E))
                             .build();
                 case II13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF))
                             .build();
                 case III13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.E, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.E, Chromatic.GG))
                             .build();
                 case IV13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.AA))
                             .build();
                 case V13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B))
                             .build();
                 case VI13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC))
                             .build();
                 case VII13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.DD))
                             .build();
                 case I_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.AA))
                             .build();
                 case II_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.B))
                             .build();
                 case III_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.CC))
                             .build();
                 case IV_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.DD))
                             .build();
                 case V_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.E))
                             .build();
                 case VI_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.FF))
                             .build();
                 case VII_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.GG))
                             .build();
                 case I_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B))
                             .build();
                 case II_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC))
                             .build();
                 case III_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.DD))
                             .build();
                 case IV_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E))
                             .build();
                 case V_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF))
                             .build();
                 case VI_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.GG))
                             .build();
                 case VII_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.AA))
                             .build();
                 case I_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.CC))
                             .build();
                 case II_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.DD))
                             .build();
                 case III_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.E))
                             .build();
                 case IV_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.FF))
                             .build();
                 case V_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.GG))
                             .build();
                 case VI_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.AA))
                             .build();
                 case VII_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.B))
                             .build();
                 case I6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.E))
                             .build();
                 case II6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.FF))
                             .build();
                 case III6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.DD, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.DD, Chromatic.GG))
                             .build();
                 case IV6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.AA))
                             .build();
                 case V6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.B))
                             .build();
                 case VI6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.GG, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.GG, Chromatic.CC))
                             .build();
                 case VII6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.DD))
                             .build();
                 case I7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.FF))
                             .build();
                 case II7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.GG))
                             .build();
                 case III7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.DD, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.DD, Chromatic.AA))
                             .build();
                 case IV7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.B))
                             .build();
                 case V7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.CC))
                             .build();
                 case VI7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.GG, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.GG, Chromatic.DD))
                             .build();
                 case VII7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.E))
                             .build();
                 case I7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.DD, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.DD, Chromatic.FF))
                             .build();
                 case II7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.E, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.E, Chromatic.GG))
                             .build();
                 case III7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.FF, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.FF, Chromatic.AA))
                             .build();
                 case IV7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.GG, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.GG, Chromatic.B))
                             .build();
                 case V7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.AA, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.AA, Chromatic.CC))
                             .build();
                 case VI7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.B, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.B, Chromatic.DD))
                             .build();
                 case VII7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.CC, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.CC, Chromatic.E))
                             .build();
                 case I9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD, Chromatic.AA))
                             .build();
                 case II9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.E, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.E, Chromatic.B))
                             .build();
                 case III9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.DD, Chromatic.FF, Chromatic.CC))
                             .build();
                 case IV9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG, Chromatic.DD))
                             .build();
                 case V9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.E))
                             .build();
                 case VI9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.GG, Chromatic.B, Chromatic.FF))
                             .build();
                 case VII9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.GG))
                             .build();
                 case I9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.DD, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.DD, Chromatic.AA))
                             .build();
                 case II9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.E, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.E, Chromatic.B))
                             .build();
                 case III9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.FF, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.FF, Chromatic.CC))
                             .build();
                 case IV9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.GG, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.GG, Chromatic.DD))
                             .build();
                 case V9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.AA, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.AA, Chromatic.E))
                             .build();
                 case VI9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.B, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.B, Chromatic.FF))
                             .build();
                 case VII9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.CC, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.CC, Chromatic.GG))
                             .build();
             }
         } else if (t.equals(Tonality.Am)) {
@@ -3720,7 +3720,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Asus2;
                 case II2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.C, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.C, Chromatic.F))
                             .build();
                 case III2:
                     return ChromaticChord.Csus2;
@@ -3728,7 +3728,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Dsus2;
                 case V2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.F, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.F, Chromatic.B))
                             .build();
                 case VI2:
                     return ChromaticChord.Fsus2;
@@ -3738,7 +3738,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Asus4;
                 case II4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.E, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.E, Chromatic.F))
                             .build();
                 case III4:
                     return ChromaticChord.Csus4;
@@ -3748,17 +3748,17 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Esus4;
                 case VI4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.B, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.B, Chromatic.C))
                             .build();
                 case VII4:
                     return ChromaticChord.Gsus4;
                 case I6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.F))
                             .build();
                 case II6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.F, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.F, Chromatic.G))
                             .build();
                 case III6:
                     return ChromaticChord.C6;
@@ -3766,7 +3766,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Dm6;
                 case V6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.C))
                             .build();
                 case VI6:
                     return ChromaticChord.F6;
@@ -3800,7 +3800,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Dm9;
                 case V9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.F))
                             .build();
                 case VI9:
                     return ChromaticChord.FMaj9;
@@ -3810,7 +3810,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Am11;
                 case II11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.E))
                             .build();
                 case III11:
                     return ChromaticChord.CMaj11;
@@ -3818,714 +3818,714 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Dm11;
                 case V11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.F, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.F, Chromatic.A))
                             .build();
                 case VI11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.B))
                             .build();
                 case VII11:
                     return ChromaticChord.G11;
                 case I13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.F))
                             .build();
                 case II13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G))
                             .build();
                 case III13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.F, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.F, Chromatic.A))
                             .build();
                 case IV13:
                     return ChromaticChord.Dm13;
                 case V13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C))
                             .build();
                 case VI13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D))
                             .build();
                 case VII13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.E))
                             .build();
                 case I_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.B))
                             .build();
                 case II_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.C))
                             .build();
                 case III_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.D))
                             .build();
                 case IV_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.E))
                             .build();
                 case V_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.F))
                             .build();
                 case VI_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.G))
                             .build();
                 case VII_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.A))
                             .build();
                 case I_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.C))
                             .build();
                 case II_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.D))
                             .build();
                 case III_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.E))
                             .build();
                 case IV_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.F))
                             .build();
                 case V_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.G))
                             .build();
                 case VI_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.A))
                             .build();
                 case VII_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.B))
                             .build();
                 case I_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.D))
                             .build();
                 case II_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.E))
                             .build();
                 case III_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.F))
                             .build();
                 case IV_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.G))
                             .build();
                 case V_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.A))
                             .build();
                 case VI_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.B))
                             .build();
                 case VII_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.C))
                             .build();
                 case I6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.F))
                             .build();
                 case II6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.G))
                             .build();
                 case III6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.A))
                             .build();
                 case IV6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.B))
                             .build();
                 case V6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.C))
                             .build();
                 case VI6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.A, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.A, Chromatic.D))
                             .build();
                 case VII6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.B, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.B, Chromatic.E))
                             .build();
                 case I7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.G))
                             .build();
                 case II7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.A))
                             .build();
                 case III7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.B))
                             .build();
                 case IV7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.C))
                             .build();
                 case V7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.D))
                             .build();
                 case VI7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.A, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.A, Chromatic.E))
                             .build();
                 case VII7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.B, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.B, Chromatic.F))
                             .build();
                 case I7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.E, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.E, Chromatic.G))
                             .build();
                 case II7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.F, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.F, Chromatic.A))
                             .build();
                 case III7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.G, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.G, Chromatic.B))
                             .build();
                 case IV7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.A, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.A, Chromatic.C))
                             .build();
                 case V7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.B, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.B, Chromatic.D))
                             .build();
                 case VI7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.C, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.C, Chromatic.E))
                             .build();
                 case VII7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.D, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.D, Chromatic.F))
                             .build();
                 case I9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.E, Chromatic.B))
                             .build();
                 case II9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.F, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.F, Chromatic.C))
                             .build();
                 case III9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.D))
                             .build();
                 case IV9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.E))
                             .build();
                 case V9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.F))
                             .build();
                 case VI9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.A, Chromatic.C, Chromatic.G))
                             .build();
                 case VII9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.A))
                             .build();
                 case I9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.E, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.E, Chromatic.B))
                             .build();
                 case II9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.F, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.F, Chromatic.C))
                             .build();
                 case III9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.G, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.G, Chromatic.D))
                             .build();
                 case IV9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.A, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.A, Chromatic.E))
                             .build();
                 case V9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.B, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.B, Chromatic.F))
                             .build();
                 case VI9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.C, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.C, Chromatic.G))
                             .build();
                 case VII9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.D, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.D, Chromatic.A))
                             .build();
             }
         } else if (t.equals(Tonality.Bbm)) {
             switch (f) {
                 case I:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F))
                             .build();
                 case II:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.FF))
                             .build();
                 case III:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG))
                             .build();
                 case IV:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA))
                             .build();
                 case V:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.C))
                             .build();
                 case VI:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC))
                             .build();
                 case VII:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD))
                             .build();
                 case I2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.C, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.C, Chromatic.F))
                             .build();
                 case II2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.CC, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.CC, Chromatic.FF))
                             .build();
                 case III2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.DD, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.DD, Chromatic.GG))
                             .build();
                 case IV2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.F, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.F, Chromatic.AA))
                             .build();
                 case V2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.FF, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.FF, Chromatic.C))
                             .build();
                 case VI2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.GG, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.GG, Chromatic.CC))
                             .build();
                 case VII2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.AA, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.AA, Chromatic.DD))
                             .build();
                 case I4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.DD, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.DD, Chromatic.F))
                             .build();
                 case II4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.F, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.F, Chromatic.FF))
                             .build();
                 case III4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.FF, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.FF, Chromatic.GG))
                             .build();
                 case IV4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.GG, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.GG, Chromatic.AA))
                             .build();
                 case V4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.AA, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.AA, Chromatic.C))
                             .build();
                 case VI4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.C, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.C, Chromatic.CC))
                             .build();
                 case VII4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.CC, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.CC, Chromatic.DD))
                             .build();
                 case I6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.FF))
                             .build();
                 case II6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.FF, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.FF, Chromatic.GG))
                             .build();
                 case III6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.AA))
                             .build();
                 case IV6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.C))
                             .build();
                 case V6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.CC))
                             .build();
                 case VI6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.DD))
                             .build();
                 case VII6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.F))
                             .build();
                 case I7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG))
                             .build();
                 case II7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.FF, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.FF, Chromatic.AA))
                             .build();
                 case III7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C))
                             .build();
                 case IV7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC))
                             .build();
                 case V7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD))
                             .build();
                 case VI7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F))
                             .build();
                 case VII7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.FF))
                             .build();
                 case I9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C))
                             .build();
                 case II9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC))
                             .build();
                 case III9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD))
                             .build();
                 case IV9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F))
                             .build();
                 case V9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.FF))
                             .build();
                 case VI9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG))
                             .build();
                 case VII9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.FF, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.FF, Chromatic.AA))
                             .build();
                 case I11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD))
                             .build();
                 case II11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F))
                             .build();
                 case III11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.FF))
                             .build();
                 case IV11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG))
                             .build();
                 case V11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.FF, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.FF, Chromatic.AA))
                             .build();
                 case VI11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C))
                             .build();
                 case VII11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC))
                             .build();
                 case I13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.FF))
                             .build();
                 case II13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG))
                             .build();
                 case III13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.FF, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.FF, Chromatic.AA))
                             .build();
                 case IV13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C))
                             .build();
                 case V13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC))
                             .build();
                 case VI13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.DD))
                             .build();
                 case VII13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.F))
                             .build();
                 case I_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.C))
                             .build();
                 case II_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.CC))
                             .build();
                 case III_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.DD))
                             .build();
                 case IV_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.F))
                             .build();
                 case V_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.FF))
                             .build();
                 case VI_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.GG))
                             .build();
                 case VII_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.AA))
                             .build();
                 case I_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC))
                             .build();
                 case II_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.DD))
                             .build();
                 case III_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.F))
                             .build();
                 case IV_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF))
                             .build();
                 case V_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.GG))
                             .build();
                 case VI_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.AA))
                             .build();
                 case VII_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.C))
                             .build();
                 case I_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.DD))
                             .build();
                 case II_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.F))
                             .build();
                 case III_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.FF))
                             .build();
                 case IV_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.GG))
                             .build();
                 case V_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.AA))
                             .build();
                 case VI_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.C))
                             .build();
                 case VII_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.CC))
                             .build();
                 case I6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.FF))
                             .build();
                 case II6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.GG))
                             .build();
                 case III6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.AA))
                             .build();
                 case IV6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.C))
                             .build();
                 case V6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.CC))
                             .build();
                 case VI6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.DD))
                             .build();
                 case VII6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.F))
                             .build();
                 case I7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.GG))
                             .build();
                 case II7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.AA))
                             .build();
                 case III7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.C))
                             .build();
                 case IV7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.CC))
                             .build();
                 case V7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.DD))
                             .build();
                 case VI7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.F))
                             .build();
                 case VII7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.FF))
                             .build();
                 case I7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.F, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.F, Chromatic.GG))
                             .build();
                 case II7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.FF, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.FF, Chromatic.AA))
                             .build();
                 case III7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.GG, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.GG, Chromatic.C))
                             .build();
                 case IV7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.AA, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.AA, Chromatic.CC))
                             .build();
                 case V7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.C, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.C, Chromatic.DD))
                             .build();
                 case VI7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.CC, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.CC, Chromatic.F))
                             .build();
                 case VII7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.DD, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.DD, Chromatic.FF))
                             .build();
                 case I9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F, Chromatic.C))
                             .build();
                 case II9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.FF, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.FF, Chromatic.CC))
                             .build();
                 case III9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.DD))
                             .build();
                 case IV9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA, Chromatic.F))
                             .build();
                 case V9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.C, Chromatic.FF))
                             .build();
                 case VI9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.GG))
                             .build();
                 case VII9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.AA))
                             .build();
                 case I9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.AA, Chromatic.F, Chromatic.C))
+                            .fromChromatic(Arrays.asList(Chromatic.AA, Chromatic.F, Chromatic.C))
                             .build();
                 case II9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.C, Chromatic.FF, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.FF, Chromatic.CC))
                             .build();
                 case III9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.GG, Chromatic.DD))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.GG, Chromatic.DD))
                             .build();
                 case IV9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.DD, Chromatic.AA, Chromatic.F))
+                            .fromChromatic(Arrays.asList(Chromatic.DD, Chromatic.AA, Chromatic.F))
                             .build();
                 case V9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.F, Chromatic.C, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.F, Chromatic.C, Chromatic.FF))
                             .build();
                 case VI9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.CC, Chromatic.GG))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.CC, Chromatic.GG))
                             .build();
                 case VII9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.GG, Chromatic.DD, Chromatic.AA))
+                            .fromChromatic(Arrays.asList(Chromatic.GG, Chromatic.DD, Chromatic.AA))
                             .build();
             }
         } else if (t.equals(Tonality.Bm)) {
@@ -4534,7 +4534,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Bm;
                 case II:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.G))
                             .build();
                 case III:
                     return ChromaticChord.D;
@@ -4542,7 +4542,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Em;
                 case V:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC))
                             .build();
                 case VI:
                     return ChromaticChord.G;
@@ -4552,7 +4552,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Bsus2;
                 case II2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.D, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.D, Chromatic.G))
                             .build();
                 case III2:
                     return ChromaticChord.Dsus2;
@@ -4560,7 +4560,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Esus2;
                 case V2:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.G, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.G, Chromatic.CC))
                             .build();
                 case VI2:
                     return ChromaticChord.Gsus2;
@@ -4570,7 +4570,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Bsus4;
                 case II4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.FF, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.FF, Chromatic.G))
                             .build();
                 case III4:
                     return ChromaticChord.Dsus4;
@@ -4578,21 +4578,21 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Esus4;
                 case V4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.B, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.B, Chromatic.CC))
                             .build();
                 case VI4:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.CC, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.CC, Chromatic.D))
                             .build();
                 case VII4:
                     return ChromaticChord.Asus4;
                 case I6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.G))
                             .build();
                 case II6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.G, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.G, Chromatic.A))
                             .build();
                 case III6:
                     return ChromaticChord.D6;
@@ -4600,7 +4600,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Em6;
                 case V6:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.D))
                             .build();
                 case VI6:
                     return ChromaticChord.G6;
@@ -4610,7 +4610,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Bm7;
                 case II7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.G, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.G, Chromatic.B))
                             .build();
                 case III7:
                     return ChromaticChord.DMaj7;
@@ -4618,7 +4618,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Em7;
                 case V7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E))
                             .build();
                 case VI7:
                     return ChromaticChord.GMaj7;
@@ -4628,7 +4628,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Bm9;
                 case II9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D))
                             .build();
                 case III9:
                     return ChromaticChord.DMaj9;
@@ -4636,7 +4636,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Em9;
                 case V9:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.G))
                             .build();
                 case VI9:
                     return ChromaticChord.GMaj9;
@@ -4646,7 +4646,7 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Bm11;
                 case II11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.FF))
                             .build();
                 case III11:
                     return ChromaticChord.DMaj11;
@@ -4654,263 +4654,263 @@ class TonalityGetDiatonicFunctionMinor {
                     return ChromaticChord.Em11;
                 case V11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.G, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.G, Chromatic.B))
                             .build();
                 case VI11:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.CC))
                             .build();
                 case VII11:
                     return ChromaticChord.A11;
                 case I13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.G))
                             .build();
                 case II13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.A))
                             .build();
                 case III13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.G, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.G, Chromatic.B))
                             .build();
                 case IV13:
                     return ChromaticChord.Em13;
                 case V13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D))
                             .build();
                 case VI13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.E))
                             .build();
                 case VII13:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.FF))
                             .build();
                 case I_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.CC))
                             .build();
                 case II_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.D))
                             .build();
                 case III_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.E))
                             .build();
                 case IV_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.FF))
                             .build();
                 case V_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.G))
                             .build();
                 case VI_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.A))
                             .build();
                 case VII_SECOND:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.B))
                             .build();
                 case I_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.D))
                             .build();
                 case II_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E))
                             .build();
                 case III_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.FF))
                             .build();
                 case IV_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.G))
                             .build();
                 case V_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A))
                             .build();
                 case VI_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.B))
                             .build();
                 case VII_THIRD:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.CC))
                             .build();
                 case I_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.E))
                             .build();
                 case II_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.FF))
                             .build();
                 case III_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.G))
                             .build();
                 case IV_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.A))
                             .build();
                 case V_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.B))
                             .build();
                 case VI_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.CC))
                             .build();
                 case VII_FOURTH:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.D))
                             .build();
                 case I6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.G))
                             .build();
                 case II6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.A))
                             .build();
                 case III6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.FF, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.FF, Chromatic.B))
                             .build();
                 case IV6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.CC))
                             .build();
                 case V6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.D))
                             .build();
                 case VI6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.B, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.B, Chromatic.E))
                             .build();
                 case VII6_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.CC, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.CC, Chromatic.FF))
                             .build();
                 case I7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.A))
                             .build();
                 case II7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.B))
                             .build();
                 case III7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.FF, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.FF, Chromatic.CC))
                             .build();
                 case IV7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.D))
                             .build();
                 case V7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.E))
                             .build();
                 case VI7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.B, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.B, Chromatic.FF))
                             .build();
                 case VII7_O5:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.CC, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.CC, Chromatic.G))
                             .build();
                 case I7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.FF, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.FF, Chromatic.A))
                             .build();
                 case II7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.G, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.G, Chromatic.B))
                             .build();
                 case III7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.A, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.A, Chromatic.CC))
                             .build();
                 case IV7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.B, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.B, Chromatic.D))
                             .build();
                 case V7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.CC, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.CC, Chromatic.E))
                             .build();
                 case VI7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.D, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.D, Chromatic.FF))
                             .build();
                 case VII7_O3:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.E, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.E, Chromatic.G))
                             .build();
                 case I9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.D, Chromatic.FF, Chromatic.CC))
                             .build();
                 case II9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.G, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.G, Chromatic.D))
                             .build();
                 case III9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.FF, Chromatic.A, Chromatic.E))
                             .build();
                 case IV9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.FF))
                             .build();
                 case V9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC, Chromatic.G))
                             .build();
                 case VI9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.A))
                             .build();
                 case VII9_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.CC, Chromatic.E, Chromatic.B))
                             .build();
                 case I9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.B, Chromatic.FF, Chromatic.CC))
+                            .fromChromatic(Arrays.asList(Chromatic.B, Chromatic.FF, Chromatic.CC))
                             .build();
                 case II9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.CC, Chromatic.G, Chromatic.D))
+                            .fromChromatic(Arrays.asList(Chromatic.CC, Chromatic.G, Chromatic.D))
                             .build();
                 case III9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.D, Chromatic.A, Chromatic.E))
+                            .fromChromatic(Arrays.asList(Chromatic.D, Chromatic.A, Chromatic.E))
                             .build();
                 case IV9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.E, Chromatic.B, Chromatic.FF))
+                            .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.B, Chromatic.FF))
                             .build();
                 case V9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.FF, Chromatic.CC, Chromatic.G))
+                            .fromChromatic(Arrays.asList(Chromatic.FF, Chromatic.CC, Chromatic.G))
                             .build();
                 case VI9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.G, Chromatic.D, Chromatic.A))
+                            .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.D, Chromatic.A))
                             .build();
                 case VII9_O3_O7:
                     return ChromaticChord.builder()
-                            .fromList(Arrays.asList(Chromatic.A, Chromatic.E, Chromatic.B))
+                            .fromChromatic(Arrays.asList(Chromatic.A, Chromatic.E, Chromatic.B))
                             .build();
             }
         }

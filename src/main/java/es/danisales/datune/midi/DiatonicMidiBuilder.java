@@ -40,12 +40,14 @@ public final class DiatonicMidiBuilder extends Builder<DiatonicMidiBuilder, Diat
         return dm;
     }
 
+    @NonNull
     public DiatonicMidiBuilder length(int length) {
         checkArgument(length > 0);
         this.length = length;
         return self();
     }
 
+    @NonNull
     public DiatonicMidiBuilder velocity(int velocity) {
         checkArgument(velocity > 0);
         this.velocity = velocity;
@@ -58,19 +60,22 @@ public final class DiatonicMidiBuilder extends Builder<DiatonicMidiBuilder, Diat
         return this;
     }
 
+    @NonNull
     public DiatonicMidiBuilder pitch(@NonNull PitchDiatonicMidi pitch) {
         this.pitch = pitch;
 
         return self();
     }
 
-    public DiatonicMidiBuilder pitch(DiatonicDegree diatonicDegree, Tonality tonality, int octave) throws TonalityException, PitchMidiException {
+    @NonNull
+    public DiatonicMidiBuilder pitch(@NonNull DiatonicDegree diatonicDegree, @NonNull Tonality tonality, int octave) throws PitchMidiException {
         PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(diatonicDegree, tonality, octave);
 
         return pitch(pitchDiatonicMidi);
     }
 
-    public DiatonicMidiBuilder from(ChromaticMidi chromaticMidi, Tonality tonality) throws TonalityException {
+    @NonNull
+    public DiatonicMidiBuilder from(@NonNull ChromaticMidi chromaticMidi, @NonNull Tonality tonality) throws TonalityException {
         PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(chromaticMidi.getPitch(), tonality);
 
         pitch(pitchDiatonicMidi)

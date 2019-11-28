@@ -49,7 +49,7 @@ public class WhatIsIt {
 
         List<ChromaticChord> foundChords = new ArrayList<>();
         for (ChromaticChordCustom chromaticChordCustom : foundCustomChords)
-            foundChords.add(ChromaticChord.builder().fromList(chromaticChordCustom).build());
+            foundChords.add(ChromaticChord.builder().fromChromatic(chromaticChordCustom).build());
 
         ChromaticChord foundChord = fSelectChord.apply( foundChords, chromaticChordCustom1 );
 

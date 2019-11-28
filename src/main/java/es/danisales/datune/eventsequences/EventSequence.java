@@ -95,7 +95,7 @@ public class EventSequence implements Durable, EventComplex {
 
 	public static ChromaticChordMidi whatNotesArePlaying(EventSequence es, long time) {
 		assert time < es.getLength();
-		ChromaticChordMidi notes = ChromaticChordMidi.newEmpty();
+		ChromaticChordMidi notes = ChromaticChordMidi.builder().build();
 
 		es.forEach( (Long t, Event ev) -> {
 			if ( t > time )

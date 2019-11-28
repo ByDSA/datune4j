@@ -13,7 +13,7 @@ public class DiatonicChordMidiAdapter {
     private DiatonicChordMidiAdapter() {
     }
 
-    public static @NonNull List<DiatonicChordMidi> fromChromaticChordMidi(ChromaticChordMidi chromaticChordMidi, boolean outScale) {
+    public static @NonNull List<DiatonicChordMidi> fromChromaticChord(ChromaticChord chromaticChordMidi, boolean outScale) {
         List<Tonality> tonalities;
 /*        if (outScale)
            tonalities = TonalityRetrieval.listFromChordOutScale(chromaticChordMidi);
@@ -27,15 +27,13 @@ public class DiatonicChordMidiAdapter {
 
         ArrayList<DiatonicChordMidi> out = new ArrayList<>();
         for (Tonality tonality1 : tonalities) {
-            ChromaticChord chromaticChord = ChromaticChord.builder().fromList(chromaticChordMidi).build();
+            ChromaticChord chromaticChord = ChromaticChord.builder().fromChromatic(chromaticChordMidi).build();
             HarmonicFunction harmonicFunction = tonality1.getFunctionFrom(chromaticChord);
             if (harmonicFunction == null)
                 continue;
 
             DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder()
                     .from(harmonicFunction, tonality1)
-                    .octave(chromaticChordMidi.getOctave())
-                    .velocity(chromaticChordMidi.getVelocity())
                     .build();
             out.add(diatonicChordMidi);
         }

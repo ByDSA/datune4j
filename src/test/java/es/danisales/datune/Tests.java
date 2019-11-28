@@ -3,6 +3,7 @@ package es.danisales.datune;
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.midi.*;
 import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.Diatonic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.tonality.Tonality;
@@ -40,13 +41,13 @@ public class Tests {
                 .octave(5)
                 .build();
 
-		ChromaticChordMidi notes = ChromaticChordMidi.newEmpty();
+		ChromaticChord notes = ChromaticChord.builder().build();
 		for ( DiatonicMidi n : c ) {
 			ChromaticMidi chromaticMidi = ChromaticMidi.from(n);
-			notes.add(chromaticMidi);
+			notes.add(chromaticMidi.getPitch().getChromatic());
 		}
 
-        List<DiatonicChordMidi> chords = DiatonicChordMidi.fromChromaticChordMidi(
+		List<DiatonicChordMidi> chords = DiatonicChordMidi.fromChromaticChord(
                 notes,
                 false
         );
@@ -56,9 +57,9 @@ public class Tests {
 
 	@Test
     public void dist() throws PitchMidiException {
-        ChromaticChordMidi notes = ChromaticChordMidi.from(
+		ChromaticChordMidi notes = ChromaticChordMidi.builder().fromChromatic(
 				Chromatic.FF, Chromatic.A, Chromatic.CC
-		);
+		).build();
 
 		assertEquals( PitchChromaticMidi.FF5, notes.get( 0 ).getPitch());
 

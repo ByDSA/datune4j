@@ -250,7 +250,7 @@ public interface ChromaticChordInterface extends PitchChromaticChord<Chromatic> 
                     break; // Ya se ha corregido la escala
             }
 
-            DiatonicChord dc = null;//DiatonicChord.from( f2 );
+            DiatonicChord dc = null;//DiatonicChord.fromDiatonicChordMidi( f2 );
             PitchChromaticChord<Chromatic> cc = ChromaticChordInterface.from(dc, t);
             ret.addAll( cc );
         }

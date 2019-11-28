@@ -523,7 +523,7 @@ public class Main {
 
 		final int N = 4 * 2 * 2;
 		final int offset = 0;
-		ArrayList<ChromaticChordMidi> css = new ArrayList<ChromaticChordMidi>();
+		java.util.List<ChromaticChordMidi> css = new ArrayList<>();
 		for ( int i = 0; i < N; i++ ) {
 			ChromaticChordMidi notes = EventSequence.whatNotesArePlaying(
 					es, (int) ( Duration.V1 * ( i * 0.5 + offset ) + Duration.V16 )
@@ -532,7 +532,16 @@ public class Main {
 			css.add( notes );
 		}
 
-		DiatonicChordMidiTransformations.showPossibleProgressionsMajorMinor(css);
+		java.util.List<ChromaticChord> cs = new ArrayList<>();
+		for (ChromaticChordMidi ccm : css) {
+			cs.add(
+					ChromaticChord.builder()
+							.fromChromaticMidi(ccm)
+							.build()
+			);
+		}
+
+		DiatonicChordMidiTransformations.showPossibleProgressionsMajorMinor(cs);
 
 		return song;
 	}

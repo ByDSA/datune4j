@@ -5,7 +5,9 @@ import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.midi.Events.EventComplex;
 import es.danisales.datune.musical.transformations.Namer;
 import es.danisales.datune.pitch.PitchDiatonicSingle;
+import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class DiatonicMidi extends Note<PitchDiatonicMidi> implements PitchDiatonicSingle, EventComplex {
 	public static DiatonicMidiBuilder builder() {
@@ -13,6 +15,11 @@ public final class DiatonicMidi extends Note<PitchDiatonicMidi> implements Pitch
 	}
 
 	DiatonicMidi() {
+	}
+
+	@NonNull
+	public static DiatonicMidi from(@NonNull ChromaticMidi chromaticMidi, @NonNull Tonality tonality) throws TonalityException {
+		return builder().from(chromaticMidi, tonality).build();
 	}
 
 	public IntervalChromatic distTo(DiatonicMidi diatonicMidi) throws TonalityException {
@@ -50,7 +57,7 @@ public final class DiatonicMidi extends Note<PitchDiatonicMidi> implements Pitch
             stringBuilder.append(" (").append(pitch.degree).append(")");
 
             return stringBuilder.toString();
-        } catch (TonalityException | PitchMidiException e) {
+		} catch (TonalityException e) {
             e.printStackTrace();
             return null;
         }

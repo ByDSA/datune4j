@@ -33,7 +33,7 @@ public class TonalityChordRetrieval {
         for ( Tonality t : ts ) {
             if ( t.equals( tonality ) )
                 continue;
-            ChromaticChord chromaticChord = ChromaticChord.builder().fromList(c).build();
+            ChromaticChord chromaticChord = ChromaticChord.builder().fromChromaticMidi(c).build();
             HarmonicFunction function = t.getFunctionFrom(chromaticChord);
             if (function instanceof DiatonicFunction) {
                 return t;

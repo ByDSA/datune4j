@@ -48,7 +48,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
         if (function instanceof ChromaticFunction) {
             try {
                 chromaticFunctionProcess2(diatonicChordMidi);
-            } catch (TonalityException e) {
+            } catch (TonalityException | PitchMidiException e) {
                 throw new RuntimeException();
             }
             Chromatic firstChromatic = Chromatic.from(diatonicChordMidi.get(0));
@@ -59,7 +59,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
             initFromDiatonicFunction(diatonicChordMidi);
     }
 
-    protected void chromaticFunctionProcess2(DiatonicChordMidi self) throws TonalityException {
+    protected void chromaticFunctionProcess2(DiatonicChordMidi self) throws TonalityException, PitchMidiException {
         ChromaticFunction chromaticFunction = (ChromaticFunction) function;
         ChromaticChord chromaticChord = TonalityGetChromaticFunction.get(self.tonality, chromaticFunction);
         tonality = TonalityGetChromaticFunction.getTonalityFromChromaticFunction(tonality, chromaticFunction);
@@ -321,7 +321,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                 ccmArray[i++] = cm;
             }
 
-            ChromaticChordMidi ccm = ChromaticChordMidi.from(ccmArray);
+            ChromaticChordMidi ccm = ChromaticChordMidi.builder().fromChromaticMidi(ccmArray).build();
 
             if (tonality.has(chromaticChordInterface))
                 self.addAll(ccm);

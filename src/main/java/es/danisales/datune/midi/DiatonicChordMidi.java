@@ -6,8 +6,6 @@ import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticAdapter;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.DiatonicChordCommon;
-import es.danisales.datune.pitch.Chord;
-import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.pitch.PitchDiatonic;
 import es.danisales.datune.tonality.*;
@@ -25,8 +23,8 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDiatonic,
         return new DiatonicChordMidiBuilder();
     }
 
-    public static @NonNull List<DiatonicChordMidi> fromChromaticChordMidi(ChromaticChordMidi chromaticChordMidi, boolean outScale) {
-        return DiatonicChordMidiAdapter.fromChromaticChordMidi(chromaticChordMidi, outScale);
+    public static @NonNull List<DiatonicChordMidi> fromChromaticChord(ChromaticChord chromaticChordMidi, boolean outScale) {
+        return DiatonicChordMidiAdapter.fromChromaticChord(chromaticChordMidi, outScale);
     }
 
     public static DiatonicChordMidi from(List<DiatonicMidi> diatonicMidiList) {
@@ -47,13 +45,13 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDiatonic,
         metaTonality = tonality;
     }
 
-    public <N extends PitchChromaticSingle, Array extends PitchChromaticChord<N>> DiatonicChordMidi(Tonality ton, Array ns) {
+    public DiatonicChordMidi(Tonality ton, ChromaticChord ns) {
         tonality = ton;
         metaTonality = ton;
-
+/*
         if ( ns instanceof ChordMidi )
             meta = ( (ChordMidi) ns ).meta;
-
+*/
         try {
             for (PitchChromaticSingle pcs : ns) {
                 Chromatic chromaticPcs = ChromaticAdapter.from(pcs);
@@ -66,7 +64,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDiatonic,
         } catch ( TonalityException e ) {
             clear();
 
-            ChromaticChord chromaticChord = ChromaticChord.builder().fromList(ns).build();
+            ChromaticChord chromaticChord = ChromaticChord.builder().fromChromatic(ns).build();
             function = ton.getFunctionFrom(chromaticChord);
             if ( function == null ) {
                 tonality = TonalityChordRetrieval.searchInModeSameRoot(tonality, ns);
@@ -78,23 +76,22 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDiatonic,
                 throw new RuntimeException();
 
             try {
-                ChromaticChordMidi c = ChromaticChordMidi.from(ns);
+                ChromaticChordMidi c = ChromaticChordMidi.builder().fromChromatic(ns).build();
                 addAll(c);
             } catch (TonalityException | PitchMidiException e1) {
                 throw new RuntimeException();
             }
         }
 
-        Chord c = ( (Chord) ns );
-        setRootPos( c.getRootPos() );
+        setRootPos(ns.getRootPos());
 
         rootIndex = ns.getRootPos();
-
+/*
         if ( ns instanceof ChordMidi ) {
             arpegio = ( (ChordMidi) ns ).arpegio;
             length = ( (ChordMidi) ns ).length;
         }
-
+*/
         setArpegioIfNull();
     }
 

@@ -114,11 +114,7 @@ class PitchDiatonicMidiAdapter {
         Objects.requireNonNull(tonality);
         PitchDiatonicMidi ret = PitchDiatonicMidiAdapter.fromUncheck(diatonicDegree, tonality, octave);
 
-        checkPossibleConversion(ret);
+        PitchMidiException.check(ret);
         return ret;
-    }
-
-    private static void checkPossibleConversion(PitchDiatonicMidi pitchDiatonicMidi) throws PitchMidiException {
-        PitchChromaticMidi.from(pitchDiatonicMidi);
     }
 }

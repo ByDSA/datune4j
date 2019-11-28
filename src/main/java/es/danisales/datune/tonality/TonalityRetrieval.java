@@ -1,13 +1,8 @@
 package es.danisales.datune.tonality;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
-import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
-import es.danisales.datune.midi.PitchMidiException;
-import es.danisales.datune.musical.ChromaticChordInterface;
-import es.danisales.datune.musical.Diatonic;
-import es.danisales.datune.musical.DiatonicAlt;
-import es.danisales.datune.musical.DiatonicAltRetrieval;
+import es.danisales.datune.musical.*;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -191,20 +186,20 @@ public class TonalityRetrieval {
         return out;
     }
 
-    public static List<Tonality> getFromChords(boolean outScale, @NonNull List<ChromaticChordMidi> chords) {
+    public static List<Tonality> getFromChords(boolean outScale, @NonNull List<ChromaticChord> chords) {
         checkArgument(chords.size() > 0);
         List<Tonality> candidates = new ArrayList<>();
 
         boolean first = true;
-        for ( ChromaticChordMidi chord : chords ) {
+        for (ChromaticChord chord : chords) {
             if ( chord.isEmpty() )
                 continue;
-            ChromaticChordMidi chordCopy = chord.clone();
+            ChromaticChord chordCopy = chord.clone();
 
             List<Tonality> candidatesPrev = candidates;
 
             do {
-                List<DiatonicChordMidi> possibleChords = DiatonicChordMidi.fromChromaticChordMidi(
+                List<DiatonicChordMidi> possibleChords = DiatonicChordMidi.fromChromaticChord(
                         chordCopy,
                         outScale
                 );
@@ -228,13 +223,10 @@ public class TonalityRetrieval {
                 }
 
                 if ( candidates.isEmpty() ) {
-                    try {
-                        chordCopy = ChromaticChordMidi.from(
+                    chordCopy = ChromaticChord.builder()
+                            .fromChromatic(
                                 chordCopy.subList(0, chordCopy.size() - 1)
-                        );
-                    } catch (PitchMidiException e) {
-                        throw new RuntimeException(); // todo: hacer con ChromaticChord, sin midi
-                    }
+                            ).build();
                 }
             } while ( candidates.isEmpty() && !chordCopy.isEmpty() );
         }

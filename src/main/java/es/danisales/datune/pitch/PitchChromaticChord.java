@@ -25,7 +25,7 @@ public interface PitchChromaticChord<N extends PitchChromaticSingle> extends Cho
 
 			return ns;
 		} else
-            return ChromaticChord.builder().fromList(chromaticChordMidi).build();
+			return ChromaticChord.builder().fromChromaticMidi(chromaticChordMidi).build();
 	}
 
 	default <Array extends PitchChromaticChord<? extends PitchChromaticSingle>> boolean hasSameNotesOrder(Array notes) {

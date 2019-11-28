@@ -12,27 +12,27 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.Objects;
 
 public class PitchDiatonicMidi implements PitchOctaveMidiEditable, PitchMidiInterface<IntervalDiatonic> {
-    protected RelativeDegree degree;
+	protected RelativeDegree degree;
 	protected int octave;
 	protected Tonality tonality;
 
 	public static PitchDiatonicMidi from(PitchDiatonicMidi pitchDiatonicMidi) {
-        try {
-            return from(pitchDiatonicMidi.degree, pitchDiatonicMidi.tonality, pitchDiatonicMidi.octave);
-        } catch (PitchMidiException e) {
-            throw new RuntimeException("Impossible!");
-        }
-    }
-
-    public static @NonNull PitchDiatonicMidi from(@NonNull RelativeDegree diatonicDegree, @NonNull Tonality tonality, int octave) throws PitchMidiException {
-        return PitchDiatonicMidiAdapter.from(diatonicDegree, tonality, octave);
+		try {
+			return from(pitchDiatonicMidi.degree, pitchDiatonicMidi.tonality, pitchDiatonicMidi.octave);
+		} catch (PitchMidiException e) {
+			throw new RuntimeException("Impossible!");
+		}
 	}
 
-    public static @NonNull PitchDiatonicMidi from(@NonNull PitchChromaticMidi pitchChromaticMidi, @NonNull Tonality tonality) throws TonalityException {
-        return PitchDiatonicMidiAdapter.from(pitchChromaticMidi, tonality);
+	public static @NonNull PitchDiatonicMidi from(@NonNull RelativeDegree diatonicDegree, @NonNull Tonality tonality, int octave) throws PitchMidiException {
+		return PitchDiatonicMidiAdapter.from(diatonicDegree, tonality, octave);
 	}
 
-    public @NonNull RelativeDegree getDegree() {
+	public static @NonNull PitchDiatonicMidi from(@NonNull PitchChromaticMidi pitchChromaticMidi, @NonNull Tonality tonality) throws TonalityException {
+		return PitchDiatonicMidiAdapter.from(pitchChromaticMidi, tonality);
+	}
+
+	public @NonNull RelativeDegree getDegree() {
 		return degree;
 	}
 
@@ -44,24 +44,18 @@ public class PitchDiatonicMidi implements PitchOctaveMidiEditable, PitchMidiInte
 		return tonality.getNote(degree).getDiatonic();
 	}
 
-    @SuppressWarnings("MethodDoesntCallSuperMethod")
-    @NonNull
-    @Override
-    public PitchDiatonicMidi clone() {
-        return PitchDiatonicMidiAdapter.fromUncheck(degree, tonality, octave);
-    }
+	@SuppressWarnings("MethodDoesntCallSuperMethod")
+	@NonNull
+	@Override
+	public PitchDiatonicMidi clone() {
+		return PitchDiatonicMidiAdapter.fromUncheck(degree, tonality, octave);
+	}
 
-    @Override
-    public int getMidiCode() {
-        PitchChromaticMidi pitchChromaticMidi;
-        try {
-            pitchChromaticMidi = PitchChromaticMidi.from(this);
-        } catch (PitchMidiException e) {
-            e.printStackTrace();
-            throw new RuntimeException();
-        }
-        return pitchChromaticMidi.getMidiCode();
-    }
+	@Override
+	public int getMidiCode() {
+		PitchChromaticMidi pitchChromaticMidi = PitchChromaticMidi.from(this);
+		return pitchChromaticMidi.getMidiCode();
+	}
 
 	@Override
 	public void next() {
@@ -78,36 +72,36 @@ public class PitchDiatonicMidi implements PitchOctaveMidiEditable, PitchMidiInte
 		shift(intervalDiatonic, 1);
 	}
 
-    @Override
-    public void shift(int pos) {
-        shift(pos, 1);
-    }
+	@Override
+	public void shift(int pos) {
+		shift(pos, 1);
+	}
 
 	@Override
 	public void shiftNegative(IntervalDiatonic intervalDiatonic) {
 		shift(intervalDiatonic, -1);
 	}
 
-    private void shift(IntervalDiatonic intervalDiatonic, int signFactor) {
-        int intervalDiatonicDegreeIndex = intervalDiatonic.ordinal();
-        shift(intervalDiatonicDegreeIndex, signFactor);
-    }
+	private void shift(IntervalDiatonic intervalDiatonic, int signFactor) {
+		int intervalDiatonicDegreeIndex = intervalDiatonic.ordinal();
+		shift(intervalDiatonicDegreeIndex, signFactor);
+	}
 
-    private void shift(int intervalDiatonicDegreeIndex, int signFactor) {
-        int totalIndex = degree.ordinal() + intervalDiatonicDegreeIndex * signFactor;
-        octave += totalIndex / Diatonic.NUMBER;
-        if (totalIndex < 0)
-            octave--;
+	private void shift(int intervalDiatonicDegreeIndex, int signFactor) {
+		int totalIndex = degree.ordinal() + intervalDiatonicDegreeIndex * signFactor;
+		octave += totalIndex / Diatonic.NUMBER;
+		if (totalIndex < 0)
+			octave--;
 
-        totalIndex = trimIndex(totalIndex);
-        degree = DiatonicDegree.values()[totalIndex];
-    }
+		totalIndex = trimIndex(totalIndex);
+		degree = DiatonicDegree.values()[totalIndex];
+	}
 
-    private int trimIndex(int i) {
-        while (i < 0)
-            i += Diatonic.NUMBER;
-        i %= Diatonic.NUMBER;
-        return i;
+	private int trimIndex(int i) {
+		while (i < 0)
+			i += Diatonic.NUMBER;
+		i %= Diatonic.NUMBER;
+		return i;
 	}
 
 	@Override
@@ -125,10 +119,10 @@ public class PitchDiatonicMidi implements PitchOctaveMidiEditable, PitchMidiInte
 		this.octave = octave;
 	}
 
-    public void setDegree(@NonNull DiatonicDegree diatonicDegree) {
-        Objects.requireNonNull(diatonicDegree);
-        degree = diatonicDegree;
-    }
+	public void setDegree(@NonNull DiatonicDegree diatonicDegree) {
+		Objects.requireNonNull(diatonicDegree);
+		degree = diatonicDegree;
+	}
 
 	public void setTonality(@NonNull Tonality tonality) {
 		Objects.requireNonNull(tonality);

@@ -4,8 +4,11 @@ import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.util.Objects;
+
 public class ChromaticMidiBuilder extends es.danisales.utils.building.Builder<ChromaticMidiBuilder, ChromaticMidi> {
     private PitchChromaticMidi pitchChromaticMidi;
+    private DiatonicMidi diatonicMidi;
     private int velocity;
     private int length;
 
@@ -63,14 +66,29 @@ public class ChromaticMidiBuilder extends es.danisales.utils.building.Builder<Ch
         return self();
     }
 
+    public @NonNull ChromaticMidiBuilder from(@NonNull DiatonicMidi diatonicMidi) {
+        this.diatonicMidi = Objects.requireNonNull(diatonicMidi);
+
+        return self();
+    }
+
     @NonNull
     @Override
     public ChromaticMidi build() {
-        ChromaticMidi chromaticMidi = new ChromaticMidi();
-        chromaticMidi.pitch = pitchChromaticMidi;
-        chromaticMidi.length = length;
-        chromaticMidi.velocity = velocity;
-        return chromaticMidi;
+        if (diatonicMidi != null) {
+            PitchChromaticMidi pitchChromaticMidi = PitchChromaticMidi.from(diatonicMidi.pitch);
+            return ChromaticMidi.builder()
+                    .pitch(pitchChromaticMidi)
+                    .velocity(diatonicMidi.velocity)
+                    .length(diatonicMidi.length)
+                    .build();
+        } else {
+            ChromaticMidi chromaticMidi = new ChromaticMidi();
+            chromaticMidi.pitch = pitchChromaticMidi;
+            chromaticMidi.length = length;
+            chromaticMidi.velocity = velocity;
+            return chromaticMidi;
+        }
     }
 
     @NonNull

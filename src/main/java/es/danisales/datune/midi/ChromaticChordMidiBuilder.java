@@ -10,31 +10,28 @@ import java.util.List;
 public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Builder<ChromaticChordMidiBuilder, ChromaticChordMidi> {
     private List<Chromatic> fromChromatic;
     private List<ChromaticMidi> fromChromaticMidi;
-    private int _octave;
-    private int _length;
-    private int _velocity;
+    private DiatonicChordMidi diatonicChordMidi;
+    private int _octave = Settings.DefaultValues.OCTAVE;
+    private int _length = Settings.DefaultValues.LENGTH_CHORD;
+    private int _velocity = Settings.DefaultValues.VELOCITY;
 
     ChromaticChordMidiBuilder() {
     }
 
-    public ChromaticChordMidiBuilder fromChromatic(@NonNull Chromatic... cs) {
-        fromChromatic = Arrays.asList(cs);
-
-        return self();
+    public ChromaticChordMidiBuilder fromChromatic(@NonNull Chromatic... cs) throws PitchMidiException {
+        return fromChromatic(Arrays.asList(cs));
     }
 
-    public ChromaticChordMidiBuilder fromChromaticMidi(@NonNull ChromaticMidi... cs) {
-        fromChromaticMidi = Arrays.asList(cs);
-
-        return self();
-    }
-
-    public ChromaticChordMidiBuilder fromChromatic(@NonNull Iterable<Chromatic> cs) {
+    public ChromaticChordMidiBuilder fromChromatic(@NonNull Iterable<Chromatic> cs) throws PitchMidiException {
         fromChromatic = new ArrayList<>();
         for (Chromatic c : cs)
             fromChromatic.add(c);
 
         return self();
+    }
+
+    public ChromaticChordMidiBuilder fromChromaticMidi(@NonNull ChromaticMidi... cs) {
+        return fromChromaticMidi(Arrays.asList(cs));
     }
 
     public ChromaticChordMidiBuilder fromChromaticMidi(@NonNull Iterable<ChromaticMidi> cs) {
@@ -66,39 +63,42 @@ public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Build
     @NonNull
     @Override
     public ChromaticChordMidi build() {
-        ChromaticChordMidi ns = new ChromaticChordMidi();
+        ChromaticChordMidi chromaticChordMidi = new ChromaticChordMidi();
         if (fromChromatic != null) {
+            int currentOctave = _octave;
             for (int i = 0; i < fromChromatic.size(); i++) {
-                ChromaticMidi chromaticMidi = ChromaticMidi.builder()
-                        .pitch(fromChromatic.get(i))
-                        .build();
                 if (i > 0) {
-                    int lastElementOctave = ns.get(ns.size() - 1).getPitch().getOctave();
                     Chromatic current = fromChromatic.get(i);
                     Chromatic previous = fromChromatic.get(i - 1);
-                    if (current.ordinal() <= previous.ordinal()) {
-                        try {
-                            chromaticMidi.getPitch().setOctave(lastElementOctave + 1);
-                        } catch (PitchMidiException e) {
-                            e.printStackTrace();
-                            throw new RuntimeException();
-                        }
-                    } else {
-                        try {
-                            chromaticMidi.getPitch().setOctave(lastElementOctave);
-                        } catch (PitchMidiException e) {
-                            e.printStackTrace();
-                            throw new RuntimeException("Impossible!");
-                        }
-                    }
+                    if (current.ordinal() <= previous.ordinal())
+                        currentOctave++;
                 }
-                ns.add(chromaticMidi);
+
+                PitchChromaticMidi pitchChromaticMidi = null;
+                try {
+                    pitchChromaticMidi = PitchChromaticMidi.from(fromChromatic.get(i), currentOctave);
+                } catch (PitchMidiException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException(); // todo: check argument pitch consistence when add octave or chromaticmidi
+                }
+                ChromaticMidi chromaticMidi = ChromaticMidi.builder()
+                        .pitch(pitchChromaticMidi)
+                        .build();
+                chromaticChordMidi.add(chromaticMidi);
             }
         } else if (fromChromaticMidi != null) {
-
+            chromaticChordMidi.addAll(fromChromaticMidi);
+        } else if (diatonicChordMidi != null) {
+            return ChromaticChordMidiAdapter.fromDiatonicChordMidi(diatonicChordMidi);
         }
 
-        return ns;
+        return chromaticChordMidi;
+    }
+
+    public @NonNull ChromaticChordMidiBuilder fromDiatonicChordMidi(@NonNull DiatonicChordMidi diatonicChordMidi) throws PitchMidiException {
+        this.diatonicChordMidi = diatonicChordMidi;
+
+        return self();
     }
 
 

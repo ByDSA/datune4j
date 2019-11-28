@@ -1,5 +1,7 @@
 package es.danisales.datune.midi;
 
+import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityRetrieval;
 
@@ -25,25 +27,25 @@ public class DiatonicChordMidiTransformations {
         return out;
     }
 
-    public static void showWhatIsIt(boolean outscale, ChromaticMidi... notes) {
+    public static void showWhatIsIt(boolean outscale, Chromatic... notes) {
         showWhatIsIt(outscale, () -> {
             return true;
         }, notes);
     }
 
-    public static void showWhatIsIt(ChromaticMidi... notes) {
+    public static void showWhatIsIt(Chromatic... notes) {
         showWhatIsIt(false, notes);
     }
 
-    public static void showWhatIsIt(boolean outscale, Supplier<Boolean> f, ChromaticMidi... notes) {
-        List<DiatonicChordMidi> chords = DiatonicChordMidi.fromChromaticChordMidi(
-                ChromaticChordMidi.from(notes),
+    public static void showWhatIsIt(boolean outscale, Supplier<Boolean> f, Chromatic... notes) {
+        List<DiatonicChordMidi> chords = DiatonicChordMidi.fromChromaticChord(
+                ChromaticChord.builder().fromChromatic(notes).build(),
                 outscale
         );
 
         if (chords.isEmpty()) {
             System.out.print("La sucesión de notas no es nada:");
-            for (ChromaticMidi n : notes) {
+            for (Chromatic n : notes) {
                 System.out.print(" " + n);
             }
             System.out.print("\n");
@@ -54,14 +56,14 @@ public class DiatonicChordMidiTransformations {
                 System.out.println(c);
     }
 
-    public static void showPossibleProgressionsMajorMinor(List<ChromaticChordMidi> cs) {
+    public static void showPossibleProgressionsMajorMinor(List<ChromaticChord> cs) {
         assert cs != null;
         showPossibleProgressionsMajorMinor((c) -> {
             return true;
         }, cs);
     }
 
-    public static void showPossibleProgressionsMajorMinor(Function<DiatonicChordMidi, Boolean> f, List<ChromaticChordMidi> cs) {
+    public static void showPossibleProgressionsMajorMinor(Function<DiatonicChordMidi, Boolean> f, List<ChromaticChord> cs) {
         assert f != null;
         assert cs != null;
         showPossibleProgressions((DiatonicChordMidi c) -> {
@@ -70,15 +72,15 @@ public class DiatonicChordMidiTransformations {
         }, cs);
     }
 
-    public static void showPossibleProgressions(Function<DiatonicChordMidi, Boolean> f, List<ChromaticChordMidi> chordsIn) {
-        List<ChromaticChordMidi> chords = reduceDistances(chordsIn);
+    public static void showPossibleProgressions(Function<DiatonicChordMidi, Boolean> f, List<ChromaticChord> chordsIn) {
+        List<ChromaticChord> chords = chordsIn;
 
         List<Tonality> possibleTonalitiesList = TonalityRetrieval.getFromChords(true, chords);
 
         // DEBUG
         if (possibleTonalitiesList == null || possibleTonalitiesList.isEmpty()) {
-            for (ChromaticChordMidi c : chords) {
-                for (ChromaticMidi chromaticMidi : c)
+            for (ChromaticChord c : chords) {
+                for (Chromatic chromaticMidi : c)
                     System.out.print(chromaticMidi + "  ");
                 System.out.println();
             }
@@ -94,7 +96,7 @@ public class DiatonicChordMidiTransformations {
                 boolean yep = true;
                 boolean first = false;
                 sb.append("----" + tonality + "----");
-                for (ChromaticChordMidi chromaticMidis : chords) {
+                for (ChromaticChord chromaticMidis : chords) {
                     DiatonicChordMidi c = new DiatonicChordMidi(tonality, chromaticMidis);
                     if (!f.apply(c)) {
                         yep = false;

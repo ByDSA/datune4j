@@ -10,18 +10,14 @@ public final class ChromaticMidi extends Note<PitchChromaticMidi> implements Pit
 		return new ChromaticMidiBuilder();
 	}
 
-    public static @NonNull ChromaticMidi from(@NonNull DiatonicMidi diatonicMidi) throws PitchMidiException {
-		PitchChromaticMidi pitchChromaticMidi = PitchChromaticMidi.from(diatonicMidi.pitch);
-		return ChromaticMidi.builder()
-				.pitch(pitchChromaticMidi)
-				.velocity(diatonicMidi.velocity)
-				.length(diatonicMidi.length)
-				.build();
-	}
-
 	ChromaticMidi() { }
 
-    @SuppressWarnings("WeakerAccess")
+	@NonNull
+	public static ChromaticMidi from(@NonNull DiatonicMidi diatonicMidi) {
+		return builder().from(diatonicMidi).build();
+	}
+
+	@SuppressWarnings("WeakerAccess")
     public int distTo(@NonNull ChromaticMidi chromaticMidi) {
         return DistanceCalculator.calculateDistanceInSemitones(this, chromaticMidi);
     }

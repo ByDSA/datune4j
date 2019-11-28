@@ -290,7 +290,7 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
         return pitchChromaticMidi;
     }
 
-    public static @NonNull PitchChromaticMidi from(PitchDiatonicMidi pitchDiatonicMidi) throws PitchMidiException {
+    public static @NonNull PitchChromaticMidi from(@NonNull PitchDiatonicMidi pitchDiatonicMidi) {
         Tonality tonality = pitchDiatonicMidi.tonality;
         RelativeDegree degree = pitchDiatonicMidi.degree;
 
@@ -300,7 +300,12 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
         int octave = pitchDiatonicMidi.octave;
         octave += octaveCorrector(tonality, degree);
 
-        return from(chromatic, octave);
+        try {
+            return from(chromatic, octave);
+        } catch (PitchMidiException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Impossible! (except checking)");
+        }
     }
 
     private static int octaveCorrector(Tonality tonality, RelativeDegree diatonicDegree) {

@@ -2,8 +2,8 @@ package es.danisales.datune.diatonic;
 
 import es.danisales.arrays.ArrayUtils;
 import es.danisales.datune.midi.DiatonicChordMidi;
+import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
-import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -130,9 +130,9 @@ public enum ChromaticFunction implements HarmonicFunction {
 	 * @param tonality tonality
 	 * @return the chromatic function
 	 */
-    public static @Nullable ChromaticFunction from(@NonNull Collection<? extends PitchChromaticSingle> pitchChromaticChord, @NonNull Tonality tonality) {
+    public static @Nullable ChromaticFunction from(@NonNull Collection<Chromatic> pitchChromaticChord, @NonNull Tonality tonality) {
         ChromaticChord chromaticChord = ChromaticChord.builder()
-                .fromList(pitchChromaticChord)
+                .fromChromatic(pitchChromaticChord)
                 .build();
         HarmonicFunction hf = tonality.getFunctionFrom(chromaticChord);
 		if ( hf instanceof ChromaticFunction )
@@ -142,7 +142,7 @@ public enum ChromaticFunction implements HarmonicFunction {
 	}
 
 	/**
-	 * Gets the harmonic function from a diatonic chord with a tonality
+     * Gets the harmonic function fromDiatonicChordMidi a diatonic chord with a tonality
 	 *
 	 * @param diatonicChordMidi the diatonic chord midi
 	 * @return the harmonic function

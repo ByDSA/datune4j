@@ -2,50 +2,14 @@ package es.danisales.datune.midi;
 
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.Quality;
-import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.pitch.PitchChromaticChord;
-import es.danisales.datune.pitch.PitchChromaticSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
-
-import java.util.Arrays;
 
 public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, IntervalChromatic, PitchChromaticMidi>
         implements PitchChromaticChord<ChromaticMidi> {
 
     public static ChromaticChordMidiBuilder builder() {
         return new ChromaticChordMidiBuilder();
-    }
-
-    public static ChromaticChordMidi newEmpty() {
-        return new ChromaticChordMidi();
-    }
-
-    public static @NonNull ChromaticChordMidi from(@NonNull Chromatic... chromatics) throws PitchMidiException {
-        return ChromaticChordMidiAdapter.fromChromatics(chromatics);
-    }
-
-    public static @NonNull ChromaticChordMidi from(@NonNull ChromaticMidi... ns) {
-        ChromaticChordMidi ccm = new ChromaticChordMidi();
-        ccm.addAll(Arrays.asList(ns));
-
-        return ccm;
-    }
-
-    public static ChromaticChordMidi from(@NonNull PitchChromaticSingle... ns) throws PitchMidiException {
-        Chromatic[] chromatics = new Chromatic[ns.length];
-        for (int i = 0; i < ns.length; i++) {
-            chromatics[i] = Chromatic.from(ns[i]);
-        }
-
-        return from(chromatics);
-    }
-
-    public static <N extends PitchChromaticSingle> ChromaticChordMidi from(Iterable<N> iterable) throws PitchMidiException {
-        return ChromaticChordMidiAdapter.from(iterable);
-    }
-
-    public static @NonNull ChromaticChordMidi from(@NonNull DiatonicChordMidi diatonicChordMidi) throws PitchMidiException {
-        return ChromaticChordMidiAdapter.fromDiatonicChordMidi(diatonicChordMidi);
     }
 
     protected ChromaticChordMidi() {

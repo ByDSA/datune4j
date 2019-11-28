@@ -6,7 +6,6 @@ import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.DiatonicMidi;
-import es.danisales.datune.midi.PitchMidiException;
 import es.danisales.datune.musical.transformations.DistanceCalculator;
 import es.danisales.datune.musical.transformations.EnharmonicsRetrieval;
 import es.danisales.datune.musical.transformations.Namer;
@@ -14,7 +13,6 @@ import es.danisales.datune.pitch.CyclicAbsoluteDegree;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.tonality.ScaleDistance;
 import es.danisales.datune.tonality.Tonality;
-import es.danisales.tasks.RunningException;
 import es.danisales.utils.MathUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -27,7 +25,7 @@ import java.util.Set;
 public enum Chromatic implements PitchChromaticSingle, CyclicAbsoluteDegree<ChromaticDegree, IntervalChromatic> {
 	C, CC, D, DD, E, F, FF, G, GG, A, AA, B;
 
-    public static final int NUMBER = values().length;
+	public static final int NUMBER = values().length;
 
 	private static final Map<DiatonicAlt, Chromatic> diatonicAltChromaticMap = new HashMap<>();
 	static {
@@ -133,13 +131,7 @@ public enum Chromatic implements PitchChromaticSingle, CyclicAbsoluteDegree<Chro
 	}
 
 	public static Chromatic from(DiatonicMidi diatonicMidi) {
-        ChromaticMidi chromaticMidi = null;
-        try {
-            chromaticMidi = ChromaticMidi.from(diatonicMidi);
-        } catch (PitchMidiException e) {
-            e.printStackTrace();
-            throw new RunningException();
-        }
+		ChromaticMidi chromaticMidi = ChromaticMidi.builder().from(diatonicMidi).build();
 		return from(chromaticMidi);
 	}
 
@@ -205,9 +197,9 @@ public enum Chromatic implements PitchChromaticSingle, CyclicAbsoluteDegree<Chro
 	}
 
 	@Override
-    public Chromatic getShifted(IntervalChromatic intervalChromatic) {
+	public Chromatic getShifted(IntervalChromatic intervalChromatic) {
 		return Chromatic.from(ordinal() + intervalChromatic.getSemitones());
-    }
+	}
 
 	@Override
 	public Chromatic getShiftedNegative(IntervalChromatic intervalChromatic) {
