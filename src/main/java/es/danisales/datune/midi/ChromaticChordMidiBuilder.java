@@ -11,9 +11,9 @@ public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Build
     private List<Chromatic> fromChromatic;
     private List<ChromaticMidi> fromChromaticMidi;
     private DiatonicChordMidi diatonicChordMidi;
-    private int _octave = Settings.DefaultValues.OCTAVE;
-    private int _length = Settings.DefaultValues.LENGTH_CHORD;
-    private int _velocity = Settings.DefaultValues.VELOCITY;
+    private int octave = Settings.DefaultValues.OCTAVE;
+    private int length = Settings.DefaultValues.LENGTH_CHORD;
+    private int velocity = Settings.DefaultValues.VELOCITY;
 
     ChromaticChordMidiBuilder() {
     }
@@ -23,11 +23,16 @@ public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Build
     }
 
     public ChromaticChordMidiBuilder fromChromatic(@NonNull Iterable<Chromatic> cs) throws PitchMidiException {
+        checkValidMidi();
         fromChromatic = new ArrayList<>();
         for (Chromatic c : cs)
             fromChromatic.add(c);
 
         return self();
+    }
+
+    private void checkValidMidi() throws PitchMidiException {
+
     }
 
     public ChromaticChordMidiBuilder fromChromaticMidi(@NonNull ChromaticMidi... cs) {
@@ -42,20 +47,22 @@ public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Build
         return self();
     }
 
-    public ChromaticChordMidiBuilder octaveBase(int octave) {
-        this._octave = octave;
+    @SuppressWarnings("WeakerAccess")
+    public ChromaticChordMidiBuilder octaveBase(int octave) throws PitchMidiException {
+        checkValidMidi();
+        this.octave = octave;
 
         return self();
     }
 
     public ChromaticChordMidiBuilder length(int length) {
-        this._length = length;
+        this.length = length;
 
         return self();
     }
 
     public ChromaticChordMidiBuilder velocity(int velocity) {
-        this._velocity = velocity;
+        this.velocity = velocity;
 
         return self();
     }
@@ -65,7 +72,7 @@ public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Build
     public ChromaticChordMidi build() {
         ChromaticChordMidi chromaticChordMidi = new ChromaticChordMidi();
         if (fromChromatic != null) {
-            int currentOctave = _octave;
+            int currentOctave = octave;
             for (int i = 0; i < fromChromatic.size(); i++) {
                 if (i > 0) {
                     Chromatic current = fromChromatic.get(i);
@@ -74,7 +81,7 @@ public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Build
                         currentOctave++;
                 }
 
-                PitchChromaticMidi pitchChromaticMidi = null;
+                PitchChromaticMidi pitchChromaticMidi;
                 try {
                     pitchChromaticMidi = PitchChromaticMidi.from(fromChromatic.get(i), currentOctave);
                 } catch (PitchMidiException e) {
@@ -95,7 +102,7 @@ public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Build
         return chromaticChordMidi;
     }
 
-    public @NonNull ChromaticChordMidiBuilder fromDiatonicChordMidi(@NonNull DiatonicChordMidi diatonicChordMidi) throws PitchMidiException {
+    public @NonNull ChromaticChordMidiBuilder fromDiatonicChordMidi(@NonNull DiatonicChordMidi diatonicChordMidi) {
         this.diatonicChordMidi = diatonicChordMidi;
 
         return self();

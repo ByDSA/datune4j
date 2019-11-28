@@ -10,7 +10,6 @@ public enum IntervalDiatonic implements Interval {
     OCTAVE, NINTH, TENTH, ELEVENTH, TWELFTH, THIRTEENTH, FOURTEENTH,
     FIFTEENTH;
 
-    @Deprecated
     public static @NonNull IntervalDiatonic fromIndex(int n) {
     	n = trimToValidValue(n);
 

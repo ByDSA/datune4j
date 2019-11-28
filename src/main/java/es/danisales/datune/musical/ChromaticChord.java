@@ -2,8 +2,6 @@ package es.danisales.datune.musical;
 
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.Quality;
-import es.danisales.datune.midi.ChromaticChordMidi;
-import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.ChordMutableInterface;
 import es.danisales.datune.pitch.PitchChromaticChord;
@@ -2519,10 +2517,6 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic, IntervalC
         return ListUtils.concatUnmodificable(COMMON_CHORDS, UNUSUAL_CHORDS);
     }
 
-    public static ChromaticChord from(DiatonicChordMidi ns) {
-        return null;
-    }
-
     @Override
     protected final void turnInnerChordIntoEnumIfPossible() {
         if (getRootPos() != 0)
@@ -2585,10 +2579,6 @@ public final class ChromaticChord extends NormalChordCommon<Chromatic, IntervalC
 
     public Quality getQuality() {
         return ((ChromaticChordInterface)innerChord).getQuality();
-    }
-
-    public ChromaticChordMidi toMidi() { // todo: remove
-        return null;
     }
 
     @Override

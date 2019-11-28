@@ -22,7 +22,7 @@ public class Pachelbel extends Progression {
 		add(DiatonicFunction.V7);
 
 		if (type == ARPEGIO) {
-			this.setArpegio( new ArpegioAscDesc(Duration.V1, Duration.V4) );
+			this.setArpegio( new ArpegioAscDesc(Duration.L1, Duration.L4) );
 		}
 	}
 }

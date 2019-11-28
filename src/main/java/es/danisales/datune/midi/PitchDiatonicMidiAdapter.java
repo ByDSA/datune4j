@@ -87,7 +87,7 @@ class PitchDiatonicMidiAdapter {
         Diatonic diatonicRoot = tonality.getRoot().getDiatonic();
         Chromatic chromaticRootWithoutAlts = Chromatic.from(diatonicRoot);
 
-        PitchChromaticMidi pitchChromaticMidiRootWithoutAlts = null;
+        PitchChromaticMidi pitchChromaticMidiRootWithoutAlts;
         try {
             pitchChromaticMidiRootWithoutAlts = PitchChromaticMidi.from(chromaticRootWithoutAlts, pitchChromaticMidi.getOctave());
         } catch (PitchMidiException e) {

@@ -190,11 +190,11 @@ public class Tonality implements Iterable<DiatonicAlt> {
         throw new TonalityException(chromatic, this);
     }
 
-    public boolean has(DiatonicAlt note) {
+    public boolean contains(DiatonicAlt note) {
         return getDegreeFrom( note ) != null;
     }
 
-    public boolean has(Chromatic note) {
+    public boolean contains(Chromatic note) {
         try {
             getDegreeFrom(note);
             return true;
@@ -203,16 +203,7 @@ public class Tonality implements Iterable<DiatonicAlt> {
         }
     }
 
-    public boolean has(@NonNull Iterable<DiatonicAlt> notes) {
-        for ( DiatonicAlt n : notes ) {
-            if ( getDegreeFrom( n ) == null )
-                return false;
-        }
-
-        return true;
-    }
-
-    public boolean has(@NonNull PitchChromaticChord<Chromatic> notes) {
+    public boolean has(@NonNull Iterable<Chromatic> notes) {
         for ( Chromatic n : notes ) {
             try {
                 getDegreeFrom(n);
@@ -310,13 +301,13 @@ public class Tonality implements Iterable<DiatonicAlt> {
         return Collections.unmodifiableList( chromaticFunctionList );
     }
 
-    public boolean has(boolean outScale, @NonNull PitchChromaticChord<? extends PitchChromaticSingle> c) {
+    public boolean has(boolean outScale, @NonNull ChromaticChord c) {
         Objects.requireNonNull(c);
 
         List<DiatonicAlt> cc = new ArrayList<>();
         for (PitchChromaticSingle chromatic : c)
             cc.add(DiatonicAlt.from(chromatic));
-        boolean hasNotes = has( cc );
+        boolean hasNotes = getNotes().containsAll( cc );
 
         if ( hasNotes )
             return true;
@@ -325,36 +316,17 @@ public class Tonality implements Iterable<DiatonicAlt> {
                 if (size() != Diatonic.NUMBER && ArrayUtils.contains(f, ChromaticFunction.TENSIONS))
                     continue;
 
-                ChromaticChordInterface c2 = ChromaticChordInterface.from(
+                ChromaticChord c2 = ChromaticChord.builder().fromDiatonicChordMidi(
                         DiatonicChordMidi.builder()
                                 .from(f, this)
                                 .build()
-                );
-                if (c.hasSameNotesOrder(c2))
+                ).build();
+                if (c.getNotes().equals(c2.getNotes()))
                     return true;
             }
         }
 
         return false;
-    }
-
-
-    public DiatonicDegree getDegreeFrom(PitchChromaticSingle note) {
-        assert note != null : "No se ha especificado nota";
-        return getDegreeFrom( note, true );
-    }
-
-    public DiatonicDegree getDegreeFrom(PitchChromaticSingle note, boolean enharmonic) {
-        assert note != null : "No se ha especificado nota";
-
-        for ( DiatonicDegree diatonicDegree : DiatonicDegree.values() ) {
-            Chromatic chromatic = ChromaticAdapter.from(note);
-            if (!enharmonic && getNote(diatonicDegree).equals(chromatic)
-                    || enharmonic && Chromatic.from(getNote(diatonicDegree)) == chromatic)
-                return diatonicDegree;
-        }
-
-        return null;
     }
 
     private void createChromaticToDiatonicAltCache() {

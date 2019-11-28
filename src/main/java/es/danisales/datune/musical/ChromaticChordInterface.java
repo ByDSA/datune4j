@@ -21,21 +21,21 @@ public interface ChromaticChordInterface extends PitchChromaticChord<Chromatic> 
         if ( f == ChromaticFunction.I || f == ChromaticFunction.II || f == ChromaticFunction.III
                 || f == ChromaticFunction.IV || f == ChromaticFunction.V
                 || f == ChromaticFunction.VI || f == ChromaticFunction.VII ) {
-            DiatonicAlt r = t.getNote( f.getDegree() );
+            DiatonicAlt r = t.getNote( DiatonicDegree.from(f) );
             Chromatic rChromatic = Chromatic.from(r);
             ret.addAll( ChromaticChordRetrieval.whichRootIs( rChromatic, ChromaticChord.CHORDS_MAJOR ) );
         } else if ( f == ChromaticFunction.i || f == ChromaticFunction.ii
                 || f == ChromaticFunction.iii
                 || f == ChromaticFunction.iv || f == ChromaticFunction.v
                 || f == ChromaticFunction.vi || f == ChromaticFunction.vii ) {
-            DiatonicAlt r = t.getNote( f.getDegree() );
+            DiatonicAlt r = t.getNote( DiatonicDegree.from(f) );
             Chromatic rChromatic = Chromatic.from(r);
             ret.addAll( ChromaticChordRetrieval.whichRootIs( rChromatic, ChromaticChord.CHORDS_MINOR ) );
         } else if ( f == ChromaticFunction.I0 || f == ChromaticFunction.II0
                 || f == ChromaticFunction.III0 || f == ChromaticFunction.IV0
                 || f == ChromaticFunction.V0 || f == ChromaticFunction.VI0
                 || f == ChromaticFunction.VII0 ) {
-            DiatonicAlt r = t.getNote( f.getDegree() );
+            DiatonicAlt r = t.getNote( DiatonicDegree.from(f) );
             Chromatic rChromatic = Chromatic.from(r);
             ret.addAll( ChromaticChordRetrieval.whichRootIs( rChromatic, ChromaticChord.CHORDS_DIMINISHED ) );
         } else if ( f == ChromaticFunction.N6 ) {
@@ -53,7 +53,7 @@ public interface ChromaticChordInterface extends PitchChromaticChord<Chromatic> 
                 || f == ChromaticFunction.III5 || f == ChromaticFunction.IV5
                 || f == ChromaticFunction.V5 || f == ChromaticFunction.VI5
                 || f == ChromaticFunction.VII5 ) {
-            DiatonicDegree d = f.getDegree();
+            DiatonicDegree d = DiatonicDegree.from(f);
 
             DiatonicAlt n = t.getNote( d );
             Chromatic nChromatic = Chromatic.from(n);
@@ -270,7 +270,7 @@ public interface ChromaticChordInterface extends PitchChromaticChord<Chromatic> 
     }
 
     static ChromaticChordInterface from(DiatonicChordMidi diatonicChordMidi) {
-        ChromaticChord chromaticChord = ChromaticChord.from(diatonicChordMidi);
+        ChromaticChord chromaticChord = ChromaticChord.builder().fromDiatonicChordMidi(diatonicChordMidi).build();
         return ChromaticChordInterface.from(chromaticChord);
     }
 

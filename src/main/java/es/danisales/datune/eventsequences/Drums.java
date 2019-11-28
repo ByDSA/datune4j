@@ -55,13 +55,13 @@ public class Drums extends EventSequence {
 	/* SAMPLES */
 	public final static Drums POWER = new Drums();
 	static {
-		for (int i = 0; i < Duration.V1; i += Duration.V4)
+		for (int i = 0; i < Duration.L1; i += Duration.L4)
 			POWER.add( i, Drums.ACOUSTIC_SNARE );
 
-		for (int i = 0; i < Duration.V1; i += Duration.V16)
+		for (int i = 0; i < Duration.L1; i += Duration.L16)
 			POWER.add( i, Drums.BASS_DRUM1 );
 
-		POWER.setLength( Duration.V1 );
+		POWER.setLength( Duration.L1);
 	}
 
 	public Drums add(int d, int n) {

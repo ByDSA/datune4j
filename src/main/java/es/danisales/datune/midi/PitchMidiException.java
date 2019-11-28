@@ -22,15 +22,9 @@ public class PitchMidiException extends PitchException {
         super("La figura musical está fuera de rango: " + chromatic + " " + octave);
     }
 
-    public static boolean check(int code) throws PitchMidiException {
+    public static void check(int code) throws PitchMidiException {
         if (code > PitchChromaticMidi.MAX.getMidiCode() || code < PitchChromaticMidi.MIN.getMidiCode())
 			throw new PitchMidiException( code );
-
-		return true;
-	}
-
-	public static boolean check(@NonNull PitchChromaticMidiInmutable n) throws PitchMidiException {
-		return check( n.getCode() );
 	}
 
 	public static void check(@NonNull PitchDiatonicMidi pitchDiatonicMidi) throws PitchMidiException {

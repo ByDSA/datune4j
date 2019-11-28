@@ -27,8 +27,6 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 		super(new ArrayList<>());
 	}
 
-	protected abstract <T extends ChordMidi<N, I, P>> T newChord();
-
 	<T extends ChordMidi<N, I, P>> void assign(@NonNull T c) {
 		Objects.requireNonNull(c);
 		clear();
@@ -95,7 +93,6 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 		arpegio.setChord( this );
 	}
 
-	@SuppressWarnings("WeakerAccess")
 	public boolean containsPitch(@NonNull Object o) {
 		if (!(o instanceof Note))
 			return false;
@@ -109,7 +106,6 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 		return false;
 	}
 
-	@SuppressWarnings("WeakerAccess")
 	public boolean containsPitchAll(@NonNull Collection<N> c) {
 		for (N note : c)
 			if (!containsPitch(note))
@@ -117,6 +113,9 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 
 		return true;
 	}
+
+	@Override
+	public abstract ChordMidi<N, I, P> clone();
 
 	@Override
 	public boolean add(@NonNull N n) throws AddedException {
@@ -233,10 +232,7 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
-	public ChordMidi<N, I, P> clone() {
-		ChordMidi<N, I, P> chordMidi = newChord();
-
+	ChordMidi<N, I, P> commonClone(ChordMidi<N, I, P> chordMidi) {
 		for (N n : this)
 			chordMidi.add((N) n.clone());
 
@@ -258,5 +254,10 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 			return false;
 
 		return super.equals(cm) && (arpegio == null || arpegio.equals(cm.arpegio)) && length == cm.length;
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode() + 37 * ( arpegio.hashCode() + 41 * Integer.hashCode(length) );
 	}
 }

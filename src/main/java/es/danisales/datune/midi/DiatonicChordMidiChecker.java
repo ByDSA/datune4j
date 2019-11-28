@@ -12,6 +12,24 @@ public class DiatonicChordMidiChecker {
     private DiatonicChordMidiChecker() {
     }
 
+    public static boolean isTonic(DiatonicChordMidi diatonicChordMidi) {
+        HarmonicFunction function = diatonicChordMidi.function;
+        return function == DiatonicFunction.I || function == DiatonicFunction.III
+                || function == DiatonicFunction.VI;
+    }
+
+    public static boolean isSubdominant(DiatonicChordMidi diatonicChordMidi) {
+        for (DiatonicMidi n : diatonicChordMidi)
+            if (n.getPitch().getDegree() == DiatonicDegree.IV)
+                return true;
+        return false;
+    }
+
+    public boolean isDominant(DiatonicChordMidi diatonicChordMidi) {
+        HarmonicFunction function =diatonicChordMidi.getFunction();
+        return function == DiatonicFunction.V || function == DiatonicFunction.VII;
+    }
+
     public static boolean contains(List<DiatonicChordMidi> chords, boolean sameOctave, boolean sameTonality, DiatonicChordMidi c) {
         for (DiatonicChordMidi ccc : chords) {
             if (sameTonality && isSameChordNotesAndTonality(ccc, sameOctave, c)
@@ -27,12 +45,12 @@ public class DiatonicChordMidiChecker {
     }
 
 
-    public static ArrayList<ChromaticMidi> commonNotes(DiatonicChordMidi self, DiatonicChordMidi c) throws PitchMidiException {
+    public static ArrayList<ChromaticMidi> commonNotes(DiatonicChordMidi self, DiatonicChordMidi c) {
         return commonNotes(self, c, false);
     }
 
-    public static ArrayList<ChromaticMidi> commonNotes(DiatonicChordMidi self, DiatonicChordMidi c, boolean sameOctave) throws PitchMidiException {
-        ArrayList<ChromaticMidi> ret = new ArrayList<ChromaticMidi>();
+    public static ArrayList<ChromaticMidi> commonNotes(DiatonicChordMidi self, DiatonicChordMidi c, boolean sameOctave) {
+        ArrayList<ChromaticMidi> ret = new ArrayList<>();
 
         for (DiatonicMidi nscale1 : self) {
             ChromaticMidi n1 = ChromaticMidi.from(nscale1);

@@ -1,6 +1,7 @@
 package es.danisales.datune.midi;
 
 import es.danisales.datune.diatonic.Interval;
+import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.ChordNamer;
 
 public class AddedException extends RuntimeException {
@@ -8,7 +9,7 @@ public class AddedException extends RuntimeException {
 		super("Ya existe en el acorde (" + ChordNamer.from(c) + ") la nota que se intenta añadir (" + n + ")");
 	}
 
-	public AddedException(ChordMidi c) {
+	public <N> AddedException(ChordCommon<N> c) {
 		super("Ya existe en el acorde (" + ChordNamer.from(c) + ") la nota que se intenta añadir.");
 	}
 }

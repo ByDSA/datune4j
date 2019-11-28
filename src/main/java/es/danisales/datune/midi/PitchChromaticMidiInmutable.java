@@ -43,16 +43,11 @@ enum PitchChromaticMidiInmutable implements PitchChromaticSingle, PitchOctave, P
     }
 
     public static PitchChromaticMidiInmutable from(int code) throws PitchMidiException {
-        checkCodeBoundaries(code);
+        PitchMidiException.check(code);
 
         Chromatic n = Chromatic.from(code % Chromatic.NUMBER);
         int o = code / Chromatic.NUMBER;
         return from(n, o);
-    }
-
-    private static void checkCodeBoundaries(int code) throws PitchMidiException {
-        if (code < PitchChromaticMidi.MIN.getMidiCode() || code > PitchChromaticMidi.MAX.getMidiCode())
-            throw new PitchMidiException(code);
     }
 
     public static @NonNull PitchChromaticMidiInmutable from(Chromatic chromatic, int octave) throws PitchMidiException {
@@ -83,8 +78,6 @@ enum PitchChromaticMidiInmutable implements PitchChromaticSingle, PitchOctave, P
                         return PitchChromaticMidiInmutable.AA0;
                     case B:
                         return PitchChromaticMidiInmutable.B0;
-                    default:
-                        return null;
                 }
             case 1:
                 switch (chromatic) {
@@ -112,8 +105,6 @@ enum PitchChromaticMidiInmutable implements PitchChromaticSingle, PitchOctave, P
                         return PitchChromaticMidiInmutable.AA1;
                     case B:
                         return PitchChromaticMidiInmutable.B1;
-                    default:
-                        return null;
                 }
             case 2:
                 switch (chromatic) {
@@ -141,8 +132,6 @@ enum PitchChromaticMidiInmutable implements PitchChromaticSingle, PitchOctave, P
                         return PitchChromaticMidiInmutable.AA2;
                     case B:
                         return PitchChromaticMidiInmutable.B2;
-                    default:
-                        return null;
                 }
             case 3:
                 switch (chromatic) {
@@ -170,8 +159,6 @@ enum PitchChromaticMidiInmutable implements PitchChromaticSingle, PitchOctave, P
                         return PitchChromaticMidiInmutable.AA3;
                     case B:
                         return PitchChromaticMidiInmutable.B3;
-                    default:
-                        return null;
                 }
             case 4:
                 switch (chromatic) {
@@ -199,8 +186,6 @@ enum PitchChromaticMidiInmutable implements PitchChromaticSingle, PitchOctave, P
                         return PitchChromaticMidiInmutable.AA4;
                     case B:
                         return PitchChromaticMidiInmutable.B4;
-                    default:
-                        return null;
                 }
             case 5:
                 switch (chromatic) {
@@ -228,8 +213,6 @@ enum PitchChromaticMidiInmutable implements PitchChromaticSingle, PitchOctave, P
                         return PitchChromaticMidiInmutable.AA5;
                     case B:
                         return PitchChromaticMidiInmutable.B5;
-                    default:
-                        return null;
                 }
             case 6:
                 switch (chromatic) {
@@ -257,8 +240,6 @@ enum PitchChromaticMidiInmutable implements PitchChromaticSingle, PitchOctave, P
                         return PitchChromaticMidiInmutable.AA6;
                     case B:
                         return PitchChromaticMidiInmutable.B6;
-                    default:
-                        return null;
                 }
             case 7:
                 switch (chromatic) {
@@ -286,8 +267,6 @@ enum PitchChromaticMidiInmutable implements PitchChromaticSingle, PitchOctave, P
                         return PitchChromaticMidiInmutable.AA7;
                     case B:
                         return PitchChromaticMidiInmutable.B7;
-                    default:
-                        return null;
                 }
             case 8:
                 switch (chromatic) {
@@ -315,8 +294,6 @@ enum PitchChromaticMidiInmutable implements PitchChromaticSingle, PitchOctave, P
                         return PitchChromaticMidiInmutable.AA8;
                     case B:
                         return PitchChromaticMidiInmutable.B8;
-                    default:
-                        return null;
                 }
             case 9:
                 switch (chromatic) {
@@ -344,8 +321,6 @@ enum PitchChromaticMidiInmutable implements PitchChromaticSingle, PitchOctave, P
                         return PitchChromaticMidiInmutable.AA9;
                     case B:
                         return PitchChromaticMidiInmutable.B9;
-                    default:
-                        return null;
                 }
             case 10:
                 switch (chromatic) {
@@ -384,10 +359,6 @@ enum PitchChromaticMidiInmutable implements PitchChromaticSingle, PitchOctave, P
     @NonNull
     public PitchChromaticMidiInmutable getShiftNegative(IntervalChromatic i) throws PitchMidiException {
         return getShift(-i.getSemitones());
-    }
-
-    private static int getCodeNoTestLimits(Chromatic chromatic, int octave) {
-        return Chromatic.NUMBER * octave + chromatic.ordinal();
     }
 
     @Override

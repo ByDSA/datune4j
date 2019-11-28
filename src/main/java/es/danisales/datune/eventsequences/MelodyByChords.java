@@ -27,7 +27,7 @@ public class MelodyByChords extends Melody {
 	
 	public class OutOfTimeException extends RuntimeException {
 		public OutOfTimeException(int t) {
-			super("No se pudo acceder al " + (t/Duration.V1+1) + ":" + ((t % Duration.V1) / (float)Duration.V4+1));
+			super("No se pudo acceder al " + (t/Duration.L1 +1) + ":" + ((t % Duration.L1) / (float)Duration.L4 +1));
 		}
 	}
 

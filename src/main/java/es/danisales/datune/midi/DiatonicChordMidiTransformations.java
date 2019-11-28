@@ -73,13 +73,12 @@ public class DiatonicChordMidiTransformations {
     }
 
     public static void showPossibleProgressions(Function<DiatonicChordMidi, Boolean> f, List<ChromaticChord> chordsIn) {
-        List<ChromaticChord> chords = chordsIn;
 
-        List<Tonality> possibleTonalitiesList = TonalityRetrieval.getFromChords(true, chords);
+        List<Tonality> possibleTonalitiesList = TonalityRetrieval.getFromChords(true, chordsIn);
 
         // DEBUG
         if (possibleTonalitiesList == null || possibleTonalitiesList.isEmpty()) {
-            for (ChromaticChord c : chords) {
+            for (ChromaticChord c : chordsIn) {
                 for (Chromatic chromaticMidi : c)
                     System.out.print(chromaticMidi + "  ");
                 System.out.println();
@@ -94,17 +93,15 @@ public class DiatonicChordMidiTransformations {
             if (tonality.isMajorOrMinor()) {
                 StringBuilder sb = new StringBuilder();
                 boolean yep = true;
-                boolean first = false;
-                sb.append("----" + tonality + "----");
-                for (ChromaticChord chromaticMidis : chords) {
+                sb.append("----").append(tonality).append("----");
+                for (ChromaticChord chromaticMidis : chordsIn) {
                     DiatonicChordMidi c = new DiatonicChordMidi(tonality, chromaticMidis);
                     if (!f.apply(c)) {
                         yep = false;
                         break;
                     }
 
-                    sb.append("\n" + c);
-                    first = false;
+                    sb.append("\n").append(c);
                 }
 
                 if (yep)
@@ -114,9 +111,9 @@ public class DiatonicChordMidiTransformations {
         }
     }
 
-    public static ArrayList<DiatonicChordMidi> chordsWhereTonalityIs(ArrayList<DiatonicChordMidi> in, Tonality t, boolean meta, boolean intercambioModal) {
-        ArrayList<DiatonicChordMidi> cs = new ArrayList<>();
-        ArrayList<DiatonicChordMidi> csModal = new ArrayList<>();
+    public static List<DiatonicChordMidi> chordsWhereTonalityIs(List<DiatonicChordMidi> in, Tonality t, boolean meta, boolean intercambioModal) {
+        List<DiatonicChordMidi> cs = new ArrayList<>();
+        List<DiatonicChordMidi> csModal = new ArrayList<>();
 
         for (final DiatonicChordMidi i : in)
             if (meta && i.metaTonality.equals(t) || !meta && i.getTonality().equals(t)) {
@@ -131,7 +128,7 @@ public class DiatonicChordMidiTransformations {
     }
 
     public static DiatonicChordMidi chordWhereTonalityIs(ArrayList<DiatonicChordMidi> in, Tonality t, boolean meta, boolean intercambioModal) {
-        ArrayList<DiatonicChordMidi> cs = chordsWhereTonalityIs(in, t, meta, intercambioModal);
+        List<DiatonicChordMidi> cs = chordsWhereTonalityIs(in, t, meta, intercambioModal);
         if (cs.size() == 0)
             throw new RuntimeException("No hay un acorde");
 

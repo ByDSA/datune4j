@@ -117,8 +117,8 @@ public enum Chromatic implements PitchChromaticSingle, CyclicAbsoluteDegree<Chro
 		throw new RuntimeException("Impossible");
 	}
 
-	public static @NonNull Chromatic from(PitchChromaticSingle t) {
-		return ChromaticAdapter.from(t);
+	public static @NonNull Chromatic from(ChromaticMidi chromaticMidi) {
+		return chromaticMidi.getPitch().getChromatic();
 	}
 
 	public static @NonNull Chromatic from(DiatonicDegree diatonicDegree, Tonality tonality) {
@@ -133,10 +133,6 @@ public enum Chromatic implements PitchChromaticSingle, CyclicAbsoluteDegree<Chro
 	public static Chromatic from(DiatonicMidi diatonicMidi) {
 		ChromaticMidi chromaticMidi = ChromaticMidi.builder().from(diatonicMidi).build();
 		return from(chromaticMidi);
-	}
-
-	public static Chromatic from(ChromaticMidi chromaticMidi) {
-		return chromaticMidi.getPitch().getChromatic();
 	}
 
 	public Chromatic addSemi(int n) {

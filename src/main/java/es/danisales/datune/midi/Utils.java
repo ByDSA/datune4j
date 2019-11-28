@@ -7,8 +7,8 @@ public class Utils {
 	public static byte[] deltaByte(int n) {
 		if ( n <= 127 )
 			return new byte[] {
-				(byte) n
-		};
+					(byte) n
+			};
 		else {
 			// Contar bits del deltaByte
 			int i = n;
@@ -18,7 +18,7 @@ public class Utils {
 					bits++;
 
 				i >>>= 1;
-		bits++;
+				bits++;
 			}
 			int bytes = (int) Math.ceil( bits / 8.0 );
 

@@ -25,7 +25,6 @@ public final class PitchMidi implements PitchChromaticSingle, Cloneable {
         return ret;
     }
 
-    @SuppressWarnings("WeakerAccess")
     public PitchChromaticMidi getPitchChromaticMidi() {
         return pitchChromaticMidi;
     }

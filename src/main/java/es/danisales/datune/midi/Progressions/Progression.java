@@ -117,7 +117,7 @@ public class Progression<This extends Progression> implements EventComplex {
 		int duration = 0;
 		for(DiatonicChordMidi node : nodes) {
 			Tonality s = node.getTonality();
-			if (duration % Duration.V1 == 0)
+			if (duration % Duration.L1 == 0)
 				es.add(duration, new KeySignatureEvent(s));
 
 			es.add(duration, node);

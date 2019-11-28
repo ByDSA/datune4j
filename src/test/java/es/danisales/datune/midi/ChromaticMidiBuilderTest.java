@@ -41,13 +41,13 @@ public class ChromaticMidiBuilderTest {
     public void all() {
         ChromaticMidi chromaticMidi = ChromaticMidi.builder()
                 .pitch(PitchChromaticMidi.C5)
-                .length(Duration.V1)
+                .length(Duration.L1)
                 .velocity(64)
                 .build();
 
         assertEquals(PitchChromaticMidi.C5, chromaticMidi.getPitch());
         assertEquals(64, chromaticMidi.getVelocity());
-        assertEquals(Duration.V1, chromaticMidi.getLength());
+        assertEquals(Duration.L1, chromaticMidi.getLength());
     }
 
     @Test

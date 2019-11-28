@@ -8,7 +8,7 @@ public class ArpegioAscDescV8 extends Arpegio {
 			int aa = a-1;
 			for(int i = 0; i < n; i++) {
 				int num = (-Math.abs(i%(2*aa)-aa)+aa);
-				This.add(Duration.V8*i, num, Duration.V8);
+				This.add(Duration.L8 *i, num, Duration.L8);
 			}
 		});
 	}

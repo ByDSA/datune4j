@@ -59,7 +59,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
             initFromDiatonicFunction(diatonicChordMidi);
     }
 
-    protected void chromaticFunctionProcess2(DiatonicChordMidi self) throws TonalityException, PitchMidiException {
+    private void chromaticFunctionProcess2(DiatonicChordMidi self) throws TonalityException, PitchMidiException {
         ChromaticFunction chromaticFunction = (ChromaticFunction) function;
         ChromaticChord chromaticChord = TonalityGetChromaticFunction.get(self.tonality, chromaticFunction);
         tonality = TonalityGetChromaticFunction.getTonalityFromChromaticFunction(tonality, chromaticFunction);
@@ -90,7 +90,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
 
             self.addAll(chromaticChordMidi);
         } else if (ArrayUtils.contains(t, ChromaticFunction.POWER_CHORDS)) {
-            DiatonicDegree d = t.getDegree();
+            DiatonicDegree d = DiatonicDegree.from(t);
 
             IntervalChromatic ic = tonality.getInterval(d, IntervalDiatonic.FIFTH);
 

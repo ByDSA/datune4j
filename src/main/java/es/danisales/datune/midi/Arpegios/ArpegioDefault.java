@@ -12,6 +12,6 @@ public class ArpegioDefault extends Arpegio {
 	}
 	
 	public ArpegioDefault() {
-		this(Duration.V1);
+		this(Duration.L1);
 	}
 }

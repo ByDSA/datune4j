@@ -9,6 +9,7 @@ import es.danisales.datune.musical.ChromaticChord;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public interface PitchChromaticChord<N extends PitchChromaticSingle> extends ChordCommon<N> {
@@ -26,47 +27,6 @@ public interface PitchChromaticChord<N extends PitchChromaticSingle> extends Cho
 			return ns;
 		} else
 			return ChromaticChord.builder().fromChromaticMidi(chromaticChordMidi).build();
-	}
-
-	default <Array extends PitchChromaticChord<? extends PitchChromaticSingle>> boolean hasSameNotesOrder(Array notes) {
-		if ( size() != notes.size() )
-			return false;
-
-		for ( int i = 0; i < size(); i++ ) {
-			Chromatic chromatic = ChromaticAdapter.from( get(i) );
-			Chromatic chromaticOther = ChromaticAdapter.from( notes.get(i) );
-			if ( chromatic.ordinal() != chromaticOther.ordinal() )
-				return false;
-		}
-
-		return true;
-	}
-
-	default List<Integer> integerNotationFromRoot() {
-		List<Integer> ret = new ArrayList<>();
-		for (PitchChromaticSingle chromatic : this) {
-			Chromatic c = Chromatic.from(chromatic);
-			Chromatic first = Chromatic.from(get(0));
-			ret.add(c.distSemitonesTo(first));
-		}
-
-		return ret;
-	}
-
-	default boolean equalsEnharmonic(ChromaticChord ca) {
-		if ( size() != ca.size() )
-			return false;
-		for ( int i = 0; i < size(); i++ ) {
-			Chromatic chromatic = ChromaticAdapter.from( get(i) );
-			Chromatic chromaticOther = ChromaticAdapter.from( ca.get(i) );
-			if ( chromatic.ordinal() != chromaticOther.ordinal() )
-				return false;
-		}
-
-		if ( getRootPos() != ca.getRootPos() )
-			return false;
-
-		return true;
 	}
 
 	@NonNull

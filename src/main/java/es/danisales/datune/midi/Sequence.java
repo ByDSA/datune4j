@@ -247,7 +247,7 @@ public class Sequence extends BinaryFile {
 				if (message instanceof ShortMessage) {
 					ShortMessage sm = (ShortMessage) message;
 					//System.out.print("Channel: " + sm.getChannel() + " ");
-					long time = Duration.V4 * event.getTick() / sequence.getResolution();
+					long time = Duration.L4 * event.getTick() / sequence.getResolution();
 					if (t == null) {
 						int ins = 0; // sequence.getPatchList()[sm.getChannel()].getProgram()
 

@@ -10,24 +10,6 @@ class ChromaticChordMidiAdapter {
     private ChromaticChordMidiAdapter() {
     }
 
-    public static @NonNull ChromaticChordMidi fromChromatics(@NonNull Chromatic[] chromatics) throws PitchMidiException {
-        ChromaticChordMidi ns = new ChromaticChordMidi();
-        for (int i = 0; i < chromatics.length; i++) {
-            ChromaticMidi chromaticMidi = ChromaticMidi.builder()
-                    .pitch(chromatics[i])
-                    .build();
-            if (i > 0) {
-                int lastElementOctave = ns.get(ns.size() - 1).getPitch().getOctave();
-                if (chromatics[i].ordinal() < (chromatics[i - 1].ordinal()))
-                    chromaticMidi.getPitch().setOctave(lastElementOctave + 1);
-                else
-                    chromaticMidi.getPitch().setOctave(lastElementOctave);
-            }
-            ns.add(chromaticMidi);
-        }
-        return ns;
-    }
-
     public static <N extends PitchChromaticSingle> @NonNull ChromaticChordMidi from(@NonNull Iterable<N> iterable) throws PitchMidiException {
         ChromaticChordMidi self = new ChromaticChordMidi();
 

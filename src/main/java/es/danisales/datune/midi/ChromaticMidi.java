@@ -17,7 +17,6 @@ public final class ChromaticMidi extends Note<PitchChromaticMidi> implements Pit
 		return builder().from(diatonicMidi).build();
 	}
 
-	@SuppressWarnings("WeakerAccess")
     public int distTo(@NonNull ChromaticMidi chromaticMidi) {
         return DistanceCalculator.calculateDistanceInSemitones(this, chromaticMidi);
     }

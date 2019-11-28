@@ -8,6 +8,7 @@ import es.danisales.datune.pitch.PitchDiatonicSingle;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 public final class DiatonicMidi extends Note<PitchDiatonicMidi> implements PitchDiatonicSingle, EventComplex {
 	public static DiatonicMidiBuilder builder() {
@@ -22,7 +23,8 @@ public final class DiatonicMidi extends Note<PitchDiatonicMidi> implements Pitch
 		return builder().from(chromaticMidi, tonality).build();
 	}
 
-	public IntervalChromatic distTo(DiatonicMidi diatonicMidi) throws TonalityException {
+	@SuppressWarnings("WeakerAccess")
+	public @Nullable IntervalChromatic distTo(@NonNull DiatonicMidi diatonicMidi) throws TonalityException {
 		if (!diatonicMidi.pitch.tonality.equals(pitch.tonality))
 			throw new TonalityException(this, diatonicMidi);
 

@@ -15,7 +15,7 @@ public class ChordTransformations {
     private ChordTransformations() {
     }
 
-    public static <N, T extends ChordCommon<N>> T removeHigherDuplicates(ChordMutableInterface<N, ?> chordMutableInterface) { // todo: move
+    public static <N, T extends ChordCommon<N>> T removeHigherDuplicates(ChordMutableInterface<N, ?> chordMutableInterface) {
         ChordMutableInterface<N, ?> out = chordMutableInterface.clone();
         for (N n : chordMutableInterface) {
             boolean found = false;
@@ -31,7 +31,7 @@ public class ChordTransformations {
     }
 
     public static void removeHigherDuplicates(ChromaticChordMidi self) {
-        ChromaticChordMidi out = self.newChord();
+        ChromaticChordMidi out = ChromaticChordMidi.builder().build();
         for (ChromaticMidi n : self) {
             boolean found = false;
             for (ChromaticMidi n2 : out) {
@@ -64,7 +64,6 @@ public class ChordTransformations {
         return ret;
     }
 
-    @SuppressWarnings("unchecked")
     public static <N extends CyclicAbsoluteDegree<?, I>, I extends Interval> List<? extends ChordCommon<N>> getAllInversions(NormalChordCommon<N, I> normalChordCommon) {
         List<ChordMutableInterface<N, I>> customDiatonicChords = getAllInversionsRaw(normalChordCommon);
 

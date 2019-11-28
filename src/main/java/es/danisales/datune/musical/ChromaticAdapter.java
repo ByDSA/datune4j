@@ -24,17 +24,6 @@ public class ChromaticAdapter {
     }
 
     public static @NonNull Chromatic from(ChromaticMidi chromaticMidi) {
-        return from( chromaticMidi.getPitch() );
-    }
-
-    public static @NonNull Chromatic from(PitchChromaticSingle t) {
-        if (t.getClass().equals(PitchChromaticMidi.class))
-            return from((PitchChromaticMidi)t);
-        else if (t.getClass().equals(Chromatic.class))
-            return (Chromatic)t;
-        else if (t.getClass().equals(ChromaticMidi.class))
-            return ((ChromaticMidi) t).getPitch().getChromatic();
-
-        throw new RuntimeException("Undefined for class " + t.getClass());
+        return chromaticMidi.getPitch().getChromatic();
     }
 }

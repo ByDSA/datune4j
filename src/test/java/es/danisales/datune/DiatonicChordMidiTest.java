@@ -614,9 +614,9 @@ public class DiatonicChordMidiTest {
         DiatonicChordMidi c2 = DiatonicChordMidi.builder().from(DiatonicFunction.I, Tonality.C).octave(5).build();
         assertEquals(c, c2);
 
-        c.setLength(Duration.V2);
+        c.setLength(Duration.L2);
         assertNotEquals(c, c2);
-        c2.setLength(Duration.V2);
+        c2.setLength(Duration.L2);
         assertEquals(c, c2);
 
         c.setOctave(6);
@@ -659,7 +659,7 @@ public class DiatonicChordMidiTest {
     @Test
     public void toDiatonic() throws PitchMidiException {
         DiatonicChordMidi c = DiatonicChordMidi.builder().from(DiatonicFunction.I, Tonality.C).octave(5).build();
-        assertEquals(Duration.V1, c.get(0).getLength());
+        assertEquals(Duration.L1, c.get(0).getLength());
         ChromaticChord ccm = ChromaticChord.builder().fromDiatonicChordMidi(c).build();
         assertEquals(Settings.DefaultValues.LENGTH_CHORD, c.get(0).getLength());
         assertEquals(c.get(0).getLength(), c.get(0).clone().getLength());
@@ -671,7 +671,7 @@ public class DiatonicChordMidiTest {
 
         assertEquals(true, chords.size() > 0);
         DiatonicChordMidi c2 = chords.get(0);
-        assertEquals(Duration.V1, c2.get(0).getLength());
+        assertEquals(Duration.L1, c2.get(0).getLength());
         assertEquals(c.getArpegio(), c2.getArpegio());
         assertEquals(c.getLength(), c2.getLength());
         assertEquals(ChordNamer.from(c), ChordNamer.from(c2));

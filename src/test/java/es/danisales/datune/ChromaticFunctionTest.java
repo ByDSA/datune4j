@@ -61,7 +61,7 @@ public class ChromaticFunctionTest {
 	@Test
 	public void getDregreeNotNull() {
 		for (ChromaticFunction cf : ChromaticFunction.values()) {
-			assertNotNull( cf.getDegree() );
+			assertNotNull( DiatonicDegree.from(cf) );
 		}
 	}
 }

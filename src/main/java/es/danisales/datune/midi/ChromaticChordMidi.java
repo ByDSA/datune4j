@@ -38,11 +38,6 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, IntervalChromat
     }
 
     @Override
-    public ChromaticChordMidi newChord() {
-        return new ChromaticChordMidi();
-    }
-
-    @Override
     public void shift(IntervalChromatic intervalChromatic) {
         try {
             for (ChromaticMidi chromaticMidi : this) {
@@ -70,7 +65,8 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, IntervalChromat
 
     @Override
     public @NonNull ChromaticChordMidi clone() {
-        return (ChromaticChordMidi) super.clone();
+        ChromaticChordMidi chromaticChordMidi = new ChromaticChordMidi();
+        return (ChromaticChordMidi) commonClone(chromaticChordMidi);
     }
 
     @Override
@@ -80,5 +76,10 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, IntervalChromat
             stringBuilder.append(chromaticMidi.toString()).append("\n");
 
         return stringBuilder.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return 43 * super.hashCode();
     }
 }

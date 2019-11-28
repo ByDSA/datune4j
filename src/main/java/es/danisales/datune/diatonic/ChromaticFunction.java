@@ -119,7 +119,7 @@ public enum ChromaticFunction implements HarmonicFunction {
 	public static final ChromaticFunction[] ALL = ArrayUtils
 			.concat( POWER_CHORDS, TENSIONS );
 
-	/**
+	/*
 	 * FIN CONSTANTES
 	 **********************************************************************************************************/
 
@@ -148,14 +148,9 @@ public enum ChromaticFunction implements HarmonicFunction {
 	 * @return the harmonic function
 	 */
 	public static HarmonicFunction from(DiatonicChordMidi diatonicChordMidi) {
-        ChromaticChord chromaticChord = ChromaticChord.from(diatonicChordMidi);
+        ChromaticChord chromaticChord = ChromaticChord.builder().fromDiatonicChordMidi(diatonicChordMidi).build();
 		return ChromaticFunction
                 .from(chromaticChord, Tonality.from(diatonicChordMidi.metaTonality.getRoot(), diatonicChordMidi.metaTonality.getScale()));
-	}
-
-	@Deprecated
-	public DiatonicDegree getDegree() {
-		return DiatonicDegree.from(this);
 	}
 
 	public @NonNull String toString() {
@@ -257,6 +252,6 @@ public enum ChromaticFunction implements HarmonicFunction {
 				return "VII0";
 		}
 
-		return null;
+		throw new RuntimeException();
 	}
 }

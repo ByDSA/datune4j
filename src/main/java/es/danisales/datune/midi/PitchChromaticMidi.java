@@ -8,7 +8,6 @@ import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-@SuppressWarnings("WeakerAccess")
 public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInterface<IntervalChromatic> {
     @SuppressWarnings("unused")
     public static final PitchChromaticMidi C0 = new PitchChromaticMidi(PitchChromaticMidiInmutable.C0);

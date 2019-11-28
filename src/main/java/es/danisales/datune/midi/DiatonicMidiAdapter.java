@@ -7,6 +7,9 @@ import es.danisales.datune.tonality.TonalityException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 class DiatonicMidiAdapter {
+    private DiatonicMidiAdapter() {
+    }
+
     public static @NonNull DiatonicMidi from(@NonNull ChromaticMidi chromaticMidi, @NonNull Tonality tonality) throws TonalityException, PitchMidiException {
         Chromatic chromatic = Chromatic.from(chromaticMidi);
         DiatonicDegree pos = (DiatonicDegree) tonality.getDegreeFrom(chromatic);

@@ -45,9 +45,9 @@ class Main {
 			ChordMidi c = pcm.get( i );
 			int l = 0;
 			if ( i <= 2 || i == 5 || true ) {
-				l = Duration.V1;
+				l = Duration.L1;
 			} else {
-				l = Duration.V2;
+				l = Duration.L2;
 			}
 
 			c.setLength( l );

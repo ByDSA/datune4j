@@ -10,6 +10,7 @@ import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.pitch.PitchDiatonic;
 import es.danisales.datune.tonality.*;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.List;
 import java.util.Objects;
@@ -102,32 +103,10 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDiatonic,
         add(diatonicMidi);
     }
 
-    @Override
-    public DiatonicChordMidi newChord() {
-        return new DiatonicChordMidi();
-    }
-
-    public boolean isTonic() {
-        return function == DiatonicFunction.I || function == DiatonicFunction.III
-                || function == DiatonicFunction.VI;
-    }
-
-    public boolean isSubdominant() {
-        for (DiatonicMidi n : this)
-            if (n.getPitch().getDegree() == DiatonicDegree.IV)
-                return true;
-        return false;
-    }
-
-    public boolean isDominant() {
-        function = getFunction();
-        return function == DiatonicFunction.V || function == DiatonicFunction.VII;
-    }
-
     public DiatonicDegree getDegree() {
         DiatonicDegree d = null;
         if ( function instanceof ChromaticFunction )
-            d = ( (ChromaticFunction) function ).getDegree();
+            d = DiatonicDegree.from((ChromaticFunction)function);
         if ( d == null ) {
             Chromatic c = Chromatic.from( getRoot() );
             try {
@@ -147,20 +126,22 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDiatonic,
         return true;
     }
 
-    public DiatonicMidi get(int note, List<DiatonicMidi> ns) {
+    public @Nullable DiatonicMidi get(int note, @NonNull List<DiatonicMidi> ns) {
         if ( ns.size() == 0 )
             return null;
 
         DiatonicMidi n;
         if ( note >= ns.size() ) {
             n = ns.get( note % ns.size() );
-            IntervalDiatonic i = IntervalDiatonic.fromIndex( note / ns.size() * IntervalDiatonic.OCTAVE.ordinal() );
-            n.getPitch().shift(i);
+            int index = note / ns.size() * IntervalDiatonic.OCTAVE.ordinal();
+            IntervalDiatonic intervalDiatonic = IntervalDiatonic.fromIndex(index);
+            n.getPitch().shift(intervalDiatonic);
         } else if ( note < 0 ) {
             int num = Math.abs( ns.size() + note % ns.size() );
             n = ns.get( num );
-            IntervalDiatonic i = IntervalDiatonic.fromIndex( ( note / ns.size() - 1 ) * IntervalDiatonic.OCTAVE.ordinal() );
-            n.getPitch().shift(i);
+            int index = ( note / ns.size() - 1 ) * IntervalDiatonic.OCTAVE.ordinal();
+            IntervalDiatonic intervalDiatonic = IntervalDiatonic.fromIndex(index);
+            n.getPitch().shift(intervalDiatonic);
         } else {
             n = ns.get( note ).clone();
         }
@@ -189,11 +170,11 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDiatonic,
 
     @Override
     public boolean add(@NonNull DiatonicMidi n) throws AddedException {
-        boolean r = super.add( n );
+        super.add( n );
 
         setArpegioIfNull();
 
-        return r;
+        return true;
     }
 
     public void addInterval(@NonNull IntervalDiatonic interval) throws AddedException {
@@ -268,9 +249,10 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDiatonic,
         return null;
     }
 
+
     @Override
-    public DiatonicChordMidi clone() {
-        DiatonicChordMidi diatonicChordMidi = (DiatonicChordMidi) super.clone();
+    public @NonNull DiatonicChordMidi clone() {
+        DiatonicChordMidi diatonicChordMidi = (DiatonicChordMidi) commonClone( new DiatonicChordMidi() );
         diatonicChordMidi.tonality = tonality.clone();
         diatonicChordMidi.metaTonality = metaTonality.clone();
         diatonicChordMidi.function = function;
@@ -290,9 +272,11 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDiatonic,
                 && metaTonality.equals( dcm.metaTonality );
     }
 
+    // todo
+
+    /*
     @Override
     public int hashCode() {
-        // todo
-        return 0;
-    }
+        return 47 * ( super.hashCode() + );
+    }*/
 }

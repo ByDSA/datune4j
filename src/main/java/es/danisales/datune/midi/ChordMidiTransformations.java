@@ -29,6 +29,15 @@ public class ChordMidiTransformations {
         return ret;
     }
 
+    private static <N extends Note<P>, I extends Interval, P extends PitchMidiInterface<I>, T extends ChordMidi<N, I, P>> ChordMidi newChord(ChordMidi<N, I, P> chordMidi) {
+        if (chordMidi instanceof DiatonicChordMidi)
+            return DiatonicChordMidi.builder().build();
+        else if (chordMidi instanceof ChromaticChordMidi)
+            return ChromaticChordMidi.builder().build();
+
+        return null;
+    }
+
     protected static <N extends Note<P>, I extends Interval, P extends PitchMidiInterface<I>, T extends ChordMidi<N, I, P>> List<T> getAllDispositionsSub(ChordMidi<N, I, P> chordMidi, boolean sub, int level, boolean first) {
         ArrayList<T> ret = new ArrayList<>();
         assert chordMidi.size() > 0;
@@ -46,14 +55,14 @@ public class ChordMidiTransformations {
 
                 if (sub && chordMidi.size() > 1) {
                     // Copia acorde desde la segunda a la última nota
-                    T subChord = chordMidi.newChord();
+                    T subChord = (T)newChord(chordMidi);
                     for (int j = 1; j < chordMidi.size(); j++)
                         subChord.add((N) chordMidi.get(j).clone());
 
                     List<T> subCombinations = getAllDispositionsSub(subChord.clone(), true, level + 1, first);
                     for (T subCombination : subCombinations) {
                         // Forma listOf superChord = [listOf[0] + subChordcombination]
-                        T superChord = chordMidi.newChord();
+                        T superChord = (T)newChord(chordMidi);
                         superChord.add((N) chordMidi.get(0).clone());
                         superChord.addAll(subCombination.clone());
 

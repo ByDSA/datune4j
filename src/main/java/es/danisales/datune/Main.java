@@ -53,151 +53,151 @@ public class Main {
 		for ( int i = 0; i < 1; i++ ) {
 			DiatonicChordMidi diatonicChordMidi;
 			diatonicChordMidi = p.add( DiatonicFunction.I );
-			diatonicChordMidi.setLength( Duration.V2 );
+			diatonicChordMidi.setLength( Duration.L2);
 			diatonicChordMidi.inv( -1 );
 
 			diatonicChordMidi = p.add( DiatonicFunction.I );
-			diatonicChordMidi.setLength( Duration.V2 );
+			diatonicChordMidi.setLength( Duration.L2);
 			diatonicChordMidi.inv( -1 );
 
 			diatonicChordMidi = p.add( DiatonicFunction.I );
-			diatonicChordMidi.setLength( Duration.V4 );
+			diatonicChordMidi.setLength( Duration.L4);
 			diatonicChordMidi.inv( -1 );
 
 			diatonicChordMidi = p.add( DiatonicFunction.I );
-			diatonicChordMidi.setLength( Duration.V4 );
-			diatonicChordMidi.inv( -1 );
-
-			diatonicChordMidi = p.add( DiatonicFunction.V, -1 );
-			diatonicChordMidi.setLength( Duration.V2 );
-			diatonicChordMidi.inv( 0 );
-
-			diatonicChordMidi = p.add( DiatonicFunction.I );
-			diatonicChordMidi.setLength( Duration.V4 );
+			diatonicChordMidi.setLength( Duration.L4);
 			diatonicChordMidi.inv( -1 );
 
 			diatonicChordMidi = p.add( DiatonicFunction.V, -1 );
-			diatonicChordMidi.setLength( Duration.V4 );
+			diatonicChordMidi.setLength( Duration.L2);
 			diatonicChordMidi.inv( 0 );
 
 			diatonicChordMidi = p.add( DiatonicFunction.I );
-			diatonicChordMidi.setLength( Duration.V2 );
+			diatonicChordMidi.setLength( Duration.L4);
+			diatonicChordMidi.inv( -1 );
+
+			diatonicChordMidi = p.add( DiatonicFunction.V, -1 );
+			diatonicChordMidi.setLength( Duration.L4);
+			diatonicChordMidi.inv( 0 );
+
+			diatonicChordMidi = p.add( DiatonicFunction.I );
+			diatonicChordMidi.setLength( Duration.L2);
 			diatonicChordMidi.inv( -1 );
 
 			diatonicChordMidi = p.add( DiatonicFunction.VI7, -1 );
-			diatonicChordMidi.setLength( Duration.V4 );
+			diatonicChordMidi.setLength( Duration.L4);
 			diatonicChordMidi.inv( 0 );
 
 			diatonicChordMidi = p.add( ChromaticFunction.V7_V );
-			diatonicChordMidi.setLength( Duration.V4 );
+			diatonicChordMidi.setLength( Duration.L4);
 			diatonicChordMidi.inv( 0 );
 
 			diatonicChordMidi = p.add( DiatonicFunction.V );
-			diatonicChordMidi.setLength( Duration.V2 );
+			diatonicChordMidi.setLength( Duration.L2);
 			diatonicChordMidi.inv( 0 );
 
-			m.add( DiatonicDegree.I, Duration.V4 );
-			m.add( DiatonicDegree.V, Duration.V4, -1 );
+			m.add( DiatonicDegree.I, Duration.L4);
+			m.add( DiatonicDegree.V, Duration.L4, -1 );
 
-			m.add( DiatonicDegree.III, Duration.V4 );
-			m.add( DiatonicDegree.I, Duration.V8 );
-			m.add( DiatonicDegree.V, Duration.V8 );
+			m.add( DiatonicDegree.III, Duration.L4);
+			m.add( DiatonicDegree.I, Duration.L8);
+			m.add( DiatonicDegree.V, Duration.L8);
 
-			m.add( DiatonicDegree.IV, Duration.V8 );
-			m.add( DiatonicDegree.III, Duration.V8 );
-			m.add( DiatonicDegree.II, Duration.V8 );
-			m.add( DiatonicDegree.I, Duration.V8 );
+			m.add( DiatonicDegree.IV, Duration.L8);
+			m.add( DiatonicDegree.III, Duration.L8);
+			m.add( DiatonicDegree.II, Duration.L8);
+			m.add( DiatonicDegree.I, Duration.L8);
 
-			m.add( DiatonicDegree.I, Duration.V8 );
-			m.add( DiatonicDegree.VII, Duration.V8, -1 );
-			m.add( DiatonicDegree.VI, Duration.V8, -1 );
-			m.add( DiatonicDegree.V, Duration.V8, -1 );
+			m.add( DiatonicDegree.I, Duration.L8);
+			m.add( DiatonicDegree.VII, Duration.L8, -1 );
+			m.add( DiatonicDegree.VI, Duration.L8, -1 );
+			m.add( DiatonicDegree.V, Duration.L8, -1 );
 
-			m.add( DiatonicDegree.I, Duration.V4 );
-			m.add( DiatonicDegree.II, Duration.V4 );
+			m.add( DiatonicDegree.I, Duration.L4);
+			m.add( DiatonicDegree.II, Duration.L4);
 
-			m.add( DiatonicDegree.III, Duration.V4 + Duration.V8 );
-			m.add( DiatonicDegree.V, Duration.V8 );
+			m.add( DiatonicDegree.III, Duration.L4 + Duration.L8);
+			m.add( DiatonicDegree.V, Duration.L8);
 
-			m.add( DiatonicDegree.IV, Duration.V8 );
-			m.add( DiatonicDegree.III, Duration.V8 );
-			m.add( DiatonicDegree.II, Duration.V8 );
-			m.add( DiatonicDegree.I, Duration.V8 );
+			m.add( DiatonicDegree.IV, Duration.L8);
+			m.add( DiatonicDegree.III, Duration.L8);
+			m.add( DiatonicDegree.II, Duration.L8);
+			m.add( DiatonicDegree.I, Duration.L8);
 
-			m.add( DiatonicDegree.V, Duration.V2 );
+			m.add( DiatonicDegree.V, Duration.L2);
 		}
 
 		for ( int i = 0; i < 1; i++ ) {
 			DiatonicChordMidi diatonicChordMidi;
 
 			diatonicChordMidi = p.add( DiatonicFunction.I );
-			diatonicChordMidi.setLength( Duration.V2 );
+			diatonicChordMidi.setLength( Duration.L2);
 			diatonicChordMidi.inv( -1 );
 
 			diatonicChordMidi = p.add( DiatonicFunction.V, -1 );
-			diatonicChordMidi.setLength( Duration.V2 );
+			diatonicChordMidi.setLength( Duration.L2);
 			diatonicChordMidi.inv( 0 );
 
 			diatonicChordMidi = p.add( DiatonicFunction.I );
-			diatonicChordMidi.setLength( Duration.V2 );
+			diatonicChordMidi.setLength( Duration.L2);
 			diatonicChordMidi.inv( -1 );
 
 			diatonicChordMidi = p.add( DiatonicFunction.V, -1 );
-			diatonicChordMidi.setLength( Duration.V2 );
+			diatonicChordMidi.setLength( Duration.L2);
 			diatonicChordMidi.inv( 0 );
 
 			diatonicChordMidi = p.add( DiatonicFunction.I );
-			diatonicChordMidi.setLength( Duration.V4 );
+			diatonicChordMidi.setLength( Duration.L4);
 			diatonicChordMidi.inv( -1 );
 
 			diatonicChordMidi = p.add( DiatonicFunction.V, -1 );
-			diatonicChordMidi.setLength( Duration.V4 );
+			diatonicChordMidi.setLength( Duration.L4);
 			diatonicChordMidi.inv( 0 );
 
 			diatonicChordMidi = p.add( DiatonicFunction.I );
-			diatonicChordMidi.setLength( Duration.V2 );
+			diatonicChordMidi.setLength( Duration.L2);
 			diatonicChordMidi.inv( -1 );
 
 			diatonicChordMidi = p.add( DiatonicFunction.I );
-			diatonicChordMidi.setLength( Duration.V4 );
+			diatonicChordMidi.setLength( Duration.L4);
 			diatonicChordMidi.inv( -1 );
 
 			diatonicChordMidi = p.add( DiatonicFunction.V, -1 );
-			diatonicChordMidi.setLength( Duration.V4 );
+			diatonicChordMidi.setLength( Duration.L4);
 			diatonicChordMidi.inv( 0 );
 
 			diatonicChordMidi = p.add( DiatonicFunction.I );
-			diatonicChordMidi.setLength( Duration.V2 );
+			diatonicChordMidi.setLength( Duration.L2);
 			diatonicChordMidi.inv( -1 );
 
-			m.add( DiatonicDegree.V, Duration.V4 );
-			m.add( DiatonicDegree.III, Duration.V8 + Duration.V16 );
-			m.add( DiatonicDegree.V, Duration.V16 );
+			m.add( DiatonicDegree.V, Duration.L4);
+			m.add( DiatonicDegree.III, Duration.L8 + Duration.L16);
+			m.add( DiatonicDegree.V, Duration.L16);
 
-			m.add( DiatonicDegree.IV, Duration.V4 );
-			m.add( DiatonicDegree.II, Duration.V8 + Duration.V16 );
-			m.add( DiatonicDegree.IV, Duration.V16 );
+			m.add( DiatonicDegree.IV, Duration.L4);
+			m.add( DiatonicDegree.II, Duration.L8 + Duration.L16);
+			m.add( DiatonicDegree.IV, Duration.L16);
 
-			m.add( DiatonicDegree.III, Duration.V4 );
-			m.add( DiatonicDegree.I, Duration.V8 + Duration.V16 );
-			m.add( DiatonicDegree.III, Duration.V16 );
+			m.add( DiatonicDegree.III, Duration.L4);
+			m.add( DiatonicDegree.I, Duration.L8 + Duration.L16);
+			m.add( DiatonicDegree.III, Duration.L16);
 
-			m.add( DiatonicDegree.II, Duration.V8 );
-			m.add( DiatonicDegree.V, Duration.V8, -1 );
-			m.add( DiatonicDegree.VI, Duration.V8, -1 );
-			m.add( DiatonicDegree.VII, Duration.V8, -1 );
+			m.add( DiatonicDegree.II, Duration.L8);
+			m.add( DiatonicDegree.V, Duration.L8, -1 );
+			m.add( DiatonicDegree.VI, Duration.L8, -1 );
+			m.add( DiatonicDegree.VII, Duration.L8, -1 );
 
-			m.add( DiatonicDegree.I, Duration.V4 );
-			m.add( DiatonicDegree.II, Duration.V4 );
+			m.add( DiatonicDegree.I, Duration.L4);
+			m.add( DiatonicDegree.II, Duration.L4);
 
-			m.add( DiatonicDegree.III, Duration.V8 + Duration.V16 );
-			m.add( DiatonicDegree.IV, Duration.V16 );
-			m.add( DiatonicDegree.V, Duration.V8 );
-			m.add( DiatonicDegree.IV, Duration.V8 );
+			m.add( DiatonicDegree.III, Duration.L8 + Duration.L16);
+			m.add( DiatonicDegree.IV, Duration.L16);
+			m.add( DiatonicDegree.V, Duration.L8);
+			m.add( DiatonicDegree.IV, Duration.L8);
 
-			m.add( DiatonicDegree.III, Duration.V4 );
-			m.add( DiatonicDegree.II, Duration.V4 );
-			m.add( DiatonicDegree.I, Duration.V2 );
+			m.add( DiatonicDegree.III, Duration.L4);
+			m.add( DiatonicDegree.II, Duration.L4);
+			m.add( DiatonicDegree.I, Duration.L2);
 		}
 
 		for ( int j = 0; j < 7; j++ ) {
@@ -263,59 +263,59 @@ public class Main {
 		for ( int i = 0; i < 2; i++ ) {
 			DiatonicChordMidi diatonicChordMidi;
 
-			p.add( DiatonicFunction.I ).setLength( Duration.V1 );
+			p.add( DiatonicFunction.I ).setLength( Duration.L1);
 			diatonicChordMidi = p.add( DiatonicFunction.VI );
-			diatonicChordMidi.setLength( Duration.V1 );
+			diatonicChordMidi.setLength( Duration.L1);
 			diatonicChordMidi.shiftOctave( -1 );
 
 			diatonicChordMidi = p.add( DiatonicFunction.III );
-			diatonicChordMidi.setLength( Duration.V1 );
+			diatonicChordMidi.setLength( Duration.L1);
 			diatonicChordMidi.inv( -1 );
 
 			diatonicChordMidi = p.add( DiatonicFunction.VII );
-			diatonicChordMidi.setLength( Duration.V1 );
+			diatonicChordMidi.setLength( Duration.L1);
 			diatonicChordMidi.shiftOctave( -1 );
 
-			m.add( DiatonicDegree.I, Duration.V8 );
-			m.addSilence( Duration.V8 );
-			m.add( DiatonicDegree.III, Duration.V8 );
-			m.add( DiatonicDegree.V, Duration.V8 );
-			m.add( DiatonicDegree.III, Duration.V8, 1 );
-			m.addSilence( Duration.V8 );
-			m.add( DiatonicDegree.II, Duration.V16, 1 );
-			m.add( DiatonicDegree.I, Duration.V16, 1 );
-			m.add( DiatonicDegree.VII, Duration.V16 );
-			m.add( DiatonicDegree.I, Duration.V8, 1 );
-			m.addSilence( Duration.V8 + Duration.V16 );
+			m.add( DiatonicDegree.I, Duration.L8);
+			m.addSilence( Duration.L8);
+			m.add( DiatonicDegree.III, Duration.L8);
+			m.add( DiatonicDegree.V, Duration.L8);
+			m.add( DiatonicDegree.III, Duration.L8, 1 );
+			m.addSilence( Duration.L8);
+			m.add( DiatonicDegree.II, Duration.L16, 1 );
+			m.add( DiatonicDegree.I, Duration.L16, 1 );
+			m.add( DiatonicDegree.VII, Duration.L16);
+			m.add( DiatonicDegree.I, Duration.L8, 1 );
+			m.addSilence( Duration.L8 + Duration.L16);
 
-			m.add( DiatonicDegree.III, Duration.V16, 1 );
-			m.addSilence( Duration.V16 );
-			m.add( DiatonicDegree.I, Duration.V16, 1 );
-			m.addSilence( Duration.V16 );
-			m.add( DiatonicDegree.VI, Duration.V8 );
-			m.addSilence( Duration.V8 + Duration.V4 );
+			m.add( DiatonicDegree.III, Duration.L16, 1 );
+			m.addSilence( Duration.L16);
+			m.add( DiatonicDegree.I, Duration.L16, 1 );
+			m.addSilence( Duration.L16);
+			m.add( DiatonicDegree.VI, Duration.L8);
+			m.addSilence( Duration.L8 + Duration.L4);
 
-			m.add( DiatonicDegree.V, Duration.V16 );
-			m.addSilence( Duration.V16 * 3 );
-			m.add( DiatonicDegree.V, Duration.V16 );
-			m.addSilence( Duration.V16 );
-			m.add( DiatonicDegree.IV, Duration.V16 );
-			m.addSilence( Duration.V16 );
-			m.add( DiatonicDegree.III, Duration.V16 );
-			m.addSilence( Duration.V16 * 3 );
-			m.add( DiatonicDegree.I, Duration.V16, 1 );
-			m.add( DiatonicDegree.VI, Duration.V16 );
-			m.add( DiatonicDegree.V, Duration.V16 );
-			m.add( DiatonicDegree.III, Duration.V16 );
+			m.add( DiatonicDegree.V, Duration.L16);
+			m.addSilence( Duration.L16 * 3 );
+			m.add( DiatonicDegree.V, Duration.L16);
+			m.addSilence( Duration.L16);
+			m.add( DiatonicDegree.IV, Duration.L16);
+			m.addSilence( Duration.L16);
+			m.add( DiatonicDegree.III, Duration.L16);
+			m.addSilence( Duration.L16 * 3 );
+			m.add( DiatonicDegree.I, Duration.L16, 1 );
+			m.add( DiatonicDegree.VI, Duration.L16);
+			m.add( DiatonicDegree.V, Duration.L16);
+			m.add( DiatonicDegree.III, Duration.L16);
 
-			m.add( DiatonicDegree.IV, Duration.V16 );
-			m.addSilence( Duration.V16 * 3 );
-			m.add( DiatonicDegree.IV, Duration.V16 );
-			m.addSilence( Duration.V16 );
-			m.add( DiatonicDegree.V, Duration.V16 );
-			m.addSilence( Duration.V16 );
-			m.add( DiatonicDegree.II, Duration.V8 );
-			m.addSilence( i == 0 ? ( Duration.V8 * 3 ) : ( Duration.V8 * 2 ) );
+			m.add( DiatonicDegree.IV, Duration.L16);
+			m.addSilence( Duration.L16 * 3 );
+			m.add( DiatonicDegree.IV, Duration.L16);
+			m.addSilence( Duration.L16);
+			m.add( DiatonicDegree.V, Duration.L16);
+			m.addSilence( Duration.L16);
+			m.add( DiatonicDegree.II, Duration.L8);
+			m.addSilence( i == 0 ? ( Duration.L8 * 3 ) : ( Duration.L8 * 2 ) );
 
 			/*
 			 *
@@ -341,8 +341,8 @@ public class Main {
 			 */
 		}
 
-		m.add( DiatonicDegree.VII, Duration.V8, -1 );
-		m.add( DiatonicDegree.I, Duration.V4 + Duration.V8 );
+		m.add( DiatonicDegree.VII, Duration.L8, -1 );
+		m.add( DiatonicDegree.I, Duration.L4 + Duration.L8);
 
 		m.show();
 
@@ -376,35 +376,35 @@ public class Main {
 			 * p.addAll(ChordFunction.VI).setLength(Duration.V1).inv(-2);
 			 * p.addAll(ChordFunction.IV).setLength(Duration.V1).inv(-1);
 			 */
-			p.add( DiatonicFunction.I ).setLength( Duration.V1 );
+			p.add( DiatonicFunction.I ).setLength( Duration.L1);
 			DiatonicChordMidi dcm = p.add( DiatonicFunction.VI );
-			dcm.setLength( Duration.V1 );
+			dcm.setLength( Duration.L1);
 			dcm.inv( 1 );
 			dcm.shiftOctave( -1 );
 
 			dcm = p.add( DiatonicFunction.IV );
-			dcm.setLength( Duration.V1 );
+			dcm.setLength( Duration.L1);
 			dcm.inv( 2 );
 			dcm.shiftOctave( -1 );
 
 			dcm = p.add( DiatonicFunction.VII );
-			dcm.setLength( Duration.V2 );
+			dcm.setLength( Duration.L2);
 			dcm.shiftOctave( -1 );
 
 			dcm = p.add( DiatonicFunction.VII );
-			dcm.setLength( Duration.V2 );
+			dcm.setLength( Duration.L2);
 			dcm.setMajorScale();
 			dcm.shiftOctave( -1 );
 		}
 
 		SecureRandom sr = new SecureRandom();
 
-		int next = Duration.V4;
+		int next = Duration.L4;
 		int max = p.getDuration();
 		for ( int i = 0; i < max; i += next ) {
 			int[] durs = new int[] {
-					Duration.V8,
-					Duration.V4
+					Duration.L8,
+					Duration.L4
 			};
 			next = durs[sr.nextInt( durs.length )];
 			next = Math.min( max - i, next );
@@ -451,7 +451,7 @@ public class Main {
 		for ( int i = 0; i < 1; i++ ) {
 			DiatonicChordMidi c;
 			c = p.add( DiatonicFunction.I );
-			c.setLength( Duration.V4 * 3 );
+			c.setLength( Duration.L4 * 3 );
 			c.inv( 0 );
 			c.shiftOctave( 0 );
 			DiatonicMidi diatonicMidi =  c.get( 1 ).clone();
@@ -459,35 +459,35 @@ public class Main {
 			c.add(diatonicMidi);
 
 			c = p.add( DiatonicFunction.VII );
-			c.setLength( Duration.V4 * 3 );
+			c.setLength( Duration.L4 * 3 );
 			c.inv( 2 );
 			c.shiftOctave( -1 );
 
 			c = p.add( DiatonicFunction.IV2 );
-			c.setLength( (int) ( Duration.V4 * 3.25 ) );
+			c.setLength( (int) ( Duration.L4 * 3.25 ) );
 			c.inv( 0 );
 
 			c = p.add( DiatonicFunction.I );
-			c.setLength( (int) ( Duration.V4 * 3.25 ) );
+			c.setLength( (int) ( Duration.L4 * 3.25 ) );
 			c.inv( 1 );
 
 			c = p.add( DiatonicFunction.I );
-			c.setLength( Duration.V4 * 3 );
+			c.setLength( Duration.L4 * 3 );
 			c.inv( 0 );
 			c.shiftOctave( 0 );
 
 			c = p.add( DiatonicFunction.VII );
-			c.setLength( Duration.V4 * 3 );
+			c.setLength( Duration.L4 * 3 );
 			c.inv( 2 );
 			c.shiftOctave( -1 );
 
 			DiatonicChordMidi c1 = p.add( DiatonicFunction.I7 );
-			c1.setLength( Duration.V4 * 3 );
+			c1.setLength( Duration.L4 * 3 );
 			c1.inv( 0 );
 			c1.shiftOctave( 0 );
 			c1.get(2).getPitch().shiftOctave(-1);
 			DiatonicChordMidi c2 = p.add( DiatonicFunction.VII_THIRD );
-			c2.setLength( Duration.V4 * 3 );
+			c2.setLength( Duration.L4 * 3 );
 			c2.setMajorScale();
 			c2.shiftOctave( -1 );
 			DiatonicMidi diatonicMidi1 = c2.get( 0 ).clone();
@@ -495,7 +495,7 @@ public class Main {
 			c2.add( diatonicMidi1 );
 			c2 = p.add( DiatonicFunction.I );
 			c2.inv( -1 );
-			c2.setLength( Duration.V1 );
+			c2.setLength( Duration.L1);
 		}
 
 		// p.setArpegio(new ArpegioDesc(Duration.V1, Duration.V16));
@@ -526,7 +526,7 @@ public class Main {
 		java.util.List<ChromaticChordMidi> css = new ArrayList<>();
 		for ( int i = 0; i < N; i++ ) {
 			ChromaticChordMidi notes = EventSequence.whatNotesArePlaying(
-					es, (int) ( Duration.V1 * ( i * 0.5 + offset ) + Duration.V16 )
+					es, (int) ( Duration.L1 * ( i * 0.5 + offset ) + Duration.L16)
 			);
 			ChordTransformations.removeHigherDuplicates(notes);
 			css.add( notes );

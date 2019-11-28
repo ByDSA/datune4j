@@ -121,7 +121,7 @@ public class EventSequence implements Durable, EventComplex {
 		HashMap<Integer, Queue<NoteOn>> notesOnEvent = new HashMap<>();
 
 		this.forEach( (time, ev) -> {
-			float tf = time / (float) Duration.V1;
+			float tf = time / (float) Duration.L1;
 			if ( ev instanceof NoteOn ) {
                 int nc = ((NoteOn) ev).getNote().getPitch().getMidiCode();
 				assert nc >= 0;
