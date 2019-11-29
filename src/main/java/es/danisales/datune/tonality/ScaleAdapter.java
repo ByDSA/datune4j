@@ -65,16 +65,16 @@ class ScaleAdapter {
         return list;
     }
 
-    static @NonNull ScaleInterface fromIntegers(List<Integer> v) {
+    static @NonNull ScaleInner fromIntegers(List<Integer> v) {
         List<ScaleDistance> distanceScaleList = getScaleDistanceListFromIntegersList(v);
 
         return fromScaleDistanceList(distanceScaleList);
     }
 
-    private static @NonNull ScaleInterface fromScaleDistanceList(List<ScaleDistance> scaleDistanceList) {
-        ScaleInterface scaleInterface = ScaleEnum.from(scaleDistanceList);
+    private static @NonNull ScaleInner fromScaleDistanceList(List<ScaleDistance> scaleDistanceList) {
+        ScaleInner scaleInterface = ScaleInnerImmutable.from(scaleDistanceList);
         if (scaleInterface == null)
-            scaleInterface = new ScaleCustom(scaleDistanceList);
+            scaleInterface = new ScaleInnerMutable(scaleDistanceList);
 
         return scaleInterface;
     }

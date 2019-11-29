@@ -1,7 +1,7 @@
 package es.danisales.datune.pitch;
 
 import es.danisales.datastructures.ListProxy;
-import es.danisales.datune.diatonic.Interval;
+import es.danisales.datune.interval.Interval;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Collection;

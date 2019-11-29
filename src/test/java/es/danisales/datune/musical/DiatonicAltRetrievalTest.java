@@ -1,6 +1,6 @@
 package es.danisales.datune.musical;
 
-import es.danisales.datune.diatonic.RelativeDegree;
+import es.danisales.datune.degree.RelativeDegree;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.ScaleDistance;
 import es.danisales.datune.tonality.Tonality;

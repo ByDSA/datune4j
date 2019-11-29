@@ -1,18 +1,18 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.diatonic.DiatonicDegree;
-import es.danisales.datune.diatonic.IntervalChromatic;
+import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.interval.IntervalChromatic;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-interface ScaleInterface {
-	static @NonNull ScaleInterface from(List<ScaleDistance> values) {
-		ScaleInterface ret = ScaleEnum.from(values);
+interface ScaleInner {
+	static @NonNull ScaleInner from(List<ScaleDistance> values) {
+		ScaleInner ret = ScaleInnerImmutable.from(values);
 		if (ret == null)
-			ret = new ScaleCustom( values );
+			ret = new ScaleInnerMutable(values);
 
 		return ret;
 	}
@@ -25,10 +25,10 @@ interface ScaleInterface {
 		return sum;
 	}
 
-	default @NonNull ScaleInterface getMode(@NonNull DiatonicDegree diatonicDegree) {
+	default @NonNull ScaleInner getMode(@NonNull DiatonicDegree diatonicDegree) {
 		List<ScaleDistance> baseValues = new ArrayList<>( this.getCode() );
 		Collections.rotate( baseValues, -diatonicDegree.ordinal() );
-		return ScaleInterface.from( baseValues );
+		return ScaleInner.from(baseValues);
 	}
 
 	default void sumCheck() {

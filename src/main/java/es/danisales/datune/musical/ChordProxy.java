@@ -1,8 +1,8 @@
 package es.danisales.datune.musical;
 
 import es.danisales.datastructures.ListProxy;
-import es.danisales.datune.diatonic.ChordNotation;
-import es.danisales.datune.diatonic.Interval;
+import es.danisales.datune.interval.Interval;
+import es.danisales.datune.lang.ChordNotation;
 import es.danisales.datune.pitch.*;
 import org.checkerframework.checker.nullness.qual.NonNull;
 

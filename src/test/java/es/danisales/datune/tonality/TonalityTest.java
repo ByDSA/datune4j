@@ -1,6 +1,10 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.diatonic.*;
+import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.degree.PentatonicDegree;
+import es.danisales.datune.degree.RelativeDegree;
+import es.danisales.datune.function.ChromaticFunction;
+import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;

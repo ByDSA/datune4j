@@ -1,6 +1,7 @@
-package es.danisales.datune.diatonic;
+package es.danisales.datune.interval;
 
 import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.musical.Quality;
 import es.danisales.datune.musical.transformations.Namer;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;

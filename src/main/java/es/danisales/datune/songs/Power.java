@@ -1,9 +1,9 @@
 package es.danisales.datune.songs;
 
-import es.danisales.datune.diatonic.ChromaticFunction;
-import es.danisales.datune.diatonic.DiatonicFunction;
-import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.eventsequences.*;
+import es.danisales.datune.function.ChromaticFunction;
+import es.danisales.datune.function.DiatonicFunction;
+import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.midi.ChordMidiTransformations;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.midi.DiatonicMidi;

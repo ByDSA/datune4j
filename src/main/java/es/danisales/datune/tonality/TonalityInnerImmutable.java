@@ -1,17 +1,15 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.diatonic.ChromaticFunction;
-import es.danisales.datune.diatonic.DiatonicFunction;
-import es.danisales.datune.diatonic.HarmonicFunction;
-import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.musical.DiatonicAltRetrieval;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
-enum TonalityEnum implements TonalityInterface {
+enum TonalityInnerImmutable implements TonalityInner {
 	C( DiatonicAlt.C, Scale.MAJOR ),
 	D( DiatonicAlt.D, Scale.MAJOR ),
 	E( DiatonicAlt.E, Scale.MAJOR ),
@@ -44,18 +42,18 @@ enum TonalityEnum implements TonalityInterface {
 	private final Scale	scale;
 	private final List<DiatonicAlt>	notes;
 
-	static @Nullable TonalityInterface of(@NonNull DiatonicAlt diatonicAlt, @NonNull Scale scale) {
+    static @Nullable TonalityInner of(@NonNull DiatonicAlt diatonicAlt, @NonNull Scale scale) {
 		Objects.requireNonNull(diatonicAlt);
 		Objects.requireNonNull(scale);
 
-		for (TonalityEnum tonalityEnum : values())
+        for (TonalityInnerImmutable tonalityEnum : values())
 			if (tonalityEnum.getScale().equals(scale) && diatonicAlt.equals(tonalityEnum.getRoot()))
 				return tonalityEnum;
 
 		return null;
 	}
 
-	TonalityEnum(DiatonicAlt noteBase, Scale scale) {
+    TonalityInnerImmutable(DiatonicAlt noteBase, Scale scale) {
 		this.root = noteBase;
 		this.scale = scale;
 

@@ -1,6 +1,6 @@
 package es.danisales.datune.midi;
 
-import es.danisales.datune.diatonic.Interval;
+import es.danisales.datune.interval.Interval;
 import es.danisales.datune.midi.pitch.PitchMidiInterface;
 import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.ChordNamer;

@@ -1,7 +1,6 @@
 package es.danisales.datune.musical;
 
-import es.danisales.datune.diatonic.ChordNotation;
-import es.danisales.datune.diatonic.Quality;
+import es.danisales.datune.lang.ChordNotation;
 
 class ChromaticChordMeta {
 	Quality	quality;

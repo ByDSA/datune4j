@@ -1,9 +1,9 @@
 package es.danisales.datune.musical;
 
-import es.danisales.datune.diatonic.ChromaticDegree;
-import es.danisales.datune.diatonic.DiatonicDegree;
-import es.danisales.datune.diatonic.IntervalChromatic;
-import es.danisales.datune.diatonic.IntervalDiatonic;
+import es.danisales.datune.degree.ChromaticDegree;
+import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.interval.IntervalChromatic;
+import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.musical.transformations.DistanceCalculator;

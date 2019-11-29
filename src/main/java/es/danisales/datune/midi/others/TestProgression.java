@@ -1,9 +1,9 @@
 package es.danisales.datune.midi.others;
 
-import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.eventsequences.Instrument;
 import es.danisales.datune.eventsequences.Melody;
 import es.danisales.datune.eventsequences.Track;
+import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.midi.Progressions.Progression;
 import es.danisales.datune.midi.Settings;

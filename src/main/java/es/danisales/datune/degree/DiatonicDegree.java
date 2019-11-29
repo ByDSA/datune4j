@@ -1,15 +1,55 @@
-package es.danisales.datune.diatonic;
+package es.danisales.datune.degree;
 
+import es.danisales.datune.function.ChromaticFunction;
+import es.danisales.datune.function.DiatonicFunction;
+import es.danisales.datune.interval.IntervalDiatonic;
+import es.danisales.datune.musical.Diatonic;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
- * Grado
+ * Grado diatónico
  */
-public enum PentatonicDegree implements RelativeDegree {
-	I, II, III, IV, V;
+public enum DiatonicDegree implements RelativeDegree {
+	I, II, III, IV, V, VI, VII;
 
-	public static @Nullable PentatonicDegree from(DiatonicFunction diatonicFunction) {
+	public static DiatonicDegree from(IntervalDiatonic intervalDiatonic) {
+		return values()[intervalDiatonic.ordinal() % DiatonicDegree.values().length];
+	}
+
+	/**
+     * Returns the degree with the added interval function
+	 *
+	 * @param id the id
+	 * @return the degree
+	 */
+	public static DiatonicDegree add(DiatonicDegree diatonicDegree, IntervalDiatonic id) {
+		return fromIndex( diatonicDegree.ordinal() + id.ordinal() );
+	}
+
+	public static DiatonicDegree sub(DiatonicDegree diatonicDegree, IntervalDiatonic id) {
+		return fromIndex( diatonicDegree.ordinal() - id.ordinal() );
+	}
+
+	/**
+	 * Gets the degree fromIndex an int
+	 *
+	 * @param n the n
+	 * @return the degree
+	 */
+	private static DiatonicDegree fromIndex(int n) {
+		n = limitToOneOctave(n);
+
+		return values()[n];
+	}
+
+	private static int limitToOneOctave(int n) {
+		n = n % Diatonic.NUMBER;
+		if ( n < 0 )
+			n += Diatonic.NUMBER;
+		return n;
+	}
+
+	public static @NonNull DiatonicDegree from(DiatonicFunction diatonicFunction) {
 		switch ( diatonicFunction ) {
 			case I:
 			case I2:
@@ -27,7 +67,7 @@ public enum PentatonicDegree implements RelativeDegree {
 			case I9_O3_O7:
 			case I11:
 			case I13:
-				return PentatonicDegree.I;
+				return DiatonicDegree.I;
 			case II:
 			case II2:
 			case II4:
@@ -44,7 +84,7 @@ public enum PentatonicDegree implements RelativeDegree {
 			case II9_O7:
 			case II9_O3_O7:
 			case II13:
-				return PentatonicDegree.II;
+				return DiatonicDegree.II;
 			case III:
 			case III2:
 			case III4:
@@ -61,7 +101,7 @@ public enum PentatonicDegree implements RelativeDegree {
 			case III9_O7:
 			case III9_O3_O7:
 			case III13:
-				return PentatonicDegree.III;
+				return DiatonicDegree.III;
 			case IV:
 			case IV2:
 			case IV4:
@@ -78,7 +118,7 @@ public enum PentatonicDegree implements RelativeDegree {
 			case IV9_O7:
 			case IV9_O3_O7:
 			case IV13:
-				return null;
+				return DiatonicDegree.IV;
 			case V:
 			case V2:
 			case V4:
@@ -95,7 +135,7 @@ public enum PentatonicDegree implements RelativeDegree {
 			case V9_O7:
 			case V9_O3_O7:
 			case V13:
-				return PentatonicDegree.IV;
+				return DiatonicDegree.V;
 			case VI:
 			case VI2:
 			case VI4:
@@ -112,7 +152,7 @@ public enum PentatonicDegree implements RelativeDegree {
 			case VI9_O7:
 			case VI9_O3_O7:
 			case VI13:
-				return PentatonicDegree.V;
+				return DiatonicDegree.VI;
 			case VII:
 			case VII2:
 			case VII4:
@@ -129,74 +169,84 @@ public enum PentatonicDegree implements RelativeDegree {
 			case VII9_O7:
 			case VII9_O3_O7:
 			case VII13:
-				return null;
+				return DiatonicDegree.VII;
 		}
 		throw new RuntimeException("Impossible");
 	}
 
-	public static @Nullable PentatonicDegree from(@NonNull ChromaticFunction chromaticFunction) {
+	public static @NonNull DiatonicDegree from(@NonNull ChromaticFunction chromaticFunction) {
 		switch ( chromaticFunction ) {
 			case I:
 			case I5:
 			case i:
 			case I0:
-				return PentatonicDegree.I;
+				return DiatonicDegree.I;
 			case II:
 			case II5:
 			case ii:
 			case II0:
 			case N6:
-				return PentatonicDegree.II;
+				return DiatonicDegree.II;
 			case III:
 			case III5:
 			case iii:
 			case III0:
-				return PentatonicDegree.III;
+				return DiatonicDegree.III;
 			case IV:
 			case IV5:
 			case iv:
 			case IV0:
-				return null;
+				return DiatonicDegree.IV;
 			case V:
 			case V5:
 			case v:
 			case V0:
-				return PentatonicDegree.IV;
+				return DiatonicDegree.V;
 			case VI:
 			case VI5:
 			case vi:
 			case VI0:
-				return PentatonicDegree.V;
+				return DiatonicDegree.VI;
 			case VII:
 			case VII5:
 			case vii:
 			case VII0:
-				return null;
+				return DiatonicDegree.VII;
 			case SUBV7:
 			case V7ALT:
-				return PentatonicDegree.I;
+				return DiatonicDegree.I;
 			case SUBV7_II:
 			case V7_II:
 			case V_II:
-				return PentatonicDegree.II;
+				return DiatonicDegree.II;
 			case SUBV7_III:
 			case V7_III:
 			case V_III:
-				return PentatonicDegree.III;
+				return DiatonicDegree.III;
 			case SUBV7_IV:
 			case V7_IV:
 			case V_IV:
-				return null;
+				return DiatonicDegree.IV;
 			case SUBV7_V:
 			case V_V:
 			case V7_V:
-				return PentatonicDegree.IV;
+				return DiatonicDegree.V;
 			case SUBV7_VI:
 			case V7_VI:
 			case V_VI:
-				return PentatonicDegree.V;
+				return DiatonicDegree.VI;
 		}
 
 		throw new RuntimeException("Impossible");
 	}
+
+    public DiatonicDegree getNext() { // todo: move to RelativeDegree
+        int index = (ordinal() + 1) % DiatonicDegree.values().length;
+        return values()[index];
+    }
+
+    public DiatonicDegree getPrevious() { // todo: move to RelativeDegree
+        int index = (ordinal() - 1 + DiatonicDegree.values().length) % DiatonicDegree.values().length;
+        return values()[index];
+    }
 }

@@ -1,6 +1,6 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.diatonic.DiatonicDegree;
+import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.midi.DiatonicChordMidiBuilder;
 import es.danisales.datune.musical.ChromaticChord;

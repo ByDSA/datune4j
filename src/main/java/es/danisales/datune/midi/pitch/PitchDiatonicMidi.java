@@ -1,7 +1,7 @@
 package es.danisales.datune.midi.pitch;
 
-import es.danisales.datune.diatonic.DiatonicDegree;
-import es.danisales.datune.diatonic.IntervalDiatonic;
+import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.musical.Diatonic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.tonality.Tonality;

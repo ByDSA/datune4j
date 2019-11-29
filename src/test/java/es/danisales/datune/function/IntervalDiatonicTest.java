@@ -1,8 +1,11 @@
-package es.danisales.datune.diatonic;
+package es.danisales.datune.function;
 
+import es.danisales.datune.interval.IntervalChromatic;
+import es.danisales.datune.interval.IntervalDiatonic;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class IntervalDiatonicTest {
     @Test

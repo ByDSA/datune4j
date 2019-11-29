@@ -1,6 +1,6 @@
 package es.danisales.datune.musical;
 
-import es.danisales.datune.diatonic.IntervalDiatonic;
+import es.danisales.datune.interval.IntervalDiatonic;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;

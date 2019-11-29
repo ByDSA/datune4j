@@ -1,6 +1,6 @@
 package es.danisales.datune.musical;
 
-import es.danisales.datune.diatonic.Interval;
+import es.danisales.datune.interval.Interval;
 import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.pitch.*;

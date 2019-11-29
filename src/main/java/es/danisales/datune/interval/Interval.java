@@ -1,4 +1,4 @@
-package es.danisales.datune.diatonic;
+package es.danisales.datune.interval;
 
 public interface Interval {
     boolean isCompound();

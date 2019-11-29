@@ -3,7 +3,9 @@ package es.danisales.datune.tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public enum ScaleDistance {
-    QUARTER(0.5f), HALF(1), WHOLE(2), WHOLE_HALF(3), NONE(0), TWO_WHOLE(4);
+    QUARTER(0.5f), HALF(1), WHOLE(2), WHOLE_HALF(3),
+    NONE(0), // todo: impossible
+    TWO_WHOLE(4);
 
     private float value;
 
@@ -27,7 +29,6 @@ public enum ScaleDistance {
             case 1: return HALF;
             case 2: return WHOLE;
             case 3: return WHOLE_HALF;
-            // Tonality.fromDiatonicChord
             case 0:
                 return NONE;
             case 4:
@@ -42,5 +43,10 @@ public enum ScaleDistance {
             return QUARTER;
         else
             return from((int)value);
+    }
+
+    @Override
+    public String toString() {
+        return ScaleNamer.from(this);
     }
 }

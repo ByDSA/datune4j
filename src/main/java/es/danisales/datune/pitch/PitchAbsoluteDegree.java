@@ -1,7 +1,7 @@
 package es.danisales.datune.pitch;
 
-import es.danisales.datune.diatonic.Interval;
-import es.danisales.datune.diatonic.RelativeDegree;
+import es.danisales.datune.degree.RelativeDegree;
+import es.danisales.datune.interval.Interval;
 
 public interface PitchAbsoluteDegree<D extends RelativeDegree, I extends Interval> extends AbsoluteDegree<D> {
     <E extends PitchException> PitchAbsoluteDegree<D, I> getNext() throws E;

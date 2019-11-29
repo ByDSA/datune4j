@@ -1,6 +1,6 @@
 package es.danisales.datune.pitch;
 
-import es.danisales.datune.diatonic.Interval;
+import es.danisales.datune.interval.Interval;
 import es.danisales.datune.musical.ImpossibleChordException;
 import es.danisales.utils.MathUtils;
 

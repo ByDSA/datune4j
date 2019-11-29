@@ -1,6 +1,6 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.diatonic.DiatonicDegree;
+import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.musical.Diatonic;
 import es.danisales.datune.musical.DiatonicAlt;
@@ -12,14 +12,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-class TonalityCustom implements TonalityInterface {
+class TonalityInnerMutable implements TonalityInner {
 	private DiatonicAlt root;
 	private Scale scale;
 
 	/** Temp */
 	private List<DiatonicAlt> notes;
 
-	public TonalityCustom(DiatonicAlt noteBase, Scale scale) {
+    public TonalityInnerMutable(DiatonicAlt noteBase, Scale scale) {
 		this.root = noteBase;
 		this.scale = scale;
 
@@ -27,8 +27,8 @@ class TonalityCustom implements TonalityInterface {
 	}
 
 	@Override
-	public TonalityCustom clone() {
-		return new TonalityCustom( root, scale );
+    public TonalityInnerMutable clone() {
+        return new TonalityInnerMutable(root, scale);
 	}
 
 	private void updateNotes() {
@@ -37,7 +37,7 @@ class TonalityCustom implements TonalityInterface {
 	}
 
 
-	public static TonalityCustom createFromChord(DiatonicChordMidi c, Tonality base) throws TonalityException {
+    public static TonalityInnerMutable createFromChord(DiatonicChordMidi c, Tonality base) throws TonalityException {
 		assert base != null;
 		if ( base.size() != 7 )
 			throw new RuntimeException( "No tiene 7 notas la escala" );
@@ -75,15 +75,15 @@ class TonalityCustom implements TonalityInterface {
 				tonalityNotes.add( base.getNote( diatonicDegree ) );
 		}
 
-        return new TonalityCustom(notesChord[0], Scale.fromDiatonicAlt(tonalityNotes));
+        return new TonalityInnerMutable(notesChord[0], Scale.fromDiatonicAlt(tonalityNotes));
 	}
 
 	@Override
 	public boolean equals(Object o) {
-		if ( !(o instanceof TonalityInterface) )
+        if (!(o instanceof TonalityInner))
 			return false;
 
-		TonalityInterface tonality = (TonalityInterface)o;
+        TonalityInner tonality = (TonalityInner) o;
 
 		return getNotes().equals( tonality.getNotes() );
 	}
@@ -93,11 +93,11 @@ class TonalityCustom implements TonalityInterface {
 		return notes.hashCode();
 	}
 
-	public TonalityCustom getRelativeScaleChromatic(int semitonesAdded) {
+    public TonalityInnerMutable getRelativeScaleChromatic(int semitonesAdded) {
 		ScaleDistance distanceScale = ScaleDistance.from(semitonesAdded);
 		int semitones = distanceScale.getSemitones();
 		DiatonicAlt shiftedRoot = root.addSemi( semitones );
-		return new TonalityCustom( shiftedRoot, getScale() );
+        return new TonalityInnerMutable(shiftedRoot, getScale());
 	}
 
 	public void setScale(@NonNull Scale scale) {

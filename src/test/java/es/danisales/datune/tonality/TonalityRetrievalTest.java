@@ -69,7 +69,7 @@ public class TonalityRetrievalTest {
     public void containsAllTonalityEnum() {
         List<Tonality> tonalityList = TonalityRetrieval.majorMinor();
 
-        for (TonalityEnum tonalityEnum : TonalityEnum.values()) {
+        for (TonalityInnerImmutable tonalityEnum : TonalityInnerImmutable.values()) {
             Tonality tonality = Tonality.from(tonalityEnum.getRoot(), tonalityEnum.getScale());
             assertTrue(tonalityList.contains(tonality));
         }

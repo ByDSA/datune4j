@@ -1,4 +1,4 @@
-package es.danisales.datune.diatonic;
+package es.danisales.datune.lang;
 
 /**
  * Clase auxiliar para nombrar acordes
@@ -49,14 +49,8 @@ public final class ChordNotation {
 	public static final String ADD_ELEVENTH = ADD + ELEVENTH;
 	public static final String ADD_THIRTEEN = ADD + THIRTEEN;
 	public static final String EMPTY_CHORD = "(Empty chord)";
-	
-	/**
-	 * Omit.
-	 *
-	 * @param s the s
-	 * @return the string
-	 */
-	private static String omit(String s) {
+
+    private static String omit(String s) {
 		return " (omit" + s + ")";
 	}
 	

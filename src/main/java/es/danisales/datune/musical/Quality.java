@@ -1,4 +1,4 @@
-package es.danisales.datune.diatonic;
+package es.danisales.datune.musical;
 
 import es.danisales.datune.musical.transformations.Namer;
 

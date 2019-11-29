@@ -1,6 +1,6 @@
 package es.danisales.datune.musical;
 
-import es.danisales.datune.diatonic.IntervalDiatonic;
+import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.pitch.ChordMutable;
 import es.danisales.datune.pitch.PitchMutable;
 import org.checkerframework.checker.nullness.qual.NonNull;

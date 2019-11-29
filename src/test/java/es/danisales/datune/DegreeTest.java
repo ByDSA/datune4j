@@ -1,8 +1,8 @@
 package es.danisales.datune;
 
-import es.danisales.datune.diatonic.ChromaticFunction;
-import es.danisales.datune.diatonic.DiatonicDegree;
-import es.danisales.datune.diatonic.IntervalDiatonic;
+import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.function.ChromaticFunction;
+import es.danisales.datune.interval.IntervalDiatonic;
 import org.junit.Test;
 
 import java.util.HashSet;

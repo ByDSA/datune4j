@@ -1,9 +1,10 @@
-package es.danisales.datune.diatonic;
+package es.danisales.datune.function;
 
+import es.danisales.datune.musical.Quality;
 import es.danisales.datune.musical.transformations.Namer;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 public class QualityTest {
     @Test

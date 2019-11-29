@@ -1,8 +1,7 @@
 package es.danisales.datune.musical;
 
-import es.danisales.datune.diatonic.ChordNotation;
-import es.danisales.datune.diatonic.IntervalChromatic;
-import es.danisales.datune.diatonic.Quality;
+import es.danisales.datune.interval.IntervalChromatic;
+import es.danisales.datune.lang.ChordNotation;
 import es.danisales.datune.pitch.ChordMutable;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import org.checkerframework.checker.nullness.qual.NonNull;

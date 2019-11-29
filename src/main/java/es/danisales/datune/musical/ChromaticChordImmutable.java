@@ -1,7 +1,6 @@
 package es.danisales.datune.musical;
 
 import es.danisales.datastructures.EnumTreeSet;
-import es.danisales.datune.diatonic.Quality;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;

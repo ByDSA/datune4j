@@ -1,6 +1,6 @@
 package es.danisales.datune.midi.Progressions;
 
-import es.danisales.datune.diatonic.DiatonicFunction;
+import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.tonality.Tonality;
 
 public class Cadence extends Progression {

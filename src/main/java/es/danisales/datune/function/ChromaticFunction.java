@@ -1,4 +1,4 @@
-package es.danisales.datune.diatonic;
+package es.danisales.datune.function;
 
 import es.danisales.arrays.ArrayUtils;
 import es.danisales.datune.musical.Chromatic;

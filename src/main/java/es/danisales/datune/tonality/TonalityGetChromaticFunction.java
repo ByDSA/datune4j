@@ -1,8 +1,8 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.diatonic.ChromaticFunction;
-import es.danisales.datune.diatonic.DiatonicDegree;
-import es.danisales.datune.diatonic.DiatonicFunction;
+import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.function.ChromaticFunction;
+import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.musical.*;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;

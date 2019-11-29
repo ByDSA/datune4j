@@ -1,9 +1,9 @@
 package es.danisales.datune.midi;
 
-import es.danisales.datune.diatonic.ChromaticFunction;
-import es.danisales.datune.diatonic.DiatonicDegree;
-import es.danisales.datune.diatonic.DiatonicFunction;
-import es.danisales.datune.diatonic.HarmonicFunction;
+import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.function.ChromaticFunction;
+import es.danisales.datune.function.DiatonicFunction;
+import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.midi.arpegios.Arpegio;
 import es.danisales.datune.midi.arpegios.ArpegioDefault;
 import es.danisales.datune.midi.pitch.PitchDiatonicMidi;
@@ -310,7 +310,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                 }
 
                 if (tonality.size() != Diatonic.NUMBER)
-                    throw new RuntimeException("DiatonicFunction is for diatonic scales. Actual: " + self.metaTonality + " " + function + " size=" + tonality.size());
+                    throw new RuntimeException("DiatonicFunction is for function scales. Actual: " + self.metaTonality + " " + function + " size=" + tonality.size());
 
                     function = t2;
                     initFromDiatonicFunction(self);

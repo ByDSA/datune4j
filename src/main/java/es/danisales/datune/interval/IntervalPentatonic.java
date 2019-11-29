@@ -1,8 +1,6 @@
-package es.danisales.datune.diatonic;
+package es.danisales.datune.interval;
 
-import es.danisales.datune.musical.Diatonic;
 import es.danisales.datune.musical.Pentatonic;
-import es.danisales.datune.musical.transformations.Namer;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public enum IntervalPentatonic implements Interval {

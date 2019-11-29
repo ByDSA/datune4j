@@ -1,5 +1,8 @@
-package es.danisales.datune.diatonic;
+package es.danisales.datune.function;
 
+import es.danisales.datune.interval.IntervalChromatic;
+import es.danisales.datune.interval.IntervalDiatonic;
+import es.danisales.datune.musical.Quality;
 import org.junit.Test;
 
 import java.util.Set;

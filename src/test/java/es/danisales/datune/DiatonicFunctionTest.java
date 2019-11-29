@@ -1,6 +1,7 @@
 package es.danisales.datune;
 
-import es.danisales.datune.diatonic.DiatonicFunction;
+import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.function.DiatonicFunction;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;
@@ -25,7 +26,7 @@ public class DiatonicFunctionTest {
 	@Test
 	public void getDregreeNotNull() {
 		for (DiatonicFunction df : DiatonicFunction.values()) {
-			assertNotNull( df.toString(), df.getDegree() );
+            assertNotNull(df.toString(), DiatonicDegree.from(df));
 		}
 	}
 }

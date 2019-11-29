@@ -1,6 +1,6 @@
 package es.danisales.datune.midi;
 
-import es.danisales.datune.diatonic.DiatonicDegree;
+import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.midi.pitch.PitchDiatonicMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.tonality.Tonality;

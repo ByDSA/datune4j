@@ -1,12 +1,12 @@
 package es.danisales.datune;
 
-import es.danisales.datune.diatonic.ChromaticFunction;
-import es.danisales.datune.diatonic.DiatonicDegree;
-import es.danisales.datune.diatonic.DiatonicFunction;
+import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.eventsequences.Instrument;
 import es.danisales.datune.eventsequences.MelodyDiatonic;
 import es.danisales.datune.eventsequences.Track;
+import es.danisales.datune.function.ChromaticFunction;
+import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.midi.*;
 import es.danisales.datune.midi.Progressions.Progression;
 import es.danisales.datune.midi.binaries.Midi;

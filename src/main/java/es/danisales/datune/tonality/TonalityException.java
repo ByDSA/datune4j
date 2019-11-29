@@ -1,6 +1,6 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.diatonic.DiatonicDegree;
+import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.Diatonic;

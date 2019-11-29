@@ -1,7 +1,7 @@
 package es.danisales.datune.midi;
 
-import es.danisales.datune.diatonic.IntervalChromatic;
-import es.danisales.datune.diatonic.IntervalDiatonic;
+import es.danisales.datune.interval.IntervalChromatic;
+import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.midi.binaries.events.EventComplex;
 import es.danisales.datune.midi.pitch.PitchDiatonicMidi;
 import es.danisales.datune.musical.transformations.Namer;

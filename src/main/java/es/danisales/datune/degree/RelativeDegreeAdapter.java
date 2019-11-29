@@ -1,4 +1,4 @@
-package es.danisales.datune.diatonic;
+package es.danisales.datune.degree;
 
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;

@@ -1,6 +1,6 @@
 package es.danisales.datune.musical;
 
-import es.danisales.datune.diatonic.HarmonicFunction;
+import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.tonality.Tonality;
 
 import java.util.List;

@@ -1,8 +1,8 @@
 package es.danisales.datune.midi.Progressions;
 
-import es.danisales.datune.diatonic.DiatonicFunction;
-import es.danisales.datune.diatonic.HarmonicFunction;
 import es.danisales.datune.eventsequences.EventSequence;
+import es.danisales.datune.function.DiatonicFunction;
+import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.midi.Duration;
 import es.danisales.datune.midi.arpegios.Arpegio;

@@ -1,15 +1,15 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.diatonic.DiatonicDegree;
+import es.danisales.datune.degree.DiatonicDegree;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Collections;
 import java.util.List;
 
-class ScaleCustom implements ScaleInterface {
+class ScaleInnerMutable implements ScaleInner {
 	private List<ScaleDistance> value;
-	
-	ScaleCustom(@NonNull List<ScaleDistance> values) {
+
+    ScaleInnerMutable(@NonNull List<ScaleDistance> values) {
 		value = values;
 
 		sumCheck();

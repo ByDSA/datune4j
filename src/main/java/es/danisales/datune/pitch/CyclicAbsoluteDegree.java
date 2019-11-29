@@ -1,7 +1,7 @@
 package es.danisales.datune.pitch;
 
-import es.danisales.datune.diatonic.Interval;
-import es.danisales.datune.diatonic.RelativeDegree;
+import es.danisales.datune.degree.RelativeDegree;
+import es.danisales.datune.interval.Interval;
 import es.danisales.datune.musical.DiatonicAlt;
 import org.checkerframework.checker.nullness.qual.NonNull;
 

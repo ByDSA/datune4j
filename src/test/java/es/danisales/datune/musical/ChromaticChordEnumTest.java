@@ -1,6 +1,5 @@
 package es.danisales.datune.musical;
 
-import es.danisales.datune.diatonic.Quality;
 import org.junit.Test;
 
 import java.util.ArrayList;

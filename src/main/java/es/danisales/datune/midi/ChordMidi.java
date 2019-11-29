@@ -1,7 +1,7 @@
 package es.danisales.datune.midi;
 
-import es.danisales.datune.diatonic.Interval;
 import es.danisales.datune.eventsequences.EventSequence;
+import es.danisales.datune.interval.Interval;
 import es.danisales.datune.midi.arpegios.Arpegio;
 import es.danisales.datune.midi.arpegios.ArpegioDefault;
 import es.danisales.datune.midi.binaries.events.EventComplex;

@@ -1,7 +1,7 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.diatonic.DiatonicDegree;
-import es.danisales.datune.diatonic.IntervalChromatic;
+import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.musical.DiatonicAlt;
 import org.junit.Test;
 
@@ -20,24 +20,24 @@ public class ScaleTest {
 
     @Test
     public void constantScalesSameAsScaleEnumSize() {
-        assertEquals(ScaleEnum.values().length, Scale.ALL.size());
+        assertEquals(ScaleInnerImmutable.values().length, Scale.ALL.size());
     }
 
     @Test
     public void constantScalesSameAsScaleEnumContent() {
-        List<ScaleEnum> scaleEnumList = Arrays.asList( ScaleEnum.values() );
-        List<ScaleEnum> scaleEnumListFromScale = new ArrayList<>();
+        List<ScaleInnerImmutable> scaleEnumList = Arrays.asList(ScaleInnerImmutable.values());
+        List<ScaleInnerImmutable> scaleEnumListFromScale = new ArrayList<>();
         for (Scale scale : Scale.ALL)
-            scaleEnumListFromScale.add((ScaleEnum)scale.innerScale);
+            scaleEnumListFromScale.add((ScaleInnerImmutable) scale.innerScale);
 
-        for (ScaleEnum scaleEnum : scaleEnumListFromScale)
+        for (ScaleInnerImmutable scaleEnum : scaleEnumListFromScale)
             assertTrue(scaleEnum.toString(), scaleEnumList.contains(scaleEnum));
 
-        for (ScaleEnum scaleEnum : scaleEnumList) {
+        for (ScaleInnerImmutable scaleEnum : scaleEnumList) {
             assertTrue(scaleEnum.toString(), scaleEnumListFromScale.contains(scaleEnum));
         }
 
-        assertEquals(ScaleEnum.values().length, Scale.ALL.size());
+        assertEquals(ScaleInnerImmutable.values().length, Scale.ALL.size());
     }
 
     @Test
@@ -112,7 +112,7 @@ public class ScaleTest {
     @SuppressWarnings("ConstantConditions")
     @Test
     public void scaleEnumReusable1() {
-        ScaleEnum scaleEnum = ScaleEnum.from(Arrays.asList(
+        ScaleInnerImmutable scaleEnum = ScaleInnerImmutable.from(Arrays.asList(
                 ScaleDistance.WHOLE,
                 ScaleDistance.WHOLE,
                 ScaleDistance.HALF,
@@ -122,9 +122,9 @@ public class ScaleTest {
                 ScaleDistance.HALF
         ));
 
-        assertSame(ScaleEnum.MAJOR, scaleEnum);
-        assertNotSame(ScaleEnum.IONIAN, scaleEnum);
-        assertEquals(ScaleEnum.MAJOR.hashCode(), scaleEnum.hashCode());
+        assertSame(ScaleInnerImmutable.MAJOR, scaleEnum);
+        assertNotSame(ScaleInnerImmutable.IONIAN, scaleEnum);
+        assertEquals(ScaleInnerImmutable.MAJOR.hashCode(), scaleEnum.hashCode());
     }
 
     @Test
@@ -139,10 +139,10 @@ public class ScaleTest {
                 ScaleDistance.HALF
         ));
 
-        ScaleEnum scaleEnum = (ScaleEnum)scale.innerScale;
+        ScaleInnerImmutable scaleEnum = (ScaleInnerImmutable) scale.innerScale;
 
-        assertSame(ScaleEnum.MAJOR, scaleEnum);
-        assertNotSame(ScaleEnum.IONIAN, scaleEnum);
+        assertSame(ScaleInnerImmutable.MAJOR, scaleEnum);
+        assertNotSame(ScaleInnerImmutable.IONIAN, scaleEnum);
     }
 
     @Test

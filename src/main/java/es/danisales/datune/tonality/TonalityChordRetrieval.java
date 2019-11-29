@@ -1,8 +1,8 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.diatonic.DiatonicDegree;
-import es.danisales.datune.diatonic.DiatonicFunction;
-import es.danisales.datune.diatonic.HarmonicFunction;
+import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.function.DiatonicFunction;
+import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -67,7 +67,7 @@ public class TonalityChordRetrieval {
     }
 
     public static List<ChromaticChord> getTriadChordsFrom(Tonality tonality) {
-        NoDiatonicScaleException.check( tonality.getScale() );
+        ScaleNonDiatonicException.check(tonality.getScale());
         List<ChromaticChord> ret = new ArrayList<>();
         for ( DiatonicDegree diatonicDegree : DiatonicDegree.values() ) {
             DiatonicFunction f = null;
@@ -101,7 +101,7 @@ public class TonalityChordRetrieval {
     }
 
     public static List<ChromaticChord> getSeventhChordsFrom(Tonality tonality) {
-        NoDiatonicScaleException.check( tonality.getScale() );
+        ScaleNonDiatonicException.check(tonality.getScale());
         List<ChromaticChord> ret = new ArrayList<>();
         for (DiatonicDegree diatonicDegree : DiatonicDegree.values()) {
             DiatonicFunction f = null;

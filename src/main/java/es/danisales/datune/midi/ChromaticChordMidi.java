@@ -1,9 +1,9 @@
 package es.danisales.datune.midi;
 
-import es.danisales.datune.diatonic.IntervalChromatic;
-import es.danisales.datune.diatonic.Quality;
+import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
+import es.danisales.datune.musical.Quality;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.utils.MathUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;

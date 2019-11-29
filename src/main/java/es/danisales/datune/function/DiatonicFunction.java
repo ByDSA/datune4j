@@ -1,6 +1,7 @@
-package es.danisales.datune.diatonic;
+package es.danisales.datune.function;
 
 import es.danisales.arrays.ArrayUtils;
+import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -98,7 +99,9 @@ public enum DiatonicFunction implements HarmonicFunction {
 			VII9,
 	};
 
-	/** Con und�cima */
+	/**
+	 * Con undécima
+	 */
 	public static final DiatonicFunction[] ELEVENTH = new DiatonicFunction[] {
 			I11,
 			II11,
@@ -178,19 +181,7 @@ public enum DiatonicFunction implements HarmonicFunction {
 			VII9_O3_O7,
 	};
 
-	@Deprecated
-	public DiatonicDegree getDegree() {
-		return DiatonicDegree.from(this);
-	}
-
-	public boolean isSus2() {
-		return ArrayUtils.contains( this, SUS2 );
-	}
-
-	public boolean isSus4() {
-		return ArrayUtils.contains( this, SUS4 );
-	}
-
+	@SuppressWarnings("Duplicates")
 	public static @NonNull DiatonicFunction from(@NonNull DiatonicDegree diatonicDegree) {
 		switch ( diatonicDegree ) {
 			case I:
@@ -393,11 +384,6 @@ public enum DiatonicFunction implements HarmonicFunction {
 		}
 	}
 
-	/**
-	 * Gets the diatonic function fromIndex a diatonic chord midi with a tonality
-	 * @param c diatonic chord midi
-	 * @return the diatonic function
-	 */
 	public static @Nullable DiatonicFunction from(@NonNull ChromaticChord chromaticChord, @NonNull Tonality tonality) {
 		HarmonicFunction hf = tonality.getFunctionFrom(chromaticChord);
 		if ( hf instanceof DiatonicFunction )

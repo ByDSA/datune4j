@@ -1,8 +1,8 @@
 package es.danisales.datune.musical;
 
-import es.danisales.datune.diatonic.DiatonicDegree;
-import es.danisales.datune.diatonic.DiatonicFunction;
-import es.danisales.datune.diatonic.IntervalDiatonic;
+import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.function.DiatonicFunction;
+import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.pitch.ChordMutableInterface;

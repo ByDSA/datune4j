@@ -1,6 +1,6 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.diatonic.DiatonicDegree;
+import es.danisales.datune.degree.DiatonicDegree;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -8,7 +8,7 @@ import java.util.*;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-enum ScaleEnum implements ScaleInterface {
+enum ScaleInnerImmutable implements ScaleInner {
 	// 7
 	MAJOR( 2, 2, 1, 2, 2, 2, 1 ),
 	IONIAN( MAJOR ),
@@ -62,7 +62,7 @@ enum ScaleEnum implements ScaleInterface {
 	WOLE_TONE( 2, 2, 2, 2, 2, 2 ),
 
 	// 5
-	PENTATONIC_MINOR( 3, 2, 3, 2, 2 ),
+	PENTATONIC_MINOR(3, 2, 2, 3, 2),
 	PENTATONIC( PENTATONIC_MINOR.getMode( DiatonicDegree.II ) ),
 	EGYPCIAN( PENTATONIC_MINOR.getMode( DiatonicDegree.III ) ),
 	SUSPENDED( EGYPCIAN ),
@@ -74,15 +74,15 @@ enum ScaleEnum implements ScaleInterface {
 	// 12
 	CHROMATIC(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 
-	private static final Map<List<ScaleDistance>, ScaleEnum> _map = new HashMap<>();
+	private static final Map<List<ScaleDistance>, ScaleInnerImmutable> _map = new HashMap<>();
 	static {
-		for (ScaleEnum s : values()) {
+		for (ScaleInnerImmutable s : values()) {
 			_map.putIfAbsent(s.value, s);
 		}
 	}
 
-	@SuppressWarnings("ConstantConditions") // Se crea primero las constantes de ScaleEnum que el map.
-	static @Nullable ScaleEnum from(@NonNull List<ScaleDistance> code) {
+	@SuppressWarnings("ConstantConditions") // Se crea primero las constantes de ScaleImmutable que el map.
+	static @Nullable ScaleInnerImmutable from(@NonNull List<ScaleDistance> code) {
 		if (_map == null)
 			return null;
 		Objects.requireNonNull(code);
@@ -93,13 +93,13 @@ enum ScaleEnum implements ScaleInterface {
 
 	private final List<ScaleDistance> value;
 
-	ScaleEnum(List<ScaleDistance> values) {
+	ScaleInnerImmutable(List<ScaleDistance> values) {
 		value = Collections.unmodifiableList(values);
 
 		sumCheck();
 	}
 
-	ScaleEnum(int... intValues) {
+	ScaleInnerImmutable(int... intValues) {
 		ScaleDistance[] distanceScales = new ScaleDistance[intValues.length];
 		for (int i = 0; i < intValues.length; i++)
 			distanceScales[i] = ScaleDistance.from(intValues[i]);
@@ -109,7 +109,7 @@ enum ScaleEnum implements ScaleInterface {
 		sumCheck();
 	}
 
-	ScaleEnum(ScaleInterface s) {
+	ScaleInnerImmutable(ScaleInner s) {
 		this( s.getCode() );
 	}
 
@@ -125,7 +125,9 @@ enum ScaleEnum implements ScaleInterface {
 
 	@Override
 	public @NonNull ScaleDistance get(DiatonicDegree diatonicDegree) {
-		return value.get(diatonicDegree.ordinal());
+		if (diatonicDegree.ordinal() == 0)
+			return ScaleDistance.NONE;
+		return value.get(diatonicDegree.ordinal() - 1);
 	}
 
 	@Override

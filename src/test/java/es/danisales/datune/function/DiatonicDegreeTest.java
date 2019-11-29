@@ -1,5 +1,7 @@
-package es.danisales.datune.diatonic;
+package es.danisales.datune.function;
 
+import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.interval.IntervalDiatonic;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

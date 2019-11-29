@@ -1,6 +1,6 @@
 package es.danisales.datune.midi.pitch;
 
-import es.danisales.datune.diatonic.Interval;
+import es.danisales.datune.interval.Interval;
 import es.danisales.datune.pitch.PitchOctave;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
