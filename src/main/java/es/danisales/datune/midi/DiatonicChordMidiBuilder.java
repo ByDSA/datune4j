@@ -8,9 +8,11 @@ import es.danisales.datune.midi.arpegios.Arpegio;
 import es.danisales.datune.midi.arpegios.ArpegioDefault;
 import es.danisales.datune.midi.pitch.PitchDiatonicMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
+import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.DiatonicChordPattern;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityChordRetrieval;
 import es.danisales.datune.tonality.TonalityException;
 import es.danisales.datune.tonality.TonalityGetChromaticFunction;
 import es.danisales.utils.building.Builder;
@@ -55,6 +57,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
             try {
                 chromaticFunctionProcess2(diatonicChordMidi);
             } catch (TonalityException | PitchMidiException e) {
+                e.printStackTrace();
                 throw new RuntimeException();
             }
         } else if (function instanceof DiatonicFunction)
@@ -406,15 +409,62 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
         return self();
     }
 
+    // todo: integrate into builder
     public static @NonNull List<DiatonicChordMidi> fromChromaticChord(ChromaticChord chromaticChord, boolean outScale) {
         return DiatonicChordMidiAdapter.fromChromaticChord(chromaticChord, outScale);
     }
 
-    public static DiatonicChordMidi from(List<DiatonicMidi> diatonicMidiList) {
+    // todo: integrate
+    public static DiatonicChordMidi from(@NonNull List<DiatonicMidi> diatonicMidiList) {
         DiatonicChordMidi diatonicChordMidi = new DiatonicChordMidi();
 
         diatonicChordMidi.tonality = diatonicMidiList.get(0).getPitch().getTonality();
         diatonicChordMidi.addAll(diatonicMidiList);
+
+        return diatonicChordMidi;
+    }
+
+    // todo: integrate into builder
+    public static DiatonicChordMidi from(Tonality ton, @NonNull ChromaticChord ns) {
+        DiatonicChordMidi diatonicChordMidi = new DiatonicChordMidi();
+        diatonicChordMidi.tonality = ton;
+/*
+        if ( ns instanceof ChordMidi )
+            meta = ( (ChordMidi) ns ).meta;
+*/
+        try {
+            for (Chromatic chromatic : ns) {
+                ChromaticMidi cm = ChromaticMidi.builder()
+                        .pitch(chromatic)
+                        .length(Settings.DefaultValues.LENGTH_CHORD)
+                        .build();
+                diatonicChordMidi.add(cm);
+            }
+        } catch (TonalityException e) {
+            diatonicChordMidi.clear();
+
+            diatonicChordMidi.tonality = TonalityChordRetrieval.searchInModeSameRoot(diatonicChordMidi.tonality, ns);
+
+            checkState(diatonicChordMidi.tonality != null);
+
+            try {
+                ChromaticChordMidi c = ChromaticChordMidi.builder().fromChromatic(ns).build();
+                diatonicChordMidi.addAll(c);
+            } catch (TonalityException | PitchMidiException e1) {
+                throw new RuntimeException();
+            }
+        }
+
+        diatonicChordMidi.setRootIndex(ns.getRootIndex());
+
+        diatonicChordMidi.setRootIndex(ns.getRootIndex());
+/*
+        if ( ns instanceof ChordMidi ) {
+            arpegio = ( (ChordMidi) ns ).arpegio;
+            length = ( (ChordMidi) ns ).length;
+        }
+*/
+        diatonicChordMidi.setArpegioIfNull();
 
         return diatonicChordMidi;
     }

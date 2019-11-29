@@ -94,8 +94,8 @@ public class DiatonicChordMidiTransformations {
                 StringBuilder sb = new StringBuilder();
                 boolean yep = true;
                 sb.append("----").append(tonality).append("----");
-                for (ChromaticChord chromaticMidis : chordsIn) {
-                    DiatonicChordMidi c = new DiatonicChordMidi(tonality, chromaticMidis);
+                for (ChromaticChord chromaticChord : chordsIn) {
+                    DiatonicChordMidi c = DiatonicChordMidi.builder().from(tonality, chromaticChord);
                     if (!f.apply(c)) {
                         yep = false;
                         break;

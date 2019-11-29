@@ -3,16 +3,11 @@ package es.danisales.datune.midi;
 import es.danisales.datune.diatonic.ChordNotation;
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.IntervalDiatonic;
-import es.danisales.datune.midi.Settings.DefaultValues;
 import es.danisales.datune.midi.pitch.PitchDiatonicMidi;
-import es.danisales.datune.midi.pitch.PitchMidiException;
-import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.DiatonicChordCommon;
 import es.danisales.datune.pitch.PitchDiatonic;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
-import es.danisales.datune.tonality.TonalityChordRetrieval;
 import es.danisales.datune.tonality.TonalityException;
 import es.danisales.utils.MathUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -27,53 +22,6 @@ public final class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDia
     }
 
     protected DiatonicChordMidi() {
-    }
-
-    protected DiatonicChordMidi(@NonNull Tonality t) {
-        tonality = t;
-    }
-
-    // todo: move builder
-    public DiatonicChordMidi(Tonality ton, ChromaticChord ns) {
-        tonality = ton;
-/*
-        if ( ns instanceof ChordMidi )
-            meta = ( (ChordMidi) ns ).meta;
-*/
-        try {
-            for (Chromatic chromatic : ns) {
-                ChromaticMidi cm = ChromaticMidi.builder()
-                        .pitch(chromatic)
-                        .length(DefaultValues.LENGTH_CHORD)
-                        .build();
-                add( cm );
-            }
-        } catch ( TonalityException e ) {
-            clear();
-
-            tonality = TonalityChordRetrieval.searchInModeSameRoot(tonality, ns);
-
-            if ( tonality == null )
-                throw new RuntimeException();
-
-            try {
-                ChromaticChordMidi c = ChromaticChordMidi.builder().fromChromatic(ns).build();
-                addAll(c);
-            } catch (TonalityException | PitchMidiException e1) {
-                throw new RuntimeException();
-            }
-        }
-
-        setRootIndex(ns.getRootIndex());
-
-        rootIndex = ns.getRootIndex();
-/*
-        if ( ns instanceof ChordMidi ) {
-            arpegio = ( (ChordMidi) ns ).arpegio;
-            length = ( (ChordMidi) ns ).length;
-        }
-*/
-        setArpegioIfNull();
     }
 
     public void add(ChromaticMidi chromaticMidi) throws TonalityException {
