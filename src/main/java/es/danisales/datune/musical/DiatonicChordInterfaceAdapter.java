@@ -13,13 +13,13 @@ class DiatonicChordInterfaceAdapter {
     public static @NonNull DiatonicChordInterface from(@NonNull Collection<Diatonic> diatonicChord) {
         Objects.requireNonNull(diatonicChord);
 
-        DiatonicChordInterface ret = DiatonicChordEnum.from(diatonicChord);
+        DiatonicChordInterface ret = DiatonicChordImmutable.from(diatonicChord);
         if (ret == null) {
-            ret = new DiatonicChordCustom();
+            ret = new DiatonicChordMutable();
             ret.addAll(diatonicChord);
-            if (diatonicChord instanceof DiatonicChordCustom) {
-                DiatonicChordCustom retCustom = (DiatonicChordCustom)ret;
-                DiatonicChordCustom inCustom = (DiatonicChordCustom)diatonicChord;
+            if (diatonicChord instanceof DiatonicChordMutable) {
+                DiatonicChordMutable retCustom = (DiatonicChordMutable) ret;
+                DiatonicChordMutable inCustom = (DiatonicChordMutable) diatonicChord;
                 retCustom.setRootIndex(inCustom.getRootIndex());
             }
         }

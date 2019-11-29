@@ -4,6 +4,7 @@ import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.midi.DiatonicChordMidiChecker;
 import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.midi.Duration;
+import es.danisales.datune.midi.pitch.PitchMidiException;
 
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class MelodyByChords extends Melody {
 		return n;
 	}
 
-	public Melody shiftOctave(int o) {
+	public Melody shiftOctave(int o) throws PitchMidiException {
 		for (DiatonicChordMidi c : chords) {
 			c.shiftOctave(o);
 		}

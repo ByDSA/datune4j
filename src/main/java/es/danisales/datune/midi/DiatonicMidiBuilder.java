@@ -1,6 +1,8 @@
 package es.danisales.datune.midi;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
+import es.danisales.datune.midi.pitch.PitchDiatonicMidi;
+import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
 import es.danisales.utils.building.Builder;
@@ -26,11 +28,12 @@ public final class DiatonicMidiBuilder extends Builder<DiatonicMidiBuilder, Diat
         checkArgument(length > 0);
         checkArgument(velocity > 0);
         Objects.requireNonNull(pitch);
-        checkArgument(pitch.octave > 0);
-        Objects.requireNonNull(pitch.degree);
+        checkArgument(pitch.getOctave() > 0);
+        Objects.requireNonNull(pitch.getDegree());
 
-        int dv = pitch.degree.ordinal();
-        pitch.octave += ( dv < 0 && dv % pitch.tonality.getScale().size() != 0 ? -1 : 0 );
+        int dv = pitch.getDegree().ordinal();
+        int shiftOctave = (dv < 0 && dv % pitch.getTonality().getScale().size() != 0 ? -1 : 0);
+        pitch.shiftOctave(shiftOctave);
 
         DiatonicMidi dm = new DiatonicMidi();
         dm.setLength( length );

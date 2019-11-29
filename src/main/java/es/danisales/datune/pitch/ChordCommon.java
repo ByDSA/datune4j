@@ -12,6 +12,13 @@ public interface ChordCommon<N extends SymbolicPitch> extends List<N> {
 
 	@NonNull N getRoot();
 
+	default <E extends PitchException> @NonNull N getCyclic(int noteNumber) throws E {
+		while (noteNumber < 0)
+			noteNumber += size();
+
+		return get(noteNumber % size());
+	}
+
 	default int getInversionNumber() {
 		int rootPos = getRootIndex();
 		if (rootPos >= 0)

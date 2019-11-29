@@ -2,6 +2,7 @@ package es.danisales.datune.tonality;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.midi.DiatonicChordMidi;
+import es.danisales.datune.midi.DiatonicChordMidiBuilder;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.Diatonic;
 import es.danisales.datune.musical.DiatonicAlt;
@@ -200,7 +201,7 @@ public class TonalityRetrieval {
             List<Tonality> candidatesPrev = candidates;
 
             do {
-                List<DiatonicChordMidi> possibleChords = DiatonicChordMidi.fromChromaticChord(
+                List<DiatonicChordMidi> possibleChords = DiatonicChordMidiBuilder.fromChromaticChord(
                         chordCopy,
                         outScale
                 );
@@ -216,7 +217,7 @@ public class TonalityRetrieval {
 
                     for ( DiatonicChordMidi c : possibleChords ) {
                         for ( Tonality t : candidatesPrev )
-                            if ( ( c.metaTonality.equals( t )
+                            if ((c.getTonality().equals(t)
                                     || c.getTonality().isModeOf( t ) )
                                     && !candidates.contains( t ) )
                                 candidates.add( t );

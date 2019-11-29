@@ -1,10 +1,16 @@
 package es.danisales.datune.eventsequences;
 
-import es.danisales.datune.midi.*;
-import es.danisales.datune.midi.Events.Event;
-import es.danisales.datune.midi.Events.EventComplex;
-import es.danisales.datune.midi.Events.NoteOff;
-import es.danisales.datune.midi.Events.NoteOn;
+import es.danisales.datune.midi.ChromaticChordMidi;
+import es.danisales.datune.midi.ChromaticMidi;
+import es.danisales.datune.midi.Durable;
+import es.danisales.datune.midi.Duration;
+import es.danisales.datune.midi.binaries.Midi;
+import es.danisales.datune.midi.binaries.events.Event;
+import es.danisales.datune.midi.binaries.events.EventComplex;
+import es.danisales.datune.midi.binaries.events.NoteOff;
+import es.danisales.datune.midi.binaries.events.NoteOn;
+import es.danisales.datune.midi.pitch.PitchChromaticMidi;
+import es.danisales.datune.midi.pitch.PitchMidiException;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;

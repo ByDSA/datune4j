@@ -4,6 +4,7 @@ import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
+import es.danisales.datune.midi.DiatonicChordMidiBuilder;
 import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.musical.*;
 import es.danisales.datune.tonality.Tonality;
@@ -49,7 +50,7 @@ public class Tests {
 			notes.add(chromaticMidi.getPitch().getChromatic());
 		}
 
-		List<DiatonicChordMidi> chords = DiatonicChordMidi.fromChromaticChord(
+		List<DiatonicChordMidi> chords = DiatonicChordMidiBuilder.fromChromaticChord(
 				notes,
 				false
 		);

@@ -4,15 +4,20 @@ import es.danisales.datune.diatonic.ChromaticFunction;
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.eventsequences.*;
-import es.danisales.datune.midi.Arpegios.ArpegioAsc;
-import es.danisales.datune.midi.Arpegios.ArpegioDefault;
-import es.danisales.datune.midi.Arpegios.ArpegioDesc;
-import es.danisales.datune.midi.Arpegios.ArpegioPowerGuitars;
-import es.danisales.datune.midi.*;
-import es.danisales.datune.midi.Events.EventComplex;
-import es.danisales.datune.midi.Events.Pan;
-import es.danisales.datune.midi.Events.Volume;
+import es.danisales.datune.midi.ChordMidiTransformations;
+import es.danisales.datune.midi.DiatonicChordMidi;
+import es.danisales.datune.midi.DiatonicMidi;
+import es.danisales.datune.midi.Duration;
 import es.danisales.datune.midi.Progressions.Progression;
+import es.danisales.datune.midi.arpegios.ArpegioAsc;
+import es.danisales.datune.midi.arpegios.ArpegioDefault;
+import es.danisales.datune.midi.arpegios.ArpegioDesc;
+import es.danisales.datune.midi.arpegios.ArpegioPowerGuitars;
+import es.danisales.datune.midi.binaries.Song;
+import es.danisales.datune.midi.binaries.events.EventComplex;
+import es.danisales.datune.midi.binaries.events.Pan;
+import es.danisales.datune.midi.binaries.events.Volume;
+import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.musical.ChordTransformations;
 import es.danisales.datune.tonality.Tonality;
 
@@ -50,7 +55,7 @@ public class Power extends Song {
 		startProgression.setArpegio(new ArpegioDefault());
 	}
 
-	public Power() {
+	public Power() throws PitchMidiException {
 		super("power.mid", 130);
 		tonality = Tonality.E;
 
@@ -90,7 +95,7 @@ public class Power extends Song {
 		seek += chorus(seek);
 	}
 
-	EventComplex startMelody() {
+	EventComplex startMelody() throws PitchMidiException {
 		List<DiatonicChordMidi> chords = ChordMidiTransformations.shiftOctaveList(ChordTransformations.duplicateList(startProgression.getChords()), 2);
 
 		MelodyByChords l = new MelodyByChords(chords);
@@ -113,8 +118,8 @@ public class Power extends Song {
 			} else if (i == 6) {
 				l.add(i*Duration.L1 + 0, 3, Duration.L4 +Duration.L8);
 				l.add(i*Duration.L1 + Duration.L4 +Duration.L8, 2, Duration.L8);
-                DiatonicMidi dm = l.add(i * Duration.L1 + Duration.L2, 1, Duration.L2_3);
-                dm.getPitch().shift(IntervalDiatonic.SECOND);
+				DiatonicMidi dm = l.add(i * Duration.L1 + Duration.L2, 1, Duration.L2_3);
+				dm.getPitch().shift(IntervalDiatonic.SECOND);
 				l.add(i*Duration.L1 + Duration.L2 +Duration.L2_3, 2, Duration.L2_3);
 				l.add(i*Duration.L1 + Duration.L2 +2*Duration.L2_3, 3, Duration.L2_3);
 			} else if (i == 7) {
@@ -149,7 +154,7 @@ public class Power extends Song {
 
 	Progression chorusGuitarsProgression() {
 		Progression l = new Progression(tonality, 3) {
-			{ 
+			{
 				add(DiatonicFunction.VI).inv(-2);
 				add(DiatonicFunction.IV, 1).inv(1);
 				add(DiatonicFunction.I, 1).inv(0);
@@ -165,7 +170,7 @@ public class Power extends Song {
 		return l;
 	}
 
-	Progression startOrganProgression() {
+	Progression startOrganProgression() throws PitchMidiException {
 		Progression p = ((Progression)startProgression.clone())
 				.setArpegio(new ArpegioDesc(Duration.L1, Duration.L4_3))
 				.setArpegio(new int[]{2, 3, 4, 6}, new ArpegioAsc(Duration.L1, Duration.L4_3))
@@ -177,15 +182,15 @@ public class Power extends Song {
 		return p;
 	}
 
-	Progression startPad() {
-		return ((Progression)startProgression.clone()).shiftOctave(1);
+	Progression startPad() throws PitchMidiException {
+		return startProgression.clone().shiftOctave(1);
 	}
 
-	Progression chorusPad() {
-		return ((Progression)chorusGuitarsProgression().clone()).shiftOctave(1);
+	Progression chorusPad() throws PitchMidiException {
+		return chorusGuitarsProgression().clone().shiftOctave(1);
 	}
 
-	int startPattern(int seek) {
+	int startPattern(int seek) throws PitchMidiException {
 		channelGuitars2.add(seek, startProgression);
 
 		channelGuitars1.add(seek, startMelody());
@@ -214,7 +219,7 @@ public class Power extends Song {
 		return startPad().getDuration();
 	}
 
-	int chorus(int seek) {
+	int chorus(int seek) throws PitchMidiException {
 
 		Progression chorusGuitars = chorusGuitarsProgression();
 		channelGuitars2.add(seek, chorusGuitars);
@@ -231,7 +236,7 @@ public class Power extends Song {
 
 	}
 
-	int bridge(int seek, int n) {
+	int bridge(int seek, int n) throws PitchMidiException {
 		Progression cad = new Progression(tonality, 3) {
 			{
 				DiatonicChordMidi c1, c2;
@@ -256,8 +261,8 @@ public class Power extends Song {
 				DiatonicChordMidi c = (DiatonicChordMidi) cad.getChords().get(i);
 				if (i == 0) {
 					c.addInterval(IntervalDiatonic.NINTH);
-                    //c.addInterval(IntervalDiatonic.C_SIXTH);
-                    //c.addInterval(IntervalDiatonic.C_SEVENTH);
+					//c.addInterval(IntervalDiatonic.C_SIXTH);
+					//c.addInterval(IntervalDiatonic.C_SEVENTH);
 					System.out.println(c);
 				} else {
 					//c.addInterval(IntervalDiatonic.TENTH);
@@ -268,7 +273,7 @@ public class Power extends Song {
 
 		Progression cad_pad = (Progression)cad.clone();
 		cad_pad.setArpegio(new ArpegioDefault(Duration.L1 *2))
-		.shiftOctave(2);
+				.shiftOctave(2);
 		channelPad.add(seek, cad_pad);
 
 		MelodyByChords guitar1 = new MelodyByChords(cad.getChords());
@@ -324,7 +329,7 @@ public class Power extends Song {
 		return cad.getDuration();
 	}
 
-	int a(int seek) {
+	int a(int seek) throws PitchMidiException {
 		Progression cad = new Progression(tonality, 4) {
 			{
 				DiatonicChordMidi dcm = add(DiatonicFunction.I);
@@ -411,7 +416,7 @@ public class Power extends Song {
 		return cad.getDuration();
 	}
 
-	int b(int seek) {
+	int b(int seek) throws PitchMidiException {
 		Progression cad = new Progression(tonality, 5) {
 			{
 				add(DiatonicFunction.VI,-1).setLength(Duration.L1);
@@ -437,21 +442,50 @@ public class Power extends Song {
 
 			c.setArpegio( new ArpegioDefault() );
 
-			switch(i) {
-				case 0: c.inv(2); break;
-				case 1: c.inv(2); c.shiftOctave(-1); break;
-				case 2: c.inv(1); c.shiftOctave(-1); break;
-				case 3: c.inv(2); c.shiftOctave(-1); break;
-				case 4: c.inv(2); c.shiftOctave(-1); break;
-				case 5: c.inv(0); break;
-				case 6: c.inv(1); c.shiftOctave(-1); break;
-				case 7: c.shiftOctave(-1); break;
-				case 8: c.shiftOctave(-1); break;
-				case 9: c.inv(0); break;
+			try {
+				switch (i) {
+					case 0:
+						c.inv(2);
+						break;
+					case 1:
+						c.inv(2);
+						c.shiftOctave(-1);
+						break;
+					case 2:
+						c.inv(1);
+						c.shiftOctave(-1);
+						break;
+					case 3:
+						c.inv(2);
+						c.shiftOctave(-1);
+						break;
+					case 4:
+						c.inv(2);
+						c.shiftOctave(-1);
+						break;
+					case 5:
+						c.inv(0);
+						break;
+					case 6:
+						c.inv(1);
+						c.shiftOctave(-1);
+						break;
+					case 7:
+						c.shiftOctave(-1);
+						break;
+					case 8:
+						c.shiftOctave(-1);
+						break;
+					case 9:
+						c.inv(0);
+						break;
+				}
+			} catch (PitchMidiException e) {
+
 			}
 		}
 
-		Progression arp = ((Progression)cad.clone()).shiftOctave(1);
+		Progression arp = cad.clone().shiftOctave(1);
 		arp.setArpegio(new ArpegioDesc(Duration.L4, Duration.L4_3));
 		channelOrgan.add(seek, arp);
 

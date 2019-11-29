@@ -2,6 +2,9 @@ package es.danisales.datune.midi;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.IntervalDiatonic;
+import es.danisales.datune.midi.pitch.PitchChromaticMidi;
+import es.danisales.datune.midi.pitch.PitchDiatonicMidi;
+import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.tonality.Scale;
@@ -245,8 +248,8 @@ public class PitchDiatonicMidiTest {
         assertNotNull(pitchDiatonicMidi);
 
         pitchDiatonicMidi.shift(2);
-        assertEquals(DiatonicDegree.I, pitchDiatonicMidi.degree);
-        assertEquals(6, pitchDiatonicMidi.octave);
+        assertEquals(DiatonicDegree.I, pitchDiatonicMidi.getDegree());
+        assertEquals(6, pitchDiatonicMidi.getOctave());
     }
 
     @Test

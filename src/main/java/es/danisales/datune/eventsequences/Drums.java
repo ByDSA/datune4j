@@ -1,7 +1,7 @@
 package es.danisales.datune.eventsequences;
 
 import es.danisales.datune.midi.Duration;
-import es.danisales.datune.midi.Events.NoteOn;
+import es.danisales.datune.midi.binaries.events.NoteOn;
 
 public class Drums extends EventSequence {
 	public static final int ACOUSTIC_BASS_DRUM = 35;

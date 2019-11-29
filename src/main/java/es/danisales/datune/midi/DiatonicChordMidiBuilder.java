@@ -4,9 +4,10 @@ import es.danisales.datune.diatonic.ChromaticFunction;
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.diatonic.HarmonicFunction;
-import es.danisales.datune.midi.Arpegios.Arpegio;
-import es.danisales.datune.midi.Arpegios.ArpegioDefault;
-import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.midi.arpegios.Arpegio;
+import es.danisales.datune.midi.arpegios.ArpegioDefault;
+import es.danisales.datune.midi.pitch.PitchDiatonicMidi;
+import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.DiatonicChordPattern;
 import es.danisales.datune.tonality.Tonality;
@@ -15,6 +16,7 @@ import es.danisales.datune.tonality.TonalityGetChromaticFunction;
 import es.danisales.utils.building.Builder;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.util.List;
 import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkState;
@@ -32,10 +34,8 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
     public DiatonicChordMidi build() {
         DiatonicChordMidi diatonicChordMidi = new DiatonicChordMidi();
         diatonicChordMidi.tonality = Objects.requireNonNull(tonality);
-        diatonicChordMidi.metaTonality = Objects.requireNonNull(tonality);
         diatonicChordMidi.setLength(length);
         diatonicChordMidi.setVelocity(velocity);
-        diatonicChordMidi.function = Objects.requireNonNull(function);
 
         initFromFunction(diatonicChordMidi);
         initArpegio(diatonicChordMidi);
@@ -57,10 +57,6 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
             } catch (TonalityException | PitchMidiException e) {
                 throw new RuntimeException();
             }
-            Chromatic firstChromatic = Chromatic.from(diatonicChordMidi.get(0));
-            Chromatic metaChromatic = Chromatic.from(diatonicChordMidi.metaTonality.getNote(DiatonicDegree.I));
-            if (firstChromatic.ordinal() < metaChromatic.ordinal())
-                diatonicChordMidi.shiftOctave(1);
         } else if (function instanceof DiatonicFunction)
             initFromDiatonicFunction(diatonicChordMidi);
     }
@@ -87,7 +83,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
             if (t == ChromaticFunction.N6) {
                 ChromaticChordInterface cc = ChromaticChordInterface.from(t, tonality);
 
-                tonality = TonalityRetrieval.listFromChord(cc).get(0);
+                tonality = TonalityRetrieval.listFromChord(cc).getCyclic(0);
 
                 ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder()
                         .fromChromatic(cc)
@@ -218,7 +214,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                         DiatonicChordMidi c = DiatonicChordMidi.builder()
                                 .from(DiatonicFunction.V7, tonality)
                                 .build();
-                        Chromatic firstChromatic = Chromatic.from(c.get(0));
+                        Chromatic firstChromatic = Chromatic.from(c.getCyclic(0));
                         tonality = Tonality.from(
                                 firstChromatic.addSemi(6), Scale.LYDIAN_b7
                         );
@@ -228,7 +224,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                                 .from(
                                         ChromaticFunction.V7_II, tonality
                                 ).build();
-                        Chromatic firstChromatic2 = Chromatic.from(c2.get(0));
+                        Chromatic firstChromatic2 = Chromatic.from(c2.getCyclic(0));
                         tonality = Tonality.from(
                                 firstChromatic2.addSemi(6), Scale.LYDIAN_b7
                         );
@@ -238,7 +234,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                                 .from(
                                         ChromaticFunction.V7_III, tonality
                                 ).build();
-                        Chromatic firstChromatic3 = Chromatic.from(c3.get(0));
+                        Chromatic firstChromatic3 = Chromatic.from(c3.getCyclic(0));
                         tonality = Tonality.from(
                                 firstChromatic3.addSemi(6), Scale.LYDIAN_b7
                         );
@@ -248,7 +244,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                                 .from(
                                         ChromaticFunction.V7_IV, tonality
                                 ).build();
-                        Chromatic firstChromatic4 = Chromatic.from(c4.get(0));
+                        Chromatic firstChromatic4 = Chromatic.from(c4.getCyclic(0));
                         tonality = Tonality.from(
                                 firstChromatic4.addSemi(6), Scale.LYDIAN_b7
                         );
@@ -258,7 +254,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                                 .from(
                                         ChromaticFunction.V7_V, tonality
                                 ).build();
-                        Chromatic firstChromatic5 = Chromatic.from(c5.get(0));
+                        Chromatic firstChromatic5 = Chromatic.from(c5.getCyclic(0));
                         tonality = Tonality.from(
                                 firstChromatic5.addSemi(6), Scale.LYDIAN_b7
                         );
@@ -268,7 +264,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                                 .from(
                                         ChromaticFunction.V7_VI, tonality
                                 ).build();
-                        Chromatic firstChromatic6 = Chromatic.from(c6.get(0));
+                        Chromatic firstChromatic6 = Chromatic.from(c6.getCyclic(0));
                         tonality = Tonality.from(
                                 firstChromatic6.addSemi(6), Scale.LYDIAN_b7
                         );
@@ -278,7 +274,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                                 .from(
                                         DiatonicFunction.V7, tonality
                                 ).build();
-                        Chromatic firstChromaticAlt = Chromatic.from(calt.get(0));
+                        Chromatic firstChromaticAlt = Chromatic.from(calt.getCyclic(0));
                         tonality = Tonality.from(
                                 firstChromaticAlt, Scale.SUPERLOCRIAN
                         );
@@ -410,6 +406,18 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
         return self();
     }
 
+    public static @NonNull List<DiatonicChordMidi> fromChromaticChord(ChromaticChord chromaticChord, boolean outScale) {
+        return DiatonicChordMidiAdapter.fromChromaticChord(chromaticChord, outScale);
+    }
+
+    public static DiatonicChordMidi from(List<DiatonicMidi> diatonicMidiList) {
+        DiatonicChordMidi diatonicChordMidi = new DiatonicChordMidi();
+
+        diatonicChordMidi.tonality = diatonicMidiList.get(0).getPitch().getTonality();
+        diatonicChordMidi.addAll(diatonicMidiList);
+
+        return diatonicChordMidi;
+    }
 
 
     @NonNull

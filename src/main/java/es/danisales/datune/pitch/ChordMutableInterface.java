@@ -6,7 +6,8 @@ import es.danisales.utils.MathUtils;
 
 import java.util.Collections;
 
-public interface ChordMutableInterface<N extends SymbolicPitch, I extends Interval> extends ChordCommon<N>, PitchMutable<I>, Cloneable {
+public interface ChordMutableInterface<N extends SymbolicPitch, I extends Interval>
+		extends ChordCommon<N>, PitchMutable<I>, Cloneable {
 	default void resetRoot() {
 		if ( isEmpty() )
 			return;

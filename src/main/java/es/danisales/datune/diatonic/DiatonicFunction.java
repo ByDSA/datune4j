@@ -1,13 +1,10 @@
 package es.danisales.datune.diatonic;
 
 import es.danisales.arrays.ArrayUtils;
-import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-
-import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * Functiones diatónicas
@@ -401,12 +398,8 @@ public enum DiatonicFunction implements HarmonicFunction {
 	 * @param c diatonic chord midi
 	 * @return the diatonic function
 	 */
-	public static @Nullable DiatonicFunction from(@NonNull DiatonicChordMidi c) {
-		checkArgument(c.getTonality() != null);
-		checkArgument(c.metaTonality!= null);
-		Tonality ton = c.getMetatonality();
-        ChromaticChord chromaticChord = ChromaticChord.builder().fromDiatonicChordMidi(c).build();
-        HarmonicFunction hf = ton.getFunctionFrom(chromaticChord);
+	public static @Nullable DiatonicFunction from(@NonNull ChromaticChord chromaticChord, @NonNull Tonality tonality) {
+		HarmonicFunction hf = tonality.getFunctionFrom(chromaticChord);
 		if ( hf instanceof DiatonicFunction )
 			return (DiatonicFunction) hf;
 		else

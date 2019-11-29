@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 public class DiatonicChordCustomTest {
     @Test
     public void fromList() {
-        DiatonicChordCustom diatonicChord = DiatonicChordCustom.from( Arrays.asList(Diatonic.E, Diatonic.G, Diatonic.B) );
+        DiatonicChordMutable diatonicChord = DiatonicChordMutable.from(Arrays.asList(Diatonic.E, Diatonic.G, Diatonic.B));
 
         assertEquals(
                 Arrays.asList(Diatonic.E, Diatonic.G, Diatonic.B),
@@ -22,7 +22,7 @@ public class DiatonicChordCustomTest {
 
     @Test
     public void shift() {
-        DiatonicChordCustom diatonicChordCustom = DiatonicChordCustom.from(DiatonicChordEnum.C_TRIAD);
+        DiatonicChordMutable diatonicChordCustom = DiatonicChordMutable.from(DiatonicChordImmutable.C_TRIAD);
         diatonicChordCustom.setRootIndex(1);
         diatonicChordCustom.shift( IntervalDiatonic.SECOND );
         assertEquals( 3, diatonicChordCustom.size() );
@@ -34,18 +34,18 @@ public class DiatonicChordCustomTest {
 
     @Test
     public void shiftOctave() {
-        DiatonicChordCustom diatonicChordCustom = DiatonicChordCustom.from(DiatonicChordEnum.C_TRIAD);
+        DiatonicChordMutable diatonicChordCustom = DiatonicChordMutable.from(DiatonicChordImmutable.C_TRIAD);
         diatonicChordCustom.setRootIndex(1);
-        DiatonicChordCustom reference = DiatonicChordCustom.from(diatonicChordCustom);
+        DiatonicChordMutable reference = DiatonicChordMutable.from(diatonicChordCustom);
         diatonicChordCustom.shift( IntervalDiatonic.OCTAVE );
         assertEquals( reference, diatonicChordCustom );
     }
 
     @Test
     public void shiftOctaveMultipleShift() {
-        DiatonicChordCustom diatonicChordCustom = DiatonicChordCustom.from(DiatonicChordEnum.C_TRIAD);
+        DiatonicChordMutable diatonicChordCustom = DiatonicChordMutable.from(DiatonicChordImmutable.C_TRIAD);
         diatonicChordCustom.setRootIndex(1);
-        DiatonicChordCustom reference = DiatonicChordCustom.from(diatonicChordCustom);
+        DiatonicChordMutable reference = DiatonicChordMutable.from(diatonicChordCustom);
         for (int i = 0; i < 7; i++)
             diatonicChordCustom.shift( IntervalDiatonic.SECOND );
 
@@ -54,25 +54,25 @@ public class DiatonicChordCustomTest {
 
     @Test(expected = ClassCastException.class)
     public void of() { // todo: quitar de datils
-        DiatonicChordCustom diatonicChordCustom = (DiatonicChordCustom)DiatonicChordCustom.of(new ArrayList<>());
+        DiatonicChordMutable diatonicChordCustom = (DiatonicChordMutable) DiatonicChordMutable.of(new ArrayList<>());
     }
 
 
     @Test
     public void isEmpty() {
-        DiatonicChordCustom diatonicChordCustom = DiatonicChordCustom.from(Collections.emptyList());
+        DiatonicChordMutable diatonicChordCustom = DiatonicChordMutable.from(Collections.emptyList());
         assertTrue( diatonicChordCustom.isEmpty() );
     }
 
     @Test
     public void isEmptyFalse() {
-        DiatonicChordCustom diatonicChordCustom = DiatonicChordCustom.from(Arrays.asList(Diatonic.C, Diatonic.E));
+        DiatonicChordMutable diatonicChordCustom = DiatonicChordMutable.from(Arrays.asList(Diatonic.C, Diatonic.E));
         assertFalse( diatonicChordCustom.isEmpty() );
     }
 
     @Test
     public void add() {
-        DiatonicChordCustom diatonicChordCustom = DiatonicChordCustom.from(Arrays.asList(Diatonic.C, Diatonic.E));
+        DiatonicChordMutable diatonicChordCustom = DiatonicChordMutable.from(Arrays.asList(Diatonic.C, Diatonic.E));
         diatonicChordCustom.add(Diatonic.G);
         assertEquals(3, diatonicChordCustom.size());
         assertEquals(Diatonic.C, diatonicChordCustom.get(0));
@@ -83,7 +83,7 @@ public class DiatonicChordCustomTest {
 
     @Test
     public void addIndex() {
-        DiatonicChordCustom diatonicChordCustom = DiatonicChordCustom.from(Arrays.asList(Diatonic.C, Diatonic.G));
+        DiatonicChordMutable diatonicChordCustom = DiatonicChordMutable.from(Arrays.asList(Diatonic.C, Diatonic.G));
         diatonicChordCustom.add(1, Diatonic.E);
         assertEquals(3, diatonicChordCustom.size());
         assertEquals(Diatonic.C, diatonicChordCustom.get(0));
@@ -94,7 +94,7 @@ public class DiatonicChordCustomTest {
 
     @Test
     public void addIndexWhenEmpty() {
-        DiatonicChordCustom diatonicChordCustom = DiatonicChordCustom.from(Collections.emptyList());
+        DiatonicChordMutable diatonicChordCustom = DiatonicChordMutable.from(Collections.emptyList());
         diatonicChordCustom.add(0, Diatonic.C);
         assertEquals(1, diatonicChordCustom.size());
         assertEquals(Diatonic.C, diatonicChordCustom.get(0));
@@ -103,7 +103,7 @@ public class DiatonicChordCustomTest {
 
     @Test
     public void addAll() {
-        DiatonicChordCustom diatonicChordCustom = DiatonicChordCustom.from(Collections.singletonList(Diatonic.C));
+        DiatonicChordMutable diatonicChordCustom = DiatonicChordMutable.from(Collections.singletonList(Diatonic.C));
         diatonicChordCustom.addAll(Arrays.asList(Diatonic.E, Diatonic.G));
         assertEquals(3, diatonicChordCustom.size());
         assertEquals(Diatonic.C, diatonicChordCustom.get(0));
@@ -114,7 +114,7 @@ public class DiatonicChordCustomTest {
 
     @Test
     public void addAllIndex() { // todo: falla porque addAll está mal, arreglar en datils
-        DiatonicChordCustom diatonicChordCustom = DiatonicChordCustom.from(Collections.singletonList(Diatonic.G));
+        DiatonicChordMutable diatonicChordCustom = DiatonicChordMutable.from(Collections.singletonList(Diatonic.G));
         diatonicChordCustom.addAll(0, Arrays.asList(Diatonic.C, Diatonic.E));
         assertEquals(3, diatonicChordCustom.size());
         assertEquals(Diatonic.C, diatonicChordCustom.get(0));
@@ -125,7 +125,7 @@ public class DiatonicChordCustomTest {
 
     @Test
     public void set() {
-        DiatonicChordCustom diatonicChordCustom = DiatonicChordCustom.from(Arrays.asList(Diatonic.C, Diatonic.D, Diatonic.G));
+        DiatonicChordMutable diatonicChordCustom = DiatonicChordMutable.from(Arrays.asList(Diatonic.C, Diatonic.D, Diatonic.G));
         diatonicChordCustom.set(1, Diatonic.E);
         assertEquals(3, diatonicChordCustom.size());
         assertEquals(Diatonic.C, diatonicChordCustom.get(0));
@@ -137,7 +137,7 @@ public class DiatonicChordCustomTest {
 
     @Test
     public void setAndItsRoot() {
-        DiatonicChordCustom diatonicChordCustom = DiatonicChordCustom.from(Arrays.asList(Diatonic.D, Diatonic.E, Diatonic.G));
+        DiatonicChordMutable diatonicChordCustom = DiatonicChordMutable.from(Arrays.asList(Diatonic.D, Diatonic.E, Diatonic.G));
         diatonicChordCustom.set(0, Diatonic.C);
         assertEquals(3, diatonicChordCustom.size());
         assertEquals(Diatonic.C, diatonicChordCustom.get(0));
@@ -148,8 +148,8 @@ public class DiatonicChordCustomTest {
 
     @Test
     public void duplicate() {
-        DiatonicChordCustom diatonicChordCustom = DiatonicChordCustom.from(Arrays.asList(Diatonic.C, Diatonic.E));
-        DiatonicChordCustom duplicated = diatonicChordCustom.clone();
+        DiatonicChordMutable diatonicChordCustom = DiatonicChordMutable.from(Arrays.asList(Diatonic.C, Diatonic.E));
+        DiatonicChordMutable duplicated = diatonicChordCustom.clone();
 
         assertEquals(diatonicChordCustom, duplicated);
         assertNotSame(diatonicChordCustom, duplicated);
@@ -157,31 +157,31 @@ public class DiatonicChordCustomTest {
 
     @Test
     public void getInv() {
-        DiatonicChordCustom diatonicChord = DiatonicChordCustom.from( Arrays.asList(Diatonic.E, Diatonic.G, Diatonic.B) );
+        DiatonicChordMutable diatonicChord = DiatonicChordMutable.from(Arrays.asList(Diatonic.E, Diatonic.G, Diatonic.B));
         diatonicChord.inv();
-        DiatonicChordCustom diatonicChordInv = DiatonicChordCustom.from( Arrays.asList(Diatonic.G, Diatonic.B, Diatonic.E) );
+        DiatonicChordMutable diatonicChordInv = DiatonicChordMutable.from(Arrays.asList(Diatonic.G, Diatonic.B, Diatonic.E));
         diatonicChordInv.setRootIndex(2);
         assertEquals(diatonicChordInv, diatonicChord);
     }
 
     @Test
     public void getInv2() {
-        DiatonicChordCustom diatonicChord = DiatonicChordCustom.from( Arrays.asList(Diatonic.E, Diatonic.G, Diatonic.B) );
+        DiatonicChordMutable diatonicChord = DiatonicChordMutable.from(Arrays.asList(Diatonic.E, Diatonic.G, Diatonic.B));
         diatonicChord.inv(2);
-        DiatonicChordCustom diatonicChordInv = DiatonicChordCustom.from( Arrays.asList(Diatonic.B, Diatonic.E, Diatonic.G) );
+        DiatonicChordMutable diatonicChordInv = DiatonicChordMutable.from(Arrays.asList(Diatonic.B, Diatonic.E, Diatonic.G));
         diatonicChordInv.setRootIndex(1);
         assertEquals(diatonicChordInv, diatonicChord);
     }
 
     @Test
     public void getAllInversions() {
-        DiatonicChordCustom diatonicChord = DiatonicChordCustom.from( Arrays.asList(Diatonic.G, Diatonic.C, Diatonic.E) );
-        List<DiatonicChordCustom> customDiatonicChords = ChordTransformations.getAllInversionsFrom(diatonicChord);
+        DiatonicChordMutable diatonicChord = DiatonicChordMutable.from(Arrays.asList(Diatonic.G, Diatonic.C, Diatonic.E));
+        List<DiatonicChordMutable> customDiatonicChords = ChordTransformations.getAllInversionsFrom(diatonicChord);
 
-        DiatonicChordCustom inv1 = DiatonicChordCustom.from(diatonicChord);
+        DiatonicChordMutable inv1 = DiatonicChordMutable.from(diatonicChord);
         inv1.inv();
 
-        DiatonicChordCustom inv2 = DiatonicChordCustom.from(diatonicChord);
+        DiatonicChordMutable inv2 = DiatonicChordMutable.from(diatonicChord);
         inv2.inv(2);
 
         assertEquals( diatonicChord, customDiatonicChords.get(0) );

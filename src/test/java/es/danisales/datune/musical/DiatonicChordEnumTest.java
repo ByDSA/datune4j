@@ -10,13 +10,13 @@ import static org.junit.Assert.*;
 public class DiatonicChordEnumTest {
     @Test
     public void getRootPos() {
-        for (DiatonicChordEnum diatonicChordEnum : DiatonicChordEnum.values())
+        for (DiatonicChordImmutable diatonicChordEnum : DiatonicChordImmutable.values())
             assertEquals(0, diatonicChordEnum.getRootIndex());
     }
 
     @Test
     public void getRoot() {
-        for (DiatonicChordEnum diatonicChordEnum : DiatonicChordEnum.values())
+        for (DiatonicChordImmutable diatonicChordEnum : DiatonicChordImmutable.values())
             assertSame(diatonicChordEnum.get(diatonicChordEnum.getRootIndex()), diatonicChordEnum.getRoot());
     }
 
@@ -145,13 +145,13 @@ public class DiatonicChordEnumTest {
 
     @Test
     public void isEmpty() {
-        for (DiatonicChordEnum diatonicChordEnum : DiatonicChordEnum.values())
+        for (DiatonicChordImmutable diatonicChordEnum : DiatonicChordImmutable.values())
             assertFalse(diatonicChordEnum.isEmpty());
     }
 
     @Test
     public void iteratorNotNull() {
-        for (DiatonicChordEnum diatonicChordEnum : DiatonicChordEnum.values())
+        for (DiatonicChordImmutable diatonicChordEnum : DiatonicChordImmutable.values())
             assertNotNull(diatonicChordEnum.iterator());
     }
 
@@ -167,7 +167,7 @@ public class DiatonicChordEnumTest {
 
     @Test
     public void listIterator() {
-        for (DiatonicChordEnum diatonicChordEnum : DiatonicChordEnum.values())
+        for (DiatonicChordImmutable diatonicChordEnum : DiatonicChordImmutable.values())
             assertNotNull(diatonicChordEnum.listIterator());
     }
 
@@ -194,13 +194,13 @@ public class DiatonicChordEnumTest {
     @Test
     public void size() {
         assertEquals(3, DiatonicChord.C_TRIAD.size());
-        assertEquals(4, DiatonicChordEnum.C_SEVENTH.size());
-        assertEquals(5, DiatonicChordEnum.C_NINTH.size());
+        assertEquals(4, DiatonicChordImmutable.C_SEVENTH.size());
+        assertEquals(5, DiatonicChordImmutable.C_NINTH.size());
     }
 
     @Test
     public void subList() {
-        assertEquals(Arrays.asList(Diatonic.E, Diatonic.G, Diatonic.B), DiatonicChordEnum.C_NINTH.subList(1, 4));
+        assertEquals(Arrays.asList(Diatonic.E, Diatonic.G, Diatonic.B), DiatonicChordImmutable.C_NINTH.subList(1, 4));
     }
 
     @Test

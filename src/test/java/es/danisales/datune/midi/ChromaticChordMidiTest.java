@@ -1,5 +1,7 @@
 package es.danisales.datune.midi;
 
+import es.danisales.datune.midi.pitch.PitchChromaticMidi;
+import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
 import org.junit.Assert;
@@ -62,7 +64,7 @@ public class ChromaticChordMidiTest {
         ChromaticChordMidi chromaticChordMidi2 = chromaticChordMidi.clone();
         chromaticChordMidi2.shiftOctave(1);
 
-        assertEquals(26, chromaticChordMidi.dist(chromaticChordMidi2));
+        assertEquals(26, ChordMidiTransformations.dist(chromaticChordMidi, chromaticChordMidi2));
 	}
 
 	@Test
@@ -71,7 +73,7 @@ public class ChromaticChordMidiTest {
         ChromaticChordMidi chromaticChordMidi2 = chromaticChordMidi.clone();
         chromaticChordMidi2.shiftOctave(1);
 
-        assertNotEquals(0, chromaticChordMidi.dist(chromaticChordMidi2));
+        assertNotEquals(0, ChordMidiTransformations.dist(chromaticChordMidi, chromaticChordMidi2));
     }
 
     @Test
@@ -87,24 +89,24 @@ public class ChromaticChordMidiTest {
                 ChromaticMidi.builder().pitch(74).build()
         ).build();
 
-        assertEquals(ccm2.dist(ccm), ccm.dist(ccm2));
-        assertEquals(63, ccm.dist(ccm2));
-        assertTrue(ccm.dist(ccm2) > 2);
+        assertEquals(ChordMidiTransformations.dist(ccm2, ccm), ChordMidiTransformations.dist(ccm, ccm2));
+        assertEquals(63, ChordMidiTransformations.dist(ccm, ccm2));
+        assertTrue(ChordMidiTransformations.dist(ccm, ccm2) > 2);
     }
 
     @SuppressWarnings("CollectionAddedToSelf")
     @Test
     public void distItself() throws PitchMidiException {
         ChromaticChordMidi ccm = ChromaticChordMidi.builder().fromChromatic(ChromaticChord.C).build();
-        assertEquals(0.0f, ccm.dist(ccm), 0);
+        assertEquals(0.0f, ChordMidiTransformations.dist(ccm, ccm), 0);
     }
 
     @Test
     public void distSameBidirectional() throws PitchMidiException {
         ChromaticChordMidi ccm = ChromaticChordMidi.builder().fromChromatic(ChromaticChord.C).build();
         ChromaticChordMidi ccm2 = ChromaticChordMidi.builder().fromChromatic(ChromaticChord.D).build();
-        assertEquals(ccm2.dist(ccm), ccm.dist(ccm2), 0);
-        assertNotEquals(0, ccm.dist(ccm2));
+        assertEquals(ChordMidiTransformations.dist(ccm2, ccm), ChordMidiTransformations.dist(ccm, ccm2), 0);
+        assertNotEquals(0, ChordMidiTransformations.dist(ccm, ccm2));
     }
 
     @Test

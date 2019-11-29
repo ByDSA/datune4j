@@ -13,22 +13,22 @@ import java.util.Collection;
 @SuppressWarnings("WeakerAccess")
 public final class DiatonicChord extends ChordProxy<DiatonicChordInterface, Diatonic, IntervalDiatonic>
         implements DiatonicChordCommon<Diatonic>, ChordMutableInterface<Diatonic, IntervalDiatonic> {
-    public static final DiatonicChord C_TRIAD = new DiatonicChord(DiatonicChordEnum.C_TRIAD);
-    public static final DiatonicChord C_THIRD = new DiatonicChord(DiatonicChordEnum.C_THIRD);
-    public static final DiatonicChord C_SUS2 = new DiatonicChord(DiatonicChordEnum.C_SUS2);
-    public static final DiatonicChord C_SUS2_O5 = new DiatonicChord(DiatonicChordEnum.C_SUS2_O5);
-    public static final DiatonicChord C_SUS4 = new DiatonicChord(DiatonicChordEnum.C_SUS4);
-    public static final DiatonicChord C_SUS4_O5 = new DiatonicChord(DiatonicChordEnum.C_SUS4_O5);
-    public static final DiatonicChord C_SIXTH = new DiatonicChord(DiatonicChordEnum.C_SIXTH);
-    public static final DiatonicChord C_SIXTH_O5 = new DiatonicChord(DiatonicChordEnum.C_SIXTH_O5);
-    public static final DiatonicChord C_SEVENTH = new DiatonicChord(DiatonicChordEnum.C_SEVENTH);
-    public static final DiatonicChord C_SEVENTH_O3 = new DiatonicChord(DiatonicChordEnum.C_SEVENTH_O3);
-    public static final DiatonicChord C_SEVENTH_O5 = new DiatonicChord(DiatonicChordEnum.C_SEVENTH_O5);
-    public static final DiatonicChord C_NINTH = new DiatonicChord(DiatonicChordEnum.C_NINTH);
-    public static final DiatonicChord C_NINTH_O7 = new DiatonicChord(DiatonicChordEnum.C_NINTH_O7);
-    public static final DiatonicChord C_NINTH_O3_O7 = new DiatonicChord(DiatonicChordEnum.C_NINTH_O3_O7);
-    public static final DiatonicChord C_ELEVENTH = new DiatonicChord(DiatonicChordEnum.C_ELEVENTH);
-    public static final DiatonicChord C_THIRTEENTH = new DiatonicChord(DiatonicChordEnum.C_THIRTEENTH);
+    public static final DiatonicChord C_TRIAD = new DiatonicChord(DiatonicChordImmutable.C_TRIAD);
+    public static final DiatonicChord C_THIRD = new DiatonicChord(DiatonicChordImmutable.C_THIRD);
+    public static final DiatonicChord C_SUS2 = new DiatonicChord(DiatonicChordImmutable.C_SUS2);
+    public static final DiatonicChord C_SUS2_O5 = new DiatonicChord(DiatonicChordImmutable.C_SUS2_O5);
+    public static final DiatonicChord C_SUS4 = new DiatonicChord(DiatonicChordImmutable.C_SUS4);
+    public static final DiatonicChord C_SUS4_O5 = new DiatonicChord(DiatonicChordImmutable.C_SUS4_O5);
+    public static final DiatonicChord C_SIXTH = new DiatonicChord(DiatonicChordImmutable.C_SIXTH);
+    public static final DiatonicChord C_SIXTH_O5 = new DiatonicChord(DiatonicChordImmutable.C_SIXTH_O5);
+    public static final DiatonicChord C_SEVENTH = new DiatonicChord(DiatonicChordImmutable.C_SEVENTH);
+    public static final DiatonicChord C_SEVENTH_O3 = new DiatonicChord(DiatonicChordImmutable.C_SEVENTH_O3);
+    public static final DiatonicChord C_SEVENTH_O5 = new DiatonicChord(DiatonicChordImmutable.C_SEVENTH_O5);
+    public static final DiatonicChord C_NINTH = new DiatonicChord(DiatonicChordImmutable.C_NINTH);
+    public static final DiatonicChord C_NINTH_O7 = new DiatonicChord(DiatonicChordImmutable.C_NINTH_O7);
+    public static final DiatonicChord C_NINTH_O3_O7 = new DiatonicChord(DiatonicChordImmutable.C_NINTH_O3_O7);
+    public static final DiatonicChord C_ELEVENTH = new DiatonicChord(DiatonicChordImmutable.C_ELEVENTH);
+    public static final DiatonicChord C_THIRTEENTH = new DiatonicChord(DiatonicChordImmutable.C_THIRTEENTH);
 
     public static DiatonicChord[] values() {
         return new DiatonicChord[]{
@@ -82,7 +82,7 @@ public final class DiatonicChord extends ChordProxy<DiatonicChordInterface, Diat
 
     public static @NonNull DiatonicChord from(@NonNull Diatonic diatonic, @NonNull DiatonicChordPattern diatonicChordPattern) {
         DiatonicChord diatonicChord = new DiatonicChord();
-        diatonicChord.innerChord = new DiatonicChordCustom();
+        diatonicChord.innerChord = new DiatonicChordMutable();
         for (Integer i : diatonicChordPattern) {
             Diatonic diatonicAdd = diatonic;
             for (int j = 0; j < i; j++) {
@@ -120,35 +120,35 @@ public final class DiatonicChord extends ChordProxy<DiatonicChordInterface, Diat
     protected final void turnInnerChordIntoImmutableIfPossible() {
         if (getRootIndex() != 0)
             return;
-        DiatonicChordEnum diatonicChordEnum = DiatonicChordEnum.from(innerChord);
+        DiatonicChordImmutable diatonicChordEnum = DiatonicChordImmutable.from(innerChord);
         if (diatonicChordEnum != null)
             innerChord = diatonicChordEnum;
     }
 
     @Override
     protected final void turnInnerIntoMutable() {
-        innerChord = DiatonicChordCustom.from(innerChord);
+        innerChord = DiatonicChordMutable.from(innerChord);
     }
 
     @Override
     protected final boolean innerIsImmutable() {
-        return innerChord instanceof DiatonicChordEnum;
+        return innerChord instanceof DiatonicChordImmutable;
     }
 
     @Override
     protected final boolean InnerIsMutable() {
-        return innerChord instanceof DiatonicChordCustom;
+        return innerChord instanceof DiatonicChordMutable;
     }
 
     @Override
     protected final ChordMutableInterface<Diatonic, IntervalDiatonic> castCustom(DiatonicChordInterface chord) {
-        return (DiatonicChordCustom)innerChord;
+        return (DiatonicChordMutable) innerChord;
     }
 
     @Override
     protected final DiatonicChord create() {
         DiatonicChord diatonicChord = new DiatonicChord();
-        diatonicChord.innerChord = new DiatonicChordCustom();
+        diatonicChord.innerChord = new DiatonicChordMutable();
         return diatonicChord;
     }
 

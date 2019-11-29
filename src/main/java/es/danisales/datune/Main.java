@@ -4,22 +4,28 @@ import es.danisales.arrays.ArrayUtils;
 import es.danisales.datune.diatonic.ChromaticFunction;
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.DiatonicFunction;
+import es.danisales.datune.diatonic.HarmonicFunction;
 import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.eventsequences.Instrument;
 import es.danisales.datune.eventsequences.MelodyDiatonic;
 import es.danisales.datune.eventsequences.Track;
 import es.danisales.datune.midi.*;
-import es.danisales.datune.midi.Events.NoteOff;
-import es.danisales.datune.midi.Events.NoteOn;
-import es.danisales.datune.midi.Events.Volume;
 import es.danisales.datune.midi.Progressions.Progression;
+import es.danisales.datune.midi.binaries.Midi;
+import es.danisales.datune.midi.binaries.Sequence;
+import es.danisales.datune.midi.binaries.Song;
+import es.danisales.datune.midi.binaries.events.NoteOff;
+import es.danisales.datune.midi.binaries.events.NoteOn;
+import es.danisales.datune.midi.binaries.events.Volume;
 import es.danisales.datune.musical.ChordTransformations;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.pitch.ChordNamer;
+import es.danisales.datune.pitch.PitchException;
 import es.danisales.datune.songs.Power;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityException;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.swing.*;
@@ -39,7 +45,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class Main {
 
-	public static Song esp() {
+	public static Song esp() throws PitchException {
 		Song song = new Song( "zxcv", 110 );
 
 		Track	channel;
@@ -248,7 +254,7 @@ public class Main {
 		return song;
 	}
 
-	public static Song spec() {
+	public static Song spec() throws PitchException {
 		Song song = new Song( "spec", 128, Tonality.CCm );
 
 		Track	channel;
@@ -358,7 +364,7 @@ public class Main {
 		return song;
 	}
 
-	public static Song test() {
+	public static Song test() throws PitchException {
 		Song song = new Song( "spec", 128, Tonality.Am );
 
 		Track	channel;
@@ -393,7 +399,7 @@ public class Main {
 
 			dcm = p.add( DiatonicFunction.VII );
 			dcm.setLength( Duration.L2);
-			dcm.setMajorScale();
+			dcm.setScaleAsMajor();
 			dcm.shiftOctave( -1 );
 		}
 
@@ -435,7 +441,7 @@ public class Main {
 		return song;
 	}
 
-	public static Song digi2end() {
+	public static Song digi2end() throws PitchException {
 		Song song = new Song( "spec", 125, Tonality.Cm );
 
 		Track	channel;
@@ -488,7 +494,7 @@ public class Main {
 			c1.get(2).getPitch().shiftOctave(-1);
 			DiatonicChordMidi c2 = p.add( DiatonicFunction.VII_THIRD );
 			c2.setLength( Duration.L4 * 3 );
-			c2.setMajorScale();
+			c2.setScaleAsMajor();
 			c2.shiftOctave( -1 );
 			DiatonicMidi diatonicMidi1 = c2.get( 0 ).clone();
 			diatonicMidi1.getPitch().shiftOctave(1);
@@ -600,16 +606,6 @@ public class Main {
 				DiatonicChordMidi c = DiatonicChordMidi.builder()
 						.from(c1, ton)
 						.build();
-				System.out.println( c.getFunction()  + " " + (c.getFunction() instanceof DiatonicFunction) + " " + c.metaTonality + " " + c.getTonality());
-				assert c.getFunction() != null : c;
-				if ( (c.getFunction() instanceof DiatonicFunction
-						&& ( ( (DiatonicFunction) c.getFunction() ).isSus2()
-						|| ( (DiatonicFunction) c.getFunction() ).isSus4() )
-				) && !sus24 )
-					continue;
-
-				if (ton.isMajorOrMinor() && !c.getMetatonality().isMajorOrMinor() && !modal)
-					continue;
 
 				if (fs.contains( c1 ))
 					continue;
@@ -617,11 +613,16 @@ public class Main {
 
 
 				JButton b = new JButton(
-						c.toString() + ( c.getMetatonality() != ton ? " " + c.getMetatonality() : "" )
+						c.toString()
 				);
-				DiatonicDegree degree = c.getDegree();
-				if ( c.getFunction() instanceof ChromaticFunction )
-					switch ( (ChromaticFunction) c.getFunction() ) {
+				DiatonicDegree degree = null;
+				try {
+					degree = (DiatonicDegree) ton.getDegreeFrom(c1.getRoot());
+				} catch (TonalityException ignored) {
+				}
+				HarmonicFunction harmonicFunction = ton.getFunctionFrom(c1);
+				if (harmonicFunction instanceof ChromaticFunction)
+					switch ((ChromaticFunction) harmonicFunction) {
 						case SUBV7:
 							degree = DiatonicDegree.I;
 							break;
@@ -651,14 +652,14 @@ public class Main {
 							degree = DiatonicDegree.VI;
 							break;
 					}
-				assert degree != null : c + " " + c.getFunction();
+				assert degree != null : c + " " + harmonicFunction;
 
 				Integer d = degree.ordinal();
 
 				panels[d][c.size() - 2].add( b );
 
 				if ( !c.getTonality().equals( ton ) ) {
-					if (ArrayUtils.contains(c.getFunction(), ChromaticFunction.TENSIONS))
+					if (ArrayUtils.contains(harmonicFunction, ChromaticFunction.TENSIONS))
 						b.setForeground( Color.BLUE );
 					else
 						b.setForeground( Color.RED );
@@ -944,11 +945,11 @@ public class Main {
 		 * TestProgression p = new TestProgression(Scale.Em, 4, 120, 90) { { Arpegio a =
 		 * new ArpegioAsc(Duration.V1, Duration.V4_3); addAll(ChordFunction.I).show();
 		 * addAll(ChordFunction.VI, -1).inv(1).show(); addAll(ChordFunction.IV,
-		 * -1).setMajorScale().inv(2).show(); addAll(ChordFunction.VI, -1).inv(1).show();
+		 * -1).setScaleAsMajor().inv(2).show(); addAll(ChordFunction.VI, -1).inv(1).show();
 		 * addAll(ChordFunction.I).show(); addAll(ChordFunction.VI, -1).inv(1).show();
-		 * addAll(ChordFunction.VI, -1).setMajorScale().inv(1).show();
+		 * addAll(ChordFunction.VI, -1).setScaleAsMajor().inv(1).show();
 		 * addAll(ChordFunction.VII, -1).setLength(Duration.V2).inv(1).show(); Chord c =
-		 * addAll(ChordFunction.VII, -1).setMajorScale().setLength(Duration.V2).show();
+		 * addAll(ChordFunction.VII, -1).setScaleAsMajor().setLength(Duration.V2).show();
 		 *
 		 * progression.setArpegio(a);
 		 *

@@ -1,8 +1,9 @@
 package es.danisales.datune.eventsequences;
 
 import es.danisales.datune.midi.Durable;
-import es.danisales.datune.midi.Events.Event;
-import es.danisales.datune.midi.Events.EventComplex;
+import es.danisales.datune.midi.binaries.events.Event;
+import es.danisales.datune.midi.binaries.events.EventComplex;
+import es.danisales.datune.midi.pitch.PitchMidiException;
 
 public abstract class Melody implements EventComplex, Durable {
 	protected long			seek;
@@ -28,7 +29,7 @@ public abstract class Melody implements EventComplex, Durable {
 		seek = p;
 	}
 
-	public abstract Melody shiftOctave(int o);
+    public abstract Melody shiftOctave(int o) throws PitchMidiException;
 	
 	public abstract Melody clone();
 }

@@ -14,7 +14,7 @@ public class DiatonicChordTest {
     public void invNotSameRoot() {
         DiatonicChord diatonicChord = DiatonicChord.from( Arrays.asList(Diatonic.G, Diatonic.C, Diatonic.E) );
         diatonicChord.inv();
-        assertNotSame(DiatonicChordEnum.C_TRIAD, diatonicChord.innerChord);
+        assertNotSame(DiatonicChordImmutable.C_TRIAD, diatonicChord.innerChord);
         assertEquals(DiatonicChord.C_TRIAD.getNotes(), diatonicChord.getNotes());
         assertNotEquals(DiatonicChord.C_TRIAD, diatonicChord);
     }
@@ -25,7 +25,7 @@ public class DiatonicChordTest {
         diatonicChord.inv();
         diatonicChord.setRootIndex(0);
         assertEquals(DiatonicChord.C_TRIAD, diatonicChord);
-        assertSame(DiatonicChordEnum.C_TRIAD, diatonicChord.innerChord);
+        assertSame(DiatonicChordImmutable.C_TRIAD, diatonicChord.innerChord);
     }
 
     @Test

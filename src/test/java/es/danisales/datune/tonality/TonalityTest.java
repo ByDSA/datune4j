@@ -1,7 +1,7 @@
 package es.danisales.datune.tonality;
 
 import es.danisales.datune.diatonic.*;
-import es.danisales.datune.midi.PitchChromaticMidi;
+import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.DiatonicAlt;

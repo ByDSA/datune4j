@@ -2,7 +2,8 @@ package es.danisales.datune.midi;
 
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.IntervalDiatonic;
-import es.danisales.datune.midi.Events.EventComplex;
+import es.danisales.datune.midi.binaries.events.EventComplex;
+import es.danisales.datune.midi.pitch.PitchDiatonicMidi;
 import es.danisales.datune.musical.transformations.Namer;
 import es.danisales.datune.pitch.PitchDiatonicSingle;
 import es.danisales.datune.tonality.Tonality;
@@ -10,7 +11,7 @@ import es.danisales.datune.tonality.TonalityException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-public final class DiatonicMidi extends Note<PitchDiatonicMidi> implements PitchDiatonicSingle, EventComplex {
+public final class DiatonicMidi extends NoteMidi<PitchDiatonicMidi> implements PitchDiatonicSingle, EventComplex {
 	public static DiatonicMidiBuilder builder() {
 		return new DiatonicMidiBuilder();
 	}
@@ -25,7 +26,7 @@ public final class DiatonicMidi extends Note<PitchDiatonicMidi> implements Pitch
 
 	@SuppressWarnings("WeakerAccess")
 	public @Nullable IntervalChromatic distTo(@NonNull DiatonicMidi diatonicMidi) throws TonalityException {
-		if (!diatonicMidi.pitch.tonality.equals(pitch.tonality))
+		if (!diatonicMidi.pitch.getTonality().equals(pitch.getTonality()))
 			throw new TonalityException(this, diatonicMidi);
 
 		int index = diatonicMidi.index() - index();
@@ -54,9 +55,9 @@ public final class DiatonicMidi extends Note<PitchDiatonicMidi> implements Pitch
             StringBuilder stringBuilder = new StringBuilder();
             ChromaticMidi chromatidMidi = ChromaticMidi.from(this);
 
-            stringBuilder.append(Namer.from(chromatidMidi, pitch.tonality));
+			stringBuilder.append(Namer.from(chromatidMidi, pitch.getTonality()));
 
-            stringBuilder.append(" (").append(pitch.degree).append(")");
+			stringBuilder.append(" (").append(pitch.getDegree()).append(")");
 
             return stringBuilder.toString();
 		} catch (TonalityException e) {

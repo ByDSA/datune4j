@@ -3,12 +3,13 @@ package es.danisales.datune.midi.Progressions;
 import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.diatonic.HarmonicFunction;
 import es.danisales.datune.eventsequences.EventSequence;
-import es.danisales.datune.midi.Arpegios.Arpegio;
-import es.danisales.datune.midi.Arpegios.ArpegioDefault;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.midi.Duration;
-import es.danisales.datune.midi.Events.EventComplex;
-import es.danisales.datune.midi.Events.KeySignatureEvent;
+import es.danisales.datune.midi.arpegios.Arpegio;
+import es.danisales.datune.midi.arpegios.ArpegioDefault;
+import es.danisales.datune.midi.binaries.events.EventComplex;
+import es.danisales.datune.midi.binaries.events.KeySignatureEvent;
+import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.tonality.Tonality;
 
 import java.util.ArrayList;
@@ -154,7 +155,7 @@ public class Progression<This extends Progression> implements EventComplex {
 		return this;
 	}
 
-	public Progression shiftOctave(int o) {
+	public Progression shiftOctave(int o) throws PitchMidiException {
 		for(DiatonicChordMidi n : nodes)
 			n.shiftOctave(o);
 

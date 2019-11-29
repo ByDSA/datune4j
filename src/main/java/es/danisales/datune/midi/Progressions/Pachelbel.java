@@ -1,8 +1,8 @@
 package es.danisales.datune.midi.Progressions;
 
 import es.danisales.datune.diatonic.DiatonicFunction;
-import es.danisales.datune.midi.Arpegios.ArpegioAscDesc;
 import es.danisales.datune.midi.Duration;
+import es.danisales.datune.midi.arpegios.ArpegioAscDesc;
 import es.danisales.datune.tonality.Tonality;
 
 public class Pachelbel extends Progression {

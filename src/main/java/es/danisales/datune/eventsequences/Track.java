@@ -1,8 +1,8 @@
 package es.danisales.datune.eventsequences;
 
-import es.danisales.datune.midi.Events.*;
 import es.danisales.datune.midi.Progressions.Progression;
-import es.danisales.datune.midi.Sequence;
+import es.danisales.datune.midi.binaries.Sequence;
+import es.danisales.datune.midi.binaries.events.*;
 import es.danisales.datune.tonality.Tonality;
 
 import java.nio.ByteBuffer;

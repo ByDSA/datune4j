@@ -1,5 +1,6 @@
 package es.danisales.datune.midi;
 
+import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.pitch.PitchOctave;
@@ -30,8 +31,8 @@ class ChromaticChordMidiAdapter {
                 builder.length(((Durable) n).getLength());
             }
 
-            if (n instanceof VelocityNote) {
-                builder.velocity(((VelocityNote) n).getVelocity());
+            if (n instanceof Velocitiable) {
+                builder.velocity(((Velocitiable) n).getVelocity());
             }
 
             ChromaticMidi chromaticMidi = builder

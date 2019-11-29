@@ -3,16 +3,14 @@ package es.danisales.datune.musical;
 import es.danisales.datastructures.ListProxy;
 import es.danisales.datune.diatonic.ChordNotation;
 import es.danisales.datune.diatonic.Interval;
-import es.danisales.datune.pitch.ChordCommon;
-import es.danisales.datune.pitch.ChordMutableInterface;
-import es.danisales.datune.pitch.ChordNamer;
-import es.danisales.datune.pitch.CyclicAbsoluteDegree;
+import es.danisales.datune.pitch.*;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.*;
 
 public abstract class ChordProxy<C extends ChordCommon<N>, N extends CyclicAbsoluteDegree<?, I>, I extends Interval>
-        extends ListProxy<N> implements ChordMutableInterface<N, I> {
+        extends ListProxy<N>
+        implements ChordMutableInterface<N, I> {
     C innerChord;
     private boolean fixed;
 
@@ -36,7 +34,7 @@ public abstract class ChordProxy<C extends ChordCommon<N>, N extends CyclicAbsol
 
     private void turnInnerIntoMutableIfNot() {
         checkInnerNotNull();
-        if ( !(innerChord instanceof DiatonicChordCustom) )
+        if (!(innerChord instanceof DiatonicChordMutable))
             turnInnerIntoMutable();
     }
 
@@ -287,6 +285,16 @@ public abstract class ChordProxy<C extends ChordCommon<N>, N extends CyclicAbsol
     @Override
     public final N get(int index) {
         return innerChord.get(index);
+    }
+
+    @NonNull
+    @Override
+    public final N getCyclic(int noteNumber) {
+        try {
+            return ((ChordCommon<N>) this).getCyclic(noteNumber);
+        } catch (PitchException e) {
+            throw new RuntimeException("Impossible!");
+        }
     }
 
     @Override

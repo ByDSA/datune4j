@@ -8,7 +8,7 @@ import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.midi.DiatonicMidi;
-import es.danisales.datune.midi.PitchChromaticMidi;
+import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
 import org.checkerframework.checker.nullness.qual.NonNull;

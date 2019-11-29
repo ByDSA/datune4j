@@ -2,6 +2,9 @@ package es.danisales.datune.midi;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.IntervalDiatonic;
+import es.danisales.datune.midi.pitch.PitchChromaticMidi;
+import es.danisales.datune.midi.pitch.PitchDiatonicMidi;
+import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
 import org.junit.Test;
@@ -28,11 +31,11 @@ public class DiatonicMidiTest {
 	}
 
 	@Test
-	public void aa() throws TonalityException, PitchMidiException {
-		DiatonicMidi n = DiatonicMidi.builder()
+	public void aa() throws PitchMidiException {
+		DiatonicMidi diatonicMidi = DiatonicMidi.builder()
                 .pitch(DiatonicDegree.I, Tonality.C, 4)
 				.build();
-        assertEquals(DiatonicDegree.I, n.getPitch().degree);
+		assertEquals(DiatonicDegree.I, diatonicMidi.getPitch().getDegree());
 	}
 
 	@Test

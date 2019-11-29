@@ -2,7 +2,10 @@ package es.danisales.datune.midi;
 
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.Quality;
+import es.danisales.datune.midi.pitch.PitchChromaticMidi;
+import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.pitch.PitchChromaticChord;
+import es.danisales.utils.MathUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, IntervalChromatic, PitchChromaticMidi>
@@ -61,6 +64,27 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, IntervalChromat
             e.printStackTrace();
             throw new RuntimeException();
         }
+    }
+
+    @Override
+    public @NonNull ChromaticMidi getCyclic(int noteNumber) throws PitchMidiException {
+        ChromaticMidi n;
+
+        int num = MathUtils.rotativeTrim(noteNumber, size());
+        n = get(num);
+
+        if (noteNumber >= size()) {
+            int octaves = noteNumber / size();
+            int index = octaves * IntervalChromatic.PERFECT_OCTAVE.getSemitones();
+            n.getPitch().shift(index);
+        } else if (noteNumber < 0) {
+            int octaves = noteNumber / size() - 1;
+            int index = -octaves * IntervalChromatic.PERFECT_OCTAVE.getSemitones();
+            n.getPitch().shift(index);
+        } else
+            n = get(num).clone();
+
+        return n;
     }
 
     @Override

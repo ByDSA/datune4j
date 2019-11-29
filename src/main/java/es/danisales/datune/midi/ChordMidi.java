@@ -2,9 +2,12 @@ package es.danisales.datune.midi;
 
 import es.danisales.datune.diatonic.Interval;
 import es.danisales.datune.eventsequences.EventSequence;
-import es.danisales.datune.midi.Arpegios.Arpegio;
-import es.danisales.datune.midi.Arpegios.ArpegioDefault;
-import es.danisales.datune.midi.Events.EventComplex;
+import es.danisales.datune.midi.arpegios.Arpegio;
+import es.danisales.datune.midi.arpegios.ArpegioDefault;
+import es.danisales.datune.midi.binaries.events.EventComplex;
+import es.danisales.datune.midi.pitch.PitchMidiException;
+import es.danisales.datune.midi.pitch.PitchMidiInterface;
+import es.danisales.datune.midi.pitch.PitchOctaveMidiEditable;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.pitch.ChordMutable;
 import es.danisales.datune.pitch.PitchOctave;
@@ -16,9 +19,9 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Objects;
 
-public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends PitchMidiInterface>
+public abstract class ChordMidi<N extends NoteMidi<P>, I extends Interval, P extends PitchMidiInterface>
 		extends ChordMutable<N, I>
-		implements Durable, PitchOctaveMidiEditable, PitchOctave, EventComplex {
+		implements Durable, Velocitiable, PitchOctaveMidiEditable, PitchOctave, EventComplex {
 	protected Arpegio	arpegio;
 	protected int		length;
 
@@ -94,11 +97,12 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 		arpegio.setChord( this );
 	}
 
+	@SuppressWarnings("WeakerAccess")
 	public boolean containsPitch(@NonNull Object o) {
-		if (!(o instanceof Note))
+		if (!(o instanceof NoteMidi))
 			return false;
 
-		Note nIn = (Note) o;
+		NoteMidi nIn = (NoteMidi) o;
 		int nInCode = nIn.pitch.getMidiCode();
 		for (N note : this)
 			if (note.pitch.getMidiCode() == nInCode)
@@ -107,6 +111,7 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 		return false;
 	}
 
+	@SuppressWarnings("WeakerAccess")
 	public boolean containsPitchAll(@NonNull Collection<N> c) {
 		for (N note : c)
 			if (!containsPitch(note))
@@ -144,17 +149,19 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 	}
 
 	@SuppressWarnings("unchecked")
-	void sortByPitch() {
+	private void sortByPitch() {
 		this.sort(
-				Comparator.comparing(Note::getPitch)
+				Comparator.comparing(NoteMidi::getPitch)
 		);
 	}
 
+	@Override
 	public void setVelocity(int v) {
 		for ( N n : this )
 			n.setVelocity( (int) Math.round( n.getVelocity() * v / 100.0 ) );
 	}
 
+	@Override
 	public int getVelocity() {
 		return getMaxNoteVelocity();
 	}
@@ -181,18 +188,14 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 	}
 
 	@Override
-	public void shiftOctave(int octaveShift) {
-        for (N n : this) {
-            try {
-                n.getPitch().shiftOctave(octaveShift);
-            } catch (PitchMidiException e) {
-                throw new RuntimeException();
-            }
-        }
+	public void shiftOctave(int octaveShift) throws PitchMidiException {
+		for (N n : this) {
+			n.getPitch().shiftOctave(octaveShift);
+		}
 	}
 
 	@Override
-	public void setOctave(int newOctave) {
+	public void setOctave(int newOctave) throws PitchMidiException {
 		int diff = newOctave - getOctave();
 		shiftOctave( diff );
 	}
@@ -200,31 +203,6 @@ public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends
 	@Override
 	public int getOctave() {
 		return get(0).getPitch().getOctave();
-	}
-
-	public <N2 extends Note<?>> int dist(@NonNull ChordMidi<N2, ?, ?> n) {
-		return dist( n, true );
-	}
-
-	protected <N2 extends Note<?>> int dist(@NonNull ChordMidi<N2, ?, ?> n, boolean bidirectional) {
-		int d = 0;
-
-		for ( N i : this ) {
-			int localMin = 9999;
-			assert n.size() > 0;
-			for (N2 j : n) {
-				int m = Math.abs(j.pitch.getMidiCode() - i.pitch.getMidiCode());
-				if ( m < localMin )
-					localMin = m;
-			}
-			assert localMin < 127 && localMin >= 0;
-			d += localMin;
-		}
-
-		if ( bidirectional )
-			d = Math.max( d, n.dist( this, false ) );
-
-		return d;
 	}
 
 	void setArpegioIfNull() {

@@ -38,7 +38,7 @@ public class DiatonicChordMidiTransformations {
     }
 
     public static void showWhatIsIt(boolean outscale, Supplier<Boolean> f, Chromatic... notes) {
-        List<DiatonicChordMidi> chords = DiatonicChordMidi.fromChromaticChord(
+        List<DiatonicChordMidi> chords = DiatonicChordMidiBuilder.fromChromaticChord(
                 ChromaticChord.builder().fromChromatic(notes).build(),
                 outscale
         );
@@ -67,7 +67,7 @@ public class DiatonicChordMidiTransformations {
         assert f != null;
         assert cs != null;
         showPossibleProgressions((DiatonicChordMidi c) -> {
-            return (c.metaTonality != null && c.metaTonality.isMajorOrMinor()
+            return (c.tonality != null && c.tonality.isMajorOrMinor()
                     || c.tonality.isMajorOrMinor()) && f.apply(c);
         }, cs);
     }
@@ -116,9 +116,9 @@ public class DiatonicChordMidiTransformations {
         List<DiatonicChordMidi> csModal = new ArrayList<>();
 
         for (final DiatonicChordMidi i : in)
-            if (meta && i.metaTonality.equals(t) || !meta && i.getTonality().equals(t)) {
+            if (meta && i.tonality.equals(t) || !meta && i.getTonality().equals(t)) {
                 cs.add(i);
-            } else if (intercambioModal && i.metaTonality.isModeOf(t))
+            } else if (intercambioModal && i.tonality.isModeOf(t))
                 csModal.add(i);
 
         if (cs.isEmpty())

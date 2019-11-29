@@ -16,9 +16,8 @@ public class PathProgression<N extends ChordMidi> extends Path<NodeProgression> 
 		return a;
 	};
 
-	protected final BiFunction<NodeProgression, NodeProgression, Float> h_default = (NodeProgression current, NodeProgression end) -> {
-		return (float)current.object.dist(end.object);
-	};
+	protected final BiFunction<NodeProgression, NodeProgression, Float> h_default =
+			(NodeProgression current, NodeProgression end) -> (float) ChordMidiTransformations.dist(current.object, end.object);
 
 	public <A extends ArrayList<ChordMidi>> PathProgression(A array) {
 		super(new NodeProgression(array.get(0)), new NodeProgression(array.get(array.size()-1)));

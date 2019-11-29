@@ -2,10 +2,10 @@ package es.danisales.datune.eventsequences;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.midi.DiatonicMidi;
-import es.danisales.datune.midi.Events.Event;
-import es.danisales.datune.midi.PitchDiatonicMidi;
-import es.danisales.datune.midi.PitchMidiException;
 import es.danisales.datune.midi.Settings.DefaultValues;
+import es.danisales.datune.midi.binaries.events.Event;
+import es.danisales.datune.midi.pitch.PitchDiatonicMidi;
+import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.tonality.Tonality;
 
 import java.util.ArrayList;

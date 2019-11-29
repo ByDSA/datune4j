@@ -2,8 +2,12 @@ package es.danisales.datune.pathfinding;
 
 import es.danisales.datune.eventsequences.Instrument;
 import es.danisales.datune.eventsequences.Track;
-import es.danisales.datune.midi.*;
-import es.danisales.datune.midi.Events.Volume;
+import es.danisales.datune.midi.ChordMidi;
+import es.danisales.datune.midi.ChromaticChordMidi;
+import es.danisales.datune.midi.Duration;
+import es.danisales.datune.midi.binaries.Midi;
+import es.danisales.datune.midi.binaries.Song;
+import es.danisales.datune.midi.binaries.events.Volume;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.pitch.ProgressionChromaticChordMidi;
 import es.danisales.datune.tonality.Tonality;

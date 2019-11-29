@@ -1,11 +1,12 @@
 package es.danisales.datune.midi;
 
-import es.danisales.datune.midi.Events.EventComplex;
+import es.danisales.datune.midi.binaries.events.EventComplex;
+import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.musical.transformations.DistanceCalculator;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public final class ChromaticMidi extends Note<PitchChromaticMidi> implements PitchChromaticSingle, EventComplex {
+public final class ChromaticMidi extends NoteMidi<PitchChromaticMidi> implements PitchChromaticSingle, EventComplex {
 	public static ChromaticMidiBuilder builder() {
 		return new ChromaticMidiBuilder();
 	}

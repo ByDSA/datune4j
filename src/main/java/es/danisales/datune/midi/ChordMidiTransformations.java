@@ -1,6 +1,8 @@
 package es.danisales.datune.midi;
 
 import es.danisales.datune.diatonic.Interval;
+import es.danisales.datune.midi.pitch.PitchMidiException;
+import es.danisales.datune.midi.pitch.PitchMidiInterface;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
@@ -12,7 +14,7 @@ public class ChordMidiTransformations {
     }
 
 
-    public static <N extends Note<P>, I extends Interval, P extends PitchMidiInterface<I>, T extends ChordMidi<N, I, P>> List<T> getAllInversionsFrom(T chordMidi) {
+    public static <N extends NoteMidi<P>, I extends Interval, P extends PitchMidiInterface<I>, T extends ChordMidi<N, I, P>> List<T> getAllInversionsFrom(T chordMidi) {
         ChordMidi<N, I, P> c = chordMidi.clone();
         c.setMinOctave();
         minimize(c);
@@ -20,7 +22,7 @@ public class ChordMidiTransformations {
         return getAllDispositionsSub(c, true, 0, true);
     }
 
-    public static <N extends Note<P>, I extends Interval, P extends PitchMidiInterface<I>, T extends ChordMidi<N, I, P>> List<T> getAllDispositionsWithInv(T chordMidi) {
+    public static <N extends NoteMidi<P>, I extends Interval, P extends PitchMidiInterface<I>, T extends ChordMidi<N, I, P>> List<T> getAllDispositionsWithInv(T chordMidi) {
         List<T> ret = new ArrayList<>();
         List<T> bases = _getAllInversions(chordMidi);
         for (T c : bases)
@@ -29,7 +31,7 @@ public class ChordMidiTransformations {
         return ret;
     }
 
-    private static <N extends Note<P>, I extends Interval, P extends PitchMidiInterface<I>, T extends ChordMidi<N, I, P>> ChordMidi newChord(ChordMidi<N, I, P> chordMidi) {
+    private static <N extends NoteMidi<P>, I extends Interval, P extends PitchMidiInterface<I>, T extends ChordMidi<N, I, P>> ChordMidi newChord(ChordMidi<N, I, P> chordMidi) {
         if (chordMidi instanceof DiatonicChordMidi)
             return DiatonicChordMidi.builder().build();
         else if (chordMidi instanceof ChromaticChordMidi)
@@ -38,7 +40,7 @@ public class ChordMidiTransformations {
         return null;
     }
 
-    protected static <N extends Note<P>, I extends Interval, P extends PitchMidiInterface<I>, T extends ChordMidi<N, I, P>> List<T> getAllDispositionsSub(ChordMidi<N, I, P> chordMidi, boolean sub, int level, boolean first) {
+    protected static <N extends NoteMidi<P>, I extends Interval, P extends PitchMidiInterface<I>, T extends ChordMidi<N, I, P>> List<T> getAllDispositionsSub(ChordMidi<N, I, P> chordMidi, boolean sub, int level, boolean first) {
         ArrayList<T> ret = new ArrayList<>();
         assert chordMidi.size() > 0;
 
@@ -84,7 +86,7 @@ public class ChordMidiTransformations {
     }
 
     @SuppressWarnings("InfiniteLoopStatement")
-    public static <N extends Note<?>> void minimize(ChordMidi<N, ?, ?> chordMidi) {
+    public static <N extends NoteMidi<?>> void minimize(ChordMidi<N, ?, ?> chordMidi) {
         for (int i = 1; i < chordMidi.size(); i++) {
             N note = chordMidi.get(i);
             N prev = chordMidi.get(i - 1);
@@ -97,14 +99,14 @@ public class ChordMidiTransformations {
         }
     }
 
-    public static <N extends Note<P>, I extends Interval, P extends PitchMidiInterface<I>, T extends ChordMidi<N, I, P>> void minimizeDistanceTo(T chordMidi, @NonNull ChordMidi cIn) {
+    public static <N extends NoteMidi<P>, I extends Interval, P extends PitchMidiInterface<I>, T extends ChordMidi<N, I, P>> void minimizeDistanceTo(T chordMidi, @NonNull ChordMidi cIn) {
         Objects.requireNonNull(cIn);
 
         List<T> ret = getAllDispositionsWithInv(chordMidi);
         int minDist = 9999;
         T minDistChord = null;
         for (T c : ret) {
-            int d = (int) Math.abs(cIn.dist(c));
+            int d = (int) Math.abs(dist(cIn, c));
             if (d < minDist) {
                 minDist = d;
                 minDistChord = c;
@@ -113,7 +115,7 @@ public class ChordMidiTransformations {
         chordMidi.assign(minDistChord);
     }
 
-    private static <N extends Note<P>, I extends Interval, P extends PitchMidiInterface<I>, T extends ChordMidi<N, I, P>> List<T> _getAllInversions(T chordMidi) {
+    private static <N extends NoteMidi<P>, I extends Interval, P extends PitchMidiInterface<I>, T extends ChordMidi<N, I, P>> List<T> _getAllInversions(T chordMidi) {
         List<T> ret = new ArrayList<>();
 
         ret.add((T) chordMidi.clone());
@@ -127,10 +129,36 @@ public class ChordMidiTransformations {
         return ret;
     }
 
-    public static <C extends ChordMidi> List<C> shiftOctaveList(List<C> a, int o) {
+    public static <C extends ChordMidi> List<C> shiftOctaveList(List<C> a, int o) throws PitchMidiException {
         for (C c : a)
             c.shiftOctave(o);
 
         return a;
+    }
+
+
+    public static <N2 extends NoteMidi<?>> int dist(@NonNull ChordMidi<N2, ?, ?> n1, @NonNull ChordMidi<N2, ?, ?> n) {
+        return dist(n1, n, true);
+    }
+
+    protected static <N2 extends NoteMidi<?>> int dist(@NonNull ChordMidi<N2, ?, ?> n1, @NonNull ChordMidi<N2, ?, ?> n, boolean bidirectional) {
+        int d = 0;
+
+        for (N2 i : n1) {
+            int localMin = 9999;
+            assert n.size() > 0;
+            for (N2 j : n) {
+                int m = Math.abs(j.pitch.getMidiCode() - i.pitch.getMidiCode());
+                if (m < localMin)
+                    localMin = m;
+            }
+            assert localMin < 127 && localMin >= 0;
+            d += localMin;
+        }
+
+        if (bidirectional)
+            d = Math.max(d, dist(n, n1, false));
+
+        return d;
     }
 }

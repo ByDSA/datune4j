@@ -1,6 +1,9 @@
 package es.danisales.datune.midi;
 
-import es.danisales.datune.diatonic.*;
+import es.danisales.datune.diatonic.DiatonicDegree;
+import es.danisales.datune.diatonic.DiatonicFunction;
+import es.danisales.datune.diatonic.IntervalChromatic;
+import es.danisales.datune.diatonic.RelativeDegree;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.transformations.ChordChecker;
 import es.danisales.datune.tonality.Tonality;
@@ -13,9 +16,15 @@ public class DiatonicChordMidiChecker {
     }
 
     public static boolean isTonic(DiatonicChordMidi diatonicChordMidi) {
-        HarmonicFunction function = diatonicChordMidi.function;
-        return function == DiatonicFunction.I || function == DiatonicFunction.III
-                || function == DiatonicFunction.VI;
+        DiatonicDegree diatonicDegree = diatonicChordMidi.getRoot().getPitch().getDegree();
+        switch (diatonicDegree) {
+            case I:
+            case III:
+            case VI:
+                return true;
+            default:
+                return false;
+        }
     }
 
     public static boolean isSubdominant(DiatonicChordMidi diatonicChordMidi) {
@@ -26,8 +35,14 @@ public class DiatonicChordMidiChecker {
     }
 
     public boolean isDominant(DiatonicChordMidi diatonicChordMidi) {
-        HarmonicFunction function =diatonicChordMidi.getFunction();
-        return function == DiatonicFunction.V || function == DiatonicFunction.VII;
+        DiatonicDegree diatonicDegree = diatonicChordMidi.getRoot().getPitch().getDegree();
+        switch (diatonicDegree) {
+            case V:
+            case VII:
+                return true;
+            default:
+                return false;
+        }
     }
 
     public static boolean contains(List<DiatonicChordMidi> chords, boolean sameOctave, boolean sameTonality, DiatonicChordMidi c) {
@@ -106,7 +121,7 @@ public class DiatonicChordMidiChecker {
     }
 
     public static DiatonicMidi getFromBase(DiatonicChordMidi self, int note) {
-        List<DiatonicMidi> ns;
+        DiatonicChordMidi ns;
 
         DiatonicChordMidi c = self.clone();
         int inversion = self.getInversionNumber();
@@ -123,10 +138,10 @@ public class DiatonicChordMidiChecker {
                 }
             }
 
-        return self.get(note, ns);
+        return ns.getCyclic(note);
     }
 
-
+/*
     public static boolean isOmitByInterval(DiatonicChordMidi diatonicChordMidi, IntervalDiatonic i) {
         if (diatonicChordMidi.function == null)
             return false;
@@ -238,7 +253,9 @@ public class DiatonicChordMidiChecker {
 
         return false;
     }
+*/
 
+/*
     public static boolean hasByType(DiatonicChordMidi diatonicChordMidi, IntervalDiatonic i) {
         if (diatonicChordMidi.function instanceof DiatonicFunction)
             switch (i) {
@@ -407,4 +424,5 @@ public class DiatonicChordMidiChecker {
 
         return false;
     }
+    */
 }

@@ -1,7 +1,6 @@
 package es.danisales.datune.diatonic;
 
 import es.danisales.arrays.ArrayUtils;
-import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.tonality.Tonality;
@@ -139,18 +138,6 @@ public enum ChromaticFunction implements HarmonicFunction {
 			return (ChromaticFunction) hf;
 
 		return null;
-	}
-
-	/**
-     * Gets the harmonic function fromDiatonicChordMidi a diatonic chord with a tonality
-	 *
-	 * @param diatonicChordMidi the diatonic chord midi
-	 * @return the harmonic function
-	 */
-	public static HarmonicFunction from(DiatonicChordMidi diatonicChordMidi) {
-        ChromaticChord chromaticChord = ChromaticChord.builder().fromDiatonicChordMidi(diatonicChordMidi).build();
-		return ChromaticFunction
-                .from(chromaticChord, Tonality.from(diatonicChordMidi.metaTonality.getRoot(), diatonicChordMidi.metaTonality.getScale()));
 	}
 
 	public @NonNull String toString() {

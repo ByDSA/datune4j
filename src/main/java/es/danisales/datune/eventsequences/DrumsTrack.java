@@ -1,6 +1,6 @@
 package es.danisales.datune.eventsequences;
 
-import es.danisales.datune.midi.Events.NoteOn;
+import es.danisales.datune.midi.binaries.events.NoteOn;
 
 public class DrumsTrack extends Track {	
 	public DrumsTrack() {
