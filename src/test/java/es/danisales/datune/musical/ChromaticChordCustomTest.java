@@ -10,32 +10,32 @@ import static junit.framework.TestCase.assertEquals;
 public class ChromaticChordCustomTest {
 	@Test
 	public void over() {
-		ChromaticChordCustom c = ChromaticChordCustom.from(ChromaticChordEnum.C);
+		ChromaticChordMutable c = ChromaticChordMutable.from(ChromaticChordImmutable.C);
 		c.over(Chromatic.C);
 
-		c = ChromaticChordCustom.from( ChromaticChordEnum.C);
+		c = ChromaticChordMutable.from(ChromaticChordImmutable.C);
 		c.over(Chromatic.E);
 
 		Assert.assertEquals( Chromatic.E, c.get( 0 ) );
 
-		ChromaticChordCustom reference = ChromaticChordCustom.from(ChromaticChordEnum.C);
+		ChromaticChordMutable reference = ChromaticChordMutable.from(ChromaticChordImmutable.C);
 		reference.inv();
 		Assert.assertEquals(reference, c );
 	}
 
 	@Test(expected = ImpossibleChordException.class)
 	public void overImpossibleChord() {
-		ChromaticChordCustom c = ChromaticChordCustom.from(ChromaticChordEnum.C);
+		ChromaticChordMutable c = ChromaticChordMutable.from(ChromaticChordImmutable.C);
 		c.over(Chromatic.F);
 	}
 
 	@Test
 	public void fromList() {
-		ChromaticChordCustom chromaticChordCustom1 = ChromaticChordCustom.from(
+		ChromaticChordMutable chromaticChordCustom1 = ChromaticChordMutable.from(
 				Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G)
 		);
 
-		ChromaticChordCustom chromaticChordCustom2 = new ChromaticChordCustom();
+		ChromaticChordMutable chromaticChordCustom2 = new ChromaticChordMutable();
 		chromaticChordCustom2.add(Chromatic.C);
 		chromaticChordCustom2.add(Chromatic.E);
 		chromaticChordCustom2.add(Chromatic.G);
@@ -48,12 +48,12 @@ public class ChromaticChordCustomTest {
 
 	@Test
 	public void fromChord() {
-		ChromaticChordCustom chromaticChordCustom1 = ChromaticChordCustom.from(
+		ChromaticChordMutable chromaticChordCustom1 = ChromaticChordMutable.from(
 				Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.C)
 		);
-		chromaticChordCustom1.setRootPos(2);
+		chromaticChordCustom1.setRootIndex(2);
 
-		ChromaticChordCustom chromaticChordCustom2 = ChromaticChordCustom.from(
+		ChromaticChordMutable chromaticChordCustom2 = ChromaticChordMutable.from(
 				Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G)
 		);
 		chromaticChordCustom2.inv();
@@ -66,12 +66,12 @@ public class ChromaticChordCustomTest {
 
 	@Test
 	public void duplicate() {
-		ChromaticChordCustom ca = ChromaticChordCustom.from(
+		ChromaticChordMutable ca = ChromaticChordMutable.from(
 				Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G)
 		);
-		ChromaticChordCustom ca2 = ca.clone();
+		ChromaticChordMutable ca2 = ca.clone();
 
-		assertEquals(ca.getRootPos(), ca2.getRootPos());
+		assertEquals(ca.getRootIndex(), ca2.getRootIndex());
 		assertEquals(ca.size(), ca2.size());
 		for (int i = 0; i < ca.size(); i++)
 			assertEquals(ca.get(i), ca2.get(i));
@@ -81,25 +81,25 @@ public class ChromaticChordCustomTest {
 
 	@Test
 	public void inv() {
-		ChromaticChordCustom c = ChromaticChordCustom.from( ChromaticChordEnum.C );
+		ChromaticChordMutable c = ChromaticChordMutable.from(ChromaticChordImmutable.C);
 		c.inv();
 		assertEquals( Chromatic.E, c.get( 0 ) );
 		assertEquals( Chromatic.G, c.get( 1 ) );
 		assertEquals( Chromatic.C, c.get( 2 ) );
 		assertEquals( Chromatic.C, c.getRoot() );
-		assertEquals( 2, c.getRootPos() );
+		assertEquals(2, c.getRootIndex());
 	}
 
 	@Test
 	public void getRoot() {
-		assertEquals( Chromatic.C, ChromaticChordEnum.C.getRoot() );
-		ChromaticChordCustom c = ChromaticChordCustom.from( ChromaticChordEnum.C );
+		assertEquals(Chromatic.C, ChromaticChordImmutable.C.getRoot());
+		ChromaticChordMutable c = ChromaticChordMutable.from(ChromaticChordImmutable.C);
 		c.inv();
-		assertEquals( 2, c.getRootPos() );
+		assertEquals(2, c.getRootIndex());
 		assertEquals( Chromatic.C, c.getRoot() );
-		c = ChromaticChordCustom.from( ChromaticChordEnum.F5 );
+		c = ChromaticChordMutable.from(ChromaticChordImmutable.F5);
 		c.inv();
-		assertEquals( 1, c.getRootPos() );
+		assertEquals(1, c.getRootIndex());
 		assertEquals( Chromatic.F, c.getRoot() );
 	}
 }

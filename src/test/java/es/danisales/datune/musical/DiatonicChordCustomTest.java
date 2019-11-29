@@ -23,7 +23,7 @@ public class DiatonicChordCustomTest {
     @Test
     public void shift() {
         DiatonicChordCustom diatonicChordCustom = DiatonicChordCustom.from(DiatonicChordEnum.C_TRIAD);
-        diatonicChordCustom.setRootPos(1);
+        diatonicChordCustom.setRootIndex(1);
         diatonicChordCustom.shift( IntervalDiatonic.SECOND );
         assertEquals( 3, diatonicChordCustom.size() );
         assertEquals( Diatonic.D, diatonicChordCustom.get(0) );
@@ -35,7 +35,7 @@ public class DiatonicChordCustomTest {
     @Test
     public void shiftOctave() {
         DiatonicChordCustom diatonicChordCustom = DiatonicChordCustom.from(DiatonicChordEnum.C_TRIAD);
-        diatonicChordCustom.setRootPos(1);
+        diatonicChordCustom.setRootIndex(1);
         DiatonicChordCustom reference = DiatonicChordCustom.from(diatonicChordCustom);
         diatonicChordCustom.shift( IntervalDiatonic.OCTAVE );
         assertEquals( reference, diatonicChordCustom );
@@ -44,7 +44,7 @@ public class DiatonicChordCustomTest {
     @Test
     public void shiftOctaveMultipleShift() {
         DiatonicChordCustom diatonicChordCustom = DiatonicChordCustom.from(DiatonicChordEnum.C_TRIAD);
-        diatonicChordCustom.setRootPos(1);
+        diatonicChordCustom.setRootIndex(1);
         DiatonicChordCustom reference = DiatonicChordCustom.from(diatonicChordCustom);
         for (int i = 0; i < 7; i++)
             diatonicChordCustom.shift( IntervalDiatonic.SECOND );
@@ -78,7 +78,7 @@ public class DiatonicChordCustomTest {
         assertEquals(Diatonic.C, diatonicChordCustom.get(0));
         assertEquals(Diatonic.E, diatonicChordCustom.get(1));
         assertEquals(Diatonic.G, diatonicChordCustom.get(2));
-        assertEquals(0, diatonicChordCustom.getRootPos());
+        assertEquals(0, diatonicChordCustom.getRootIndex());
     }
 
     @Test
@@ -89,7 +89,7 @@ public class DiatonicChordCustomTest {
         assertEquals(Diatonic.C, diatonicChordCustom.get(0));
         assertEquals(Diatonic.E, diatonicChordCustom.get(1));
         assertEquals(Diatonic.G, diatonicChordCustom.get(2));
-        assertEquals(0, diatonicChordCustom.getRootPos());
+        assertEquals(0, diatonicChordCustom.getRootIndex());
     }
 
     @Test
@@ -98,7 +98,7 @@ public class DiatonicChordCustomTest {
         diatonicChordCustom.add(0, Diatonic.C);
         assertEquals(1, diatonicChordCustom.size());
         assertEquals(Diatonic.C, diatonicChordCustom.get(0));
-        assertEquals(0, diatonicChordCustom.getRootPos());
+        assertEquals(0, diatonicChordCustom.getRootIndex());
     }
 
     @Test
@@ -109,7 +109,7 @@ public class DiatonicChordCustomTest {
         assertEquals(Diatonic.C, diatonicChordCustom.get(0));
         assertEquals(Diatonic.E, diatonicChordCustom.get(1));
         assertEquals(Diatonic.G, diatonicChordCustom.get(2));
-        assertEquals(0, diatonicChordCustom.getRootPos());
+        assertEquals(0, diatonicChordCustom.getRootIndex());
     }
 
     @Test
@@ -120,7 +120,7 @@ public class DiatonicChordCustomTest {
         assertEquals(Diatonic.C, diatonicChordCustom.get(0));
         assertEquals(Diatonic.E, diatonicChordCustom.get(1));
         assertEquals(Diatonic.G, diatonicChordCustom.get(2));
-        assertEquals(2, diatonicChordCustom.getRootPos());
+        assertEquals(2, diatonicChordCustom.getRootIndex());
     }
 
     @Test
@@ -131,7 +131,7 @@ public class DiatonicChordCustomTest {
         assertEquals(Diatonic.C, diatonicChordCustom.get(0));
         assertEquals(Diatonic.E, diatonicChordCustom.get(1));
         assertEquals(Diatonic.G, diatonicChordCustom.get(2));
-        assertEquals(0, diatonicChordCustom.getRootPos());
+        assertEquals(0, diatonicChordCustom.getRootIndex());
     }
 
 
@@ -143,7 +143,7 @@ public class DiatonicChordCustomTest {
         assertEquals(Diatonic.C, diatonicChordCustom.get(0));
         assertEquals(Diatonic.E, diatonicChordCustom.get(1));
         assertEquals(Diatonic.G, diatonicChordCustom.get(2));
-        assertEquals(0, diatonicChordCustom.getRootPos());
+        assertEquals(0, diatonicChordCustom.getRootIndex());
     }
 
     @Test
@@ -160,7 +160,7 @@ public class DiatonicChordCustomTest {
         DiatonicChordCustom diatonicChord = DiatonicChordCustom.from( Arrays.asList(Diatonic.E, Diatonic.G, Diatonic.B) );
         diatonicChord.inv();
         DiatonicChordCustom diatonicChordInv = DiatonicChordCustom.from( Arrays.asList(Diatonic.G, Diatonic.B, Diatonic.E) );
-        diatonicChordInv.setRootPos(2);
+        diatonicChordInv.setRootIndex(2);
         assertEquals(diatonicChordInv, diatonicChord);
     }
 
@@ -169,7 +169,7 @@ public class DiatonicChordCustomTest {
         DiatonicChordCustom diatonicChord = DiatonicChordCustom.from( Arrays.asList(Diatonic.E, Diatonic.G, Diatonic.B) );
         diatonicChord.inv(2);
         DiatonicChordCustom diatonicChordInv = DiatonicChordCustom.from( Arrays.asList(Diatonic.B, Diatonic.E, Diatonic.G) );
-        diatonicChordInv.setRootPos(1);
+        diatonicChordInv.setRootIndex(1);
         assertEquals(diatonicChordInv, diatonicChord);
     }
 

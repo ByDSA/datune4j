@@ -23,7 +23,7 @@ public class ChromaticChordFixedTest {
 
     @Test
     public void same() {
-        assertSame(ChromaticChordEnum.C5, ChromaticChord.C5.innerChord);
+        assertSame(ChromaticChordImmutable.C5, ChromaticChord.C5.innerChord);
     }
 
     @Test
@@ -35,12 +35,12 @@ public class ChromaticChordFixedTest {
         ChromaticChord inv1 = ChromaticChord.builder()
                 .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.C))
                 .build();
-        inv1.setRootPos(2);
+        inv1.setRootIndex(2);
 
         ChromaticChord inv2 = ChromaticChord.builder()
                 .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E))
                 .build();
-        inv2.setRootPos(1);
+        inv2.setRootIndex(1);
 
         assertEquals(
                 Arrays.asList(
@@ -56,13 +56,13 @@ public class ChromaticChordFixedTest {
 
     @Test
     public void getRootPos() {
-        for (ChromaticChord chromaticChord : ChromaticChord.values())
-            assertEquals(0, chromaticChord.getRootPos());
+        for (ChromaticChord chromaticChord : ChromaticChord.immutableValues())
+            assertEquals(0, chromaticChord.getRootIndex());
     }
 
     @Test
     public void sizeLikeEnum() {
-        assertEquals(ChromaticChordEnum.values().length, ChromaticChord.values().size());
+        assertEquals(ChromaticChordImmutable.values().length, ChromaticChord.immutableValues().size());
     }
 
     @Test
@@ -81,7 +81,7 @@ public class ChromaticChordFixedTest {
 
     @Test(expected = UnsupportedOperationException.class)
     public void setRootPos() {
-        ChromaticChord.C.setRootPos(1);
+        ChromaticChord.C.setRootIndex(1);
     }
 
     @Test
@@ -91,7 +91,7 @@ public class ChromaticChordFixedTest {
 
     @Test
     public void isEmpty() {
-        for (ChromaticChord chromaticChord : ChromaticChord.values())
+        for (ChromaticChord chromaticChord : ChromaticChord.immutableValues())
             assertFalse(chromaticChord.isEmpty());
     }
 
@@ -350,7 +350,7 @@ public class ChromaticChordFixedTest {
         ChromaticChord chromaticChord = ChromaticChord.builder()
                 .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E))
                 .build();
-        chromaticChord.setRootPos(1);
+        chromaticChord.setRootIndex(1);
         chromaticChord.inv();
         assertSame(ChromaticChord.C.innerChord, chromaticChord.innerChord);
     }

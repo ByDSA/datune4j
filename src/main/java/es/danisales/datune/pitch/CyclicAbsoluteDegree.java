@@ -5,7 +5,8 @@ import es.danisales.datune.diatonic.RelativeDegree;
 import es.danisales.datune.musical.DiatonicAlt;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public interface CyclicAbsoluteDegree<D extends RelativeDegree, I extends Interval> extends AbsoluteDegree<D, I> {
+public interface CyclicAbsoluteDegree<D extends RelativeDegree, I extends Interval>
+        extends AbsoluteDegree<D>, SymbolicPitch {
     static @NonNull CyclicAbsoluteDegree from(DiatonicAlt noteBase, int size) {
         return CyclicAbsoluteDegreeAdapter.from(noteBase, size);
     }

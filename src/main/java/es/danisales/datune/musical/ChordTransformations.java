@@ -3,10 +3,7 @@ package es.danisales.datune.musical;
 import es.danisales.datune.diatonic.Interval;
 import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.ChromaticMidi;
-import es.danisales.datune.pitch.Chord;
-import es.danisales.datune.pitch.ChordCommon;
-import es.danisales.datune.pitch.ChordMutableInterface;
-import es.danisales.datune.pitch.CyclicAbsoluteDegree;
+import es.danisales.datune.pitch.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +12,7 @@ public class ChordTransformations {
     private ChordTransformations() {
     }
 
-    public static <N, T extends ChordCommon<N>> T removeHigherDuplicates(ChordMutableInterface<N, ?> chordMutableInterface) {
+    public static <N extends SymbolicPitch, T extends ChordCommon<N>> T removeHigherDuplicates(ChordMutableInterface<N, ?> chordMutableInterface) {
         ChordMutableInterface<N, ?> out = chordMutableInterface.clone();
         for (N n : chordMutableInterface) {
             boolean found = false;
@@ -51,12 +48,12 @@ public class ChordTransformations {
         self.addAll(out);
     }
 
-    public static <N, I extends Interval, T extends ChordMutableInterface<N, I>> List<T> getAllInversionsFrom(ChordMutableInterface<N, I> chordMutableInterface) {
-        List<T> ret = new ArrayList<>();
+    public static <IN extends ChordCommon<N>, C extends ChordMutableInterface<N, I>, N extends CyclicAbsoluteDegree<?, I>, I extends Interval> List<C> getAllInversionsFrom(C chordMutableInterface) {
+        List<C> ret = new ArrayList<>();
 
-        T last = (T) chordMutableInterface.clone();
+        C last = (C) chordMutableInterface.clone();
         for (int i = 0; i < chordMutableInterface.size(); i++) {
-            ret.add((T) last.clone());
+            ret.add((C) last.clone());
             if (i < chordMutableInterface.size() - 1)
                 last.inv();
         }
@@ -64,33 +61,35 @@ public class ChordTransformations {
         return ret;
     }
 
-    public static <N extends CyclicAbsoluteDegree<?, I>, I extends Interval> List<? extends ChordCommon<N>> getAllInversions(NormalChordCommon<N, I> normalChordCommon) {
+    public static <C extends ChordProxy<ChordMutableInterface<N, I>, N, I>, N extends CyclicAbsoluteDegree<?, I>, I extends Interval> List<C> getAllInversions(C normalChordCommon) {
         List<ChordMutableInterface<N, I>> customDiatonicChords = getAllInversionsRaw(normalChordCommon);
 
         return createListFrom(normalChordCommon, customDiatonicChords);
     }
 
-    private static <N extends CyclicAbsoluteDegree<?, I>, I extends Interval> List<ChordMutableInterface<N, I>> getAllInversionsRaw(NormalChordCommon<N, I> normalChordCommon) {
+    private static <IN extends ChordCommon<N>, C extends ChordProxy<IN, N, I>, N extends CyclicAbsoluteDegree<?, I>, I extends Interval> List<ChordMutableInterface<N, I>> getAllInversionsRaw(C normalChordCommon) {
         List<ChordMutableInterface<N, I>> customDiatonicChords;
 
-        if (normalChordCommon.isCustom()) {
-            customDiatonicChords = ChordTransformations.getAllInversionsFrom(normalChordCommon.castCustom(normalChordCommon.innerChord));
+        if (normalChordCommon.InnerIsMutable()) {
+            ChordMutableInterface<N, I> chordMutableInterface = normalChordCommon.castCustom(normalChordCommon.innerChord);
+            customDiatonicChords = ChordTransformations.getAllInversionsFrom(normalChordCommon);
         } else {
-            ChordCommon<N> tmp = normalChordCommon.innerChord;
-            normalChordCommon.turnInnerIntoCustom();
-            customDiatonicChords = ChordTransformations.getAllInversionsFrom(normalChordCommon.castCustom(normalChordCommon.innerChord));
+            IN tmp = normalChordCommon.innerChord;
+            normalChordCommon.turnInnerIntoMutable();
+            ChordMutableInterface<N, I> chordMutableInterface = normalChordCommon.castCustom(normalChordCommon.innerChord);
+            customDiatonicChords = ChordTransformations.getAllInversionsFrom(normalChordCommon);
             normalChordCommon.innerChord = tmp;
         }
 
         return customDiatonicChords;
     }
 
-    private static <N extends CyclicAbsoluteDegree<?, I>, I extends Interval> List<NormalChordCommon<N, I>> createListFrom(NormalChordCommon<N, I> self, List<ChordMutableInterface<N, I>> list) {
-        List<NormalChordCommon<N, I>> ret = new ArrayList<>();
-        for (ChordCommon<N> customChromaticChord : list) {
-            NormalChordCommon<N, I> chromaticChord = self.create();
+    private static <C extends ChordProxy<ChordMutableInterface<N, I>, N, I>, N extends CyclicAbsoluteDegree<?, I>, I extends Interval> List<C> createListFrom(C self, List<ChordMutableInterface<N, I>> list) {
+        List<C> ret = new ArrayList<>();
+        for (ChordMutableInterface<N, I> customChromaticChord : list) {
+            C chromaticChord = (C) self.create();
             chromaticChord.innerChord = customChromaticChord;
-            chromaticChord.turnInnerChordIntoEnumIfPossible();
+            chromaticChord.turnInnerChordIntoImmutableIfPossible();
             ret.add(chromaticChord);
         }
 
@@ -98,7 +97,7 @@ public class ChordTransformations {
     }
 
     @SuppressWarnings("unchecked")
-    public static <C extends Chord> ArrayList<C> duplicateList(List<C> a) {
+    public static <C extends ChordMutable> ArrayList<C> duplicateList(List<C> a) {
         ArrayList<C> b = new ArrayList<>();
         for (C c : a)
             b.add((C) c.clone());

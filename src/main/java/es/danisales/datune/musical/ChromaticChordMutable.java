@@ -3,29 +3,27 @@ package es.danisales.datune.musical;
 import es.danisales.datune.diatonic.ChordNotation;
 import es.danisales.datune.diatonic.IntervalChromatic;
 import es.danisales.datune.diatonic.Quality;
-import es.danisales.datune.pitch.Chord;
+import es.danisales.datune.pitch.ChordMutable;
 import es.danisales.datune.pitch.PitchChromaticChord;
-import es.danisales.datune.pitch.PitchChromaticSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 
-class ChromaticChordCustom extends Chord<Chromatic, IntervalChromatic> implements PitchChromaticChord<Chromatic>, ChromaticChordInterface {
+class ChromaticChordMutable extends ChordMutable<Chromatic, IntervalChromatic> implements PitchChromaticChord<Chromatic>, ChromaticChordInterface {
 	ChromaticChordMeta meta = new ChromaticChordMeta();
 
-	public static <T extends PitchChromaticSingle> @NonNull ChromaticChordCustom from(@NonNull Iterable<T> chord) {
-		ChromaticChordCustom c = new ChromaticChordCustom();
+	public static @NonNull ChromaticChordMutable from(@NonNull Iterable<Chromatic> chord) {
+		ChromaticChordMutable c = new ChromaticChordMutable();
 
-		for (T t : chord) {
-			Chromatic chromatic = Chromatic.from(t);
+		for (Chromatic chromatic : chord) {
 			c.add(chromatic);
 		}
 
 		return c;
 	}
 
-	ChromaticChordCustom() {
+	ChromaticChordMutable() {
 		super(new ArrayList<>());
 	}
 
@@ -34,15 +32,15 @@ class ChromaticChordCustom extends Chord<Chromatic, IntervalChromatic> implement
         throw new UnsupportedOperationException();
     }
 
-	void assignMeta(@NonNull ChromaticChordCustom c) {
-		setRootPos( c.getRootPos() );
+	void assignMeta(@NonNull ChromaticChordMutable c) {
+		setRootIndex(c.getRootIndex());
 		this.meta = new ChromaticChordMeta( c.meta.quality, c.meta.str, c.meta.getPattern() );
 		this.meta.updated = c.meta.updated;
 	}
 
 	@Override
-	public ChromaticChordCustom clone() {
-		ChromaticChordCustom customChromaticChord = ChromaticChordCustom.from(this);
+	public ChromaticChordMutable clone() {
+		ChromaticChordMutable customChromaticChord = ChromaticChordMutable.from(this);
 		customChromaticChord.assignMeta( this );
 		return customChromaticChord;
 	}

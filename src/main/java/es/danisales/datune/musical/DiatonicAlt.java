@@ -6,6 +6,7 @@ import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.pitch.SymbolicPitch;
 import es.danisales.datune.tonality.ScaleDistance;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -129,12 +130,12 @@ public class DiatonicAlt implements SymbolicPitch {
 		return DiatonicAltAdapter.from(pitchChromaticSingle);
 	}
 
-	public static @Nullable DiatonicAlt from(@NonNull Diatonic diatonic, @NonNull Tonality tonality) {
+	public static @NonNull DiatonicAlt from(@NonNull Diatonic diatonic, @NonNull Tonality tonality) throws TonalityException {
 		for ( DiatonicAlt diatonicAlt : tonality.getNotes() )
 			if (diatonicAlt.getDiatonic().equals(diatonic))
 				return diatonicAlt;
 
-		return null;
+		throw new TonalityException(diatonic, tonality);
 	}
 
     public static DiatonicAlt from(@NonNull Chromatic chromatic, float microPart, @NonNull CyclicAbsoluteDegree absoluteDegree) {

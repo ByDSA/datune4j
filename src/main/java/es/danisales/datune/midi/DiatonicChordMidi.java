@@ -3,10 +3,8 @@ package es.danisales.datune.midi;
 import es.danisales.datune.diatonic.*;
 import es.danisales.datune.midi.Settings.DefaultValues;
 import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.musical.ChromaticAdapter;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.DiatonicChordCommon;
-import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.pitch.PitchDiatonic;
 import es.danisales.datune.tonality.*;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -54,10 +52,9 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDiatonic,
             meta = ( (ChordMidi) ns ).meta;
 */
         try {
-            for (PitchChromaticSingle pcs : ns) {
-                Chromatic chromaticPcs = ChromaticAdapter.from(pcs);
+            for (Chromatic chromatic : ns) {
                 ChromaticMidi cm = ChromaticMidi.builder()
-                        .pitch(chromaticPcs)
+                        .pitch(chromatic)
                         .length(DefaultValues.LENGTH_CHORD)
                         .build();
                 add( cm );
@@ -84,9 +81,9 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDiatonic,
             }
         }
 
-        setRootPos(ns.getRootPos());
+        setRootIndex(ns.getRootIndex());
 
-        rootIndex = ns.getRootPos();
+        rootIndex = ns.getRootIndex();
 /*
         if ( ns instanceof ChordMidi ) {
             arpegio = ( (ChordMidi) ns ).arpegio;
@@ -198,7 +195,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDiatonic,
                 .velocity(DefaultValues.VELOCITY)
                 .build();
         add( ns );
-        setRootPos( 0 );
+        setRootIndex(0);
     }
 
     public Tonality getTonality() {
@@ -256,7 +253,7 @@ public class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDiatonic,
         diatonicChordMidi.tonality = tonality.clone();
         diatonicChordMidi.metaTonality = metaTonality.clone();
         diatonicChordMidi.function = function;
-        diatonicChordMidi.rootIndex = getRootPos();
+        diatonicChordMidi.rootIndex = getRootIndex();
 
         return diatonicChordMidi;
     }

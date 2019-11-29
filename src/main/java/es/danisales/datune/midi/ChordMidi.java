@@ -6,7 +6,7 @@ import es.danisales.datune.midi.Arpegios.Arpegio;
 import es.danisales.datune.midi.Arpegios.ArpegioDefault;
 import es.danisales.datune.midi.Events.EventComplex;
 import es.danisales.datune.musical.ChromaticChord;
-import es.danisales.datune.pitch.Chord;
+import es.danisales.datune.pitch.ChordMutable;
 import es.danisales.datune.pitch.PitchOctave;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -16,7 +16,8 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Objects;
 
-public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends PitchMidiInterface> extends Chord<N, I>
+public abstract class ChordMidi<N extends Note<P>, I extends Interval, P extends PitchMidiInterface>
+		extends ChordMutable<N, I>
 		implements Durable, PitchOctaveMidiEditable, PitchOctave, EventComplex {
 	protected Arpegio	arpegio;
 	protected int		length;

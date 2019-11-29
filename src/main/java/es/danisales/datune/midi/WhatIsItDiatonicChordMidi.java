@@ -16,9 +16,9 @@ public class WhatIsItDiatonicChordMidi {
 
                     assert diatonicChordMidi.size() == ret.size();
 
-                    if ( diatonicChordMidi.getRootPos() != 0 ) {
+                    if ( diatonicChordMidi.getRootIndex() != 0 ) {
                         ret = ret.duplicate();
-                        ret.inv(ret.size() - diatonicChordMidi.getRootPos());
+                        ret.inv(ret.size() - diatonicChordMidi.getRootIndex());
                     }
 
                     //assert ret.meta.str != null : " " + ( function instanceof DiatonicFunction );

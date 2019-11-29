@@ -910,7 +910,7 @@ public class TonalityTest {
                 .build());
         assertTrue(ChromaticChord.builder()
                 .tonality(ton)
-                .chromaticFunction(ChromaticFunction.V7_IV).build().equalsEnharmonic(ChromaticChord.C7));
+                .chromaticFunction(ChromaticFunction.V7_IV).build().getNotes().equals(ChromaticChord.C7.getNotes()));
         assertEquals(ChromaticChord.D7, ChromaticChord.builder()
                 .tonality(ton)
                 .chromaticFunction(ChromaticFunction.V7_V)
@@ -920,31 +920,31 @@ public class TonalityTest {
                 .chromaticFunction(ChromaticFunction.V7_VI)
                 .build());
 
-        assertTrue(ChromaticChord.builder()
+        assertEquals(ChromaticChord.builder()
                 .tonality(ton)
-                .chromaticFunction(ChromaticFunction.SUBV7).build().equalsEnharmonic(ChromaticChord.CC7));
+                .chromaticFunction(ChromaticFunction.SUBV7).build().getNotes(), ChromaticChord.CC7.getNotes());
 
-        assertTrue(ChromaticChord.builder()
+        assertEquals(ChromaticChord.builder()
                 .tonality(ton)
-                .chromaticFunction(ChromaticFunction.SUBV7_II).build().equalsEnharmonic(ChromaticChord.DD7));
+                .chromaticFunction(ChromaticFunction.SUBV7_II).build().getNotes(), ChromaticChord.DD7.getNotes());
 
-        assertTrue(ChromaticChord.builder()
+        assertEquals(ChromaticChord.builder()
                 .tonality(ton)
-                .chromaticFunction(ChromaticFunction.SUBV7_III).build().equalsEnharmonic(ChromaticChord.F7));
+                .chromaticFunction(ChromaticFunction.SUBV7_III).build().getNotes(), ChromaticChord.F7.getNotes());
 
-        assertTrue(ChromaticChord.builder()
+        assertEquals(ChromaticChord.builder()
                 .tonality(ton)
-                .chromaticFunction(ChromaticFunction.SUBV7_IV).build().equalsEnharmonic(ChromaticChord.FF7));
+                .chromaticFunction(ChromaticFunction.SUBV7_IV).build().getNotes(), ChromaticChord.FF7.getNotes());
 
-        assertTrue(ChromaticChord.builder()
+        assertEquals(ChromaticChord.builder()
                 .tonality(ton)
-                .chromaticFunction(ChromaticFunction.SUBV7_V).build().equalsEnharmonic(ChromaticChord.GG7));
+                .chromaticFunction(ChromaticFunction.SUBV7_V).build().getNotes(), ChromaticChord.GG7.getNotes());
 
-        assertTrue(ChromaticChord.builder()
+        assertEquals(ChromaticChord.builder()
                 .tonality(ton)
                 .chromaticFunction(ChromaticFunction.SUBV7_VI).toString(), ChromaticChord.builder()
                 .tonality(ton)
-                .chromaticFunction(ChromaticFunction.SUBV7_VI).build().equalsEnharmonic(ChromaticChord.AA7));
+                .chromaticFunction(ChromaticFunction.SUBV7_VI).build().getNotes(), ChromaticChord.AA7.getNotes());
 
         ChromaticChord c = ChromaticChord.CC.clone();
         c.inv();
@@ -956,19 +956,19 @@ public class TonalityTest {
                         .build()
         );
 
-        assertTrue(ChromaticChord.builder()
+        assertEquals(ChromaticChord.builder()
                 .tonality(ton)
-                .chromaticFunction(ChromaticFunction.V7ALT).build().equalsEnharmonic(ChromaticChord.Gm7b5));
+                .chromaticFunction(ChromaticFunction.V7ALT).build().getNotes(), ChromaticChord.Gm7b5.getNotes());
 
         ton = Tonality.Cm;
-        assertTrue(ChromaticChord.builder()
+        assertEquals(ChromaticChord.builder()
                 .tonality(ton)
-                .diatonicFunction(DiatonicFunction.VII7).build().equalsEnharmonic(ChromaticChord.AA7));
+                .diatonicFunction(DiatonicFunction.VII7).build().getNotes(), ChromaticChord.AA7.getNotes());
 
         ton = Tonality.Db;
-        assertTrue(ChromaticChord.builder()
+        assertEquals(ChromaticChord.builder()
                 .tonality(ton)
-                .diatonicFunction(DiatonicFunction.II).build().equalsEnharmonic(ChromaticChord.DDm));
+                .diatonicFunction(DiatonicFunction.II).build().getNotes(), ChromaticChord.DDm.getNotes());
     }
 
     @Test

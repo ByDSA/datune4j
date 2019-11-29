@@ -13,173 +13,173 @@ import static org.junit.Assert.*;
 public class ChromaticChordEnumTest {
 	@Test
 	public void fromList() {
-		ChromaticChordEnum c = ChromaticChordEnum.from( Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G) );
-		assertSame(ChromaticChordEnum.C, c);
+		ChromaticChordImmutable c = ChromaticChordImmutable.from(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G));
+		assertSame(ChromaticChordImmutable.C, c);
 	}
 
 	@Test
 	public void fromListNonNullValues() {
-		for (ChromaticChordEnum cc : ChromaticChordEnum.values())
-			assertNotNull( ChromaticChordEnum.from( cc ) );
+		for (ChromaticChordImmutable cc : ChromaticChordImmutable.values())
+			assertNotNull(ChromaticChordImmutable.from(cc));
 	}
 
 	@Test
 	public void testSomeValues() {
-		assertEquals(Arrays.asList(Chromatic.C, Chromatic.G), ChromaticChordEnum.C5);
+		assertEquals(Arrays.asList(Chromatic.C, Chromatic.G), ChromaticChordImmutable.C5);
 	}
 
 	@Test
 	public void fromListNotFound() {
-		ChromaticChordEnum chromaticChordEnum = ChromaticChordEnum.from( Arrays.asList(Chromatic.C, Chromatic.D, Chromatic.E) );
+		ChromaticChordImmutable chromaticChordEnum = ChromaticChordImmutable.from(Arrays.asList(Chromatic.C, Chromatic.D, Chromatic.E));
 		assertNull( chromaticChordEnum );
 	}
 
 	@Test
 	public void size() {
-			assertEquals(2, ChromaticChordEnum.C5.size());
-			assertEquals(3, ChromaticChordEnum.C.size());
-			assertEquals(4, ChromaticChordEnum.C7.size());
-			assertEquals(5, ChromaticChordEnum.C9.size());
-			assertEquals(6, ChromaticChordEnum.C11.size());
-			assertEquals(7, ChromaticChordEnum.Cm13.size());
+		assertEquals(2, ChromaticChordImmutable.C5.size());
+		assertEquals(3, ChromaticChordImmutable.C.size());
+		assertEquals(4, ChromaticChordImmutable.C7.size());
+		assertEquals(5, ChromaticChordImmutable.C9.size());
+		assertEquals(6, ChromaticChordImmutable.C11.size());
+		assertEquals(7, ChromaticChordImmutable.Cm13.size());
 	}
 
 	@Test
 	public void get() {
-		assertEquals(Chromatic.C, ChromaticChordEnum.C.get(0));
-		assertEquals(Chromatic.E, ChromaticChordEnum.C.get(1));
-		assertEquals(Chromatic.G, ChromaticChordEnum.C.get(2));
+		assertEquals(Chromatic.C, ChromaticChordImmutable.C.get(0));
+		assertEquals(Chromatic.E, ChromaticChordImmutable.C.get(1));
+		assertEquals(Chromatic.G, ChromaticChordImmutable.C.get(2));
 	}
 
 	@SuppressWarnings("ResultOfMethodCallIgnored")
 	@Test(expected = IndexOutOfBoundsException.class)
 	public void getIndexExceed() {
-		ChromaticChordEnum.C.get(3);
+		ChromaticChordImmutable.C.get(3);
 	}
 
 	@Test
 	public void getRootAll() {
-		for (ChromaticChordEnum c : ChromaticChordEnum.values())
+		for (ChromaticChordImmutable c : ChromaticChordImmutable.values())
 			assertEquals( c.get( 0 ), c.getRoot() );
 
 	}
 
 	@Test
 	public void getRootManual() {
-		assertEquals(Chromatic.C, ChromaticChordEnum.C.getRoot());
-		assertEquals(Chromatic.D, ChromaticChordEnum.D.getRoot());
-		assertEquals(Chromatic.G, ChromaticChordEnum.G7.getRoot());
+		assertEquals(Chromatic.C, ChromaticChordImmutable.C.getRoot());
+		assertEquals(Chromatic.D, ChromaticChordImmutable.D.getRoot());
+		assertEquals(Chromatic.G, ChromaticChordImmutable.G7.getRoot());
 	}
 
 	@Test
 	public void getRootPosAll() {
-		for (ChromaticChordEnum c : ChromaticChordEnum.values())
-			assertEquals( 0, c.getRootPos() );
+		for (ChromaticChordImmutable c : ChromaticChordImmutable.values())
+			assertEquals(0, c.getRootIndex());
 	}
 
 	@Test
 	public void getInversionNumberAll() {
-		for (ChromaticChordEnum c : ChromaticChordEnum.values())
+		for (ChromaticChordImmutable c : ChromaticChordImmutable.values())
 			assertEquals( 0, c.getInversionNumber() );
 	}
 
 	@Test
 	public void getQuality() {
-		for (ChromaticChordEnum c : ChromaticChordEnum.values())
+		for (ChromaticChordImmutable c : ChromaticChordImmutable.values())
 			assertNotNull( c.toString(), c.getQuality() );
 
-		assertEquals( Quality.MAJOR, ChromaticChordEnum.C.getQuality() );
-		assertEquals( Quality.MINOR, ChromaticChordEnum.Cm.getQuality() );
-		assertEquals( Quality.DIMINISHED, ChromaticChordEnum.Cdim.getQuality() );
-		assertEquals( Quality.AUGMENTED, ChromaticChordEnum.Caug.getQuality() );
-		assertEquals( Quality.INDETERMINATED, ChromaticChordEnum.Csus2.getQuality() );
+		assertEquals(Quality.MAJOR, ChromaticChordImmutable.C.getQuality());
+		assertEquals(Quality.MINOR, ChromaticChordImmutable.Cm.getQuality());
+		assertEquals(Quality.DIMINISHED, ChromaticChordImmutable.Cdim.getQuality());
+		assertEquals(Quality.AUGMENTED, ChromaticChordImmutable.Caug.getQuality());
+		assertEquals(Quality.INDETERMINATED, ChromaticChordImmutable.Csus2.getQuality());
 	}
 
 	@Test
 	public void isEmpty() {
-		for (ChromaticChordEnum c : ChromaticChordEnum.values())
+		for (ChromaticChordImmutable c : ChromaticChordImmutable.values())
 			assertFalse( c.isEmpty() );
 	}
 
 	@Test
 	public void contians() {
-		assertTrue( ChromaticChordEnum.C.contains( Chromatic.C ) );
-		assertFalse( ChromaticChordEnum.C.contains( Chromatic.D ) );
-		assertTrue( ChromaticChordEnum.D.contains( Chromatic.D ) );
-		assertFalse( ChromaticChordEnum.D.contains( Chromatic.C ) );
-		assertTrue( ChromaticChordEnum.C7.contains( Chromatic.C ) );
-		assertFalse( ChromaticChordEnum.C7.contains( Chromatic.D ) );
-		assertTrue( ChromaticChordEnum.D7.contains( Chromatic.D ) );
-		assertFalse( ChromaticChordEnum.D7.contains( Chromatic.E ) );
+		assertTrue(ChromaticChordImmutable.C.contains(Chromatic.C));
+		assertFalse(ChromaticChordImmutable.C.contains(Chromatic.D));
+		assertTrue(ChromaticChordImmutable.D.contains(Chromatic.D));
+		assertFalse(ChromaticChordImmutable.D.contains(Chromatic.C));
+		assertTrue(ChromaticChordImmutable.C7.contains(Chromatic.C));
+		assertFalse(ChromaticChordImmutable.C7.contains(Chromatic.D));
+		assertTrue(ChromaticChordImmutable.D7.contains(Chromatic.D));
+		assertFalse(ChromaticChordImmutable.D7.contains(Chromatic.E));
 	}
 
 	@Test
 	public void contiansAll() {
 		Collection<Chromatic> c = Arrays.asList( Chromatic.C, Chromatic.E );
-		assertTrue( ChromaticChordEnum.C.containsAll( c ) );
-		assertTrue( ChromaticChordEnum.C7.containsAll( c ) );
-		assertTrue( ChromaticChordEnum.C6.containsAll( c ) );
-		assertFalse( ChromaticChordEnum.Csus4.containsAll( c ) );
-		assertFalse( ChromaticChordEnum.Csus2.containsAll( c ) );
-		assertFalse( ChromaticChordEnum.C5.containsAll( c ) );
+		assertTrue(ChromaticChordImmutable.C.containsAll(c));
+		assertTrue(ChromaticChordImmutable.C7.containsAll(c));
+		assertTrue(ChromaticChordImmutable.C6.containsAll(c));
+		assertFalse(ChromaticChordImmutable.Csus4.containsAll(c));
+		assertFalse(ChromaticChordImmutable.Csus2.containsAll(c));
+		assertFalse(ChromaticChordImmutable.C5.containsAll(c));
 	}
 
 	@Test
 	public void indexOf() {
-		assertEquals( 0, ChromaticChordEnum.C.indexOf( Chromatic.C ) );
-		assertEquals( 3, ChromaticChordEnum.D7.indexOf( Chromatic.C ) );
-		assertEquals( 1, ChromaticChordEnum.C13sus4.indexOf( Chromatic.F ) );
+		assertEquals(0, ChromaticChordImmutable.C.indexOf(Chromatic.C));
+		assertEquals(3, ChromaticChordImmutable.D7.indexOf(Chromatic.C));
+		assertEquals(1, ChromaticChordImmutable.C13sus4.indexOf(Chromatic.F));
 	}
 
 	@Test
 	public void iteratorNotNull() {
-		ChromaticChordEnum chromaticChordEnum = ChromaticChordEnum.C;
+		ChromaticChordImmutable chromaticChordEnum = ChromaticChordImmutable.C;
 		assertNotNull(chromaticChordEnum.iterator());
 	}
 
 	@Test
 	public void lastIndexOf() {
-		assertEquals( 5, ChromaticChordEnum.C13sus4.lastIndexOf( Chromatic.F ) );
+		assertEquals(5, ChromaticChordImmutable.C13sus4.lastIndexOf(Chromatic.F));
 	}
 	@Test
 	public void listIteratorNotNull() {
-		ChromaticChordEnum chromaticChordEnum = ChromaticChordEnum.C;
+		ChromaticChordImmutable chromaticChordEnum = ChromaticChordImmutable.C;
 		assertNotNull(chromaticChordEnum.listIterator());
 	}
 
 @Test
 	public void listIteratorIndexNotNull() {
-		ChromaticChordEnum chromaticChordEnum = ChromaticChordEnum.C;
+	ChromaticChordImmutable chromaticChordEnum = ChromaticChordImmutable.C;
 		assertNotNull(chromaticChordEnum.listIterator(2));
 	}
 
 	@Test
 	public void subList() {
-		assertEquals( ChromaticChord.C.getNotes(), ChromaticChordEnum.C7.subList( 0, 3 ) );
-		assertEquals( ChromaticChord.Edim.getNotes(), ChromaticChordEnum.C7.subList( 1, 4 ) );
+		assertEquals(ChromaticChord.C.getNotes(), ChromaticChordImmutable.C7.subList(0, 3));
+		assertEquals(ChromaticChord.Edim.getNotes(), ChromaticChordImmutable.C7.subList(1, 4));
 	}
 
 	@Test
 	public void toArray() {
-		Object[] objs = ChromaticChordEnum.C.toArray();
+		Object[] objs = ChromaticChordImmutable.C.toArray();
 
 		Chromatic[] c = new Chromatic[objs.length];
 		for (int i = 0; i < objs.length; i++)
 			c[i] = (Chromatic) objs[i];
 
-		assertEquals(c.length, ChromaticChordEnum.C.size());
+		assertEquals(c.length, ChromaticChordImmutable.C.size());
 		for (int i = 0; i < c.length; i++)
-			assertEquals(c[i], ChromaticChordEnum.C.get( i ));
+			assertEquals(c[i], ChromaticChordImmutable.C.get(i));
 	}
 
 	@Test
 	public void toArray2() {
-		Chromatic[] c = new Chromatic[ChromaticChordEnum.C.size()];
-		c = ChromaticChordEnum.C.toArray(c);
+		Chromatic[] c = new Chromatic[ChromaticChordImmutable.C.size()];
+		c = ChromaticChordImmutable.C.toArray(c);
 
-		assertEquals(c.length, ChromaticChordEnum.C.size());
+		assertEquals(c.length, ChromaticChordImmutable.C.size());
 		for (int i = 0; i < c.length; i++)
-			assertEquals(c[i], ChromaticChordEnum.C.get( i ));
+			assertEquals(c[i], ChromaticChordImmutable.C.get(i));
 	}
 
 	/**
@@ -188,17 +188,17 @@ public class ChromaticChordEnumTest {
 
 	@Test(expected = UnsupportedOperationException.class)
 	public void clear() {
-		ChromaticChordEnum.C.clear();
+		ChromaticChordImmutable.C.clear();
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
 	public void removeObject() {
-		ChromaticChordEnum.C.remove(Chromatic.C);
+		ChromaticChordImmutable.C.remove(Chromatic.C);
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
 	public void removeIndex() {
-		ChromaticChordEnum.C.remove(0);
+		ChromaticChordImmutable.C.remove(0);
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
@@ -207,7 +207,7 @@ public class ChromaticChordEnumTest {
 		removeList.add( Chromatic.C );
 		removeList.add( Chromatic.E );
 		removeList.add( Chromatic.F );
-		ChromaticChordEnum.C.removeAll( removeList );
+		ChromaticChordImmutable.C.removeAll(removeList);
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
@@ -216,37 +216,37 @@ public class ChromaticChordEnumTest {
 		retainList.add( Chromatic.C );
 		retainList.add( Chromatic.E );
 		retainList.add( Chromatic.G );
-		ChromaticChordEnum.C.retainAll( retainList );
+		ChromaticChordImmutable.C.retainAll(retainList);
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
 	public void set() {
-		ChromaticChordEnum.C.set( 0, Chromatic.D );
+		ChromaticChordImmutable.C.set(0, Chromatic.D);
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
 	public void add() {
-		ChromaticChordEnum.C.add( Chromatic.D );
+		ChromaticChordImmutable.C.add(Chromatic.D);
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
 	public void add2() {
-		ChromaticChordEnum.C.add( 0, Chromatic.D );
+		ChromaticChordImmutable.C.add(0, Chromatic.D);
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
 	public void addAll() {
-		ChromaticChordEnum.C.addAll( ChromaticChordEnum.D );
+		ChromaticChordImmutable.C.addAll(ChromaticChordImmutable.D);
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
 	public void addAll2() {
-		ChromaticChordEnum.C.addAll( 0, ChromaticChordEnum.D );
+		ChromaticChordImmutable.C.addAll(0, ChromaticChordImmutable.D);
 	}
 
     @Test
     public void content() {
-        ChromaticChordEnum chromaticChordEnum = ChromaticChordEnum.B9;
+		ChromaticChordImmutable chromaticChordEnum = ChromaticChordImmutable.B9;
         assertSame(5, chromaticChordEnum.size());
         assertSame(Chromatic.B, chromaticChordEnum.get(0));
         assertSame(Chromatic.DD, chromaticChordEnum.get(1));

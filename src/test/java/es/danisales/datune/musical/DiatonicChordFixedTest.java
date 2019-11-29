@@ -29,10 +29,10 @@ public class DiatonicChordFixedTest {
         assertEquals(3, diatonicChordList.size());
 
         DiatonicChord inv1 = DiatonicChord.from( Arrays.asList(Diatonic.E, Diatonic.G, Diatonic.C) );
-        inv1.setRootPos(2);
+        inv1.setRootIndex(2);
 
         DiatonicChord inv2 = DiatonicChord.from( Arrays.asList(Diatonic.G, Diatonic.C, Diatonic.E) );
-        inv2.setRootPos(1);
+        inv2.setRootIndex(1);
 
         assertEquals(
                 Arrays.asList(
@@ -47,7 +47,7 @@ public class DiatonicChordFixedTest {
     @Test
     public void getRootPos() {
         for (DiatonicChord diatonicChord : DiatonicChord.values())
-            assertEquals(0, diatonicChord.getRootPos());
+            assertEquals(0, diatonicChord.getRootIndex());
     }
 
     @Test
@@ -73,7 +73,7 @@ public class DiatonicChordFixedTest {
 
     @Test(expected = UnsupportedOperationException.class)
     public void setRootPos() {
-        DiatonicChord.C_TRIAD.setRootPos(1);
+        DiatonicChord.C_TRIAD.setRootIndex(1);
     }
 
     @Test
@@ -329,7 +329,7 @@ public class DiatonicChordFixedTest {
     @Test
     public void sameAfterInv() {
         DiatonicChord diatonicChord = DiatonicChord.from( Arrays.asList(Diatonic.G, Diatonic.C, Diatonic.E) );
-        diatonicChord.setRootPos(1);
+        diatonicChord.setRootIndex(1);
         diatonicChord.inv();
         assertSame(DiatonicChord.C_TRIAD.innerChord, diatonicChord.innerChord);
     }
@@ -377,7 +377,7 @@ public class DiatonicChordFixedTest {
         assertEquals(Diatonic.B, diatonicChord.get(0));
         assertEquals(Diatonic.D, diatonicChord.get(1));
         assertEquals(Diatonic.G, diatonicChord.get(2));
-        assertEquals(2, diatonicChord.getRootPos());
+        assertEquals(2, diatonicChord.getRootIndex());
     }
 
     @Test
@@ -388,7 +388,7 @@ public class DiatonicChordFixedTest {
         assertEquals(Diatonic.B, diatonicChord.get(0));
         assertEquals(Diatonic.D, diatonicChord.get(1));
         assertEquals(Diatonic.G, diatonicChord.get(2));
-        assertEquals(2, diatonicChord.getRootPos());
+        assertEquals(2, diatonicChord.getRootIndex());
     }
 
     @Test(expected = UnsupportedOperationException.class)

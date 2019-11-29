@@ -1,17 +1,19 @@
 package es.danisales.datune;
 
+import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.diatonic.DiatonicFunction;
-import es.danisales.datune.midi.*;
-import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.musical.ChromaticChord;
-import es.danisales.datune.musical.Diatonic;
-import es.danisales.datune.musical.DiatonicAlt;
+import es.danisales.datune.midi.ChromaticMidi;
+import es.danisales.datune.midi.DiatonicChordMidi;
+import es.danisales.datune.midi.DiatonicMidi;
+import es.danisales.datune.musical.*;
 import es.danisales.datune.tonality.Tonality;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 public class Tests {
 	@Test
@@ -30,16 +32,16 @@ public class Tests {
 
 	@Test
 	public void chordFunction() {
-		assertEquals( 0, DiatonicFunction.I.getDegree().ordinal() );
+		assertEquals(0, DiatonicDegree.from(DiatonicFunction.I).ordinal());
 	}
 
 	@Test
-    public void whatIsItStatic() throws PitchMidiException {
+	public void whatIsItStatic() {
 		Tonality s = Tonality.C;
-        DiatonicChordMidi c = DiatonicChordMidi.builder()
-                .from(DiatonicFunction.I, s)
-                .octave(5)
-                .build();
+		DiatonicChordMidi c = DiatonicChordMidi.builder()
+				.from(DiatonicFunction.I, s)
+				.octave(5)
+				.build();
 
 		ChromaticChord notes = ChromaticChord.builder().build();
 		for ( DiatonicMidi n : c ) {
@@ -48,29 +50,27 @@ public class Tests {
 		}
 
 		List<DiatonicChordMidi> chords = DiatonicChordMidi.fromChromaticChord(
-                notes,
-                false
-        );
+				notes,
+				false
+		);
 		assert ( chords.size() > 0 );
 	}
 
 
 	@Test
-    public void dist() throws PitchMidiException {
-		ChromaticChordMidi notes = ChromaticChordMidi.builder().fromChromatic(
+	public void dist() {
+		ChromaticChord notes = ChromaticChord.builder().fromChromatic(
 				Chromatic.FF, Chromatic.A, Chromatic.CC
 		).build();
 
-		assertEquals( PitchChromaticMidi.FF5, notes.get( 0 ).getPitch());
+		ChromaticChordPattern n = ChromaticChordPattern.from(notes);
 
-		List<Integer> n = notes.integerNotationFromRoot();
-
-		assertArrayEquals(
-				new Integer[] {
+		assertEquals(
+				Arrays.asList(
 						0,
 						3,
 						7
-				}, n.toArray()
+				), n
 		);
 	}
 }

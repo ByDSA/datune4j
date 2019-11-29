@@ -2,9 +2,10 @@ package es.danisales.datune.tonality;
 
 import es.danisales.datune.diatonic.DiatonicDegree;
 import es.danisales.datune.midi.DiatonicChordMidi;
-import es.danisales.datune.musical.*;
-import es.danisales.datune.pitch.PitchChromaticChord;
-import es.danisales.datune.pitch.PitchChromaticSingle;
+import es.danisales.datune.musical.ChromaticChord;
+import es.danisales.datune.musical.Diatonic;
+import es.danisales.datune.musical.DiatonicAlt;
+import es.danisales.datune.musical.DiatonicAltRetrieval;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.*;
@@ -78,7 +79,7 @@ public class TonalityRetrieval {
         return ret;
     }
 
-    public static @NonNull List<Tonality> listFromChord(@NonNull PitchChromaticChord<? extends PitchChromaticSingle> c) {
+    public static @NonNull List<Tonality> listFromChord(@NonNull ChromaticChord c) {
         List<Tonality> out = new ArrayList<>();
         for ( Tonality t : Tonality.all() ) {
             if ( t.has( false, c ) )
@@ -88,7 +89,7 @@ public class TonalityRetrieval {
         return out;
     }
 
-    public static @NonNull List<Tonality> listFromChordOutScale(@NonNull PitchChromaticChord<? extends PitchChromaticSingle> c) {
+    public static @NonNull List<Tonality> listFromChordOutScale(@NonNull ChromaticChord c) {
         List<Tonality> out = new ArrayList<>();
         for ( Tonality t : Tonality.all() ) {
             if ( t.has( true, c ) )
@@ -168,15 +169,15 @@ public class TonalityRetrieval {
         return Collections.unmodifiableSet(ret);
     }
 
-    public static List<Tonality> getFromChord(ChromaticChordInterface c) {
+    public static List<Tonality> getFromChord(ChromaticChord c) {
         return getFromChord( false, c );
     }
 
-    public static List<Tonality> getFromChordOutScale(ChromaticChordInterface c) {
+    public static List<Tonality> getFromChordOutScale(ChromaticChord c) {
         return getFromChord(true, c);
     }
 
-    public static List<Tonality> getFromChord(boolean outScale, ChromaticChordInterface c) {
+    public static List<Tonality> getFromChord(boolean outScale, ChromaticChord c) {
         List<Tonality> out = new ArrayList<>();
         for ( Tonality t : Tonality.values() ) {
             if ( t.has( outScale, c ) )

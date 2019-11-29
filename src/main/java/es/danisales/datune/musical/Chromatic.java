@@ -13,9 +13,9 @@ import es.danisales.datune.pitch.CyclicAbsoluteDegree;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.tonality.ScaleDistance;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityException;
 import es.danisales.utils.MathUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -126,7 +126,7 @@ public enum Chromatic implements PitchChromaticSingle, CyclicAbsoluteDegree<Chro
 		return Chromatic.from(diatonicAlt);
 	}
 
-	public static @Nullable Chromatic from(@NonNull Diatonic diatonic, @NonNull Tonality tonality) {
+    public static @NonNull Chromatic from(@NonNull Diatonic diatonic, @NonNull Tonality tonality) throws TonalityException {
 		return ChromaticAdapter.from(diatonic, tonality);
 	}
 

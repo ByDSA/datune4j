@@ -36,7 +36,7 @@ public class ChromaticChordTest {
                 ),
                 chromaticChord.getNotes()
         );
-        assertEquals(2, chromaticChord.getRootPos());
+        assertEquals(2, chromaticChord.getRootIndex());
         chromaticChord.inv(2);
         assertEquals(Arrays.asList(
                 Chromatic.G,
@@ -45,7 +45,7 @@ public class ChromaticChordTest {
                 ),
                 chromaticChord.getNotes()
         );
-        assertEquals(0, chromaticChord.getRootPos());
+        assertEquals(0, chromaticChord.getRootIndex());
     }
 
     @Test
@@ -130,7 +130,7 @@ public class ChromaticChordTest {
         ChromaticChord Gsus4_inv = ChromaticChord.Gsus4.clone();
         Gsus4_inv.inv();
         assertEquals(Csus2.getNotes(), Gsus4_inv.getNotes());
-        assertNotEquals(Csus2.getRootPos(), Gsus4_inv.getRootPos());
+        assertNotEquals(Csus2.getRootIndex(), Gsus4_inv.getRootIndex());
         assertNotEquals(Csus2, Gsus4_inv);
     }
 
@@ -140,7 +140,7 @@ public class ChromaticChordTest {
         assertNotNull(chromaticChord);
 
         assertEquals(3, chromaticChord.size());
-        assertEquals(0, chromaticChord.getRootPos());
+        assertEquals(0, chromaticChord.getRootIndex());
         assertEquals(Chromatic.C, chromaticChord.get(0));
         assertEquals(Chromatic.D, chromaticChord.get(1));
         assertEquals(Chromatic.E, chromaticChord.get(2));
@@ -152,9 +152,9 @@ public class ChromaticChordTest {
 
         ChromaticChord original = ChromaticChord.builder().fromChromatic(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G)).build();
         ChromaticChord inv1 = ChromaticChord.builder().fromChromatic(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.C)).build();
-        inv1.setRootPos(2);
+        inv1.setRootIndex(2);
         ChromaticChord inv2 = ChromaticChord.builder().fromChromatic(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E)).build();
-        inv2.setRootPos(1);
+        inv2.setRootIndex(1);
 
         assertEquals(3, listChromaticChords.size());
         assertEquals( original, listChromaticChords.get(0) );

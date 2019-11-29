@@ -891,7 +891,7 @@ public class Main {
 		StringBuilder sb = new StringBuilder();
 		for (CustomTonality t : ts ) {
 			sb.append( "case " + t + ": switch(f) {\n" );
-			for (DiatonicFunction f : DiatonicFunction.values()) {
+			for (DiatonicFunction f : DiatonicFunction.immutableValues()) {
 				ChromaticChord c = t.fromIndex(f);
 				String cStr = c.toString();
 				boolean cont = false;

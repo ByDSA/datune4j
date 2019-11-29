@@ -8,66 +8,66 @@ import es.danisales.datune.pitch.ChordMutableInterface;
 import es.danisales.datune.pitch.ChordNamer;
 import es.danisales.datune.pitch.CyclicAbsoluteDegree;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.*;
 
-public abstract class NormalChordCommon<N extends CyclicAbsoluteDegree<?, I>, I extends Interval> extends ListProxy<N> implements ChordMutableInterface<N, I> {
-    ChordCommon<N> innerChord;
+public abstract class ChordProxy<C extends ChordCommon<N>, N extends CyclicAbsoluteDegree<?, I>, I extends Interval>
+        extends ListProxy<N> implements ChordMutableInterface<N, I> {
+    C innerChord;
     private boolean fixed;
 
-    NormalChordCommon() {
+    ChordProxy() {
         super(new ArrayList<>());
         fixed = false;
     }
 
-    NormalChordCommon(ChordCommon<N> chromaticChordInterface) {
+    ChordProxy(C chromaticChordInterface) {
         super(chromaticChordInterface);
         innerChord = chromaticChordInterface;
         fixed = true;
     }
 
-    protected abstract void turnInnerChordIntoEnumIfPossible();
+    protected abstract void turnInnerChordIntoImmutableIfPossible();
 
     private void exceptionIfFixed() {
         if (fixed)
             throw new UnsupportedOperationException();
     }
 
-    private void turnIntoCustomIfNot() {
+    private void turnInnerIntoMutableIfNot() {
         checkInnerNotNull();
         if ( !(innerChord instanceof DiatonicChordCustom) )
-            turnInnerIntoCustom();
+            turnInnerIntoMutable();
     }
 
     private void checkInnerNotNull() {
         Objects.requireNonNull(innerChord);
     }
 
-    protected abstract void turnInnerIntoCustom();
+    protected abstract void turnInnerIntoMutable();
 
-    protected abstract boolean isEnum();
-    protected abstract boolean isCustom();
+    protected abstract boolean innerIsImmutable();
 
-    protected abstract ChordMutableInterface<N, I> castCustom(ChordCommon<N> chord);
+    protected abstract boolean InnerIsMutable();
 
-    protected abstract NormalChordCommon<N, I> create();
+    protected abstract ChordMutableInterface<N, I> castCustom(C chord);
 
-    protected abstract ChordCommon<N> createInnerFrom(ChordCommon<N> chord);
+    protected abstract ChordProxy<C, N, I> create();
 
-
+    @SuppressWarnings("unchecked")
     @Override
     public void shift(I interval) {
         exceptionIfFixed();
 
-        turnInnerIntoCustom();
+        turnInnerIntoMutable();
 
         for (int i = 0; i < size(); i++)
             set(i, (N) get(i).getShifted(interval));
 
-        turnInnerChordIntoEnumIfPossible();
+        turnInnerChordIntoImmutableIfPossible();
     }
 
+    @SuppressWarnings("unchecked")
     private List<N> getShiftedInto(I interval) {
         List<N> list = new ArrayList<>();
         for (int i = 0; i < size(); i++) {
@@ -77,17 +77,18 @@ public abstract class NormalChordCommon<N extends CyclicAbsoluteDegree<?, I>, I 
         return list;
     }
 
-    public NormalChordCommon<N, I> getShifted(I interval) {
+    public ChordProxy<C, N, I> getShifted(I interval) {
         List<N> list = getShiftedInto(interval);
 
-        NormalChordCommon<N, I> diatonicChord = create();
+        ChordProxy<C, N, I> diatonicChord = create();
         diatonicChord.innerChord.addAll(list);
-        diatonicChord.setRootPos(getRootPos());
-        diatonicChord.turnInnerChordIntoEnumIfPossible();
+        diatonicChord.setRootIndex(getRootIndex());
+        diatonicChord.turnInnerChordIntoImmutableIfPossible();
 
         return diatonicChord;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void shiftNegative(I interval) {
         exceptionIfFixed();
@@ -95,16 +96,17 @@ public abstract class NormalChordCommon<N extends CyclicAbsoluteDegree<?, I>, I 
         for (int i = 0; i < size(); i++)
             set(i, (N) get(i).getShiftedNegative(interval));
 
-        turnInnerChordIntoEnumIfPossible();
+        turnInnerChordIntoImmutableIfPossible();
     }
 
-    public NormalChordCommon<N, I> getShiftedNegative(I interval) {
-        NormalChordCommon<N, I> diatonicChord = create();
+    @SuppressWarnings("unchecked")
+    public ChordProxy<C, N, I> getShiftedNegative(I interval) {
+        ChordProxy<C, N, I> diatonicChord = create();
         for (int i = 0; i < size(); i++) {
             diatonicChord.add((N) get(i).getShiftedNegative(interval));
         }
 
-        diatonicChord.turnInnerChordIntoEnumIfPossible();
+        diatonicChord.turnInnerChordIntoImmutableIfPossible();
 
         return diatonicChord;
     }
@@ -113,54 +115,55 @@ public abstract class NormalChordCommon<N extends CyclicAbsoluteDegree<?, I>, I 
     public final void inv(int n) {
         exceptionIfFixed();
 
-        if (isEnum())
-            turnInnerIntoCustom();
+        if (innerIsImmutable())
+            turnInnerIntoMutable();
 
-        if (isCustom()) {
+        if (InnerIsMutable()) {
             castCustom(innerChord).inv(n);
-            if (getRootPos() == 0)
-                turnInnerChordIntoEnumIfPossible();
+            if (getRootIndex() == 0)
+                turnInnerChordIntoImmutableIfPossible();
         }
     }
 
     @Override
-    public final int getRootPos() {
-        return innerChord.getRootPos();
+    public final int getRootIndex() {
+        return innerChord.getRootIndex();
     }
 
-    @Nullable
+    @NonNull
     @Override
     public final N getRoot() {
         return innerChord.getRoot();
     }
 
+    @SuppressWarnings({"unchecked", "MethodDoesntCallSuperMethod"})
     @Override
-    public NormalChordCommon<N, I> clone() {
-        NormalChordCommon<N, I> normalChordCommon = create();
-        if (isEnum())
+    public ChordProxy<C, N, I> clone() {
+        ChordProxy<C, N, I> normalChordCommon = create();
+        if (innerIsImmutable())
             normalChordCommon.innerChord = innerChord;
         else {
-            normalChordCommon.innerChord = ((ChordMutableInterface) innerChord).clone();
-            normalChordCommon.turnInnerChordIntoEnumIfPossible();
+            normalChordCommon.innerChord = (C) ((ChordMutableInterface) innerChord).clone();
+            normalChordCommon.turnInnerChordIntoImmutableIfPossible();
         }
         return normalChordCommon;
     }
 
     @Override
-    public final void setRootPos(int pos) {
+    public final void setRootIndex(int pos) {
         exceptionIfFixed();
 
-        if (getRootPos() == pos)
+        if (getRootIndex() == pos)
             return;
 
-        if (isCustom())
-            castCustom(innerChord).setRootPos(pos);
+        if (InnerIsMutable())
+            castCustom(innerChord).setRootIndex(pos);
         else if (pos != 0) {
-            turnInnerIntoCustom();
-            castCustom(innerChord).setRootPos(pos);
+            turnInnerIntoMutable();
+            castCustom(innerChord).setRootIndex(pos);
         }
 
-        turnInnerChordIntoEnumIfPossible();
+        turnInnerChordIntoImmutableIfPossible();
     }
 
     @Override
@@ -192,21 +195,21 @@ public abstract class NormalChordCommon<N extends CyclicAbsoluteDegree<?, I>, I 
     }
 
     @Override
-    public final boolean add(N n) {
+    public final boolean add(@NonNull N n) {
         exceptionIfFixed();
-        turnIntoCustomIfNot();
-        boolean ret = innerChord.add(n);
-        turnInnerChordIntoEnumIfPossible();
+        turnInnerIntoMutableIfNot();
+        innerChord.add(n);
+        turnInnerChordIntoImmutableIfPossible();
 
-        return ret;
+        return true;
     }
 
     @Override
     public final boolean remove(Object o) {
         exceptionIfFixed();
-        turnIntoCustomIfNot();
+        turnInnerIntoMutableIfNot();
         boolean ret = innerChord.remove(o);
-        turnInnerChordIntoEnumIfPossible();
+        turnInnerChordIntoImmutableIfPossible();
 
         return ret;
     }
@@ -214,17 +217,17 @@ public abstract class NormalChordCommon<N extends CyclicAbsoluteDegree<?, I>, I 
     @Override
     public final void add(int index, N element) {
         exceptionIfFixed();
-        turnIntoCustomIfNot();
+        turnInnerIntoMutableIfNot();
         innerChord.add(index, element);
-        turnInnerChordIntoEnumIfPossible();
+        turnInnerChordIntoImmutableIfPossible();
     }
 
     @Override
     public final N remove(int index) {
         exceptionIfFixed();
-        turnIntoCustomIfNot();
+        turnInnerIntoMutableIfNot();
         N ret = innerChord.remove(index);
-        turnInnerChordIntoEnumIfPossible();
+        turnInnerChordIntoImmutableIfPossible();
         return ret;
     }
 
@@ -236,9 +239,9 @@ public abstract class NormalChordCommon<N extends CyclicAbsoluteDegree<?, I>, I 
     @Override
     public final boolean addAll(@NonNull Collection<? extends N> c) {
         exceptionIfFixed();
-        turnIntoCustomIfNot();
+        turnInnerIntoMutableIfNot();
         boolean ret = innerChord.addAll(c);
-        turnInnerChordIntoEnumIfPossible();
+        turnInnerChordIntoImmutableIfPossible();
 
         return ret;
     }
@@ -246,9 +249,9 @@ public abstract class NormalChordCommon<N extends CyclicAbsoluteDegree<?, I>, I 
     @Override
     public final boolean addAll(int index, @NonNull Collection<? extends N> c) {
         exceptionIfFixed();
-        turnIntoCustomIfNot();
+        turnInnerIntoMutableIfNot();
         boolean ret = innerChord.addAll(index, c);
-        turnInnerChordIntoEnumIfPossible();
+        turnInnerChordIntoImmutableIfPossible();
 
         return ret;
     }
@@ -256,9 +259,9 @@ public abstract class NormalChordCommon<N extends CyclicAbsoluteDegree<?, I>, I 
     @Override
     public final boolean removeAll(@NonNull Collection<?> c) {
         exceptionIfFixed();
-        turnIntoCustomIfNot();
+        turnInnerIntoMutableIfNot();
         boolean ret = innerChord.removeAll(c);
-        turnInnerChordIntoEnumIfPossible();
+        turnInnerChordIntoImmutableIfPossible();
 
         return ret;
     }
@@ -267,9 +270,9 @@ public abstract class NormalChordCommon<N extends CyclicAbsoluteDegree<?, I>, I 
     @Override
     public final boolean retainAll(@NonNull Collection<?> c) {
         exceptionIfFixed();
-        turnIntoCustomIfNot();
+        turnInnerIntoMutableIfNot();
         boolean ret = innerChord.removeAll(c);
-        turnInnerChordIntoEnumIfPossible();
+        turnInnerChordIntoImmutableIfPossible();
 
         return ret;
     }
@@ -277,7 +280,7 @@ public abstract class NormalChordCommon<N extends CyclicAbsoluteDegree<?, I>, I 
     @Override
     public final void clear() {
         exceptionIfFixed();
-        turnIntoCustomIfNot();
+        turnInnerIntoMutableIfNot();
         innerChord.clear();
     }
 
@@ -291,9 +294,9 @@ public abstract class NormalChordCommon<N extends CyclicAbsoluteDegree<?, I>, I 
         checkInnerNotNull();
         exceptionIfFixed();
 
-        turnIntoCustomIfNot();
+        turnInnerIntoMutableIfNot();
         ChordMutableInterface.super.resetRoot();
-        turnInnerChordIntoEnumIfPossible();
+        turnInnerChordIntoImmutableIfPossible();
     }
 
     @Override
@@ -303,13 +306,13 @@ public abstract class NormalChordCommon<N extends CyclicAbsoluteDegree<?, I>, I 
         if (get(index) == element)
             return element;
 
-        turnIntoCustomIfNot();
+        turnInnerIntoMutableIfNot();
 
         N old = null;
-        if (isCustom())
+        if (InnerIsMutable())
             old = innerChord.set(index, element);
 
-        turnInnerChordIntoEnumIfPossible();
+        turnInnerChordIntoImmutableIfPossible();
 
         return old;
     }
@@ -344,16 +347,16 @@ public abstract class NormalChordCommon<N extends CyclicAbsoluteDegree<?, I>, I 
 
     @Override
     public final String toString() {
-        if (isEnum()) {
+        if (innerIsImmutable()) {
             return innerChord.toString();
         } else {
             if ( size() == 0 )
                 return ChordNotation.EMPTY_CHORD;
 
-            if (getRootPos() != 0) {
-                NormalChordCommon<N, I> normalChordCommon = clone();
-                normalChordCommon.inv(getRootPos());
-                if (normalChordCommon.isEnum())
+            if (getRootIndex() != 0) {
+                ChordProxy<C, N, I> normalChordCommon = clone();
+                normalChordCommon.inv(getRootIndex());
+                if (normalChordCommon.innerIsImmutable())
                     return normalChordCommon.toString() + "/" + get(0).toString();
             }
             return ChordNamer.from(this);

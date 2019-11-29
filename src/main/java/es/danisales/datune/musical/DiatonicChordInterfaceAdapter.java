@@ -20,7 +20,7 @@ class DiatonicChordInterfaceAdapter {
             if (diatonicChord instanceof DiatonicChordCustom) {
                 DiatonicChordCustom retCustom = (DiatonicChordCustom)ret;
                 DiatonicChordCustom inCustom = (DiatonicChordCustom)diatonicChord;
-                retCustom.setRootPos(inCustom.getRootPos());
+                retCustom.setRootIndex(inCustom.getRootIndex());
             }
         }
 
@@ -183,7 +183,7 @@ class DiatonicChordInterfaceAdapter {
 
         DiatonicChordInterface notes = (DiatonicChordInterface)o;
 
-        if (self.getRootPos() != notes.getRootPos())
+        if (self.getRootIndex() != notes.getRootIndex())
             return false;
 
         if (self.size() != notes.size())

@@ -6,15 +6,15 @@ import es.danisales.utils.MathUtils;
 
 import java.util.Collections;
 
-public interface ChordMutableInterface<N, I extends Interval> extends ChordCommon<N>, PitchMutable<I>, Cloneable {
+public interface ChordMutableInterface<N extends SymbolicPitch, I extends Interval> extends ChordCommon<N>, PitchMutable<I>, Cloneable {
 	default void resetRoot() {
 		if ( isEmpty() )
 			return;
 
-		setRootPos( 0 );
+		setRootIndex(0);
 	}
 
-	void setRootPos(int pos);
+	void setRootIndex(int pos);
 
 	default void over(N b) {
 		for (int i = 0; i < size(); i++) {
@@ -34,8 +34,8 @@ public interface ChordMutableInterface<N, I extends Interval> extends ChordCommo
 		if ( n == 0 )
 			return;
 		Collections.rotate(this, -n);
-		int rootIndex = MathUtils.rotativeTrim(getRootPos()-n, size());
-		setRootPos(rootIndex);
+		int rootIndex = MathUtils.rotativeTrim(getRootIndex() - n, size());
+		setRootIndex(rootIndex);
 	}
 
 	ChordMutableInterface<N, I> clone();

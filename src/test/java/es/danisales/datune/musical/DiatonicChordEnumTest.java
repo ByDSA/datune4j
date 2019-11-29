@@ -11,13 +11,13 @@ public class DiatonicChordEnumTest {
     @Test
     public void getRootPos() {
         for (DiatonicChordEnum diatonicChordEnum : DiatonicChordEnum.values())
-            assertEquals(0, diatonicChordEnum.getRootPos());
+            assertEquals(0, diatonicChordEnum.getRootIndex());
     }
 
     @Test
     public void getRoot() {
         for (DiatonicChordEnum diatonicChordEnum : DiatonicChordEnum.values())
-            assertSame(diatonicChordEnum.get(diatonicChordEnum.getRootPos()), diatonicChordEnum.getRoot());
+            assertSame(diatonicChordEnum.get(diatonicChordEnum.getRootIndex()), diatonicChordEnum.getRoot());
     }
 
     @Test
@@ -57,7 +57,7 @@ public class DiatonicChordEnumTest {
     @Test
     public void getInv() {
         DiatonicChord diatonicChordInv = DiatonicChord.from( Arrays.asList(Diatonic.E, Diatonic.G, Diatonic.C) );
-        diatonicChordInv.setRootPos(2);
+        diatonicChordInv.setRootIndex(2);
         DiatonicChord dc = DiatonicChord.C_TRIAD.clone();
         dc.inv();
 
@@ -67,7 +67,7 @@ public class DiatonicChordEnumTest {
     @Test
     public void getInv2() {
         DiatonicChord diatonicChordInv = DiatonicChord.from( Arrays.asList(Diatonic.G, Diatonic.C, Diatonic.E) );
-        diatonicChordInv.setRootPos(1);
+        diatonicChordInv.setRootIndex(1);
         DiatonicChord dc = DiatonicChord.C_TRIAD.clone();
         dc.inv(2);
         assertEquals(diatonicChordInv, dc);

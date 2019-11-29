@@ -1,7 +1,7 @@
 package es.danisales.datune.musical;
 
 import es.danisales.datune.diatonic.IntervalDiatonic;
-import es.danisales.datune.pitch.Chord;
+import es.danisales.datune.pitch.ChordMutable;
 import es.danisales.datune.pitch.PitchMutable;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 
-final class DiatonicChordCustom extends Chord<Diatonic, IntervalDiatonic> implements DiatonicChordInterface, PitchMutable<IntervalDiatonic> {
+final class DiatonicChordCustom extends ChordMutable<Diatonic, IntervalDiatonic> implements DiatonicChordInterface, PitchMutable<IntervalDiatonic> {
 	DiatonicChordCustom() {
 		super(new ArrayList<>());
 	}
@@ -19,8 +19,8 @@ final class DiatonicChordCustom extends Chord<Diatonic, IntervalDiatonic> implem
 		customDiatonicChord.addAll(diatonics);
 		if (diatonics instanceof DiatonicChordCommon) {
 			DiatonicChordCommon diatonicsCasted = (DiatonicChordCommon)diatonics;
-			if (diatonicsCasted.getRootPos() != 0)
-				customDiatonicChord.setRootPos(diatonicsCasted.getRootPos());
+			if (diatonicsCasted.getRootIndex() != 0)
+				customDiatonicChord.setRootIndex(diatonicsCasted.getRootIndex());
 		}
 		return customDiatonicChord;
 	}

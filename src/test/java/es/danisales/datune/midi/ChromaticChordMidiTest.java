@@ -19,7 +19,7 @@ public class ChromaticChordMidiTest {
         for (int i = 0; i < chromaticChord.size(); i++)
             assertEquals(chromaticChord.get(i), chromaticChordMidi.get(i).getPitch().getChromatic());
 
-        assertEquals(0, chromaticChordMidi.getRootPos());
+        assertEquals(0, chromaticChordMidi.getRootIndex());
 
         assertEquals(PitchChromaticMidi.F5, chromaticChordMidi.get(0).getPitch());
         assertEquals(PitchChromaticMidi.C6, chromaticChordMidi.get(1).getPitch());
@@ -32,7 +32,7 @@ public class ChromaticChordMidiTest {
         for (int i = 0; i < chromaticChord.size(); i++)
             assertEquals(chromaticChord.get(i), chromaticChordMidi.get(i).getPitch().getChromatic());
 
-        assertEquals(0, chromaticChordMidi.getRootPos());
+        assertEquals(0, chromaticChordMidi.getRootIndex());
 
         assertEquals(PitchChromaticMidi.B5, chromaticChordMidi.get(0).getPitch());
         assertEquals(PitchChromaticMidi.DD6, chromaticChordMidi.get(1).getPitch());
@@ -168,7 +168,7 @@ public class ChromaticChordMidiTest {
 
     @Test
     public void sizeSameAsChromaticChord() throws PitchMidiException {
-        for (ChromaticChord chromaticChord : ChromaticChord.values()) {
+        for (ChromaticChord chromaticChord : ChromaticChord.immutableValues()) {
             assertEquals(chromaticChord.size(), ChromaticChordMidi.builder().fromChromatic(chromaticChord).build().size());
         }
     }

@@ -8,24 +8,23 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Chord<N extends SymbolicPitch, I extends Interval> extends ListProxy<N> implements ChordMutableInterface<N, I> {
+public abstract class ChordMutable<N extends SymbolicPitch, I extends Interval> extends ListProxy<N> implements ChordMutableInterface<N, I> {
 	protected int rootIndex = -1;
 	private final List<N> innerList;
 
-	protected Chord(List<N> listAdapter) {
+	protected ChordMutable(List<N> listAdapter) {
 		super(listAdapter);
 
 		innerList = listAdapter;
 	}
 
 	@Override
-	public abstract Chord<N, I> clone();
-
-	@Override
 	public boolean add(@NonNull N note) {
 		Objects.requireNonNull(note);
+
 		innerList.add( note );
 		resetRootIfNeeded();
+
 		return true;
 	}
 
@@ -68,7 +67,7 @@ public abstract class Chord<N extends SymbolicPitch, I extends Interval> extends
 	}
 
 	@Override
-	public final void setRootPos(int n) {
+	public final void setRootIndex(int n) {
 		if ( indexOutArray(n, this) )
 			throw new ArrayIndexOutOfBoundsException();
 
@@ -81,16 +80,19 @@ public abstract class Chord<N extends SymbolicPitch, I extends Interval> extends
 	}
 
 	@Override
-	public int getRootPos() {
+	public final int getRootIndex() {
 		return rootIndex;
 	}
 
 	@Override
+	public abstract ChordMutable<N, I> clone();
+
+	@Override
 	public boolean equals(Object o) {
-		if ( !( o instanceof Chord ) )
+		if (!(o instanceof ChordMutable))
 			return false;
 
-		Chord chordCasted = (Chord) o;
+		ChordMutable chordCasted = (ChordMutable) o;
 
 		return innerList.equals(chordCasted.innerList) && rootIndex == chordCasted.rootIndex;
 	}

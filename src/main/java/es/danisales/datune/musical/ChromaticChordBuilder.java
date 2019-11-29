@@ -8,9 +8,9 @@ import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.midi.DiatonicMidi;
+import es.danisales.datune.midi.PitchChromaticMidi;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
-import es.danisales.utils.ListUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.*;
@@ -189,8 +189,8 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
 
         pitchChromaticSingles = new ArrayList<>();
         for (DiatonicMidi diatonicMidi : diatonicChordMidi) {
-            Diatonic diatonic = diatonicMidi.getPitch().getDiatonic();
-            Chromatic chromatic = Chromatic.from(diatonic, tonality);
+            PitchChromaticMidi pitchChromaticMidi = PitchChromaticMidi.from(diatonicMidi.getPitch());
+            Chromatic chromatic = pitchChromaticMidi.getChromatic();
             pitchChromaticSingles.add(chromatic);
         }
 
@@ -233,57 +233,15 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
         return self();
     }
 
-    public static @NonNull ChromaticChord from(@NonNull DiatonicChord diatonicChord, @NonNull Tonality t, @NonNull DiatonicFunction df) {
-        ChromaticChord cc = new ChromaticChord();
-        cc.innerChord = ChromaticChordInterfaceAdapter.from(ImmutableList.of());
+    public static @NonNull ChromaticChord from(@NonNull DiatonicChord diatonicChord, @NonNull Tonality tonality) throws TonalityException {
+        ChromaticChord chromaticChord = new ChromaticChord();
+        chromaticChord.innerChord = ChromaticChordInterfaceAdapter.from(ImmutableList.of());
 
-        for (Diatonic d : diatonicChord) {
-            Chromatic chromatic = ChromaticAdapter.from(d, t);
-            cc.add(chromatic);
+        for (Diatonic diatonic : diatonicChord) {
+            Chromatic chromatic = Chromatic.from(diatonic, tonality);
+            chromaticChord.add(chromatic);
         }
 
-        switch (df) {
-            case I2:
-            case II2:
-            case III2:
-            case IV2:
-            case V2:
-            case VI2:
-            case VII2:
-                for (ChromaticChord c : ListUtils.concatUnmodificable(ChromaticChord.CHORDS_SUS2, ChromaticChord.CHORDS_SUSb2, ChromaticChord.CHORDS_SUSb2b5))
-                    if (cc.equals(c)) {
-                        return c;
-                    }
-                break;
-            case I4:
-            case II4:
-            case III4:
-            case IV4:
-            case V4:
-            case VI4:
-            case VII4:
-                for (ChromaticChord c : ListUtils.concatUnmodificable(ChromaticChord.CHORDS_SUS4, ChromaticChord.CHORDS_SUSa4))
-                    if (cc.equals(c)) {
-                        return c;
-                    }
-                break;
-            case I6:
-            case II6:
-            case III6:
-            case IV6:
-            case V6:
-            case VI6:
-            case VII6:
-                for (ChromaticChord c : ListUtils.concatUnmodificable(ChromaticChord.CHORDS_6, ChromaticChord.CHORDS_m6))
-                    if (cc.equals(c)) {
-                        return c;
-                    }
-                break;
-        }
-
-        WhatIsIt.updateWhatIsIt((ChromaticChordCustom) cc.innerChord);
-        //assert cc.meta.str != null : "meta.str es null: " + cc.notesToString() + " [" + t + "] [" + df + "] " + t.notesToString();
-
-        return cc;
+        return chromaticChord;
     }
 }

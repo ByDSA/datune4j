@@ -90,11 +90,11 @@ public final class DiatonicChordPattern extends Pattern {
     }
 
     public static DiatonicChordPattern from(DiatonicChord diatonicChord) {
-        if ( diatonicChord.getRootPos() == 0 )
+        if (diatonicChord.getRootIndex() == 0)
             return fromFirst(diatonicChord);
         else {
             DiatonicChord chromaticChord = diatonicChord.clone();
-            chromaticChord.inv(chromaticChord.getRootPos());
+            chromaticChord.inv(chromaticChord.getRootIndex());
             return fromFirst(chromaticChord);
         }
     }

@@ -15,17 +15,12 @@ public class WhatIsItChordMidi {
         if (chordMidi instanceof ChromaticChordMidi)
             chordMidi.meta = ChromaticChord.builder().fromChromaticMidi((ChromaticChordMidi) chordMidi).build();
         else if (chordMidi instanceof DiatonicChordMidi) {
-            try {
-                ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder().fromDiatonicChordMidi((DiatonicChordMidi) chordMidi).build();
-                updateWhatIsIt(chromaticChordMidi, f);
-                return;
-            } catch (PitchMidiException e) {
-                e.printStackTrace();
-                throw new RuntimeException();
-            }
+            ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder().fromDiatonicChordMidi((DiatonicChordMidi) chordMidi).build();
+            updateWhatIsIt(chromaticChordMidi, f);
+            return;
         }
         assert f != null;
         WhatIsIt.updateWhatIsIt(chordMidi.meta, f );
-        chordMidi.setRootPos( chordMidi.meta.getRootPos() );
+        chordMidi.setRootIndex(chordMidi.meta.getRootIndex());
     }
 }

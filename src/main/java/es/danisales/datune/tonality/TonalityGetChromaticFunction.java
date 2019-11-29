@@ -126,7 +126,7 @@ public class TonalityGetChromaticFunction {
                         .build();
 
 				if (chromaticFunction == ChromaticFunction.N6)
-					ret.setRootPos(2);
+                    ret.setRootIndex(2);
 
 				return ret;
 			case V_II:

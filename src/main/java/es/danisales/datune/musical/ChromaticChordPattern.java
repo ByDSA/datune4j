@@ -229,11 +229,11 @@ public final class ChromaticChordPattern extends Pattern {
     }
 
     public static ChromaticChordPattern from(ChromaticChord chromaticChordBase) {
-        if ( chromaticChordBase.getRootPos() == 0 )
+        if (chromaticChordBase.getRootIndex() == 0)
             return from((List<Chromatic>)chromaticChordBase);
         else {
             ChromaticChord chromaticChord = chromaticChordBase.clone();
-            chromaticChord.inv(chromaticChord.getRootPos());
+            chromaticChord.inv(chromaticChord.getRootIndex());
             return from((List<Chromatic>)chromaticChord);
         }
     }

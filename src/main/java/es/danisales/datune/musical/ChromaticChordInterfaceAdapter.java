@@ -1,18 +1,15 @@
 package es.danisales.datune.musical;
 
-import es.danisales.datune.pitch.PitchChromaticSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
-
-import java.util.Collection;
 
 class ChromaticChordInterfaceAdapter {
     private ChromaticChordInterfaceAdapter() {
     }
 
-    static <T extends PitchChromaticSingle> @NonNull ChromaticChordInterface from(@NonNull Collection<T> chord) {
-        ChromaticChordInterface ret = ChromaticChordEnum.from(chord);
+    static @NonNull ChromaticChordInterface from(@NonNull Iterable<Chromatic> chord) {
+        ChromaticChordInterface ret = ChromaticChordImmutable.from(chord);
         if (ret == null)
-            ret = ChromaticChordCustom.from(chord);
+            ret = ChromaticChordMutable.from(chord);
         return ret;
     }
 }

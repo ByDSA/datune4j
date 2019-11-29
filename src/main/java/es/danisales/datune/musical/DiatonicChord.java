@@ -5,14 +5,13 @@ import es.danisales.datune.diatonic.DiatonicFunction;
 import es.danisales.datune.diatonic.IntervalDiatonic;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.midi.DiatonicMidi;
-import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.ChordMutableInterface;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Collection;
 
 @SuppressWarnings("WeakerAccess")
-public final class DiatonicChord extends NormalChordCommon<Diatonic, IntervalDiatonic>
+public final class DiatonicChord extends ChordProxy<DiatonicChordInterface, Diatonic, IntervalDiatonic>
         implements DiatonicChordCommon<Diatonic>, ChordMutableInterface<Diatonic, IntervalDiatonic> {
     public static final DiatonicChord C_TRIAD = new DiatonicChord(DiatonicChordEnum.C_TRIAD);
     public static final DiatonicChord C_THIRD = new DiatonicChord(DiatonicChordEnum.C_THIRD);
@@ -92,7 +91,7 @@ public final class DiatonicChord extends NormalChordCommon<Diatonic, IntervalDia
             diatonicChord.innerChord.add(diatonicAdd);
         }
 
-        diatonicChord.turnInnerChordIntoEnumIfPossible();
+        diatonicChord.turnInnerChordIntoImmutableIfPossible();
 
         return diatonicChord;
     }
@@ -118,8 +117,8 @@ public final class DiatonicChord extends NormalChordCommon<Diatonic, IntervalDia
     }
 
     @Override
-    protected final void turnInnerChordIntoEnumIfPossible() {
-        if (getRootPos() != 0)
+    protected final void turnInnerChordIntoImmutableIfPossible() {
+        if (getRootIndex() != 0)
             return;
         DiatonicChordEnum diatonicChordEnum = DiatonicChordEnum.from(innerChord);
         if (diatonicChordEnum != null)
@@ -127,22 +126,22 @@ public final class DiatonicChord extends NormalChordCommon<Diatonic, IntervalDia
     }
 
     @Override
-    protected final void turnInnerIntoCustom() {
+    protected final void turnInnerIntoMutable() {
         innerChord = DiatonicChordCustom.from(innerChord);
     }
 
     @Override
-    protected final boolean isEnum() {
+    protected final boolean innerIsImmutable() {
         return innerChord instanceof DiatonicChordEnum;
     }
 
     @Override
-    protected final boolean isCustom() {
+    protected final boolean InnerIsMutable() {
         return innerChord instanceof DiatonicChordCustom;
     }
 
     @Override
-    protected final ChordMutableInterface<Diatonic, IntervalDiatonic> castCustom(ChordCommon<Diatonic> chord) {
+    protected final ChordMutableInterface<Diatonic, IntervalDiatonic> castCustom(DiatonicChordInterface chord) {
         return (DiatonicChordCustom)innerChord;
     }
 
@@ -151,11 +150,6 @@ public final class DiatonicChord extends NormalChordCommon<Diatonic, IntervalDia
         DiatonicChord diatonicChord = new DiatonicChord();
         diatonicChord.innerChord = new DiatonicChordCustom();
         return diatonicChord;
-    }
-
-    @Override
-    protected ChordCommon<Diatonic> createInnerFrom(ChordCommon<Diatonic> chord) {
-        return DiatonicChordInterfaceAdapter.from(chord);
     }
 
     @Override
@@ -168,6 +162,6 @@ public final class DiatonicChord extends NormalChordCommon<Diatonic, IntervalDia
         if ( !(o instanceof DiatonicChord) )
             return false;
         DiatonicChord other = (DiatonicChord)o;
-        return DiatonicChordInterfaceAdapter.equals(((DiatonicChordInterface)innerChord), other.innerChord);
+        return DiatonicChordInterfaceAdapter.equals(innerChord, other.innerChord);
     }
 }

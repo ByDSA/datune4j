@@ -1,12 +1,10 @@
 package es.danisales.datune.pitch;
 
-import es.danisales.datune.diatonic.Interval;
-
 public class ChordNamer {
     private ChordNamer() {
     }
 
-    public static <N, I extends Interval> String from(ChordCommon<N> chordCommon) {
+    public static <N extends SymbolicPitch> String from(ChordCommon<N> chordCommon) {
         StringBuilder sb = new StringBuilder();
         boolean first = true;
         for (N n : chordCommon) {
@@ -20,7 +18,7 @@ public class ChordNamer {
         sb.append(" | root = ");
         sb.append(chordCommon.getRoot());
         sb.append("(");
-        sb.append(chordCommon.getRootPos());
+        sb.append(chordCommon.getRootIndex());
         sb.append(")");
 
         return sb.toString();

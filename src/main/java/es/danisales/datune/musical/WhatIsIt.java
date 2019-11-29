@@ -12,12 +12,12 @@ public class WhatIsIt {
     private WhatIsIt() {
     }
 
-    private static final Map<ChromaticChordPattern, List<ChromaticChordCustom>> patternToChromaticChords = new HashMap<>();
+    private static final Map<ChromaticChordPattern, List<ChromaticChordMutable>> patternToChromaticChords = new HashMap<>();
 
     static {
-        for ( ChromaticChordEnum chromaticChordEnum : ChromaticChordEnum.values() ) {
+        for (ChromaticChordImmutable chromaticChordEnum : ChromaticChordImmutable.values()) {
             for ( int i = 0; i < chromaticChordEnum.size(); i++ ) {
-                ChromaticChordCustom chromaticChordCustom = ChromaticChordCustom.from(chromaticChordEnum);
+                ChromaticChordMutable chromaticChordCustom = ChromaticChordMutable.from(chromaticChordEnum);
                 chromaticChordCustom.inv( i );
 
                 putInPatternToChromaticChords(chromaticChordCustom);
@@ -25,21 +25,21 @@ public class WhatIsIt {
         }
     }
 
-    private static void putInPatternToChromaticChords(ChromaticChordCustom chromaticChordCustom) {
+    private static void putInPatternToChromaticChords(ChromaticChordMutable chromaticChordCustom) {
         ChromaticChordPattern array = ChromaticChordPattern.from(chromaticChordCustom);
-        List<ChromaticChordCustom> arrayListChords = patternToChromaticChords.getOrDefault( array, new ArrayList<>() );
+        List<ChromaticChordMutable> arrayListChords = patternToChromaticChords.getOrDefault(array, new ArrayList<>());
         arrayListChords.add( chromaticChordCustom );
         patternToChromaticChords.put( array, arrayListChords );
     }
 
     public static void updateWhatIsIt(ChromaticChord chromaticChord, BiFunction<List<ChromaticChord>, ChordCommon<?>, ChromaticChord> fSelectChord) {
-        updateWhatIsIt((ChromaticChordCustom)chromaticChord.innerChord, fSelectChord);
+        updateWhatIsIt((ChromaticChordMutable) chromaticChord.innerChord, fSelectChord);
     }
 
-    public static void updateWhatIsIt(ChromaticChordCustom chromaticChordCustom1, BiFunction<List<ChromaticChord>, ChordCommon<?>, ChromaticChord> fSelectChord) {
+    public static void updateWhatIsIt(ChromaticChordMutable chromaticChordCustom1, BiFunction<List<ChromaticChord>, ChordCommon<?>, ChromaticChord> fSelectChord) {
         ChromaticChordPattern integerChromatics = ChromaticChordPattern.from(chromaticChordCustom1);
 
-        List<ChromaticChordCustom> foundCustomChords = patternToChromaticChords.get( integerChromatics );
+        List<ChromaticChordMutable> foundCustomChords = patternToChromaticChords.get(integerChromatics);
 
         if ( foundCustomChords == null ) {
             chromaticChordCustom1.autoName();
@@ -48,23 +48,23 @@ public class WhatIsIt {
         }
 
         List<ChromaticChord> foundChords = new ArrayList<>();
-        for (ChromaticChordCustom chromaticChordCustom : foundCustomChords)
+        for (ChromaticChordMutable chromaticChordCustom : foundCustomChords)
             foundChords.add(ChromaticChord.builder().fromChromatic(chromaticChordCustom).build());
 
         ChromaticChord foundChord = fSelectChord.apply( foundChords, chromaticChordCustom1 );
 
-        chromaticChordCustom1.assignMeta( (ChromaticChordCustom)foundChord.innerChord );
+        chromaticChordCustom1.assignMeta((ChromaticChordMutable) foundChord.innerChord);
 
         chromaticChordCustom1.meta.updated = true;
     }
 
-    public static void updateWhatIsIt(ChromaticChordCustom chromaticChordCustom) {
+    public static void updateWhatIsIt(ChromaticChordMutable chromaticChordCustom) {
         updateWhatIsIt(chromaticChordCustom,
                 (List<ChromaticChord> chords, ChordCommon<?> self) -> chords.get(0)
         );
     }
 
-    static void updateWhatIsItIfNeeded(ChromaticChordCustom chromaticChordCustom) {
+    static void updateWhatIsItIfNeeded(ChromaticChordMutable chromaticChordCustom) {
         if ( !chromaticChordCustom.meta.updated )
             updateWhatIsIt(chromaticChordCustom);
     }

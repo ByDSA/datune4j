@@ -8,7 +8,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.*;
 
-enum DiatonicChordEnum implements DiatonicChordInterface {
+enum DiatonicChordEnum implements DiatonicChordInterface, ChordImmutable<Diatonic> {
     C_TRIAD(Diatonic.C, Diatonic.E, Diatonic.G),
     C_THIRD(Diatonic.C, Diatonic.E),
     C_SUS2(Diatonic.C, Diatonic.D, Diatonic.G),
@@ -57,13 +57,13 @@ enum DiatonicChordEnum implements DiatonicChordInterface {
 	}
 
 	@Override
-	public int getRootPos() {
+	public int getRootIndex() {
 		return 0;
 	}
 
 	@Override
 	public @NonNull Diatonic getRoot() {
-		return notes.get( getRootPos() );
+		return notes.get(getRootIndex());
 	}
 
 	@Override

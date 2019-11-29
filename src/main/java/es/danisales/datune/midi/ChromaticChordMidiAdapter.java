@@ -1,7 +1,6 @@
 package es.danisales.datune.midi;
 
 import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.musical.ChromaticAdapter;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.pitch.PitchOctave;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -16,7 +15,11 @@ class ChromaticChordMidiAdapter {
         for (N n : iterable) {
             ChromaticMidiBuilder builder = ChromaticMidi.builder();
 
-            Chromatic chromaticN = ChromaticAdapter.from(n);
+            Chromatic chromaticN = null;
+            if (n instanceof Chromatic)
+                chromaticN = (Chromatic) n;
+            else if (n instanceof ChromaticMidi)
+                chromaticN = ((ChromaticMidi) n).getPitch().getChromatic();
 
             if (n instanceof PitchOctave)
                 builder.pitch(chromaticN, (((PitchOctave) n).getOctave()));
@@ -58,7 +61,7 @@ class ChromaticChordMidiAdapter {
         }
         chromaticChordMidi.arpegio = diatonicChordMidi.arpegio;
         chromaticChordMidi.length = diatonicChordMidi.length;
-        chromaticChordMidi.setRootPos(diatonicChordMidi.getRootPos());
+        chromaticChordMidi.setRootIndex(diatonicChordMidi.getRootIndex());
 
         return chromaticChordMidi;
     }

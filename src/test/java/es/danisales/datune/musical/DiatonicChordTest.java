@@ -23,7 +23,7 @@ public class DiatonicChordTest {
     public void invSameRoot() {
         DiatonicChord diatonicChord = DiatonicChord.from( Arrays.asList(Diatonic.G, Diatonic.C, Diatonic.E) );
         diatonicChord.inv();
-        diatonicChord.setRootPos(0);
+        diatonicChord.setRootIndex(0);
         assertEquals(DiatonicChord.C_TRIAD, diatonicChord);
         assertSame(DiatonicChordEnum.C_TRIAD, diatonicChord.innerChord);
     }

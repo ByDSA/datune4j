@@ -3,14 +3,13 @@ package es.danisales.datune.musical;
 import es.danisales.datastructures.EnumTreeSet;
 import es.danisales.datune.diatonic.Quality;
 import es.danisales.datune.pitch.PitchChromaticChord;
-import es.danisales.datune.pitch.PitchChromaticSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import javax.annotation.Nonnull;
 import java.util.*;
 
-enum ChromaticChordEnum implements PitchChromaticChord<Chromatic>, ChromaticChordInterface {
+enum ChromaticChordImmutable implements PitchChromaticChord<Chromatic>, ChromaticChordInterface, ChordImmutable<Chromatic> {
 	// Quintas
 	C5(ChromaticChordMeta.POWER_CHORD, Chromatic.C),
 	CC5(ChromaticChordMeta.POWER_CHORD, Chromatic.CC),
@@ -1203,11 +1202,11 @@ OMIT11
 	Bsusb2b5(ChromaticChordMeta.SUS2b2b5, Chromatic.B);
 
 
-	static EnumTreeSet<Chromatic, ChromaticChordEnum> chordTree; // todo: mirar para qué sirve esto
+	static EnumTreeSet<Chromatic, ChromaticChordImmutable> chordTree; // todo: mirar para qué sirve esto
 
 	static {
-		chordTree = new EnumTreeSet<>( Chromatic.class, ChromaticChordEnum.class );
-		for (ChromaticChordEnum c : values()) {
+		chordTree = new EnumTreeSet<>(Chromatic.class, ChromaticChordImmutable.class);
+		for (ChromaticChordImmutable c : values()) {
 			chordTree.addContent( c, c.notes );
 		}
 	}
@@ -1216,7 +1215,7 @@ OMIT11
 	final List<Chromatic> notes;
 	final private ChromaticChordMeta meta;
 
-	ChromaticChordEnum(@NonNull ChromaticChordMeta chromaticChordMeta, @NonNull Chromatic base) {
+	ChromaticChordImmutable(@NonNull ChromaticChordMeta chromaticChordMeta, @NonNull Chromatic base) {
 		Objects.requireNonNull(chromaticChordMeta);
 		Objects.requireNonNull(base);
 		Objects.requireNonNull(chromaticChordMeta.getPattern());
@@ -1231,26 +1230,16 @@ OMIT11
 		meta = chromaticChordMeta;
 	}
 
-	static @Nullable ChromaticChordEnum from(@NonNull Collection<? extends PitchChromaticSingle> chromaticCollection) {
-		for (ChromaticChordEnum chromaticChordEnum : ChromaticChordEnum.values())
+	static @Nullable ChromaticChordImmutable from(@NonNull Iterable<Chromatic> chromaticCollection) {
+		for (ChromaticChordImmutable chromaticChordEnum : ChromaticChordImmutable.values())
 			if (chromaticChordEnum.hasSameNotesAs(chromaticCollection))
 				return chromaticChordEnum;
 
 		return null;
 	}
 
-	private boolean hasSameNotesAs(@NonNull Collection<? extends PitchChromaticSingle> diatonicCollection) {
-		if (notes.size() != diatonicCollection.size())
-			return false;
-
-		int i = 0;
-		for (PitchChromaticSingle pitchChromaticSingle : diatonicCollection) {
-			if (notes.get(i) != pitchChromaticSingle)
-				return false;
-			i++;
-		}
-
-		return true;
+	private boolean hasSameNotesAs(@NonNull Iterable<Chromatic> diatonicCollection) {
+		return notes.equals(diatonicCollection);
 	}
 
 	@Override
@@ -1264,12 +1253,13 @@ OMIT11
 	}
 
 	@Override
+	@NonNull
 	public Chromatic getRoot() {
-		return notes.get( getRootPos() );
+		return notes.get(getRootIndex());
 	}
 
 	@Override
-	public int getRootPos() {
+	public int getRootIndex() {
 		return 0;
 	}
 

@@ -19,8 +19,8 @@ import static org.junit.Assert.*;
 public class DiatonicChordMidiTest {
 
     private void assertPitchInChord(PitchChromaticMidi pitchChromaticMidi, DiatonicChordMidi diatonicChordMidi, int pos) {
-            assertEquals("Actual: " + PitchChromaticMidi.from(diatonicChordMidi.get(pos).getPitch()) + " Expected: " + pitchChromaticMidi,
-                    pitchChromaticMidi.getMidiCode(), diatonicChordMidi.get(pos).getPitch().getMidiCode());
+        assertEquals("Actual: " + PitchChromaticMidi.from(diatonicChordMidi.get(pos).getPitch()) + " Expected: " + pitchChromaticMidi,
+                pitchChromaticMidi.getMidiCode(), diatonicChordMidi.get(pos).getPitch().getMidiCode());
     }
 
     @Test
@@ -294,7 +294,7 @@ public class DiatonicChordMidiTest {
         assertEquals(Chromatic.G, chromatic1);
         assertEquals(Chromatic.C, chromatic2);
         assertEquals(Chromatic.C, chromaticRoot);
-        assertEquals(2, c.getRootPos());
+        assertEquals(2, c.getRootIndex());
     }
 
     @Test
@@ -310,17 +310,17 @@ public class DiatonicChordMidiTest {
                 .from(ChromaticChord.C, Tonality.C)
                 .build();
         c.inv();
-        assertEquals(2, c.getRootPos());
+        assertEquals(2, c.getRootIndex());
         assertEquals(Chromatic.C, Chromatic.from(c.getRoot()));
 
         c = DiatonicChordMidi.builder()
                 .from(ChromaticChord.F5, Tonality.C)
                 .build();
-        assertEquals(0, c.getRootPos());
+        assertEquals(0, c.getRootIndex());
         assertEquals(Chromatic.F, Chromatic.from(c.getRoot()));
 
         c.inv();
-        assertEquals(1, c.getRootPos());
+        assertEquals(1, c.getRootIndex());
         assertEquals(Chromatic.F, Chromatic.from(c.getRoot()));
     }
 
@@ -499,7 +499,7 @@ public class DiatonicChordMidiTest {
         assertEquals(0, dcm.size());
         ChromaticChordMidi ccm = ChromaticChordMidi.builder().fromChromatic(ChromaticChord.F5).build();
         dcm.addAll(ccm);
-        assertEquals(0, dcm.getRootPos());
+        assertEquals(0, dcm.getRootIndex());
         Chromatic chromatic0 = Chromatic.from(dcm.get(0));
         Chromatic chromatic1 = Chromatic.from(dcm.get(1));
         assertEquals(Chromatic.F, chromatic0);
@@ -521,7 +521,7 @@ public class DiatonicChordMidiTest {
                 .build();
         dcm.addAll(ccm);
         assertNotEquals(0, dcm.size());
-        assertEquals(0, dcm.getRootPos());
+        assertEquals(0, dcm.getRootIndex());
         Chromatic chromatic0 = Chromatic.from(dcm.get(0));
         Chromatic chromatic1 = Chromatic.from(dcm.get(1));
         assertEquals(Chromatic.F, chromatic0);
@@ -535,7 +535,7 @@ public class DiatonicChordMidiTest {
         DiatonicChordMidi c = DiatonicChordMidi.builder()
                 .from(ChromaticChord.F5, Tonality.C)
                 .build();
-        assertEquals(0, c.getRootPos());
+        assertEquals(0, c.getRootIndex());
         Chromatic chromatic0 = Chromatic.from(c.get(0));
         Chromatic chromatic1 = Chromatic.from(c.get(1));
         assertEquals(Chromatic.F, chromatic0);
@@ -544,68 +544,72 @@ public class DiatonicChordMidiTest {
     }
 
     @Test
-    public void functions() {
+    public void functions() throws TonalityException {
         Tonality ton = Tonality.C;
         DiatonicChordMidi dcm = DiatonicChordMidi.builder().from(DiatonicFunction.I, ton).build();
-        assertEquals(ChromaticChord.C, ChromaticChordInterface.from(dcm));
+        assertEquals(ChromaticChord.C, ChromaticChord.builder().fromDiatonicChordMidi(dcm).build());
 
         dcm = DiatonicChordMidi.builder().from(DiatonicFunction.II, ton).build();
-        assertEquals(ChromaticChord.Dm, ChromaticChordInterface.from(dcm));
+        assertEquals(ChromaticChord.Dm, ChromaticChord.builder().fromDiatonicChordMidi(dcm).build());
 
         dcm = DiatonicChordMidi.builder().from(DiatonicFunction.III, ton).build();
-        assertEquals(ChromaticChord.Em, ChromaticChordInterface.from(dcm));
+        assertEquals(ChromaticChord.Em, ChromaticChord.builder().fromDiatonicChordMidi(dcm).build());
 
         dcm = DiatonicChordMidi.builder().from(DiatonicFunction.IV, ton).build();
-        assertEquals(ChromaticChord.F, ChromaticChordInterface.from(dcm));
+        assertEquals(ChromaticChord.F, ChromaticChord.builder().fromDiatonicChordMidi(dcm).build());
 
         dcm = DiatonicChordMidi.builder().from(DiatonicFunction.V, ton).build();
-        assertEquals(ChromaticChord.G, ChromaticChordInterface.from(dcm));
+        assertEquals(ChromaticChord.G, ChromaticChord.builder().fromDiatonicChordMidi(dcm).build());
 
         dcm = DiatonicChordMidi.builder().from(DiatonicFunction.VI, ton).build();
-        assertEquals(ChromaticChord.Am, ChromaticChordInterface.from(dcm));
+        assertEquals(ChromaticChord.Am, ChromaticChord.builder().fromDiatonicChordMidi(dcm).build());
 
         dcm = DiatonicChordMidi.builder().from(DiatonicFunction.VII, ton).build();
-        assertEquals(ChromaticChord.Bdim, ChromaticChordInterface.from(dcm));
+        assertEquals(ChromaticChord.Bdim, ChromaticChord.builder().fromDiatonicChordMidi(dcm).build());
 
         dcm = DiatonicChordMidi.builder().from(ChromaticFunction.IV5, ton).build();
         assertEquals(ChromaticChord.builder().fromChromatic(
                 Arrays.asList(Chromatic.F, Chromatic.C)
-        ).build(), ChromaticChordInterface.from(dcm));
+        ).build(), ChromaticChord.builder().fromDiatonicChordMidi(dcm).build());
 
         ton = Tonality.FFm;
         dcm = DiatonicChordMidi.builder().from(DiatonicFunction.I, ton).build();
-        assertEquals(ChromaticChord.FFm, ChromaticChordInterface.from(dcm));
+        assertEquals(ChromaticChord.FFm, ChromaticChord.builder().fromDiatonicChordMidi(dcm).build());
 
         assertEquals(
                 DiatonicChord.from(Arrays.asList(Diatonic.D, Diatonic.F, Diatonic.A)), DiatonicChord.from(DiatonicFunction.II, Diatonic.C)
         );
 
         assertEquals(
-                ChromaticChord.GGdim, ChromaticChordInterface.from(DiatonicChord.from(DiatonicFunction.II, Diatonic.C), Tonality.FFm)
+                ChromaticChord.GGdim,
+                ChromaticChord.builder()
+                        .diatonicFunction(DiatonicFunction.II)
+                        .tonality(Tonality.FFm)
+                        .build()
         );
 /*
 		assertEquals(
 			ChromaticChord.GGdim, new CustomDiatonicChord( DiatonicFunction.D ).toChromaticChord( Tonality.FFm ).toMidi().toChromaticChord()
 		);*/
-        assertEquals(Chromatic.GG, Tonality.FFm.getNote(DiatonicDegree.II));
+        assertEquals(Chromatic.GG, Chromatic.from(Tonality.FFm.getNote(DiatonicDegree.II)));
 
         dcm = DiatonicChordMidi.builder().from(DiatonicFunction.II, ton).build();
-        assertEquals(ChromaticChord.GGdim, ChromaticChordInterface.from(dcm));
+        assertEquals(ChromaticChord.GGdim, ChromaticChord.builder().fromDiatonicChordMidi(dcm).build());
 
         dcm = DiatonicChordMidi.builder().from(DiatonicFunction.III, ton).build();
-        assertEquals(ChromaticChord.A, ChromaticChordInterface.from(dcm));
+        assertEquals(ChromaticChord.A, ChromaticChord.builder().fromDiatonicChordMidi(dcm).build());
 
         dcm = DiatonicChordMidi.builder().from(DiatonicFunction.IV, ton).build();
-        assertEquals(ChromaticChord.Bm, ChromaticChordInterface.from(dcm));
+        assertEquals(ChromaticChord.Bm, ChromaticChord.builder().fromDiatonicChordMidi(dcm).build());
 
         dcm = DiatonicChordMidi.builder().from(DiatonicFunction.V, ton).build();
-        assertEquals(ChromaticChord.CCm, ChromaticChordInterface.from(dcm));
+        assertEquals(ChromaticChord.CCm, ChromaticChord.builder().fromDiatonicChordMidi(dcm).build());
 
         dcm = DiatonicChordMidi.builder().from(DiatonicFunction.VI, ton).build();
-        assertEquals(ChromaticChord.D, ChromaticChordInterface.from(dcm));
+        assertEquals(ChromaticChord.D, ChromaticChord.builder().fromDiatonicChordMidi(dcm).build());
 
         dcm = DiatonicChordMidi.builder().from(DiatonicFunction.VII, ton).build();
-        assertEquals(ChromaticChord.E, ChromaticChordInterface.from(dcm));
+        assertEquals(ChromaticChord.E, ChromaticChord.builder().fromDiatonicChordMidi(dcm).build());
     }
 
     @Test
