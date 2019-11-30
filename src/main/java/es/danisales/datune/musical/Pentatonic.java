@@ -6,6 +6,7 @@ import es.danisales.datune.interval.IntervalPentatonic;
 import es.danisales.datune.pitch.CyclicAbsoluteDegree;
 import es.danisales.utils.MathUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 public enum Pentatonic implements CyclicAbsoluteDegree<PentatonicDegree, IntervalPentatonic> {
 	C, D, E, G, A;
@@ -47,7 +48,7 @@ public enum Pentatonic implements CyclicAbsoluteDegree<PentatonicDegree, Interva
 	}
 
 	@Override
-	public Pentatonic getShifted(IntervalPentatonic intervalPentatonic) {
+	public @Nullable Pentatonic getShifted(IntervalPentatonic intervalPentatonic) {
 		int i = (ordinal() + intervalPentatonic.ordinal()) % NUMBER;
 		return values()[i];
 	}

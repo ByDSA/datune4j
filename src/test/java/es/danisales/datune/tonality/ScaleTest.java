@@ -423,25 +423,90 @@ public class ScaleTest {
 
     @Test
     public void hasIntervalChromatic() {
-        assertTrue(Scale.MAJOR.has(IntervalChromatic.MAJOR_THIRD));
-        assertFalse(Scale.PENTATONIC.has(IntervalChromatic.MAJOR_THIRD));
-        assertFalse(Scale.MAJOR.has(IntervalChromatic.MINOR_THIRD));
-        assertFalse(Scale.PENTATONIC.has(IntervalChromatic.MINOR_THIRD));
-        assertTrue(Scale.MINOR.has(IntervalChromatic.MINOR_THIRD));
-        assertTrue(Scale.PENTATONIC_MINOR.has(IntervalChromatic.MINOR_THIRD));
-        assertTrue(Scale.MAJOR.has(IntervalChromatic.PERFECT_FIFTH));
-        assertTrue(Scale.MINOR.has(IntervalChromatic.PERFECT_FIFTH));
-        assertFalse(Scale.LOCRIAN.has(IntervalChromatic.PERFECT_FIFTH));
-        assertTrue(Scale.LOCRIAN.has(IntervalChromatic.PERFECT_OCTAVE));
+        assertTrue(Scale.MAJOR.hasIntervalFromRoot(IntervalChromatic.MAJOR_THIRD));
+        assertTrue(Scale.PENTATONIC.hasIntervalFromRoot(IntervalChromatic.MAJOR_THIRD));
+        assertFalse(Scale.MAJOR.hasIntervalFromRoot(IntervalChromatic.MINOR_THIRD));
+        assertFalse(Scale.PENTATONIC.hasIntervalFromRoot(IntervalChromatic.MINOR_THIRD));
+        assertTrue(Scale.MINOR.hasIntervalFromRoot(IntervalChromatic.MINOR_THIRD));
+        assertTrue(Scale.PENTATONIC_MINOR.hasIntervalFromRoot(IntervalChromatic.MINOR_THIRD));
+        assertTrue(Scale.MAJOR.hasIntervalFromRoot(IntervalChromatic.PERFECT_FIFTH));
+        assertTrue(Scale.MINOR.hasIntervalFromRoot(IntervalChromatic.PERFECT_FIFTH));
+        assertFalse(Scale.LOCRIAN.hasIntervalFromRoot(IntervalChromatic.PERFECT_FIFTH));
+        assertTrue(Scale.LOCRIAN.hasIntervalFromRoot(IntervalChromatic.PERFECT_OCTAVE));
     }
 
     @Test
     public void hasIntervalChromaticGreatherThan12() {
-        assertTrue(Scale.MAJOR.has(IntervalChromatic.MAJOR_TENTH));
-        assertFalse(Scale.MAJOR.has(IntervalChromatic.MINOR_TENTH));
-        assertTrue(Scale.MINOR.has(IntervalChromatic.MINOR_TENTH));
-        assertTrue(Scale.MAJOR.has(IntervalChromatic.PERFECT_TWELFTH));
-        assertTrue(Scale.MINOR.has(IntervalChromatic.PERFECT_TWELFTH));
-        assertFalse(Scale.LOCRIAN.has(IntervalChromatic.PERFECT_TWELFTH));
+        assertTrue(Scale.MAJOR.hasIntervalFromRoot(IntervalChromatic.MAJOR_TENTH));
+        assertFalse(Scale.MAJOR.hasIntervalFromRoot(IntervalChromatic.MINOR_TENTH));
+        assertTrue(Scale.MINOR.hasIntervalFromRoot(IntervalChromatic.MINOR_TENTH));
+        assertTrue(Scale.MAJOR.hasIntervalFromRoot(IntervalChromatic.PERFECT_TWELFTH));
+        assertTrue(Scale.MINOR.hasIntervalFromRoot(IntervalChromatic.PERFECT_TWELFTH));
+        assertFalse(Scale.LOCRIAN.hasIntervalFromRoot(IntervalChromatic.PERFECT_TWELFTH));
+    }
+
+    @Test
+    public void setScaleDiatonicReparametrizer() {
+        Scale scale = Scale.PENTATONIC.clone();
+        scale.setScaleDiatonicReparametrizer(null);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void setScaleDiatonicReparametrizerFails() {
+        Scale.PENTATONIC.setScaleDiatonicReparametrizer(null);
+    }
+
+    @Test
+    public void getRelativeDegreeByIndex() {  // todo
+    }
+
+    @Test
+    public void cloneTest() {
+        Scale scale = Scale.CHROMATIC.clone();
+
+        assertEquals(Scale.CHROMATIC, scale);
+        assertNotSame(Scale.CHROMATIC, scale);
+        assertSame(Scale.CHROMATIC.innerScale, scale.innerScale);
+    }
+
+    @Test
+    public void cloneTest2() {
+        Scale scale = Scale.CHROMATIC.clone();
+        scale.setScaleDiatonicReparametrizer(null);
+
+        assertNotEquals(Scale.CHROMATIC, scale);
+    }
+
+    @Test
+    public void autoTurnIntoImmutable() {
+        Scale scale = Scale.CHROMATIC.clone();
+        scale.setScaleDiatonicReparametrizer(null);
+
+        ScaleDegreeReparametrizer scaleDiatonicReparametrizer = getCopyFrom(Scale.CHROMATIC);
+        scale.setScaleDiatonicReparametrizer(scaleDiatonicReparametrizer);
+
+        assertEquals(Scale.CHROMATIC, scale);
+        assertSame(Scale.CHROMATIC.innerScale, scale.innerScale);
+    }
+
+    @SuppressWarnings("SameParameterValue")
+    private ScaleDegreeReparametrizer getCopyFrom(Scale scale) {
+        ScaleDegreeReparametrizer scaleDiatonicReparametrizer = ScaleDegreeReparametrizer.create();
+        for (int i = 0; i < scale.size(); i++)
+            scaleDiatonicReparametrizer.put(i, scale.getRelativeDegreeByIndex(i));
+        return scaleDiatonicReparametrizer;
+    }
+
+    @Test
+    public void autoTurnIntoImmutable2() {
+        Scale scale = Scale.fromIntegers(Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+
+        assertEquals(Scale.CHROMATIC, scale);
+        assertSame(Scale.CHROMATIC.innerScale, scale.innerScale);
+    }
+
+    @Test
+    public void getIndexByRelativeDegree() {
+        // todo
     }
 }

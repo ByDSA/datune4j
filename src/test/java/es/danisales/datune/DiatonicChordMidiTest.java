@@ -385,7 +385,7 @@ public class DiatonicChordMidiTest {
             error = true;
         }
 
-        assertEquals(false, error);
+        assertFalse(error);
 
         try {
             c2.add(n2);
@@ -394,7 +394,7 @@ public class DiatonicChordMidiTest {
             error = true;
         }
 
-        assertEquals(true, error);
+        assertTrue(error);
     }
 
 
@@ -425,7 +425,7 @@ public class DiatonicChordMidiTest {
     }
 
     @Test
-    public void toChordUnfunc() throws PitchMidiException {
+    public void toChordUnfunc() {
         DiatonicChordMidi c = (DiatonicChordMidi.builder().from(DiatonicFunction.IV6, Tonality.C).octave(5).build());
         c.inv(3);
 
@@ -433,7 +433,7 @@ public class DiatonicChordMidiTest {
     }
 
     @Test
-    public void toChordFunc() throws PitchMidiException {
+    public void toChordFunc() {
         DiatonicChordMidi c = (DiatonicChordMidi.builder().from(DiatonicFunction.IV6, Tonality.C).octave(5).build());
         c.inv(3);
 
@@ -444,7 +444,7 @@ public class DiatonicChordMidiTest {
     }
 
     @Test
-    public void whatIsIt() throws PitchMidiException {
+    public void whatIsIt() {
         DiatonicChordMidi c = (DiatonicChordMidi.builder().from(DiatonicFunction.IV6, Tonality.C).octave(5).build());
         c.inv(3);
 
@@ -538,7 +538,7 @@ public class DiatonicChordMidiTest {
     }
 
     @Test
-    public void functions() throws TonalityException {
+    public void functions() {
         Tonality ton = Tonality.C;
         DiatonicChordMidi dcm = DiatonicChordMidi.builder().from(DiatonicFunction.I, ton).build();
         assertEquals(ChromaticChord.C, ChromaticChord.builder().fromDiatonicChordMidi(dcm).build());
@@ -655,7 +655,7 @@ public class DiatonicChordMidiTest {
     }
 
     @Test
-    public void toDiatonic() throws PitchMidiException {
+    public void toDiatonic() {
         DiatonicChordMidi c = DiatonicChordMidi.builder().from(DiatonicFunction.I, Tonality.C).octave(5).build();
         assertEquals(Duration.L1, c.get(0).getLength());
         ChromaticChord ccm = ChromaticChord.builder().fromDiatonicChordMidi(c).build();

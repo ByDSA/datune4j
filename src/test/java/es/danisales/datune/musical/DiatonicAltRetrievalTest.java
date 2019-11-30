@@ -15,31 +15,32 @@ import static org.junit.Assert.assertSame;
 public class DiatonicAltRetrievalTest {
 
     @Test
-    public void listFromAlterations() {
+    public void listFromAlterations() { // todo
     }
 
     @Test
-    public void listFrom() {
+    public void listFrom() { // todo
     }
 
     @Test
-    public void areEnharmonic() {
+    public void areEnharmonic() { // todo
     }
 
     @Test
     public void getEnharmonicsFrom() {
+        // todo
     }
 
     @Test
     public void getNoteAbsoluteDegree3() {
-        RelativeDegree relativeDegree = RelativeDegree.from(0);
         Scale scale = Scale.fromIntegers(Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+        RelativeDegree relativeDegree = RelativeDegree.valuesFrom(scale.size()).get(0);
         Tonality tonality = Tonality.from(DiatonicAlt.C, scale);
         System.out.println(tonality.getNotes());
         assertEquals(DiatonicAlt.C,
                 tonality.getNote(relativeDegree));
 
-        relativeDegree = RelativeDegree.from(8);
+        relativeDegree = RelativeDegree.valuesFrom(scale.size()).get(8);
 
         assertEquals(DiatonicAlt.GG,
                 tonality.getNote(relativeDegree));

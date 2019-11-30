@@ -78,12 +78,13 @@ public class TonalityRetrievalTest {
     @Test
     public void getEnharmonicMinimalAltsFromPentatonic() {
         Tonality target = Tonality.from(DiatonicAlt.Eb, Scale.PENTATONIC_MINOR);
-        Tonality tonality = Tonality.from(DiatonicAlt.DD, Scale.PENTATONIC_MINOR);
-        Set<Tonality> result = TonalityRetrieval.getEnharmonicMinimalAltsFrom(tonality);
-        Tonality actual = result.iterator().next();
+        Tonality target2 = Tonality.from(DiatonicAlt.DD, Scale.PENTATONIC_MINOR);
+        Tonality source = Tonality.from(DiatonicAlt.Fbb, Scale.PENTATONIC_MINOR);
+        Set<Tonality> result = TonalityRetrieval.getEnharmonicMinimalAltsFrom(source);
 
-        assertEquals(1, result.size());
-        assertEquals(target, actual);
+        assertEquals(2, result.size());
+        assertTrue(result.contains(target));
+        assertTrue(result.contains(target2));
     }
 
     @Test

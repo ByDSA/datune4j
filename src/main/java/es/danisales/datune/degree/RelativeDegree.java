@@ -32,8 +32,4 @@ public interface RelativeDegree {
                 return ret;
         }
     }
-
-    static RelativeDegree from(int degreeNumber) {
-        return () -> degreeNumber;
-    }
 }

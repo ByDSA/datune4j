@@ -1,7 +1,7 @@
 package es.danisales.datune.musical;
 
+import es.danisales.datune.degree.RelativeDegree;
 import es.danisales.datune.musical.transformations.EnharmonicsRetrieval;
-import es.danisales.datune.pitch.CyclicAbsoluteDegree;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.ScaleDistance;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -26,13 +26,15 @@ public class DiatonicAltRetrieval {
     }
 
     public static @NonNull List<DiatonicAlt> listFrom(@NonNull DiatonicAlt noteBase, @NonNull final Scale scale) {
-        if (scale.size() > 7)
-            return moreThan7listFrom(noteBase, scale);
+        if (scale.size() == 7)
+            return sevenListFrom(noteBase, scale);
+        else if (scale.size() < 7)
+            return lowerThan7ListFrom(noteBase, scale);
         else
-            return normalListFrom(noteBase, scale);
+            return genericListFrom(noteBase, scale);
     }
 
-    private static @NonNull List<DiatonicAlt> moreThan7listFrom(@NonNull DiatonicAlt noteBase, @NonNull final Scale scale) {
+    private static @NonNull List<DiatonicAlt> genericListFrom(@NonNull DiatonicAlt noteBase, @NonNull final Scale scale) {
         List<DiatonicAlt> retNotes = new ArrayList<>();
         retNotes.add(noteBase);
 
@@ -50,18 +52,42 @@ public class DiatonicAltRetrieval {
         return retNotes;
     }
 
-    private static @NonNull List<DiatonicAlt> normalListFrom(@NonNull DiatonicAlt noteBase, @NonNull final Scale scale) {
+    private static @NonNull List<DiatonicAlt> sevenListFrom(@NonNull DiatonicAlt noteBase, @NonNull final Scale scale) {
+        List<DiatonicAlt> retNotes = new ArrayList<>();
+        retNotes.add(noteBase);
+        Diatonic diatonic = noteBase.getDiatonic();
+        float semis = Chromatic.from(noteBase.getDiatonic()).ordinal() + noteBase.getAlterations();
+
+        for (int i = 0; i < scale.size() - 1; i++) {
+            ScaleDistance step = scale.getCode().get(i);
+            semis += step.getMicrotonalSemitones();
+            diatonic = diatonic.getNext();
+            DiatonicAlt newDiatonicAlt = DiatonicAlt.from(semis, diatonic);
+
+            retNotes.add(newDiatonicAlt);
+        }
+
+        return retNotes;
+    }
+
+    private static @NonNull List<DiatonicAlt> lowerThan7ListFrom(@NonNull DiatonicAlt noteBase, @NonNull final Scale scale) {
         List<DiatonicAlt> retNotes = new ArrayList<>();
         retNotes.add(noteBase);
 
         DiatonicAlt newDiatonicAlt;
-        CyclicAbsoluteDegree absoluteDegree = CyclicAbsoluteDegree.from(noteBase, scale.size());
+        Diatonic diatonicBase = noteBase.getDiatonic();
         float semis = Chromatic.from(noteBase.getDiatonic()).ordinal() + noteBase.getAlterations();
 
         for (int i = 0; i < scale.size()-1; i++) {
             ScaleDistance step = scale.getCode().get(i);
             semis += step.getMicrotonalSemitones();
-            absoluteDegree = absoluteDegree.getNext();
+            RelativeDegree relativeDegree;
+            relativeDegree = scale.getRelativeDegreeByIndex(i + 1);
+            if (relativeDegree == null)
+                return genericListFrom(noteBase, scale);
+            int index = diatonicBase.ordinal() + relativeDegree.ordinal();
+            index %= Diatonic.NUMBER;
+            Diatonic absoluteDegree = Diatonic.values()[index];
             newDiatonicAlt = DiatonicAlt.from(semis, absoluteDegree);
 
             retNotes.add(newDiatonicAlt);

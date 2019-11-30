@@ -1,5 +1,6 @@
 package es.danisales.datune.tonality;
 
+import es.danisales.datune.degree.ChromaticDegree;
 import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.degree.PentatonicDegree;
 import es.danisales.datune.degree.RelativeDegree;
@@ -218,7 +219,7 @@ public class TonalityTest {
         assertTrue(Tonality.from(Chromatic.C, Scale.LYDIAN).isMajorOrMinor());
         assertTrue(Tonality.from(Chromatic.C, Scale.DORIAN).isMajorOrMinor());
         assertTrue(Tonality.from(Chromatic.C, Scale.PENTATONIC_MINOR).isMajorOrMinor());
-        assertFalse(Tonality.from(Chromatic.C, Scale.PENTATONIC).isMajorOrMinor());
+        assertTrue(Tonality.from(Chromatic.C, Scale.PENTATONIC).isMajorOrMinor());
         assertFalse(Tonality.from(Chromatic.C, Scale.CHROMATIC).isMajorOrMinor());
     }
 
@@ -229,7 +230,7 @@ public class TonalityTest {
         assertTrue(Tonality.from(Chromatic.C, Scale.LYDIAN).isMajor());
         assertFalse(Tonality.from(Chromatic.C, Scale.DORIAN).isMajor());
         assertFalse(Tonality.from(Chromatic.C, Scale.PENTATONIC_MINOR).isMajor());
-        assertFalse(Tonality.from(Chromatic.C, Scale.PENTATONIC).isMajor());
+        assertTrue(Tonality.from(Chromatic.C, Scale.PENTATONIC).isMajor());
         assertFalse(Tonality.from(Chromatic.C, Scale.CHROMATIC).isMajor());
     }
 
@@ -263,24 +264,60 @@ public class TonalityTest {
         assertEquals(DiatonicAlt.A,
                 Tonality.from(DiatonicAlt.C, Scale.PENTATONIC)
                         .getNote(PentatonicDegree.V));
+    }
 
+    @Test
+    public void getNotePentatonic2() {
         assertEquals(DiatonicAlt.AA,
                 Tonality.from(DiatonicAlt.CC, Scale.PENTATONIC)
                         .getNote(PentatonicDegree.V));
+    }
 
-        assertEquals(DiatonicAlt.AAA,
+    @Test
+    public void getNotePentatonic3() {
+        assertEquals(DiatonicAlt.AA,
                 Tonality.from(DiatonicAlt.DD, Scale.PENTATONIC_MINOR)
                         .getNote(PentatonicDegree.IV));
     }
 
     @Test
+    public void getNotePentatonic4() {
+        assertEquals(DiatonicAlt.G,
+                Tonality.from(DiatonicAlt.C, Scale.PENTATONIC)
+                        .getNote(DiatonicDegree.V));
+    }
+
+    @Test
+    public void getNotePentatonic5() {
+        assertEquals(DiatonicAlt.G,
+                Tonality.from(DiatonicAlt.C, Scale.PENTATONIC)
+                        .getNote(PentatonicDegree.IV));
+    }
+
+    @Test
+    public void getNotePentatonic6() {
+        assertNull(
+                Tonality.from(DiatonicAlt.C, Scale.PENTATONIC)
+                        .getNote(DiatonicDegree.IV)
+        );
+    }
+
+    @Test
+    public void getNotePentatonic7() {
+        assertEquals(DiatonicAlt.G,
+                Tonality.from(DiatonicAlt.C, Scale.PENTATONIC)
+                        .getNote(PentatonicDegree.IV)
+        );
+    }
+
+    @Test
     public void getNoteAbsoluteDegree() {
-        RelativeDegree relativeDegree = RelativeDegree.from(0);
-        Tonality tonality = Tonality.from(DiatonicAlt.C, Scale.WOLE_TONE);
+        RelativeDegree relativeDegree = RelativeDegree.valuesFrom(6).get(0);
+        Tonality tonality = Tonality.from(DiatonicAlt.C, Scale.WHOLE_TONE);
         assertEquals(DiatonicAlt.C,
                 tonality.getNote(relativeDegree));
 
-        relativeDegree = RelativeDegree.from(5);
+        relativeDegree = RelativeDegree.valuesFrom(6).get(5);
 
         assertEquals(DiatonicAlt.AA,
                 tonality.getNote(relativeDegree));
@@ -288,37 +325,49 @@ public class TonalityTest {
 
     @Test
     public void getNoteAbsoluteDegree2() {
-        RelativeDegree relativeDegree = RelativeDegree.from(0);
         Scale scale = Scale.fromIntegers(Arrays.asList(1, 1, 1, 1, 2, 1, 2, 1, 2));
+        RelativeDegree relativeDegree = RelativeDegree.valuesFrom(scale.size()).get(0);
         Tonality tonality = Tonality.from(DiatonicAlt.C, scale);
-        System.out.println(tonality.getNotes());
         assertEquals(DiatonicAlt.C,
                 tonality.getNote(relativeDegree));
 
-        relativeDegree = RelativeDegree.from(8);
+        relativeDegree = RelativeDegree.valuesFrom(scale.size()).get(8);
 
         assertEquals(DiatonicAlt.AA,
                 tonality.getNote(relativeDegree));
     }
 
     @Test
-    public void getNoteAbsoluteDegree3() {
-        RelativeDegree relativeDegree = RelativeDegree.from(0);
-        Scale scale = Scale.fromIntegers(Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+    public void getChromaticDegree() {
+        RelativeDegree relativeDegree = ChromaticDegree.I;
+        Scale scale = Scale.CHROMATIC;
         Tonality tonality = Tonality.from(DiatonicAlt.C, scale);
-        System.out.println(tonality.getNotes());
         assertEquals(DiatonicAlt.C,
                 tonality.getNote(relativeDegree));
+    }
 
-        relativeDegree = RelativeDegree.from(8);
+    @Test
+    public void getChromaticDegree2() {
+        RelativeDegree relativeDegree = ChromaticDegree.V;
+        Scale scale = Scale.CHROMATIC;
+        Tonality tonality = Tonality.from(DiatonicAlt.C, scale);
 
-        assertEquals(DiatonicAlt.GG,
+        assertEquals(DiatonicAlt.E,
+                tonality.getNote(relativeDegree));
+    }
+
+    @Test
+    public void getChromaticDegree3() {
+        RelativeDegree relativeDegree = ChromaticDegree.VIII;
+        Scale scale = Scale.CHROMATIC;
+        Tonality tonality = Tonality.from(DiatonicAlt.C, scale);
+
+        assertEquals(DiatonicAlt.G,
                 tonality.getNote(relativeDegree));
     }
 
     @Test
     public void getNoteAbsoluteDegreeMicrotonal() {
-        RelativeDegree relativeDegree = RelativeDegree.from(0);
         Scale scale = Scale.fromDistances( Arrays.asList(
                 ScaleDistance.QUARTER,
                 ScaleDistance.QUARTER,
@@ -332,12 +381,13 @@ public class TonalityTest {
                 ScaleDistance.WHOLE,
                 ScaleDistance.HALF
         ));
+        RelativeDegree relativeDegree = RelativeDegree.valuesFrom(scale.size()).get(0);
         Tonality tonality = Tonality.from(DiatonicAlt.C, scale);
 
         assertEquals(DiatonicAlt.C,
                 tonality.getNote(relativeDegree));
 
-        relativeDegree = RelativeDegree.from(8);
+        relativeDegree = RelativeDegree.valuesFrom(scale.size()).get(8);
 
         assertEquals(DiatonicAlt.G,
                 tonality.getNote(relativeDegree));

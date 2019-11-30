@@ -101,7 +101,7 @@ class ScaleNamer {
                 return "Napolitana mayor";
             case BLUES:
                 break;
-            case WOLE_TONE:
+            case WHOLE_TONE:
                 break;
             case PENTATONIC_MINOR:
                 return ScaleInnerImmutable.PENTATONIC + " " + ScaleInnerImmutable.MINOR;

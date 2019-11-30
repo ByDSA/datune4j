@@ -113,25 +113,29 @@ public class Tonality implements Iterable<DiatonicAlt> {
     }
 
     public boolean isMajor() {
-        return getScale().has(IntervalChromatic.MAJOR_THIRD)
-                && !getScale().has(IntervalChromatic.MINOR_THIRD);
+        return getScale().hasIntervalFromRoot(IntervalChromatic.MAJOR_THIRD)
+                && !getScale().hasIntervalFromRoot(IntervalChromatic.MINOR_THIRD);
     }
 
     public boolean isMinor() {
-        return !getScale().has(IntervalChromatic.MAJOR_THIRD)
-                && getScale().has(IntervalChromatic.MINOR_THIRD);
+        return !getScale().hasIntervalFromRoot(IntervalChromatic.MAJOR_THIRD)
+                && getScale().hasIntervalFromRoot(IntervalChromatic.MINOR_THIRD);
     }
 
     public int size() {
         return getScale().size();
     }
 
-    public @NonNull DiatonicAlt getNote(@NonNull RelativeDegree degree) {
+    public @Nullable DiatonicAlt getNote(@NonNull RelativeDegree degree) {
         RelativeDegreeAdapter.checkDegree(this, degree);
 
-        int i = degree.ordinal();
-        DiatonicAlt ret = getNotes().get(i);
-        return ret;
+        if (degree.getClass().equals(RelativeDegree.valuesFrom(getScale().size()).get(0).getClass()))
+            return getNotes().get(degree.ordinal());
+
+        Integer indexInteger = getScale().getIndexByRelativeDegree(degree);
+        if (indexInteger == null)
+            return null;
+        return getNotes().get(indexInteger);
     }
 
     public boolean isModeOf(Tonality t) {

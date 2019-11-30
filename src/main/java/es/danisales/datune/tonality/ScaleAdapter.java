@@ -82,8 +82,6 @@ class ScaleAdapter {
     private static List<ScaleDistance> getScaleDistanceListFromIntegersList(List<Integer> v) {
         List<ScaleDistance> distanceScaleList = new ArrayList<>();
         for (int i : v) {
-            if (i == 0)
-                System.out.println(v);
             ScaleDistance scaleDistance = ScaleDistance.from(i);
             distanceScaleList.add(scaleDistance);
         }

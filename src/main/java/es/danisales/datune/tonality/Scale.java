@@ -1,6 +1,7 @@
 package es.danisales.datune.tonality;
 
 import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.degree.RelativeDegree;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
@@ -65,17 +66,20 @@ public class Scale implements Iterable<ScaleDistance> {
 	public static final Scale BLUES = new Scale(ScaleInnerImmutable.BLUES);
 
 	// 6
-	public static final Scale WOLE_TONE = new Scale(ScaleInnerImmutable.WOLE_TONE);
+    public static final Scale WHOLE_TONE = new Scale(ScaleInnerImmutable.WHOLE_TONE);
 
 	// 5
 	public static final Scale PENTATONIC_MINOR = new Scale(ScaleInnerImmutable.PENTATONIC_MINOR);
 	public static final Scale PENTATONIC = new Scale(ScaleInnerImmutable.PENTATONIC);
 	public static final Scale EGYPCIAN = new Scale(ScaleInnerImmutable.EGYPCIAN);
-	public static final Scale SUSPENDED = new Scale(ScaleInnerImmutable.SUSPENDED);
+    @SuppressWarnings("unused")
+    public static final Scale SUSPENDED = new Scale(ScaleInnerImmutable.SUSPENDED);
 	public static final Scale BLUES_MINOR = new Scale(ScaleInnerImmutable.BLUES_MINOR);
-	public static final Scale MAN_GONG = new Scale(ScaleInnerImmutable.MAN_GONG);
+    @SuppressWarnings("unused")
+    public static final Scale MAN_GONG = new Scale(ScaleInnerImmutable.MAN_GONG);
 	public static final Scale BLUES_MAJOR = new Scale(ScaleInnerImmutable.BLUES_MAJOR);
-	public static final Scale YO_SCALE = new Scale(ScaleInnerImmutable.YO_SCALE);
+    @SuppressWarnings("unused")
+    public static final Scale YO_SCALE = new Scale(ScaleInnerImmutable.YO_SCALE);
 
 	// 12
 	public static final Scale CHROMATIC = new Scale(ScaleInnerImmutable.CHROMATIC);
@@ -131,7 +135,7 @@ public class Scale implements Iterable<ScaleDistance> {
 			NEAPOLITAN_MINOR,
 			NEAPOLITAN_MAJOR,
 			BLUES/*,
-			WOLE_TONE,
+			WHOLE_TONE,
 			PENTATONIC_MINOR,
 			PENTATONIC,
 			EGYPCIAN,
@@ -147,7 +151,8 @@ public class Scale implements Iterable<ScaleDistance> {
 	 * END CONSTANT SCALES
 	 ***************************************************************************************************************/
 
-	final ScaleInner innerScale;
+    ScaleInner innerScale;
+    private final boolean fixed;
 
 	public static @NonNull Scale fromIntegers(List<Integer> v) {
 		return new Scale( ScaleAdapter.fromIntegers(v) );
@@ -161,9 +166,21 @@ public class Scale implements Iterable<ScaleDistance> {
 		return ScaleAdapter.fromDiatonicAltList(notes);
 	}
 
-	Scale(@NonNull ScaleInner scaleInterface) {
-		innerScale = scaleInterface;
-	}
+    Scale(@NonNull ScaleInner scaleInterface) {
+        innerScale = scaleInterface;
+        fixed = true;
+    }
+
+    private Scale(@NonNull ScaleInner scaleInterface, boolean fixed) {
+        innerScale = scaleInterface;
+        this.fixed = fixed;
+    }
+
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @Override
+    public Scale clone() {
+        return new Scale(innerScale, false);
+    }
 
 	public @NonNull List<ScaleDistance> getCode() {
 		return innerScale.getCode();
@@ -188,7 +205,7 @@ public class Scale implements Iterable<ScaleDistance> {
 		return ret;
 	}
 
-	public boolean has(IntervalChromatic intervalChromatic) {
+    public boolean hasIntervalFromRoot(IntervalChromatic intervalChromatic) {
 		int intervalChromaticSemitones = intervalChromatic.getSemitones() % Chromatic.NUMBER;
 		float sum = 0;
 		for (ScaleDistance scaleDistance : innerScale.getCode()) {
@@ -211,43 +228,60 @@ public class Scale implements Iterable<ScaleDistance> {
 		return innerScale.getCode().iterator();
 	}
 
-	public @Nullable ScaleDistance get(DiatonicDegree diatonicDegree) {
-		switch (size()) {
-			default:
-			case 7:
-				return innerScale.get(diatonicDegree);
-			case 5:
-				if (equals(Scale.PENTATONIC)) {
-					switch (diatonicDegree) {
-						case I:
-							return innerScale.get(DiatonicDegree.I);
-						case II:
-							return innerScale.get(DiatonicDegree.II);
-						case III:
-							return innerScale.get(DiatonicDegree.III);
-						case V:
-							return innerScale.get(DiatonicDegree.IV);
-						case VI:
-							return innerScale.get(DiatonicDegree.V);
-					}
-				} else if (equals(Scale.PENTATONIC_MINOR)) {
-					switch (diatonicDegree) {
-						case I:
-							return innerScale.get(DiatonicDegree.I);
-						case III:
-							return innerScale.get(DiatonicDegree.II);
-						case IV:
-							return innerScale.get(DiatonicDegree.III);
-						case V:
-							return innerScale.get(DiatonicDegree.IV);
-						case VII:
-							return innerScale.get(DiatonicDegree.V);
-					}
-				}
-				break;
-		}
+    public @Nullable ScaleDistance get(@NonNull DiatonicDegree diatonicDegree) {
+        if (diatonicDegree.ordinal() == 0)
+            return ScaleDistance.NONE;
 
-		return null;
+        if (size() == 7)
+            return innerScale.get(diatonicDegree);
+
+        return non7get(diatonicDegree);
+    }
+
+    private @Nullable ScaleDistance non7get(@NonNull DiatonicDegree diatonicDegree) {
+        if (innerScale.getScaleDegreeReparametrizer() == null)
+            return null;
+
+        Integer index = innerScale.getScaleDegreeReparametrizer().getByKey(diatonicDegree);
+        if (index == null)
+            return null;
+
+        return innerScale.getCode().get(index - 1);
+    }
+
+    private void checkFixed() {
+        if (fixed)
+            throw new UnsupportedOperationException();
+    }
+
+    public void setScaleDiatonicReparametrizer(@Nullable ScaleDegreeReparametrizer scaleDiatonicReparametrizer) {
+        if (Objects.equals(innerScale.getScaleDegreeReparametrizer(), scaleDiatonicReparametrizer))
+            return;
+
+        checkFixed();
+        if (isInnerImmutable())
+            turnIntoMutable();
+
+        innerScale.setScaleDegreeReparametrizer(scaleDiatonicReparametrizer);
+
+        turnIntoImmutableIfPossible();
+    }
+
+    private boolean isInnerImmutable() {
+        return innerScale instanceof ScaleInnerImmutable;
+    }
+
+    private void turnIntoMutable() {
+        innerScale = new ScaleInnerMutable(innerScale.getCode());
+    }
+
+    private void turnIntoImmutableIfPossible() {
+        for (ScaleInnerImmutable scaleInnerImmutable : ScaleInnerImmutable.values()) {
+            if (innerScale.getCode().equals(scaleInnerImmutable.getCode()) && Objects.equals(innerScale.getScaleDegreeReparametrizer(), scaleInnerImmutable.getScaleDegreeReparametrizer())) {
+                innerScale = scaleInnerImmutable;
+                return;
+            }
+        }
 	}
 
 	/**
@@ -263,6 +297,21 @@ public class Scale implements Iterable<ScaleDistance> {
 		return false;
 	}
 
+    public @Nullable RelativeDegree getRelativeDegreeByIndex(int i) {
+        ScaleDegreeReparametrizer scaleDiatonicReparametrizer = innerScale.getScaleDegreeReparametrizer();
+        if (scaleDiatonicReparametrizer == null)
+            return null;
+        return scaleDiatonicReparametrizer.getByIndex(i);
+    }
+
+    public @Nullable Integer getIndexByRelativeDegree(RelativeDegree relativeDegree) {
+        ScaleDegreeReparametrizer scaleDiatonicReparametrizer = innerScale.getScaleDegreeReparametrizer();
+        if (scaleDiatonicReparametrizer == null)
+            return null;
+
+        return scaleDiatonicReparametrizer.getByKey(relativeDegree);
+    }
+
 	@Override
 	public String toString() {
 		return ScaleNamer.from(this);
@@ -274,11 +323,18 @@ public class Scale implements Iterable<ScaleDistance> {
 			return false;
 
 		Scale scale = (Scale)o;
-		return scale.getCode().equals(getCode());
+        boolean codeEquals = scale.getCode().equals(getCode());
+        boolean scaleDiatonicReparametrizerEquals = Objects.equals(innerScale.getScaleDegreeReparametrizer(), scale.innerScale.getScaleDegreeReparametrizer());
+
+        return codeEquals && scaleDiatonicReparametrizerEquals;
 	}
 
 	@Override
 	public int hashCode() {
-		return getCode().hashCode();
+        int code = getCode().hashCode();
+        if (innerScale.getScaleDegreeReparametrizer() != null)
+            code += 37 * innerScale.getScaleDegreeReparametrizer().hashCode();
+
+        return code;
 	}
 }

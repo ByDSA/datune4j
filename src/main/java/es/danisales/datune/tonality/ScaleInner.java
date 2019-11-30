@@ -3,6 +3,7 @@ package es.danisales.datune.tonality;
 import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.interval.IntervalChromatic;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,4 +45,8 @@ interface ScaleInner {
 	int size();
 
 	@NonNull ScaleDistance get(DiatonicDegree diatonicDegree);
+
+    @Nullable ScaleDegreeReparametrizer getScaleDegreeReparametrizer();
+
+    void setScaleDegreeReparametrizer(@Nullable ScaleDegreeReparametrizer scaleDegreeReparametrizer);
 }

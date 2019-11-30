@@ -197,91 +197,91 @@ public class ChromaticChordMidiTest {
     }
 
     @Test
-    public void add() {
+    public void add() { // todo
     }
 
     @Test
-    public void setVelocity() {
+    public void setVelocity() {  // todo
     }
 
     @Test
-    public void setLength() {
+    public void setLength() { // todo
     }
 
     @Test
-    public void shiftOctave1() {
+    public void shiftOctave1() { // todo
     }
 
     @Test
-    public void setOctave1() {
+    public void setOctave1() { // todo
     }
 
     @Test
-    public void getOctave() {
+    public void getOctave() { // todo
     }
 
     @Test
-    public void sortByPitch() {
+    public void sortByPitch() { // todo
     }
 
     @Test
-    public void equals() {
+    public void equals() { // todo
     }
 
     @Test
-    public void cloneTest() {
+    public void cloneTest() { // todo
     }
 
     @Test
-    public void add1() {
+    public void add1() { // todo
     }
 
     @Test
-    public void add2() {
+    public void add2() { // todo
     }
 
     @Test
-    public void addAll() {
+    public void addAll() { // todo
     }
 
     @Test
-    public void remove() {
+    public void remove() { // todo
     }
 
     @Test
-    public void setRootPos() {
+    public void setRootPos() { // todo
     }
 
     @Test
-    public void getRoot() {
+    public void getRoot() { // todo
     }
 
     @Test
-    public void getRootPos() {
+    public void getRootPos() { // todo
     }
 
     @Test
-    public void hashCodeTest() {
+    public void hashCodeTest() { // todo
     }
 
     @Test
-    public void add3() {
+    public void add3() { // todo
     }
 
     @Test
-    public void add4() {
+    public void add4() { // todo
     }
 
     @Test
-    public void addAll1() {
+    public void addAll1() { // todo
     }
 
     @Test
-    public void addAll2() {
+    public void addAll2() { // todo
     }
 
     @Test
-    public void clear() {
+    public void clear() { // todo
     }
 
     @Test
@@ -341,182 +341,182 @@ public class ChromaticChordMidiTest {
     }
 
     @Test
-    public void indexOf() {
+    public void indexOf() {  // todo
     }
 
     @Test
-    public void isEmpty() {
+    public void isEmpty() { // todo
     }
 
     @Test
-    public void iterator() {
+    public void iterator() { // todo
     }
 
     @Test
-    public void lastIndexOf() {
+    public void lastIndexOf() { // todo
     }
 
     @Test
-    public void listIterator() {
+    public void listIterator() { // todo
     }
 
     @Test
-    public void listIterator1() {
+    public void listIterator1() { // todo
     }
 
     @Test
-    public void remove1() {
+    public void remove1() { // todo
     }
 
     @Test
-    public void remove2() {
+    public void remove2() { // todo
     }
 
     @Test
-    public void removeAll() {
+    public void removeAll() { // todo
     }
 
     @Test
-    public void retainAll() {
+    public void retainAll() { // todo
     }
 
     @Test
-    public void set() {
+    public void set() { // todo
     }
 
     @Test
-    public void size() {
+    public void size() { // todo
     }
 
     @Test
-    public void subList() {
+    public void subList() { // todo
     }
 
     @Test
-    public void toArray() {
+    public void toArray() { // todo
     }
 
     @Test
-    public void toArray1() {
+    public void toArray1() { // todo
     }
 
     @Test
-    public void replaceAll() {
+    public void replaceAll() { // todo
     }
 
     @Test
-    public void sort() {
+    public void sort() { // todo
     }
 
     @Test
-    public void spliterator() {
+    public void spliterator() { // todo
     }
 
     @Test
-    public void removeIf() {
+    public void removeIf() { // todo
     }
 
     @Test
-    public void spliterator1() {
+    public void spliterator1() { // todo
     }
 
     @Test
-    public void stream() {
+    public void stream() { // todo
     }
 
     @Test
-    public void parallelStream() {
+    public void parallelStream() { // todo
     }
 
     @Test
-    public void forEach() {
+    public void forEach() { // todo
     }
 
     @Test
-    public void spliterator2() {
+    public void spliterator2() { // todo
     }
 
     @Test
-    public void getAllInversions() {
+    public void getAllInversions() { // todo
     }
 
     @Test
-    public void resetRoot() {
+    public void resetRoot() { // todo
     }
 
     @Test
-    public void over() {
+    public void over() { // todo
     }
 
     @Test
-    public void inv() {
+    public void inv() { // todo
     }
 
     @Test
-    public void inv1() {
+    public void inv1() { // todo
     }
 
     @Test
-    public void getInversionNumber() {
+    public void getInversionNumber() { // todo
     }
 
     @Test
-    public void from() {
+    public void from() { // todo
     }
 
     @Test
-    public void builder() {
+    public void builder() { // todo
     }
 
     @Test
-    public void from1() {
+    public void from1() { // todo
     }
 
     @Test
-    public void from2() {
+    public void from2() { // todo
     }
 
     @Test
-    public void from3() {
+    public void from3() { // todo
     }
 
     @Test
-    public void from4() {
+    public void from4() { // todo
     }
 
     @Test
-    public void fromDiatonicChordMidi() {
+    public void fromDiatonicChordMidi() { // todo
     }
 
     @Test
-    public void addAll3() {
+    public void addAll3() { // todo
     }
 
     @Test
-    public void add5() {
+    public void add5() { // todo
     }
 
     @Test
-    public void add6() {
+    public void add6() { // todo
     }
 
     @Test
-    public void compact() {
+    public void compact() { // todo
     }
 
     @Test
-    public void getQuality() {
+    public void getQuality() { // todo
     }
 
     @Test
-    public void shift() {
+    public void shift() { // todo
     }
 
     @Test
-    public void shiftNegative() {
+    public void shiftNegative() { // todo
     }
 
     @Test
-    public void clone1() {
+    public void clone1() { // todo
 	}
 }
