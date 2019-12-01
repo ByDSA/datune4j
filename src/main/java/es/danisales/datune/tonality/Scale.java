@@ -228,17 +228,17 @@ public class Scale implements Iterable<ScaleDistance> {
 		return innerScale.getCode().iterator();
 	}
 
-    public @Nullable ScaleDistance get(@NonNull DiatonicDegree diatonicDegree) {
-        if (diatonicDegree.ordinal() == 0)
+    public @Nullable ScaleDistance get(@NonNull RelativeDegree relativeDegree) {
+        if (relativeDegree.ordinal() == 0)
             return ScaleDistance.NONE;
 
         if (size() == 7)
-            return innerScale.get(diatonicDegree);
+            return innerScale.get(relativeDegree);
 
-        return non7get(diatonicDegree);
+        return non7get(relativeDegree);
     }
 
-    private @Nullable ScaleDistance non7get(@NonNull DiatonicDegree diatonicDegree) {
+    private @Nullable ScaleDistance non7get(@NonNull RelativeDegree diatonicDegree) {
         if (innerScale.getScaleDegreeReparametrizer() == null)
             return null;
 

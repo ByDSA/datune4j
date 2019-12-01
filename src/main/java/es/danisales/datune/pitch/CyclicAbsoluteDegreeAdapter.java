@@ -17,7 +17,7 @@ public class CyclicAbsoluteDegreeAdapter {
     private CyclicAbsoluteDegreeAdapter() {
     }
 
-    static Map<Integer, Function<DiatonicAlt, CyclicAbsoluteDegree>> conversorMap = new HashMap<>();
+    private static Map<Integer, Function<DiatonicAlt, CyclicAbsoluteDegree>> conversorMap = new HashMap<>();
 
     static {
         conversorMap.put(5, Pentatonic::from);
@@ -42,7 +42,7 @@ public class CyclicAbsoluteDegreeAdapter {
 
                 @Override
                 public RelativeDegree getDegree() {
-                    return () -> currentIndex;
+                    return RelativeDegree.getValuesFromScaleSize(size).get(currentIndex);
                 }
 
                 @Override
@@ -97,7 +97,7 @@ public class CyclicAbsoluteDegreeAdapter {
         return i;
     }
 
-    static CyclicAbsoluteDegree createDegree(DiatonicAlt noteBase, int size) {
+    private static CyclicAbsoluteDegree createDegree(DiatonicAlt noteBase, int size) {
         int retIndex = noteBase.getDiatonic().ordinal() % size;
         return from(retIndex, size);
     }

@@ -24,7 +24,10 @@ public final class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDia
     protected DiatonicChordMidi() {
     }
 
-    public void add(ChromaticMidi chromaticMidi) throws TonalityException {
+    public void add(@NonNull ChromaticMidi chromaticMidi) throws TonalityException {
+        Objects.requireNonNull(chromaticMidi);
+        Objects.requireNonNull(tonality);
+
         DiatonicMidi diatonicMidi = DiatonicMidi.builder()
                 .from(chromaticMidi, tonality)
                 .build();

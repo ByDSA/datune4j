@@ -7,7 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 
 public interface BuilderOfWays<T> {
     @NonNull
-    default T build() {
+    default T build() throws BuildingException {
         for (Class<? extends BuildingWay<T>> c : getBuildingWaysClasses()) {
             try {
                 Constructor<? extends BuildingWay<T>> constructor = c.getDeclaredConstructor(this.getClass());

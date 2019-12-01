@@ -68,7 +68,6 @@ public class PitchDiatonicMidiTest {
         assertEquals(pitchDiatonicMidiExpected, pitchDiatonicMidiActual);
     }
 
-    @SuppressWarnings("ConstantConditions")
     @Test
     public void fromPitchChromaticMidiBidirectional() throws PitchMidiException {
         PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(DiatonicDegree.I, Tonality.C, 5);
@@ -89,7 +88,6 @@ public class PitchDiatonicMidiTest {
         assertEquals(pitchDiatonicMidiExpected, pitchDiatonicMidiActual);
     }
 
-    @SuppressWarnings("ConstantConditions")
     @Test
     public void fromPitchChromaticMidiBidirectional2() throws PitchMidiException {
         PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(DiatonicDegree.III, Tonality.Am, 4);
@@ -112,7 +110,6 @@ public class PitchDiatonicMidiTest {
         assertEquals(pitchDiatonicMidiExpected, pitchDiatonicMidiActual);
     }
 
-    @SuppressWarnings("ConstantConditions")
     @Test
     public void fromPitchChromaticMidiBidirectional3() throws PitchMidiException {
         Tonality tonality = Tonality.from(DiatonicAlt.BB, Scale.MAJOR);
@@ -138,7 +135,6 @@ public class PitchDiatonicMidiTest {
         assertEquals(pitchDiatonicMidiExpected, pitchDiatonicMidiActual);
     }
 
-    @SuppressWarnings("ConstantConditions")
     @Test
     public void fromPitchChromaticMidiBidirectional4() throws PitchMidiException {
         Tonality tonality = Tonality.from(DiatonicAlt.Cbbb, Scale.MINOR);

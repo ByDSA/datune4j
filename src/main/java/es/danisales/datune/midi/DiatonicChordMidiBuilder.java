@@ -68,7 +68,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
         ChromaticFunction chromaticFunction = (ChromaticFunction) function;
         ChromaticChord chromaticChord = TonalityGetChromaticFunction.get(self.tonality, chromaticFunction);
         tonality = TonalityGetChromaticFunction.getTonalityFromChromaticFunction(tonality, chromaticFunction);
-        self.tonality = tonality;
+        self.tonality = Objects.requireNonNull(tonality, chromaticFunction.toString());
 
         ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder()
                 .fromChromatic(chromaticChord)
@@ -329,7 +329,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
 
                 ChromaticChordMidi ccm = ChromaticChordMidi.builder().fromChromaticMidi(ccmArray).build();
 
-                if (tonality.has(chromaticChordInterface))
+                if (tonality.hasAsDiatonicFunction(chromaticChordInterface))
                     self.addAll(ccm);
                 else {
                     self.metaTonality = TonalityChordRetrieval.searchInModeSameRoot(tonality, chromaticChordInterface);

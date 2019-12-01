@@ -2,6 +2,7 @@ package es.danisales.datune.musical;
 
 import com.google.common.collect.ImmutableList;
 import es.danisales.building.BuilderOfWays;
+import es.danisales.building.BuildingException;
 import es.danisales.building.BuildingWay;
 import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.absolutedegree.Diatonic;
@@ -115,8 +116,12 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
 
         @NonNull
         @Override
-        public ChromaticChord build() {
-            return tonality.getChordFrom(chromaticFunction);
+        public ChromaticChord build() throws BuildingException {
+            try {
+                return tonality.getChordFrom(chromaticFunction);
+            } catch (TonalityException e) {
+                throw new BuildingException(e.getMessage());
+            }
         }
 
 
@@ -156,8 +161,12 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
 
     @NonNull
     @Override
-    public ChromaticChord build() {
-        return BuilderOfWays.super.build();
+    public ChromaticChord build() { // todo: datild: throws BuildingException
+        try {
+            return BuilderOfWays.super.build();
+        } catch (BuildingException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     @NonNull

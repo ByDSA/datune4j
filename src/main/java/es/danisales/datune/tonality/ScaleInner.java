@@ -1,6 +1,7 @@
 package es.danisales.datune.tonality;
 
 import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.degree.RelativeDegree;
 import es.danisales.datune.interval.IntervalChromatic;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -44,7 +45,7 @@ interface ScaleInner {
 
 	int size();
 
-	@NonNull ScaleDistance get(DiatonicDegree diatonicDegree);
+    @Nullable ScaleDistance get(RelativeDegree diatonicDegree);
 
     @Nullable ScaleDegreeReparametrizer getScaleDegreeReparametrizer();
 

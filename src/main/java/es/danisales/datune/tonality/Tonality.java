@@ -272,13 +272,10 @@ public class Tonality implements Iterable<DiatonicAlt> {
         return ret;
     }
 
-    public @NonNull ChromaticChord getChordFrom(@NonNull ChromaticFunction chromaticFunction) {
+    public @NonNull ChromaticChord getChordFrom(@NonNull ChromaticFunction chromaticFunction) throws TonalityException {
         Objects.requireNonNull(chromaticFunction);
 
-        ChromaticChord ret = TonalityGetChromaticFunction.get(this, chromaticFunction);
-        if (ret == null)
-            throw new RuntimeException("Undefined chord for chromatic function " + chromaticFunction + " in " + this);
-        return ret;
+        return TonalityGetChromaticFunction.get(this, chromaticFunction);
     }
 
     public @NonNull Scale getScale() {
@@ -324,26 +321,22 @@ public class Tonality implements Iterable<DiatonicAlt> {
         return Collections.unmodifiableList( chromaticFunctionList );
     }
 
-    public boolean has(boolean outScale, @NonNull ChromaticChord chromaticChord) {
+    public boolean hasAsChromaticFunction(@NonNull ChromaticChord chromaticChord) {
         Objects.requireNonNull(chromaticChord);
 
-        if (!outScale && has(chromaticChord))
-            return true;
+        for (ChromaticFunction f : ChromaticFunction.ALL) {
+            if (size() != Diatonic.NUMBER && ArrayUtils.contains(f, ChromaticFunction.TENSIONS))
+                continue;
 
-        if (outScale) {
-            for ( ChromaticFunction f : ChromaticFunction.ALL ) {
-                if (size() != Diatonic.NUMBER && ArrayUtils.contains(f, ChromaticFunction.TENSIONS))
-                    continue;
-
-                ChromaticChord c2 = ChromaticChord.builder().fromDiatonicChordMidi(
-                        DiatonicChordMidi.builder()
-                                .from(f, this)
-                                .build()
-                ).build();
-                if (chromaticChord.getNotes().equals(c2.getNotes()))
-                    return true;
-            }
+            ChromaticChord c2 = ChromaticChord.builder().fromDiatonicChordMidi(
+                    DiatonicChordMidi.builder()
+                            .from(f, this)
+                            .build()
+            ).build();
+            if (chromaticChord.getNotes().equals(c2.getNotes()))
+                return true;
         }
+
         return false;
     }
 
@@ -416,5 +409,21 @@ public class Tonality implements Iterable<DiatonicAlt> {
     @Override
     public int hashCode() {
         return getRoot().hashCode() + 31*getScale().hashCode();
+    }
+
+    public boolean hasAsDiatonicFunction(ChromaticFunction chromaticFunction) {
+        ChromaticChord chromaticChord2 = ChromaticChord.builder()
+                .chromaticFunction(chromaticFunction)
+                .tonality(this)
+                .build();
+        return has(chromaticChord2);
+    }
+
+    public boolean has(ChromaticFunction chromaticFunction) {
+        ChromaticChord chromaticChord2 = ChromaticChord.builder()
+                .chromaticFunction(chromaticFunction)
+                .tonality(this)
+                .build();
+        return has(chromaticChord2);
     }
 }

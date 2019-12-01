@@ -202,6 +202,41 @@ public enum DiatonicFunction implements HarmonicFunction {
 		throw new RuntimeException("Impossible");
 	}
 
+    public static @Nullable DiatonicFunction from(@NonNull ChromaticFunction chromaticFunction) {
+        switch (chromaticFunction) {
+            case I:
+            case i:
+            case I0:
+                return DiatonicFunction.I;
+            case II:
+            case ii:
+            case II0:
+                return DiatonicFunction.II;
+            case III:
+            case iii:
+            case III0:
+                return DiatonicFunction.III;
+            case IV:
+            case iv:
+            case IV0:
+                return DiatonicFunction.IV;
+            case V:
+            case v:
+            case V0:
+                return DiatonicFunction.V;
+            case VI:
+            case vi:
+            case VI0:
+                return DiatonicFunction.VI;
+            case VII:
+            case vii:
+            case VII0:
+                return DiatonicFunction.VII;
+        }
+
+        return null;
+    }
+
 	public String toString() {
 		switch ( this ) {
 			case I_SECOND:

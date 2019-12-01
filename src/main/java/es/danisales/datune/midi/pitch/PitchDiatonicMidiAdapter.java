@@ -2,7 +2,6 @@ package es.danisales.datune.midi.pitch;
 
 import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.absolutedegree.Diatonic;
-import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.degree.RelativeDegree;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.ScaleDistance;
@@ -23,39 +22,41 @@ class PitchDiatonicMidiAdapter {
     public static @NonNull PitchDiatonicMidi from(@NonNull PitchChromaticMidi pitchChromaticMidi, @NonNull Tonality tonality) throws TonalityException {
         Objects.requireNonNull(pitchChromaticMidi);
         Objects.requireNonNull(tonality);
-        DiatonicDegree diatonicDegree = getDegreeFromChromaticMidi(pitchChromaticMidi, tonality);
+        RelativeDegree relativeDegree = getDegreeFromChromaticMidi(pitchChromaticMidi, tonality);
 
-        int octave = getRootOctaveFromChromaticMidi(pitchChromaticMidi, diatonicDegree, tonality);
+        int octave = getRootOctaveFromChromaticMidi(pitchChromaticMidi, relativeDegree, tonality);
 
-        return fromUncheck(diatonicDegree, tonality, octave);
+        return fromUncheck(relativeDegree, tonality, octave);
     }
 
-    private static @NonNull DiatonicDegree getDegreeFromChromaticMidi(PitchChromaticMidi pitchChromaticMidi, Tonality tonality) throws TonalityException {
+    private static @NonNull RelativeDegree getDegreeFromChromaticMidi(PitchChromaticMidi pitchChromaticMidi, Tonality tonality) throws TonalityException {
         Chromatic chromatic = pitchChromaticMidi.getChromatic();
-        return (DiatonicDegree) tonality.getDegreeFrom(chromatic);
+        return tonality.getDegreeFrom(chromatic);
     }
 
-    private static int getRootOctaveFromChromaticMidi(PitchChromaticMidi pitchChromaticMidi, DiatonicDegree diatonicDegree, Tonality tonality) {
+    private static int getRootOctaveFromChromaticMidi(PitchChromaticMidi pitchChromaticMidi, RelativeDegree relativeDegree, Tonality tonality) {
         int octave = getRootOctaveWithoutAlts(pitchChromaticMidi, tonality);
-        octave += octaveCorrector(pitchChromaticMidi, diatonicDegree, tonality);
+        octave += octaveCorrector(pitchChromaticMidi, relativeDegree, tonality);
         return octave;
     }
 
-    private static int octaveCorrector(PitchChromaticMidi pitchChromaticMidi, DiatonicDegree diatonicDegree, Tonality tonality) {
+    private static int octaveCorrector(PitchChromaticMidi pitchChromaticMidi, RelativeDegree relativeDegree, Tonality tonality) {
         int octave = 0;
 
         octave += octaveCorrectionAlts(tonality);
-        octave += octaveCorrectionDiatonicDegree(pitchChromaticMidi, diatonicDegree, tonality.getScale());
+        octave += octaveCorrectionDiatonicDegree(pitchChromaticMidi, relativeDegree, tonality.getScale());
 
         return octave;
     }
 
-    private static int octaveCorrectionDiatonicDegree(PitchChromaticMidi pitchChromaticMidi, DiatonicDegree diatonicDegree, Scale scale) {
+    private static int octaveCorrectionDiatonicDegree(PitchChromaticMidi pitchChromaticMidi, RelativeDegree relativeDegree, Scale scale) {
         int semis = pitchChromaticMidi.getChromatic().ordinal();
         int octave = 0;
 
-        for (DiatonicDegree degree = diatonicDegree.getPrevious(); degree != DiatonicDegree.VII; degree = degree.getPrevious()) {
+        for (RelativeDegree degree = relativeDegree.getPrevious(); degree.ordinal() > degree.getPrevious().ordinal(); degree = degree.getPrevious()) {
             ScaleDistance scaleDistance = scale.get(degree);
+            if (scaleDistance == null)
+                continue;
             semis -= scaleDistance.getMicrotonalSemitones();
             if (semis < 0) {
                 semis += Chromatic.NUMBER;

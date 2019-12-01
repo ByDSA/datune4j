@@ -83,7 +83,7 @@ public class TonalityRetrieval {
     public static @NonNull List<Tonality> listFromChord(@NonNull ChromaticChord c) {
         List<Tonality> out = new ArrayList<>();
         for ( Tonality t : Tonality.all() ) {
-            if ( t.has( false, c ) )
+            if (t.has(c))
                 out.add( t );
         }
 
@@ -93,7 +93,7 @@ public class TonalityRetrieval {
     public static @NonNull List<Tonality> listFromChordOutScale(@NonNull ChromaticChord c) {
         List<Tonality> out = new ArrayList<>();
         for ( Tonality t : Tonality.all() ) {
-            if ( t.has( true, c ) )
+            if (t.hasAsChromaticFunction(c))
                 out.add( t );
         }
 
@@ -170,25 +170,39 @@ public class TonalityRetrieval {
         return Collections.unmodifiableSet(ret);
     }
 
-    public static List<Tonality> getFromChord(ChromaticChord c) {
-        return getFromChord( false, c );
-    }
-
-    public static List<Tonality> getFromChordOutScale(ChromaticChord c) {
-        return getFromChord(true, c);
-    }
-
-    public static List<Tonality> getFromChord(boolean outScale, ChromaticChord c) {
+    public static @NonNull List<Tonality> getFromChordInScale(@NonNull ChromaticChord chromaticChord) {
         List<Tonality> out = new ArrayList<>();
-        for ( Tonality t : Tonality.values() ) {
-            if ( t.has( outScale, c ) )
-                out.add( t );
+        for (Tonality tonality : Tonality.values()) {
+            if (tonality.has(chromaticChord))
+                out.add(tonality);
         }
 
         return out;
     }
 
-    public static List<Tonality> getFromChords(boolean outScale, @NonNull List<ChromaticChord> chords) {
+    public static @NonNull List<Tonality> getFromChordOutScale(@NonNull ChromaticChord chromaticChord) {
+        List<Tonality> out = new ArrayList<>();
+        for (Tonality tonality : Tonality.values())
+            if (tonality.hasAsChromaticFunction(chromaticChord))
+                out.add(tonality);
+
+        return out;
+    }
+
+    public static @NonNull List<Tonality> getFromChord(@NonNull ChromaticChord chromaticChord) {
+        List<Tonality> out = new ArrayList<>();
+        for ( Tonality t : Tonality.values() ) {
+            if (t.has(chromaticChord))
+                out.add(t);
+
+            if (t.hasAsChromaticFunction(chromaticChord))
+                out.add(t);
+        }
+
+        return out;
+    }
+
+    public static @NonNull List<Tonality> getFromChords(boolean outScale, @NonNull List<ChromaticChord> chords) {
         checkArgument(chords.size() > 0);
         List<Tonality> candidates = new ArrayList<>();
 

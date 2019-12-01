@@ -11,6 +11,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 public interface RelativeDegree {
     int ordinal();
 
+    @NonNull RelativeDegree getPrevious();
+
+    @NonNull RelativeDegree getNext();
+
     static @NonNull List<RelativeDegree> getValuesFromScaleSize(int n) {
         switch (n) {
             case 5: return Collections.unmodifiableList(
@@ -26,7 +30,29 @@ public interface RelativeDegree {
                 List<RelativeDegree> ret = new ArrayList<>();
                 for (int i = 0; i < n; i++) {
                     AtomicInteger iAtomic = new AtomicInteger(i);
-                    RelativeDegree tonalityDegree = iAtomic::get;
+                    RelativeDegree tonalityDegree = new RelativeDegree() {
+                        @Override
+                        public int ordinal() {
+                            return iAtomic.get();
+                        }
+
+                        @NonNull
+                        @Override
+                        public RelativeDegree getPrevious() {
+                            int index = ordinal() - 1;
+                            if (index < 0)
+                                index += ret.size();
+                            return ret.get(index);
+                        }
+
+                        @NonNull
+                        @Override
+                        public RelativeDegree getNext() {
+                            int index = ordinal() + 1;
+                            index %= ret.size();
+                            return ret.get(index);
+                        }
+                    };
                     ret.add(tonalityDegree);
                 }
 
