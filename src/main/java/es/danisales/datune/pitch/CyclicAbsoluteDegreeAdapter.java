@@ -1,11 +1,11 @@
 package es.danisales.datune.pitch;
 
+import es.danisales.datune.absolutedegree.Chromatic;
+import es.danisales.datune.absolutedegree.Diatonic;
+import es.danisales.datune.absolutedegree.Pentatonic;
 import es.danisales.datune.degree.RelativeDegree;
 import es.danisales.datune.interval.Interval;
-import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.musical.Diatonic;
 import es.danisales.datune.musical.DiatonicAlt;
-import es.danisales.datune.musical.Pentatonic;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.HashMap;

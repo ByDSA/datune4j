@@ -1,8 +1,9 @@
 package es.danisales.datune.midi.pitch;
 
+import es.danisales.datune.absolutedegree.Diatonic;
 import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.degree.RelativeDegree;
 import es.danisales.datune.interval.IntervalDiatonic;
-import es.danisales.datune.musical.Diatonic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
@@ -11,7 +12,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.Objects;
 
 public class PitchDiatonicMidi implements PitchOctaveMidiEditable, PitchMidiInterface<IntervalDiatonic> {
-	protected DiatonicDegree degree;
+	protected RelativeDegree degree;
 	protected int octave;
 	protected Tonality tonality;
 
@@ -23,7 +24,7 @@ public class PitchDiatonicMidi implements PitchOctaveMidiEditable, PitchMidiInte
 		}
 	}
 
-	public static @NonNull PitchDiatonicMidi from(@NonNull DiatonicDegree diatonicDegree, @NonNull Tonality tonality, int octave) throws PitchMidiException {
+	public static @NonNull PitchDiatonicMidi from(@NonNull RelativeDegree diatonicDegree, @NonNull Tonality tonality, int octave) throws PitchMidiException {
 		return PitchDiatonicMidiAdapter.from(diatonicDegree, tonality, octave);
 	}
 
@@ -31,16 +32,17 @@ public class PitchDiatonicMidi implements PitchOctaveMidiEditable, PitchMidiInte
 		return PitchDiatonicMidiAdapter.from(pitchChromaticMidi, tonality);
 	}
 
-	public @NonNull DiatonicDegree getDegree() {
+	public @NonNull RelativeDegree getDegree() {
 		return degree;
 	}
 
+	@SuppressWarnings("ConstantConditions") // Si es consistente, nunca devolverá null
 	public @NonNull DiatonicAlt getDiatonicAlt() {
 		return tonality.getNote(degree);
 	}
 
-	public Diatonic getDiatonic() {
-		return tonality.getNote(degree).getDiatonic();
+	public @NonNull Diatonic getDiatonic() {
+		return getDiatonicAlt().getDiatonic();
 	}
 
 	@SuppressWarnings("MethodDoesntCallSuperMethod")

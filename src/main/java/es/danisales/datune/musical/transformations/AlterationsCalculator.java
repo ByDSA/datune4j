@@ -1,15 +1,10 @@
 package es.danisales.datune.musical.transformations;
 
-import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.musical.Diatonic;
+import es.danisales.datune.absolutedegree.Diatonic;
 import es.danisales.datune.musical.DiatonicAlt;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
-
-import static es.danisales.datune.musical.DiatonicAlt.*;
 
 public class AlterationsCalculator {
     private AlterationsCalculator() {

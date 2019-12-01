@@ -3,6 +3,8 @@ package es.danisales.datune.musical;
 import com.google.common.collect.ImmutableList;
 import es.danisales.building.BuilderOfWays;
 import es.danisales.building.BuildingWay;
+import es.danisales.datune.absolutedegree.Chromatic;
+import es.danisales.datune.absolutedegree.Diatonic;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.midi.ChromaticMidi;

@@ -1,10 +1,11 @@
-package es.danisales.datune.musical;
+package es.danisales.datune.absolutedegree;
 
 import es.danisales.datune.degree.PentatonicDegree;
+import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
 
-public class PentatonicAdapter {
+class PentatonicAdapter {
     private PentatonicAdapter() {
     }
 

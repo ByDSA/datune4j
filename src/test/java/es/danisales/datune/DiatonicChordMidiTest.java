@@ -1,12 +1,16 @@
 package es.danisales.datune;
 
+import es.danisales.datune.absolutedegree.Chromatic;
+import es.danisales.datune.absolutedegree.Diatonic;
 import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.midi.*;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
-import es.danisales.datune.musical.*;
+import es.danisales.datune.musical.ChromaticChord;
+import es.danisales.datune.musical.ChromaticChordInterface;
+import es.danisales.datune.musical.DiatonicChord;
 import es.danisales.datune.pitch.ChordNamer;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
@@ -432,7 +436,7 @@ public class DiatonicChordMidiTest {
         ChromaticChordMidi cc = ChromaticChordMidi.builder().fromDiatonicChordMidi(c).build();
     }
 
-    @Test
+    @Test(timeout = 2000)
     public void toChordFunc() {
         DiatonicChordMidi c = (DiatonicChordMidi.builder().from(DiatonicFunction.IV6, Tonality.C).octave(5).build());
         c.inv(3);

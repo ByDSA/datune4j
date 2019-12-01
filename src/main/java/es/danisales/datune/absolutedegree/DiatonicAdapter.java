@@ -1,15 +1,16 @@
-package es.danisales.datune.musical;
+package es.danisales.datune.absolutedegree;
 
 import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.degree.RelativeDegree;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
+import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public class DiatonicAdapter {
+class DiatonicAdapter {
     private DiatonicAdapter() {
     }
 

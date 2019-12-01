@@ -1,9 +1,8 @@
 package es.danisales.datune.musical.transformations;
 
-import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.musical.Diatonic;
+import es.danisales.datune.absolutedegree.Chromatic;
+import es.danisales.datune.absolutedegree.Diatonic;
 import es.danisales.datune.musical.DiatonicAlt;
-import es.danisales.utils.MathUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.HashSet;

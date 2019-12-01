@@ -83,7 +83,7 @@ public class Sequence extends BinaryFile {
 	}
 	/*
 	public void ready(int type) {
-		events.addSemi(0, new TempoEvent(tempo));
+		events.getWithSemiAdded(0, new TempoEvent(tempo));
 
 		for(Track c : channels) {
 			//mChannels[c.midiChannel].programChange(instr[c.midiInstrument].getPatch().getProgram());
@@ -106,7 +106,7 @@ public class Sequence extends BinaryFile {
 						ms = key;
 					else
 						ms = -1;
-					events.addSemi(ms, ev);
+					events.getWithSemiAdded(ms, ev);
 
 				}
 			}

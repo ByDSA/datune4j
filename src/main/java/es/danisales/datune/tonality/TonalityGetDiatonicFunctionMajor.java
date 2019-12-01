@@ -1,7 +1,7 @@
 package es.danisales.datune.tonality;
 
+import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.function.DiatonicFunction;
-import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.DiatonicChordPattern;
 import org.checkerframework.checker.nullness.qual.NonNull;

@@ -1,13 +1,9 @@
 package es.danisales.datune.tuning;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
+
+import java.util.*;
 
 public class Tuning {	
 	public final static double MIN_FREQUENCY = 20;

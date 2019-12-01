@@ -1,9 +1,9 @@
 package es.danisales.datune.tonality;
 
+import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.degree.RelativeDegree;
 import es.danisales.datune.interval.IntervalChromatic;
-import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -133,8 +133,8 @@ public class Scale implements Iterable<ScaleDistance> {
 			IONIAN_AUGMENTED_H2,
 			LOCRIAN_bb3_bb7,
 			NEAPOLITAN_MINOR,
-			NEAPOLITAN_MAJOR,
-			BLUES/*,
+			NEAPOLITAN_MAJOR/*,
+			BLUES,
 			WHOLE_TONE,
 			PENTATONIC_MINOR,
 			PENTATONIC,

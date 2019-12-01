@@ -1,8 +1,9 @@
 package es.danisales.datune.midi.pitch;
 
+import es.danisales.datune.absolutedegree.Chromatic;
+import es.danisales.datune.absolutedegree.Diatonic;
 import es.danisales.datune.degree.DiatonicDegree;
-import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.musical.Diatonic;
+import es.danisales.datune.degree.RelativeDegree;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.ScaleDistance;
 import es.danisales.datune.tonality.Tonality;
@@ -95,7 +96,7 @@ class PitchDiatonicMidiAdapter {
         return pitchChromaticMidiRootWithoutAlts.getOctave();
     }
 
-    static @NonNull PitchDiatonicMidi fromUncheck(@NonNull DiatonicDegree diatonicDegree, @NonNull Tonality tonality, int octave) {
+    static @NonNull PitchDiatonicMidi fromUncheck(@NonNull RelativeDegree diatonicDegree, @NonNull Tonality tonality, int octave) {
         PitchDiatonicMidi ret = new PitchDiatonicMidi();
         ret.degree = diatonicDegree;
         ret.tonality = tonality;
@@ -108,7 +109,7 @@ class PitchDiatonicMidiAdapter {
      * FROM DiatonicDegree, Tonality, Octave
      */
 
-    public static @NonNull PitchDiatonicMidi from(@NonNull DiatonicDegree diatonicDegree, @NonNull Tonality tonality, int octave) throws PitchMidiException {
+    public static @NonNull PitchDiatonicMidi from(@NonNull RelativeDegree diatonicDegree, @NonNull Tonality tonality, int octave) throws PitchMidiException {
         Objects.requireNonNull(diatonicDegree);
         Objects.requireNonNull(tonality);
         PitchDiatonicMidi ret = PitchDiatonicMidiAdapter.fromUncheck(diatonicDegree, tonality, octave);

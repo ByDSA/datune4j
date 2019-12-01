@@ -1,5 +1,6 @@
 package es.danisales.datune;
 
+import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.eventsequences.Instrument;
@@ -14,7 +15,6 @@ import es.danisales.datune.midi.binaries.Sequence;
 import es.danisales.datune.midi.binaries.Song;
 import es.danisales.datune.midi.binaries.events.Volume;
 import es.danisales.datune.musical.ChordTransformations;
-import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.pitch.PitchException;
 import es.danisales.datune.songs.Power;

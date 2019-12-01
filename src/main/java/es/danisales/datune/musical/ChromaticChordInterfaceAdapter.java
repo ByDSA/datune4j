@@ -1,5 +1,6 @@
 package es.danisales.datune.musical;
 
+import es.danisales.datune.absolutedegree.Chromatic;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 class ChromaticChordInterfaceAdapter {

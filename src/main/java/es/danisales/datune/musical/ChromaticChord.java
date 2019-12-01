@@ -1,5 +1,6 @@
 package es.danisales.datune.musical;
 
+import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.PitchChromaticChord;

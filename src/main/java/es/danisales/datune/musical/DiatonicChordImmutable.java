@@ -1,5 +1,6 @@
 package es.danisales.datune.musical;
 
+import es.danisales.datune.absolutedegree.Diatonic;
 import es.danisales.datune.midi.AddedException;
 import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.PitchDiatonicSingle;

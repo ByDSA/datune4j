@@ -1,9 +1,13 @@
 package es.danisales.datune.tonality;
 
+import es.danisales.datune.absolutedegree.Chromatic;
+import es.danisales.datune.absolutedegree.Diatonic;
 import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
-import es.danisales.datune.musical.*;
+import es.danisales.datune.musical.ChromaticChord;
+import es.danisales.datune.musical.ChromaticChordPattern;
+import es.danisales.datune.musical.DiatonicAlt;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -78,7 +82,7 @@ public class TonalityGetChromaticFunction {
 		}
 	}
 
-	public static @NonNull ChromaticChord get(@NonNull Tonality tonality, @NonNull ChromaticFunction chromaticFunction) {
+	public static @Nullable ChromaticChord get(@NonNull Tonality tonality, @NonNull ChromaticFunction chromaticFunction) {
 		Objects.requireNonNull(tonality);
 		Objects.requireNonNull(chromaticFunction);
 
@@ -182,42 +186,42 @@ public class TonalityGetChromaticFunction {
 				return Tonality.from(newRoot, tonality.getScale());
 			case SUBV7:
 				newRoot = tonality.getNote(DiatonicDegree.V);
-				Chromatic newRootChromatic = Chromatic.from(newRoot).addSemi(6);
+				Chromatic newRootChromatic = Chromatic.from(newRoot).getNext(6);
 				return Tonality.from(newRootChromatic, Scale.LYDIAN_b7);
 			case SUBV7_II:
                 ChromaticChord chromaticChord = ChromaticChord.builder()
                         .tonality(tonality)
                         .chromaticFunction(ChromaticFunction.V7_II)
                         .build();
-				newRootChromatic = chromaticChord.get(0).addSemi(6);
+				newRootChromatic = chromaticChord.get(0).getNext(6);
 				return Tonality.from(newRootChromatic, Scale.LYDIAN_b7);
 			case SUBV7_III:
                 chromaticChord = ChromaticChord.builder()
                         .tonality(tonality)
                         .chromaticFunction(ChromaticFunction.V7_III)
                         .build();
-				newRootChromatic = chromaticChord.get(0).addSemi(6);
+				newRootChromatic = chromaticChord.get(0).getNext(6);
 				return Tonality.from(newRootChromatic, Scale.LYDIAN_b7);
 			case SUBV7_IV:
                 chromaticChord = ChromaticChord.builder()
                         .tonality(tonality)
                         .chromaticFunction(ChromaticFunction.V7_IV)
                         .build();
-				newRootChromatic = chromaticChord.get(0).addSemi(6);
+				newRootChromatic = chromaticChord.get(0).getNext(6);
 				return Tonality.from(newRootChromatic, Scale.LYDIAN_b7);
 			case SUBV7_V:
                 chromaticChord = ChromaticChord.builder()
                         .tonality(tonality)
                         .chromaticFunction(ChromaticFunction.V7_V)
                         .build();
-				newRootChromatic = chromaticChord.get(0).addSemi(6);
+				newRootChromatic = chromaticChord.get(0).getNext(6);
 				return Tonality.from(newRootChromatic, Scale.LYDIAN_b7);
 			case SUBV7_VI:
                 chromaticChord = ChromaticChord.builder()
                         .tonality(tonality)
                         .chromaticFunction(ChromaticFunction.V7_VI)
                         .build();
-				newRootChromatic = chromaticChord.get(0).addSemi(6);
+				newRootChromatic = chromaticChord.get(0).getNext(6);
 				return Tonality.from(newRootChromatic, Scale.LYDIAN_b7);
 			case V7ALT:
 				newRoot = tonality.getNote(DiatonicDegree.V);

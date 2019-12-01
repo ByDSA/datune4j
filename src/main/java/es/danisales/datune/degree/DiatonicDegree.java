@@ -1,9 +1,9 @@
 package es.danisales.datune.degree;
 
+import es.danisales.datune.absolutedegree.Diatonic;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.interval.IntervalDiatonic;
-import es.danisales.datune.musical.Diatonic;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**

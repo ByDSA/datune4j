@@ -34,13 +34,13 @@ public class DiatonicAltRetrievalTest {
     @Test
     public void getNoteAbsoluteDegree3() {
         Scale scale = Scale.fromIntegers(Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-        RelativeDegree relativeDegree = RelativeDegree.valuesFrom(scale.size()).get(0);
+        RelativeDegree relativeDegree = RelativeDegree.getValuesFromScaleSize(scale.size()).get(0);
         Tonality tonality = Tonality.from(DiatonicAlt.C, scale);
         System.out.println(tonality.getNotes());
         assertEquals(DiatonicAlt.C,
                 tonality.getNote(relativeDegree));
 
-        relativeDegree = RelativeDegree.valuesFrom(scale.size()).get(8);
+        relativeDegree = RelativeDegree.getValuesFromScaleSize(scale.size()).get(8);
 
         assertEquals(DiatonicAlt.GG,
                 tonality.getNote(relativeDegree));

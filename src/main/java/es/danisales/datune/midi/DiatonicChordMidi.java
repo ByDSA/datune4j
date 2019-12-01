@@ -68,7 +68,7 @@ public final class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDia
     public void addInterval(@NonNull IntervalDiatonic interval) throws AddedException {
         Objects.requireNonNull(interval);
 
-        DiatonicDegree rootDegree = getRoot().getPitch().getDegree();
+        DiatonicDegree rootDegree = (DiatonicDegree) getRoot().getPitch().getDegree();
         DiatonicDegree targetDegree = DiatonicDegree.add(rootDegree, interval);
         add(targetDegree);
     }

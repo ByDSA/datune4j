@@ -1,10 +1,9 @@
 package es.danisales.datune.midi;
 
+import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
-import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.musical.ChromaticAdapter;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -42,9 +41,9 @@ public class PitchTests {
 		assertEquals( PitchChromaticMidi.GG5, PitchChromaticMidi.from( Chromatic.GG, 5 ) );
 		assertEquals( 5, PitchChromaticMidi.GG5.getOctave() );
 		assertEquals( PitchChromaticMidi.GG5, PitchChromaticMidi.from( Chromatic.GG, PitchChromaticMidi.GG5.getOctave() ) );
-		assertEquals( Chromatic.GG, ChromaticAdapter.from( PitchChromaticMidi.GG5 ) );
-		assertEquals( PitchChromaticMidi.GG5, PitchChromaticMidi.from( ChromaticAdapter.from( PitchChromaticMidi.GG5 ), 5 ) );
-		assertEquals( PitchChromaticMidi.GG5, PitchChromaticMidi.from( ChromaticAdapter.from( PitchChromaticMidi.GG5 ), PitchChromaticMidi.GG5.getOctave() ) );
+		assertEquals(Chromatic.GG, PitchChromaticMidi.GG5.getChromatic());
+		assertEquals(PitchChromaticMidi.GG5, PitchChromaticMidi.from(PitchChromaticMidi.GG5.getChromatic(), 5));
+		assertEquals(PitchChromaticMidi.GG5, PitchChromaticMidi.from(PitchChromaticMidi.GG5.getChromatic(), PitchChromaticMidi.GG5.getOctave()));
         assertEquals(PitchChromaticMidi.GG5.getMidiCode(), PitchChromaticMidi.GG5.getMidiCode());
 	}
 }

@@ -1,5 +1,7 @@
 package es.danisales.datune.musical;
 
+import es.danisales.datune.absolutedegree.Chromatic;
+import es.danisales.datune.absolutedegree.Diatonic;
 import es.danisales.datune.degree.RelativeDegree;
 import es.danisales.datune.musical.transformations.EnharmonicsRetrieval;
 import es.danisales.datune.tonality.Scale;

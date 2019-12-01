@@ -1,6 +1,7 @@
 package es.danisales.datune.musical;
 
 import es.danisales.datastructures.EnumTreeSet;
+import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -1221,7 +1222,7 @@ OMIT11
 
 		List<Chromatic> mutableNotesList = new ArrayList<>();
 		for (Integer n : chromaticChordMeta.getPattern()) {
-			Chromatic newChromatic = base.addSemi(n);
+			Chromatic newChromatic = base.getNext(n);
 			mutableNotesList.add(newChromatic);
 		}
 

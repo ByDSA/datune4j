@@ -1,12 +1,12 @@
-package es.danisales.datune.musical;
+package es.danisales.datune.absolutedegree;
 
 import es.danisales.datune.midi.ChromaticMidi;
-import es.danisales.datune.midi.pitch.PitchChromaticMidi;
+import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public class ChromaticAdapter {
+class ChromaticAdapter {
     private ChromaticAdapter() {
     }
 
@@ -16,12 +16,7 @@ public class ChromaticAdapter {
         return Chromatic.from(diatonicAlt);
     }
 
-    public static @NonNull Chromatic from(PitchChromaticMidi pitchMidi) {
-        int value = pitchMidi.getMidiCode();
-        return Chromatic.from( value % Chromatic.NUMBER );
-    }
-
-    public static @NonNull Chromatic from(ChromaticMidi chromaticMidi) {
+    public static @NonNull Chromatic from(@NonNull ChromaticMidi chromaticMidi) {
         return chromaticMidi.getPitch().getChromatic();
     }
 }

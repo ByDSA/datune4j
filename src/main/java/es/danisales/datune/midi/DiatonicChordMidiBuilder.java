@@ -1,5 +1,6 @@
 package es.danisales.datune.midi;
 
+import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
@@ -8,7 +9,6 @@ import es.danisales.datune.midi.arpegios.Arpegio;
 import es.danisales.datune.midi.arpegios.ArpegioDefault;
 import es.danisales.datune.midi.pitch.PitchDiatonicMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
-import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.DiatonicChordPattern;
 import es.danisales.datune.tonality.Tonality;
@@ -219,7 +219,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                                 .build();
                         Chromatic firstChromatic = Chromatic.from(c.getCyclic(0));
                         tonality = Tonality.from(
-                                firstChromatic.addSemi(6), Scale.LYDIAN_b7
+                                firstChromatic.getWithSemiAdded(6), Scale.LYDIAN_b7
                         );
                         break;
                     case SUBV7_II:
@@ -229,7 +229,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                                 ).build();
                         Chromatic firstChromatic2 = Chromatic.from(c2.getCyclic(0));
                         tonality = Tonality.from(
-                                firstChromatic2.addSemi(6), Scale.LYDIAN_b7
+                                firstChromatic2.getWithSemiAdded(6), Scale.LYDIAN_b7
                         );
                         break;
                     case SUBV7_III:
@@ -239,7 +239,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                                 ).build();
                         Chromatic firstChromatic3 = Chromatic.from(c3.getCyclic(0));
                         tonality = Tonality.from(
-                                firstChromatic3.addSemi(6), Scale.LYDIAN_b7
+                                firstChromatic3.getWithSemiAdded(6), Scale.LYDIAN_b7
                         );
                         break;
                     case SUBV7_IV:
@@ -249,7 +249,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                                 ).build();
                         Chromatic firstChromatic4 = Chromatic.from(c4.getCyclic(0));
                         tonality = Tonality.from(
-                                firstChromatic4.addSemi(6), Scale.LYDIAN_b7
+                                firstChromatic4.getWithSemiAdded(6), Scale.LYDIAN_b7
                         );
                         break;
                     case SUBV7_V:
@@ -259,7 +259,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                                 ).build();
                         Chromatic firstChromatic5 = Chromatic.from(c5.getCyclic(0));
                         tonality = Tonality.from(
-                                firstChromatic5.addSemi(6), Scale.LYDIAN_b7
+                                firstChromatic5.getWithSemiAdded(6), Scale.LYDIAN_b7
                         );
                         break;
                     case SUBV7_VI:
@@ -269,7 +269,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                                 ).build();
                         Chromatic firstChromatic6 = Chromatic.from(c6.getCyclic(0));
                         tonality = Tonality.from(
-                                firstChromatic6.addSemi(6), Scale.LYDIAN_b7
+                                firstChromatic6.getWithSemiAdded(6), Scale.LYDIAN_b7
                         );
                         break;
                     case V7ALT:

@@ -1,9 +1,8 @@
 package es.danisales.datune.tuning;
 
+import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.musical.AlterationException;
-import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
-import es.danisales.datune.musical.transformations.AlterationsCalculator;
 
 public abstract class DiatonicTemperament extends Temperament<DiatonicAlt> {
 	public abstract double semi();

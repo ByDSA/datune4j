@@ -1,10 +1,10 @@
 package es.danisales.datune.midi;
 
+import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.degree.RelativeDegree;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.interval.IntervalChromatic;
-import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.transformations.ChordChecker;
 import es.danisales.datune.tonality.Tonality;
 
@@ -16,7 +16,7 @@ public class DiatonicChordMidiChecker {
     }
 
     public static boolean isTonic(DiatonicChordMidi diatonicChordMidi) {
-        DiatonicDegree diatonicDegree = diatonicChordMidi.getRoot().getPitch().getDegree();
+        DiatonicDegree diatonicDegree = (DiatonicDegree) diatonicChordMidi.getRoot().getPitch().getDegree();
         switch (diatonicDegree) {
             case I:
             case III:
@@ -35,7 +35,7 @@ public class DiatonicChordMidiChecker {
     }
 
     public boolean isDominant(DiatonicChordMidi diatonicChordMidi) {
-        DiatonicDegree diatonicDegree = diatonicChordMidi.getRoot().getPitch().getDegree();
+        DiatonicDegree diatonicDegree = (DiatonicDegree) diatonicChordMidi.getRoot().getPitch().getDegree();
         switch (diatonicDegree) {
             case V:
             case VII:
@@ -112,7 +112,7 @@ public class DiatonicChordMidiChecker {
         RelativeDegree relativeDegree = self.get(0).getPitch().getDegree();
         if (!(relativeDegree instanceof DiatonicDegree))
             return null;
-        Tonality tonality = self.tonality.getRelativeScaleDiatonic((DiatonicDegree) relativeDegree);
+        Tonality tonality = self.tonality.getRelativeScaleDiatonic(relativeDegree);
 
         return DiatonicChordMidi.builder()
                 .from(diatonicFunction, tonality)

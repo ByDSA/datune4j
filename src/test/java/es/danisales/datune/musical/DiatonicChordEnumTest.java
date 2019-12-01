@@ -1,5 +1,6 @@
 package es.danisales.datune.musical;
 
+import es.danisales.datune.absolutedegree.Diatonic;
 import org.junit.Test;
 
 import java.util.Arrays;

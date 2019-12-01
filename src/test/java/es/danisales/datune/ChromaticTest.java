@@ -1,11 +1,11 @@
 package es.danisales.datune;
 
-import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
+import es.danisales.datune.musical.transformations.EnharmonicsRetrieval;
 import es.danisales.datune.tonality.ScaleDistance;
 import org.junit.Test;
 
-import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.*;
@@ -92,13 +92,13 @@ public class ChromaticTest {
 	}
 	@Test
 	public void add() {
-		Chromatic c = Chromatic.C.addSemi(2);
+		Chromatic c = Chromatic.C.getNext(2);
 		assertEquals(Chromatic.D, c);
-		
-		c = Chromatic.B.addSemi(2);
+
+		c = Chromatic.B.getNext(2);
 		assertEquals(Chromatic.CC, c);
-		
-		c = Chromatic.C.addSemi(-2);
+
+		c = Chromatic.C.getNext(-2);
 		assertEquals(Chromatic.AA, c);
 	}
 	
@@ -126,7 +126,7 @@ public class ChromaticTest {
 	
 	@Test
 	public void getEnharmonics() {
-		Set<DiatonicAlt> cs = Chromatic.C.getEnharmonics(3);
+		Set<DiatonicAlt> cs = EnharmonicsRetrieval.getFromChromatic(Chromatic.C, 3);
 		assertEquals(4, cs.size());
 	}
 	

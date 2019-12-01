@@ -10,7 +10,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public interface RelativeDegree {
     int ordinal();
-    static @NonNull List<RelativeDegree> valuesFrom(int n) {
+
+    static @NonNull List<RelativeDegree> getValuesFromScaleSize(int n) {
         switch (n) {
             case 5: return Collections.unmodifiableList(
                     Arrays.asList( PentatonicDegree.values() )

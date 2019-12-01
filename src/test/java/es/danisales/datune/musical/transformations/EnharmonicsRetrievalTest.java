@@ -1,6 +1,6 @@
 package es.danisales.datune.musical.transformations;
 
-import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.tonality.ScaleDistance;
 import org.junit.Test;

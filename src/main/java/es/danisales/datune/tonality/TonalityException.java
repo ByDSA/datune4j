@@ -1,44 +1,45 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.absolutedegree.Chromatic;
+import es.danisales.datune.absolutedegree.Diatonic;
+import es.danisales.datune.degree.RelativeDegree;
 import es.danisales.datune.midi.DiatonicMidi;
-import es.danisales.datune.musical.Chromatic;
-import es.danisales.datune.musical.Diatonic;
+import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.pitch.ChordNamer;
-import es.danisales.datune.pitch.PitchChromaticChord;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class TonalityException extends Exception {
-	public TonalityException(DiatonicAlt diatonicAlt, Tonality tonality) {
+	public TonalityException(@NonNull DiatonicAlt diatonicAlt, @NonNull Tonality tonality) {
 		super(
 			"La nota " + diatonicAlt + " no pertenece a la tonalidad " + tonality + ": "
 					+ TonalityNamer.notesFrom(tonality) + "."
 				);
 	}
 
-	public TonalityException(Diatonic diatonic, Tonality tonality) {
+	public TonalityException(@NonNull Diatonic diatonic, @NonNull Tonality tonality) {
 		super(
 				"El grado " + diatonic + " no pertenece a la tonalidad " + tonality + ": "
 						+ TonalityNamer.notesFrom(tonality) + "."
 		);
 	}
 
-	public TonalityException(Chromatic chromatic, Tonality tonality) {
+	public TonalityException(@NonNull Chromatic chromatic, @NonNull Tonality tonality) {
 		super(
 			"La nota " + chromatic + " no pertenece a la tonalidad " + tonality + ": "
 					+ TonalityNamer.notesFrom(tonality) + "."
 				);
 	}
 
-	public TonalityException(PitchChromaticChord pitchChromaticChord, Tonality tonality) {
+	public TonalityException(@NonNull ChromaticChord chromaticChord, @NonNull Tonality tonality) {
 		super(
-			"El acorde a añadir " + pitchChromaticChord + " de notas " + ChordNamer.from(pitchChromaticChord)
+				"El acorde a añadir " + chromaticChord + " de notas " + ChordNamer.from(chromaticChord)
 			+ " no pertenece a la escala " + tonality + ": "
 			+ TonalityNamer.notesFrom(tonality) + "."
 				);
 	}
 
-	public TonalityException(DiatonicMidi n1, DiatonicMidi n2) {
+	public TonalityException(@NonNull DiatonicMidi n1, @NonNull DiatonicMidi n2) {
 		super(
                 "Las nota " + n1 + " de tonalidad " + n1.getPitch().getTonality() + " y " + n2
                         + " de tonalidad " + n2.getPitch().getTonality()
@@ -46,7 +47,11 @@ public class TonalityException extends Exception {
 				);
 	}
 
-    public TonalityException(DiatonicDegree diatonicDegree, Tonality tonality, int octave) {
-        super(diatonicDegree + " " + tonality + " " + octave);
-    }
+	public TonalityException(@NonNull RelativeDegree relativeDegree, @NonNull Tonality tonality, int octave) {
+		super(relativeDegree + " " + tonality + " " + octave);
+	}
+
+	public TonalityException(@NonNull RelativeDegree relativeDegree, @NonNull Tonality tonality) {
+		super("La tonalidad " + tonality + " no tiene el grado relativo " + relativeDegree);
+	}
 }

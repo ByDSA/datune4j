@@ -55,10 +55,9 @@ enum ScaleInnerImmutable implements ScaleInner {
 
 	NEAPOLITAN_MINOR( 1, 2, 2, 2, 1, 3, 1 ),
 	NEAPOLITAN_MAJOR( 1, 2, 2, 2, 2, 2, 1 ),
-
+	// 6
 	BLUES( 3, 2, 1, 1, 3, 2 ),
 
-	// 6
     WHOLE_TONE(ScaleDegreeReparametrizer.WHOLE_NOTE, 2, 2, 2, 2, 2, 2),
 
 	// 5

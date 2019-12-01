@@ -1,12 +1,16 @@
 package es.danisales.datune;
 
+import es.danisales.datune.absolutedegree.Chromatic;
+import es.danisales.datune.absolutedegree.Diatonic;
 import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.midi.DiatonicChordMidiBuilder;
 import es.danisales.datune.midi.DiatonicMidi;
-import es.danisales.datune.musical.*;
+import es.danisales.datune.musical.ChromaticChord;
+import es.danisales.datune.musical.ChromaticChordPattern;
+import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.tonality.Tonality;
 import org.junit.Test;
 

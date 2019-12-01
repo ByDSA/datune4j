@@ -1,6 +1,6 @@
 package es.danisales.datune.midi;
 
-import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityRetrieval;

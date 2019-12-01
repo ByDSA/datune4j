@@ -1,5 +1,6 @@
 package es.danisales.datune.musical;
 
+import es.danisales.datune.absolutedegree.Diatonic;
 import es.danisales.datune.interval.IntervalDiatonic;
 import org.checkerframework.checker.nullness.qual.NonNull;
 

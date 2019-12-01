@@ -1,7 +1,7 @@
 package es.danisales.datune.tonality;
 
 import com.google.common.base.Preconditions;
-import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.musical.DiatonicAlt;
 import org.checkerframework.checker.nullness.qual.NonNull;
 

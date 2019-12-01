@@ -1,5 +1,7 @@
 package es.danisales.datune.musical;
 
+import es.danisales.datune.absolutedegree.Chromatic;
+import es.danisales.datune.absolutedegree.Diatonic;
 import es.danisales.datune.musical.transformations.Namer;
 import es.danisales.datune.pitch.CyclicAbsoluteDegree;
 import es.danisales.datune.pitch.PitchChromaticSingle;
@@ -171,10 +173,7 @@ public class DiatonicAlt implements SymbolicPitch {
 	}
 
 	public float getAlterations() {
-		float altSigned = getSemitonesAdded() + getMicrotonalPartAdded();
-		if (altSigned == 0)
-			return 0;
-		return altSigned;
+		return getSemitonesAdded() + getMicrotonalPartAdded();
 	}
 
 	public @NonNull DiatonicAlt getNextDiatonic() { // todo: used only in tunning (revisar tras hacer tunning)

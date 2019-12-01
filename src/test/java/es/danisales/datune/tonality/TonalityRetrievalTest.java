@@ -1,6 +1,6 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.DiatonicAlt;
 import org.junit.Assert;

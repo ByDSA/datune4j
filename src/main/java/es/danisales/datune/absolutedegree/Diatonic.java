@@ -1,7 +1,8 @@
-package es.danisales.datune.musical;
+package es.danisales.datune.absolutedegree;
 
 import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.interval.IntervalDiatonic;
+import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.pitch.CyclicAbsoluteDegree;
 import es.danisales.datune.pitch.CyclicAbsoluteDegreeAdapter;
 import es.danisales.datune.pitch.PitchDiatonicSingle;

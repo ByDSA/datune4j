@@ -1,5 +1,6 @@
 package es.danisales.datune.musical;
 
+import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.tonality.Tonality;
 import org.junit.Assert;
 import org.junit.Test;

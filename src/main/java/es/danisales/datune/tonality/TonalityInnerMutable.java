@@ -1,8 +1,8 @@
 package es.danisales.datune.tonality;
 
+import es.danisales.datune.absolutedegree.Diatonic;
 import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.midi.DiatonicChordMidi;
-import es.danisales.datune.musical.Diatonic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.musical.DiatonicAltRetrieval;
 import org.checkerframework.checker.nullness.qual.NonNull;

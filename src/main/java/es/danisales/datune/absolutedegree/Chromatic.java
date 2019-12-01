@@ -1,17 +1,16 @@
-package es.danisales.datune.musical;
+package es.danisales.datune.absolutedegree;
 
 import es.danisales.datune.degree.ChromaticDegree;
-import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.degree.RelativeDegree;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.DiatonicMidi;
+import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.musical.transformations.DistanceCalculator;
-import es.danisales.datune.musical.transformations.EnharmonicsRetrieval;
 import es.danisales.datune.musical.transformations.Namer;
 import es.danisales.datune.pitch.CyclicAbsoluteDegree;
 import es.danisales.datune.pitch.PitchChromaticSingle;
-import es.danisales.datune.tonality.ScaleDistance;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
 import es.danisales.utils.MathUtils;
@@ -20,7 +19,6 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 public enum Chromatic implements PitchChromaticSingle, CyclicAbsoluteDegree<ChromaticDegree, IntervalChromatic> {
 	C, CC, D, DD, E, F, FF, G, GG, A, AA, B;
@@ -96,7 +94,7 @@ public enum Chromatic implements PitchChromaticSingle, CyclicAbsoluteDegree<Chro
 			Diatonic diatonicOriginal = diatonicAlt.getDiatonic();
 			int semitones = Math.round(diatonicAlt.getSemitonesAdded() + diatonicAlt.getMicrotonalPartAdded());
 			Chromatic chromaticDiatonicOriginal = Chromatic.from(diatonicOriginal);
-			ret = chromaticDiatonicOriginal.addSemi(semitones);
+            ret = chromaticDiatonicOriginal.getNext(semitones);
 		}
 
 		return ret;
@@ -117,12 +115,14 @@ public enum Chromatic implements PitchChromaticSingle, CyclicAbsoluteDegree<Chro
 		throw new RuntimeException("Impossible");
 	}
 
-	public static @NonNull Chromatic from(ChromaticMidi chromaticMidi) {
+    public static @NonNull Chromatic from(@NonNull ChromaticMidi chromaticMidi) {
 		return chromaticMidi.getPitch().getChromatic();
 	}
 
-	public static @NonNull Chromatic from(DiatonicDegree diatonicDegree, Tonality tonality) {
-		DiatonicAlt diatonicAlt = tonality.getNote(diatonicDegree);
+    public static @NonNull Chromatic from(@NonNull RelativeDegree relativeDegree, @NonNull Tonality tonality) throws TonalityException {
+        DiatonicAlt diatonicAlt = tonality.getNote(relativeDegree);
+        if (diatonicAlt == null)
+            throw new TonalityException(relativeDegree, tonality);
 		return Chromatic.from(diatonicAlt);
 	}
 
@@ -130,26 +130,14 @@ public enum Chromatic implements PitchChromaticSingle, CyclicAbsoluteDegree<Chro
 		return ChromaticAdapter.from(diatonic, tonality);
 	}
 
-	public static Chromatic from(DiatonicMidi diatonicMidi) {
+    public static @NonNull Chromatic from(@NonNull DiatonicMidi diatonicMidi) {
 		ChromaticMidi chromaticMidi = ChromaticMidi.builder().from(diatonicMidi).build();
 		return from(chromaticMidi);
 	}
 
-	public Chromatic addSemi(int n) {
+    public Chromatic getNext(int n) {
 		int index = delimit(ordinal() + n);
 		return values()[index];
-	}
-
-	public Chromatic addSemi(ScaleDistance distanceScale) {
-		return addSemi(distanceScale.getSemitones());
-	}
-
-	public Chromatic addSemi() {
-		return addSemi(1);
-	}
-
-	public Set<DiatonicAlt> getEnharmonics(int maxAlts) { // todo: pasar a retrieval
-		return EnharmonicsRetrieval.getFromChromaticMicro(this, 0, maxAlts);
 	}
 
 	private static int delimit(int n) {

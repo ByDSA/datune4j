@@ -1,8 +1,8 @@
 package es.danisales.datune.midi;
 
+import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
-import es.danisales.datune.musical.Chromatic;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;

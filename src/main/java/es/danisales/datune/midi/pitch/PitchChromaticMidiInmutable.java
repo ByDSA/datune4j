@@ -1,8 +1,8 @@
 package es.danisales.datune.midi.pitch;
 
+import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.degree.ChromaticDegree;
 import es.danisales.datune.interval.IntervalChromatic;
-import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.pitch.PitchAbsoluteDegree;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.pitch.PitchOctave;

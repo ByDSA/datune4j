@@ -1,5 +1,6 @@
 package es.danisales.datune.tonality;
 
+import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.degree.ChromaticDegree;
 import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.degree.PentatonicDegree;
@@ -7,7 +8,6 @@ import es.danisales.datune.degree.RelativeDegree;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
-import es.danisales.datune.musical.Chromatic;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.DiatonicAlt;
 import org.junit.Test;
@@ -312,12 +312,12 @@ public class TonalityTest {
 
     @Test
     public void getNoteAbsoluteDegree() {
-        RelativeDegree relativeDegree = RelativeDegree.valuesFrom(6).get(0);
+        RelativeDegree relativeDegree = RelativeDegree.getValuesFromScaleSize(6).get(0);
         Tonality tonality = Tonality.from(DiatonicAlt.C, Scale.WHOLE_TONE);
         assertEquals(DiatonicAlt.C,
                 tonality.getNote(relativeDegree));
 
-        relativeDegree = RelativeDegree.valuesFrom(6).get(5);
+        relativeDegree = RelativeDegree.getValuesFromScaleSize(6).get(5);
 
         assertEquals(DiatonicAlt.AA,
                 tonality.getNote(relativeDegree));
@@ -326,12 +326,12 @@ public class TonalityTest {
     @Test
     public void getNoteAbsoluteDegree2() {
         Scale scale = Scale.fromIntegers(Arrays.asList(1, 1, 1, 1, 2, 1, 2, 1, 2));
-        RelativeDegree relativeDegree = RelativeDegree.valuesFrom(scale.size()).get(0);
+        RelativeDegree relativeDegree = RelativeDegree.getValuesFromScaleSize(scale.size()).get(0);
         Tonality tonality = Tonality.from(DiatonicAlt.C, scale);
         assertEquals(DiatonicAlt.C,
                 tonality.getNote(relativeDegree));
 
-        relativeDegree = RelativeDegree.valuesFrom(scale.size()).get(8);
+        relativeDegree = RelativeDegree.getValuesFromScaleSize(scale.size()).get(8);
 
         assertEquals(DiatonicAlt.AA,
                 tonality.getNote(relativeDegree));
@@ -381,22 +381,21 @@ public class TonalityTest {
                 ScaleDistance.WHOLE,
                 ScaleDistance.HALF
         ));
-        RelativeDegree relativeDegree = RelativeDegree.valuesFrom(scale.size()).get(0);
+        RelativeDegree relativeDegree = RelativeDegree.getValuesFromScaleSize(scale.size()).get(0);
         Tonality tonality = Tonality.from(DiatonicAlt.C, scale);
 
         assertEquals(DiatonicAlt.C,
                 tonality.getNote(relativeDegree));
 
-        relativeDegree = RelativeDegree.valuesFrom(scale.size()).get(8);
+        relativeDegree = RelativeDegree.getValuesFromScaleSize(scale.size()).get(8);
 
         assertEquals(DiatonicAlt.G,
                 tonality.getNote(relativeDegree));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void getNoteWrongDegreeType() {
-        assertNotEquals(DiatonicAlt.AA,
-                Tonality.from(Chromatic.C, Scale.PENTATONIC)
+        assertNull(Tonality.from(Chromatic.C, Scale.PENTATONIC)
                         .getNote(DiatonicDegree.VII));
     }
 
@@ -503,21 +502,21 @@ public class TonalityTest {
 
     @Test
     public void getAlterationsNumberFixedTonalities() {
-        assertEquals(0, Tonality.C.getAlterationsNumber());
-        assertEquals(0, Tonality.Am.getAlterationsNumber());
-        assertEquals(5, Tonality.Db.getAlterationsNumber());
-        assertEquals(2, Tonality.D.getAlterationsNumber());
-        assertEquals(3, Tonality.Eb.getAlterationsNumber());
-        assertEquals(4, Tonality.E.getAlterationsNumber());
-        assertEquals(3, Tonality.Cm.getAlterationsNumber());
+        assertEquals(0, Tonality.C.getDiatonicAlterationsNumber());
+        assertEquals(0, Tonality.Am.getDiatonicAlterationsNumber());
+        assertEquals(5, Tonality.Db.getDiatonicAlterationsNumber());
+        assertEquals(2, Tonality.D.getDiatonicAlterationsNumber());
+        assertEquals(3, Tonality.Eb.getDiatonicAlterationsNumber());
+        assertEquals(4, Tonality.E.getDiatonicAlterationsNumber());
+        assertEquals(3, Tonality.Cm.getDiatonicAlterationsNumber());
     }
 
     @Test
     public void getAlterationsNumberCustom() {
         Tonality tonality = Tonality.from(DiatonicAlt.FF, Scale.CHROMATIC);
-        assertEquals(tonality.getNotes().toString(), 5, tonality.getAlterationsNumber());
+        assertEquals(tonality.getNotes().toString(), 5, tonality.getDiatonicAlterationsNumber());
         tonality = Tonality.from(DiatonicAlt.Gb, Scale.CHROMATIC);
-        assertEquals(tonality.getNotes().toString(), 5, tonality.getAlterationsNumber());
+        assertEquals(tonality.getNotes().toString(), 5, tonality.getDiatonicAlterationsNumber());
     }
 
     @Test

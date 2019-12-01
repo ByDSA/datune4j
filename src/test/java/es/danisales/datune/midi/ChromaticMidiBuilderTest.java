@@ -1,8 +1,8 @@
 package es.danisales.datune.midi;
 
+import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
-import es.danisales.datune.musical.Chromatic;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -26,14 +26,14 @@ public class ChromaticMidiBuilderTest {
         assertEquals(PitchChromaticMidi.C5, n.getPitch());
 
         n = ChromaticMidi.builder()
-                .pitch(Chromatic.C.addSemi(5), 5)
+                .pitch(Chromatic.C.getNext(5), 5)
                 .build();
 
         assertEquals(PitchChromaticMidi.from(60 + 5), n.getPitch());
         assertEquals(5, n.getPitch().getOctave());
 
         n = ChromaticMidi.builder()
-                .pitch(Chromatic.C.addSemi(12), 5)
+                .pitch(Chromatic.C.getNext(12), 5)
                 .build();
 
         assertEquals(PitchChromaticMidi.C5, n.getPitch());

@@ -1,12 +1,13 @@
 package es.danisales.datune.interval;
 
-import es.danisales.datune.musical.Chromatic;
+import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.musical.Quality;
 import es.danisales.datune.musical.transformations.Namer;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public enum IntervalChromatic implements Interval {
@@ -40,16 +41,16 @@ public enum IntervalChromatic implements Interval {
     private final int semitones;
     private final Quality quality;
 
-    IntervalChromatic(int semitones, Quality quality) {
+    IntervalChromatic(int semitones, @NonNull Quality quality) {
         this.semitones = semitones;
-        this.quality = quality;
+        this.quality = Objects.requireNonNull(quality);
     }
 
     public int getSemitones() {
         return semitones;
     }
 
-    public Quality getQuality() {
+    public @NonNull Quality getQuality() {
         return quality;
     }
 

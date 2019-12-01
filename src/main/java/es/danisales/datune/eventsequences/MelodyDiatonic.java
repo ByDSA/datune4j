@@ -107,9 +107,9 @@ public class MelodyDiatonic extends Melody {
 		for(NoteDiatonic n : notesDiatonic) {
 			Tonality s = n.getTonality();
 			if (duration % Duration.V1 == 0)
-				notes.addSemi(duration, new KeySignatureEvent(s));
+				notes.getWithSemiAdded(duration, new KeySignatureEvent(s));
 
-			notes.addSemi(duration, n);
+			notes.getWithSemiAdded(duration, n);
 			duration += n.getDuration();
 		}*/
 
@@ -123,7 +123,7 @@ public class MelodyDiatonic extends Melody {
         int d = 0;
 		for (DiatonicMidi nd : notesDiatonic) {
 			DiatonicMidi nd2 = nd.clone();
-			//md.addSemi(d, nd);
+            //md.getWithSemiAdded(d, nd);
 			md.notesDiatonic.add(nd2);
 			d += nd2.getLength();
 		}
