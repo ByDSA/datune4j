@@ -19,7 +19,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.*;
 
 public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<ChromaticChordBuilder, ChromaticChord> implements BuilderOfWays<ChromaticChord> {
-    private Collection<Chromatic> pitchChromaticSingles;
+    private ChromaticChord chromaticChord;
     private Chromatic chromaticBase;
     private Tonality tonality;
     private DiatonicChordPattern diatonicChordPattern;
@@ -28,19 +28,16 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
     private ChromaticFunction chromaticFunction;
     private boolean dirty;
 
-    class PitchChromaticSinglesWay implements BuildingWay<ChromaticChord> {
-
+    class ChromaticChordWay implements BuildingWay<ChromaticChord> {
         @Override
         public boolean isReadyToBuild() {
-            return pitchChromaticSingles != null;
+            return chromaticChord != null;
         }
 
         @Override
         @NonNull
         public ChromaticChord build() {
-            ChromaticChord ret = new ChromaticChord();
-            ret.innerChord = ChromaticChordInterfaceAdapter.from(pitchChromaticSingles);
-            return ret;
+            return chromaticChord;
         }
 
 
@@ -144,7 +141,7 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
     }
     private static final List<Class<? extends BuildingWay<ChromaticChord>>> buildingWays = Arrays.asList(
             EmptyWay.class,
-            PitchChromaticSinglesWay.class,
+            ChromaticChordWay.class,
             ChromaticBaseAndChromaticChordPatternWay.class,
             ChromaticBaseAndDiatonicChordPatternAndTonalityWay.class,
             DiatonicFunctionAndTonalityWay.class,
@@ -176,8 +173,11 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
         return this;
     }
 
-    public @NonNull ChromaticChordBuilder fromChromatic(@NonNull Collection<Chromatic> chromaticChord) {
-        this.pitchChromaticSingles = Objects.requireNonNull(chromaticChord);
+    public @NonNull ChromaticChordBuilder fromChromatic(@NonNull Collection<Chromatic> chromaticList) {
+        ChromaticChord chromaticChord = new ChromaticChord();
+        chromaticChord.innerChord = new ChromaticChordMutable();
+        chromaticChord.addAll(chromaticList);
+        this.chromaticChord = chromaticChord;
 
         return self();
     }
@@ -195,15 +195,18 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
         return fromChromatic(Arrays.asList(chromaticChord));
     }
 
-    public ChromaticChordBuilder fromDiatonicChordMidi(DiatonicChordMidi diatonicChordMidi) {
+    public @NonNull ChromaticChordBuilder fromDiatonicChordMidi(@NonNull DiatonicChordMidi diatonicChordMidi) {
         tonality = diatonicChordMidi.getTonality();
 
-        pitchChromaticSingles = new ArrayList<>();
+        List<Chromatic> chromaticList = new ArrayList<>();
         for (DiatonicMidi diatonicMidi : diatonicChordMidi) {
             PitchChromaticMidi pitchChromaticMidi = PitchChromaticMidi.from(diatonicMidi.getPitch());
             Chromatic chromatic = pitchChromaticMidi.getChromatic();
-            pitchChromaticSingles.add(chromatic);
+            chromaticList.add(chromatic);
         }
+
+        fromChromatic(chromaticList);
+        chromaticChord.setRootIndex(diatonicChordMidi.getRootIndex());
 
         return self();
     }

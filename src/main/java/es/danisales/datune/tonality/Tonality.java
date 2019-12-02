@@ -291,12 +291,18 @@ public class Tonality implements Iterable<DiatonicAlt> {
     }
 
     public @Nullable HarmonicFunction getFunctionFrom(@NonNull ChromaticChord chromaticChord) {
-        List<DiatonicFunction> diatonicFunctions = getDiatonicFunctionFrom(chromaticChord);
+        ChromaticChord chromaticChordTmp;
+        if (chromaticChord.getInversionNumber() > 0) {
+            chromaticChordTmp = chromaticChord.clone();
+            chromaticChordTmp.inv(chromaticChordTmp.getRootIndex());
+        } else
+            chromaticChordTmp = chromaticChord;
+        List<DiatonicFunction> diatonicFunctions = getDiatonicFunctionFrom(chromaticChordTmp);
 
         if (!diatonicFunctions.isEmpty())
             return diatonicFunctions.get(0);
 
-        List<ChromaticFunction> chromaticFunctions = getChromaticFunctionFrom(chromaticChord);
+        List<ChromaticFunction> chromaticFunctions = getChromaticFunctionFrom(chromaticChordTmp);
         if (!chromaticFunctions.isEmpty())
             return chromaticFunctions.get(0);
 

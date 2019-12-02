@@ -3,13 +3,15 @@ package es.danisales.datune.midi;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
-import es.danisales.datune.musical.Quality;
+import es.danisales.datune.musical.ChromaticChord;
+import es.danisales.datune.musical.ChromaticChordInfo;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.utils.MathUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, IntervalChromatic, PitchChromaticMidi>
         implements PitchChromaticChord<ChromaticMidi> {
+    private ChromaticChordInfo info;
 
     public static ChromaticChordMidiBuilder builder() {
         return new ChromaticChordMidiBuilder();
@@ -35,35 +37,36 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, IntervalChromat
     }
 
     @Override
-    @NonNull
-    public Quality getQuality() {
-        return meta.getQuality();
+    public @NonNull ChromaticChordInfo getInfo() {
+        return info;
     }
 
     @Override
     public void shift(IntervalChromatic intervalChromatic) {
         try {
             for (ChromaticMidi chromaticMidi : this) {
-
                 chromaticMidi.getPitch().shift(intervalChromatic);
             }
         } catch (PitchMidiException e) {
             e.printStackTrace();
             throw new RuntimeException();
         }
+
+        onMutation();
     }
 
     @Override
     public void shiftNegative(IntervalChromatic intervalChromatic) {
         try {
             for (ChromaticMidi chromaticMidi : this) {
-
                 chromaticMidi.getPitch().shiftNegative(intervalChromatic);
             }
         } catch (PitchMidiException e) {
             e.printStackTrace();
             throw new RuntimeException();
         }
+
+        onMutation();
     }
 
     @Override
@@ -88,9 +91,19 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, IntervalChromat
     }
 
     @Override
+    protected void onMutation() {
+        ChromaticChord chromaticChord = ChromaticChord.builder()
+                .fromChromaticMidi(this)
+                .build();
+        info = ChromaticChordInfo.from(chromaticChord);
+    }
+
+    @Override
     public @NonNull ChromaticChordMidi clone() {
         ChromaticChordMidi chromaticChordMidi = new ChromaticChordMidi();
-        return (ChromaticChordMidi) commonClone(chromaticChordMidi);
+        chromaticChordMidi = (ChromaticChordMidi) commonClone(chromaticChordMidi);
+        chromaticChordMidi.info = info;
+        return chromaticChordMidi;
     }
 
     @Override

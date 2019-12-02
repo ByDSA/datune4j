@@ -435,26 +435,42 @@ public class DiatonicChordMidiTest {
     }
 
     @Test
-    public void scaleByChord() {
-        Tonality s = Tonality.C;
-        DiatonicChordMidi c = DiatonicChordMidi.builder().from(ChromaticFunction.V7_IV, s).octave(5).build();
+    public void chromaticFunctionTonality() {
+        Tonality tonality = Tonality.C;
+        DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder()
+                .from(ChromaticFunction.V7_IV, tonality)
+                .octave(5)
+                .build();
 
         assertEquals(
-                Tonality.from(Chromatic.C, Scale.MIXOLYDIAN).getScale(), c.getTonality().getScale()
+                Tonality.F,
+                diatonicChordMidi.getTonality()
         );
+    }
 
-        c = DiatonicChordMidi.builder().from(ChromaticFunction.V7_V, Tonality.E).octave(5).build();
+    @Test
+    public void chromaticFunctionTonality2() {
+        DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder()
+                .from(ChromaticFunction.V7_V, Tonality.E)
+                .octave(5)
+                .build();
+
         assertEquals(
-                Tonality.from(Chromatic.FF, Scale.MIXOLYDIAN).getScale(), c.getTonality().getScale()
+                Tonality.B,
+                diatonicChordMidi.getTonality()
         );
     }
 
     @Test
     public void toChordUnfunc() {
-        DiatonicChordMidi c = (DiatonicChordMidi.builder().from(DiatonicFunction.IV6, Tonality.C).octave(5).build());
-        c.inv(3);
+        DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder()
+                .from(DiatonicFunction.IV6, Tonality.C)
+                .octave(5)
+                .build();
+        System.out.println(diatonicChordMidi);
+        diatonicChordMidi.inv(3);
 
-        ChromaticChordMidi cc = ChromaticChordMidi.builder().fromDiatonicChordMidi(c).build();
+        System.out.println(diatonicChordMidi);
     }
 
     @Test(timeout = 2000)

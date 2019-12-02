@@ -86,13 +86,13 @@ public class ChromaticChordEnumTest {
 	@Test
 	public void getQuality() {
 		for (ChromaticChordImmutable c : ChromaticChordImmutable.values())
-			assertNotNull( c.toString(), c.getQuality() );
+            assertNotNull(c.toString(), c.getInfo().getQuality());
 
-		assertEquals(Quality.MAJOR, ChromaticChordImmutable.C.getQuality());
-		assertEquals(Quality.MINOR, ChromaticChordImmutable.Cm.getQuality());
-		assertEquals(Quality.DIMINISHED, ChromaticChordImmutable.Cdim.getQuality());
-		assertEquals(Quality.AUGMENTED, ChromaticChordImmutable.Caug.getQuality());
-		assertEquals(Quality.INDETERMINATED, ChromaticChordImmutable.Csus2.getQuality());
+        assertEquals(Quality.MAJOR, ChromaticChordImmutable.C.getInfo().getQuality());
+        assertEquals(Quality.MINOR, ChromaticChordImmutable.Cm.getInfo().getQuality());
+        assertEquals(Quality.DIMINISHED, ChromaticChordImmutable.Cdim.getInfo().getQuality());
+        assertEquals(Quality.AUGMENTED, ChromaticChordImmutable.Caug.getInfo().getQuality());
+        assertEquals(Quality.INDETERMINATED, ChromaticChordImmutable.Csus2.getInfo().getQuality());
 	}
 
 	@Test

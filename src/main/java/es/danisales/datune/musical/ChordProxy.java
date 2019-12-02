@@ -144,6 +144,7 @@ public abstract class ChordProxy<C extends ChordCommon<N>, N extends CyclicAbsol
             normalChordCommon.innerChord = (C) ((ChordMutableInterface) innerChord).clone();
             normalChordCommon.turnInnerChordIntoImmutableIfPossible();
         }
+
         return normalChordCommon;
     }
 
@@ -154,12 +155,10 @@ public abstract class ChordProxy<C extends ChordCommon<N>, N extends CyclicAbsol
         if (getRootIndex() == pos)
             return;
 
-        if (InnerIsMutable())
-            castCustom(innerChord).setRootIndex(pos);
-        else if (pos != 0) {
+        else if (!InnerIsMutable() && pos != 0)
             turnInnerIntoMutable();
-            castCustom(innerChord).setRootIndex(pos);
-        }
+
+        castCustom(innerChord).setRootIndex(pos);
 
         turnInnerChordIntoImmutableIfPossible();
     }
@@ -362,13 +361,18 @@ public abstract class ChordProxy<C extends ChordCommon<N>, N extends CyclicAbsol
                 return ChordNotation.EMPTY_CHORD;
 
             if (getRootIndex() != 0) {
-                ChordProxy<C, N, I> normalChordCommon = clone();
-                normalChordCommon.inv(getRootIndex());
+                ChordProxy<C, N, I> normalChordCommon = getWithoutInv();
                 if (normalChordCommon.innerIsImmutable())
                     return normalChordCommon.toString() + "/" + get(0).toString();
             }
             return ChordNamer.from(this);
         }
+    }
+
+    private ChordProxy<C, N, I> getWithoutInv() {
+        ChordProxy<C, N, I> normalChordCommon = clone();
+        normalChordCommon.inv(getRootIndex());
+        return normalChordCommon;
     }
 
     @Override

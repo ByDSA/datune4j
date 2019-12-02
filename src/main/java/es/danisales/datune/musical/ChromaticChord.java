@@ -2556,9 +2556,9 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
         return chromaticChord;
     }
 
-    @NonNull
-    public Quality getQuality() {
-        return innerChord.getQuality();
+    @Override
+    public @NonNull ChromaticChordInfo getInfo() {
+        return innerChord.getInfo();
     }
 
     @Override

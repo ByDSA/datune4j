@@ -23,7 +23,7 @@ public abstract class ChordMutable<N extends SymbolicPitch, I extends Interval> 
 		Objects.requireNonNull(note);
 
 		innerList.add( note );
-		resetRootIfNeeded();
+		resetRootIfNeededElseOnMutation();
 
 		return true;
 	}
@@ -31,14 +31,14 @@ public abstract class ChordMutable<N extends SymbolicPitch, I extends Interval> 
 	@Override
 	public void add(int n, N note) {
 		innerList.add( n, note );
-		resetRootIfNeeded();
+		resetRootIfNeededElseOnMutation();
 	}
 
 	@Override
 	public boolean addAll(@NonNull Collection<? extends N> collection) {
 		boolean ret = innerList.addAll(collection);
 
-		resetRootIfNeeded();
+		resetRootIfNeededElseOnMutation();
 
 		return ret;
 	}
@@ -49,13 +49,17 @@ public abstract class ChordMutable<N extends SymbolicPitch, I extends Interval> 
 		N ret = innerList.remove( n );
 		if ( ret == root )
 			resetRoot();
+		else if (ret != null)
+			onMutation();
 
 		return ret;
 	}
 
-	private void resetRootIfNeeded() {
-		if ( hasInvalidRoot() )
+	private void resetRootIfNeededElseOnMutation() {
+		if (hasInvalidRoot()) {
 			resetRoot();
+		} else
+			onMutation();
 	}
 
 	private boolean hasInvalidRoot() {
@@ -72,7 +76,11 @@ public abstract class ChordMutable<N extends SymbolicPitch, I extends Interval> 
 			throw new ArrayIndexOutOfBoundsException();
 
 		rootIndex = n;
+
+		onMutation();
 	}
+
+	protected abstract void onMutation();
 
 	@Override
 	public final @NonNull N getRoot() {

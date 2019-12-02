@@ -21,7 +21,9 @@ public final class DiatonicMidi extends NoteMidi<PitchDiatonicMidi> implements P
 
 	@NonNull
 	public static DiatonicMidi from(@NonNull ChromaticMidi chromaticMidi, @NonNull Tonality tonality) throws TonalityException {
-		return builder().from(chromaticMidi, tonality).build();
+		return builder()
+				.from(chromaticMidi, tonality)
+				.build();
 	}
 
 	@SuppressWarnings("WeakerAccess")
@@ -43,7 +45,7 @@ public final class DiatonicMidi extends NoteMidi<PitchDiatonicMidi> implements P
 	@Override
 	public DiatonicMidi clone() {
 		return builder()
-                .pitch(pitch.clone())
+				.pitch(pitch.clone())
 				.length(length)
 				.velocity(velocity)
 				.build();
@@ -51,19 +53,23 @@ public final class DiatonicMidi extends NoteMidi<PitchDiatonicMidi> implements P
 
 	@Override
 	public String toString() {
-        try {
-            StringBuilder stringBuilder = new StringBuilder();
-            ChromaticMidi chromatidMidi = ChromaticMidi.from(this);
+		try {
+			StringBuilder stringBuilder = new StringBuilder();
+			ChromaticMidi chromatidMidi = ChromaticMidi.from(this);
 
-			stringBuilder.append(Namer.from(chromatidMidi, pitch.getTonality()));
+			stringBuilder
+					.append(Namer.from(chromatidMidi, pitch.getTonality()))
+					.append(" (")
+					.append(pitch.getDegree())
+					.append(", ")
+					.append(pitch.getTonality())
+					.append(")");
 
-			stringBuilder.append(" (").append(pitch.getDegree()).append(")");
-
-            return stringBuilder.toString();
+			return stringBuilder.toString();
 		} catch (TonalityException e) {
-            e.printStackTrace();
-            return null;
-        }
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override

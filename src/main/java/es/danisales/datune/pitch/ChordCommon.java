@@ -21,7 +21,7 @@ public interface ChordCommon<N extends SymbolicPitch> extends List<N> {
 
 	default int getInversionNumber() {
 		int rootPos = getRootIndex();
-		if (rootPos >= 0)
+		if (rootPos > 0)
 			return size() - rootPos;
 		else
 			return NO_INVERSION;

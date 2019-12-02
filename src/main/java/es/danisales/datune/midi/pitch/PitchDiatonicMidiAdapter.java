@@ -53,7 +53,7 @@ class PitchDiatonicMidiAdapter {
         int semis = pitchChromaticMidi.getChromatic().ordinal();
         int octave = 0;
 
-        for (RelativeDegree degree = relativeDegree.getPrevious(); degree.ordinal() > degree.getPrevious().ordinal(); degree = degree.getPrevious()) {
+        for (RelativeDegree degree = relativeDegree.getPrevious(); degree.getNext().ordinal() != 0; degree = degree.getPrevious()) {
             ScaleDistance scaleDistance = scale.get(degree);
             if (scaleDistance == null)
                 continue;

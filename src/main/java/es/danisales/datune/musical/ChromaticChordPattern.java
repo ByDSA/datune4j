@@ -1,10 +1,15 @@
 package es.danisales.datune.musical;
 
 import es.danisales.datune.absolutedegree.Chromatic;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import es.danisales.datune.midi.DiatonicChordMidi;
+import es.danisales.datune.midi.DiatonicMidi;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static com.google.common.base.Preconditions.checkState;
 
 @SuppressWarnings("WeakerAccess")
 public final class ChromaticChordPattern extends Pattern {
@@ -99,28 +104,32 @@ public final class ChromaticChordPattern extends Pattern {
         super(chromaticChordPatternEnum);
     }
 
+    private ChromaticChordPattern(@NonNull List<Integer> chromaticChordPattern) {
+        super(chromaticChordPattern);
+    }
+
     private ChromaticChordPattern() {
         super();
     }
 
-    public static ChromaticChordPattern from(Integer... patternArray) {
-        ChromaticChordPattern inner = fromValues(patternArray);
-        if (inner == null) {
-            inner = new ChromaticChordPattern();
-            inner.addAll(Arrays.asList(patternArray));
-        }
-
-        return inner;
+    public static @NonNull ChromaticChordPattern from(Integer... patternArray) {
+        return fromValues(patternArray);
     }
 
-    private static @Nullable ChromaticChordPattern fromValues(Integer[] patternArray) {
-        List<Integer> patternList = Arrays.asList(patternArray);
+    private static @NonNull ChromaticChordPattern fromValues(Integer[] patternArray) {
+        return fromValues(Arrays.asList(patternArray));
+    }
+
+    private static @NonNull ChromaticChordPattern fromValues(List<Integer> patternList) {
         for (ChromaticChordPattern v : values()) {
             if (v.numbersPattern.equals(patternList))
                 return v;
         }
 
-        return null;
+        ChromaticChordPattern chromaticChordPattern = new ChromaticChordPattern();
+        chromaticChordPattern.addAll(patternList);
+
+        return chromaticChordPattern;
     }
 
     private static ChromaticChordPattern[] values() {
@@ -229,7 +238,7 @@ public final class ChromaticChordPattern extends Pattern {
         return from(patternArray);
     }
 
-    public static ChromaticChordPattern from(ChromaticChord chromaticChordBase) {
+    public static @NonNull ChromaticChordPattern from(ChromaticChord chromaticChordBase) {
         if (chromaticChordBase.getRootIndex() == 0)
             return from((List<Chromatic>)chromaticChordBase);
         else {
@@ -239,6 +248,29 @@ public final class ChromaticChordPattern extends Pattern {
         }
     }
 
+    public static @NonNull ChromaticChordPattern from(@NonNull DiatonicChordMidi diatonicChordMidi) {
+        checkState(!diatonicChordMidi.isEmpty());
+
+        List<Integer> integerPitchMidiList = new ArrayList<>();
+        int firstCode = diatonicChordMidi.get(0).getPitch().getMidiCode();
+        for (DiatonicMidi diatonicMidi : diatonicChordMidi) {
+            if (integerPitchMidiList.isEmpty())
+                integerPitchMidiList.add(0);
+            else {
+                int code = diatonicMidi.getPitch().getMidiCode();
+                integerPitchMidiList.add(code - firstCode);
+            }
+        }
+
+        return fromValues(integerPitchMidiList);
+    }
+
+    public static @NonNull ChromaticChordPattern immutablePatern(ChromaticChordPattern pattern) {
+        if (pattern.isImmutable())
+            return pattern;
+        else
+            return new ChromaticChordPattern(pattern);
+    }
     @Override
     public boolean equals(Object o) {
         if ( !(o instanceof ChromaticChordPattern) )

@@ -8,7 +8,7 @@ import es.danisales.datune.midi.binaries.events.EventComplex;
 import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.midi.pitch.PitchMidiInterface;
 import es.danisales.datune.midi.pitch.PitchOctaveMidiEditable;
-import es.danisales.datune.musical.ChromaticChord;
+import es.danisales.datune.musical.ChromaticChordInfo;
 import es.danisales.datune.pitch.ChordMutable;
 import es.danisales.datune.pitch.PitchOctave;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -24,8 +24,7 @@ public abstract class ChordMidi<N extends NoteMidi<P>, I extends Interval, P ext
 		implements Durable, Velocitiable, PitchOctaveMidiEditable, PitchOctave, EventComplex {
 	protected Arpegio	arpegio;
 	protected int		length;
-
-	ChromaticChord meta = null;
+	private ChromaticChordInfo meta;
 
 	ChordMidi() {
 		super(new ArrayList<>());
@@ -125,12 +124,11 @@ public abstract class ChordMidi<N extends NoteMidi<P>, I extends Interval, P ext
 
 	@Override
 	public boolean add(@NonNull N n) throws AddedException {
-		if (!containsPitch(n))
-			super.add( n );
-		else
-			throw new AddedException( n, this );
-
-		sortByPitch();
+		if (!containsPitch(n)) {
+			super.add(n);
+			sortByPitch();
+		} else
+			throw new AddedException(n, this);
 
 		return true;
 	}

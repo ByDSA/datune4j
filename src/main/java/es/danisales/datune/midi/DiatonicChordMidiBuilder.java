@@ -41,6 +41,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
 
         initFromFunction(diatonicChordMidi);
         initArpegio(diatonicChordMidi);
+        diatonicChordMidi.building = false;
 
         return diatonicChordMidi;
     }
@@ -369,6 +370,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                     .build();
             self.add(diatonicMidi);
         }
+        self.building = false;
     }
 
     public DiatonicChordMidiBuilder tonality(@NonNull Tonality tonality) {
@@ -417,9 +419,9 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
     // todo: integrate
     public static DiatonicChordMidi from(@NonNull List<DiatonicMidi> diatonicMidiList) {
         DiatonicChordMidi diatonicChordMidi = new DiatonicChordMidi();
-
         diatonicChordMidi.tonality = diatonicMidiList.get(0).getPitch().getTonality();
         diatonicChordMidi.addAll(diatonicMidiList);
+        diatonicChordMidi.building = false;
 
         return diatonicChordMidi;
     }
@@ -465,6 +467,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
         }
 */
         diatonicChordMidi.setArpegioIfNull();
+        diatonicChordMidi.building = false;
 
         return diatonicChordMidi;
     }

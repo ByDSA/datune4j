@@ -9,13 +9,22 @@ public class Pattern implements List<Integer>, PatternInterface, Cloneable {
     final private boolean fixed;
 
     Pattern(@NonNull Integer... pattern) {
-        numbersPattern = Arrays.asList(pattern);
+        this(Arrays.asList(pattern));
+    }
+
+    Pattern(@NonNull List<Integer> patternList) {
+        numbersPattern = patternList;
         fixed = true;
     }
 
     Pattern() {
         numbersPattern = new ArrayList<>();
         fixed = false;
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public boolean isImmutable() {
+        return fixed;
     }
 
     @SuppressWarnings("MethodDoesntCallSuperMethod")

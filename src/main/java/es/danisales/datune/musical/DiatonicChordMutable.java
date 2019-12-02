@@ -35,12 +35,21 @@ final class DiatonicChordMutable extends ChordMutable<Diatonic, IntervalDiatonic
 		for ( int i = 0; i < size(); i++ ) {
 			set( i, get( i ).getShifted( intervalDiatonic ) );
 		}
+
+		onMutation();
 	}
 
 	public void shiftNegative(IntervalDiatonic intervalDiatonic) {
-		for ( int i = 0; i < size(); i++ ) {
+		for (int i = 0; i < size(); i++ ) {
 			set( i, get( i ).getShiftedNegative( intervalDiatonic ) );
 		}
+
+		onMutation();
+	}
+
+	@Override
+	protected void onMutation() {
+
 	}
 
 	@Override
