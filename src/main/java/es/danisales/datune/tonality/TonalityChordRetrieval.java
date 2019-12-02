@@ -2,7 +2,6 @@ package es.danisales.datune.tonality;
 
 import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.function.DiatonicFunction;
-import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -34,10 +33,9 @@ public class TonalityChordRetrieval {
             if ( t.equals( tonality ) )
                 continue;
             ChromaticChord chromaticChord = ChromaticChord.builder().fromChromaticMidi(c).build();
-            HarmonicFunction function = t.getFunctionFrom(chromaticChord);
-            if (function instanceof DiatonicFunction) {
+            DiatonicFunction diatonicFunction = DiatonicFunction.from(chromaticChord, t);
+            if (diatonicFunction != null)
                 return t;
-            }
         }
 
         return null;

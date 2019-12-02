@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class ChromaticChordInfo implements Cloneable {
+public final class ChromaticChordInfo implements Cloneable {
 	private static final Map<ChromaticChordPattern, ChromaticChordInfo> metaMap = new HashMap<>();
 
 	static final ChromaticChordInfo POWER_CHORD = new ChromaticChordInfo(Quality.INDETERMINATED, ChordNotation.POWER_CHORD, ChromaticChordPattern.POWER_CHORD);
@@ -198,7 +198,7 @@ public class ChromaticChordInfo implements Cloneable {
 	private ChromaticChordInfo(Quality q, String str, ChromaticChordPattern pattern) {
 		quality = q;
 		this.str = str;
-		this.pattern = pattern;
+		this.pattern = ChromaticChordPattern.immutablePatern(pattern);
 	}
 
 	private static ChromaticChordMutable getFundamentalChordOf(ChromaticChordMutable chromaticChord) {

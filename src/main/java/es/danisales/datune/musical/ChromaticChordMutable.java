@@ -15,12 +15,23 @@ class ChromaticChordMutable
 		implements PitchChromaticChord<Chromatic>, ChromaticChordInterface {
 
 	private ChromaticChordInfo info;
+	boolean building;
 
 	public static @NonNull ChromaticChordMutable from(@NonNull Collection<Chromatic> chord) {
 		ChromaticChordMutable chromaticChordMutable = new ChromaticChordMutable();
 
 		chromaticChordMutable.addAll(chord);
+		chromaticChordMutable.onMutation();
 
+		return chromaticChordMutable;
+	}
+
+	public static @NonNull ChromaticChordMutable from(@NonNull ChromaticChordImmutable chord) {
+		ChromaticChordMutable chromaticChordMutable = new ChromaticChordMutable();
+
+		chromaticChordMutable.addAll(chord);
+		chromaticChordMutable.setRootIndex(chord.getRootIndex());
+		chromaticChordMutable.building = false;
 		chromaticChordMutable.onMutation();
 
 		return chromaticChordMutable;
@@ -28,22 +39,26 @@ class ChromaticChordMutable
 
 	ChromaticChordMutable() {
 		super(new ArrayList<>());
+		building = true;
 	}
 
-    @Override
-    public void sort(Comparator<? super Chromatic> comparator) {
-        throw new UnsupportedOperationException();
-    }
+	@Override
+	public void sort(Comparator<? super Chromatic> comparator) {
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	protected void onMutation() {
+		if (building)
+			return;
 		info = ChromaticChordInfo.from(this);
 	}
 
 	@Override
 	public ChromaticChordMutable clone() {
 		ChromaticChordMutable customChromaticChord = ChromaticChordMutable.from(this);
-		customChromaticChord.info = info == null ? null : info.clone();
+		customChromaticChord.rootIndex = rootIndex;
+		customChromaticChord.info = info == null ? null : info.clone(); // es null cuando está actualizando info.function
 		return customChromaticChord;
 	}
 

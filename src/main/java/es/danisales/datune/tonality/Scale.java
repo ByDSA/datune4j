@@ -96,13 +96,13 @@ public class Scale implements Iterable<ScaleDistance> {
 
 	public static final List<Scale> ALL = Collections.unmodifiableList(Arrays.asList(
 			MAJOR,
-			IONIAN,
+            //IONIAN,
 			DORIAN,
 			PHRYGIAN,
 			LYDIAN,
 			MIXOLYDIAN,
 			MINOR,
-			AEOLIAN,
+            //AEOLIAN,
 			LOCRIAN,HARMONIC_MINOR,
 			LOCRIAN_H6,
 			IONIAN_H5,

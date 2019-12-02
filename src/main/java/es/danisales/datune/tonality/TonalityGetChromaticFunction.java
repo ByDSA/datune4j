@@ -237,7 +237,7 @@ public class TonalityGetChromaticFunction {
                     if (chromaticChord2.equals(chromaticChord4))
                         return mode;
                 }
-                return null;
+				return TonalityRetrieval.listFromChordFirst(chromaticChord4);
             case N6:
                 throw new RuntimeException();
 			case V_II:

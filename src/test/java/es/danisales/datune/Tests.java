@@ -4,10 +4,7 @@ import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.absolutedegree.Diatonic;
 import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.function.DiatonicFunction;
-import es.danisales.datune.midi.ChromaticMidi;
-import es.danisales.datune.midi.DiatonicChordMidi;
-import es.danisales.datune.midi.DiatonicChordMidiBuilder;
-import es.danisales.datune.midi.DiatonicMidi;
+import es.danisales.datune.midi.*;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.ChromaticChordPattern;
 import es.danisales.datune.musical.DiatonicAlt;
@@ -40,7 +37,7 @@ public class Tests {
 		assertEquals(0, DiatonicDegree.from(DiatonicFunction.I).ordinal());
 	}
 
-	@Test
+	@Test(timeout = 1000)
 	public void whatIsItStatic() {
 		Tonality s = Tonality.C;
 		DiatonicChordMidi c = DiatonicChordMidi.builder()
@@ -54,7 +51,7 @@ public class Tests {
 			notes.add(chromaticMidi.getPitch().getChromatic());
 		}
 
-		List<DiatonicChordMidi> chords = DiatonicChordMidiBuilder.fromChromaticChord(
+		List<DiatonicChordMidiInfo> chords = DiatonicChordMidiBuilder.fromChromaticChord(
 				notes,
 				false
 		);

@@ -8,7 +8,6 @@ import es.danisales.datune.tonality.TonalityRetrieval;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 public class DiatonicChordMidiTransformations {
     private DiatonicChordMidiTransformations() {
@@ -25,35 +24,6 @@ public class DiatonicChordMidiTransformations {
         }
 
         return out;
-    }
-
-    public static void showWhatIsIt(boolean outscale, Chromatic... notes) {
-        showWhatIsIt(outscale, () -> {
-            return true;
-        }, notes);
-    }
-
-    public static void showWhatIsIt(Chromatic... notes) {
-        showWhatIsIt(false, notes);
-    }
-
-    public static void showWhatIsIt(boolean outscale, Supplier<Boolean> f, Chromatic... notes) {
-        List<DiatonicChordMidi> chords = DiatonicChordMidiBuilder.fromChromaticChord(
-                ChromaticChord.builder().fromChromatic(notes).build(),
-                outscale
-        );
-
-        if (chords.isEmpty()) {
-            System.out.print("La sucesión de notas no es nada:");
-            for (Chromatic n : notes) {
-                System.out.print(" " + n);
-            }
-            System.out.print("\n");
-        }
-
-        for (DiatonicChordMidi c : chords)
-            if (f.get())
-                System.out.println(c);
     }
 
     public static void showPossibleProgressionsMajorMinor(List<ChromaticChord> cs) {

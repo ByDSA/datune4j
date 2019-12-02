@@ -4,10 +4,12 @@ import es.danisales.datune.absolutedegree.Diatonic;
 import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.midi.DiatonicChordMidiBuilder;
+import es.danisales.datune.midi.DiatonicChordMidiInfo;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.musical.DiatonicAltRetrieval;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -90,6 +92,15 @@ public class TonalityRetrieval {
         return out;
     }
 
+    public static @Nullable Tonality listFromChordFirst(@NonNull ChromaticChord c) {
+        for (Tonality t : Tonality.all()) {
+            if (t.has(c))
+                return t;
+        }
+
+        return null;
+    }
+
     public static @NonNull List<Tonality> listFromChordOutScale(@NonNull ChromaticChord c) {
         List<Tonality> out = new ArrayList<>();
         for ( Tonality t : Tonality.all() ) {
@@ -170,38 +181,6 @@ public class TonalityRetrieval {
         return Collections.unmodifiableSet(ret);
     }
 
-    public static @NonNull List<Tonality> getFromChordInScale(@NonNull ChromaticChord chromaticChord) {
-        List<Tonality> out = new ArrayList<>();
-        for (Tonality tonality : Tonality.values()) {
-            if (tonality.has(chromaticChord))
-                out.add(tonality);
-        }
-
-        return out;
-    }
-
-    public static @NonNull List<Tonality> getFromChordOutScale(@NonNull ChromaticChord chromaticChord) {
-        List<Tonality> out = new ArrayList<>();
-        for (Tonality tonality : Tonality.values())
-            if (tonality.hasAsChromaticFunction(chromaticChord))
-                out.add(tonality);
-
-        return out;
-    }
-
-    public static @NonNull List<Tonality> getFromChord(@NonNull ChromaticChord chromaticChord) {
-        List<Tonality> out = new ArrayList<>();
-        for ( Tonality t : Tonality.values() ) {
-            if (t.has(chromaticChord))
-                out.add(t);
-
-            if (t.hasAsChromaticFunction(chromaticChord))
-                out.add(t);
-        }
-
-        return out;
-    }
-
     public static @NonNull List<Tonality> getFromChords(boolean outScale, @NonNull List<ChromaticChord> chords) {
         checkArgument(chords.size() > 0);
         List<Tonality> candidates = new ArrayList<>();
@@ -215,12 +194,12 @@ public class TonalityRetrieval {
             List<Tonality> candidatesPrev = candidates;
 
             do {
-                List<DiatonicChordMidi> possibleChords = DiatonicChordMidiBuilder.fromChromaticChord(
+                List<DiatonicChordMidiInfo> possibleChords = DiatonicChordMidiBuilder.fromChromaticChord(
                         chordCopy,
                         outScale
                 );
                 if ( first ) {
-                    for ( DiatonicChordMidi c : possibleChords ) {
+                    for (DiatonicChordMidiInfo c : possibleChords) {
                         Tonality t = c.getTonality();
                         if ( !candidates.contains( t ) )
                             candidates.add( t );
@@ -229,7 +208,7 @@ public class TonalityRetrieval {
                 } else {
                     candidates = new ArrayList<>();
 
-                    for ( DiatonicChordMidi c : possibleChords ) {
+                    for (DiatonicChordMidiInfo c : possibleChords) {
                         for ( Tonality t : candidatesPrev )
                             if ((c.getTonality().equals(t)
                                     || c.getTonality().isModeOf( t ) )

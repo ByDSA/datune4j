@@ -6,6 +6,8 @@ import es.danisales.utils.MathUtils;
 
 import java.util.Collections;
 
+import static com.google.common.base.Preconditions.checkState;
+
 public interface ChordMutableInterface<N extends SymbolicPitch, I extends Interval>
 		extends ChordCommon<N>, PitchMutable<I>, Cloneable {
 	default void resetRoot() {
@@ -16,6 +18,11 @@ public interface ChordMutableInterface<N extends SymbolicPitch, I extends Interv
 	}
 
 	void setRootIndex(int pos);
+
+    default void removeInv() {
+        inv(getRootIndex());
+        checkState(getRootIndex() == 0, getRootIndex());
+    }
 
 	default void over(N b) {
 		for (int i = 0; i < size(); i++) {

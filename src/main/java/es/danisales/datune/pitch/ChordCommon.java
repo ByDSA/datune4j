@@ -6,8 +6,6 @@ import java.util.List;
 
 // Para las cosas comunes de los chord mutables y los chord inmutables
 public interface ChordCommon<N extends SymbolicPitch> extends List<N> {
-	int NO_INVERSION = -1;
-
 	int getRootIndex();
 
 	@NonNull N getRoot();
@@ -24,7 +22,7 @@ public interface ChordCommon<N extends SymbolicPitch> extends List<N> {
 		if (rootPos > 0)
 			return size() - rootPos;
 		else
-			return NO_INVERSION;
+			return 0;
 	}
 
 	// todo: move (make private)

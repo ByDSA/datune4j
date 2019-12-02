@@ -56,6 +56,7 @@ class DiatonicChordInterfaceAdapter {
             case IV2:
             case V2:
             case VI2:
+            case VII2:
                 return DiatonicChordPattern.SUS2;
 
             case I4:
@@ -73,6 +74,7 @@ class DiatonicChordInterfaceAdapter {
             case IV6:
             case V6:
             case VI6:
+            case VII6:
                 return DiatonicChordPattern.SIXTH;
 
             case I9:
@@ -90,6 +92,7 @@ class DiatonicChordInterfaceAdapter {
             case IV11:
             case V11:
             case VI11:
+            case VII11:
                 return DiatonicChordPattern.ELEVENTH;
 
             case I13:

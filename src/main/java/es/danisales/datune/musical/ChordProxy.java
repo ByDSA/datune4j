@@ -34,7 +34,7 @@ public abstract class ChordProxy<C extends ChordCommon<N>, N extends CyclicAbsol
 
     private void turnInnerIntoMutableIfNot() {
         checkInnerNotNull();
-        if (!(innerChord instanceof DiatonicChordMutable))
+        if (!(innerChord instanceof ChordMutableInterface))
             turnInnerIntoMutable();
     }
 
@@ -361,18 +361,13 @@ public abstract class ChordProxy<C extends ChordCommon<N>, N extends CyclicAbsol
                 return ChordNotation.EMPTY_CHORD;
 
             if (getRootIndex() != 0) {
-                ChordProxy<C, N, I> normalChordCommon = getWithoutInv();
+                ChordProxy<C, N, I> normalChordCommon = clone();
+                normalChordCommon.removeInv();
                 if (normalChordCommon.innerIsImmutable())
                     return normalChordCommon.toString() + "/" + get(0).toString();
             }
             return ChordNamer.from(this);
         }
-    }
-
-    private ChordProxy<C, N, I> getWithoutInv() {
-        ChordProxy<C, N, I> normalChordCommon = clone();
-        normalChordCommon.inv(getRootIndex());
-        return normalChordCommon;
     }
 
     @Override

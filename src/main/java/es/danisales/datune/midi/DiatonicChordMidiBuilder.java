@@ -36,10 +36,12 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
     public DiatonicChordMidi build() {
         DiatonicChordMidi diatonicChordMidi = new DiatonicChordMidi();
         diatonicChordMidi.tonality = Objects.requireNonNull(tonality);
+
+        initFromFunction(diatonicChordMidi);
+
         diatonicChordMidi.setLength(length);
         diatonicChordMidi.setVelocity(velocity);
 
-        initFromFunction(diatonicChordMidi);
         initArpegio(diatonicChordMidi);
         diatonicChordMidi.building = false;
 
@@ -405,15 +407,19 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
     }
 
     public DiatonicChordMidiBuilder from(@NonNull ChromaticChord chromaticChord, @NonNull Tonality tonality) {
-        function = tonality.getFunctionFrom(chromaticChord);
-        checkState(function != null);
+        HarmonicFunction f = tonality.getFunctionFrom(chromaticChord);
+        checkState(f != null);
+        function = f;
 
         return self();
     }
 
     // todo: integrate into builder
-    public static @NonNull List<DiatonicChordMidi> fromChromaticChord(ChromaticChord chromaticChord, boolean outScale) {
-        return DiatonicChordMidiAdapter.fromChromaticChord(chromaticChord, outScale);
+    public static @NonNull List<DiatonicChordMidiInfo> fromChromaticChord(ChromaticChord chromaticChord, boolean outScale) {
+        if (outScale)
+            return DiatonicChordMidiAdapter.fromChromaticChordAll(chromaticChord);
+        else
+            return DiatonicChordMidiAdapter.fromChromaticChordDiatonic(chromaticChord);
     }
 
     // todo: integrate

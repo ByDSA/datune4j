@@ -297,8 +297,8 @@ public class Tonality implements Iterable<DiatonicAlt> {
             chromaticChordTmp.inv(chromaticChordTmp.getRootIndex());
         } else
             chromaticChordTmp = chromaticChord;
-        List<DiatonicFunction> diatonicFunctions = getDiatonicFunctionFrom(chromaticChordTmp);
 
+        List<DiatonicFunction> diatonicFunctions = getDiatonicFunctionFrom(chromaticChordTmp);
         if (!diatonicFunctions.isEmpty())
             return diatonicFunctions.get(0);
 
@@ -309,19 +309,46 @@ public class Tonality implements Iterable<DiatonicAlt> {
         return null;
     }
 
-    @SuppressWarnings("WeakerAccess")
+    public @NonNull List<HarmonicFunction> getAllFunctionsFrom(@NonNull ChromaticChord chromaticChord) {
+        ChromaticChord chromaticChordTmp;
+        if (chromaticChord.getInversionNumber() > 0) {
+            chromaticChordTmp = chromaticChord.clone();
+            chromaticChordTmp.inv(chromaticChordTmp.getRootIndex());
+        } else
+            chromaticChordTmp = chromaticChord;
+
+        List<DiatonicFunction> diatonicFunctions = getDiatonicFunctionFrom(chromaticChordTmp);
+        List<HarmonicFunction> ret = new ArrayList<>(diatonicFunctions);
+
+        List<ChromaticFunction> chromaticFunctions = getChromaticFunctionFrom(chromaticChordTmp);
+        ret.addAll(chromaticFunctions);
+
+        return ret;
+    }
+
     public @NonNull List<DiatonicFunction> getDiatonicFunctionFrom(@NonNull ChromaticChord chromaticChord) {
         createCacheIfNeeded();
 
+        chromaticChord = removeInversionIfNeeded(chromaticChord);
         List<DiatonicFunction> diatonicFunctionList = cacheDiatonicMap.getOrDefault(chromaticChord, new ArrayList<>());
 
         return Collections.unmodifiableList( diatonicFunctionList );
+    }
+
+    private ChromaticChord removeInversionIfNeeded(ChromaticChord chromaticChord) {
+        if (chromaticChord.getInversionNumber() != 0) {
+            chromaticChord = chromaticChord.clone();
+            chromaticChord.removeInv();
+        }
+
+        return chromaticChord;
     }
 
     @SuppressWarnings("WeakerAccess")
     public @NonNull List<ChromaticFunction> getChromaticFunctionFrom(ChromaticChord chromaticChord) {
         createCacheIfNeeded();
 
+        chromaticChord = removeInversionIfNeeded(chromaticChord);
         List<ChromaticFunction> chromaticFunctionList = cacheChromaticMap.getOrDefault(chromaticChord, new ArrayList<>());
 
         return Collections.unmodifiableList( chromaticFunctionList );
