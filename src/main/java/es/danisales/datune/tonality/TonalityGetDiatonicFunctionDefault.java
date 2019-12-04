@@ -9,7 +9,7 @@ import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.musical.DiatonicChordPattern;
 
 public class TonalityGetDiatonicFunctionDefault {
-    public static ChromaticChord get(Tonality tonality, DiatonicFunction diatonicFunction) {
+    public static ChromaticChord get(Tonality tonality, DiatonicFunction diatonicFunction) throws ScaleDegreeException {
         DiatonicAlt noteBase = getNoteBaseFrom(tonality, diatonicFunction);
         DiatonicChordPattern diatonicChordPattern = getDiatonicChordPatternFrom(diatonicFunction);
 
@@ -24,7 +24,7 @@ public class TonalityGetDiatonicFunctionDefault {
                 .build();
     }
 
-    private static DiatonicAlt getNoteBaseFrom(Tonality tonality, DiatonicFunction diatonicFunction) {
+    private static DiatonicAlt getNoteBaseFrom(Tonality tonality, DiatonicFunction diatonicFunction) throws ScaleDegreeException {
         switch (diatonicFunction) {
             case I:
             case I2:

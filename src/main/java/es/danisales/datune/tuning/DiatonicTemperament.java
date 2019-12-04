@@ -45,13 +45,13 @@ public abstract class DiatonicTemperament extends Temperament<DiatonicAlt> {
 
 	private void addFlat(DiatonicOctave map, DiatonicAlt note, double freq) {
 		freq /= semi();
-		note = note.addSemi(-1);
+        note = note.getAddSemi(-1);
 		while(freq >= Tuning.MIN_FREQUENCY) {
 			map.put(note, freq );
 
 			freq /= semi();
 			try {
-				note = note.addSemi(-1);
+                note = note.getAddSemi(-1);
 			} catch(AlterationException e) {
 				break;
 			}
@@ -60,13 +60,13 @@ public abstract class DiatonicTemperament extends Temperament<DiatonicAlt> {
 	
 	private void addSharp(DiatonicOctave map, DiatonicAlt note, double freq) {
 		freq *= semi();
-		note = note.addSemi(1);
+        note = note.getAddSemi(1);
 		while(freq <= Tuning.MAX_FREQUENCY) {
 			map.put(note, freq );
 
 			freq *= semi();
 			try {
-				note = note.addSemi(1);
+                note = note.getAddSemi(1);
 			} catch(AlterationException e) {
 				break;
 			}

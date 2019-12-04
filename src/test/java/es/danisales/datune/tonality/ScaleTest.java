@@ -1,44 +1,18 @@
 package es.danisales.datune.tonality;
 
+import es.danisales.datune.degree.ChromaticDegree;
+import es.danisales.datune.degree.Degree;
 import es.danisales.datune.degree.DiatonicDegree;
-import es.danisales.datune.interval.IntervalChromatic;
+import es.danisales.datune.degree.PentatonicDegree;
 import es.danisales.datune.musical.DiatonicAlt;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
 public class ScaleTest {
-    @Test
-    public void getMode() {
-        assertEquals(Scale.DORIAN, Scale.IONIAN.getMode(DiatonicDegree.II));
-    }
-
-    @Test
-    public void constantScalesSameAsScaleEnumSize() {
-        assertEquals(ScaleInnerImmutable.values().length, Scale.ALL.size());
-    }
-
-    @Test
-    public void constantScalesSameAsScaleEnumContent() {
-        List<ScaleInnerImmutable> scaleEnumList = Arrays.asList(ScaleInnerImmutable.values());
-        List<ScaleInnerImmutable> scaleEnumListFromScale = new ArrayList<>();
-        for (Scale scale : Scale.ALL)
-            scaleEnumListFromScale.add((ScaleInnerImmutable) scale.innerScale);
-
-        for (ScaleInnerImmutable scaleEnum : scaleEnumListFromScale)
-            assertTrue(scaleEnum.toString(), scaleEnumList.contains(scaleEnum));
-
-        for (ScaleInnerImmutable scaleEnum : scaleEnumList) {
-            assertTrue(scaleEnum.toString(), scaleEnumListFromScale.contains(scaleEnum));
-        }
-
-        assertEquals(ScaleInnerImmutable.values().length, Scale.ALL.size());
-    }
+    /* fromScaleDistances */
 
     @Test
     public void fromScaleDistances() {
@@ -58,7 +32,7 @@ public class ScaleTest {
     }
 
     @Test
-    public void fromScaleDistancesMicrotonal() {
+    public void fromScaleDistances_Microtonal() {
         List<ScaleDistance> listAdded = Collections.unmodifiableList(Arrays.asList(
                 ScaleDistance.QUARTER,
                 ScaleDistance.HALF,
@@ -81,7 +55,7 @@ public class ScaleTest {
     }
 
     @Test(expected = ScaleBuildingException.class)
-    public void fromScaleDistancesDontSum12() {
+    public void fromScaleDistances_DontSum12() {
         List<ScaleDistance> listAdded = Collections.unmodifiableList(Arrays.asList(
                 ScaleDistance.WHOLE,
                 ScaleDistance.WHOLE,
@@ -95,18 +69,573 @@ public class ScaleTest {
         assertTrue(scale.getCode().size() < 7);
     }
 
+    /* fromIntegers */
+
     @Test(expected = ScaleBuildingException.class)
-    public void integersDontSum12() {
+    public void fromIntegers_DontSum12() {
         Scale scale = Scale.fromIntegers(Arrays.asList(2, 2, 1, 2, 2, 2));
         assertTrue(scale.getCode().size() < 7);
     }
 
     @Test
-    public void integersChromatic() {
+    public void fromIntegers() {
         Scale scale = Scale.fromIntegers(Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
         assertEquals(Scale.CHROMATIC, scale);
         assertEquals(Scale.CHROMATIC.hashCode(), scale.hashCode());
         assertEquals(12, scale.getCode().size());
+    }
+
+    @Test
+    public void fromIntegers2() {
+        Scale scale = Scale.fromIntegers(Arrays.asList(2, 2, 1, 2, 2, 2, 1));
+        assertEquals(Arrays.asList(
+                ScaleDistance.WHOLE,
+                ScaleDistance.WHOLE,
+                ScaleDistance.HALF,
+                ScaleDistance.WHOLE,
+                ScaleDistance.WHOLE,
+                ScaleDistance.WHOLE,
+                ScaleDistance.HALF
+        ), scale.getCode());
+    }
+
+    /* fromDiatonicAlt */
+
+    @Test
+    public void fromDiatonicAlt() {
+        Scale scale = Scale.fromDiatonicAlt(Arrays.asList(
+                DiatonicAlt.C,
+                DiatonicAlt.D,
+                DiatonicAlt.E,
+                DiatonicAlt.F,
+                DiatonicAlt.G,
+                DiatonicAlt.A,
+                DiatonicAlt.B
+        ) );
+
+        assertEquals(Scale.MAJOR, scale);
+        assertEquals(Scale.MAJOR.hashCode(), scale.hashCode());
+    }
+
+    @Test
+    public void fromDiatonicAlt2() {
+        Scale scale = Scale.fromDiatonicAlt(Arrays.asList(
+                DiatonicAlt.A,
+                DiatonicAlt.B,
+                DiatonicAlt.C,
+                DiatonicAlt.D,
+                DiatonicAlt.E,
+                DiatonicAlt.F,
+                DiatonicAlt.G
+        ) );
+
+        assertEquals(Scale.MINOR, scale);
+        assertEquals(Scale.MINOR.hashCode(), scale.hashCode());
+    }
+
+    @Test
+    public void fromDiatonicAlt3() {
+        Scale scale = Scale.fromDiatonicAlt(Arrays.asList(
+                DiatonicAlt.F,
+                DiatonicAlt.G,
+                DiatonicAlt.A,
+                DiatonicAlt.Bb,
+                DiatonicAlt.C,
+                DiatonicAlt.D,
+                DiatonicAlt.E
+        ) ); // Fa Major
+
+        assertEquals(Scale.MAJOR, scale);
+        assertEquals(Scale.MAJOR.hashCode(), scale.hashCode());
+    }
+
+    @Test
+    public void fromDiatonicAlt_Unsorted() {
+        Scale scale = Scale.fromDiatonicAlt(Arrays.asList(
+                DiatonicAlt.A,
+                DiatonicAlt.C,
+                DiatonicAlt.F,
+                DiatonicAlt.D,
+                DiatonicAlt.B,
+                DiatonicAlt.G,
+                DiatonicAlt.E
+        ) );
+
+        assertEquals(Scale.MINOR, scale);
+    }
+
+    @Test
+    public void fromDiatonicAlt_DuplicatedNotes() {
+        Scale scale = Scale.fromDiatonicAlt(Arrays.asList(
+                DiatonicAlt.A,
+                DiatonicAlt.C,
+                DiatonicAlt.A,
+                DiatonicAlt.F,
+                DiatonicAlt.D,
+                DiatonicAlt.B,
+                DiatonicAlt.B,
+                DiatonicAlt.G,
+                DiatonicAlt.G,
+                DiatonicAlt.E,
+                DiatonicAlt.E
+        ));
+
+        assertEquals(Scale.MINOR, scale);
+    }
+
+    @Test
+    public void fromDiatonicAlt_DuplicatedNotesEnharmonic() {
+        Scale scale = Scale.fromDiatonicAlt(Arrays.asList(
+                DiatonicAlt.A,
+                DiatonicAlt.BB,
+                DiatonicAlt.C,
+                DiatonicAlt.Gbb,
+                DiatonicAlt.F,
+                DiatonicAlt.D,
+                DiatonicAlt.B,
+                DiatonicAlt.Cb,
+                DiatonicAlt.G,
+                DiatonicAlt.AAA,
+                DiatonicAlt.E,
+                DiatonicAlt.E
+        ));
+
+        assertEquals(Scale.MINOR, scale);
+    }
+
+    @Test
+    public void fromDiatonicAlt_List() throws ScaleDegreeException {
+        Tonality s = Tonality.A;
+        List<DiatonicAlt> notes = new ArrayList<>();
+        for (DiatonicDegree diatonicDegree : DiatonicDegree.values())
+            notes.add(s.getNote(diatonicDegree));
+
+        assertEquals(s.getScale(), Scale.fromDiatonicAlt(notes));
+        assertEquals(s.getScale().hashCode(), Scale.fromDiatonicAlt(notes).hashCode());
+    }
+
+    /* getMode */
+
+    @Test
+    public void getMode() throws ScaleDegreeException {
+        assertEquals(Scale.DORIAN, Scale.IONIAN.getModeFrom(DiatonicDegree.II));
+    }
+
+    @Test
+    public void getMode_Pentatonic() throws ScaleDegreeException {
+        assertEquals(Scale.PENTATONIC, Scale.PENTATONIC_MINOR.getModeFrom(PentatonicDegree.II));
+    }
+
+    @Test
+    public void getMode_PentatonicDiatonicDegree() throws ScaleDegreeException {
+        assertEquals(Scale.PENTATONIC, Scale.PENTATONIC_MINOR.getModeFrom(DiatonicDegree.III));
+    }
+
+    @Test(expected = ScaleDegreeException.class)
+    public void getModePentatonicDiatonicDegreeImpossible() throws ScaleDegreeException {
+        assertEquals(Scale.PENTATONIC, Scale.PENTATONIC_MINOR.getModeFrom(DiatonicDegree.II));
+    }
+
+    /* getModes */
+
+    @Test
+    public void getModes_FromMajor() {
+        Scale scale = Scale.MAJOR;
+
+        List<Scale> scaleModes = scale.getModes();
+
+        assertEquals(6, scaleModes.size());
+        assertSame(Scale.DORIAN.innerScale, scaleModes.get(0).innerScale);
+        assertSame(Scale.PHRYGIAN.innerScale, scaleModes.get(1).innerScale);
+        assertSame(Scale.LYDIAN.innerScale, scaleModes.get(2).innerScale);
+        assertSame(Scale.MIXOLYDIAN.innerScale, scaleModes.get(3).innerScale);
+        assertSame(Scale.MINOR.innerScale, scaleModes.get(4).innerScale);
+        assertSame(Scale.LOCRIAN.innerScale, scaleModes.get(5).innerScale);
+    }
+
+    @Test
+    public void getModes_FromPentatonic() {
+        Scale scale = Scale.PENTATONIC;
+
+        List<Scale> scaleModes = scale.getModes();
+
+        assertEquals(4, scaleModes.size());
+        assertSame(Scale.EGYPCIAN.innerScale, scaleModes.get(0).innerScale);
+        assertSame(Scale.BLUES_MINOR.innerScale, scaleModes.get(1).innerScale);
+        assertSame(Scale.BLUES_MAJOR.innerScale, scaleModes.get(2).innerScale);
+        assertSame(Scale.PENTATONIC_MINOR.innerScale, scaleModes.get(3).innerScale);
+    }
+
+    @Test
+    public void getModes_FromWholeNoteScale() {
+        Scale scale = Scale.WHOLE_TONE;
+
+        List<Scale> scaleModes = scale.getModes();
+
+        assertEquals(5, scaleModes.size());
+        assertSame(Scale.WHOLE_TONE.innerScale, scaleModes.get(0).innerScale);
+        assertSame(Scale.WHOLE_TONE.innerScale, scaleModes.get(1).innerScale);
+        assertSame(Scale.WHOLE_TONE.innerScale, scaleModes.get(2).innerScale);
+        assertSame(Scale.WHOLE_TONE.innerScale, scaleModes.get(3).innerScale);
+        assertSame(Scale.WHOLE_TONE.innerScale, scaleModes.get(4).innerScale);
+    }
+
+    /* getCode */
+
+    @Test
+    public void getCode() {
+        assertEquals(
+                Arrays.asList(
+                        ScaleDistance.WHOLE,
+                        ScaleDistance.HALF,
+                        ScaleDistance.WHOLE,
+                        ScaleDistance.WHOLE,
+                        ScaleDistance.HALF,
+                        ScaleDistance.WHOLE,
+                        ScaleDistance.WHOLE
+                ), Scale.MINOR.getCode()
+        );
+    }
+
+    /* size */
+
+    @Test
+    public void size() {
+        assertEquals(7, Scale.MAJOR.size());
+        assertEquals(7, Scale.MINOR.size());
+        assertEquals(5, Scale.PENTATONIC.size());
+        assertEquals(6, Scale.WHOLE_TONE.size());
+        assertEquals(12, Scale.CHROMATIC.size());
+    }
+
+    @Test
+    public void size_Custom() {
+        assertEquals(13, Scale.fromDistances(Arrays.asList(
+                ScaleDistance.HALF,
+                ScaleDistance.HALF,
+                ScaleDistance.HALF,
+                ScaleDistance.HALF,
+                ScaleDistance.HALF,
+                ScaleDistance.HALF,
+                ScaleDistance.HALF,
+                ScaleDistance.HALF,
+                ScaleDistance.HALF,
+                ScaleDistance.HALF,
+                ScaleDistance.HALF,
+                ScaleDistance.QUARTER,
+                ScaleDistance.QUARTER
+        )).size());
+    }
+
+    /* iterator */
+
+    @Test
+    public void iterator() {
+        Iterator<ScaleDistance> iterator = Scale.MAJOR.iterator();
+        assertNotNull(iterator);
+    }
+
+    @Test
+    public void iterator_Next() {
+        Iterator<ScaleDistance> iterator = Scale.MAJOR.iterator();
+        assertEquals(ScaleDistance.WHOLE, iterator.next());
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void iteratorRemove() {
+        Iterator<ScaleDistance> iterator = Scale.MAJOR.iterator();
+        iterator.next();
+        iterator.remove();
+    }
+
+    @Test
+    public void iterator_HasNext() {
+        Iterator<ScaleDistance> iterator = Scale.PENTATONIC.iterator();
+        assertTrue(iterator.hasNext());
+        iterator.next();
+        assertTrue(iterator.hasNext());
+        iterator.next();
+        assertTrue(iterator.hasNext());
+        iterator.next();
+        assertTrue(iterator.hasNext());
+        iterator.next();
+        assertTrue(iterator.hasNext());
+        iterator.next();
+        assertFalse(iterator.hasNext());
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void iteratorNextEnd() {
+        Iterator<ScaleDistance> iterator = Scale.MAJOR.iterator();
+        while (iterator.hasNext())
+            iterator.next();
+        iterator.next();
+    }
+
+    /* getDistance Degree */
+
+    @Test
+    public void getDistance() throws ScaleDegreeException {
+        assertEquals(ScaleDistance.NONE, Scale.MAJOR.getDistance(DiatonicDegree.I));
+        assertEquals(ScaleDistance.WHOLE, Scale.MAJOR.getDistance(DiatonicDegree.II));
+        assertEquals(ScaleDistance.HALF, Scale.MAJOR.getDistance(DiatonicDegree.IV));
+        assertEquals(ScaleDistance.WHOLE, Scale.MAJOR.getDistance(DiatonicDegree.VII));
+    }
+
+    @Test
+    public void getDistance_PentatonicScale() throws ScaleDegreeException {
+        assertEquals(ScaleDistance.NONE, Scale.PENTATONIC.getDistance(PentatonicDegree.I));
+        assertEquals(ScaleDistance.WHOLE, Scale.PENTATONIC.getDistance(PentatonicDegree.II));
+        assertEquals(ScaleDistance.WHOLE_HALF, Scale.PENTATONIC.getDistance(PentatonicDegree.IV));
+    }
+
+    @Test
+    public void getDistance_ChromaticScale() throws ScaleDegreeException {
+        for (ChromaticDegree chromaticDegree = ChromaticDegree.I;
+             chromaticDegree.getPrevious() != ChromaticDegree.XII;
+             chromaticDegree = chromaticDegree.getNext())
+            if (chromaticDegree == ChromaticDegree.I)
+                assertEquals(ScaleDistance.NONE, Scale.CHROMATIC.getDistance(chromaticDegree));
+            else
+                assertEquals(ScaleDistance.HALF, Scale.CHROMATIC.getDistance(chromaticDegree));
+    }
+
+    @Test
+    public void getDistance_WholeToneScale() throws ScaleDegreeException {
+        List<Degree> degrees = Degree.getMainDegreesFromScaleSize(Scale.WHOLE_TONE.size());
+        for (Degree degree : degrees)
+            if (degree == degrees.get(0))
+                assertEquals(ScaleDistance.NONE, Scale.WHOLE_TONE.getDistance(degree));
+            else
+                assertEquals(ScaleDistance.WHOLE, Scale.WHOLE_TONE.getDistance(degree));
+    }
+
+    @Test
+    public void getDistance_PentatonicScale_DiatonicDegree_Found() throws ScaleDegreeException {
+        assertEquals(ScaleDistance.NONE, Scale.PENTATONIC.getDistance(DiatonicDegree.I));
+    }
+
+    @Test(expected = ScaleDegreeException.class)
+    public void getDistance_PentatonicScale_DiatonicDegree_NotFound() throws ScaleDegreeException {
+        Scale.PENTATONIC.getDistance(DiatonicDegree.VII);
+    }
+
+    /* getIndexByDegree */
+
+    @Test
+    public void getIndexByDegree() throws ScaleDegreeException {
+        Scale scale = Scale.MAJOR;
+        DiatonicDegree diatonicDegree = DiatonicDegree.VII;
+        Integer ret = scale.getIndexByDegree(diatonicDegree);
+        assertEquals((Integer) 6, ret);
+    }
+
+    @Test
+    public void getIndexByDegree_PentatonicScale_DiatonicDegree_Found() throws ScaleDegreeException {
+        Scale scale = Scale.PENTATONIC;
+        DiatonicDegree diatonicDegree = DiatonicDegree.I;
+        Integer ret = scale.getIndexByDegree(diatonicDegree);
+        assertEquals((Integer) 0, ret);
+    }
+
+    @Test(expected = ScaleDegreeException.class)
+    public void getIndexByDegree_PentatonicScale_DiatonicDegree_NotFound() throws ScaleDegreeException {
+        Scale scale = Scale.PENTATONIC_MINOR;
+        DiatonicDegree diatonicDegree = DiatonicDegree.II;
+        scale.getIndexByDegree(diatonicDegree);
+    }
+
+    @Test
+    public void getIndexByDegree_PentatonicScale_PentatonicDegree() throws ScaleDegreeException {
+        Scale scale = Scale.PENTATONIC_MINOR;
+        PentatonicDegree pentatonicDegree = PentatonicDegree.II;
+        Integer ret = scale.getIndexByDegree(pentatonicDegree);
+        assertEquals((Integer) 1, ret);
+    }
+
+    /* degreeGetter */
+
+    @Test
+    public void degreeGetter() {
+        Scale scale = Scale.MAJOR;
+        Set<Degree> degreeSet = scale.degreeGetter()
+                .index(0)
+                .get();
+        assertEquals(1, degreeSet.size());
+        assertTrue(degreeSet.contains(DiatonicDegree.I));
+    }
+
+    @Test
+    public void degreeGetter_Pentatonic() {
+        Scale scale = Scale.PENTATONIC;
+        Set<Degree> degreeSet = scale.degreeGetter()
+                .index(0)
+                .get();
+        assertEquals(2, degreeSet.size());
+        assertTrue(degreeSet.contains(DiatonicDegree.I));
+        assertTrue(degreeSet.contains(PentatonicDegree.I));
+    }
+
+    @Test
+    public void degreeGetter_Pentatonic2() {
+        Scale scale = Scale.PENTATONIC_MINOR;
+        Set<Degree> degreeSet = scale.degreeGetter()
+                .index(1)
+                .get();
+        assertEquals(2, degreeSet.size());
+        assertTrue(degreeSet.contains(DiatonicDegree.III));
+        assertTrue(degreeSet.contains(PentatonicDegree.II));
+    }
+
+    @Test
+    public void degreeGetter_Chromatic() {
+        Scale scale = Scale.CHROMATIC;
+        Set<Degree> degreeSet = scale.degreeGetter()
+                .index(7)
+                .get();
+        assertEquals(2, degreeSet.size());
+        assertTrue(degreeSet.contains(DiatonicDegree.V));
+        assertTrue(degreeSet.contains(ChromaticDegree.VIII));
+    }
+
+    /* degreeGetter Diatonic */
+
+    @Test
+    public void degreeGetterDiatonic() {
+        Scale scale = Scale.MAJOR;
+        DiatonicDegree diatonicDegree = scale.degreeGetter()
+                .index(0)
+                .getFirstOfClass(DiatonicDegree.class);
+        assertEquals(DiatonicDegree.I, diatonicDegree);
+    }
+
+    @Test
+    public void degreeGetterDiatonic2() {
+        Scale scale = Scale.MAJOR;
+        DiatonicDegree diatonicDegree = scale.degreeGetter()
+                .index(6)
+                .getFirstOfClass(DiatonicDegree.class);
+        assertEquals(DiatonicDegree.VII, diatonicDegree);
+    }
+
+    @Test
+    public void degreeGetterDiatonic_GreaterThanSize() {
+        Scale scale = Scale.MAJOR;
+        DiatonicDegree diatonicDegree = scale.degreeGetter()
+                .index(7)
+                .getFirstOfClass(DiatonicDegree.class);
+        assertEquals(DiatonicDegree.I, diatonicDegree);
+    }
+
+    @Test
+    public void degreeGetterDiatonic_LowerThanSize() {
+        Scale scale = Scale.MAJOR;
+        DiatonicDegree diatonicDegree = scale.degreeGetter()
+                .index(-1)
+                .getFirstOfClass(DiatonicDegree.class);
+        assertEquals(DiatonicDegree.VII, diatonicDegree);
+    }
+
+    @Test
+    public void degreeGetterDiatonic_Pentatonic() {
+        Scale scale = Scale.PENTATONIC;
+        DiatonicDegree diatonicDegree = scale.degreeGetter()
+                .index(0)
+                .getFirstOfClass(DiatonicDegree.class);
+        assertEquals(DiatonicDegree.I, diatonicDegree);
+    }
+
+    @Test
+    public void degreeGetterDiatonic_PentatonicGreaterThanSize() {
+        Scale scale = Scale.PENTATONIC_MINOR;
+        DiatonicDegree diatonicDegree = scale.degreeGetter()
+                .index(5)
+                .getFirstOfClass(DiatonicDegree.class);
+        assertEquals(DiatonicDegree.I, diatonicDegree);
+    }
+
+    @Test
+    public void degreeGetterDiatonic_PentatonicLowerThanSize() {
+        Scale scale = Scale.PENTATONIC;
+        DiatonicDegree pentatonicDegree = scale.degreeGetter()
+                .index(-1)
+                .getFirstOfClass(DiatonicDegree.class);
+        assertEquals(DiatonicDegree.VI, pentatonicDegree);
+    }
+
+    /* setScaleDegreeReparametrizer */
+
+    @Test
+    public void setScaleDiatonicReparametrizer() {
+        Scale scale = Scale.PENTATONIC.clone();
+        assertNotNull(scale.degreeGetter()
+                .index(0)
+                .getFirstOfClass(DiatonicDegree.class)
+        );
+
+        scale.setScaleDegreeReparametrizer(null);
+
+        assertNull(scale.degreeGetter()
+                .index(0)
+                .getFirstOfClass(DiatonicDegree.class)
+        );
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void setScaleDiatonicReparametrizerFails() {
+        Scale.PENTATONIC.setScaleDegreeReparametrizer(null);
+    }
+
+    @Test
+    public void setScaleDegreeReparametrizer_autoTurnIntoImmutable() {
+        Scale scale = Scale.CHROMATIC.clone();
+        scale.setScaleDegreeReparametrizer(null);
+
+        ScaleDegreeReparametrizer scaleDiatonicReparametrizer = getCopyFrom(Scale.CHROMATIC);
+        scale.setScaleDegreeReparametrizer(scaleDiatonicReparametrizer);
+
+        assertEquals(Scale.CHROMATIC, scale);
+        assertSame(Scale.CHROMATIC.innerScale, scale.innerScale);
+    }
+
+    @SuppressWarnings("SameParameterValue")
+    private ScaleDegreeReparametrizer getCopyFrom(Scale scale) {
+        ScaleDegreeReparametrizer scaleDiatonicReparametrizer = ScaleDegreeReparametrizer.create();
+        for (int i = 0; i < scale.size(); i++)
+            scaleDiatonicReparametrizer.put(i,
+                    scale.degreeGetter()
+                            .index(i)
+                            .getFirstOfClass(DiatonicDegree.class)
+            );
+        return scaleDiatonicReparametrizer;
+    }
+
+    /* isDiatonic */
+
+    @Test
+    public void isDiatonicTrue() {
+        assertTrue(Scale.MAJOR.isDiatonic());
+    }
+
+    @Test
+    public void isDiatonicAllDiatonics() {
+        for (Scale scale : Scale.DIATONICS)
+            assertTrue(scale.isDiatonic());
+    }
+
+    @Test
+    public void isDiatonicFalse() {
+        assertFalse(Scale.PENTATONIC.isDiatonic());
+    }
+
+    /* innerScale */
+
+    @Test
+    public void autoTurnIntoImmutable() {
+        Scale scale = Scale.fromIntegers(Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+
+        assertEquals(Scale.CHROMATIC, scale);
+        assertSame(Scale.CHROMATIC.innerScale, scale.innerScale);
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -146,145 +675,25 @@ public class ScaleTest {
     }
 
     @Test
-    public void fromDiatonicAltList1() {
-        Scale scale = Scale.fromDiatonicAlt(Arrays.asList(
-                DiatonicAlt.C,
-                DiatonicAlt.D,
-                DiatonicAlt.E,
-                DiatonicAlt.F,
-                DiatonicAlt.G,
-                DiatonicAlt.A,
-                DiatonicAlt.B
-        ) );
-
-        assertEquals(Scale.MAJOR, scale);
-        assertEquals(Scale.MAJOR.hashCode(), scale.hashCode());
+    public void innerScaleNotNullAll() {
+        for (Scale scale : Scale.ALL)
+            assertNotNull(scale.innerScale);
     }
+
+    /* Others */
 
     @Test
-    public void fromDiatonicAltList2() {
-        Scale scale = Scale.fromDiatonicAlt(Arrays.asList(
-                DiatonicAlt.A,
-                DiatonicAlt.B,
-                DiatonicAlt.C,
-                DiatonicAlt.D,
-                DiatonicAlt.E,
-                DiatonicAlt.F,
-                DiatonicAlt.G
-        ) );
+    public void sameScaleWithDifferentName() {
+        assertEquals(Scale.MINOR, Scale.AEOLIAN);
+        assertEquals(Scale.MINOR.hashCode(), Scale.AEOLIAN.hashCode());
+        assertNotSame(Scale.MINOR.innerScale, Scale.AEOLIAN.innerScale); // Es distinto enum
 
-        assertEquals(Scale.MINOR, scale);
-        assertEquals(Scale.MINOR.hashCode(), scale.hashCode());
-    }
-    @Test
-    public void fromDiatonicAltList3() {
-        Scale scale = Scale.fromDiatonicAlt(Arrays.asList(
-                DiatonicAlt.F,
-                DiatonicAlt.G,
-                DiatonicAlt.A,
-                DiatonicAlt.Bb,
-                DiatonicAlt.C,
-                DiatonicAlt.D,
-                DiatonicAlt.E
-        ) ); // Fa Major
-
-        assertEquals(Scale.MAJOR, scale);
-        assertEquals(Scale.MAJOR.hashCode(), scale.hashCode());
+        assertEquals(Scale.MAJOR, Scale.IONIAN);
+        assertEquals(Scale.MAJOR.hashCode(), Scale.IONIAN.hashCode());
+        assertNotSame(Scale.MAJOR.innerScale, Scale.IONIAN.innerScale); // Es distinto enum
     }
 
-    @Test
-    public void fromDiatonicAltListUnordered() {
-        Scale scale = Scale.fromDiatonicAlt(Arrays.asList(
-                DiatonicAlt.A,
-                DiatonicAlt.C,
-                DiatonicAlt.F,
-                DiatonicAlt.D,
-                DiatonicAlt.B,
-                DiatonicAlt.G,
-                DiatonicAlt.E
-        ) );
-
-        assertEquals(Scale.MINOR, scale);
-    }
-
-    @Test
-    public void fromDuplicatedNotes() {
-        Scale scale = Scale.fromDiatonicAlt(Arrays.asList(
-                DiatonicAlt.A,
-                DiatonicAlt.C,
-                DiatonicAlt.A,
-                DiatonicAlt.F,
-                DiatonicAlt.D,
-                DiatonicAlt.B,
-                DiatonicAlt.B,
-                DiatonicAlt.G,
-                DiatonicAlt.G,
-                DiatonicAlt.E,
-                DiatonicAlt.E
-        ));
-
-        assertEquals(Scale.MINOR, scale);
-    }
-
-    @Test
-    public void fromDuplicatedNotesEnharmonic() {
-        Scale scale = Scale.fromDiatonicAlt(Arrays.asList(
-                DiatonicAlt.A,
-                DiatonicAlt.BB,
-                DiatonicAlt.C,
-                DiatonicAlt.Gbb,
-                DiatonicAlt.F,
-                DiatonicAlt.D,
-                DiatonicAlt.B,
-                DiatonicAlt.Cb,
-                DiatonicAlt.G,
-                DiatonicAlt.AAA,
-                DiatonicAlt.E,
-                DiatonicAlt.E
-        ));
-
-        assertEquals(Scale.MINOR, scale);
-    }
-
-    @Test
-    public void getAllModes() {
-        Scale scale = Scale.MAJOR;
-
-        List<Scale> scaleModes = scale.getModes();
-
-        assertEquals(7, scaleModes.size());
-        assertEquals(Scale.MAJOR, scaleModes.get(0));
-        assertEquals(Scale.DORIAN, scaleModes.get(1));
-        assertEquals(Scale.PHRYGIAN, scaleModes.get(2));
-        assertEquals(Scale.LYDIAN, scaleModes.get(3));
-        assertEquals(Scale.MIXOLYDIAN, scaleModes.get(4));
-        assertEquals(Scale.AEOLIAN, scaleModes.get(5));
-        assertEquals(Scale.LOCRIAN, scaleModes.get(6));
-
-        assertEquals(Scale.MAJOR.hashCode(), scaleModes.get(0).hashCode());
-        assertEquals(Scale.DORIAN.hashCode(), scaleModes.get(1).hashCode());
-        assertEquals(Scale.PHRYGIAN.hashCode(), scaleModes.get(2).hashCode());
-        assertEquals(Scale.LYDIAN.hashCode(), scaleModes.get(3).hashCode());
-        assertEquals(Scale.MIXOLYDIAN.hashCode(), scaleModes.get(4).hashCode());
-        assertEquals(Scale.AEOLIAN.hashCode(), scaleModes.get(5).hashCode());
-        assertEquals(Scale.LOCRIAN.hashCode(), scaleModes.get(6).hashCode());
-    }
-
-    @Test
-    public void isDiatonicTrue() {
-        assertTrue(Scale.MAJOR.isDiatonic());
-    }
-
-    @Test
-    public void isDiatonicAllDiatonics() {
-        for (Scale scale : Scale.DIATONICS)
-            assertTrue(scale.isDiatonic());
-    }
-
-    @Test
-    public void isDiatonicFalse() {
-        assertFalse(Scale.PENTATONIC.isDiatonic());
-    }
+    /* Equals */
 
     @Test
     public void equalsScaleOfListTwice() {
@@ -315,7 +724,7 @@ public class ScaleTest {
                 ScaleDistance.WHOLE,
                 ScaleDistance.WHOLE,
                 ScaleDistance.HALF
-        ) );
+        ));
 
         Scale scale = Scale.fromDistances(listAdded);
 
@@ -327,56 +736,6 @@ public class ScaleTest {
     public void equalsDifferentName() {
         assertEquals(Scale.MAJOR, Scale.IONIAN);
         assertEquals(Scale.MAJOR.hashCode(), Scale.IONIAN.hashCode());
-    }
-
-    @Test
-    public void getCode() {
-        assertEquals(
-                Arrays.asList(
-                        ScaleDistance.WHOLE,
-                        ScaleDistance.HALF,
-                        ScaleDistance.WHOLE,
-                        ScaleDistance.WHOLE,
-                        ScaleDistance.HALF,
-                        ScaleDistance.WHOLE,
-                        ScaleDistance.WHOLE
-                ), Scale.MINOR.getCode()
-        );
-    }
-
-    @Test
-    public void fromDiatonicAltList() {
-        Tonality s = Tonality.A;
-        List<DiatonicAlt> notes = new ArrayList<>();
-        for (DiatonicDegree diatonicDegree : DiatonicDegree.values())
-            notes.add(s.getNote(diatonicDegree));
-
-        assertEquals(s.getScale(), Scale.fromDiatonicAlt(notes));
-        assertEquals(s.getScale().hashCode(), Scale.fromDiatonicAlt(notes).hashCode());
-    }
-
-    @Test
-    public void getNoteFromDiatonicDegree() {
-        Tonality tonality = Tonality.C;
-
-        assertEquals( DiatonicAlt.C, tonality.getRoot() );
-
-        assertEquals( DiatonicAlt.C, tonality.getNote( DiatonicDegree.I ) );
-        assertEquals( DiatonicAlt.D, tonality.getNote( DiatonicDegree.II ) );
-    }
-
-    @Test
-    public void fromIntegers() {
-        Scale scale = Scale.fromIntegers(Arrays.asList(2, 2, 1, 2, 2, 2, 1));
-        assertEquals(Arrays.asList(
-                ScaleDistance.WHOLE,
-                ScaleDistance.WHOLE,
-                ScaleDistance.HALF,
-                ScaleDistance.WHOLE,
-                ScaleDistance.WHOLE,
-                ScaleDistance.WHOLE,
-                ScaleDistance.HALF
-        ), scale.getCode());
     }
 
     @Test
@@ -406,6 +765,8 @@ public class ScaleTest {
         assertEquals(a.hashCode(), b.hashCode());
     }
 
+    /* toString */
+
     @Test
     public void toStringNotEmpty() {
         for (Scale scale : Scale.ALL) {
@@ -415,50 +776,7 @@ public class ScaleTest {
         }
     }
 
-    @Test
-    public void innerScaleNotNullAll() {
-        for (Scale scale : Scale.ALL)
-            assertNotNull(scale.innerScale);
-    }
-
-    @Test
-    public void hasIntervalChromatic() {
-        assertTrue(Scale.MAJOR.hasIntervalFromRoot(IntervalChromatic.MAJOR_THIRD));
-        assertTrue(Scale.PENTATONIC.hasIntervalFromRoot(IntervalChromatic.MAJOR_THIRD));
-        assertFalse(Scale.MAJOR.hasIntervalFromRoot(IntervalChromatic.MINOR_THIRD));
-        assertFalse(Scale.PENTATONIC.hasIntervalFromRoot(IntervalChromatic.MINOR_THIRD));
-        assertTrue(Scale.MINOR.hasIntervalFromRoot(IntervalChromatic.MINOR_THIRD));
-        assertTrue(Scale.PENTATONIC_MINOR.hasIntervalFromRoot(IntervalChromatic.MINOR_THIRD));
-        assertTrue(Scale.MAJOR.hasIntervalFromRoot(IntervalChromatic.PERFECT_FIFTH));
-        assertTrue(Scale.MINOR.hasIntervalFromRoot(IntervalChromatic.PERFECT_FIFTH));
-        assertFalse(Scale.LOCRIAN.hasIntervalFromRoot(IntervalChromatic.PERFECT_FIFTH));
-        assertTrue(Scale.LOCRIAN.hasIntervalFromRoot(IntervalChromatic.PERFECT_OCTAVE));
-    }
-
-    @Test
-    public void hasIntervalChromaticGreatherThan12() {
-        assertTrue(Scale.MAJOR.hasIntervalFromRoot(IntervalChromatic.MAJOR_TENTH));
-        assertFalse(Scale.MAJOR.hasIntervalFromRoot(IntervalChromatic.MINOR_TENTH));
-        assertTrue(Scale.MINOR.hasIntervalFromRoot(IntervalChromatic.MINOR_TENTH));
-        assertTrue(Scale.MAJOR.hasIntervalFromRoot(IntervalChromatic.PERFECT_TWELFTH));
-        assertTrue(Scale.MINOR.hasIntervalFromRoot(IntervalChromatic.PERFECT_TWELFTH));
-        assertFalse(Scale.LOCRIAN.hasIntervalFromRoot(IntervalChromatic.PERFECT_TWELFTH));
-    }
-
-    @Test
-    public void setScaleDiatonicReparametrizer() {
-        Scale scale = Scale.PENTATONIC.clone();
-        scale.setScaleDiatonicReparametrizer(null);
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void setScaleDiatonicReparametrizerFails() {
-        Scale.PENTATONIC.setScaleDiatonicReparametrizer(null);
-    }
-
-    @Test
-    public void getRelativeDegreeByIndex() {  // todo
-    }
+    /* clone */
 
     @Test
     public void cloneTest() {
@@ -472,41 +790,22 @@ public class ScaleTest {
     @Test
     public void cloneTest2() {
         Scale scale = Scale.CHROMATIC.clone();
-        scale.setScaleDiatonicReparametrizer(null);
+        scale.setScaleDegreeReparametrizer(null);
 
         assertNotEquals(Scale.CHROMATIC, scale);
     }
 
+    /* hashCode */
+
     @Test
-    public void autoTurnIntoImmutable() {
-        Scale scale = Scale.CHROMATIC.clone();
-        scale.setScaleDiatonicReparametrizer(null);
-
-        ScaleDegreeReparametrizer scaleDiatonicReparametrizer = getCopyFrom(Scale.CHROMATIC);
-        scale.setScaleDiatonicReparametrizer(scaleDiatonicReparametrizer);
-
-        assertEquals(Scale.CHROMATIC, scale);
-        assertSame(Scale.CHROMATIC.innerScale, scale.innerScale);
-    }
-
-    @SuppressWarnings("SameParameterValue")
-    private ScaleDegreeReparametrizer getCopyFrom(Scale scale) {
-        ScaleDegreeReparametrizer scaleDiatonicReparametrizer = ScaleDegreeReparametrizer.create();
-        for (int i = 0; i < scale.size(); i++)
-            scaleDiatonicReparametrizer.put(i, scale.getRelativeDegreeByIndex(i));
-        return scaleDiatonicReparametrizer;
+    public void hashCode_dependsOnCode() {
+        assertNotEquals(Scale.MAJOR.hashCode(), Scale.DORIAN.hashCode());
+        assertEquals(Scale.MAJOR.hashCode(), Scale.MAJOR.clone().hashCode());
     }
 
     @Test
-    public void autoTurnIntoImmutable2() {
-        Scale scale = Scale.fromIntegers(Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-
-        assertEquals(Scale.CHROMATIC, scale);
-        assertSame(Scale.CHROMATIC.innerScale, scale.innerScale);
-    }
-
-    @Test
-    public void getIndexByRelativeDegree() {
-        // todo
+    public void hashCode_dependsOnScaleDegreeReparametrizer() {
+        assertEquals(Scale.BLUES_a4.getCode(), Scale.BLUES_b5.getCode());
+        assertNotEquals(Scale.BLUES_a4.hashCode(), Scale.BLUES_b5.hashCode());
     }
 }

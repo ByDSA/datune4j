@@ -12,12 +12,13 @@ public class Pan extends ControlChangeEvent {
 	public Pan(int value) {
 		this(0, value);
 	}
-	
-	@Override
-	public Pan clone() {
-		Pan r = new Pan(0, 0);
-		r.setData(getData());
-		
-		return r;
-	}
+
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @Override
+    public Pan clone() {
+        Pan r = new Pan(0, 0);
+        r.setData(getData());
+
+        return r;
+    }
 }

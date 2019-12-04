@@ -2,7 +2,7 @@ package es.danisales.datune.tonality;
 
 import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.absolutedegree.Diatonic;
-import es.danisales.datune.degree.RelativeDegree;
+import es.danisales.datune.degree.Degree;
 import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.musical.ChromaticChord;
@@ -48,15 +48,11 @@ public class TonalityException extends Exception {
 				);
 	}
 
-	public TonalityException(@NonNull RelativeDegree relativeDegree, @NonNull Tonality tonality, int octave) {
+	public TonalityException(@NonNull Degree relativeDegree, @NonNull Tonality tonality, int octave) {
 		super(relativeDegree + " " + tonality + " " + octave);
 	}
 
-	public TonalityException(@NonNull RelativeDegree relativeDegree, @NonNull Tonality tonality) {
-		super("La tonalidad " + tonality + " no tiene el grado relativo " + relativeDegree);
-	}
-
     public TonalityException(Tonality tonality, HarmonicFunction harmonicFunction) {
-        super("Tonality " + tonality + " has not harmonic function " + harmonicFunction);
+		super("Tonality " + tonality + " containsAll not harmonic function " + harmonicFunction);
     }
 }

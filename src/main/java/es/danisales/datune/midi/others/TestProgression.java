@@ -11,26 +11,26 @@ import es.danisales.datune.midi.binaries.Song;
 import es.danisales.datune.tonality.Tonality;
 
 public class TestProgression extends Song {
-	public Progression progression;
-	public Track track;
-	
-	public TestProgression(Tonality s, int oct, int t) {
+	private Progression progression;
+	private Track track;
+
+	private TestProgression(Tonality s, int oct, int t) {
 		this(s, oct, t, Instrument.PAD7_HALO);
 	}
-	
-	public TestProgression(Tonality s, int oct) {
+
+	private TestProgression(Tonality s, int oct) {
 		this(s, oct, 120);
 	}
-	
-	public TestProgression(Tonality s) {
+
+	private TestProgression(Tonality s) {
 		this(s, 5);
 	}
 	
 	public TestProgression() {
 		this(Settings.DefaultValues.TONALITY);
 	}
-	
-	public TestProgression(Tonality s, int oct, int t, Instrument ins) {
+
+	private TestProgression(Tonality s, int oct, int t, Instrument ins) {
 		super("test_progression", t);
 		tonality = s;
 

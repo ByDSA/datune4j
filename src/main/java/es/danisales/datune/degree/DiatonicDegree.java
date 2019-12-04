@@ -9,7 +9,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 /**
  * Grado diatónico
  */
-public enum DiatonicDegree implements RelativeDegree {
+public enum DiatonicDegree implements Degree {
 	I, II, III, IV, V, VI, VII;
 
 	public static DiatonicDegree from(IntervalDiatonic intervalDiatonic) {
@@ -241,14 +241,19 @@ public enum DiatonicDegree implements RelativeDegree {
 	}
 
     @NonNull
-    public DiatonicDegree getNext() { // todo: move to RelativeDegree
+    public DiatonicDegree getNext() {
         int index = (ordinal() + 1) % DiatonicDegree.values().length;
         return values()[index];
     }
 
     @NonNull
-    public DiatonicDegree getPrevious() { // todo: move to RelativeDegree
+    public DiatonicDegree getPrevious() {
         int index = (ordinal() - 1 + DiatonicDegree.values().length) % DiatonicDegree.values().length;
         return values()[index];
+    }
+
+    @Override
+    public String toString() {
+        return "Diatonic Degree " + super.toString();
     }
 }

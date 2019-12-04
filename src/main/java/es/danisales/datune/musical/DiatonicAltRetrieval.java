@@ -2,11 +2,13 @@ package es.danisales.datune.musical;
 
 import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.absolutedegree.Diatonic;
-import es.danisales.datune.degree.RelativeDegree;
+import es.danisales.datune.degree.Degree;
+import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.musical.transformations.EnharmonicsRetrieval;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.ScaleDistance;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,8 +85,8 @@ public class DiatonicAltRetrieval {
         for (int i = 0; i < scale.size()-1; i++) {
             ScaleDistance step = scale.getCode().get(i);
             semis += step.getMicrotonalSemitones();
-            RelativeDegree relativeDegree;
-            relativeDegree = scale.getRelativeDegreeByIndex(i + 1);
+            Degree relativeDegree;
+            relativeDegree = getDiatonicDegreeFromRelativeDegreeSet(scale.degreeGetter().index(i + 1).get());
             if (relativeDegree == null)
                 return genericListFrom(noteBase, scale);
             int index = diatonicBase.ordinal() + relativeDegree.ordinal();
@@ -96,6 +98,14 @@ public class DiatonicAltRetrieval {
         }
 
         return retNotes;
+    }
+
+    private static @Nullable DiatonicDegree getDiatonicDegreeFromRelativeDegreeSet(Set<Degree> set) {
+        for (Degree relativeDegree : set)
+            if (relativeDegree instanceof DiatonicDegree)
+                return (DiatonicDegree) relativeDegree;
+
+        return null;
     }
 
     public static Set<DiatonicAlt> getEnharmonicsFrom(DiatonicAlt diatonicAlt, int maxAlterations) {

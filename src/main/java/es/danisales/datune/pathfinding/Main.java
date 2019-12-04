@@ -47,7 +47,7 @@ class Main {
 		int l2 = 0;
 		for ( int i = 0; i < pcm.size(); i++ ) {
 			ChordMidi c = pcm.get( i );
-			int l = 0;
+            int l;
 			if ( i <= 2 || i == 5 || true ) {
 				l = Duration.L1;
 			} else {

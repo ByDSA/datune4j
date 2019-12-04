@@ -1,6 +1,6 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.degree.RelativeDegree;
+import es.danisales.datune.degree.Degree;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -29,7 +29,7 @@ class ScaleInnerMutable implements ScaleInner {
 	}
 
 	@Override
-    public @NonNull ScaleDistance get(RelativeDegree diatonicDegree) {
+    public @NonNull ScaleDistance getDistance(Degree diatonicDegree) {
         if (diatonicDegree.ordinal() == 0)
             return ScaleDistance.NONE;
 

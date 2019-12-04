@@ -56,14 +56,9 @@ public final class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDia
         onMutation();
     }
 
-    public void setScaleAsMinor() {
-        Tonality newTonality = Tonality.from(tonality.getRoot(), Scale.MINOR);
+    public void setScaleAs(Scale scale) {
+        Tonality newTonality = Tonality.from(tonality.getRoot(), scale);
         setTonality(newTonality);
-    }
-
-    public void setScaleAsMajor() {
-        Tonality newTonality = Tonality.from(tonality.getRoot(), Scale.MAJOR);
-        setTonality( newTonality );
     }
 
     @Override
@@ -108,17 +103,18 @@ public final class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDia
         return tonality;
     }
 
-    // todo
     @Override
-    public void shift(IntervalDiatonic interval) {
+    public void shift(IntervalDiatonic intervalDiatonic) {
+        for (DiatonicMidi diatonicMidi : this)
+            diatonicMidi.getPitch().shift(intervalDiatonic);
 
         onMutation();
     }
 
-    // todo
     @Override
-    public void shiftNegative(IntervalDiatonic interval) {
-
+    public void shiftNegative(IntervalDiatonic intervalDiatonic) {
+        for (DiatonicMidi diatonicMidi : this)
+            diatonicMidi.getPitch().shiftNegative(intervalDiatonic);
 
         onMutation();
     }
@@ -144,6 +140,7 @@ public final class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDia
         return n;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public @NonNull DiatonicChordMidiInfo getInfo() {
         return info;
     }
@@ -213,11 +210,8 @@ public final class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDia
                 && tonality.equals(dcm.tonality);
     }
 
-    // todo
-
-    /*
     @Override
     public int hashCode() {
-        return 47 * ( super.hashCode() + );
-    }*/
+        return 47 * (super.hashCode() + 53 * tonality.hashCode());
+    }
 }

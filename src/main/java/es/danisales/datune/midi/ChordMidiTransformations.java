@@ -26,7 +26,7 @@ public class ChordMidiTransformations {
         List<T> ret = new ArrayList<>();
         List<T> bases = _getAllInversions(chordMidi);
         for (T c : bases)
-            ret.addAll((List<T>) getAllInversionsFrom(c));
+            ret.addAll(getAllInversionsFrom(c));
 
         return ret;
     }

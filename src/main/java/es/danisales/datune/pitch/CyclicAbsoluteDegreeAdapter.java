@@ -3,7 +3,7 @@ package es.danisales.datune.pitch;
 import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.absolutedegree.Diatonic;
 import es.danisales.datune.absolutedegree.Pentatonic;
-import es.danisales.datune.degree.RelativeDegree;
+import es.danisales.datune.degree.Degree;
 import es.danisales.datune.interval.Interval;
 import es.danisales.datune.musical.DiatonicAlt;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -41,8 +41,8 @@ public class CyclicAbsoluteDegreeAdapter {
                 int currentIndex = ai.get();
 
                 @Override
-                public RelativeDegree getDegree() {
-                    return RelativeDegree.getValuesFromScaleSize(size).get(currentIndex);
+                public Degree getDegree() {
+                    return Degree.getMainDegreesFromScaleSize(size).get(currentIndex);
                 }
 
                 @Override

@@ -2405,13 +2405,13 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.Bsusb2b5
     )));
 
-    public static final Set<ChromaticChord>	UNUSUAL_CHORDS			= ListUtils.concatUnmodificable(
+    public static final Set<ChromaticChord> UNUSUAL_CHORDS = ListUtils.concatImmutable(
             CHORDS_SUSb2,
             CHORDS_SUSa4,
             CHORDS_SUSb2b5
     );
 
-    public static final Set<ChromaticChord>	TRIAD_CHORDS		= ListUtils.concatUnmodificable(
+    public static final Set<ChromaticChord> TRIAD_CHORDS = ListUtils.concatImmutable(
             CHORDS_MAJOR,
             CHORDS_MINOR,
             CHORDS_DIMINISHED,
@@ -2420,7 +2420,7 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             CHORDS_SUS2
     );
 
-    public static final Set<ChromaticChord>	SEVENTH_CHORDS			= ListUtils.concatUnmodificable(
+    public static final Set<ChromaticChord> SEVENTH_CHORDS = ListUtils.concatImmutable(
             CHORDS_7,
             CHORDS_Maj7,
             CHORDS_m7,
@@ -2434,7 +2434,7 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             CHORDS_7sus4
     );
 
-    public static final Set<ChromaticChord>	SIXTH_CHORDS	= ListUtils.concatUnmodificable(
+    public static final Set<ChromaticChord> SIXTH_CHORDS = ListUtils.concatImmutable(
             CHORDS_6,
             CHORDS_m6,
             CHORDS_6sus4,
@@ -2442,7 +2442,7 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             CHORDS_m6add9
     );
 
-    public static final Set<ChromaticChord>	NINTH_CHORDS		= ListUtils.concatUnmodificable(
+    public static final Set<ChromaticChord> NINTH_CHORDS = ListUtils.concatImmutable(
             CHORDS_7b9,
             CHORDS_7a9,
             CHORDS_m7b9,
@@ -2458,7 +2458,7 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             CHORDS_Maj9a11
     );
 
-    public static final Set<ChromaticChord>	ELEVENTH_CHORDS			= ListUtils.concatUnmodificable(
+    public static final Set<ChromaticChord> ELEVENTH_CHORDS = ListUtils.concatImmutable(
             CHORDS_11,
             CHORDS_m11,
             CHORDS_11b9,
@@ -2467,7 +2467,7 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             CHORDS_mMaj11
     );
 
-    public static final Set<ChromaticChord>	THIRTEENTH_CHORDS		= ListUtils.concatUnmodificable(
+    public static final Set<ChromaticChord> THIRTEENTH_CHORDS = ListUtils.concatImmutable(
             CHORDS_m13,
             CHORDS_13sus4,
             CHORDS_13b5,
@@ -2490,11 +2490,11 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             CHORDS_Maj13a5a9
     );
 
-    public static final Set<ChromaticChord>	PARTIAL_CHORDS = ListUtils.concatUnmodificable(
+    public static final Set<ChromaticChord> PARTIAL_CHORDS = ListUtils.concatImmutable(
             CHORDS_FIFTH
     );
 
-    public static final Set<ChromaticChord>	COMMON_CHORDS = ListUtils.concatUnmodificable(
+    public static final Set<ChromaticChord> COMMON_CHORDS = ListUtils.concatImmutable(
             TRIAD_CHORDS, SEVENTH_CHORDS, SIXTH_CHORDS, NINTH_CHORDS,
             ELEVENTH_CHORDS, THIRTEENTH_CHORDS, PARTIAL_CHORDS
     );
@@ -2513,7 +2513,7 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
     }
 
     public static @NonNull Set<ChromaticChord> immutableValues() {
-        return ListUtils.concatUnmodificable(COMMON_CHORDS, UNUSUAL_CHORDS);
+        return ListUtils.concatImmutable(COMMON_CHORDS, UNUSUAL_CHORDS);
     }
 
     private ChromaticChord(ChromaticChordInterface chromaticChordInterface) {

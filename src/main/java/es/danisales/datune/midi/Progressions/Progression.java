@@ -13,12 +13,13 @@ import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.tonality.Tonality;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Progression<This extends Progression> implements EventComplex {
 	protected Tonality tonality;
 	protected int octave;
 
-	protected ArrayList<DiatonicChordMidi> nodes;
+	private List<DiatonicChordMidi> nodes;
 
 	private Progression() {
 		super();
@@ -35,13 +36,13 @@ public class Progression<This extends Progression> implements EventComplex {
 
 	/** Replace Chord
 	 *
-	 * @param n	NUMBER�mero de corde en el tiempo
+	 * @param n    número de corde en el tiempo
 	 * @param t	Grado del acorde
 	 * @param o	Desplazamiento de octava
 	 * @return Acorde reemplazado
 	 */
 	public DiatonicChordMidi replaceChord(int n, DiatonicFunction t, int o) {
-		DiatonicChordMidi c = null;
+		DiatonicChordMidi c;
 		o += octave;
 
         c = DiatonicChordMidi.builder()
@@ -143,8 +144,7 @@ public class Progression<This extends Progression> implements EventComplex {
 	}
 
 	public Progression setArpegio(int[] n, Arpegio a) {
-		for(int i = 0; i < n.length; i++)
-			setArpegio(n[i], a);
+		for (int i1 : n) setArpegio(i1, a);
 
 		return this;
 	}
@@ -199,7 +199,7 @@ public class Progression<This extends Progression> implements EventComplex {
 		return nodes.size();
 	}
 
-	public ArrayList<DiatonicChordMidi> getChords() {
+	public List<DiatonicChordMidi> getChords() {
 		return nodes;
 	}
 

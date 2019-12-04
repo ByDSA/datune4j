@@ -128,7 +128,7 @@ public class DiatonicAltTest {
     @Test
     public void addSemi() {
         DiatonicAlt diatonicAlt = DiatonicAlt.C;
-        assertNotEquals(DiatonicAlt.C, diatonicAlt.addSemi(1));
+        assertNotEquals(DiatonicAlt.C, diatonicAlt.getAddSemi(1));
         assertEquals(Diatonic.C, diatonicAlt.getDiatonic());
         assertNotEquals(1.0f, diatonicAlt.getAlterations());
     }
@@ -136,7 +136,7 @@ public class DiatonicAltTest {
     @Test
     public void addSemi2() {
         DiatonicAlt diatonicAlt = DiatonicAlt.C;
-        assertNotEquals(DiatonicAlt.C, diatonicAlt.addSemi(-1));
+        assertNotEquals(DiatonicAlt.C, diatonicAlt.getAddSemi(-1));
         assertEquals(Diatonic.C, diatonicAlt.getDiatonic());
         assertNotEquals(-1.0f, diatonicAlt.getAlterations());
     }

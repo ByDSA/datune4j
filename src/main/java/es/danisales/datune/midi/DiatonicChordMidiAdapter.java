@@ -4,18 +4,19 @@ import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityRetrieval;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DiatonicChordMidiAdapter {
+class DiatonicChordMidiAdapter {
     private DiatonicChordMidiAdapter() {
     }
 
-    public static @NonNull List<DiatonicChordMidiInfo> fromChromaticChordAll(ChromaticChord chromaticChord) {
+    static @NonNull List<DiatonicChordMidiInfo> fromChromaticChordAll(ChromaticChord chromaticChord) {
         List<DiatonicChordMidiInfo> out = new ArrayList<>();
-        for (Tonality tonality : Tonality.all()) {
+        for (Tonality tonality : TonalityRetrieval.all()) {
             HarmonicFunction harmonicFunction = tonality.getFunctionFrom(chromaticChord);
 
             if (harmonicFunction == null)
@@ -28,9 +29,9 @@ public class DiatonicChordMidiAdapter {
         return out;
     }
 
-    public static @NonNull List<DiatonicChordMidiInfo> fromChromaticChordDiatonic(ChromaticChord chromaticChord) {
+    static @NonNull List<DiatonicChordMidiInfo> fromChromaticChordDiatonic(ChromaticChord chromaticChord) {
         List<DiatonicChordMidiInfo> out = new ArrayList<>();
-        for (Tonality tonality : Tonality.all()) {
+        for (Tonality tonality : TonalityRetrieval.all()) {
             List<DiatonicFunction> diatonicFunctionList = tonality.getDiatonicFunctionFrom(chromaticChord);
 
             if (diatonicFunctionList.isEmpty())

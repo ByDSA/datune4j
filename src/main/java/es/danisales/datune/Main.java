@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 public class Main {
 
-	public static Song esp() throws PitchException {
+	public static Song esp() {
 		Song song = new Song( "zxcv", 110 );
 
 		Track	channel;
@@ -218,9 +218,9 @@ public class Main {
 			}
 
 			tonality = Tonality.from( Chromatic.C, scale );
-			Progression pp = ( (Progression) p.clone() ).setTonality( tonality );
+			Progression pp = p.clone().setTonality(tonality);
 
-			MelodyDiatonic mm2 = (MelodyDiatonic) ( (MelodyDiatonic) m.clone() )
+			MelodyDiatonic mm2 = (MelodyDiatonic) m.clone()
 					.setTonality( tonality );
 
 			int l = mm2.getLength();
@@ -383,7 +383,7 @@ public class Main {
 
 			dcm = p.add( DiatonicFunction.VII );
 			dcm.setLength( Duration.L2);
-			dcm.setScaleAsMajor();
+			dcm.setScaleAs(Scale.MAJOR);
 			dcm.shiftOctave( -1 );
 		}
 
@@ -478,7 +478,7 @@ public class Main {
 			c1.get(2).getPitch().shiftOctave(-1);
 			DiatonicChordMidi c2 = p.add( DiatonicFunction.VII_THIRD );
 			c2.setLength( Duration.L4 * 3 );
-			c2.setScaleAsMajor();
+			c2.setScaleAs(Scale.MAJOR);
 			c2.shiftOctave( -1 );
 			DiatonicMidi diatonicMidi1 = c2.get( 0 ).clone();
 			diatonicMidi1.getPitch().shiftOctave(1);

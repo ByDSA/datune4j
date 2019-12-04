@@ -7,7 +7,7 @@ public class ListUtils {
     }
 
     @SafeVarargs
-    public static<T> List<T> concatUnmodificable(List<T>... lists) {
+    public static <T> List<T> concatImmutable(List<T>... lists) {
         List<T> result = new ArrayList<>();
 
         for (List<T> l: lists)
@@ -17,7 +17,7 @@ public class ListUtils {
     }
 
     @SafeVarargs
-    public static<T> Set<T> concatUnmodificable(Set<T>... sets) { // todo: to setUtils
+    public static <T> Set<T> concatImmutable(Set<T>... sets) { // todo: datils to setUtils
         Set<T> result = new HashSet<>();
 
         for (Set<T> l: sets)

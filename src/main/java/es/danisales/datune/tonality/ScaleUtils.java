@@ -1,7 +1,9 @@
 package es.danisales.datune.tonality;
 
+import es.danisales.datune.absolutedegree.Chromatic;
+import es.danisales.datune.degree.Degree;
 import es.danisales.datune.degree.DiatonicDegree;
-import es.danisales.datune.degree.RelativeDegree;
+import es.danisales.datune.interval.IntervalChromatic;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ public class ScaleUtils {
     }
 
     @SuppressWarnings("WeakerAccess")
-    public static String getDistancesFrom(@NonNull Scale scale) {
+    public static String getStringDistancesFrom(@NonNull Scale scale) {
         StringBuilder sb = new StringBuilder();
 
         boolean first = true;
@@ -29,11 +31,25 @@ public class ScaleUtils {
         return sb.toString();
     }
 
+    public static boolean hasIntervalFromRoot(@NonNull Scale scale, @NonNull IntervalChromatic intervalChromatic) {
+        int intervalChromaticSemitones = intervalChromatic.getSemitones() % Chromatic.NUMBER;
+        float sum = 0;
+        for (ScaleDistance scaleDistance : scale.getCode()) {
+            if (ScaleDistance.compare(sum, intervalChromaticSemitones))
+                return true;
+            else if (sum > intervalChromaticSemitones)
+                return false;
+            sum += scaleDistance.getMicrotonalSemitones();
+        }
+
+        return false;
+    }
+
     private static class Tuple {
-        RelativeDegree relativeDegree;
+        Degree relativeDegree;
         int diff;
 
-        Tuple(RelativeDegree relativeDegree, int diff) {
+        Tuple(Degree relativeDegree, int diff) {
             this.relativeDegree = relativeDegree;
             this.diff = diff;
         }
@@ -83,27 +99,21 @@ public class ScaleUtils {
             ret = new ArrayList<>();
             alteredScale = 0;
 
-            if (scale.size() <= 7)
-                for (DiatonicDegree diatonicDegree : DiatonicDegree.values()) {
-                    ScaleDistance scaleDistance = scale.get(diatonicDegree);
-                    if (scaleDistance == null)
-                        continue;
-                    makeTupleAndAdd(diatonicDegree, scaleDistance);
-                }
-            else {
-                for (int i = 0; i < scale.size(); i++) {
-                    RelativeDegree diatonicDegree = scale.getRelativeDegreeByIndex(i);
-                    if (diatonicDegree == null)
-                        continue;
+            for (int i = 0; i < scale.size(); i++) {
+                DiatonicDegree diatonicDegree = scale.degreeGetter()
+                        .index(i)
+                        .getFirstOfClass(DiatonicDegree.class);
 
-                    ScaleDistance scaleDistance;
-                    if (i == 0)
-                        scaleDistance = ScaleDistance.NONE;
-                    else
-                        scaleDistance = scaleGetIndex(i);
+                if (diatonicDegree == null)
+                    continue;
 
-                    makeTupleAndAdd(diatonicDegree, scaleDistance);
-                }
+                ScaleDistance scaleDistance;
+                if (i == 0)
+                    scaleDistance = ScaleDistance.NONE;
+                else
+                    scaleDistance = scaleGetIndex(i - 1);
+
+                makeTupleAndAdd(diatonicDegree, scaleDistance);
             }
 
             return ret;
@@ -117,7 +127,7 @@ public class ScaleUtils {
             return iterator.next();
         }
 
-        void makeTupleAndAdd(RelativeDegree diatonicDegree, ScaleDistance scaleDistance) {
+        void makeTupleAndAdd(DiatonicDegree diatonicDegree, ScaleDistance scaleDistance) {
             alteredScale += scaleDistance.getSemitones();
             int diff = alteredScale - majorScaleSemitonesSum[diatonicDegree.ordinal()];
             Tuple tuple = new Tuple(diatonicDegree, diff);

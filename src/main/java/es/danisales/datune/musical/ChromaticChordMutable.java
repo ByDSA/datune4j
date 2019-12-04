@@ -63,14 +63,18 @@ class ChromaticChordMutable
 	}
 
 	@Override
-	public void shift(IntervalChromatic interval) {
-// todo
+	public void shift(@NonNull IntervalChromatic intervalChromatic) {
+		for (int i = 0; i < size(); i++)
+			set(i, get(i).getShifted(intervalChromatic));
+
 		onMutation();
 	}
 
 	@Override
-	public void shiftNegative(IntervalChromatic interval) {
-// todo
+	public void shiftNegative(@NonNull IntervalChromatic intervalChromatic) {
+		for (int i = 0; i < size(); i++)
+			set(i, get(i).getShiftedNegative(intervalChromatic));
+
 		onMutation();
 	}
 

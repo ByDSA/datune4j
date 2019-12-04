@@ -1,7 +1,8 @@
 package es.danisales.datune.musical;
 
-import es.danisales.datune.degree.RelativeDegree;
+import es.danisales.datune.degree.Degree;
 import es.danisales.datune.tonality.Scale;
+import es.danisales.datune.tonality.ScaleDegreeException;
 import es.danisales.datune.tonality.ScaleDistance;
 import es.danisales.datune.tonality.Tonality;
 import org.junit.Test;
@@ -32,15 +33,15 @@ public class DiatonicAltRetrievalTest {
     }
 
     @Test
-    public void getNoteAbsoluteDegree3() {
+    public void getNoteAbsoluteDegree3() throws ScaleDegreeException {
         Scale scale = Scale.fromIntegers(Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-        RelativeDegree relativeDegree = RelativeDegree.getValuesFromScaleSize(scale.size()).get(0);
+        Degree relativeDegree = Degree.getMainDegreesFromScaleSize(scale.size()).get(0);
         Tonality tonality = Tonality.from(DiatonicAlt.C, scale);
         System.out.println(tonality.getNotes());
         assertEquals(DiatonicAlt.C,
                 tonality.getNote(relativeDegree));
 
-        relativeDegree = RelativeDegree.getValuesFromScaleSize(scale.size()).get(8);
+        relativeDegree = Degree.getMainDegreesFromScaleSize(scale.size()).get(8);
 
         assertEquals(DiatonicAlt.GG,
                 tonality.getNote(relativeDegree));

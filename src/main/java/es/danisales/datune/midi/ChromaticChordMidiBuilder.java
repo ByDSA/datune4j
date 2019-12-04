@@ -34,7 +34,7 @@ public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Build
     }
 
     private void checkValidMidi() throws PitchMidiException {
-
+        // todo
     }
 
     public ChromaticChordMidiBuilder fromChromaticMidi(@NonNull ChromaticMidi... cs) {

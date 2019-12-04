@@ -24,18 +24,4 @@ public interface ChordCommon<N extends SymbolicPitch> extends List<N> {
 		else
 			return 0;
 	}
-
-	// todo: move (make private)
-	default int _hashCode() { // si se usa hashCode normal, no se puede usar en enum, donde no se peude sobreescribir
-		if (size() == 0)
-			return 0;
-
-		int result = 1;
-
-		for (N element : this)
-			result = 31 * result + (element == null ? 0 : element.hashCode());
-		result = 37 * result + getRootIndex();
-
-		return result;
-	}
 }

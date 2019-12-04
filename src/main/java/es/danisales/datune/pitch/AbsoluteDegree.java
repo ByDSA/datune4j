@@ -1,8 +1,8 @@
 package es.danisales.datune.pitch;
 
-import es.danisales.datune.degree.RelativeDegree;
+import es.danisales.datune.degree.Degree;
 
-interface AbsoluteDegree<D extends RelativeDegree> {
+interface AbsoluteDegree<D extends Degree> {
     D getDegree();
     default int ordinal() {
         return getDegree().ordinal();

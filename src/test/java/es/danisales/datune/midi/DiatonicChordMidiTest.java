@@ -10,6 +10,7 @@ import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.ChromaticChordInterface;
 import es.danisales.datune.musical.DiatonicChord;
+import es.danisales.datune.tonality.ScaleDegreeException;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
 import org.junit.Test;
@@ -258,7 +259,7 @@ public class DiatonicChordMidiTest {
     }
 
     @Test
-    public void functions() {
+    public void functions() throws TonalityException, ScaleDegreeException {
         Tonality ton = Tonality.C;
         DiatonicChordMidi dcm = DiatonicChordMidi.builder().from(DiatonicFunction.I, ton).build();
         assertEquals(ChromaticChord.C, ChromaticChord.builder().fromDiatonicChordMidi(dcm).build());
@@ -501,10 +502,10 @@ public class DiatonicChordMidiTest {
     @Test
     public void toDiatonic() {
         DiatonicChordMidi c = DiatonicChordMidi.builder().from(DiatonicFunction.I, Tonality.C).octave(5).build();
-        assertEquals(Duration.L1, c.get(0).getLength());
+        assertEquals(Duration.L1, c.getDistance(0).getLength());
         ChromaticChord ccm = ChromaticChord.builder().fromDiatonicChordMidi(c).build();
-        assertEquals(Settings.DefaultValues.LENGTH_CHORD, c.get(0).getLength());
-        assertEquals(c.get(0).getLength(), c.get(0).clone().getLength());
+        assertEquals(Settings.DefaultValues.LENGTH_CHORD, c.getDistance(0).getLength());
+        assertEquals(c.getDistance(0).getLength(), c.getDistance(0).clone().getLength());
 
         List<DiatonicChordMidiInfo> chords = DiatonicChordMidiBuilder.fromChromaticChord(
                 ccm,
@@ -512,19 +513,19 @@ public class DiatonicChordMidiTest {
         );
 
         assertEquals(true, chords.size() > 0);
-        DiatonicChordMidi c2 = chords.get(0);
-        assertEquals(Duration.L1, c2.get(0).getLength());
+        DiatonicChordMidi c2 = chords.getDistance(0);
+        assertEquals(Duration.L1, c2.getDistance(0).getLength());
         assertEquals(c.getArpegio(), c2.getArpegio());
         assertEquals(c.getLength(), c2.getLength());
         assertEquals(ChordNamer.from(c), ChordNamer.from(c2));
-        assertEquals(c.get(0).getPitch(), c2.get(0).getPitch());
-        assertEquals(c.get(0).getPitch().getDegree(), c2.get(0).getPitch().getDegree());
-        assertEquals(c.get(0).getLength(), c.get(0).clone().getLength());
-        assertEquals(c.get(0).getLength(), c2.get(0).getLength());
-        assertEquals(c.get(0).getVelocity(), c2.get(0).getVelocity());
-        assertEquals(c.get(0), c2.get(0));
-        assertEquals(c.get(1), c2.get(1));
-        assertEquals(c.get(2), c2.get(2));
+        assertEquals(c.getDistance(0).getPitch(), c2.getDistance(0).getPitch());
+        assertEquals(c.getDistance(0).getPitch().getDegree(), c2.getDistance(0).getPitch().getDegree());
+        assertEquals(c.getDistance(0).getLength(), c.getDistance(0).clone().getLength());
+        assertEquals(c.getDistance(0).getLength(), c2.getDistance(0).getLength());
+        assertEquals(c.getDistance(0).getVelocity(), c2.getDistance(0).getVelocity());
+        assertEquals(c.getDistance(0), c2.getDistance(0));
+        assertEquals(c.getDistance(1), c2.getDistance(1));
+        assertEquals(c.getDistance(2), c2.getDistance(2));
 
         assertEquals(c, c2);
     }*/

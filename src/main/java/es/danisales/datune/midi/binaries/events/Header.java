@@ -9,10 +9,10 @@ public class Header extends Chunk {
 	public final static byte SINGLE_TRACK = 0x00;
 	public final static byte MULTIPLE_TRACK = 0x01;
 	public final static byte MULTIPLE_SONG = 0x02;
-	
-	int tracks;
-	byte[] ticks;
-	byte type;
+
+	private int tracks;
+	private byte[] ticks;
+	private byte type;
 
 	public Header(byte type, int tracks, byte[] ticks) {
 		super(new byte[]{'M', 'T', 'h', 'd'}); // 0x4d, 0x54, 0x68, 0x64
@@ -26,6 +26,7 @@ public class Header extends Chunk {
 		});
 	}
 
+	@SuppressWarnings("MethodDoesntCallSuperMethod")
 	@Override
 	public Header clone() {
 		return new Header(type, tracks, ticks.clone());

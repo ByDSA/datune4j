@@ -372,7 +372,16 @@ public abstract class ChordProxy<C extends ChordCommon<N>, N extends CyclicAbsol
 
     @Override
     public final int hashCode() {
-        return innerChord._hashCode();
+        if (size() == 0)
+            return 0;
+
+        int result = 1;
+
+        for (N element : innerChord)
+            result = 31 * result + (element == null ? 0 : element.hashCode());
+        result = 37 * result + getRootIndex();
+
+        return result;
     }
 
     public List<N> getNotes() {

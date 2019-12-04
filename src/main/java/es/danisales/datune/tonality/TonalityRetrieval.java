@@ -21,7 +21,7 @@ public class TonalityRetrieval {
     private TonalityRetrieval() {
     }
 
-    private static final Set<Tonality> majorTonalities = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+    private static final Set<Tonality> mainMajorTonalities = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.C,
             Tonality.Db,
             Tonality.D,
@@ -37,7 +37,7 @@ public class TonalityRetrieval {
             Tonality.B
     )));
 
-    private static final Set<Tonality> minorTonalities = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    private static final Set<Tonality> mainMinorTonalities = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.Cm,
             Tonality.CCm,
             Tonality.Dm,
@@ -53,24 +53,26 @@ public class TonalityRetrieval {
             Tonality.Bm
     )));
 
-    private static final List<Tonality> majorMinorTonalities = Collections.unmodifiableList(
-            Stream.concat(majorTonalities.stream(), minorTonalities.stream())
-                    .collect(Collectors.toList())
+    private static final Set<Tonality> mainMajorAndMinorTonalities = Collections.unmodifiableSet(
+            Stream.concat(mainMajorTonalities.stream(), mainMinorTonalities.stream())
+                    .collect(Collectors.toSet())
     );
 
-    public static @NonNull Set<Tonality> mainMajor() {
-        return majorTonalities;
+    @SuppressWarnings("WeakerAccess")
+    public static @NonNull Set<Tonality> getMainMajorTonalities() {
+        return mainMajorTonalities;
     }
 
-    public static @NonNull Set<Tonality> mainMinor() {
-        return minorTonalities;
+    @SuppressWarnings("WeakerAccess")
+    public static @NonNull Set<Tonality> getMainMinorTonalities() {
+        return mainMinorTonalities;
     }
 
-    static @NonNull List<Tonality> majorMinor() {
-        return majorMinorTonalities;
+    static @NonNull Set<Tonality> getMainMajorAndMinorTonalities() {
+        return mainMajorAndMinorTonalities;
     }
 
-    static @NonNull List<Tonality> all() {
+    public static @NonNull List<Tonality> all() {
         List<Tonality> ret = new ArrayList<>();
         List<DiatonicAlt> diatonicAltList = DiatonicAltRetrieval.listFromAlterations(1);
         for ( Scale mode : Scale.ALL )
@@ -82,28 +84,31 @@ public class TonalityRetrieval {
         return ret;
     }
 
-    public static @NonNull List<Tonality> listFromChord(@NonNull ChromaticChord c) {
+    @SuppressWarnings("WeakerAccess")
+    public static @NonNull List<Tonality> listFromChordDiatonicFunction(@NonNull ChromaticChord c) {
         List<Tonality> out = new ArrayList<>();
-        for ( Tonality t : Tonality.all() ) {
-            if (t.has(c))
+        for (Tonality t : TonalityRetrieval.all()) {
+            if (t.containsAll(c))
                 out.add( t );
         }
 
         return out;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public static @Nullable Tonality listFromChordFirst(@NonNull ChromaticChord c) {
-        for (Tonality t : Tonality.all()) {
-            if (t.has(c))
+        for (Tonality t : TonalityRetrieval.all()) {
+            if (t.containsAll(c))
                 return t;
         }
 
         return null;
     }
 
-    public static @NonNull List<Tonality> listFromChordOutScale(@NonNull ChromaticChord c) {
+    @SuppressWarnings("WeakerAccess")
+    public static @NonNull List<Tonality> listFromChordAllFunctions(@NonNull ChromaticChord c) {
         List<Tonality> out = new ArrayList<>();
-        for ( Tonality t : Tonality.all() ) {
+        for (Tonality t : TonalityRetrieval.all()) {
             if (t.hasAsChromaticFunction(c))
                 out.add( t );
         }
@@ -140,8 +145,14 @@ public class TonalityRetrieval {
                 }
             }
 
-            if ( notFound )
-                tonalityNotes[i] = base.getNote( diatonicDegree );
+            if (notFound) {
+                try {
+                    tonalityNotes[i] = base.getNote(diatonicDegree);
+                } catch (ScaleDegreeException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException("Impossible for diatonic scale");
+                }
+            }
         }
 
         List<DiatonicAlt> notes = Arrays.asList(tonalityNotes);

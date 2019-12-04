@@ -5,7 +5,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 /**
  * Grado pentatónico
  */
-public enum PentatonicDegree implements RelativeDegree {
+public enum PentatonicDegree implements Degree {
 	I, II, III, IV, V;
 
     @NonNull
@@ -24,5 +24,10 @@ public enum PentatonicDegree implements RelativeDegree {
         int index = ordinal() + 1;
         index %= values().length;
         return values()[index];
+    }
+
+    @Override
+    public String toString() {
+        return "Pentatonic Degree " + super.toString();
     }
 }

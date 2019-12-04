@@ -5,6 +5,7 @@ import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.ChromaticChordInfo;
+import es.danisales.datune.musical.transformations.DistanceCalculator;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.utils.MathUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -22,7 +23,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, IntervalChromat
 
     public void compact() {
         for (int i = 1; i < this.size(); i++) {
-            int distFromPrevious = this.get(i - 1).distTo(this.get(i));
+            int distFromPrevious = DistanceCalculator.calculateDistanceInSemitones(get(i - 1), get(i));
             if (distFromPrevious > IntervalChromatic.PERFECT_OCTAVE.getSemitones()) {
                 try {
                     get(i).getPitch().shiftOctave(

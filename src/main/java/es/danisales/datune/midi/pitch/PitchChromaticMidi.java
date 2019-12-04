@@ -2,14 +2,15 @@ package es.danisales.datune.midi.pitch;
 
 import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.degree.ChromaticDegree;
-import es.danisales.datune.degree.RelativeDegree;
+import es.danisales.datune.degree.Degree;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.musical.DiatonicAlt;
+import es.danisales.datune.tonality.ScaleDegreeException;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInterface<IntervalChromatic> {
-    @SuppressWarnings({"unused", "WeakerAccess"})
+    @SuppressWarnings({"unused"})
     public static final PitchChromaticMidi C0 = new PitchChromaticMidi(PitchChromaticMidiInmutable.C0);
     @SuppressWarnings("unused")
     public static final PitchChromaticMidi CC0 = new PitchChromaticMidi(PitchChromaticMidiInmutable.CC0);
@@ -105,7 +106,7 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
     public static final PitchChromaticMidi AA3 = new PitchChromaticMidi(PitchChromaticMidiInmutable.AA3);
     @SuppressWarnings("unused")
     public static final PitchChromaticMidi B3 = new PitchChromaticMidi(PitchChromaticMidiInmutable.B3);
-    @SuppressWarnings({"unused", "WeakerAccess"})
+    @SuppressWarnings({"unused"})
     public static final PitchChromaticMidi C4 = new PitchChromaticMidi(PitchChromaticMidiInmutable.C4);
     @SuppressWarnings("unused")
     public static final PitchChromaticMidi CC4 = new PitchChromaticMidi(PitchChromaticMidiInmutable.CC4);
@@ -123,15 +124,15 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
     public static final PitchChromaticMidi G4 = new PitchChromaticMidi(PitchChromaticMidiInmutable.G4);
     @SuppressWarnings("unused")
     public static final PitchChromaticMidi GG4 = new PitchChromaticMidi(PitchChromaticMidiInmutable.GG4);
-    @SuppressWarnings({"unused", "WeakerAccess"})
+    @SuppressWarnings({"unused"})
     public static final PitchChromaticMidi A4 = new PitchChromaticMidi(PitchChromaticMidiInmutable.A4);
     @SuppressWarnings("unused")
     public static final PitchChromaticMidi AA4 = new PitchChromaticMidi(PitchChromaticMidiInmutable.AA4);
-    @SuppressWarnings({"unused", "WeakerAccess"})
+    @SuppressWarnings({"unused"})
     public static final PitchChromaticMidi B4 = new PitchChromaticMidi(PitchChromaticMidiInmutable.B4);
     @SuppressWarnings("unused")
     public static final PitchChromaticMidi C5 = new PitchChromaticMidi(PitchChromaticMidiInmutable.C5);
-    @SuppressWarnings({"unused", "WeakerAccess"})
+    @SuppressWarnings({"unused"})
     public static final PitchChromaticMidi CC5 = new PitchChromaticMidi(PitchChromaticMidiInmutable.CC5);
     @SuppressWarnings("unused")
     public static final PitchChromaticMidi D5 = new PitchChromaticMidi(PitchChromaticMidiInmutable.D5);
@@ -179,7 +180,7 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
     public static final PitchChromaticMidi B6 = new PitchChromaticMidi(PitchChromaticMidiInmutable.B6);
     @SuppressWarnings("unused")
     public static final PitchChromaticMidi C7 = new PitchChromaticMidi(PitchChromaticMidiInmutable.C7);
-    @SuppressWarnings({"unused", "WeakerAccess"})
+    @SuppressWarnings({"unused"})
     public static final PitchChromaticMidi CC7 = new PitchChromaticMidi(PitchChromaticMidiInmutable.CC7);
     @SuppressWarnings("unused")
     public static final PitchChromaticMidi D7 = new PitchChromaticMidi(PitchChromaticMidiInmutable.D7);
@@ -249,7 +250,7 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
     public static final PitchChromaticMidi AA9 = new PitchChromaticMidi(PitchChromaticMidiInmutable.AA9);
     @SuppressWarnings("unused")
     public static final PitchChromaticMidi B9 = new PitchChromaticMidi(PitchChromaticMidiInmutable.B9);
-    @SuppressWarnings({"unused", "WeakerAccess"})
+    @SuppressWarnings({"unused"})
     public static final PitchChromaticMidi C10 = new PitchChromaticMidi(PitchChromaticMidiInmutable.C10);
     @SuppressWarnings("unused")
     public static final PitchChromaticMidi CC10 = new PitchChromaticMidi(PitchChromaticMidiInmutable.CC10);
@@ -263,16 +264,12 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
     public static final PitchChromaticMidi F10 = new PitchChromaticMidi(PitchChromaticMidiInmutable.F10);
     @SuppressWarnings("unused")
     public static final PitchChromaticMidi FF10 = new PitchChromaticMidi(PitchChromaticMidiInmutable.FF10);
-    @SuppressWarnings({"unused", "WeakerAccess"})
+    @SuppressWarnings({"unused"})
     public static final PitchChromaticMidi G10 = new PitchChromaticMidi(PitchChromaticMidiInmutable.G10);
 
-    @SuppressWarnings("WeakerAccess")
     public static final PitchChromaticMidi MIN = C0;
-    @SuppressWarnings("WeakerAccess")
     public static final PitchChromaticMidi MAX = G10;
-    @SuppressWarnings("WeakerAccess")
     public static final int MIN_OCTAVE = 0;
-    @SuppressWarnings("WeakerAccess")
     public static final int MAX_OCTAVE = 10;
 
     /**
@@ -295,9 +292,15 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
 
     public static @NonNull PitchChromaticMidi from(@NonNull PitchDiatonicMidi pitchDiatonicMidi) {
         Tonality tonality = pitchDiatonicMidi.tonality;
-        RelativeDegree degree = pitchDiatonicMidi.degree;
+        Degree degree = pitchDiatonicMidi.degree;
 
-        DiatonicAlt diatonicAlt = tonality.getNote(degree);
+        DiatonicAlt diatonicAlt;
+        try {
+            diatonicAlt = tonality.getNote(degree);
+        } catch (ScaleDegreeException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Impossible!");
+        }
         Chromatic chromatic = Chromatic.from(diatonicAlt);
 
         int octave = pitchDiatonicMidi.octave;
@@ -311,10 +314,19 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
         }
     }
 
-    private static int octaveCorrector(Tonality tonality, RelativeDegree diatonicDegree) {
+    private static DiatonicAlt tonalityGetNoteSecure(Tonality tonality, Degree diatonicDegree) {
+        try {
+            return tonality.getNote(diatonicDegree);
+        } catch (ScaleDegreeException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Impossible!");
+        }
+    }
+
+    private static int octaveCorrector(@NonNull Tonality tonality, @NonNull Degree relativeDegree) {
         int octave = 0;
 
-        DiatonicAlt diatonicAlt = tonality.getNote(diatonicDegree);
+        DiatonicAlt diatonicAlt = tonalityGetNoteSecure(tonality, relativeDegree);
         Chromatic chromaticWithoutAlts = Chromatic.from(diatonicAlt.getDiatonic());
         float semis = chromaticWithoutAlts.ordinal() + diatonicAlt.getAlterations();
         while (semis < 0) {

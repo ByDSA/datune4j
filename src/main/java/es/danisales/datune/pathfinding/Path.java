@@ -99,7 +99,7 @@ class Path<N extends Node<?, N>> {
 						openNodes.remove(s);
 						addAbiertaSort(s);
 					}
-				} else if ( closedNodes.contains(s) ) { // Significa que has calculado caminos a partir de S_i y todos estos caminos est�n mal
+                } else if (closedNodes.contains(s)) { // Significa que containsAll calculado caminos a partir de S_i y todos estos caminos est�n mal
 					if (s.g > s_g) {
 						s.parent = n;
 						s.g = s_g;

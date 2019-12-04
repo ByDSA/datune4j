@@ -39,7 +39,7 @@ public class DiatonicMidiTest {
 	}
 
 	@Test
-	public void noteScaleAdd() throws TonalityException, PitchMidiException {
+	public void noteScaleAdd() throws PitchMidiException {
         Tonality s = Tonality.C;
 		DiatonicMidi n = DiatonicMidi.builder()
 				.pitch(DiatonicDegree.I, s, 4)
@@ -71,7 +71,7 @@ public class DiatonicMidiTest {
     }
 
     @Test
-	public void noteScaleAdd2() throws TonalityException, PitchMidiException {
+	public void noteScaleAdd2() throws PitchMidiException {
         Tonality s = Tonality.FFm;
         DiatonicMidi n = DiatonicMidi.builder()
                 .pitch(DiatonicDegree.I, s, 4)
@@ -103,7 +103,7 @@ public class DiatonicMidiTest {
     }
 
     @Test
-	public void noteScaleAdd3() throws TonalityException, PitchMidiException {
+	public void noteScaleAdd3() throws PitchMidiException {
         Tonality s = Tonality.FFm;
         DiatonicMidi n = DiatonicMidi.builder()
 				.pitch(DiatonicDegree.VI, s, 4)
@@ -134,7 +134,7 @@ public class DiatonicMidiTest {
 	}
 
 	@Test
-	public void equals() throws TonalityException, PitchMidiException {
+	public void equals() throws PitchMidiException {
 		DiatonicMidi dm = DiatonicMidi.builder()
 				.pitch(DiatonicDegree.I, Tonality.C, 5)
 				.build();
@@ -146,7 +146,7 @@ public class DiatonicMidiTest {
 	}
 
 	@Test
-	public void cloneTest() throws TonalityException, PitchMidiException {
+	public void cloneTest() throws PitchMidiException {
 		DiatonicMidi dm = DiatonicMidi.builder()
 				.pitch(DiatonicDegree.I, Tonality.C, 5)
 				.build();

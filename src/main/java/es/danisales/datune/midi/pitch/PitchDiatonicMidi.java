@@ -1,10 +1,11 @@
 package es.danisales.datune.midi.pitch;
 
 import es.danisales.datune.absolutedegree.Diatonic;
+import es.danisales.datune.degree.Degree;
 import es.danisales.datune.degree.DiatonicDegree;
-import es.danisales.datune.degree.RelativeDegree;
 import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.musical.DiatonicAlt;
+import es.danisales.datune.tonality.ScaleDegreeException;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -12,7 +13,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.Objects;
 
 public class PitchDiatonicMidi implements PitchOctaveMidiEditable, PitchMidiInterface<IntervalDiatonic> {
-	protected RelativeDegree degree;
+	protected Degree degree;
 	protected int octave;
 	protected Tonality tonality;
 
@@ -24,7 +25,7 @@ public class PitchDiatonicMidi implements PitchOctaveMidiEditable, PitchMidiInte
 		}
 	}
 
-	public static @NonNull PitchDiatonicMidi from(@NonNull RelativeDegree diatonicDegree, @NonNull Tonality tonality, int octave) throws PitchMidiException {
+	public static @NonNull PitchDiatonicMidi from(@NonNull Degree diatonicDegree, @NonNull Tonality tonality, int octave) throws PitchMidiException {
 		return PitchDiatonicMidiAdapter.from(diatonicDegree, tonality, octave);
 	}
 
@@ -32,13 +33,17 @@ public class PitchDiatonicMidi implements PitchOctaveMidiEditable, PitchMidiInte
 		return PitchDiatonicMidiAdapter.from(pitchChromaticMidi, tonality);
 	}
 
-	public @NonNull RelativeDegree getDegree() {
+	public @NonNull Degree getDegree() {
 		return degree;
 	}
 
-	@SuppressWarnings("ConstantConditions") // Si es consistente, nunca devolverá null
 	public @NonNull DiatonicAlt getDiatonicAlt() {
-		return tonality.getNote(degree);
+		try {
+			return tonality.getNote(degree);
+		} catch (ScaleDegreeException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Impossible!"); // Si es consistente, nunca devolverá null
+		}
 	}
 
 	public @NonNull Diatonic getDiatonic() {

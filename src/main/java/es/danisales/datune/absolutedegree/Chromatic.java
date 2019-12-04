@@ -1,16 +1,15 @@
 package es.danisales.datune.absolutedegree;
 
 import es.danisales.datune.degree.ChromaticDegree;
-import es.danisales.datune.degree.RelativeDegree;
+import es.danisales.datune.degree.Degree;
 import es.danisales.datune.interval.IntervalChromatic;
-import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.musical.DiatonicAlt;
-import es.danisales.datune.musical.transformations.DistanceCalculator;
 import es.danisales.datune.musical.transformations.Namer;
 import es.danisales.datune.pitch.CyclicAbsoluteDegree;
 import es.danisales.datune.pitch.PitchChromaticSingle;
+import es.danisales.datune.tonality.ScaleDegreeException;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
 import es.danisales.utils.MathUtils;
@@ -119,10 +118,8 @@ public enum Chromatic implements PitchChromaticSingle, CyclicAbsoluteDegree<Chro
 		return chromaticMidi.getPitch().getChromatic();
 	}
 
-    public static @NonNull Chromatic from(@NonNull RelativeDegree relativeDegree, @NonNull Tonality tonality) throws TonalityException {
+	public static @NonNull Chromatic from(@NonNull Degree relativeDegree, @NonNull Tonality tonality) throws ScaleDegreeException {
         DiatonicAlt diatonicAlt = tonality.getNote(relativeDegree);
-        if (diatonicAlt == null)
-            throw new TonalityException(relativeDegree, tonality);
 		return Chromatic.from(diatonicAlt);
 	}
 
@@ -151,10 +148,6 @@ public enum Chromatic implements PitchChromaticSingle, CyclicAbsoluteDegree<Chro
 
 	public String toString() {
 		return Namer.from(this);
-	}
-
-	public IntervalChromatic dist(@NonNull Chromatic n, @NonNull IntervalDiatonic i) {
-		return DistanceCalculator.calculareInterval(this, n, i);
 	}
 
 	public int distSemitonesTo(@NonNull Chromatic n2) {

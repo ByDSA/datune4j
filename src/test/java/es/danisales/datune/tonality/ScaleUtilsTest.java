@@ -1,24 +1,24 @@
 package es.danisales.datune.tonality;
 
 import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.lang.Language;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class ScaleUtilsTest {
     @Test
     public void getDistancesFromEng() {
         Language.current = Language.ENG;
-        String str = ScaleUtils.getDistancesFrom(Scale.MAJOR);
+        String str = ScaleUtils.getStringDistancesFrom(Scale.MAJOR);
         assertEquals("W-W-H-W-W-W-H", str);
     }
 
     @Test
     public void getDistancesFromEng2() {
         Language.current = Language.ENG;
-        String str = ScaleUtils.getDistancesFrom(Scale.PENTATONIC);
+        String str = ScaleUtils.getStringDistancesFrom(Scale.PENTATONIC);
         assertEquals("W-W-WH-W-WH", str);
     }
 
@@ -26,7 +26,7 @@ public class ScaleUtilsTest {
     public void getDistancesFromEngAllNotNull() {
         Language.current = Language.ENG;
         for (Scale scale : Scale.ALL) {
-            String str = ScaleUtils.getDistancesFrom(scale);
+            String str = ScaleUtils.getStringDistancesFrom(scale);
             assertNotNull(str);
         }
     }
@@ -34,14 +34,14 @@ public class ScaleUtilsTest {
     @Test
     public void getDistancesFromEsp() {
         Language.current = Language.ESP;
-        String str = ScaleUtils.getDistancesFrom(Scale.MAJOR);
+        String str = ScaleUtils.getStringDistancesFrom(Scale.MAJOR);
         assertEquals("T-T-ST-T-T-T-ST", str);
     }
 
     @Test
     public void getDistancesFromEsp2() {
         Language.current = Language.ESP;
-        String str = ScaleUtils.getDistancesFrom(Scale.PENTATONIC);
+        String str = ScaleUtils.getStringDistancesFrom(Scale.PENTATONIC);
         assertEquals("T-T-TS-T-TS", str);
     }
 
@@ -50,7 +50,7 @@ public class ScaleUtilsTest {
     public void getDistancesFromEspAllNotNull() {
         Language.current = Language.ESP;
         for (Scale scale : Scale.ALL) {
-            String str = ScaleUtils.getDistancesFrom(scale);
+            String str = ScaleUtils.getStringDistancesFrom(scale);
             assertNotNull(str);
         }
     }
@@ -116,6 +116,18 @@ public class ScaleUtilsTest {
     }
 
     @Test
+    public void getMajorScaleAlterationsFromBluesb5() {
+        String str = ScaleUtils.getMajorScaleAlterationsFrom(Scale.BLUES_b5);
+        assertEquals("1-b3-4-b5-5-b7", str);
+    }
+
+    @Test
+    public void getMajorScaleAlterationsFromBluesa4() {
+        String str = ScaleUtils.getMajorScaleAlterationsFrom(Scale.BLUES_a4);
+        assertEquals("1-b3-4-#4-5-b7", str);
+    }
+
+    @Test
     public void getMajorScaleAlterationsFromChromaticCustom() {
         Scale scale = Scale.CHROMATIC.clone();
         ScaleDegreeReparametrizer scaleDiatonicReparametrizer = ScaleDegreeReparametrizer.create();
@@ -131,7 +143,7 @@ public class ScaleUtilsTest {
         scaleDiatonicReparametrizer.put(9, DiatonicDegree.VI);
         scaleDiatonicReparametrizer.put(10, DiatonicDegree.VII);
         scaleDiatonicReparametrizer.put(11, DiatonicDegree.VII);
-        scale.setScaleDiatonicReparametrizer(scaleDiatonicReparametrizer);
+        scale.setScaleDegreeReparametrizer(scaleDiatonicReparametrizer);
 
         String str = ScaleUtils.getMajorScaleAlterationsFrom(scale);
         assertEquals("1-#1-2-b3-3-4-#4-5-#5-6-b7-7", str);
@@ -144,5 +156,34 @@ public class ScaleUtilsTest {
             String str = ScaleUtils.getMajorScaleAlterationsFrom(scale);
             assertNotNull(str);
         }
+    }
+
+    @Test
+    public void getStringDistancesFrom() {
+        fail();
+    }
+
+    @Test
+    public void hasIntervalChromatic() {
+        assertTrue(ScaleUtils.hasIntervalFromRoot(Scale.MAJOR, IntervalChromatic.MAJOR_THIRD));
+        assertTrue(ScaleUtils.hasIntervalFromRoot(Scale.PENTATONIC, IntervalChromatic.MAJOR_THIRD));
+        assertFalse(ScaleUtils.hasIntervalFromRoot(Scale.MAJOR, IntervalChromatic.MINOR_THIRD));
+        assertFalse(ScaleUtils.hasIntervalFromRoot(Scale.PENTATONIC, IntervalChromatic.MINOR_THIRD));
+        assertTrue(ScaleUtils.hasIntervalFromRoot(Scale.MINOR, IntervalChromatic.MINOR_THIRD));
+        assertTrue(ScaleUtils.hasIntervalFromRoot(Scale.PENTATONIC_MINOR, IntervalChromatic.MINOR_THIRD));
+        assertTrue(ScaleUtils.hasIntervalFromRoot(Scale.MAJOR, IntervalChromatic.PERFECT_FIFTH));
+        assertTrue(ScaleUtils.hasIntervalFromRoot(Scale.MINOR, IntervalChromatic.PERFECT_FIFTH));
+        assertFalse(ScaleUtils.hasIntervalFromRoot(Scale.LOCRIAN, IntervalChromatic.PERFECT_FIFTH));
+        assertTrue(ScaleUtils.hasIntervalFromRoot(Scale.LOCRIAN, IntervalChromatic.PERFECT_OCTAVE));
+    }
+
+    @Test
+    public void hasIntervalChromaticGreaterThan12() {
+        assertTrue(ScaleUtils.hasIntervalFromRoot(Scale.MAJOR, IntervalChromatic.MAJOR_TENTH));
+        assertFalse(ScaleUtils.hasIntervalFromRoot(Scale.MAJOR, IntervalChromatic.MINOR_TENTH));
+        assertTrue(ScaleUtils.hasIntervalFromRoot(Scale.MINOR, IntervalChromatic.MINOR_TENTH));
+        assertTrue(ScaleUtils.hasIntervalFromRoot(Scale.MAJOR, IntervalChromatic.PERFECT_TWELFTH));
+        assertTrue(ScaleUtils.hasIntervalFromRoot(Scale.MINOR, IntervalChromatic.PERFECT_TWELFTH));
+        assertFalse(ScaleUtils.hasIntervalFromRoot(Scale.LOCRIAN, IntervalChromatic.PERFECT_TWELFTH));
     }
 }

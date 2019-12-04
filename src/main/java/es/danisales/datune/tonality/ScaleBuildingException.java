@@ -5,7 +5,7 @@ import es.danisales.datune.interval.IntervalChromatic;
 @SuppressWarnings("WeakerAccess")
 public class ScaleBuildingException extends RuntimeException {
 	ScaleBuildingException(ScaleInner s) {
-		super("La escala no suma " + IntervalChromatic.PERFECT_OCTAVE.getSemitones() + " semitonos, sino " + sum(s) + ": " + ScaleUtils.getDistancesFrom(new Scale(s)));
+        super("La escala no suma " + IntervalChromatic.PERFECT_OCTAVE.getSemitones() + " semitonos, sino " + sum(s) + ": " + ScaleUtils.getStringDistancesFrom(new Scale(s)));
 	}
 
 	private static float sum(ScaleInner scale) {

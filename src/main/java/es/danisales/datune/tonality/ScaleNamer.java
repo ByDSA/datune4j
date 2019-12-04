@@ -99,7 +99,7 @@ class ScaleNamer {
                 return "Napolitana menor";
             case NEAPOLITAN_MAJOR:
                 return "Napolitana mayor";
-            case BLUES:
+            case BLUES_b5:
                 break;
             case WHOLE_TONE:
                 break;
@@ -130,7 +130,7 @@ class ScaleNamer {
             return from((ScaleInnerImmutable) scaleInner);
         }
 
-        return ScaleUtils.getDistancesFrom(scale);
+        return ScaleUtils.getStringDistancesFrom(scale);
     }
 
     public static String from(ScaleDistance scaleDistance) {

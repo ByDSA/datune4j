@@ -3,7 +3,7 @@ package es.danisales.datune.midi.binaries.events;
 import es.danisales.datune.eventsequences.Instrument;
 
 public class ProgramChange extends ChannelEvent {
-	Instrument value;
+	private Instrument value;
 
 	public ProgramChange(int delta, int channel, Instrument v) {
 		super(delta, (byte)0xC0, channel);
@@ -24,12 +24,13 @@ public class ProgramChange extends ChannelEvent {
 
 		setData(new byte[]{(byte)(value.val() & 0x7F)});
 	}
-	
+
+	@SuppressWarnings("MethodDoesntCallSuperMethod")
 	@Override
 	public ProgramChange clone() {
 		ProgramChange r = new ProgramChange(value);
 		r.setData(getData());
-		
+
 		return r;
 	}
 }

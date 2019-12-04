@@ -5,7 +5,9 @@ public class BuildingException extends Exception {
         super(msg);
     }
 
-    public BuildingException() {
-        super();
+    public BuildingException(Exception e) {
+        this(e.getMessage());
+
+        e.printStackTrace();
     }
 }

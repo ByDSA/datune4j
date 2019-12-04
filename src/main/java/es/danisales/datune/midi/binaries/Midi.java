@@ -19,9 +19,9 @@ public class Midi {
 		sequencer.start();
 	}
 
-	static Synthesizer midiSynth; 
+	private static Synthesizer midiSynth;
 
-	static javax.sound.midi.Instrument[] instr;
+	private static javax.sound.midi.Instrument[] instr;
 	public static MidiChannel[] mChannels;
 
 	static {
@@ -31,7 +31,8 @@ public class Midi {
 			instr = midiSynth.getDefaultSoundbank().getInstruments();
 			mChannels = midiSynth.getChannels();
 			midiSynth.loadInstrument(instr[0]);
-		} catch (MidiUnavailableException e) { }
+		} catch (MidiUnavailableException ignored) {
+		}
 	}
 	
 	public static void setInstrument(Instrument i) {

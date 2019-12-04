@@ -8,6 +8,7 @@ import es.danisales.datune.lang.ChordNotation;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.musical.Quality;
+import es.danisales.datune.tonality.ScaleDegreeException;
 import es.danisales.datune.tonality.ScaleDistance;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
@@ -61,7 +62,7 @@ public class Namer {
         throw new RuntimeException("Impossible");
     }
 
-    public static String from(@NonNull ChromaticMidi chromaticMidi, @NonNull Tonality tonality) throws TonalityException {
+    public static String from(@NonNull ChromaticMidi chromaticMidi, @NonNull Tonality tonality) throws TonalityException, ScaleDegreeException {
         Chromatic chromatic = Chromatic.from(chromaticMidi);
         DiatonicDegree diatonicDegree = (DiatonicDegree)tonality.getDegreeFrom(chromatic);
         DiatonicAlt diatonicAlt = tonality.getNote(diatonicDegree);

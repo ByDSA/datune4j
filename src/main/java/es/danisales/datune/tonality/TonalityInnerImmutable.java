@@ -1,5 +1,7 @@
 package es.danisales.datune.tonality;
 
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.musical.DiatonicAltRetrieval;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -42,15 +44,18 @@ enum TonalityInnerImmutable implements TonalityInner {
 	private final Scale	scale;
 	private final List<DiatonicAlt>	notes;
 
-    static @Nullable TonalityInner of(@NonNull DiatonicAlt diatonicAlt, @NonNull Scale scale) {
+	private static final Table<DiatonicAlt, Scale, TonalityInnerImmutable> table = HashBasedTable.create();
+
+	static {
+		for (TonalityInnerImmutable tonalityEnum : values())
+			table.put(tonalityEnum.root, tonalityEnum.scale, tonalityEnum);
+	}
+
+	static @Nullable TonalityInnerImmutable from(@NonNull DiatonicAlt diatonicAlt, @NonNull Scale scale) {
 		Objects.requireNonNull(diatonicAlt);
 		Objects.requireNonNull(scale);
 
-        for (TonalityInnerImmutable tonalityEnum : values())
-			if (tonalityEnum.getScale().equals(scale) && diatonicAlt.equals(tonalityEnum.getRoot()))
-				return tonalityEnum;
-
-		return null;
+		return table.get(diatonicAlt, scale);
 	}
 
     TonalityInnerImmutable(DiatonicAlt noteBase, Scale scale) {

@@ -57,30 +57,6 @@ public class ChromaticMidiTest {
 	}
 
 	@Test
-	public void distTo() {
-		ChromaticMidi chromaticMidi = ChromaticMidi.builder()
-				.pitch(PitchChromaticMidi.C5)
-				.build();
-		ChromaticMidi chromaticMidi2 = ChromaticMidi.builder()
-				.pitch(PitchChromaticMidi.C6)
-				.build();
-
-		assertEquals(12, chromaticMidi.distTo(chromaticMidi2));
-		assertEquals(-12, chromaticMidi2.distTo(chromaticMidi));
-	}
-
-	@Test
-	public void distToItself() {
-		ChromaticMidi chromaticMidi = ChromaticMidi.builder()
-				.pitch(PitchChromaticMidi.C5)
-				.build();
-		ChromaticMidi chromaticMidi2 = chromaticMidi.clone();
-
-		assertEquals(0, chromaticMidi.distTo(chromaticMidi2));
-		assertEquals(0, chromaticMidi2.distTo(chromaticMidi));
-	}
-
-	@Test
 	public void getEvents() {
 		fail();
 	}

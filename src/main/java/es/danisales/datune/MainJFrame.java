@@ -14,9 +14,12 @@ import es.danisales.datune.midi.binaries.Midi;
 import es.danisales.datune.midi.binaries.events.NoteOff;
 import es.danisales.datune.midi.binaries.events.NoteOn;
 import es.danisales.datune.musical.ChromaticChord;
+import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.pitch.ChordNamer;
+import es.danisales.datune.tonality.ScaleDegreeException;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
+import es.danisales.datune.tonality.TonalityRetrieval;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -31,10 +34,10 @@ import java.util.HashSet;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class MainJFrame extends JFrame {
-    JPanel panel;
+    private JPanel panel;
 
-    boolean sus24 = false;
-    boolean modal = false;
+    private boolean sus24 = false;
+    private boolean modal = false;
 
     public void load(Tonality ton) {
         assert ton != null;
@@ -49,7 +52,13 @@ public class MainJFrame extends JFrame {
         for (int i = 0; i < panels.length; i++) {
             panelF[i] = new JPanel();
             DiatonicDegree diatonicDegree = DiatonicDegree.values()[i];
-            panelF[i].add(new JLabel(ton.getNote(diatonicDegree).toString()));
+            DiatonicAlt diatonicAlt;
+            try {
+                diatonicAlt = ton.getNote(diatonicDegree);
+            } catch (ScaleDegreeException e) {
+                continue;
+            }
+            panelF[i].add(new JLabel(diatonicAlt.toString()));
             panelF[i].setLayout(new GridLayout(1, 5));
             for (int j = 0; j < panels[i].length; j++) {
                 panels[i][j] = new JPanel();
@@ -202,7 +211,7 @@ public class MainJFrame extends JFrame {
         JPanel selectorPanel = new JPanel();
 
         JComboBox<Tonality> combo = new JComboBox<>();
-        for (Tonality t : Tonality.all())
+        for (Tonality t : TonalityRetrieval.all())
             combo.addItem(t);
 
         combo.addActionListener(new ActionListener() {

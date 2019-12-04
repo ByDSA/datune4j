@@ -2,18 +2,21 @@ package es.danisales.datune.tonality;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multimap;
+import es.danisales.datune.degree.Degree;
 import es.danisales.datune.degree.DiatonicDegree;
-import es.danisales.datune.degree.RelativeDegree;
+import es.danisales.datune.degree.PentatonicDegree;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.Map;
+import java.util.Set;
 
 public class ScaleDegreeReparametrizer implements Cloneable {
     @SuppressWarnings("WeakerAccess")
     public static final ScaleDegreeReparametrizer PENTATONIC = new ScaleDegreeReparametrizer(
-            new ImmutableMultimap.Builder<Integer, RelativeDegree>()
+            new ImmutableMultimap.Builder<Integer, Degree>()
                     .put(0, DiatonicDegree.I)
                     .put(1, DiatonicDegree.II)
                     .put(2, DiatonicDegree.III)
@@ -24,7 +27,7 @@ public class ScaleDegreeReparametrizer implements Cloneable {
 
     @SuppressWarnings("WeakerAccess")
     public static final ScaleDegreeReparametrizer PENTATONIC_MINOR = new ScaleDegreeReparametrizer(
-            new ImmutableMultimap.Builder<Integer, RelativeDegree>()
+            new ImmutableMultimap.Builder<Integer, Degree>()
                     .put(0, DiatonicDegree.I)
                     .put(1, DiatonicDegree.III)
                     .put(2, DiatonicDegree.IV)
@@ -35,7 +38,7 @@ public class ScaleDegreeReparametrizer implements Cloneable {
 
     @SuppressWarnings("WeakerAccess")
     public static final ScaleDegreeReparametrizer EGYPTIAN = new ScaleDegreeReparametrizer(
-            new ImmutableMultimap.Builder<Integer, RelativeDegree>()
+            new ImmutableMultimap.Builder<Integer, Degree>()
                     .put(0, DiatonicDegree.I)
                     .put(1, DiatonicDegree.II)
                     .put(2, DiatonicDegree.IV)
@@ -46,7 +49,7 @@ public class ScaleDegreeReparametrizer implements Cloneable {
 
     @SuppressWarnings("WeakerAccess")
     public static final ScaleDegreeReparametrizer BLUE_MINOR = new ScaleDegreeReparametrizer(
-            new ImmutableMultimap.Builder<Integer, RelativeDegree>()
+            new ImmutableMultimap.Builder<Integer, Degree>()
                     .put(0, DiatonicDegree.I)
                     .put(1, DiatonicDegree.III)
                     .put(2, DiatonicDegree.IV)
@@ -56,8 +59,46 @@ public class ScaleDegreeReparametrizer implements Cloneable {
     );
 
     @SuppressWarnings("WeakerAccess")
+    public static final ScaleDegreeReparametrizer BLUES_b5 = new ScaleDegreeReparametrizer(
+            new ImmutableMultimap.Builder<Integer, Degree>()
+                    .put(0, DiatonicDegree.I)
+                    .put(1, DiatonicDegree.III)
+                    .put(2, DiatonicDegree.IV)
+                    .put(3, DiatonicDegree.V)
+                    .put(4, DiatonicDegree.V)
+                    .put(5, DiatonicDegree.VII)
+
+                    .put(0, PentatonicDegree.I)
+                    .put(1, PentatonicDegree.II)
+                    .put(2, PentatonicDegree.III)
+                    .put(3, PentatonicDegree.IV)
+                    .put(4, PentatonicDegree.IV)
+                    .put(5, PentatonicDegree.V)
+                    .build()
+    );
+
+    @SuppressWarnings("WeakerAccess")
+    public static final ScaleDegreeReparametrizer BLUES_a4 = new ScaleDegreeReparametrizer(
+            new ImmutableMultimap.Builder<Integer, Degree>()
+                    .put(0, DiatonicDegree.I)
+                    .put(1, DiatonicDegree.III)
+                    .put(2, DiatonicDegree.IV)
+                    .put(3, DiatonicDegree.IV)
+                    .put(4, DiatonicDegree.V)
+                    .put(5, DiatonicDegree.VII)
+
+                    .put(0, PentatonicDegree.I)
+                    .put(1, PentatonicDegree.II)
+                    .put(2, PentatonicDegree.III)
+                    .put(3, PentatonicDegree.III)
+                    .put(4, PentatonicDegree.IV)
+                    .put(5, PentatonicDegree.V)
+                    .build()
+    );
+
+    @SuppressWarnings("WeakerAccess")
     public static final ScaleDegreeReparametrizer BLUE_MAJOR = new ScaleDegreeReparametrizer(
-            new ImmutableMultimap.Builder<Integer, RelativeDegree>()
+            new ImmutableMultimap.Builder<Integer, Degree>()
                     .put(0, DiatonicDegree.I)
                     .put(1, DiatonicDegree.II)
                     .put(2, DiatonicDegree.IV)
@@ -68,7 +109,7 @@ public class ScaleDegreeReparametrizer implements Cloneable {
 
     @SuppressWarnings("WeakerAccess")
     public static final ScaleDegreeReparametrizer WHOLE_NOTE = new ScaleDegreeReparametrizer(
-            new ImmutableMultimap.Builder<Integer, RelativeDegree>()
+            new ImmutableMultimap.Builder<Integer, Degree>()
                     .put(0, DiatonicDegree.I)
                     .put(1, DiatonicDegree.II)
                     .put(2, DiatonicDegree.III)
@@ -78,9 +119,8 @@ public class ScaleDegreeReparametrizer implements Cloneable {
                     .build()
     );
 
-    @SuppressWarnings("WeakerAccess")
     public static final ScaleDegreeReparametrizer CHROMATIC = new ScaleDegreeReparametrizer(
-            new ImmutableMultimap.Builder<Integer, RelativeDegree>()
+            new ImmutableMultimap.Builder<Integer, Degree>()
                     .put(0, DiatonicDegree.I)
                     .put(1, DiatonicDegree.I)
                     .put(2, DiatonicDegree.II)
@@ -96,10 +136,10 @@ public class ScaleDegreeReparametrizer implements Cloneable {
                     .build()
     );
 
-    private Multimap<Integer, RelativeDegree> multimap;
+    private Multimap<Integer, Degree> multimap;
     private final boolean fixed;
 
-    private ScaleDegreeReparametrizer(Multimap<Integer, RelativeDegree> map) {
+    private ScaleDegreeReparametrizer(Multimap<Integer, Degree> map) {
         multimap = ArrayListMultimap.create();
         multimap.putAll(map);
         fixed = true;
@@ -119,23 +159,23 @@ public class ScaleDegreeReparametrizer implements Cloneable {
             throw new UnsupportedOperationException();
     }
 
-    public void put(RelativeDegree relativeDegree, int n) {
+    public void put(Degree relativeDegree, int n) {
         checkFixed();
         multimap.put(n, relativeDegree);
     }
 
-    public void put(int n, RelativeDegree relativeDegree) {
+    public void put(int n, Degree relativeDegree) {
         put(relativeDegree, n);
     }
 
     @SuppressWarnings("WeakerAccess")
-    public @Nullable RelativeDegree getByIndex(int n) {
-        return multimap.get(n).iterator().next();
+    public @Nullable Set<Degree> getByIndex(int n) {
+        return ImmutableSet.copyOf(multimap.get(n));
     }
 
     @SuppressWarnings("WeakerAccess")
-    public @Nullable Integer getByKey(@NonNull RelativeDegree relativeDegree) {
-        for (Map.Entry<Integer, RelativeDegree> entry : multimap.entries())
+    public @Nullable Integer getByKey(@NonNull Degree relativeDegree) {
+        for (Map.Entry<Integer, Degree> entry : multimap.entries())
             if (entry.getValue() == relativeDegree)
                 return entry.getKey();
         return null;

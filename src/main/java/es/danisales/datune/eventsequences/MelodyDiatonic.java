@@ -9,10 +9,11 @@ import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.tonality.Tonality;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 public class MelodyDiatonic extends Melody {
-	protected ArrayList<DiatonicMidi> notesDiatonic;
+    protected List<DiatonicMidi> notesDiatonic;
 	protected Tonality tonality;
 	protected int octave;
 
@@ -23,7 +24,7 @@ public class MelodyDiatonic extends Melody {
 	public MelodyDiatonic(int o, Tonality t) {
 		super();
 
-		notesDiatonic = new ArrayList<DiatonicMidi>();
+        notesDiatonic = new ArrayList<>();
 
 		octave = o;
 		if (t != null)

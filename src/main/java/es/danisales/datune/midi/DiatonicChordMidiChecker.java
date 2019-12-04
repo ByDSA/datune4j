@@ -1,11 +1,12 @@
 package es.danisales.datune.midi;
 
 import es.danisales.datune.absolutedegree.Chromatic;
+import es.danisales.datune.degree.Degree;
 import es.danisales.datune.degree.DiatonicDegree;
-import es.danisales.datune.degree.RelativeDegree;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.musical.transformations.ChordChecker;
+import es.danisales.datune.tonality.ScaleDegreeException;
 import es.danisales.datune.tonality.Tonality;
 
 import java.util.ArrayList;
@@ -109,10 +110,14 @@ public class DiatonicChordMidiChecker {
     }
 
     public static DiatonicChordMidi relative(DiatonicChordMidi self, DiatonicFunction diatonicFunction) {
-        RelativeDegree relativeDegree = self.get(0).getPitch().getDegree();
-        if (!(relativeDegree instanceof DiatonicDegree))
-            return null;
-        Tonality tonality = self.tonality.getRelativeScaleDiatonic(relativeDegree);
+        Degree relativeDegree = self.get(0).getPitch().getDegree();
+        Tonality tonality;
+        try {
+            tonality = self.tonality.getRelativeScaleDiatonic(relativeDegree);
+        } catch (ScaleDegreeException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Impossible!"); // Si self.getDistance(0).getPitch() es consistente es imposbbible
+        }
 
         return DiatonicChordMidi.builder()
                 .from(diatonicFunction, tonality)

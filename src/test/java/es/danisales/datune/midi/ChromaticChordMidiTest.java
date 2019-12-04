@@ -94,7 +94,6 @@ public class ChromaticChordMidiTest {
         assertTrue(ChordMidiTransformations.dist(ccm, ccm2) > 2);
     }
 
-    @SuppressWarnings("CollectionAddedToSelf")
     @Test
     public void distItself() throws PitchMidiException {
         ChromaticChordMidi ccm = ChromaticChordMidi.builder().fromChromatic(ChromaticChord.C).build();

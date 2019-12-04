@@ -7,31 +7,31 @@ import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
 
 public class KeySignatureEvent extends MetaEvent {
-	static final byte[] C_MAJOR = new byte[]{0, 0};
-	static final byte[] C_SHARP_MAJOR = new byte[]{7, 0};
-	static final byte[] D_MAJOR = new byte[]{2, 0};
-	static final byte[] E_BEMOL_MAJOR = new byte[]{-3, 0};
-	static final byte[] E_MAJOR = new byte[]{4, 0};
-	static final byte[] F_MAJOR = new byte[]{-1, 0};
-	static final byte[] F_SHARP_MAJOR = new byte[]{6, 0};
-	static final byte[] G_MAJOR = new byte[]{1, 0};
-	static final byte[] A_BEMOL_MAJOR = new byte[]{-4, 0};
-	static final byte[] A_MAJOR = new byte[]{3, 0};
-	static final byte[] B_BEMOL_MAJOR = new byte[]{-2, 0};
-	static final byte[] B_MAJOR = new byte[]{5, 0};
-	
-	static final byte[] C_MINOR = new byte[]{-3, 1};
-	static final byte[] C_SHARP_MINOR = new byte[]{4, 1};
-	static final byte[] D_MINOR = new byte[]{-1, 1};
-	static final byte[] E_BEMOL_MINOR = new byte[]{-5, 1};
-	static final byte[] E_MINOR = new byte[]{1, 1};
-	static final byte[] F_MINOR = new byte[]{-4, 1};
-	static final byte[] F_SHARP_MINOR = new byte[]{3, 1};
-	static final byte[] G_MINOR = new byte[]{-2, 1};
-	static final byte[] A_BEMOL_MINOR = new byte[]{5, 1};
-	static final byte[] A_MINOR = new byte[]{0, 1};
-	static final byte[] B_BEMOL_MINOR = new byte[]{-5, 1};
-	static final byte[] B_MINOR = new byte[]{2, 1};
+	private static final byte[] C_MAJOR = new byte[]{0, 0};
+	private static final byte[] C_SHARP_MAJOR = new byte[]{7, 0};
+	private static final byte[] D_MAJOR = new byte[]{2, 0};
+	private static final byte[] E_BEMOL_MAJOR = new byte[]{-3, 0};
+	private static final byte[] E_MAJOR = new byte[]{4, 0};
+	private static final byte[] F_MAJOR = new byte[]{-1, 0};
+	private static final byte[] F_SHARP_MAJOR = new byte[]{6, 0};
+	private static final byte[] G_MAJOR = new byte[]{1, 0};
+	private static final byte[] A_BEMOL_MAJOR = new byte[]{-4, 0};
+	private static final byte[] A_MAJOR = new byte[]{3, 0};
+	private static final byte[] B_BEMOL_MAJOR = new byte[]{-2, 0};
+	private static final byte[] B_MAJOR = new byte[]{5, 0};
+
+	private static final byte[] C_MINOR = new byte[]{-3, 1};
+	private static final byte[] C_SHARP_MINOR = new byte[]{4, 1};
+	private static final byte[] D_MINOR = new byte[]{-1, 1};
+	private static final byte[] E_BEMOL_MINOR = new byte[]{-5, 1};
+	private static final byte[] E_MINOR = new byte[]{1, 1};
+	private static final byte[] F_MINOR = new byte[]{-4, 1};
+	private static final byte[] F_SHARP_MINOR = new byte[]{3, 1};
+	private static final byte[] G_MINOR = new byte[]{-2, 1};
+	private static final byte[] A_BEMOL_MINOR = new byte[]{5, 1};
+	private static final byte[] A_MINOR = new byte[]{0, 1};
+	private static final byte[] B_BEMOL_MINOR = new byte[]{-5, 1};
+	private static final byte[] B_MINOR = new byte[]{2, 1};
 
 	public Track channel;
 

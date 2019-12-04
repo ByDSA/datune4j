@@ -11,10 +11,7 @@ import es.danisales.datune.midi.pitch.PitchDiatonicMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.DiatonicChordPattern;
-import es.danisales.datune.tonality.Tonality;
-import es.danisales.datune.tonality.TonalityChordRetrieval;
-import es.danisales.datune.tonality.TonalityException;
-import es.danisales.datune.tonality.TonalityGetChromaticFunction;
+import es.danisales.datune.tonality.*;
 import es.danisales.utils.building.Builder;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -59,7 +56,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
         if (function instanceof ChromaticFunction) {
             try {
                 chromaticFunctionProcess2(diatonicChordMidi);
-            } catch (TonalityException | PitchMidiException e) {
+            } catch (TonalityException | PitchMidiException | ScaleDegreeException e) {
                 e.printStackTrace();
                 throw new RuntimeException();
             }
@@ -67,7 +64,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
             initFromDiatonicFunction(diatonicChordMidi);
     }
 
-    private void chromaticFunctionProcess2(DiatonicChordMidi self) throws TonalityException, PitchMidiException {
+    private void chromaticFunctionProcess2(DiatonicChordMidi self) throws TonalityException, PitchMidiException, ScaleDegreeException {
         ChromaticFunction chromaticFunction = (ChromaticFunction) function;
         ChromaticChord chromaticChord = TonalityGetChromaticFunction.get(self.tonality, chromaticFunction);
         tonality = TonalityGetChromaticFunction.getTonalityFromChromaticFunction(tonality, chromaticFunction);
@@ -89,7 +86,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
             if (t == ChromaticFunction.N6) {
                 ChromaticChordInterface cc = ChromaticChordInterface.from(t, tonality);
 
-                tonality = TonalityRetrieval.listFromChord(cc).getCyclic(0);
+                tonality = TonalityRetrieval.listFromChordDiatonicFunction(cc).getCyclic(0);
 
                 ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder()
                         .fromChromatic(cc)

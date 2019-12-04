@@ -31,10 +31,6 @@ public final class DiatonicMidiBuilder extends Builder<DiatonicMidiBuilder, Diat
         checkArgument(pitch.getOctave() > 0);
         Objects.requireNonNull(pitch.getDegree());
 
-        int dv = pitch.getDegree().ordinal();
-        int shiftOctave = (dv < 0 && dv % pitch.getTonality().getScale().size() != 0 ? -1 : 0);
-        pitch.shiftOctave(shiftOctave);
-
         DiatonicMidi dm = new DiatonicMidi();
         dm.setLength( length );
         dm.setVelocity( velocity );

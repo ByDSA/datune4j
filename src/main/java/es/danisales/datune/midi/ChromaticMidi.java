@@ -2,7 +2,6 @@ package es.danisales.datune.midi;
 
 import es.danisales.datune.midi.binaries.events.EventComplex;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
-import es.danisales.datune.musical.transformations.DistanceCalculator;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -17,10 +16,6 @@ public final class ChromaticMidi extends NoteMidi<PitchChromaticMidi> implements
 	public static ChromaticMidi from(@NonNull DiatonicMidi diatonicMidi) {
 		return builder().from(diatonicMidi).build();
 	}
-
-    public int distTo(@NonNull ChromaticMidi chromaticMidi) {
-        return DistanceCalculator.calculateDistanceInSemitones(this, chromaticMidi);
-    }
 
 	@Override
 	public @NonNull ChromaticMidi clone() {

@@ -4,7 +4,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 public enum ScaleDistance {
     QUARTER(0.5f), HALF(1), WHOLE(2), WHOLE_HALF(3),
-    NONE(0), // todo: impossible
+    NONE(0), // para devolver nulo. no se usa para construir Scales
     TWO_WHOLE(4);
 
     private float value;

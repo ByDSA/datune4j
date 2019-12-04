@@ -164,7 +164,7 @@ public class DiatonicAlt implements SymbolicPitch {
 		return DiatonicAlt.from(diatonicBase, alt - scaleDistance.getMicrotonalSemitones());
 	}
 
-	public @NonNull DiatonicAlt addSemi(int semis) {
+	public @NonNull DiatonicAlt getAddSemi(int semis) {
 		return DiatonicAlt.from(diatonicBase, alt + semis);
 	}
 

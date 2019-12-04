@@ -81,7 +81,7 @@ public class TonalityGetChromaticFunction {
 		}
 	}
 
-    public static @NonNull ChromaticChord get(@NonNull Tonality tonality, @NonNull ChromaticFunction chromaticFunction) throws TonalityException {
+	public static @NonNull ChromaticChord get(@NonNull Tonality tonality, @NonNull ChromaticFunction chromaticFunction) throws TonalityException, ScaleDegreeException {
 		Objects.requireNonNull(tonality);
 		Objects.requireNonNull(chromaticFunction);
 
@@ -190,7 +190,7 @@ public class TonalityGetChromaticFunction {
         return null;
     }
 
-    public static @NonNull Tonality getTonalityFromChromaticFunction(@NonNull Tonality tonality, @NonNull ChromaticFunction chromaticFunction) {
+	public static @NonNull Tonality getTonalityFromChromaticFunction(@NonNull Tonality tonality, @NonNull ChromaticFunction chromaticFunction) throws ScaleDegreeException {
 		switch (chromaticFunction) {
             case I:
             case II:
@@ -239,7 +239,8 @@ public class TonalityGetChromaticFunction {
                 }
 				return TonalityRetrieval.listFromChordFirst(chromaticChord4);
             case N6:
-                throw new RuntimeException();
+				DiatonicAlt diatonicAlt = tonality.getRoot().getAddSemi(1);
+				return Tonality.from(diatonicAlt, Scale.MAJOR);
 			case V_II:
 			case V7_II:
 				DiatonicAlt newRoot = tonality.getNote(DiatonicDegree.II);
@@ -307,7 +308,7 @@ public class TonalityGetChromaticFunction {
 		}
 	}
 
-    private static @Nullable DiatonicAlt getNoteBaseFromChromaticFunctionAndTonality(Tonality tonality, @NonNull ChromaticFunction chromaticFunction) {
+	private static @Nullable DiatonicAlt getNoteBaseFromChromaticFunctionAndTonality(Tonality tonality, @NonNull ChromaticFunction chromaticFunction) throws ScaleDegreeException {
 		switch (chromaticFunction) {
 			case I:
 			case i:

@@ -5,11 +5,11 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class ScaleDiatonicReparametrizerTest {
+public class ScaleDegreeReparametrizerTest {
     @Test
     public void create() {
-        ScaleDegreeReparametrizer scaleDiatonicReparametrizer = ScaleDegreeReparametrizer.create();
-        assertNotNull(scaleDiatonicReparametrizer);
+        ScaleDegreeReparametrizer scaleDegreeReparametrizer = ScaleDegreeReparametrizer.create();
+        assertNotNull(scaleDegreeReparametrizer);
     }
 
     @Test
