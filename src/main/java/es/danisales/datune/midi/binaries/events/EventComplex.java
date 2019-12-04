@@ -56,7 +56,7 @@ public interface EventComplex extends Event {
 	default void write(ByteBuffer buff) {
 		EventSequence e = getBasicEvents();
 
-		AtomicReference<Tonality> scale = new AtomicReference<Tonality>( null );
+        AtomicReference<Tonality> tonalityAtomicReference = new AtomicReference<>(null);
 		AtomicLong last = new AtomicLong(0);
 
 		e.getMap().forEach( (Long key, ArrayList<Event> value) -> {
@@ -69,16 +69,17 @@ public interface EventComplex extends Event {
 
 				Event me = null;
 				if (ev instanceof ChannelEvent) {
-					me = ((ChannelEvent) ev);
+                    me = ev;
 					((ChannelEvent)me).setChannel(0); // TODO
 				} else if (ev instanceof KeySignatureEvent) {
 					KeySignatureEvent ks = ((KeySignatureEvent)ev);
-					if (scale != null && !ks.getTonality().equals(scale)) {
+                    if (tonalityAtomicReference.get() != null
+                            && !ks.getTonality().equals(tonalityAtomicReference.get())) {
 						me = ks;
 					} else
-						scale.set( ks.getTonality() );
-				} else if (ev instanceof Event)
-					me = (Event) ev;
+                        tonalityAtomicReference.set(ks.getTonality());
+                } else if (ev != null)
+                    me = ev;
 
 				if (me != null) {
 					last.set( key );

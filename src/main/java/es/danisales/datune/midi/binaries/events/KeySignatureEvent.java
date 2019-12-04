@@ -5,6 +5,8 @@ import es.danisales.datune.eventsequences.Track;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.utils.NeverHappensException;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class KeySignatureEvent extends MetaEvent {
 	private static final byte[] C_MAJOR = new byte[]{0, 0};
@@ -69,8 +71,8 @@ public class KeySignatureEvent extends MetaEvent {
 		return tonality;
 	}
 
-	protected byte[] major(Chromatic note) {
-		switch(note) {
+	protected byte[] major(@NonNull Chromatic chromatic) {
+		switch (chromatic) {
 		case C: return C_MAJOR;
 		case CC: return C_SHARP_MAJOR;
 		case D: return D_MAJOR;
@@ -85,7 +87,7 @@ public class KeySignatureEvent extends MetaEvent {
 		case B: return B_MAJOR;
 		}
 
-		return null;
+		throw NeverHappensException.switchOf(chromatic);
 	}
 	
 	protected byte[] minor(Chromatic note) {

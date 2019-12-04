@@ -5,6 +5,7 @@ import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.musical.ChromaticChord;
+import es.danisales.datune.pitch.PitchException;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
 import org.junit.Test;
@@ -16,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 public class DiatonicChordMidiNamesTest {
 
     @Test
-    public void names() {
+    public void names() throws PitchException {
         DiatonicChordMidi ccm = DiatonicChordMidi.builder().from(DiatonicFunction.I, Tonality.C).build();
         assertEquals(
                 "C/E (C)", ccm.toString()

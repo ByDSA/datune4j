@@ -8,6 +8,7 @@ import es.danisales.datune.musical.ChromaticChordInfo;
 import es.danisales.datune.musical.transformations.DistanceCalculator;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import es.danisales.utils.MathUtils;
+import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, IntervalChromatic, PitchChromaticMidi>
@@ -30,8 +31,7 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, IntervalChromat
                             -distFromPrevious / IntervalChromatic.PERFECT_OCTAVE.getSemitones()
                     );
                 } catch (PitchMidiException e) {
-                    e.printStackTrace();
-                    throw new RuntimeException("Impossible!");
+                    NeverHappensException.msg("Si antes era válido, la versión compactada lo seguirá siendo siempre");
                 }
             }
         }

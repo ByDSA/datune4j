@@ -9,7 +9,7 @@ public interface PitchOctaveMidiEditable extends PitchOctaveEditable {
             setOctave(PitchChromaticMidi.MIN_OCTAVE);
         } catch (PitchException e) {
             e.printStackTrace();
-            throw new RuntimeException("Impossible!");
+            throw new RuntimeException("Impossible!"); // todo: hacer tests, porque puede que no sea impossible en PitchDiatonicMidi
         }
 	}
 }

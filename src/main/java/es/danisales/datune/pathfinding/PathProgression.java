@@ -9,17 +9,16 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class PathProgression<N extends ChordMidi> extends Path<NodeProgression> {
-	List<List<NodeProgression>> nodes;
+	private List<List<NodeProgression>> nodes;
 
 	protected final Function<NodeProgression, List<NodeProgression>> sucesores_f = (NodeProgression n) -> {
-		List<NodeProgression> a = n.getNextNodes();
-		return a;
+		return n.getNextNodes();
 	};
 
 	protected final BiFunction<NodeProgression, NodeProgression, Float> h_default =
 			(NodeProgression current, NodeProgression end) -> (float) ChordMidiTransformations.dist(current.object, end.object);
 
-	public <A extends ArrayList<ChordMidi>> PathProgression(A array) {
+	public <A extends List<ChordMidi>> PathProgression(A array) {
 		super(new NodeProgression(array.get(0)), new NodeProgression(array.get(array.size()-1)));
 		assert array.size() > 2;
 		nodes = new ArrayList<>();

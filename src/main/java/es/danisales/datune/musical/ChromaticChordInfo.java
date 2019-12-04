@@ -201,11 +201,11 @@ public final class ChromaticChordInfo implements Cloneable {
 		this.pattern = ChromaticChordPattern.immutablePatern(pattern);
 	}
 
-	private static ChromaticChordMutable getFundamentalChordOf(ChromaticChordMutable chromaticChord) {
+	private static ChromaticChordMutable getFundamentalChordOf(ChromaticChordMutable chromaticChord) { // todo: move to transformations
 		ChromaticChordMutable chromaticChordTmp;
 		if (chromaticChord.getRootIndex() > 0) {
 			chromaticChordTmp = chromaticChord.clone();
-			chromaticChordTmp.inv(chromaticChordTmp.getRootIndex());
+			chromaticChordTmp.removeInv();
 		} else
 			chromaticChordTmp = chromaticChord;
 

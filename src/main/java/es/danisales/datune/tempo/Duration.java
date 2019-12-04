@@ -5,7 +5,7 @@ public enum Duration implements SymbolicDuration {
 	
 	double val;
 
-	private Duration(double n) {
+    Duration(double n) {
 		val = n;
 	}
 }

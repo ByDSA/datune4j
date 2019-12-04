@@ -24,7 +24,7 @@ public class ChromaticChordCustomTest {
 		Assert.assertEquals(reference, c );
 	}
 
-	@Test(expected = ImpossibleChordException.class)
+    @Test(expected = InvalidChordException.class)
 	public void overImpossibleChord() {
 		ChromaticChordMutable c = ChromaticChordMutable.from(ChromaticChordImmutable.C);
 		c.over(Chromatic.F);

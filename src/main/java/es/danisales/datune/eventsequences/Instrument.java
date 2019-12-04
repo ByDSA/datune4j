@@ -315,8 +315,8 @@ public enum Instrument {
 
 	private final int value;
 
-	private Instrument(
-		int v) {
+    Instrument(
+            int v) {
 		value = v;
 	}
 

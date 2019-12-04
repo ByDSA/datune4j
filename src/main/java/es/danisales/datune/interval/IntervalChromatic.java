@@ -3,6 +3,7 @@ package es.danisales.datune.interval;
 import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.musical.Quality;
 import es.danisales.datune.musical.transformations.Namer;
+import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -144,7 +145,7 @@ public enum IntervalChromatic implements Interval {
                 ret.add(AUGMENTED_FIFTEENTH);
                 break;
             default:
-                throw new RuntimeException("Impossible");
+                throw NeverHappensException.switchOf(intervalDiatonic);
         }
 
         return ret;

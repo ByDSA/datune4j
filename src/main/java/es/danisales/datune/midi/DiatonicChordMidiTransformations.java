@@ -1,6 +1,7 @@
 package es.danisales.datune.midi;
 
 import es.danisales.datune.absolutedegree.Chromatic;
+import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityRetrieval;
@@ -105,7 +106,7 @@ public class DiatonicChordMidiTransformations {
         return cs.get(0);
     }
 
-    public static void addDuplicate(DiatonicChordMidi diatonicChordMidi, int oct) {
+    public static void addDuplicate(DiatonicChordMidi diatonicChordMidi, int oct) throws PitchMidiException {
         if (oct == 0)
             throw new AddedException(diatonicChordMidi);
 

@@ -2,6 +2,7 @@ package es.danisales.datune.musical;
 
 import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.absolutedegree.Diatonic;
+import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.musical.transformations.Namer;
 import es.danisales.datune.pitch.CyclicAbsoluteDegree;
 import es.danisales.datune.pitch.PitchChromaticSingle;
@@ -128,8 +129,12 @@ public class DiatonicAlt implements SymbolicPitch {
 			return null;
 	}
 
-	public static @NonNull DiatonicAlt from(@NonNull PitchChromaticSingle pitchChromaticSingle) {
-		return DiatonicAltAdapter.from(pitchChromaticSingle);
+	public static @NonNull DiatonicAlt from(@NonNull Chromatic chromatic) {
+		return DiatonicAltAdapter.from(chromatic);
+	}
+
+	public static @NonNull DiatonicAlt from(@NonNull ChromaticMidi chromaticMidi) {
+		return DiatonicAltAdapter.from(chromaticMidi);
 	}
 
 	public static @NonNull DiatonicAlt from(@NonNull Diatonic diatonic, @NonNull Tonality tonality) throws TonalityException {

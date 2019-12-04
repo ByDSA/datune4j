@@ -3,6 +3,7 @@ package es.danisales.datune.interval;
 import es.danisales.datune.absolutedegree.Diatonic;
 import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.musical.transformations.Namer;
+import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -22,7 +23,7 @@ public enum IntervalDiatonic implements Interval {
     }
 
     @SuppressWarnings("Duplicates")
-    public static @NonNull IntervalDiatonic from(DiatonicDegree diatonicDegree) {
+    public static @NonNull IntervalDiatonic from(@NonNull DiatonicDegree diatonicDegree) {
         switch (diatonicDegree) {
             case I:
                 return UNISON;
@@ -40,7 +41,7 @@ public enum IntervalDiatonic implements Interval {
                 return SEVENTH;
         }
 
-        throw new RuntimeException("Impossible");
+        throw NeverHappensException.switchOf(diatonicDegree);
     }
 
     public static @NonNull IntervalDiatonic from(@NonNull IntervalChromatic intervalChromatic) {
@@ -114,7 +115,7 @@ public enum IntervalDiatonic implements Interval {
                 return IntervalDiatonic.FIFTEENTH;
         }
 
-        throw new RuntimeException("Impossible");
+        throw NeverHappensException.switchOf(intervalChromatic);
     }
 
     public String toString() {

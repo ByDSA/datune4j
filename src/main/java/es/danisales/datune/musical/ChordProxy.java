@@ -4,6 +4,7 @@ import es.danisales.datastructures.ListProxy;
 import es.danisales.datune.interval.Interval;
 import es.danisales.datune.lang.ChordNotation;
 import es.danisales.datune.pitch.*;
+import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.*;
@@ -11,8 +12,12 @@ import java.util.*;
 public abstract class ChordProxy<C extends ChordCommon<N>, N extends CyclicAbsoluteDegree<?, I>, I extends Interval>
         extends ListProxy<N>
         implements ChordMutableInterface<N, I> {
+    private static final NeverHappensException NEVER_HAPPENS_EXCEPTION
+            = NeverHappensException.make("Los ChordProxy son siempre de Chromatic o Diatonic y no tienen problemas de octava mínima o máxima");
+
     C innerChord;
     private boolean fixed;
+
 
     ChordProxy() {
         super(new ArrayList<>());
@@ -117,7 +122,11 @@ public abstract class ChordProxy<C extends ChordCommon<N>, N extends CyclicAbsol
             turnInnerIntoMutable();
 
         if (InnerIsMutable()) {
-            castCustom(innerChord).inv(n);
+            try {
+                castCustom(innerChord).inv(n);
+            } catch (PitchException e) {
+                throw NEVER_HAPPENS_EXCEPTION;
+            }
             if (getRootIndex() == 0)
                 turnInnerChordIntoImmutableIfPossible();
         }
@@ -292,7 +301,7 @@ public abstract class ChordProxy<C extends ChordCommon<N>, N extends CyclicAbsol
         try {
             return ((ChordCommon<N>) this).getCyclic(noteNumber);
         } catch (PitchException e) {
-            throw new RuntimeException("Impossible!");
+            throw NEVER_HAPPENS_EXCEPTION;
         }
     }
 
@@ -386,5 +395,32 @@ public abstract class ChordProxy<C extends ChordCommon<N>, N extends CyclicAbsol
 
     public List<N> getNotes() {
         return Collections.unmodifiableList(this.subList(0, size()));
+    }
+
+    @Override
+    public void over(@NonNull N chromatic) {
+        try {
+            ChordMutableInterface.super.over(chromatic);
+        } catch (PitchException e) {
+            throw NEVER_HAPPENS_EXCEPTION;
+        }
+    }
+
+    @Override
+    public void removeInv() {
+        try {
+            ChordMutableInterface.super.removeInv();
+        } catch (PitchException e) {
+            throw NEVER_HAPPENS_EXCEPTION;
+        }
+    }
+
+    @Override
+    public void inv() {
+        try {
+            ChordMutableInterface.super.inv();
+        } catch (PitchException e) {
+            throw NEVER_HAPPENS_EXCEPTION;
+        }
     }
 }

@@ -5,6 +5,7 @@ import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.midi.pitch.PitchMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.musical.DiatonicAlt;
+import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Objects;
@@ -51,7 +52,7 @@ public class ChromaticMidiBuilder extends es.danisales.utils.building.Builder<Ch
         try {
             pitchChromaticMidi = PitchChromaticMidi.from(chromatic, Settings.DefaultValues.OCTAVE);
         } catch (PitchMidiException e) {
-            throw new RuntimeException("Impossible!");
+            NeverHappensException.msg("Un Chromatic con la octava por defecto siempre va a ser válido.");
         }
 
         return self();

@@ -86,7 +86,7 @@ class Path<N extends Node<?, N>> {
 
 			// 7
 			for (N s : sucesores) {
-				N n_g = (N)s.clone();
+                N n_g = s.clone();
 				n_g.parent = n;
 				float s_g = dist_g.apply(ini, n_g); //  g(sucesor)=g(NUMBER)+K(NUMBER,sucesor)
 

@@ -13,6 +13,7 @@ import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.DiatonicAlt;
+import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -65,8 +66,12 @@ public class Tonality implements Iterable<DiatonicAlt> {
     private Map<ChromaticChord, List<DiatonicFunction>> cacheDiatonicMap;
 
     private Tonality(TonalityInner tonalityInterface) {
+        this(tonalityInterface, true);
+    }
+
+    private Tonality(TonalityInner tonalityInterface, boolean fixed) {
         innerTonality = tonalityInterface;
-        fixed = true;
+        this.fixed = fixed;
 
         createChromaticToDiatonicAltCache();
     }
@@ -80,7 +85,7 @@ public class Tonality implements Iterable<DiatonicAlt> {
         if (tonalityInterface == null)
             tonalityInterface = new TonalityInnerMutable(diatonicAlt, scale);
 
-        return new Tonality(tonalityInterface);
+        return new Tonality(tonalityInterface, false);
     }
 
     public static @NonNull Tonality from(@NonNull Chromatic chromatic, @NonNull Scale scale) {
@@ -133,7 +138,7 @@ public class Tonality implements Iterable<DiatonicAlt> {
     }
 
     public boolean isModeOf(Tonality t) {
-        return getScale().isDiatonic() && this.getRoot() == t.getRoot() && !getScale().equals( t.getScale() );
+        return this.getRoot() == t.getRoot() && !getScale().equals(t.getScale());
     }
 
     @SuppressWarnings("WeakerAccess")
@@ -164,32 +169,32 @@ public class Tonality implements Iterable<DiatonicAlt> {
         for ( Scale s : getScale().getModes() )
             for ( Chromatic chromatic : Chromatic.values() ) {
                 Tonality t = Tonality.from( chromatic, s );
-                if ( isModeOf( t ) ) {
-                    if (t.innerTonality instanceof TonalityInnerMutable)
-                        t = TonalityRetrieval.getEnharmonicMinimalAltsFrom(t).iterator().next();
-                    ret.add( t );
-                }
+                if (t.innerTonality instanceof TonalityInnerMutable)
+                    t = TonalityRetrieval.getEnharmonicMinimalAltsFrom(t).iterator().next();
+                ret.add(t);
             }
 
         return ret;
     }
 
-    public @Nullable Degree getDegreeFrom(@NonNull DiatonicAlt note) {
-        Objects.requireNonNull(note, "No se ha especificado nota");
+    public @Nullable Degree getDegreeFrom(@NonNull DiatonicAlt diatonicAlt) {
+        Objects.requireNonNull(diatonicAlt, "No se ha especificado nota");
 
-        for (Degree relativeDegree : getScaleMainDegrees()) {
-            DiatonicAlt diatonicAlt;
-            try {
-                diatonicAlt = getNote(relativeDegree);
-            } catch (ScaleDegreeException e) {
-                e.printStackTrace();
-                throw new RuntimeException("Impossible!");
-            }
-            if (diatonicAlt.equals(note))
-                return relativeDegree;
+        for (Degree degree : getScaleMainDegrees()) {
+            DiatonicAlt diatonicAlt1 = getNoteSecure(degree);
+            if (diatonicAlt1.equals(diatonicAlt))
+                return degree;
         }
 
         return null;
+    }
+
+    private DiatonicAlt getNoteSecure(Degree degree) {
+        try {
+            return getNote(degree);
+        } catch (ScaleDegreeException e) {
+            throw NeverHappensException.make("Siempre tiene los MainDegreea");
+        }
     }
 
     private List<Degree> getScaleMainDegrees() {
@@ -200,13 +205,7 @@ public class Tonality implements Iterable<DiatonicAlt> {
         Objects.requireNonNull(chromatic, "No se ha especificado nota");
 
         for (Degree degree : getScaleMainDegrees()) {
-            DiatonicAlt diatonicAlt;
-            try {
-                diatonicAlt = getNote(degree);
-            } catch (ScaleDegreeException e) {
-                e.printStackTrace();
-                throw new RuntimeException("Impossible!");
-            }
+            DiatonicAlt diatonicAlt = getNoteSecure(degree);
 
             Chromatic chromatic1 = Chromatic.from(diatonicAlt);
             if (chromatic1 == chromatic)
@@ -224,6 +223,9 @@ public class Tonality implements Iterable<DiatonicAlt> {
     public void setRoot(@NonNull DiatonicAlt root) {
         excepIfFixed();
 
+        if (!getRoot().equals(root))
+            clearCaches();
+
         if (innerIsImmutable())
             turnInnerIntoMutable();
         ((TonalityInnerMutable) innerTonality).setRoot(root);
@@ -233,6 +235,9 @@ public class Tonality implements Iterable<DiatonicAlt> {
 
     public void setScale(@NonNull Scale scale) {
         excepIfFixed();
+
+        if (!getScale().equals(scale))
+            clearCaches();
 
         if (innerIsImmutable())
             turnInnerIntoMutable();
@@ -335,12 +340,7 @@ public class Tonality implements Iterable<DiatonicAlt> {
     }
 
     public @Nullable HarmonicFunction getFunctionFrom(@NonNull ChromaticChord chromaticChord) { // todo: move to checker
-        ChromaticChord chromaticChordTmp;
-        if (chromaticChord.getInversionNumber() > 0) {
-            chromaticChordTmp = chromaticChord.clone();
-            chromaticChordTmp.inv(chromaticChordTmp.getRootIndex());
-        } else
-            chromaticChordTmp = chromaticChord;
+        ChromaticChord chromaticChordTmp = removeInversionAsClonedChordIfNeeded(chromaticChord);
 
         List<DiatonicFunction> diatonicFunctions = getDiatonicFunctionFrom(chromaticChordTmp);
         if (!diatonicFunctions.isEmpty())
@@ -354,12 +354,7 @@ public class Tonality implements Iterable<DiatonicAlt> {
     }
 
     public @NonNull List<HarmonicFunction> getAllFunctionsFrom(@NonNull ChromaticChord chromaticChord) { // todo: move to checker
-        ChromaticChord chromaticChordTmp;
-        if (chromaticChord.getInversionNumber() > 0) {
-            chromaticChordTmp = chromaticChord.clone();
-            chromaticChordTmp.inv(chromaticChordTmp.getRootIndex());
-        } else
-            chromaticChordTmp = chromaticChord;
+        ChromaticChord chromaticChordTmp = removeInversionAsClonedChordIfNeeded(chromaticChord);
 
         List<DiatonicFunction> diatonicFunctions = getDiatonicFunctionFrom(chromaticChordTmp);
         List<HarmonicFunction> ret = new ArrayList<>(diatonicFunctions);
@@ -379,7 +374,7 @@ public class Tonality implements Iterable<DiatonicAlt> {
         return Collections.unmodifiableList( diatonicFunctionList );
     }
 
-    private ChromaticChord removeInversionAsClonedChordIfNeeded(@NonNull ChromaticChord chromaticChord) {
+    private ChromaticChord removeInversionAsClonedChordIfNeeded(@NonNull ChromaticChord chromaticChord) { // todo: move to transforms
         if (chromaticChord.getInversionNumber() != 0) {
             chromaticChord = chromaticChord.clone();
             chromaticChord.removeInv();
@@ -448,6 +443,11 @@ public class Tonality implements Iterable<DiatonicAlt> {
             list.add(chromaticFunction);
             cacheChromaticMap.putIfAbsent(chromaticChord, list);
         }
+    }
+
+    private void clearCaches() {
+        cacheDiatonicMap = null;
+        cacheChromaticMap = null;
     }
 
     private void createCacheIfNeeded() {

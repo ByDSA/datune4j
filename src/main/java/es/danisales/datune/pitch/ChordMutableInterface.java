@@ -1,8 +1,9 @@
 package es.danisales.datune.pitch;
 
 import es.danisales.datune.interval.Interval;
-import es.danisales.datune.musical.ImpossibleChordException;
+import es.danisales.datune.musical.InvalidChordException;
 import es.danisales.utils.MathUtils;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Collections;
 
@@ -19,26 +20,26 @@ public interface ChordMutableInterface<N extends SymbolicPitch, I extends Interv
 
 	void setRootIndex(int pos);
 
-    default void removeInv() {
+	default void removeInv() throws PitchException {
         inv(getRootIndex());
         checkState(getRootIndex() == 0, getRootIndex());
     }
 
-	default void over(N b) {
+	default void over(@NonNull N b) throws PitchException {
 		for (int i = 0; i < size(); i++) {
 			if (get(0).equals(b))
 				return;
 			inv();
 		}
 
-		throw new ImpossibleChordException();
+		throw new InvalidChordException();
 	}
 
-	default void inv() {
+	default void inv() throws PitchException {
 		inv( 1 );
 	}
 
-	default void inv(int n) {
+	default void inv(int n) throws PitchException {
 		if ( n == 0 )
 			return;
 		Collections.rotate(this, -n);

@@ -171,7 +171,7 @@ public class Power extends Song {
 	}
 
 	Progression startOrganProgression() throws PitchMidiException {
-		Progression p = ((Progression)startProgression.clone())
+        Progression p = startProgression.clone()
 				.setArpegio(new ArpegioDesc(Duration.L1, Duration.L4_3))
 				.setArpegio(new int[]{2, 3, 4, 6}, new ArpegioAsc(Duration.L1, Duration.L4_3))
 				.setArpegio(new int[]{4}, new ArpegioDesc(Duration.L1, Duration.L4_3))
@@ -271,7 +271,7 @@ public class Power extends Song {
 
 			}
 
-		Progression cad_pad = (Progression)cad.clone();
+        Progression cad_pad = cad.clone();
 		cad_pad.setArpegio(new ArpegioDefault(Duration.L1 *2))
 				.shiftOctave(2);
 		channelPad.add(seek, cad_pad);
@@ -364,7 +364,7 @@ public class Power extends Song {
 
 		channelPad.add(seek, cad);
 
-		Progression arp = ((Progression)cad.clone()).shiftOctave(2);
+        Progression arp = cad.clone().shiftOctave(2);
 
 		arp.setArpegio(new ArpegioDesc(Duration.L4, Duration.L4_3));
 		channelOrgan.add(seek, arp);

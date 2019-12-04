@@ -10,7 +10,7 @@ public class PitchMidiException extends PitchException {
 		super( "La figura musical está fuera de rango: " + n );
 	}
 
-	public PitchMidiException(@NonNull PitchChromaticMidiInmutable n) {
+	public PitchMidiException(@NonNull PitchChromaticMidiImmutable n) {
 		super( "La figura musical " + n + "está fuera de rango: " + n.getCode() );
 	}
 

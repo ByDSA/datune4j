@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 
 public class Arpegio implements Durable, Cloneable {
-	ArrayList<Node> nodes;
+	private ArrayList<Node> nodes;
 	ChordMidi chord;
-	Consumer<Arpegio> build;
-	int length;
+	private Consumer<Arpegio> build;
+	private int length;
 
 	public Arpegio() {
 		this( (Arpegio a) -> {
@@ -99,7 +99,7 @@ public class Arpegio implements Durable, Cloneable {
 		Arpegio a = new Arpegio( build );
 		a.length = length;
 		if ( chord != null )
-			a.chord = (ChordMidi) chord;//.duplicate( b );
+            a.chord = chord;//.duplicate( b );
 		for ( Node n : nodes )
 			a.nodes.add( n.clone() );
 

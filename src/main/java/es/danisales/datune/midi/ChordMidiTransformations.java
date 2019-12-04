@@ -3,6 +3,7 @@ package es.danisales.datune.midi;
 import es.danisales.datune.interval.Interval;
 import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.midi.pitch.PitchMidiInterface;
+import es.danisales.datune.pitch.PitchException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class ChordMidiTransformations {
 
     public static <N extends NoteMidi<P>, I extends Interval, P extends PitchMidiInterface<I>, T extends ChordMidi<N, I, P>> List<T> getAllDispositionsWithInv(T chordMidi) {
         List<T> ret = new ArrayList<>();
-        List<T> bases = _getAllInversions(chordMidi);
+        List<T> bases = _getWithAllInversions(chordMidi);
         for (T c : bases)
             ret.addAll(getAllInversionsFrom(c));
 
@@ -40,7 +41,8 @@ public class ChordMidiTransformations {
         return null;
     }
 
-    protected static <N extends NoteMidi<P>, I extends Interval, P extends PitchMidiInterface<I>, T extends ChordMidi<N, I, P>> List<T> getAllDispositionsSub(ChordMidi<N, I, P> chordMidi, boolean sub, int level, boolean first) {
+    protected static <N extends NoteMidi<P>, I extends Interval, P extends PitchMidiInterface<I>, T extends ChordMidi<N, I, P>>
+    List<T> getAllDispositionsSub(ChordMidi<N, I, P> chordMidi, boolean sub, int level, boolean first) {
         ArrayList<T> ret = new ArrayList<>();
         assert chordMidi.size() > 0;
 
@@ -79,51 +81,56 @@ public class ChordMidiTransformations {
                 first = false;
             }
         } catch (PitchMidiException e) {
-
+// todo: ??
         }
 
         return ret;
     }
 
-    @SuppressWarnings("InfiniteLoopStatement")
     public static <N extends NoteMidi<?>> void minimize(ChordMidi<N, ?, ?> chordMidi) {
         for (int i = 1; i < chordMidi.size(); i++) {
             N note = chordMidi.get(i);
             N prev = chordMidi.get(i - 1);
 
             try {
-                while (true)
+                while (note.getPitch().getOctave() > prev.getPitch().getOctave())
                     note.getPitch().shiftOctave(-1);
             } catch (PitchMidiException ignored) {
             }
         }
     }
 
-    public static <N extends NoteMidi<P>, I extends Interval, P extends PitchMidiInterface<I>, T extends ChordMidi<N, I, P>> void minimizeDistanceTo(T chordMidi, @NonNull ChordMidi cIn) {
-        Objects.requireNonNull(cIn);
+    public static <N extends NoteMidi<P>, I extends Interval, P extends PitchMidiInterface<I>, T extends ChordMidi<N, I, P>> void minimizeDistanceTo(@NonNull T selfChord, @NonNull ChordMidi<N, I, P> otherChord) {
+        Objects.requireNonNull(otherChord);
+        Objects.requireNonNull(selfChord);
 
-        List<T> ret = getAllDispositionsWithInv(chordMidi);
-        int minDist = 9999;
+        List<T> ret = getAllDispositionsWithInv(selfChord);
+        int minDist = Integer.MAX_VALUE;
         T minDistChord = null;
-        for (T c : ret) {
-            int d = (int) Math.abs(dist(cIn, c));
-            if (d < minDist) {
-                minDist = d;
-                minDistChord = c;
+        for (T chordMidiCandidate : ret) {
+            int distValue = dist(otherChord, chordMidiCandidate);
+            int absDistValue = Math.abs(distValue);
+            if (absDistValue < minDist) {
+                minDist = absDistValue;
+                minDistChord = chordMidiCandidate;
             }
         }
-        chordMidi.assign(minDistChord);
+        Objects.requireNonNull(minDistChord);
+        selfChord.assign(minDistChord);
     }
 
-    private static <N extends NoteMidi<P>, I extends Interval, P extends PitchMidiInterface<I>, T extends ChordMidi<N, I, P>> List<T> _getAllInversions(T chordMidi) {
+    private static <N extends NoteMidi<P>, I extends Interval, P extends PitchMidiInterface<I>, T extends ChordMidi<N, I, P>> List<T> _getWithAllInversions(T chordMidi) {
         List<T> ret = new ArrayList<>();
-
-        ret.add((T) chordMidi.clone());
-
-        T last = (T) chordMidi;
+        T last = chordMidi;
         for (int i = 0; i < chordMidi.size(); i++) {
+            last = (T) last.clone();
             ret.add(last);
-            last.inv();
+            try {
+                last.inv(); // todo: hacer con NormalChord y así evitar excepciones
+            } catch (PitchException e) {
+                e.printStackTrace();
+                throw new RuntimeException();
+            }
         }
 
         return ret;

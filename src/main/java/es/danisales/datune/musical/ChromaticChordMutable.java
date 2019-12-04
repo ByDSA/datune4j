@@ -2,20 +2,18 @@ package es.danisales.datune.musical;
 
 import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.interval.IntervalChromatic;
-import es.danisales.datune.pitch.ChordMutable;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 
 class ChromaticChordMutable
-		extends ChordMutable<Chromatic, IntervalChromatic>
+		extends ChordMutableNonMidi<Chromatic, IntervalChromatic>
 		implements PitchChromaticChord<Chromatic>, ChromaticChordInterface {
 
 	private ChromaticChordInfo info;
-	boolean building;
+	private boolean building;
 
 	public static @NonNull ChromaticChordMutable from(@NonNull Collection<Chromatic> chord) {
 		ChromaticChordMutable chromaticChordMutable = new ChromaticChordMutable();
@@ -38,7 +36,7 @@ class ChromaticChordMutable
 	}
 
 	ChromaticChordMutable() {
-		super(new ArrayList<>());
+		super();
 		building = true;
 	}
 

@@ -4,8 +4,10 @@ import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.lang.ChordNotation;
 import es.danisales.datune.midi.pitch.PitchDiatonicMidi;
+import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.musical.DiatonicChordCommon;
 import es.danisales.datune.pitch.PitchDiatonic;
+import es.danisales.datune.pitch.PitchException;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
@@ -77,7 +79,7 @@ public final class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDia
         info.update();
     }
 
-    public void addInterval(@NonNull IntervalDiatonic interval) throws AddedException {
+    public void addInterval(@NonNull IntervalDiatonic interval) throws AddedException, PitchMidiException {
         Objects.requireNonNull(interval);
 
         DiatonicDegree rootDegree = (DiatonicDegree) getRoot().getPitch().getDegree();
@@ -85,7 +87,7 @@ public final class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDia
         add(targetDegree);
     }
 
-    public void add(@NonNull DiatonicDegree diatonicDegree) throws AddedException {
+    public void add(@NonNull DiatonicDegree diatonicDegree) throws AddedException, PitchMidiException {
         PitchDiatonicMidi lastDiatonicPitch = get(size() - 1).pitch;
         PitchDiatonicMidi newDiatonicPitch = lastDiatonicPitch.clone();
         newDiatonicPitch.setDegree(diatonicDegree);
@@ -104,7 +106,7 @@ public final class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDia
     }
 
     @Override
-    public void shift(IntervalDiatonic intervalDiatonic) {
+    public void shift(IntervalDiatonic intervalDiatonic) throws PitchMidiException {
         for (DiatonicMidi diatonicMidi : this)
             diatonicMidi.getPitch().shift(intervalDiatonic);
 
@@ -112,7 +114,7 @@ public final class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDia
     }
 
     @Override
-    public void shiftNegative(IntervalDiatonic intervalDiatonic) {
+    public void shiftNegative(IntervalDiatonic intervalDiatonic) throws PitchMidiException {
         for (DiatonicMidi diatonicMidi : this)
             diatonicMidi.getPitch().shiftNegative(intervalDiatonic);
 
@@ -120,7 +122,7 @@ public final class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDia
     }
 
     @Override
-    public @NonNull DiatonicMidi getCyclic(int noteNumber) {
+    public @NonNull DiatonicMidi getCyclic(int noteNumber) throws PitchMidiException {
         DiatonicMidi n;
 
         int num = MathUtils.rotativeTrim(noteNumber, size());
@@ -146,16 +148,22 @@ public final class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDia
     }
 
     @Override
-    public void inv() {
+    public void inv() throws PitchException {
         super.inv();
         get(size() - 1).getPitch().shiftOctave(1);
     }
 
 
+    // todo: hacer test. puede que no funcione bien
     @Override
     public void inv(int n) {
         building = true;
-        super.inv(n);
+        try {
+            super.inv(n);
+        } catch (PitchException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
         building = false;
         info.update();
     }

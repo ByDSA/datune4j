@@ -229,8 +229,10 @@ public class TonalityGetChromaticFunction {
                         .build();
 
                 for (Tonality mode : tonality.getModesSameRoot()) {
-                    ChromaticChord chromaticChord2 = ChromaticChord.builder()
-                            .chromaticFunction(chromaticFunction)
+					DiatonicFunction diatonicFunction = DiatonicFunction.from(chromaticFunction);
+					@SuppressWarnings("ConstantConditions") // nunca es null para estas ChromaticFunction
+							ChromaticChord chromaticChord2 = ChromaticChord.builder()
+							.diatonicFunction(diatonicFunction)
                             .tonality(mode)
                             .build();
 

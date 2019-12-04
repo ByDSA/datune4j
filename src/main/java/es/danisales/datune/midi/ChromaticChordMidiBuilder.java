@@ -87,8 +87,8 @@ public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Build
                 try {
                     pitchChromaticMidi = PitchChromaticMidi.from(fromChromatic.get(i), currentOctave);
                 } catch (PitchMidiException e) {
-                    e.printStackTrace();
-                    throw new RuntimeException(); // todo: check argument pitch consistence when add octave or chromaticmidi
+                    //throw new BuildingException(e);
+                    throw new RuntimeException();
                 }
                 ChromaticMidi chromaticMidi = ChromaticMidi.builder()
                         .pitch(pitchChromaticMidi)

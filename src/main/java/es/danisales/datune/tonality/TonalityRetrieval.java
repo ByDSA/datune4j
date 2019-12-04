@@ -8,6 +8,7 @@ import es.danisales.datune.midi.DiatonicChordMidiInfo;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.musical.DiatonicAltRetrieval;
+import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -68,13 +69,14 @@ public class TonalityRetrieval {
         return mainMinorTonalities;
     }
 
-    static @NonNull Set<Tonality> getMainMajorAndMinorTonalities() {
+    public static @NonNull Set<Tonality> getMainMajorAndMinorTonalities() {
         return mainMajorAndMinorTonalities;
     }
 
     public static @NonNull List<Tonality> all() {
         List<Tonality> ret = new ArrayList<>();
         List<DiatonicAlt> diatonicAltList = DiatonicAltRetrieval.listFromAlterations(1);
+        diatonicAltList.sort(Comparator.comparing(DiatonicAlt::getDiatonic));
         for ( Scale mode : Scale.ALL )
             for ( DiatonicAlt diatonicAlt : diatonicAltList ) {
                 Tonality tonality = Tonality.from( diatonicAlt, mode );
@@ -149,8 +151,7 @@ public class TonalityRetrieval {
                 try {
                     tonalityNotes[i] = base.getNote(diatonicDegree);
                 } catch (ScaleDegreeException e) {
-                    e.printStackTrace();
-                    throw new RuntimeException("Impossible for diatonic scale");
+                    throw NeverHappensException.make("Las escalas diatónicas tienen todos los DiatonicDegree");
                 }
             }
         }

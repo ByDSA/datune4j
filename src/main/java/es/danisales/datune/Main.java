@@ -536,12 +536,6 @@ public class Main {
 		return song;
 	}
 
-	public static void showOctaves(int[] array) {
-		for ( int i : array )
-			System.out.print( i / 12 + " " );
-		System.out.println( "" );
-	}
-
 	public static ArrayList<int[]> getAllDispositionsSub(int[] array, boolean sub, int level, boolean first) {
 		ArrayList<int[]> ret = new ArrayList<>();
 		assert array.length > 0;

@@ -8,6 +8,7 @@ import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.tonality.ScaleDegreeException;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
+import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Objects;
@@ -17,11 +18,11 @@ public class PitchDiatonicMidi implements PitchOctaveMidiEditable, PitchMidiInte
 	protected int octave;
 	protected Tonality tonality;
 
-	public static PitchDiatonicMidi from(PitchDiatonicMidi pitchDiatonicMidi) {
+	public static PitchDiatonicMidi from(@NonNull PitchDiatonicMidi pitchDiatonicMidi) {
 		try {
 			return from(pitchDiatonicMidi.degree, pitchDiatonicMidi.tonality, pitchDiatonicMidi.octave);
 		} catch (PitchMidiException e) {
-			throw new RuntimeException("Impossible!");
+			throw NeverHappensException.make("Si PitchDiatonicMidi es consistente, lo va a ser la copia");
 		}
 	}
 
@@ -42,7 +43,7 @@ public class PitchDiatonicMidi implements PitchOctaveMidiEditable, PitchMidiInte
 			return tonality.getNote(degree);
 		} catch (ScaleDegreeException e) {
 			e.printStackTrace();
-			throw new RuntimeException("Impossible!"); // Si es consistente, nunca devolverá null
+			throw NeverHappensException.make("Si PitchDiatonicMidi es consistente, la Tonality siempre va a tener Degree y nunca devolverá null");
 		}
 	}
 
@@ -64,40 +65,40 @@ public class PitchDiatonicMidi implements PitchOctaveMidiEditable, PitchMidiInte
 	}
 
 	@Override
-	public void next() {
+	public void next() throws PitchMidiException {
 		shift(IntervalDiatonic.SECOND);
 	}
 
 	@Override
-	public void previous() {
+	public void previous() throws PitchMidiException {
 		shiftNegative(IntervalDiatonic.SECOND);
 	}
 
 	@Override
-	public void shift(IntervalDiatonic intervalDiatonic) {
+	public void shift(IntervalDiatonic intervalDiatonic) throws PitchMidiException {
 		shift(intervalDiatonic, 1);
 	}
 
 	@Override
-	public void shift(int pos) {
+	public void shift(int pos) throws PitchMidiException {
 		shift(pos, 1);
 	}
 
 	@Override
-	public void shiftNegative(IntervalDiatonic intervalDiatonic) {
+	public void shiftNegative(IntervalDiatonic intervalDiatonic) throws PitchMidiException {
 		shift(intervalDiatonic, -1);
 	}
 
-	private void shift(IntervalDiatonic intervalDiatonic, int signFactor) {
+	private void shift(IntervalDiatonic intervalDiatonic, int signFactor) throws PitchMidiException {
 		int intervalDiatonicDegreeIndex = intervalDiatonic.ordinal();
 		shift(intervalDiatonicDegreeIndex, signFactor);
 	}
 
-	private void shift(int intervalDiatonicDegreeIndex, int signFactor) {
+	private void shift(int intervalDiatonicDegreeIndex, int signFactor) throws PitchMidiException {
 		int totalIndex = degree.ordinal() + intervalDiatonicDegreeIndex * signFactor;
-		octave += totalIndex / Diatonic.NUMBER;
+		shiftOctave(totalIndex / Diatonic.NUMBER);
 		if (totalIndex < 0)
-			octave--;
+			shiftOctave(-1);
 
 		totalIndex = trimIndex(totalIndex);
 		degree = DiatonicDegree.values()[totalIndex];
@@ -116,13 +117,14 @@ public class PitchDiatonicMidi implements PitchOctaveMidiEditable, PitchMidiInte
 	}
 
 	@Override
-	public void shiftOctave(int octaveShift) {
+	public void shiftOctave(int octaveShift) throws PitchMidiException {
 		setOctave(octave + octaveShift);
 	}
 
 	@Override
-	public void setOctave(int octave) {
+	public void setOctave(int octave) throws PitchMidiException {
 		this.octave = octave;
+		PitchMidiException.check(this);
 	}
 
 	public void setDegree(@NonNull DiatonicDegree diatonicDegree) {

@@ -6,6 +6,7 @@ import es.danisales.datune.absolutedegree.Pentatonic;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.pitch.CyclicAbsoluteDegree;
 import es.danisales.datune.pitch.PitchChromaticSingle;
+import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Objects;
@@ -20,9 +21,8 @@ class DiatonicAltAdapter {
             ChromaticMidi chromaticMidi = (ChromaticMidi) pitchChromaticSingle;
             CyclicAbsoluteDegree chromatic = Chromatic.from(chromaticMidi);
             return from(chromatic, diatonic);
-        }
-
-        throw new RuntimeException("Impossible conversion");
+        } else
+            throw NeverHappensException.make("PitchChromaticSingle es siempre Chromatic o ChromaticMidi y se supone que nunca es " + pitchChromaticSingle.getClass());
     }
 
     static @NonNull DiatonicAlt from(@NonNull PitchChromaticSingle pitchChromaticSingle, float microPart, @NonNull CyclicAbsoluteDegree absoluteDegree) {
@@ -290,30 +290,39 @@ class DiatonicAltAdapter {
         return DiatonicAlt.from(diatonic, semis);
     }
 
-
-    static @NonNull DiatonicAlt from(@NonNull PitchChromaticSingle pitchChromaticSingle) {
-        if (pitchChromaticSingle instanceof Chromatic)
-            switch ((Chromatic)pitchChromaticSingle) {
-                case C: return DiatonicAlt.C;
-                case CC: return DiatonicAlt.CC;
-                case D: return DiatonicAlt.D;
-                case DD: return DiatonicAlt.DD;
-                case E: return DiatonicAlt.E;
-                case F: return DiatonicAlt.F;
-                case FF: return DiatonicAlt.FF;
-                case G: return DiatonicAlt.G;
-                case GG: return DiatonicAlt.GG;
-                case A: return DiatonicAlt.A;
-                case AA: return DiatonicAlt.AA;
-                case B: return DiatonicAlt.B;
-            }
-        else if (pitchChromaticSingle instanceof ChromaticMidi) {
-            ChromaticMidi chromaticMidi = (ChromaticMidi)pitchChromaticSingle;
-            Chromatic chromatic = Chromatic.from(chromaticMidi);
-            return from(chromatic);
+    static @NonNull DiatonicAlt from(@NonNull Chromatic chromatic) {
+        switch (chromatic) {
+            case C:
+                return DiatonicAlt.C;
+            case CC:
+                return DiatonicAlt.CC;
+            case D:
+                return DiatonicAlt.D;
+            case DD:
+                return DiatonicAlt.DD;
+            case E:
+                return DiatonicAlt.E;
+            case F:
+                return DiatonicAlt.F;
+            case FF:
+                return DiatonicAlt.FF;
+            case G:
+                return DiatonicAlt.G;
+            case GG:
+                return DiatonicAlt.GG;
+            case A:
+                return DiatonicAlt.A;
+            case AA:
+                return DiatonicAlt.AA;
+            case B:
+                return DiatonicAlt.B;
         }
 
-        throw new RuntimeException("Impossible");
+        throw NeverHappensException.switchOf(chromatic);
     }
 
+    static @NonNull DiatonicAlt from(@NonNull ChromaticMidi chromaticMidi) {
+        Chromatic chromatic = Chromatic.from(chromaticMidi);
+        return from(chromatic);
+    }
 }

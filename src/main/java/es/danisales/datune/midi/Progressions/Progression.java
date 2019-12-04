@@ -235,7 +235,7 @@ public class Progression<This extends Progression> implements EventComplex {
 		p.octave = octave;
 
 		for(DiatonicChordMidi n : nodes) {
-			p.nodes.add((DiatonicChordMidi)n.clone());
+            p.nodes.add(n.clone());
 		}
 
 		p.tonality = Tonality.from(tonality.getRoot(),tonality.getScale());
@@ -245,7 +245,7 @@ public class Progression<This extends Progression> implements EventComplex {
 
 	static class OutOfTimeException extends RuntimeException {
 		OutOfTimeException(int t, int d) {
-			super(Integer.toString(t) + " " + Integer.toString(d));
+            super(t + " " + d);
 		}
 	}
 }

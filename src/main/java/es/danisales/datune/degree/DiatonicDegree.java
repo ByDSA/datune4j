@@ -4,6 +4,7 @@ import es.danisales.datune.absolutedegree.Diatonic;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.interval.IntervalDiatonic;
+import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
@@ -49,7 +50,7 @@ public enum DiatonicDegree implements Degree {
 		return n;
 	}
 
-	public static @NonNull DiatonicDegree from(DiatonicFunction diatonicFunction) {
+	public static @NonNull DiatonicDegree from(@NonNull DiatonicFunction diatonicFunction) {
 		switch ( diatonicFunction ) {
 			case I:
 			case I2:
@@ -171,7 +172,7 @@ public enum DiatonicDegree implements Degree {
 			case VII13:
 				return DiatonicDegree.VII;
 		}
-		throw new RuntimeException("Impossible");
+		throw NeverHappensException.switchOf(diatonicFunction);
 	}
 
 	public static @NonNull DiatonicDegree from(@NonNull ChromaticFunction chromaticFunction) {
@@ -237,7 +238,7 @@ public enum DiatonicDegree implements Degree {
 				return DiatonicDegree.VI;
 		}
 
-		throw new RuntimeException("Impossible");
+		throw NeverHappensException.switchOf(chromaticFunction);
 	}
 
     @NonNull

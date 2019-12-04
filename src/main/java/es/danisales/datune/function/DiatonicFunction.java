@@ -4,6 +4,7 @@ import es.danisales.arrays.ArrayUtils;
 import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -183,7 +184,7 @@ public enum DiatonicFunction implements HarmonicFunction {
 
 	@SuppressWarnings("Duplicates")
 	public static @NonNull DiatonicFunction from(@NonNull DiatonicDegree diatonicDegree) {
-		switch ( diatonicDegree ) {
+		switch (diatonicDegree) {
 			case I:
 				return I;
 			case II:
@@ -199,7 +200,7 @@ public enum DiatonicFunction implements HarmonicFunction {
 			case VII:
 				return VII;
 		}
-		throw new RuntimeException("Impossible");
+		throw NeverHappensException.switchOf(diatonicDegree);
 	}
 
 	public static @Nullable DiatonicFunction from(@NonNull ChromaticFunction chromaticFunction) {

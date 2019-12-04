@@ -57,6 +57,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
             try {
                 chromaticFunctionProcess2(diatonicChordMidi);
             } catch (TonalityException | PitchMidiException | ScaleDegreeException e) {
+                System.out.println(function + " " + diatonicChordMidi.getTonality());
                 e.printStackTrace();
                 throw new RuntimeException();
             }
@@ -356,19 +357,21 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
         PitchDiatonicMidi pitchDiatonicMidiBase;
         try {
             pitchDiatonicMidiBase = PitchDiatonicMidi.from(diatonicDegreeBase, tonality, octave);
+
+            for (final Integer diatonic : diatonicChordPattern) {
+                PitchDiatonicMidi pitchDiatonicMidi = pitchDiatonicMidiBase.clone();
+                pitchDiatonicMidi.shift(diatonic);
+                DiatonicMidi diatonicMidi = DiatonicMidi.builder()
+                        .pitch(pitchDiatonicMidi)
+                        .build();
+                self.add(diatonicMidi);
+            }
+
         } catch (PitchMidiException e) {
             e.printStackTrace();
             throw new RuntimeException();
         }
 
-        for (final Integer diatonic : diatonicChordPattern) {
-            PitchDiatonicMidi pitchDiatonicMidi = pitchDiatonicMidiBase.clone();
-            pitchDiatonicMidi.shift(diatonic);
-            DiatonicMidi diatonicMidi = DiatonicMidi.builder()
-                    .pitch(pitchDiatonicMidi)
-                    .build();
-            self.add(diatonicMidi);
-        }
         self.building = false;
     }
 
@@ -404,9 +407,10 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
     }
 
     public DiatonicChordMidiBuilder from(@NonNull ChromaticChord chromaticChord, @NonNull Tonality tonality) {
-        HarmonicFunction f = tonality.getFunctionFrom(chromaticChord);
-        checkState(f != null);
-        function = f;
+        HarmonicFunction harmonicFunction = HarmonicFunction.get(chromaticChord, tonality);
+        checkState(harmonicFunction != null, "Tonality '" + tonality + "' don't contains chord '" + chromaticChord + "' as any harmonic function.");
+        function = harmonicFunction;
+        this.tonality = tonality;
 
         return self();
     }

@@ -12,6 +12,7 @@ import es.danisales.datune.tonality.ScaleDegreeException;
 import es.danisales.datune.tonality.ScaleDistance;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
+import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class Namer {
@@ -59,7 +60,7 @@ public class Namer {
             case B:  return "B";
         }
 
-        throw new RuntimeException("Impossible");
+        throw NeverHappensException.switchOf(chromatic);
     }
 
     public static String from(@NonNull ChromaticMidi chromaticMidi, @NonNull Tonality tonality) throws TonalityException, ScaleDegreeException {
@@ -102,7 +103,7 @@ public class Namer {
             case FIFTEENTH:
                 return "Quinceava";
         }
-        throw new RuntimeException("Impossible");
+        throw NeverHappensException.switchOf(intervalDiatonic);
     }
 
     public static @NonNull String shortFrom(@NonNull Quality quality) {
@@ -121,7 +122,7 @@ public class Namer {
                 return "undef";
         }
 
-        throw new RuntimeException("Impossible");
+        throw NeverHappensException.switchOf(quality);
     }
 
     public static @NonNull String longFrom(@NonNull Quality quality) {
@@ -140,7 +141,7 @@ public class Namer {
                 return "indeterminada";
         }
 
-        throw new RuntimeException("Impossible");
+        throw NeverHappensException.switchOf(quality);
     }
 
     public static @NonNull String shortFrom(IntervalChromatic intervalChromatic) {

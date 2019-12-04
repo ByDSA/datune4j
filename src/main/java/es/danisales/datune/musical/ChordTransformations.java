@@ -55,8 +55,14 @@ public class ChordTransformations {
         C last = (C) chordMutableInterface.clone();
         for (int i = 0; i < chordMutableInterface.size(); i++) {
             ret.add((C) last.clone());
-            if (i < chordMutableInterface.size() - 1)
-                last.inv();
+            if (i < chordMutableInterface.size() - 1) {
+                try {
+                    last.inv();
+                } catch (PitchException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException();
+                }
+            }
         }
 
         return ret;

@@ -13,6 +13,7 @@ import es.danisales.datune.tonality.ScaleDegreeException;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
 import es.danisales.utils.MathUtils;
+import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.HashMap;
@@ -100,7 +101,7 @@ public enum Chromatic implements PitchChromaticSingle, CyclicAbsoluteDegree<Chro
 	}
 
 	@SuppressWarnings("Duplicates")
-	public static @NonNull Chromatic from(Diatonic diatonic) {
+    public static @NonNull Chromatic from(@NonNull Diatonic diatonic) {
 		switch (diatonic) {
 			case C: return C;
 			case D: return D;
@@ -111,7 +112,7 @@ public enum Chromatic implements PitchChromaticSingle, CyclicAbsoluteDegree<Chro
 			case B: return B;
 		}
 
-		throw new RuntimeException("Impossible");
+        throw NeverHappensException.switchOf(diatonic);
 	}
 
     public static @NonNull Chromatic from(@NonNull ChromaticMidi chromaticMidi) {

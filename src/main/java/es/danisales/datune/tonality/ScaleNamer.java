@@ -1,6 +1,7 @@
 package es.danisales.datune.tonality;
 
 import es.danisales.datune.lang.Language;
+import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 class ScaleNamer {
@@ -149,6 +150,8 @@ class ScaleNamer {
                         return "0";
                     case TWO_WHOLE:
                         return "TT";
+                    default:
+                        throw NeverHappensException.switchOf(scaleDistance);
                 }
             default:
             case ENG:
@@ -165,9 +168,9 @@ class ScaleNamer {
                         return "0";
                     case TWO_WHOLE:
                         return "WW";
+                    default:
+                        throw NeverHappensException.switchOf(scaleDistance);
                 }
         }
-
-        throw new RuntimeException("Impossible");
     }
 }

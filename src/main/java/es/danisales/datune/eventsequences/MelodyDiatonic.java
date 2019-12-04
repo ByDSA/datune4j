@@ -81,7 +81,7 @@ public class MelodyDiatonic extends Melody {
 		return this;
 	}
 
-	public Melody shiftOctave(int o) {
+	public Melody shiftOctave(int o) throws PitchMidiException {
 		for (DiatonicMidi c : notesDiatonic) {
             c.getPitch().shiftOctave(o);
 		}
