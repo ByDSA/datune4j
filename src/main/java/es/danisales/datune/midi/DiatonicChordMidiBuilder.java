@@ -23,7 +23,7 @@ import static com.google.common.base.Preconditions.checkState;
 public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, DiatonicChordMidi> {
     private Tonality tonality = Settings.DefaultValues.TONALITY;
     private int length = Settings.DefaultValues.LENGTH_CHORD;
-    private int velocity = Settings.DefaultValues.VELOCITY;
+    private int velocity = Settings.DefaultValues.VELOCITY_CHORD;
     private HarmonicFunction function;
     private Arpegio arpegio;
     private int octave = Settings.DefaultValues.OCTAVE;

@@ -1,9 +1,7 @@
-package es.danisales.datune.midi;
+package es.danisales.datune.midi.pitch;
 
 import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.interval.IntervalChromatic;
-import es.danisales.datune.midi.pitch.PitchChromaticMidi;
-import es.danisales.datune.midi.pitch.PitchMidiException;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

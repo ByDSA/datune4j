@@ -21,13 +21,13 @@ import static org.junit.Assert.*;
 public class TonalityTest {
     @Test
     public void allSize() {
-        List<Tonality> tonalities = TonalityRetrieval.all();
+        List<Tonality> tonalities = TonalityRetrieval.allUsualKeys();
 
-        assertEquals( 1071, tonalities.size() );
+        assertEquals(1029, tonalities.size());
     }
 
     private void allContains(Tonality tonality) {
-        List<Tonality> tonalities = TonalityRetrieval.all();
+        List<Tonality> tonalities = TonalityRetrieval.allUsualKeys();
 
         assertTrue( tonality.toString(), tonalities.contains(tonality) );
     }
@@ -59,7 +59,7 @@ public class TonalityTest {
 
     @Test
     public void allContainsValues() {
-        List<Tonality> tonalities = TonalityRetrieval.all();
+        List<Tonality> tonalities = TonalityRetrieval.allUsualKeys();
 
         Set<Tonality> values = TonalityRetrieval.getMainMajorAndMinorTonalities();
 
@@ -247,7 +247,7 @@ public class TonalityTest {
 
     @Test
     public void size() {
-        for (Tonality tonality : TonalityRetrieval.all())
+        for (Tonality tonality : TonalityRetrieval.allUsualKeys())
             assertEquals(tonality.getScale().size(), tonality.size());
     }
 
@@ -519,7 +519,7 @@ public class TonalityTest {
 
     @Test
     public void cloneTest() {
-        for (Tonality tonality : TonalityRetrieval.all()) {
+        for (Tonality tonality : TonalityRetrieval.allUsualKeys()) {
             Tonality clonedTonality = tonality.clone();
             assertEquals(tonality, clonedTonality);
             assertNotSame(tonality, clonedTonality);
@@ -580,7 +580,7 @@ public class TonalityTest {
 
     @Test
     public void minimizeAlterationsBidirectionalAll() {
-        for (Tonality tonality : TonalityRetrieval.all()) {
+        for (Tonality tonality : TonalityRetrieval.allUsualKeys()) {
             Set<Tonality> minTonalityListReference = TonalityRetrieval.getEnharmonicMinimalAltsFrom(tonality);
 
             if (minTonalityListReference.size() > 1)

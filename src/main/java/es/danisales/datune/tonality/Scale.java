@@ -1,5 +1,6 @@
 package es.danisales.datune.tonality;
 
+import com.google.common.collect.ImmutableList;
 import es.danisales.datune.degree.Degree;
 import es.danisales.datune.musical.DiatonicAlt;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -82,7 +83,7 @@ public class Scale implements Iterable<ScaleDistance> {
 	// 12
 	public static final Scale CHROMATIC = new Scale(ScaleInnerImmutable.CHROMATIC);
 
-	public static final Set<Scale> DIATONICS = Collections.unmodifiableSet( new HashSet<>(Arrays.asList(
+	private static final List<Scale> DIATONIC_SCALES = ImmutableList.of(
 			Scale.IONIAN,
 			Scale.DORIAN,
 			Scale.PHRYGIAN,
@@ -90,9 +91,9 @@ public class Scale implements Iterable<ScaleDistance> {
 			Scale.MIXOLYDIAN,
 			Scale.AEOLIAN,
 			Scale.LOCRIAN
-	) ) );
+	);
 
-	public static final List<Scale> ALL = Collections.unmodifiableList(Arrays.asList(
+	private static final List<Scale> ALL_USUAL_SCALES = ImmutableList.of(
 			MAJOR,
 			//IONIAN,
 			DORIAN,
@@ -105,7 +106,7 @@ public class Scale implements Iterable<ScaleDistance> {
 			LOCRIAN_H6,
 			IONIAN_H5,
 			DORIAN_H4,
-			UKRANIAN_MINOR_SCALE,
+			//UKRANIAN_MINOR_SCALE,
 			MIXOLIDIAN_b9_b13,
 			LYDIAN_H2,
 			SUPERLOCRIAN_bb7,
@@ -144,7 +145,15 @@ public class Scale implements Iterable<ScaleDistance> {
 			BLUES_MAJOR,
 			YO_SCALE,
 			CHROMATIC
-	));
+	);
+
+	public static List<Scale> allUsualScales() {
+		return Scale.ALL_USUAL_SCALES;
+	}
+
+	public static List<Scale> diatonicScales() {
+		return Scale.DIATONIC_SCALES;
+	}
 
 	/**
 	 * END CONSTANT SCALES
@@ -182,8 +191,8 @@ public class Scale implements Iterable<ScaleDistance> {
 	}
 
 	/**
-	 * Get all modes from the scale
-	 * @return the array within all modes from the scale
+	 * Get allUsual modes from the scale
+	 * @return the array within allUsual modes from the scale
 	 */
 	public @NonNull List<Scale> getModes() {
 		List<ScaleDistance> scaleDistanceList = new ArrayList<>(getCode());
@@ -264,7 +273,7 @@ public class Scale implements Iterable<ScaleDistance> {
 	 * @return if it's function
 	 */
 	public boolean isDiatonic() {
-		return DIATONICS.contains(this);
+		return DIATONIC_SCALES.contains(this);
 	}
 
 	@SuppressWarnings("MethodDoesntCallSuperMethod")

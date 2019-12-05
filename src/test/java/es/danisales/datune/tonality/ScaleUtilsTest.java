@@ -25,7 +25,7 @@ public class ScaleUtilsTest {
     @Test
     public void getDistancesFromEngAllNotNull() {
         Language.current = Language.ENG;
-        for (Scale scale : Scale.ALL) {
+        for (Scale scale : Scale.allUsualScales()) {
             String str = ScaleUtils.getStringDistancesFrom(scale);
             assertNotNull(str);
         }
@@ -49,7 +49,7 @@ public class ScaleUtilsTest {
     @Test
     public void getDistancesFromEspAllNotNull() {
         Language.current = Language.ESP;
-        for (Scale scale : Scale.ALL) {
+        for (Scale scale : Scale.allUsualScales()) {
             String str = ScaleUtils.getStringDistancesFrom(scale);
             assertNotNull(str);
         }
@@ -152,7 +152,7 @@ public class ScaleUtilsTest {
     @Test
     public void getMajorScaleAlterationsFromAllNotNull() {
         Language.current = Language.ENG;
-        for (Scale scale : Scale.ALL) {
+        for (Scale scale : Scale.allUsualScales()) {
             String str = ScaleUtils.getMajorScaleAlterationsFrom(scale);
             assertNotNull(str);
         }

@@ -16,7 +16,7 @@ class DiatonicChordMidiAdapter {
 
     static @NonNull List<DiatonicChordMidiInfo> fromChromaticChordAll(ChromaticChord chromaticChord) {
         List<DiatonicChordMidiInfo> out = new ArrayList<>();
-        for (Tonality tonality : TonalityRetrieval.all()) {
+        for (Tonality tonality : TonalityRetrieval.allUsualKeys()) {
             HarmonicFunction harmonicFunction = tonality.getFunctionFrom(chromaticChord);
 
             if (harmonicFunction == null)
@@ -31,7 +31,7 @@ class DiatonicChordMidiAdapter {
 
     static @NonNull List<DiatonicChordMidiInfo> fromChromaticChordDiatonic(ChromaticChord chromaticChord) {
         List<DiatonicChordMidiInfo> out = new ArrayList<>();
-        for (Tonality tonality : TonalityRetrieval.all()) {
+        for (Tonality tonality : TonalityRetrieval.allUsualKeys()) {
             List<DiatonicFunction> diatonicFunctionList = tonality.getDiatonicFunctionFrom(chromaticChord);
 
             if (diatonicFunctionList.isEmpty())

@@ -321,10 +321,19 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
         }
     }
 
-    private static int octaveCorrector(@NonNull Tonality tonality, @NonNull Degree relativeDegree) {
+    private static int octaveCorrector(@NonNull Tonality tonality, @NonNull Degree degree) {
         int octave = 0;
 
-        DiatonicAlt diatonicAlt = tonalityGetNoteSecure(tonality, relativeDegree);
+        octave += octaveCorrectorAltRoot(tonality);
+        octave += octaveCorrectorDegree(tonality, degree);
+
+        return octave;
+    }
+
+    private static int octaveCorrectorAltRoot(@NonNull Tonality tonality) {
+        int octave = 0;
+
+        DiatonicAlt diatonicAlt = tonality.getRoot();
         Chromatic chromaticWithoutAlts = Chromatic.from(diatonicAlt.getDiatonic());
         float semis = chromaticWithoutAlts.ordinal() + diatonicAlt.getAlterations();
         while (semis < 0) {
@@ -336,10 +345,17 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
             semis -= Chromatic.NUMBER;
         }
 
+        return octave;
+    }
+
+    private static int octaveCorrectorDegree(@NonNull Tonality tonality, @NonNull Degree degree) {
+        int octave = 0;
+
+        DiatonicAlt degreeDiatonicAlt = tonalityGetNoteSecure(tonality, degree);
         DiatonicAlt root = tonality.getRoot();
         Chromatic rootChromatic = Chromatic.from(root);
-        Chromatic chromatic = Chromatic.from(diatonicAlt);
-        if (chromatic.ordinal() < rootChromatic.ordinal())
+        Chromatic degreeChromatic = Chromatic.from(degreeDiatonicAlt);
+        if (degreeChromatic.ordinal() < rootChromatic.ordinal())
             octave++;
 
         return octave;

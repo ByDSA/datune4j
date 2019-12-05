@@ -619,8 +619,8 @@ public class ScaleTest {
 
     @Test
     public void isDiatonicAllDiatonics() {
-        for (Scale scale : Scale.DIATONICS)
-            assertTrue(scale.isDiatonic());
+        for (Scale scale : Scale.diatonicScales())
+            assertTrue(scale.toString(), scale.isDiatonic());
     }
 
     @Test
@@ -676,7 +676,7 @@ public class ScaleTest {
 
     @Test
     public void innerScaleNotNullAll() {
-        for (Scale scale : Scale.ALL)
+        for (Scale scale : Scale.allUsualScales())
             assertNotNull(scale.innerScale);
     }
 
@@ -768,12 +768,36 @@ public class ScaleTest {
     /* toString */
 
     @Test
-    public void toStringNotEmpty() {
-        for (Scale scale : Scale.ALL) {
-            assertNotNull(scale.toString());
-            assertNotEquals("",scale.toString());
-            assertNotEquals(" ",scale.toString());
+    public void toString_NotEmpty() {
+        for (Scale scale : Scale.allUsualScales()) {
+            checkNotEmptyScaleToString(scale);
         }
+    }
+
+    @Test
+    public void toString_Custom_NotEmpty() {
+        Scale scale = Scale.fromDistances(Arrays.asList(
+                ScaleDistance.HALF,
+                ScaleDistance.HALF,
+                ScaleDistance.HALF,
+                ScaleDistance.HALF,
+                ScaleDistance.HALF,
+                ScaleDistance.HALF,
+                ScaleDistance.HALF,
+                ScaleDistance.HALF,
+                ScaleDistance.HALF,
+                ScaleDistance.HALF,
+                ScaleDistance.HALF,
+                ScaleDistance.QUARTER,
+                ScaleDistance.QUARTER
+        ));
+        checkNotEmptyScaleToString(scale);
+    }
+
+    private void checkNotEmptyScaleToString(Scale scale) {
+        assertNotNull(scale.toString());
+        assertNotEquals("", scale.toString());
+        assertNotEquals(" ", scale.toString());
     }
 
     /* clone */
@@ -807,5 +831,48 @@ public class ScaleTest {
     public void hashCode_dependsOnScaleDegreeReparametrizer() {
         assertEquals(Scale.BLUES_a4.getCode(), Scale.BLUES_b5.getCode());
         assertNotEquals(Scale.BLUES_a4.hashCode(), Scale.BLUES_b5.hashCode());
+    }
+
+    /* allUsual sizes */
+
+    @Test
+    public void allUsualScales_size() {
+        assertEquals(49, Scale.allUsualScales().size());
+    }
+
+    @Test
+    public void allUsualScales_hasDuplicates() {
+        Set<Scale> setAllScales = new HashSet<>(Scale.allUsualScales());
+
+        assertEquals(getScaleAllMinusSetAllScales(setAllScales).toString(),
+                Scale.allUsualScales().size(), setAllScales.size());
+    }
+
+    private List<Scale> getScaleAllMinusSetAllScales(Set<Scale> setAllScales) {
+        List<Scale> diff = new ArrayList<>(Scale.allUsualScales());
+        main:
+        for (int i = 0; i < diff.size(); i++) {
+            for (Scale scale : setAllScales)
+                if (diff.get(i) == scale) {
+                    diff.remove(i);
+                    i--;
+                    continue main;
+                }
+        }
+
+        return diff;
+    }
+
+    @Test
+    public void diatonicScales_size() {
+        assertEquals(7, Scale.diatonicScales().size());
+    }
+
+    @Test
+    public void diatonicScales_hasIonianMajorAeolianMinor() {
+        assertTrue(Scale.diatonicScales().contains(Scale.MAJOR));
+        assertTrue(Scale.diatonicScales().contains(Scale.IONIAN));
+        assertTrue(Scale.diatonicScales().contains(Scale.MINOR));
+        assertTrue(Scale.diatonicScales().contains(Scale.AEOLIAN));
     }
 }

@@ -11,6 +11,7 @@ public class Settings {
 	public static class DefaultValues {
 		public static final int OCTAVE = 5;
 		public static final int VELOCITY = VELOCITY_MAX;
+		public static final int VELOCITY_CHORD = 100;
 		public static final int LENGTH_CHORD = Duration.L1;
 		public static final int LENGTH_NOTE = Duration.L4;
 		public static final Chromatic CHROMATIC = Chromatic.C;

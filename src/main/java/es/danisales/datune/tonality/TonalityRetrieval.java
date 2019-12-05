@@ -73,11 +73,11 @@ public class TonalityRetrieval {
         return mainMajorAndMinorTonalities;
     }
 
-    public static @NonNull List<Tonality> all() {
+    public static @NonNull List<Tonality> allUsualKeys() {
         List<Tonality> ret = new ArrayList<>();
         List<DiatonicAlt> diatonicAltList = DiatonicAltRetrieval.listFromAlterations(1);
         diatonicAltList.sort(Comparator.comparing(DiatonicAlt::getDiatonic));
-        for ( Scale mode : Scale.ALL )
+        for (Scale mode : Scale.allUsualScales())
             for ( DiatonicAlt diatonicAlt : diatonicAltList ) {
                 Tonality tonality = Tonality.from( diatonicAlt, mode );
                 ret.add(tonality);
@@ -89,7 +89,7 @@ public class TonalityRetrieval {
     @SuppressWarnings("WeakerAccess")
     public static @NonNull List<Tonality> listFromChordDiatonicFunction(@NonNull ChromaticChord c) {
         List<Tonality> out = new ArrayList<>();
-        for (Tonality t : TonalityRetrieval.all()) {
+        for (Tonality t : TonalityRetrieval.allUsualKeys()) {
             if (t.containsAll(c))
                 out.add( t );
         }
@@ -99,7 +99,7 @@ public class TonalityRetrieval {
 
     @SuppressWarnings("WeakerAccess")
     public static @Nullable Tonality listFromChordFirst(@NonNull ChromaticChord c) {
-        for (Tonality t : TonalityRetrieval.all()) {
+        for (Tonality t : TonalityRetrieval.allUsualKeys()) {
             if (t.containsAll(c))
                 return t;
         }
@@ -110,7 +110,7 @@ public class TonalityRetrieval {
     @SuppressWarnings("WeakerAccess")
     public static @NonNull List<Tonality> listFromChordAllFunctions(@NonNull ChromaticChord c) {
         List<Tonality> out = new ArrayList<>();
-        for (Tonality t : TonalityRetrieval.all()) {
+        for (Tonality t : TonalityRetrieval.allUsualKeys()) {
             if (t.hasAsChromaticFunction(c))
                 out.add( t );
         }

@@ -3,7 +3,11 @@ package es.danisales.datune.midi.pitch;
 import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.absolutedegree.Diatonic;
 import es.danisales.datune.degree.Degree;
-import es.danisales.datune.tonality.*;
+import es.danisales.datune.musical.DiatonicAlt;
+import es.danisales.datune.tonality.ScaleDegreeException;
+import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityException;
+import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Objects;
@@ -40,33 +44,36 @@ class PitchDiatonicMidiAdapter {
     private static int octaveCorrector(PitchChromaticMidi pitchChromaticMidi, Degree relativeDegree, Tonality tonality) {
         int octave = 0;
 
-        octave += octaveCorrectionAlts(tonality);
-        octave += octaveCorrectionDiatonicDegree(pitchChromaticMidi, relativeDegree, tonality.getScale());
+        octave += octaveCorrectionRootAlt(tonality);
+        octave += octaveCorrectionDegree(relativeDegree, tonality);
 
         return octave;
     }
 
-    private static int octaveCorrectionDiatonicDegree(PitchChromaticMidi pitchChromaticMidi, Degree relativeDegree, Scale scale) {
-        int semis = pitchChromaticMidi.getChromatic().ordinal();
+    private static DiatonicAlt getNoteSecure(Tonality tonality, Degree degree) {
+        try {
+            return tonality.getNote(degree);
+        } catch (ScaleDegreeException e) {
+            throw NeverHappensException.make("Siempre pertenece a Tonality");
+        }
+    }
+
+    // todo: hacer test con Degree que no sea el por defecto de su cantidad de notas (ej: DiatonicDegree en Pentatonic)
+    // todo: coger cosas comunes para octaveCorrector entre covnersores. Es lo mismo pero cambiado de signo
+    private static int octaveCorrectionDegree(Degree degree1, Tonality tonality) {
         int octave = 0;
 
-        for (Degree degree = relativeDegree.getPrevious(); degree.getNext().ordinal() != 0; degree = degree.getPrevious()) {
-            ScaleDistance scaleDistance = null;
-            try {
-                scaleDistance = scale.getDistance(degree);
-            } catch (ScaleDegreeException e) {
-                continue;
-            }
-            semis -= scaleDistance.getMicrotonalSemitones();
-            if (semis < 0) {
-                semis += Chromatic.NUMBER;
-                octave--;
-            }
-        }
+        DiatonicAlt degreeDiatonicAlt = getNoteSecure(tonality, degree1);
+        DiatonicAlt root = tonality.getRoot();
+        Chromatic rootChromatic = Chromatic.from(root);
+        Chromatic degreeChromatic = Chromatic.from(degreeDiatonicAlt);
+        if (degreeChromatic.ordinal() < rootChromatic.ordinal())
+            octave--;
+
         return octave;
     }
 
-    private static int octaveCorrectionAlts(Tonality tonality) {
+    private static int octaveCorrectionRootAlt(Tonality tonality) {
         Diatonic diatonicRoot = tonality.getRoot().getDiatonic();
         float semis = Chromatic.from(diatonicRoot).ordinal() + tonality.getRoot().getAlterations();
         int octaveVariation = 0;
