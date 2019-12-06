@@ -1,7 +1,6 @@
 package es.danisales.datune.pitch;
 
 import es.danisales.datune.absolutedegree.Chromatic;
-import es.danisales.datune.absolutedegree.Diatonic;
 import es.danisales.datune.absolutedegree.Pentatonic;
 import es.danisales.datune.degree.Degree;
 import es.danisales.datune.interval.Interval;
@@ -21,7 +20,7 @@ public class CyclicAbsoluteDegreeAdapter {
 
     static {
         conversorMap.put(5, Pentatonic::from);
-        conversorMap.put(7, Diatonic::from);
+        conversorMap.put(7, DiatonicAlt::getDiatonic);
         conversorMap.put(12, Chromatic::from);
     }
 

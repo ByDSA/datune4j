@@ -14,7 +14,8 @@ public interface ChromaticChordInterface extends PitchChromaticChord<Chromatic> 
     static @NonNull ChromaticChordInterface from(DiatonicChord diatonicChord, Tonality tonality) throws TonalityException {
         ChromaticChordInterface chromaticChord = new ChromaticChordMutable();
         for (Diatonic diatonic : diatonicChord) {
-            Chromatic chromatic = Chromatic.from(diatonic, tonality);
+            DiatonicAlt diatonicAlt = DiatonicAlt.from(diatonic, tonality);
+            Chromatic chromatic = Chromatic.from(diatonicAlt);
             chromaticChord.add(chromatic);
         }
         return chromaticChord;
@@ -28,7 +29,7 @@ public interface ChromaticChordInterface extends PitchChromaticChord<Chromatic> 
     static ChromaticChordInterface from(ChromaticChordMidi chromaticChordMidi) {
         ChromaticChordInterface ret = new ChromaticChordMutable();
         for (ChromaticMidi chromaticMidi : chromaticChordMidi)
-            ret.add(Chromatic.from(chromaticMidi));
+            ret.add(chromaticMidi.getPitch().getChromatic());
         return ret;
     }
 

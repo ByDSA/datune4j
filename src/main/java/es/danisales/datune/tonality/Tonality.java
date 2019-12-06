@@ -377,7 +377,7 @@ public class Tonality implements Iterable<DiatonicAlt> {
     private ChromaticChord removeInversionAsClonedChordIfNeeded(@NonNull ChromaticChord chromaticChord) { // todo: move to transforms
         if (chromaticChord.getInversionNumber() != 0) {
             chromaticChord = chromaticChord.clone();
-            chromaticChord.removeInv();
+            chromaticChord.toFundamental();
         }
 
         return chromaticChord;
@@ -400,11 +400,10 @@ public class Tonality implements Iterable<DiatonicAlt> {
             if (size() != Diatonic.NUMBER && ArrayUtils.contains(f, ChromaticFunction.TENSIONS))
                 continue;
 
-            ChromaticChord c2 = ChromaticChord.builder().fromDiatonicChordMidi(
-                    DiatonicChordMidi.builder()
-                            .from(f, this)
-                            .build()
-            ).build();
+            ChromaticChord c2 = ChromaticChord.builder()
+                    .chromaticFunction(f)
+                    .tonality(this)
+                    .build();
             if (chromaticChord.getNotes().equals(c2.getNotes()))
                 return true;
         }

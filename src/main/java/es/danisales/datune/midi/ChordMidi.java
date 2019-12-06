@@ -10,6 +10,7 @@ import es.danisales.datune.midi.pitch.PitchMidiInterface;
 import es.danisales.datune.midi.pitch.PitchOctaveMidiEditable;
 import es.danisales.datune.pitch.ChordMutable;
 import es.danisales.datune.pitch.PitchOctave;
+import es.danisales.utils.HashingUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -139,7 +140,14 @@ public abstract class ChordMidi<N extends NoteMidi<P>, I extends Interval, P ext
 	}
 
 	@Override
-	public void add(int n, N chromaticMidi) throws AddedException {
+    public boolean addAll(int index, @NonNull Collection<? extends N> collection) {
+        boolean ret = super.addAll(index, collection);
+        sortByPitch();
+        return ret;
+    }
+
+    @Override
+    public void add(int n, @NonNull N chromaticMidi) throws AddedException {
 		super.add(n, chromaticMidi);
 		sortByPitch();
 	}
@@ -153,8 +161,16 @@ public abstract class ChordMidi<N extends NoteMidi<P>, I extends Interval, P ext
 
 	@Override
 	public void setVelocity(int v) {
-		for ( N n : this )
-			n.setVelocity( (int) Math.round( n.getVelocity() * v / 100.0 ) );
+        for (N n : this) {
+            int vel = (int) Math.round(n.getVelocity() * v / 100.0);
+
+            if (vel < 0)
+                vel = 0;
+            else if (vel > 128)
+                vel = 128;
+
+            n.setVelocity(vel);
+        }
 	}
 
 	@Override
@@ -233,6 +249,6 @@ public abstract class ChordMidi<N extends NoteMidi<P>, I extends Interval, P ext
 
 	@Override
 	public int hashCode() {
-		return super.hashCode() + 37 * ( arpegio.hashCode() + 41 * Integer.hashCode(length) );
+        return super.hashCode() + HashingUtils.from(arpegio, length);
 	}
 }

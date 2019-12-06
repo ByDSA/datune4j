@@ -3,11 +3,11 @@ package es.danisales.datune.midi;
 import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
-import es.danisales.datune.midi.pitch.PitchMidiException;
+import es.danisales.datune.lang.Language;
 import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.pitch.PitchException;
 import es.danisales.datune.tonality.Tonality;
-import es.danisales.datune.tonality.TonalityException;
+import es.danisales.utils.building.BuildingException;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -15,54 +15,51 @@ import java.util.Arrays;
 import static org.junit.Assert.assertEquals;
 
 public class DiatonicChordMidiNamesTest {
-
-    @Test
-    public void names() throws PitchException {
-        DiatonicChordMidi ccm = DiatonicChordMidi.builder().from(DiatonicFunction.I, Tonality.C).build();
-        assertEquals(
-                "C/E (C)", ccm.toString()
-        );
-
-        assertEquals("C", ChromaticChord.C.toString());
-
-        DiatonicChordMidi dcm = DiatonicChordMidi.builder().from(DiatonicFunction.I, Tonality.C).build();
-
-        assertEquals("C (C)", dcm.toString());
-
-        dcm = DiatonicChordMidi.builder().from(DiatonicFunction.I, Tonality.Cm).build();
-        assertEquals("Cm (C)", dcm.toString());
-        dcm = DiatonicChordMidi.builder().from(DiatonicFunction.I, Tonality.C).build();
-        dcm.inv();
-
-        assertEquals("C/E (C)", dcm.toString());
-        dcm.inv();
-        assertEquals("C/G (C)", dcm.toString());
-        dcm.inv();
-        assertEquals("C (C)", dcm.toString());
-
-        dcm = DiatonicChordMidi.builder().from(ChromaticFunction.IV5, Tonality.C).build();
-        assertEquals("F5 (IV5)", dcm.toString());
-        dcm.inv();
-        assertEquals("F5/C (IV5)", dcm.toString());
-
-        dcm = DiatonicChordMidi.builder().from(DiatonicFunction.I2, Tonality.C).build();
-        assertEquals("Csus2 (I2)", dcm.toString());
-        dcm = DiatonicChordMidi.builder().from(DiatonicFunction.V4, Tonality.C).build();
-        assertEquals("Gsus4 (V4)", dcm.toString());
-        dcm.inv();
-        assertEquals("Gsus4/C (V4)", dcm.toString());
-
-        ChromaticChord chromaticChord = ChromaticChord.builder().fromChromatic(
-                Arrays.asList(Chromatic.C, Chromatic.D, Chromatic.G)
-        ).build();
-        dcm = DiatonicChordMidi.builder()
-                .from(chromaticChord, Tonality.C)
-                .build();
-        assertEquals("Csus2 (I2)", dcm.toString());
+    {
+        Language.current = Language.ENG;
     }
 
     @Test
-    public void toStringTest() throws PitchMidiException, TonalityException {
+    public void names() throws PitchException, BuildingException {
+        DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder().from(DiatonicFunction.I, Tonality.C).build();
+
+        assertEquals("C (C)", diatonicChordMidi.toString());
+
+        diatonicChordMidi = DiatonicChordMidi.builder().from(DiatonicFunction.I, Tonality.Cm).build();
+        assertEquals("Cm (C)", diatonicChordMidi.toString());
+        diatonicChordMidi = DiatonicChordMidi.builder().from(DiatonicFunction.I, Tonality.C).build();
+        diatonicChordMidi.inv();
+
+        assertEquals("C/E (C)", diatonicChordMidi.toString());
+        diatonicChordMidi.inv();
+        assertEquals("C/G (C)", diatonicChordMidi.toString());
+        diatonicChordMidi.inv();
+        assertEquals("C (C)", diatonicChordMidi.toString());
+
+        diatonicChordMidi = DiatonicChordMidi.builder().from(ChromaticFunction.IV5, Tonality.C).build();
+        assertEquals("F5 (IV5)", diatonicChordMidi.toString());
+        diatonicChordMidi.inv();
+        assertEquals("F5/C (IV5)", diatonicChordMidi.toString());
+
+        diatonicChordMidi = DiatonicChordMidi.builder().from(DiatonicFunction.I2, Tonality.C).build();
+        assertEquals("Csus2 (I2)", diatonicChordMidi.toString());
+        diatonicChordMidi = DiatonicChordMidi.builder().from(DiatonicFunction.V4, Tonality.C).build();
+        assertEquals("Gsus4 (V4)", diatonicChordMidi.toString());
+        diatonicChordMidi.inv();
+        assertEquals("Gsus4/C (V4)", diatonicChordMidi.toString());
+
+        ChromaticChord chromaticChord = ChromaticChord.builder().addAll(
+                Arrays.asList(Chromatic.C, Chromatic.D, Chromatic.G)
+        ).build();
+        diatonicChordMidi = DiatonicChordMidi.builder()
+                .from(chromaticChord, Tonality.C)
+                .build();
+        assertEquals("Csus2 (I2)", diatonicChordMidi.toString());
+    }
+
+    @Test
+    public void toStringTest() throws BuildingException {
+        Language.current = Language.ENG;
         DiatonicChordMidi dcm = DiatonicChordMidi.builder()
                 .from(ChromaticChord.F5, Tonality.C)
                 .build();

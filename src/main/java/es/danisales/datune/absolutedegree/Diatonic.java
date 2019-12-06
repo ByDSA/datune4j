@@ -2,11 +2,12 @@ package es.danisales.datune.absolutedegree;
 
 import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.interval.IntervalDiatonic;
-import es.danisales.datune.musical.DiatonicAlt;
+import es.danisales.datune.lang.Language;
 import es.danisales.datune.pitch.CyclicAbsoluteDegree;
 import es.danisales.datune.pitch.CyclicAbsoluteDegreeAdapter;
 import es.danisales.datune.pitch.PitchDiatonicSingle;
 import es.danisales.utils.MathUtils;
+import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.HashMap;
@@ -22,10 +23,6 @@ public enum Diatonic implements PitchDiatonicSingle, CyclicAbsoluteDegree<Diaton
 
 	public static Diatonic from(DiatonicDegree d) {
 		return DiatonicAdapter.from( d );
-	}
-
-	public static Diatonic from(DiatonicAlt diatonicAlt) {
-		return DiatonicAdapter.from(diatonicAlt);
 	}
 
     private static final Map<Integer, Function<CyclicAbsoluteDegree, Diatonic>> mapConversor = new HashMap<>();
@@ -77,6 +74,9 @@ public enum Diatonic implements PitchDiatonicSingle, CyclicAbsoluteDegree<Diaton
 	}
 
     public static Diatonic from(@NonNull CyclicAbsoluteDegree absoluteDegree) {
+		if (absoluteDegree instanceof Diatonic)
+			return (Diatonic) absoluteDegree;
+
         Integer number = CyclicAbsoluteDegreeAdapter.getNumber(absoluteDegree);
         Function<CyclicAbsoluteDegree, Diatonic> f = mapConversor.get(number);
 		if (f == null)
@@ -128,5 +128,33 @@ public enum Diatonic implements PitchDiatonicSingle, CyclicAbsoluteDegree<Diaton
 		d = MathUtils.rotativeTrim(d, Diatonic.NUMBER);
 
 		return IntervalDiatonic.values()[d];
+	}
+
+	@Override
+	public String toString() {
+		switch (Language.current) {
+			default:
+			case ENG:
+				return name();
+			case ESP:
+				switch (this) {
+					case C:
+						return "Do";
+					case D:
+						return "Re";
+					case E:
+						return "Mi";
+					case F:
+						return "Fa";
+					case G:
+						return "Sol";
+					case A:
+						return "La";
+					case B:
+						return "Si";
+				}
+		}
+
+		throw NeverHappensException.switchOf(this);
 	}
 }

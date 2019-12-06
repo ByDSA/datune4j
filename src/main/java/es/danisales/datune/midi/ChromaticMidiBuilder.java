@@ -22,8 +22,8 @@ public class ChromaticMidiBuilder extends es.danisales.utils.building.Builder<Ch
         length = Settings.DefaultValues.LENGTH_NOTE;
     }
 
-    public ChromaticMidiBuilder pitch(PitchChromaticMidi pitchMidiEnum) {
-        pitchChromaticMidi = pitchMidiEnum;
+    public ChromaticMidiBuilder pitch(PitchChromaticMidi pitchChromaticMidi1) {
+        pitchChromaticMidi = pitchChromaticMidi1;
 
         return self();
     }

@@ -2,6 +2,7 @@ package es.danisales.datune.musical;
 
 import es.danisales.datune.absolutedegree.Diatonic;
 import es.danisales.datune.function.DiatonicFunction;
+import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Collection;
@@ -28,10 +29,10 @@ class DiatonicChordInterfaceAdapter {
         return ret;
     }
 
-    public static DiatonicChordPattern from(@NonNull DiatonicFunction f) {
-        Objects.requireNonNull(f);
+    static DiatonicChordPattern patternFrom(@NonNull DiatonicFunction diatonicFunction) {
+        Objects.requireNonNull(diatonicFunction);
 
-        switch ( f ) {
+        switch (diatonicFunction) {
             case I:
             case II:
             case III:
@@ -176,9 +177,7 @@ class DiatonicChordInterfaceAdapter {
             case VII_THIRD:
                 return DiatonicChordPattern.THIRD;
         }
-        throw new RuntimeException( " " + f + " " );
-
-        // return null;
+        throw NeverHappensException.switchOf(diatonicFunction);
     }
 
     static boolean equals(DiatonicChordInterface self, Object o) {

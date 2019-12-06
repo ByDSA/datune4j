@@ -160,7 +160,7 @@ public class TonalityGetChromaticFunction {
 		return null;
 	}
 
-	@SuppressWarnings("ConstantConditions") // DiatonicFunction.from nunca devuelve null en este contexto
+    @SuppressWarnings("ConstantConditions") // DiatonicFunction.patternFrom nunca devuelve null en este contexto
 	private static @Nullable Tonality getT(@NonNull Tonality tonality, @NonNull ChromaticFunction chromaticFunction) {
 		DiatonicFunction diatonicFunction = DiatonicFunction.from(chromaticFunction);
 		ChromaticChord chromaticChord = ChromaticChord.builder()

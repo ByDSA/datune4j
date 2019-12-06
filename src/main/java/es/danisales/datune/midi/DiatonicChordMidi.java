@@ -11,6 +11,7 @@ import es.danisales.datune.pitch.PitchException;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
+import es.danisales.utils.HashingUtils;
 import es.danisales.utils.MathUtils;
 import es.danisales.utils.OrdinalNumbers;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -220,6 +221,6 @@ public final class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDia
 
     @Override
     public int hashCode() {
-        return 47 * (super.hashCode() + 53 * tonality.hashCode());
+        return super.hashCode() + HashingUtils.from(4, tonality);
     }
 }

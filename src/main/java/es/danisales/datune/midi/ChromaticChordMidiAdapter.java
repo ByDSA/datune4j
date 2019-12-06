@@ -39,9 +39,9 @@ class ChromaticChordMidiAdapter {
                     .build();
 
             if (self.size() > 0) {
-                Chromatic chromaticCm = Chromatic.from(chromaticMidi);
+                Chromatic chromaticCm = chromaticMidi.getPitch().getChromatic();
                 ChromaticMidi previous = self.get(self.size() - 1);
-                Chromatic prevChromatic = Chromatic.from(previous);
+                Chromatic prevChromatic = previous.getPitch().getChromatic();
                 chromaticMidi.getPitch().setOctave(previous.getPitch().getOctave());
                 if (!(n instanceof PitchOctave) && self.size() > 0 && chromaticCm.ordinal() <= prevChromatic.ordinal()) {
                     chromaticMidi.getPitch().shiftOctave(1);

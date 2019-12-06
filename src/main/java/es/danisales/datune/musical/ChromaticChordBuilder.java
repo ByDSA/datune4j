@@ -1,9 +1,6 @@
 package es.danisales.datune.musical;
 
 import com.google.common.collect.ImmutableList;
-import es.danisales.building.BuilderOfWays;
-import es.danisales.building.BuildingException;
-import es.danisales.building.BuildingWay;
 import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.absolutedegree.Diatonic;
 import es.danisales.datune.function.ChromaticFunction;
@@ -15,6 +12,10 @@ import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.tonality.ScaleDegreeException;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
+import es.danisales.utils.NeverHappensException;
+import es.danisales.utils.building.BuilderOfWays;
+import es.danisales.utils.building.BuildingException;
+import es.danisales.utils.building.BuildingWay;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.*;
@@ -40,9 +41,8 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
         public ChromaticChord build() {
             return chromaticChord;
         }
-
-
     }
+
     class ChromaticBaseAndChromaticChordPatternWay implements BuildingWay<ChromaticChord> {
         @Override
         public boolean isReadyToBuild() {
@@ -62,9 +62,8 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
 
             return ret;
         }
-
-
     }
+
     class ChromaticBaseAndDiatonicChordPatternAndTonalityWay implements BuildingWay<ChromaticChord> {
         @Override
         public boolean isReadyToBuild() {
@@ -90,8 +89,8 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
 
             return ret;
         }
-
     }
+
     class DiatonicFunctionAndTonalityWay implements BuildingWay<ChromaticChord> {
         @Override
         public boolean isReadyToBuild() {
@@ -100,16 +99,16 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
 
         @NonNull
         @Override
-        public ChromaticChord build() throws BuildingException {
+        public ChromaticChord build() {
             try {
                 return tonality.getChordFrom(diatonicFunction);
-            } catch (ScaleDegreeException e) {
-                throw new BuildingException(e);
+            } catch (ScaleDegreeException e) { // todo: comprobar al asignar en builder y así evitar lanzar BuildingException
+                //throw new BuildingException(e);
+                return null;
             }
         }
-
-
     }
+
     class ChromaticFunctionAndTonalityWay implements BuildingWay<ChromaticChord> {
         @Override
         public boolean isReadyToBuild() {
@@ -118,16 +117,16 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
 
         @NonNull
         @Override
-        public ChromaticChord build() throws BuildingException {
+        public ChromaticChord build() {
             try {
                 return tonality.getChordFrom(chromaticFunction);
-            } catch (TonalityException | ScaleDegreeException e) {
-                throw new BuildingException(e.getMessage());
+            } catch (TonalityException | ScaleDegreeException e) { // todo: comprobar al asignar en builder y así evitar lanzar BuildingException
+                //throw new BuildingException(e);
+                return null;
             }
         }
-
-
     }
+
     class EmptyWay implements BuildingWay<ChromaticChord> {
         @Override
         public boolean isReadyToBuild() {
@@ -141,9 +140,8 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
             ret.innerChord = ChromaticChordInterfaceAdapter.from(ImmutableList.of());
             return ret;
         }
-
-
     }
+
     private static final List<Class<? extends BuildingWay<ChromaticChord>>> buildingWays = Arrays.asList(
             EmptyWay.class,
             ChromaticChordWay.class,
@@ -152,6 +150,7 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
             DiatonicFunctionAndTonalityWay.class,
             ChromaticFunctionAndTonalityWay.class
     );
+
     @Override
     public Iterable<Class<? extends BuildingWay<ChromaticChord>>> getBuildingWaysClasses() {
         return buildingWays;
@@ -163,11 +162,11 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
 
     @NonNull
     @Override
-    public ChromaticChord build() { // todo: datild: throws BuildingException
+    public ChromaticChord build() {
         try {
             return BuilderOfWays.super.build();
         } catch (BuildingException e) {
-            throw new RuntimeException(e.getMessage());
+            throw NeverHappensException.make("Se supone que se han comprobado la consistencia de los parámetros conforme se añadían");
         }
     }
 
@@ -178,7 +177,7 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
         return this;
     }
 
-    public @NonNull ChromaticChordBuilder fromChromatic(@NonNull Collection<Chromatic> chromaticList) {
+    public @NonNull ChromaticChordBuilder addAll(@NonNull Collection<Chromatic> chromaticList) {
         ChromaticChord chromaticChord = new ChromaticChord();
         chromaticChord.innerChord = new ChromaticChordMutable();
         chromaticChord.addAll(chromaticList);
@@ -193,11 +192,11 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
         for (ChromaticMidi chromaticMidi : chromaticChordMidi)
             list.add(chromaticMidi.getPitch().getChromatic());
 
-        return fromChromatic(list);
+        return addAll(list);
     }
 
-    public @NonNull ChromaticChordBuilder fromChromatic(@NonNull Chromatic... chromaticChord) {
-        return fromChromatic(Arrays.asList(chromaticChord));
+    public @NonNull ChromaticChordBuilder addAll(@NonNull Chromatic... chromaticChord) {
+        return addAll(Arrays.asList(chromaticChord));
     }
 
     public @NonNull ChromaticChordBuilder fromDiatonicChordMidi(@NonNull DiatonicChordMidi diatonicChordMidi) {
@@ -210,7 +209,7 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
             chromaticList.add(chromatic);
         }
 
-        fromChromatic(chromaticList);
+        addAll(chromaticList);
         chromaticChord.setRootIndex(diatonicChordMidi.getRootIndex());
 
         return self();
@@ -257,7 +256,8 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
         chromaticChord.innerChord = ChromaticChordInterfaceAdapter.from(ImmutableList.of());
 
         for (Diatonic diatonic : diatonicChord) {
-            Chromatic chromatic = Chromatic.from(diatonic, tonality);
+            DiatonicAlt diatonicAlt = DiatonicAlt.from(diatonic, tonality);
+            Chromatic chromatic = Chromatic.from(diatonicAlt);
             chromaticChord.add(chromatic);
         }
 

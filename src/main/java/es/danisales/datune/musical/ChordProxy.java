@@ -371,7 +371,7 @@ public abstract class ChordProxy<C extends ChordCommon<N>, N extends CyclicAbsol
 
             if (getRootIndex() != 0) {
                 ChordProxy<C, N, I> normalChordCommon = clone();
-                normalChordCommon.removeInv();
+                normalChordCommon.toFundamental();
                 if (normalChordCommon.innerIsImmutable())
                     return normalChordCommon.toString() + "/" + get(0).toString();
             }
@@ -407,9 +407,9 @@ public abstract class ChordProxy<C extends ChordCommon<N>, N extends CyclicAbsol
     }
 
     @Override
-    public void removeInv() {
+    public void toFundamental() {
         try {
-            ChordMutableInterface.super.removeInv();
+            ChordMutableInterface.super.toFundamental();
         } catch (PitchException e) {
             throw NEVER_HAPPENS_EXCEPTION;
         }

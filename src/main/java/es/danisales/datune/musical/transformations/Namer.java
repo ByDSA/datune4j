@@ -1,6 +1,7 @@
 package es.danisales.datune.musical.transformations;
 
 import es.danisales.datune.absolutedegree.Chromatic;
+import es.danisales.datune.absolutedegree.Diatonic;
 import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.interval.IntervalDiatonic;
@@ -46,25 +47,32 @@ public class Namer {
 
     public static String from(@NonNull Chromatic chromatic) {
         switch(chromatic) {
-            case C:  return "C";
+            case C:
+                return Diatonic.C.toString();
             case CC: return from(Chromatic.C) + ChordNotation.SHARP;
-            case D:  return "D";
+            case D:
+                return Diatonic.D.toString();
             case DD: return from(Chromatic.D) + ChordNotation.SHARP;
-            case E:  return "E";
-            case F:  return "F";
+            case E:
+                return Diatonic.E.toString();
+            case F:
+                return Diatonic.F.toString();
             case FF: return from(Chromatic.F) + ChordNotation.SHARP;
-            case G:  return "G";
+            case G:
+                return Diatonic.G.toString();
             case GG: return from(Chromatic.G) + ChordNotation.SHARP;
-            case A:  return "A";
+            case A:
+                return Diatonic.A.toString();
             case AA: return from(Chromatic.A) + ChordNotation.SHARP;
-            case B:  return "B";
+            case B:
+                return Diatonic.B.toString();
         }
 
         throw NeverHappensException.switchOf(chromatic);
     }
 
     public static String from(@NonNull ChromaticMidi chromaticMidi, @NonNull Tonality tonality) throws TonalityException, ScaleDegreeException {
-        Chromatic chromatic = Chromatic.from(chromaticMidi);
+        Chromatic chromatic = chromaticMidi.getPitch().getChromatic();
         DiatonicDegree diatonicDegree = (DiatonicDegree)tonality.getDegreeFrom(chromatic);
         DiatonicAlt diatonicAlt = tonality.getNote(diatonicDegree);
         return diatonicAlt.toString() + chromaticMidi.getPitch().getOctave();

@@ -20,7 +20,7 @@ public interface ChordMutableInterface<N extends SymbolicPitch, I extends Interv
 
 	void setRootIndex(int pos);
 
-	default void removeInv() throws PitchException {
+	default void toFundamental() throws PitchException {
         inv(getRootIndex());
         checkState(getRootIndex() == 0, getRootIndex());
     }

@@ -1,6 +1,7 @@
 package es.danisales.datune.musical;
 
 import es.danisales.datune.absolutedegree.Chromatic;
+import es.danisales.datune.lang.Language;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -34,19 +35,19 @@ public class ChromaticChordFixedTest {
         assertEquals(3, chromaticChordList.size());
 
         ChromaticChord inv1 = ChromaticChord.builder()
-                .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.C))
+                .addAll(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.C))
                 .build();
         inv1.setRootIndex(2);
 
         ChromaticChord inv2 = ChromaticChord.builder()
-                .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E))
+                .addAll(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E))
                 .build();
         inv2.setRootIndex(1);
 
         assertEquals(
                 Arrays.asList(
                         ChromaticChord.builder()
-                                .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G))
+                                .addAll(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G))
                                 .build(),
                         inv1,
                         inv2
@@ -284,23 +285,30 @@ public class ChromaticChordFixedTest {
 
     @Test
     public void toStringTest() {
+        Language.current = Language.ENG;
         assertEquals("C", ChromaticChord.C.toString());
+        Language.current = Language.ESP;
+        assertEquals("Do", ChromaticChord.C.toString());
     }
 
     @Test
-    public void toStringTestManually() {
+    public void toStringTest_Manually() {
         ChromaticChord chromaticChord = ChromaticChord.builder()
-                .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E))
+                .addAll(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E))
                 .build();
         chromaticChord.inv();
         chromaticChord.resetRoot();
+
+        Language.current = Language.ENG;
         assertEquals("C", chromaticChord.toString());
+        Language.current = Language.ESP;
+        assertEquals("Do", chromaticChord.toString());
     }
 
     @Test
     public void equals() {
         ChromaticChord chromaticChord = ChromaticChord.builder()
-                .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E))
+                .addAll(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E))
                 .build();
         chromaticChord.inv();
         chromaticChord.resetRoot();
@@ -311,7 +319,7 @@ public class ChromaticChordFixedTest {
     @Test
     public void hashCodeTest() {
         ChromaticChord chromaticChord = ChromaticChord.builder()
-                .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E))
+                .addAll(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E))
                 .build();
         chromaticChord.inv();
         chromaticChord.resetRoot();
@@ -321,7 +329,7 @@ public class ChromaticChordFixedTest {
     @Test
     public void hashCodeTestDifferentRoot() {
         ChromaticChord chromaticChord = ChromaticChord.builder()
-                .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E))
+                .addAll(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E))
                 .build();
         chromaticChord.inv();
         assertNotEquals(ChromaticChord.C.hashCode(), chromaticChord.hashCode());
@@ -330,7 +338,7 @@ public class ChromaticChordFixedTest {
     @Test
     public void hashCodeTestDifferentOrder() {
         ChromaticChord chromaticChord = ChromaticChord.builder()
-                .fromChromatic(Arrays.asList(Chromatic.E, Chromatic.C, Chromatic.G))
+                .addAll(Arrays.asList(Chromatic.E, Chromatic.C, Chromatic.G))
                 .build();
         assertNotEquals(ChromaticChord.C.hashCode(), chromaticChord.hashCode());
     }
@@ -338,7 +346,7 @@ public class ChromaticChordFixedTest {
     @Test
     public void sameAfterResetRoot() {
         ChromaticChord chromaticChord = ChromaticChord.builder()
-                .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E))
+                .addAll(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E))
                 .build();
         chromaticChord.inv();
         chromaticChord.resetRoot();
@@ -349,7 +357,7 @@ public class ChromaticChordFixedTest {
     @Test
     public void sameAfterInv() {
         ChromaticChord chromaticChord = ChromaticChord.builder()
-                .fromChromatic(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E))
+                .addAll(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E))
                 .build();
         chromaticChord.setRootIndex(1);
         chromaticChord.inv();
@@ -359,7 +367,7 @@ public class ChromaticChordFixedTest {
     @Test
     public void sameAfterSet() {
         ChromaticChord chromaticChord = ChromaticChord.builder()
-                .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G))
+                .addAll(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G))
                 .build();
         chromaticChord.set(1, Chromatic.D);
         assertSame(ChromaticChord.Csus2.innerChord, chromaticChord.innerChord);
@@ -368,7 +376,7 @@ public class ChromaticChordFixedTest {
     @Test
     public void sameAfterAdd() {
         ChromaticChord chromaticChord = ChromaticChord.builder()
-                .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G))
+                .addAll(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G))
                 .build();
         chromaticChord.add(Chromatic.AA);
         assertSame(ChromaticChord.C7.innerChord, chromaticChord.innerChord);
@@ -377,7 +385,7 @@ public class ChromaticChordFixedTest {
     @Test
     public void sameAfterRemove() {
         ChromaticChord chromaticChord = ChromaticChord.builder()
-                .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.AA))
+                .addAll(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.AA))
                 .build();
         chromaticChord.remove(Chromatic.AA);
         assertSame(ChromaticChord.C.innerChord, chromaticChord.innerChord);
@@ -386,7 +394,7 @@ public class ChromaticChordFixedTest {
     @Test
     public void sameAfterRemove2() {
         ChromaticChord chromaticChord = ChromaticChord.builder()
-                .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.GG))
+                .addAll(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.GG))
                 .build();
         chromaticChord.remove(2);
         assertSame(ChromaticChord.Caug.innerChord, chromaticChord.innerChord);
@@ -395,7 +403,7 @@ public class ChromaticChordFixedTest {
     @Test
     public void sameAfterAddPos() {
         ChromaticChord chromaticChord = ChromaticChord.builder()
-                .fromChromatic(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.AA))
+                .addAll(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.AA))
                 .build();
         chromaticChord.add(2, Chromatic.G);
         assertSame(ChromaticChord.C7.innerChord, chromaticChord.innerChord);

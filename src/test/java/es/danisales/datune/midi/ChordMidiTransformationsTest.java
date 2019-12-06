@@ -4,6 +4,7 @@ import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
+import es.danisales.utils.building.BuildingException;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -18,7 +19,22 @@ public class ChordMidiTransformationsTest {
     }
 
     @Test
-    public void getAllDispositionsWithInv() {
+    public void getAllDispositionsSub() {
+        fail();
+    }
+
+    @Test
+    public void shiftOctaveList() {
+        fail();
+    }
+
+    @Test
+    public void dist() {
+        fail();
+    }
+
+    @Test
+    public void getAllDispositionsWithInv() throws BuildingException {
         DiatonicChordMidi diatonicChordMidiOther = DiatonicChordMidi.builder()
                 .from(DiatonicFunction.I, Tonality.C)
                 .build();
@@ -27,12 +43,7 @@ public class ChordMidiTransformationsTest {
     }
 
     @Test
-    public void getAllDispositionsSub() {
-        fail();
-    }
-
-    @Test
-    public void minimize() throws TonalityException {
+    public void minimize() throws TonalityException, BuildingException {
         DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder().tonality(Tonality.C).build();
         diatonicChordMidi.addAll(
                 Arrays.asList(
@@ -48,7 +59,7 @@ public class ChordMidiTransformationsTest {
     }
 
     @Test
-    public void minimizeDistanceTo() {
+    public void minimizeDistanceTo() throws BuildingException {
         DiatonicChordMidi diatonicChordMidiEditing = DiatonicChordMidi.builder()
                 .from(DiatonicFunction.VII, Tonality.C)
                 .build();
@@ -65,16 +76,6 @@ public class ChordMidiTransformationsTest {
         assertEquals(PitchChromaticMidi.D5.getMidiCode(), diatonicChordMidiEditing.get(0).getPitch().getMidiCode());
         assertEquals(PitchChromaticMidi.F5.getMidiCode(), diatonicChordMidiEditing.get(1).getPitch().getMidiCode());
         assertEquals(PitchChromaticMidi.B5.getMidiCode(), diatonicChordMidiEditing.get(2).getPitch().getMidiCode());
-    }
-
-    @Test
-    public void shiftOctaveList() {
-        fail();
-    }
-
-    @Test
-    public void dist() {
-        fail();
     }
 
     @Test

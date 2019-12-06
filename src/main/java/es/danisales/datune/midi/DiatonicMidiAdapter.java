@@ -13,7 +13,7 @@ class DiatonicMidiAdapter {
     }
 
     public static @NonNull DiatonicMidi from(@NonNull ChromaticMidi chromaticMidi, @NonNull Tonality tonality) throws TonalityException, PitchMidiException {
-        Chromatic chromatic = Chromatic.from(chromaticMidi);
+        Chromatic chromatic = chromaticMidi.getPitch().getChromatic();
         DiatonicDegree pos = (DiatonicDegree) tonality.getDegreeFrom(chromatic);
 
         int octaveNote = chromaticMidi.getPitch().getOctave();

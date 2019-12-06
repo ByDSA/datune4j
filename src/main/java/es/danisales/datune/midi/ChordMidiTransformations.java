@@ -4,6 +4,8 @@ import es.danisales.datune.interval.Interval;
 import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.midi.pitch.PitchMidiInterface;
 import es.danisales.datune.pitch.PitchException;
+import es.danisales.utils.NeverHappensException;
+import es.danisales.utils.building.BuildingException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
@@ -33,8 +35,13 @@ public class ChordMidiTransformations {
     }
 
     private static <N extends NoteMidi<P>, I extends Interval, P extends PitchMidiInterface<I>, T extends ChordMidi<N, I, P>> ChordMidi newChord(ChordMidi<N, I, P> chordMidi) {
-        if (chordMidi instanceof DiatonicChordMidi)
-            return DiatonicChordMidi.builder().build();
+        if (chordMidi instanceof DiatonicChordMidi) {
+            try {
+                return DiatonicChordMidi.builder().build();
+            } catch (BuildingException e) {
+                throw NeverHappensException.make("Un DiatonicChordMidi vacío nunca lanza una excepción");
+            }
+        }
         else if (chordMidi instanceof ChromaticChordMidi)
             return ChromaticChordMidi.builder().build();
 

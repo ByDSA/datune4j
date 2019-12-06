@@ -1,15 +1,14 @@
 package es.danisales.datune.musical;
 
+import com.google.common.collect.ImmutableSet;
+import es.danisales.datastructures.SetUtils;
 import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.pitch.ChordCommon;
 import es.danisales.datune.pitch.PitchChromaticChord;
-import es.danisales.utils.ListUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
 
 @SuppressWarnings("WeakerAccess")
@@ -1203,7 +1202,7 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
     public static final ChromaticChord Bsusb2b5 = new ChromaticChord(ChromaticChordImmutable.Bsusb2b5);
 
 
-    public static final Set<ChromaticChord> CHORDS_FIFTH = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_FIFTH = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C5,
             ChromaticChord.CC5,
             ChromaticChord.D5,
@@ -1216,9 +1215,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A5,
             ChromaticChord.AA5,
             ChromaticChord.B5
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_MAJOR = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_MAJOR = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C,
             ChromaticChord.CC,
             ChromaticChord.D,
@@ -1231,9 +1229,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A,
             ChromaticChord.AA,
             ChromaticChord.B
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_MINOR = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_MINOR = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.Cm,
             ChromaticChord.CCm,
             ChromaticChord.Dm,
@@ -1246,9 +1243,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.Am,
             ChromaticChord.AAm,
             ChromaticChord.Bm
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_AUGMENTED = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_AUGMENTED = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.Caug,
             ChromaticChord.CCaug,
             ChromaticChord.Daug,
@@ -1261,9 +1257,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.Aaug,
             ChromaticChord.AAaug,
             ChromaticChord.Baug
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_DIMINISHED = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_DIMINISHED = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.Cdim,
             ChromaticChord.CCdim,
             ChromaticChord.Ddim,
@@ -1276,9 +1271,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.Adim,
             ChromaticChord.AAdim,
             ChromaticChord.Bdim
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_SUS4 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_SUS4 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.Csus4,
             ChromaticChord.CCsus4,
             ChromaticChord.Dsus4,
@@ -1291,9 +1285,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.Asus4,
             ChromaticChord.AAsus4,
             ChromaticChord.Bsus4
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_SUS2 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_SUS2 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.Csus2,
             ChromaticChord.CCsus2,
             ChromaticChord.Dsus2,
@@ -1306,9 +1299,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.Asus2,
             ChromaticChord.AAsus2,
             ChromaticChord.Bsus2
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_7 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_7 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C7,
             ChromaticChord.CC7,
             ChromaticChord.D7,
@@ -1321,9 +1313,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A7,
             ChromaticChord.AA7,
             ChromaticChord.B7
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_7b5 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_7b5 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C7b5,
             ChromaticChord.CC7b5,
             ChromaticChord.D7b5,
@@ -1336,9 +1327,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A7b5,
             ChromaticChord.AA7b5,
             ChromaticChord.B7b5
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_7a5 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_7a5 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C7a5,
             ChromaticChord.CC7a5,
             ChromaticChord.D7a5,
@@ -1351,9 +1341,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A7a5,
             ChromaticChord.AA7a5,
             ChromaticChord.B7a5
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_7sus4 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_7sus4 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C7sus4,
             ChromaticChord.CC7sus4,
             ChromaticChord.D7sus4,
@@ -1366,9 +1355,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A7sus4,
             ChromaticChord.AA7sus4,
             ChromaticChord.B7sus4
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_m7 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_m7 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.Cm7,
             ChromaticChord.CCm7,
             ChromaticChord.Dm7,
@@ -1381,9 +1369,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.Am7,
             ChromaticChord.AAm7,
             ChromaticChord.Bm7
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_m7b5 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_m7b5 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.Cm7b5,
             ChromaticChord.CCm7b5,
             ChromaticChord.Dm7b5,
@@ -1396,9 +1383,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.Am7b5,
             ChromaticChord.AAm7b5,
             ChromaticChord.Bm7b5
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_m7a5 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_m7a5 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.Cm7a5,
             ChromaticChord.CCm7a5,
             ChromaticChord.Dm7a5,
@@ -1411,9 +1397,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.Am7a5,
             ChromaticChord.AAm7a5,
             ChromaticChord.Bm7a5
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_6 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_6 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C6,
             ChromaticChord.CC6,
             ChromaticChord.D6,
@@ -1426,9 +1411,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A6,
             ChromaticChord.AA6,
             ChromaticChord.B6
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_6sus4 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_6sus4 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C6sus4,
             ChromaticChord.CC6sus4,
             ChromaticChord.D6sus4,
@@ -1441,9 +1425,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A6sus4,
             ChromaticChord.AA6sus4,
             ChromaticChord.B6sus4
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_Maj7 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_Maj7 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.CMaj7,
             ChromaticChord.CCMaj7,
             ChromaticChord.DMaj7,
@@ -1456,9 +1439,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.AMaj7,
             ChromaticChord.AAMaj7,
             ChromaticChord.BMaj7
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_mMaj7 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_mMaj7 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.CmMaj7,
             ChromaticChord.CCmMaj7,
             ChromaticChord.DmMaj7,
@@ -1471,9 +1453,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.AmMaj7,
             ChromaticChord.AAmMaj7,
             ChromaticChord.BmMaj7
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_6add9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_6add9 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C6add9,
             ChromaticChord.CC6add9,
             ChromaticChord.D6add9,
@@ -1486,9 +1467,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A6add9,
             ChromaticChord.AA6add9,
             ChromaticChord.B6add9
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_m6add9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_m6add9 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.Cm6add9,
             ChromaticChord.CCm6add9,
             ChromaticChord.Dm6add9,
@@ -1501,9 +1481,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.Am6add9,
             ChromaticChord.AAm6add9,
             ChromaticChord.Bm6add9
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_7b9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_7b9 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C7b9,
             ChromaticChord.CC7b9,
             ChromaticChord.D7b9,
@@ -1516,9 +1495,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A7b9,
             ChromaticChord.AA7b9,
             ChromaticChord.B7b9
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_m6 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_m6 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.Cm6,
             ChromaticChord.CCm6,
             ChromaticChord.Dm6,
@@ -1531,9 +1509,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.Am6,
             ChromaticChord.AAm6,
             ChromaticChord.Bm6
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_7a9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_7a9 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C7a9,
             ChromaticChord.CC7a9,
             ChromaticChord.D7a9,
@@ -1546,9 +1523,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A7a9,
             ChromaticChord.AA7a9,
             ChromaticChord.B7a9
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_m7b9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_m7b9 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.Cm7b9,
             ChromaticChord.CCm7b9,
             ChromaticChord.Dm7b9,
@@ -1561,9 +1537,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.Am7b9,
             ChromaticChord.AAm7b9,
             ChromaticChord.Bm7b9
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_7add11 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_7add11 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C7add11,
             ChromaticChord.CC7add11,
             ChromaticChord.D7add11,
@@ -1576,9 +1551,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A7add11,
             ChromaticChord.AA7add11,
             ChromaticChord.B7add11
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_7add13 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_7add13 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C7add13,
             ChromaticChord.CC7add13,
             ChromaticChord.D7add13,
@@ -1591,10 +1565,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A7add13,
             ChromaticChord.AA7add13,
             ChromaticChord.B7add13
-    )));
-
-
-    public static final Set<ChromaticChord>	CHORDS_9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_9 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C9,
             ChromaticChord.CC9,
             ChromaticChord.D9,
@@ -1607,9 +1579,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A9,
             ChromaticChord.AA9,
             ChromaticChord.B9
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_m9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_m9 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.Cm9,
             ChromaticChord.CCm9,
             ChromaticChord.Dm9,
@@ -1622,9 +1593,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.Am9,
             ChromaticChord.AAm9,
             ChromaticChord.Bm9
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_9b5 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_9b5 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C9b5,
             ChromaticChord.CC9b5,
             ChromaticChord.D9b5,
@@ -1637,9 +1607,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A9b5,
             ChromaticChord.AA9b5,
             ChromaticChord.B9b5
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_9a5 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_9a5 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C9a5,
             ChromaticChord.CC9a5,
             ChromaticChord.D9a5,
@@ -1652,9 +1621,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A9a5,
             ChromaticChord.AA9a5,
             ChromaticChord.B9a5
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_9sus4 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_9sus4 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C9sus4,
             ChromaticChord.CC9sus4,
             ChromaticChord.D9sus4,
@@ -1667,9 +1635,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A9sus4,
             ChromaticChord.AA9sus4,
             ChromaticChord.B9sus4
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_Maj9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_Maj9 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.CMaj9,
             ChromaticChord.CCMaj9,
             ChromaticChord.DMaj9,
@@ -1682,9 +1649,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.AMaj9,
             ChromaticChord.AAMaj9,
             ChromaticChord.BMaj9
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_mMaj9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_mMaj9 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.CmMaj9,
             ChromaticChord.CCmMaj9,
             ChromaticChord.DmMaj9,
@@ -1697,9 +1663,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.AmMaj9,
             ChromaticChord.AAmMaj9,
             ChromaticChord.BmMaj9
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_9add6 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_9add6 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C9add6,
             ChromaticChord.CC9add6,
             ChromaticChord.D9add6,
@@ -1712,8 +1677,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A9add6,
             ChromaticChord.AA9add6,
             ChromaticChord.B9add6
-    )));
-    public static final Set<ChromaticChord>	CHORDS_9a11 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_9a11 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C9a11,
             ChromaticChord.CC9a11,
             ChromaticChord.D9a11,
@@ -1726,8 +1691,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A9a11,
             ChromaticChord.AA9a11,
             ChromaticChord.B9a11
-    )));
-    public static final Set<ChromaticChord>	CHORDS_Maj9a11 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_Maj9a11 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.CMaj9a11,
             ChromaticChord.CCMaj9a11,
             ChromaticChord.DMaj9a11,
@@ -1740,9 +1705,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.AMaj9a11,
             ChromaticChord.AAMaj9a11,
             ChromaticChord.BMaj9a11
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_11 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_11 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C11,
             ChromaticChord.CC11,
             ChromaticChord.D11,
@@ -1755,8 +1719,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A11,
             ChromaticChord.AA11,
             ChromaticChord.B11
-    )));
-    public static final Set<ChromaticChord>	CHORDS_m11 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_m11 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.Cm11,
             ChromaticChord.CCm11,
             ChromaticChord.Dm11,
@@ -1769,8 +1733,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.Am11,
             ChromaticChord.AAm11,
             ChromaticChord.Bm11
-    )));
-    public static final Set<ChromaticChord>	CHORDS_11b9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_11b9 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C11b9,
             ChromaticChord.CC11b9,
             ChromaticChord.D11b9,
@@ -1783,9 +1747,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A11b9,
             ChromaticChord.AA11b9,
             ChromaticChord.B11b9
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_11a9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_11a9 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C11a9,
             ChromaticChord.CC11a9,
             ChromaticChord.D11a9,
@@ -1798,8 +1761,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A11a9,
             ChromaticChord.AA11a9,
             ChromaticChord.B11a9
-    )));
-    public static final Set<ChromaticChord>	CHORDS_Maj11 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_Maj11 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.CMaj11,
             ChromaticChord.CCMaj11,
             ChromaticChord.DMaj11,
@@ -1812,8 +1775,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.AMaj11,
             ChromaticChord.AAMaj11,
             ChromaticChord.BMaj11
-    )));
-    public static final Set<ChromaticChord>	CHORDS_mMaj11 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_mMaj11 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.CmMaj11,
             ChromaticChord.CCmMaj11,
             ChromaticChord.DmMaj11,
@@ -1826,8 +1789,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.AmMaj11,
             ChromaticChord.AAmMaj11,
             ChromaticChord.BmMaj11
-    )));
-    public static final Set<ChromaticChord>	CHORDS_m13 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_m13 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.Cm13,
             ChromaticChord.CCm13,
             ChromaticChord.Dm13,
@@ -1852,9 +1815,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.Am13omit11,
             ChromaticChord.AAm13omit11,
             ChromaticChord.Bm13omit11
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_13sus4 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_13sus4 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C13sus4,
             ChromaticChord.CC13sus4,
             ChromaticChord.D13sus4,
@@ -1879,9 +1841,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A13sus4omit11,
             ChromaticChord.AA13sus4omit11,
             ChromaticChord.B13sus4omit11
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_13b5 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_13b5 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C13b5,
             ChromaticChord.CC13b5,
             ChromaticChord.D13b5,
@@ -1906,8 +1867,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A13b5omit11,
             ChromaticChord.AA13b5omit11,
             ChromaticChord.B13b5omit11
-    )));
-    public static final Set<ChromaticChord>	CHORDS_13a5 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_13a5 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C13a5,
             ChromaticChord.CC13a5,
             ChromaticChord.D13a5,
@@ -1932,9 +1893,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A13a5omit11,
             ChromaticChord.AA13a5omit11,
             ChromaticChord.B13a5omit11
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_13b9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_13b9 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C13b9,
             ChromaticChord.CC13b9,
             ChromaticChord.D13b9,
@@ -1959,8 +1919,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A13b9omit11,
             ChromaticChord.AA13b9omit11,
             ChromaticChord.B13b9omit11
-    )));
-    public static final Set<ChromaticChord>	CHORDS_13a9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_13a9 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C13a9,
             ChromaticChord.CC13a9,
             ChromaticChord.D13a9,
@@ -1985,8 +1945,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A13a9omit11,
             ChromaticChord.AA13a9omit11,
             ChromaticChord.B13a9omit11
-    )));
-    public static final Set<ChromaticChord>	CHORDS_13b5b9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_13b5b9 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C13b5b9,
             ChromaticChord.CC13b5b9,
             ChromaticChord.D13b5b9,
@@ -2011,9 +1971,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A13b5b9omit11,
             ChromaticChord.AA13b5b9omit11,
             ChromaticChord.B13b5b9omit11
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_13b5a9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_13b5a9 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C13b5a9,
             ChromaticChord.CC13b5a9,
             ChromaticChord.D13b5a9,
@@ -2038,8 +1997,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A13b5a9omit11,
             ChromaticChord.AA13b5a9omit11,
             ChromaticChord.B13b5a9omit11
-    )));
-    public static final Set<ChromaticChord>	CHORDS_13a5b9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_13a5b9 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C13a5b9,
             ChromaticChord.CC13a5b9,
             ChromaticChord.D13a5b9,
@@ -2064,9 +2023,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A13a5b9omit11,
             ChromaticChord.AA13a5b9omit11,
             ChromaticChord.B13a5b9omit11
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_13a5a9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_13a5a9 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C13a5a9,
             ChromaticChord.CC13a5a9,
             ChromaticChord.D13a5a9,
@@ -2091,8 +2049,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.A13a5a9omit11,
             ChromaticChord.AA13a5a9omit11,
             ChromaticChord.B13a5a9omit11
-    )));
-    public static final Set<ChromaticChord>	CHORDS_Maj13 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_Maj13 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.CMaj13,
             ChromaticChord.CCMaj13,
             ChromaticChord.DMaj13,
@@ -2117,9 +2075,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.AMaj13omit11,
             ChromaticChord.AAMaj13omit11,
             ChromaticChord.BMaj13omit11
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_mMaj13 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_mMaj13 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.CmMaj13,
             ChromaticChord.CCmMaj13,
             ChromaticChord.DmMaj13,
@@ -2144,8 +2101,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.AmMaj13omit11,
             ChromaticChord.AAmMaj13omit11,
             ChromaticChord.BmMaj13omit11
-    )));
-    public static final Set<ChromaticChord>	CHORDS_Maj13b5 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_Maj13b5 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.CMaj13b5,
             ChromaticChord.CCMaj13b5,
             ChromaticChord.DMaj13b5,
@@ -2170,9 +2127,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.AMaj13b5omit11,
             ChromaticChord.AAMaj13b5omit11,
             ChromaticChord.BMaj13b5omit11
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_Maj13a5 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_Maj13a5 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.CMaj13a5,
             ChromaticChord.CCMaj13a5,
             ChromaticChord.DMaj13a5,
@@ -2197,8 +2153,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.AMaj13a5omit11,
             ChromaticChord.AAMaj13a5omit11,
             ChromaticChord.BMaj13a5omit11
-    )));
-    public static final Set<ChromaticChord>	CHORDS_Maj13b9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_Maj13b9 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.CMaj13b9,
             ChromaticChord.CCMaj13b9,
             ChromaticChord.DMaj13b9,
@@ -2223,9 +2179,9 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.AMaj13b9omit11,
             ChromaticChord.AAMaj13b9omit11,
             ChromaticChord.BMaj13b9omit11
-    )));
+    ));
 
-    public static final Set<ChromaticChord>	CHORDS_Maj13a9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_Maj13a9 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.CMaj13a9,
             ChromaticChord.CCMaj13a9,
             ChromaticChord.DMaj13a9,
@@ -2250,9 +2206,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.AMaj13a9omit11,
             ChromaticChord.AAMaj13a9omit11,
             ChromaticChord.BMaj13a9omit11
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_Maj13b5b9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_Maj13b5b9 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.CMaj13b5b9,
             ChromaticChord.CCMaj13b5b9,
             ChromaticChord.DMaj13b5b9,
@@ -2277,9 +2232,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.AMaj13b5b9omit11,
             ChromaticChord.AAMaj13b5b9omit11,
             ChromaticChord.BMaj13b5b9omit11
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_Maj13b5a9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_Maj13b5a9 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.CMaj13b5a9,
             ChromaticChord.CCMaj13b5a9,
             ChromaticChord.DMaj13b5a9,
@@ -2304,9 +2258,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.AMaj13b5a9omit11,
             ChromaticChord.AAMaj13b5a9omit11,
             ChromaticChord.BMaj13b5a9omit11
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_Maj13a5b9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_Maj13a5b9 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.CMaj13a5b9,
             ChromaticChord.CCMaj13a5b9,
             ChromaticChord.DMaj13a5b9,
@@ -2331,9 +2284,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.AMaj13a5b9omit11,
             ChromaticChord.AAMaj13a5b9omit11,
             ChromaticChord.BMaj13a5b9omit11
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_Maj13a5a9 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_Maj13a5a9 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.CMaj13a5a9,
             ChromaticChord.CCMaj13a5a9,
             ChromaticChord.DMaj13a5a9,
@@ -2358,9 +2310,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.AMaj13a5a9omit11,
             ChromaticChord.AAMaj13a5a9omit11,
             ChromaticChord.BMaj13a5a9omit11
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_SUSa4 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_SUSa4 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.Csusa4,
             ChromaticChord.CCsusa4,
             ChromaticChord.Dsusa4,
@@ -2373,9 +2324,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.Asusa4,
             ChromaticChord.AAsusa4,
             ChromaticChord.Bsusa4
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_SUSb2 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_SUSb2 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.Csusb2,
             ChromaticChord.CCsusb2,
             ChromaticChord.Dsusb2,
@@ -2388,9 +2338,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.Asusb2,
             ChromaticChord.AAsusb2,
             ChromaticChord.Bsusb2
-    )));
-
-    public static final Set<ChromaticChord>	CHORDS_SUSb2b5 = Collections.unmodifiableSet( new HashSet<>( Arrays.asList(
+    ));
+    protected static final Set<ChromaticChord> CHORDS_SUSb2b5 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.Csusb2b5,
             ChromaticChord.CCsusb2b5,
             ChromaticChord.Dsusb2b5,
@@ -2403,15 +2352,14 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.Asusb2b5,
             ChromaticChord.AAsusb2b5,
             ChromaticChord.Bsusb2b5
-    )));
-
-    public static final Set<ChromaticChord> UNUSUAL_CHORDS = ListUtils.concatImmutable(
+    ));
+    protected static final Set<ChromaticChord> UNUSUAL_CHORDS = SetUtils.concatImmutable(
             CHORDS_SUSb2,
             CHORDS_SUSa4,
             CHORDS_SUSb2b5
     );
 
-    public static final Set<ChromaticChord> TRIAD_CHORDS = ListUtils.concatImmutable(
+    protected static final Set<ChromaticChord> TRIAD_CHORDS = SetUtils.concatImmutable(
             CHORDS_MAJOR,
             CHORDS_MINOR,
             CHORDS_DIMINISHED,
@@ -2420,7 +2368,7 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             CHORDS_SUS2
     );
 
-    public static final Set<ChromaticChord> SEVENTH_CHORDS = ListUtils.concatImmutable(
+    protected static final Set<ChromaticChord> SEVENTH_CHORDS = SetUtils.concatImmutable(
             CHORDS_7,
             CHORDS_Maj7,
             CHORDS_m7,
@@ -2434,7 +2382,7 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             CHORDS_7sus4
     );
 
-    public static final Set<ChromaticChord> SIXTH_CHORDS = ListUtils.concatImmutable(
+    protected static final Set<ChromaticChord> SIXTH_CHORDS = SetUtils.concatImmutable(
             CHORDS_6,
             CHORDS_m6,
             CHORDS_6sus4,
@@ -2442,7 +2390,7 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             CHORDS_m6add9
     );
 
-    public static final Set<ChromaticChord> NINTH_CHORDS = ListUtils.concatImmutable(
+    protected static final Set<ChromaticChord> NINTH_CHORDS = SetUtils.concatImmutable(
             CHORDS_7b9,
             CHORDS_7a9,
             CHORDS_m7b9,
@@ -2458,7 +2406,7 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             CHORDS_Maj9a11
     );
 
-    public static final Set<ChromaticChord> ELEVENTH_CHORDS = ListUtils.concatImmutable(
+    protected static final Set<ChromaticChord> ELEVENTH_CHORDS = SetUtils.concatImmutable(
             CHORDS_11,
             CHORDS_m11,
             CHORDS_11b9,
@@ -2467,7 +2415,7 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             CHORDS_mMaj11
     );
 
-    public static final Set<ChromaticChord> THIRTEENTH_CHORDS = ListUtils.concatImmutable(
+    protected static final Set<ChromaticChord> THIRTEENTH_CHORDS = SetUtils.concatImmutable(
             CHORDS_m13,
             CHORDS_13sus4,
             CHORDS_13b5,
@@ -2490,14 +2438,18 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             CHORDS_Maj13a5a9
     );
 
-    public static final Set<ChromaticChord> PARTIAL_CHORDS = ListUtils.concatImmutable(
+    protected static final Set<ChromaticChord> PARTIAL_CHORDS = SetUtils.concatImmutable(
             CHORDS_FIFTH
     );
 
-    public static final Set<ChromaticChord> COMMON_CHORDS = ListUtils.concatImmutable(
+    protected static final Set<ChromaticChord> COMMON_CHORDS = SetUtils.concatImmutable(
             TRIAD_CHORDS, SEVENTH_CHORDS, SIXTH_CHORDS, NINTH_CHORDS,
             ELEVENTH_CHORDS, THIRTEENTH_CHORDS, PARTIAL_CHORDS
     );
+
+    public static @NonNull Set<ChromaticChord> immutableValues() {
+        return SetUtils.concatImmutable(COMMON_CHORDS, UNUSUAL_CHORDS);
+    }
 
 
     /*
@@ -2510,10 +2462,6 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
 
     ChromaticChord() {
         super();
-    }
-
-    public static @NonNull Set<ChromaticChord> immutableValues() {
-        return ListUtils.concatImmutable(COMMON_CHORDS, UNUSUAL_CHORDS);
     }
 
     private ChromaticChord(ChromaticChordInterface chromaticChordInterface) {

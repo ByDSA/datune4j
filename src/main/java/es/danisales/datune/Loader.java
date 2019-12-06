@@ -20,6 +20,7 @@ import es.danisales.datune.pitch.ChordNamer;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.ScaleDegreeException;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.utils.building.BuildingException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import javax.swing.*;
@@ -154,6 +155,14 @@ class Loader {
         jButton.getChangeListeners()[0].stateChanged(new ChangeEvent(jButton));
     }
 
+    private void check(DiatonicChordMidi diatonicChordMidi, ChromaticChord chromaticChord, Tonality ton) {
+        ChromaticChord chromaticChord1 = ChromaticChord.builder()
+                .fromDiatonicChordMidi(diatonicChordMidi)
+                .build();
+        if (!chromaticChord1.equals(chromaticChord))
+            System.err.println(chromaticChord1 + " " + chromaticChord + " " + ton);
+    }
+
     void load() {
         initializePanels();
 
@@ -192,10 +201,8 @@ class Loader {
                 diatonicChordMidi = DiatonicChordMidi.builder()
                         .from(chromaticChord, ton)
                         .build();
-                ChromaticChord chromaticChord1 = ChromaticChord.builder().fromDiatonicChordMidi(diatonicChordMidi).build();
-                if (!chromaticChord1.equals(chromaticChord))
-                    System.err.println(chromaticChord1 + " " + chromaticChord + " " + ton);
-            } catch (RuntimeException e) {
+                check(diatonicChordMidi, chromaticChord, ton);
+            } catch (RuntimeException | BuildingException e) {
                 System.err.println("Fail " + chromaticChord + " " + chromaticChord.getNotes());
                 e.printStackTrace();
                 continue;
@@ -234,13 +241,13 @@ class Loader {
         }
 
         jButton.getModel().addChangeListener(new ChangeListener() {
-            private boolean pressed = false; // holds the last pressed state from the button
+            private boolean pressed = false; // holds the last pressed state patternFrom the button
 
             @Override
             public void stateChanged(ChangeEvent e) {
                 ButtonModel model = (ButtonModel) e.getSource();
 
-                // if the current state differs from the previous state
+                // if the current state differs patternFrom the previous state
                 if (model.isPressed() != pressed) {
                     pressed = model.isPressed();
                     if (pressed) {

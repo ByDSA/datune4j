@@ -1,6 +1,7 @@
 package es.danisales.datune.pitch;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
 public interface ChordCommon<N extends SymbolicPitch> extends List<N> {
 	int getRootIndex();
 
-	@NonNull N getRoot();
+	@Nullable N getRoot();
 
 	default <E extends PitchException> @NonNull N getCyclic(int noteNumber) throws E {
 		while (noteNumber < 0)

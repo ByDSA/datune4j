@@ -10,6 +10,7 @@ import es.danisales.datune.musical.transformations.ChordChecker;
 import es.danisales.datune.tonality.ScaleDegreeException;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.utils.NeverHappensException;
+import es.danisales.utils.building.BuildingException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,17 +72,17 @@ public class DiatonicChordMidiChecker {
         ArrayList<ChromaticMidi> ret = new ArrayList<>();
 
         for (DiatonicMidi nscale1 : self) {
-            ChromaticMidi n1 = ChromaticMidi.from(nscale1);
+            ChromaticMidi chromaticMidi1 = ChromaticMidi.from(nscale1);
             for (DiatonicMidi nscale2 : c) {
-                ChromaticMidi n2 = ChromaticMidi.from(nscale2);
+                ChromaticMidi chromaticMidi2 = ChromaticMidi.from(nscale2);
 
-                if (n1.pitch.getMidiCode() == n2.pitch.getMidiCode())
-                    ret.add(n2);
+                if (chromaticMidi1.getPitch().getMidiCode() == chromaticMidi2.getPitch().getMidiCode())
+                    ret.add(chromaticMidi2);
                 else {
-                    Chromatic chromaticn1 = Chromatic.from(n1);
-                    Chromatic chromaticn2 = Chromatic.from(n2);
+                    Chromatic chromaticn1 = chromaticMidi1.getPitch().getChromatic();
+                    Chromatic chromaticn2 = chromaticMidi2.getPitch().getChromatic();
                     if (sameOctave && chromaticn1 == chromaticn2)
-                        ret.add(n2);
+                        ret.add(chromaticMidi2);
                 }
             }
         }
@@ -120,10 +121,14 @@ public class DiatonicChordMidiChecker {
             throw NeverHappensException.make("Si self.getDistance(0).getPitch() es consistente es imposible");
         }
 
-        return DiatonicChordMidi.builder()
-                .from(diatonicFunction, tonality)
-                .octave(self.getOctave())
-                .build();
+        try {
+            return DiatonicChordMidi.builder()
+                    .from(diatonicFunction, tonality)
+                    .octave(self.getOctave())
+                    .build();
+        } catch (BuildingException e) {
+            throw new RuntimeException();
+        }
     }
 
     public static DiatonicMidi getFromBase(DiatonicChordMidi self, int note) {

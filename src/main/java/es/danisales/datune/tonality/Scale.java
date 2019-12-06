@@ -191,8 +191,8 @@ public class Scale implements Iterable<ScaleDistance> {
 	}
 
 	/**
-	 * Get allUsual modes from the scale
-	 * @return the array within allUsual modes from the scale
+     * Get allUsual modes patternFrom the scale
+     * @return the array within allUsual modes patternFrom the scale
 	 */
 	public @NonNull List<Scale> getModes() {
 		List<ScaleDistance> scaleDistanceList = new ArrayList<>(getCode());

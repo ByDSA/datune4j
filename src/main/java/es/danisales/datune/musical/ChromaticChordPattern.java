@@ -1,15 +1,16 @@
 package es.danisales.datune.musical;
 
+import com.google.common.collect.ImmutableMap;
 import es.danisales.datune.absolutedegree.Chromatic;
-import es.danisales.datune.midi.DiatonicChordMidi;
-import es.danisales.datune.midi.DiatonicMidi;
+import es.danisales.datune.midi.ChordMidi;
+import es.danisales.datune.midi.NoteMidi;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
-import static com.google.common.base.Preconditions.checkState;
+import static com.google.common.base.Preconditions.checkArgument;
 
 @SuppressWarnings("WeakerAccess")
 public final class ChromaticChordPattern extends Pattern {
@@ -100,6 +101,18 @@ public final class ChromaticChordPattern extends Pattern {
     public static final ChromaticChordPattern SUS2b2b5 = new ChromaticChordPattern(0, 1, 6);
     public static final ChromaticChordPattern N6 = new ChromaticChordPattern(5, 8, 13);
 
+    private static final Map<Integer, ChromaticChordPattern> registeredImmutables;
+
+    static {
+        ImmutableMap.Builder<Integer, ChromaticChordPattern> builder = ImmutableMap.builder();
+        for (ChromaticChordPattern chromaticChordPattern : values())
+            builder.put(Arrays.hashCode(chromaticChordPattern.toArray()), chromaticChordPattern);
+
+        registeredImmutables = builder.build();
+    }
+
+    /* Immutables */
+
     private ChromaticChordPattern(Integer... chromaticChordPatternEnum) {
         super(chromaticChordPatternEnum);
     }
@@ -108,28 +121,25 @@ public final class ChromaticChordPattern extends Pattern {
         super(chromaticChordPattern);
     }
 
-    private ChromaticChordPattern() {
-        super();
+    public static @NonNull ChromaticChordPattern immutableOf(Integer... patternArray) {
+        return immutableFromIntegers(patternArray);
     }
 
-    public static @NonNull ChromaticChordPattern from(Integer... patternArray) {
-        return fromValues(patternArray);
+    public static @NonNull ChromaticChordPattern immutableOf(@NonNull ChromaticChordPattern pattern) {
+        if (pattern.isImmutable())
+            return pattern;
+        else
+            return registeredImmutables.getOrDefault(
+                    pattern.hashCode(),
+                    new ChromaticChordPattern(pattern)
+            );
     }
 
-    private static @NonNull ChromaticChordPattern fromValues(Integer[] patternArray) {
-        return fromValues(Arrays.asList(patternArray));
-    }
-
-    private static @NonNull ChromaticChordPattern fromValues(List<Integer> patternList) {
-        for (ChromaticChordPattern v : values()) {
-            if (v.numbersPattern.equals(patternList))
-                return v;
-        }
-
-        ChromaticChordPattern chromaticChordPattern = new ChromaticChordPattern();
-        chromaticChordPattern.addAll(patternList);
-
-        return chromaticChordPattern;
+    private static @NonNull ChromaticChordPattern immutableFromIntegers(Integer[] patternArray) {
+        return registeredImmutables.getOrDefault(
+                Arrays.hashCode(patternArray),
+                new ChromaticChordPattern(Arrays.asList(patternArray))
+        );
     }
 
     private static ChromaticChordPattern[] values() {
@@ -223,54 +233,60 @@ public final class ChromaticChordPattern extends Pattern {
         };
     }
 
-    public static ChromaticChordPattern from(List<Chromatic> collection) {
+    /* Mutables */
+
+    private ChromaticChordPattern() {
+        super();
+    }
+
+    public static @NonNull ChromaticChordPattern from(Integer... patternArray) {
+        ChromaticChordPattern chromaticChordPattern = new ChromaticChordPattern();
+        chromaticChordPattern.addAll(Arrays.asList(patternArray));
+        return chromaticChordPattern;
+    }
+
+    public static @NonNull ChromaticChordPattern from(List<Chromatic> collection) {
+        checkArgument(!collection.isEmpty());
+
         Integer[] patternArray = new Integer[collection.size()];
-        for (int i = 0; i < collection.size(); i++) {
-            if (i == 0)
-                patternArray[0] = 0;
-            else {
-                Chromatic last = collection.get(i-1);
-                Chromatic current = collection.get(i);
-                patternArray[i] = patternArray[i-1] + last.distSemitonesTo(current);
-            }
+        patternArray[0] = 0;
+        for (int i = 1; i < collection.size(); i++) {
+            Chromatic last = collection.get(i - 1);
+            Chromatic current = collection.get(i);
+            patternArray[i] = patternArray[i - 1] + last.distSemitonesTo(current);
         }
 
         return from(patternArray);
     }
 
     public static @NonNull ChromaticChordPattern from(ChromaticChord chromaticChordBase) {
-        if (chromaticChordBase.getRootIndex() == 0)
-            return from((List<Chromatic>)chromaticChordBase);
-        else {
-            ChromaticChord chromaticChord = chromaticChordBase.clone();
-            chromaticChord.inv(chromaticChord.getRootIndex());
-            return from((List<Chromatic>)chromaticChord);
-        }
-    }
+        checkArgument(!chromaticChordBase.isEmpty());
 
-    public static @NonNull ChromaticChordPattern from(@NonNull DiatonicChordMidi diatonicChordMidi) {
-        checkState(!diatonicChordMidi.isEmpty());
-
-        List<Integer> integerPitchMidiList = new ArrayList<>();
-        int firstCode = diatonicChordMidi.get(0).getPitch().getMidiCode();
-        for (DiatonicMidi diatonicMidi : diatonicChordMidi) {
-            if (integerPitchMidiList.isEmpty())
-                integerPitchMidiList.add(0);
-            else {
-                int code = diatonicMidi.getPitch().getMidiCode();
-                integerPitchMidiList.add(code - firstCode);
-            }
+        if (chromaticChordBase.getRootIndex() != 0) {
+            chromaticChordBase = chromaticChordBase.clone();
+            chromaticChordBase.toFundamental();
         }
 
-        return fromValues(integerPitchMidiList);
+        return from((List<Chromatic>) chromaticChordBase);
     }
 
-    public static @NonNull ChromaticChordPattern immutablePatern(ChromaticChordPattern pattern) {
-        if (pattern.isImmutable())
-            return pattern;
-        else
-            return new ChromaticChordPattern(pattern);
+    public static <N extends NoteMidi<?>> @NonNull ChromaticChordPattern from(@NonNull ChordMidi<N, ?, ?> chordMidi) {
+        checkArgument(!chordMidi.isEmpty());
+
+        Integer[] integerPitchMidiArray = new Integer[chordMidi.size()];
+        integerPitchMidiArray[0] = 0;
+        int firstCode = chordMidi.get(0).getPitch().getMidiCode();
+        for (int i = 0; i < chordMidi.size(); i++) {
+
+            int code = chordMidi.get(i).getPitch().getMidiCode();
+            integerPitchMidiArray[i] = code - firstCode;
+        }
+
+        return immutableFromIntegers(integerPitchMidiArray);
     }
+
+    /* Object */
+
     @Override
     public boolean equals(Object o) {
         if ( !(o instanceof ChromaticChordPattern) )

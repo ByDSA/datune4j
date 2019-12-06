@@ -19,7 +19,7 @@ class DiatonicAltAdapter {
             return from((CyclicAbsoluteDegree) pitchChromaticSingle, diatonic);
         } else if (pitchChromaticSingle instanceof ChromaticMidi) {
             ChromaticMidi chromaticMidi = (ChromaticMidi) pitchChromaticSingle;
-            CyclicAbsoluteDegree chromatic = Chromatic.from(chromaticMidi);
+            CyclicAbsoluteDegree chromatic = chromaticMidi.getPitch().getChromatic();
             return from(chromatic, diatonic);
         } else
             throw NeverHappensException.make("PitchChromaticSingle es siempre Chromatic o ChromaticMidi y se supone que nunca es " + pitchChromaticSingle.getClass());
@@ -322,7 +322,7 @@ class DiatonicAltAdapter {
     }
 
     static @NonNull DiatonicAlt from(@NonNull ChromaticMidi chromaticMidi) {
-        Chromatic chromatic = Chromatic.from(chromaticMidi);
+        Chromatic chromatic = chromaticMidi.getPitch().getChromatic();
         return from(chromatic);
     }
 }

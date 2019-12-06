@@ -2,14 +2,18 @@ package es.danisales.datune.pitch;
 
 import es.danisales.datastructures.ListProxy;
 import es.danisales.datune.interval.Interval;
+import es.danisales.utils.HashingUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
 public abstract class ChordMutable<N extends SymbolicPitch, I extends Interval> extends ListProxy<N> implements ChordMutableInterface<N, I> {
-	protected int rootIndex = -1;
+	private static final int NO_VALUE = -1;
+
+	protected int rootIndex = NO_VALUE;
 	private final List<N> innerList;
 
 	protected ChordMutable(List<N> listAdapter) {
@@ -29,14 +33,30 @@ public abstract class ChordMutable<N extends SymbolicPitch, I extends Interval> 
 	}
 
 	@Override
-	public void add(int n, N note) {
+	public void add(int n, @NonNull N note) {
 		innerList.add( n, note );
+
+		if (n <= rootIndex)
+			rootIndex++;
+
 		resetRootIfNeededElseOnMutation();
 	}
 
 	@Override
 	public boolean addAll(@NonNull Collection<? extends N> collection) {
 		boolean ret = innerList.addAll(collection);
+
+		resetRootIfNeededElseOnMutation();
+
+		return ret;
+	}
+
+	@Override
+	public boolean addAll(int index, @NonNull Collection<? extends N> collection) {
+		boolean ret = innerList.addAll(index, collection);
+
+		if (index <= rootIndex)
+			rootIndex += collection.size();
 
 		resetRootIfNeededElseOnMutation();
 
@@ -83,7 +103,15 @@ public abstract class ChordMutable<N extends SymbolicPitch, I extends Interval> 
 	protected abstract void onMutation();
 
 	@Override
-	public final @NonNull N getRoot() {
+	public final void clear() {
+		super.clear();
+		rootIndex = NO_VALUE;
+	}
+
+	@Override
+	public final @Nullable N getRoot() {
+		if (rootIndex == NO_VALUE)
+			return null;
 		return get(rootIndex);
 	}
 
@@ -107,7 +135,7 @@ public abstract class ChordMutable<N extends SymbolicPitch, I extends Interval> 
 
 	@Override
 	public int hashCode() {
-		return super.hashCode() + 31 * rootIndex;
+		return innerList.hashCode() + HashingUtils.from(rootIndex);
 	}
 
 	@Override

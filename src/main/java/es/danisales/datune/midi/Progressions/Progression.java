@@ -11,6 +11,7 @@ import es.danisales.datune.midi.binaries.events.EventComplex;
 import es.danisales.datune.midi.binaries.events.KeySignatureEvent;
 import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.utils.building.BuildingException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,18 +38,22 @@ public class Progression<This extends Progression> implements EventComplex {
 	/** Replace Chord
 	 *
 	 * @param n    número de corde en el tiempo
-	 * @param t	Grado del acorde
+	 * @param diatonicFunction    Grado del acorde
 	 * @param o	Desplazamiento de octava
 	 * @return Acorde reemplazado
 	 */
-	public DiatonicChordMidi replaceChord(int n, DiatonicFunction t, int o) {
-		DiatonicChordMidi c;
+	public DiatonicChordMidi replaceChord(int n, DiatonicFunction diatonicFunction, int o) {
+		DiatonicChordMidi c = null;
 		o += octave;
 
-        c = DiatonicChordMidi.builder()
-                .from(t, tonality)
-                .octave(o)
-                .build();
+		try {
+			c = DiatonicChordMidi.builder()
+					.from(diatonicFunction, tonality)
+					.octave(o)
+					.build();
+		} catch (BuildingException e) {
+			e.printStackTrace();
+		}
 
 		nodes.set(n, c);
 
@@ -72,13 +77,17 @@ public class Progression<This extends Progression> implements EventComplex {
 	}
 
 	public DiatonicChordMidi add(HarmonicFunction t, int o) {
-		DiatonicChordMidi c;
+		DiatonicChordMidi c = null;
 		o += octave;
 
-        c = DiatonicChordMidi.builder()
-                .from(t, tonality)
-                .octave(o)
-                .build();
+		try {
+			c = DiatonicChordMidi.builder()
+					.from(t, tonality)
+					.octave(o)
+					.build();
+		} catch (BuildingException e) {
+			e.printStackTrace();
+		}
 
 		return add(c);
 	}

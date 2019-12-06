@@ -13,6 +13,7 @@ import es.danisales.datune.musical.ChromaticChord;
 import es.danisales.datune.musical.DiatonicChordPattern;
 import es.danisales.datune.tonality.*;
 import es.danisales.utils.building.Builder;
+import es.danisales.utils.building.BuildingException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.List;
@@ -30,11 +31,15 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
 
     @NonNull
     @Override
-    public DiatonicChordMidi build() {
+    public DiatonicChordMidi build() throws BuildingException {
         DiatonicChordMidi diatonicChordMidi = new DiatonicChordMidi();
         diatonicChordMidi.tonality = Objects.requireNonNull(tonality);
 
-        initFromFunction(diatonicChordMidi);
+        try {
+            initFromFunction(diatonicChordMidi);
+        } catch (TonalityException | PitchMidiException | ScaleDegreeException e) {
+            throw new BuildingException(e);
+        }
 
         diatonicChordMidi.setLength(length);
         diatonicChordMidi.setVelocity(velocity);
@@ -52,15 +57,9 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
             diatonicChordMidi.arpegio = arpegio;
     }
 
-    private void initFromFunction(DiatonicChordMidi diatonicChordMidi) {
+    private void initFromFunction(DiatonicChordMidi diatonicChordMidi) throws TonalityException, PitchMidiException, ScaleDegreeException {
         if (function instanceof ChromaticFunction) {
-            try {
-                chromaticFunctionProcess2(diatonicChordMidi);
-            } catch (TonalityException | PitchMidiException | ScaleDegreeException e) {
-                System.out.println(function + " " + diatonicChordMidi.getTonality());
-                e.printStackTrace();
-                throw new RuntimeException();
-            }
+            chromaticFunctionProcess2(diatonicChordMidi);
         } else if (function instanceof DiatonicFunction)
             initFromDiatonicFunction(diatonicChordMidi);
     }
@@ -72,7 +71,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
         self.tonality = Objects.requireNonNull(tonality, chromaticFunction.toString());
 
         ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder()
-                .fromChromatic(chromaticChord)
+                .fromChromaticChord(chromaticChord)
                 .length(length)
                 .velocity(velocity)
                 .octaveBase(octave)
@@ -85,25 +84,25 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
         protected void chromaticFunctionProcess(DiatonicChordMidi self) throws TonalityException, PitchMidiException {
             ChromaticFunction t = (ChromaticFunction) function;
             if (t == ChromaticFunction.N6) {
-                ChromaticChordInterface cc = ChromaticChordInterface.from(t, tonality);
+                ChromaticChordInterface cc = ChromaticChordInterface.patternFrom(t, tonality);
 
                 tonality = TonalityRetrieval.listFromChordDiatonicFunction(cc).getCyclic(0);
 
                 ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder()
-                        .fromChromatic(cc)
+                        .fromChromaticChord(cc)
                         .octaveBase(octave)
                         .length(length)
                         .build();
 
                 self.addAll(chromaticChordMidi);
             } else if (ArrayUtils.contains(t, ChromaticFunction.POWER_CHORDS)) {
-                DiatonicDegree d = DiatonicDegree.from(t);
+                DiatonicDegree d = DiatonicDegree.patternFrom(t);
 
                 IntervalChromatic ic = tonality.getInterval(d, IntervalDiatonic.FIFTH);
 
                 if (!ic.equals(IntervalChromatic.PERFECT_FIFTH)) {
                     DiatonicAlt diatonicAlt = tonality.getNote(d);
-                    tonality = Tonality.from(diatonicAlt, Scale.MAJOR);
+                    tonality = Tonality.patternFrom(diatonicAlt, Scale.MAJOR);
                     d = DiatonicDegree.I;
                 }
 
@@ -127,7 +126,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                     case V_II:
                         tonality = Tonality.fromDiatonicChordMidi(
                                 DiatonicChordMidi.builder()
-                                        .from(
+                                        .patternFrom(
                                                 DiatonicFunction.V, tonality
                                                         .getRelativeScaleDiatonic(DiatonicDegree.II)
                                         ).build(), tonality
@@ -136,7 +135,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                     case V7_II:
                         tonality = Tonality.fromDiatonicChordMidi(
                                 DiatonicChordMidi.builder()
-                                        .from(
+                                        .patternFrom(
                                                 DiatonicFunction.V7, tonality
                                                         .getRelativeScaleDiatonic(DiatonicDegree.II)
                                         ).build(), tonality
@@ -145,7 +144,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                     case V_III:
                         tonality = Tonality.fromDiatonicChordMidi(
                                 DiatonicChordMidi.builder()
-                                        .from(
+                                        .patternFrom(
                                                 DiatonicFunction.V, tonality
                                                         .getRelativeScaleDiatonic(DiatonicDegree.III)
                                         ).build(), tonality
@@ -154,7 +153,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                     case V7_III:
                         tonality = Tonality.fromDiatonicChordMidi(
                                 DiatonicChordMidi.builder()
-                                        .from(
+                                        .patternFrom(
                                                 DiatonicFunction.V7, tonality
                                                         .getRelativeScaleDiatonic(DiatonicDegree.III)
                                         ).build(), tonality
@@ -163,7 +162,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                     case V_IV:
                         tonality = Tonality.fromDiatonicChordMidi(
                                 DiatonicChordMidi.builder()
-                                        .from(
+                                        .patternFrom(
                                                 DiatonicFunction.V, tonality
                                                         .getRelativeScaleDiatonic(DiatonicDegree.IV)
                                         ).build(), tonality
@@ -172,7 +171,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                     case V7_IV:
                         tonality = Tonality.fromDiatonicChordMidi(
                                 DiatonicChordMidi.builder()
-                                        .from(
+                                        .patternFrom(
                                                 DiatonicFunction.V7, tonality
                                                         .getRelativeScaleDiatonic(DiatonicDegree.IV)
                                         ).build(), tonality
@@ -181,7 +180,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                     case V_V:
                         tonality = Tonality.fromDiatonicChordMidi(
                                 DiatonicChordMidi.builder()
-                                        .from(
+                                        .patternFrom(
                                                 DiatonicFunction.V, tonality
                                                         .getRelativeScaleDiatonic(DiatonicDegree.V)
                                         ).build(), tonality
@@ -190,7 +189,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                     case V7_V:
                         tonality = Tonality.fromDiatonicChordMidi(
                                 DiatonicChordMidi.builder()
-                                        .from(
+                                        .patternFrom(
                                                 DiatonicFunction.V7, tonality
                                                         .getRelativeScaleDiatonic(DiatonicDegree.V)
                                         ).build(), tonality
@@ -199,7 +198,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                     case V_VI:
                         tonality = Tonality.fromDiatonicChordMidi(
                                 DiatonicChordMidi.builder()
-                                        .from(
+                                        .patternFrom(
                                                 DiatonicFunction.V, tonality
                                                         .getRelativeScaleDiatonic(DiatonicDegree.VI)
                                         ).build(), tonality
@@ -208,7 +207,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                     case V7_VI:
                         tonality = Tonality.fromDiatonicChordMidi(
                                 DiatonicChordMidi.builder()
-                                        .from(
+                                        .patternFrom(
                                                 DiatonicFunction.V7, tonality
                                                         .getRelativeScaleDiatonic(DiatonicDegree.VI)
                                         ).build(), tonality
@@ -216,70 +215,70 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                         break;
                     case SUBV7:
                         DiatonicChordMidi c = DiatonicChordMidi.builder()
-                                .from(DiatonicFunction.V7, tonality)
+                                .patternFrom(DiatonicFunction.V7, tonality)
                                 .build();
-                        Chromatic firstChromatic = Chromatic.from(c.getCyclic(0));
-                        tonality = Tonality.from(
+                        Chromatic firstChromatic = Chromatic.patternFrom(c.getCyclic(0));
+                        tonality = Tonality.patternFrom(
                                 firstChromatic.getWithSemiAdded(6), Scale.LYDIAN_b7
                         );
                         break;
                     case SUBV7_II:
                         DiatonicChordMidi c2 = DiatonicChordMidi.builder()
-                                .from(
+                                .patternFrom(
                                         ChromaticFunction.V7_II, tonality
                                 ).build();
-                        Chromatic firstChromatic2 = Chromatic.from(c2.getCyclic(0));
-                        tonality = Tonality.from(
+                        Chromatic firstChromatic2 = Chromatic.patternFrom(c2.getCyclic(0));
+                        tonality = Tonality.patternFrom(
                                 firstChromatic2.getWithSemiAdded(6), Scale.LYDIAN_b7
                         );
                         break;
                     case SUBV7_III:
                         DiatonicChordMidi c3 = DiatonicChordMidi.builder()
-                                .from(
+                                .patternFrom(
                                         ChromaticFunction.V7_III, tonality
                                 ).build();
-                        Chromatic firstChromatic3 = Chromatic.from(c3.getCyclic(0));
-                        tonality = Tonality.from(
+                        Chromatic firstChromatic3 = Chromatic.patternFrom(c3.getCyclic(0));
+                        tonality = Tonality.patternFrom(
                                 firstChromatic3.getWithSemiAdded(6), Scale.LYDIAN_b7
                         );
                         break;
                     case SUBV7_IV:
                         DiatonicChordMidi c4 = DiatonicChordMidi.builder()
-                                .from(
+                                .patternFrom(
                                         ChromaticFunction.V7_IV, tonality
                                 ).build();
-                        Chromatic firstChromatic4 = Chromatic.from(c4.getCyclic(0));
-                        tonality = Tonality.from(
+                        Chromatic firstChromatic4 = Chromatic.patternFrom(c4.getCyclic(0));
+                        tonality = Tonality.patternFrom(
                                 firstChromatic4.getWithSemiAdded(6), Scale.LYDIAN_b7
                         );
                         break;
                     case SUBV7_V:
                         DiatonicChordMidi c5 = DiatonicChordMidi.builder()
-                                .from(
+                                .patternFrom(
                                         ChromaticFunction.V7_V, tonality
                                 ).build();
-                        Chromatic firstChromatic5 = Chromatic.from(c5.getCyclic(0));
-                        tonality = Tonality.from(
+                        Chromatic firstChromatic5 = Chromatic.patternFrom(c5.getCyclic(0));
+                        tonality = Tonality.patternFrom(
                                 firstChromatic5.getWithSemiAdded(6), Scale.LYDIAN_b7
                         );
                         break;
                     case SUBV7_VI:
                         DiatonicChordMidi c6 = DiatonicChordMidi.builder()
-                                .from(
+                                .patternFrom(
                                         ChromaticFunction.V7_VI, tonality
                                 ).build();
-                        Chromatic firstChromatic6 = Chromatic.from(c6.getCyclic(0));
-                        tonality = Tonality.from(
+                        Chromatic firstChromatic6 = Chromatic.patternFrom(c6.getCyclic(0));
+                        tonality = Tonality.patternFrom(
                                 firstChromatic6.getWithSemiAdded(6), Scale.LYDIAN_b7
                         );
                         break;
                     case V7ALT:
                         DiatonicChordMidi calt = DiatonicChordMidi.builder()
-                                .from(
+                                .patternFrom(
                                         DiatonicFunction.V7, tonality
                                 ).build();
-                        Chromatic firstChromaticAlt = Chromatic.from(calt.getCyclic(0));
-                        tonality = Tonality.from(
+                        Chromatic firstChromaticAlt = Chromatic.patternFrom(calt.getCyclic(0));
+                        tonality = Tonality.patternFrom(
                                 firstChromaticAlt, Scale.SUPERLOCRIAN
                         );
                         break;
@@ -317,7 +316,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                     initFromDiatonicFunction(self);
                     function = t;
             } else {
-                ChromaticChordInterface chromaticChordInterface = ChromaticChordInterface.from(t, tonality);
+                ChromaticChordInterface chromaticChordInterface = ChromaticChordInterface.patternFrom(t, tonality);
 
                 ChromaticMidi[] ccmArray = new ChromaticMidi[chromaticChordInterface.size()];
                 int i = 0;
@@ -457,7 +456,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
             checkState(diatonicChordMidi.tonality != null);
 
             try {
-                ChromaticChordMidi c = ChromaticChordMidi.builder().fromChromatic(ns).build();
+                ChromaticChordMidi c = ChromaticChordMidi.builder().fromChromaticChord(ns).build();
                 diatonicChordMidi.addAll(c);
             } catch (TonalityException | PitchMidiException e1) {
                 throw new RuntimeException();

@@ -7,7 +7,6 @@ import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.tonality.Tonality;
 import org.junit.Test;
 
-import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -54,11 +53,6 @@ public class ChromaticMidiTest {
 		ChromaticMidi clonedChromaticMidi1 = chromaticMidi.clone();
 
 		assertEquals(chromaticMidi, clonedChromaticMidi1);
-	}
-
-	@Test
-	public void getEvents() {
-		fail();
 	}
 
 	@Test

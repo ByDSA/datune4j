@@ -2,12 +2,14 @@ package es.danisales.datune.midi.arpegios;
 
 import es.danisales.datune.midi.ChordMidi;
 import es.danisales.datune.midi.Durable;
+import es.danisales.utils.HashingUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 public class Arpegio implements Durable, Cloneable {
-	private ArrayList<Node> nodes;
+    private List<Node> nodes;
 	ChordMidi chord;
 	private Consumer<Arpegio> build;
 	private int length;
@@ -64,7 +66,7 @@ public class Arpegio implements Durable, Cloneable {
 		return d;
 	}
 
-	public ArrayList<Node> getNodes() {
+    public List<Node> getNodes() {
 		return nodes;
 	}
 
@@ -92,9 +94,13 @@ public class Arpegio implements Durable, Cloneable {
 
 			return n;
 		}
-	}
 
-	@Override
+        @Override
+        public int hashCode() {
+            return HashingUtils.from(0, note, time, length);
+        }
+    }
+
 	public Arpegio clone() {
 		Arpegio a = new Arpegio( build );
 		a.length = length;
@@ -142,4 +148,9 @@ public class Arpegio implements Durable, Cloneable {
 	public ChordMidi getChord() {
 		return chord;
 	}
+
+    @Override
+    public int hashCode() {
+        return nodes.hashCode() + 31 * (chord.hashCode() + 37 * (build.hashCode() + 41 * Integer.hashCode(length)));
+    }
 }

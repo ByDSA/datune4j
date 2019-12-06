@@ -115,9 +115,4 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, IntervalChromat
 
         return stringBuilder.toString();
     }
-
-    @Override
-    public int hashCode() {
-        return 43 * super.hashCode();
-    }
 }

@@ -7,6 +7,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Builder<ChromaticChordMidiBuilder, ChromaticChordMidi> {
@@ -21,10 +22,10 @@ public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Build
     }
 
     public ChromaticChordMidiBuilder fromChromatic(@NonNull Chromatic... cs) throws PitchMidiException {
-        return fromChromatic(Arrays.asList(cs));
+        return fromChromaticChord(Arrays.asList(cs));
     }
 
-    public ChromaticChordMidiBuilder fromChromatic(@NonNull Iterable<Chromatic> cs) throws PitchMidiException {
+    public ChromaticChordMidiBuilder fromChromaticChord(@NonNull Iterable<Chromatic> cs) throws PitchMidiException {
         checkValidMidi();
         fromChromatic = new ArrayList<>();
         for (Chromatic c : cs)
@@ -102,6 +103,32 @@ public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Build
         }
 
         return chromaticChordMidi;
+    }
+
+    private void createFromChromaticMidiArrayIfNull() {
+        if (fromChromaticMidi == null)
+            fromChromaticMidi = new ArrayList<>();
+    }
+
+    public @NonNull ChromaticChordMidiBuilder add(@NonNull ChromaticMidi chromaticMidi) {
+        createFromChromaticMidiArrayIfNull();
+        fromChromaticMidi.add(chromaticMidi);
+
+        return self();
+    }
+
+    public @NonNull ChromaticChordMidiBuilder addAll(@NonNull Collection<ChromaticMidi> chromaticMidiCollection) {
+        createFromChromaticMidiArrayIfNull();
+        fromChromaticMidi.addAll(chromaticMidiCollection);
+
+        return self();
+    }
+
+    public @NonNull ChromaticChordMidiBuilder add(@NonNull PitchChromaticMidi pitchChromaticMidi) {
+        ChromaticMidi chromaticMidi = ChromaticMidi.builder()
+                .pitch(pitchChromaticMidi)
+                .build();
+        return add(chromaticMidi);
     }
 
     public @NonNull ChromaticChordMidiBuilder fromDiatonicChordMidi(@NonNull DiatonicChordMidi diatonicChordMidi) {

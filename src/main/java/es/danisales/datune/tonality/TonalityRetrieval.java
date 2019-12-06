@@ -1,6 +1,5 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.absolutedegree.Diatonic;
 import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.midi.DiatonicChordMidiBuilder;
@@ -129,8 +128,8 @@ public class TonalityRetrieval {
         int posChordCorrector = 7 - c.get(0).getPitch().getDegree().ordinal();
 
         // Integer posBaseCorrector = base.getDegreeFrom(notesChord[0]);
-        int posBaseCorrector = ( Diatonic.from( notesChord[0] ).ordinal()
-                - Diatonic.from( base.getRoot() ).ordinal() + 7 ) % 7;
+        int posBaseCorrector = (notesChord[0].getDiatonic().ordinal()
+                - base.getRoot().getDiatonic().ordinal() + 7) % 7;
 
         DiatonicAlt[] tonalityNotes = new DiatonicAlt[7];
         for ( int i = 0; i < 7; i++ ) {
@@ -231,7 +230,7 @@ public class TonalityRetrieval {
 
                 if ( candidates.isEmpty() ) {
                     chordCopy = ChromaticChord.builder()
-                            .fromChromatic(
+                            .addAll(
                                 chordCopy.subList(0, chordCopy.size() - 1)
                             ).build();
                 }

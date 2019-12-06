@@ -8,17 +8,17 @@ import java.util.Arrays;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.*;
 
-public class DiatonicChordEnumTest {
+public class DiatonicChordImmutableTest {
     @Test
     public void getRootPos() {
-        for (DiatonicChordImmutable diatonicChordEnum : DiatonicChordImmutable.values())
-            assertEquals(0, diatonicChordEnum.getRootIndex());
+        for (DiatonicChordImmutable diatonicChordImmutable : DiatonicChordImmutable.values())
+            assertEquals(0, diatonicChordImmutable.getRootIndex());
     }
 
     @Test
     public void getRoot() {
-        for (DiatonicChordImmutable diatonicChordEnum : DiatonicChordImmutable.values())
-            assertSame(diatonicChordEnum.get(diatonicChordEnum.getRootIndex()), diatonicChordEnum.getRoot());
+        for (DiatonicChordImmutable diatonicChordImmutable : DiatonicChordImmutable.values())
+            assertSame(diatonicChordImmutable.get(diatonicChordImmutable.getRootIndex()), diatonicChordImmutable.getRoot());
     }
 
     @Test
@@ -146,14 +146,14 @@ public class DiatonicChordEnumTest {
 
     @Test
     public void isEmpty() {
-        for (DiatonicChordImmutable diatonicChordEnum : DiatonicChordImmutable.values())
-            assertFalse(diatonicChordEnum.isEmpty());
+        for (DiatonicChordImmutable diatonicChordImmutable : DiatonicChordImmutable.values())
+            assertFalse(diatonicChordImmutable.isEmpty());
     }
 
     @Test
     public void iteratorNotNull() {
-        for (DiatonicChordImmutable diatonicChordEnum : DiatonicChordImmutable.values())
-            assertNotNull(diatonicChordEnum.iterator());
+        for (DiatonicChordImmutable diatonicChordImmutable : DiatonicChordImmutable.values())
+            assertNotNull(diatonicChordImmutable.iterator());
     }
 
     @Test
@@ -168,8 +168,8 @@ public class DiatonicChordEnumTest {
 
     @Test
     public void listIterator() {
-        for (DiatonicChordImmutable diatonicChordEnum : DiatonicChordImmutable.values())
-            assertNotNull(diatonicChordEnum.listIterator());
+        for (DiatonicChordImmutable diatonicChordImmutable : DiatonicChordImmutable.values())
+            assertNotNull(diatonicChordImmutable.listIterator());
     }
 
     @Test(expected = UnsupportedOperationException.class)

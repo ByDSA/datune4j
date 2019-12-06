@@ -131,7 +131,7 @@ public enum ChromaticFunction implements HarmonicFunction {
 	 */
     public static @Nullable ChromaticFunction from(@NonNull Collection<Chromatic> pitchChromaticChord, @NonNull Tonality tonality) {
         ChromaticChord chromaticChord = ChromaticChord.builder()
-                .fromChromatic(pitchChromaticChord)
+                .addAll(pitchChromaticChord)
                 .build();
         HarmonicFunction hf = tonality.getFunctionFrom(chromaticChord);
 		if ( hf instanceof ChromaticFunction )

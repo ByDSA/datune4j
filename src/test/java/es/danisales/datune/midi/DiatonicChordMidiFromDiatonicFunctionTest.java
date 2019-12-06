@@ -5,6 +5,7 @@ import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.utils.building.BuildingException;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -17,7 +18,7 @@ public class DiatonicChordMidiFromDiatonicFunctionTest {
     }
 
     @Test
-    public void fromDiatonicFunction() {
+    public void fromDiatonicFunction() throws BuildingException {
         DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder()
                 .from(DiatonicFunction.I, Tonality.C)
                 .octave(5)
@@ -29,7 +30,7 @@ public class DiatonicChordMidiFromDiatonicFunctionTest {
     }
 
     @Test
-    public void fromDiatonicFunction2() {
+    public void fromDiatonicFunction2() throws BuildingException {
         DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder()
                 .from(DiatonicFunction.I_THIRD, Tonality.C)
                 .octave(5)
@@ -40,7 +41,7 @@ public class DiatonicChordMidiFromDiatonicFunctionTest {
     }
 
     @Test
-    public void fromDiatonicFunction3() {
+    public void fromDiatonicFunction3() throws BuildingException {
         DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder()
                 .from(DiatonicFunction.I_THIRD, Tonality.Gm)
                 .octave(5)
@@ -51,7 +52,7 @@ public class DiatonicChordMidiFromDiatonicFunctionTest {
     }
 
     @Test
-    public void fromDiatonicFunction4() {
+    public void fromDiatonicFunction4() throws BuildingException {
         DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder()
                 .from(DiatonicFunction.II_THIRD, Tonality.Gm)
                 .octave(6)
@@ -62,7 +63,7 @@ public class DiatonicChordMidiFromDiatonicFunctionTest {
     }
 
     @Test
-    public void fromDiatonicFunction5() {
+    public void fromDiatonicFunction5() throws BuildingException {
         DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder()
                 .from(DiatonicFunction.VI_THIRD, Tonality.Gm)
                 .octave(5)
@@ -73,7 +74,7 @@ public class DiatonicChordMidiFromDiatonicFunctionTest {
     }
 
     @Test
-    public void fromDiatonicFunction6() {
+    public void fromDiatonicFunction6() throws BuildingException {
         Tonality tonality = Tonality.from(Chromatic.C, Scale.MAJOR);
         DiatonicChordMidi diatonicChordMidi;
         diatonicChordMidi = DiatonicChordMidi.builder()
@@ -87,7 +88,7 @@ public class DiatonicChordMidiFromDiatonicFunctionTest {
     }
 
     @Test
-    public void fromDiatonicFunction7() {
+    public void fromDiatonicFunction7() throws BuildingException {
         Tonality tonality = Tonality.from(Chromatic.C, Scale.MAJOR);
         DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder()
                 .from(DiatonicFunction.II, tonality)
@@ -100,7 +101,7 @@ public class DiatonicChordMidiFromDiatonicFunctionTest {
     }
 
     @Test
-    public void fromDiatonicFunction8() {
+    public void fromDiatonicFunction8() throws BuildingException {
         Tonality tonality = Tonality.from(Chromatic.C, Scale.MAJOR);
         DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder()
                 .from(DiatonicFunction.III, tonality)
@@ -113,7 +114,7 @@ public class DiatonicChordMidiFromDiatonicFunctionTest {
     }
 
     @Test
-    public void fromDiatonicFunction9() {
+    public void fromDiatonicFunction9() throws BuildingException {
         Tonality tonality = Tonality.from(Chromatic.C, Scale.MAJOR);
         DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder()
                 .from(DiatonicFunction.IV, tonality)
@@ -126,7 +127,7 @@ public class DiatonicChordMidiFromDiatonicFunctionTest {
     }
 
     @Test
-    public void fromDiatonicFunction10() {
+    public void fromDiatonicFunction10() throws BuildingException {
         Tonality tonality = Tonality.from(Chromatic.C, Scale.MAJOR);
         DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder()
                 .from(DiatonicFunction.V, tonality)
@@ -139,7 +140,7 @@ public class DiatonicChordMidiFromDiatonicFunctionTest {
     }
 
     @Test
-    public void fromDiatonicFunction11() {
+    public void fromDiatonicFunction11() throws BuildingException {
         Tonality tonality = Tonality.from(Chromatic.C, Scale.MAJOR);
         DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder()
                 .from(DiatonicFunction.VI, tonality)
@@ -152,7 +153,7 @@ public class DiatonicChordMidiFromDiatonicFunctionTest {
     }
 
     @Test
-    public void fromDiatonicFunction12() {
+    public void fromDiatonicFunction12() throws BuildingException {
         Tonality tonality = Tonality.from(Chromatic.C, Scale.MAJOR);
         DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder()
                 .from(DiatonicFunction.VII, tonality)
@@ -165,7 +166,7 @@ public class DiatonicChordMidiFromDiatonicFunctionTest {
     }
 
     @Test
-    public void fromDiatonicFunction13() {
+    public void fromDiatonicFunction13() throws BuildingException {
         Tonality tonality = Tonality.from(Chromatic.FF, Scale.MINOR);
         DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder()
                 .from(DiatonicFunction.I, tonality)
@@ -178,7 +179,7 @@ public class DiatonicChordMidiFromDiatonicFunctionTest {
     }
 
     @Test
-    public void fromDiatonicFunction14() {
+    public void fromDiatonicFunction14() throws BuildingException {
         Tonality tonality = Tonality.from(Chromatic.FF, Scale.MINOR);
         DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder()
                 .from(DiatonicFunction.II, tonality)
@@ -191,7 +192,7 @@ public class DiatonicChordMidiFromDiatonicFunctionTest {
     }
 
     @Test
-    public void fromDiatonicFunction15() {
+    public void fromDiatonicFunction15() throws BuildingException {
         Tonality tonality = Tonality.from(Chromatic.FF, Scale.MINOR);
         DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder()
                 .from(DiatonicFunction.III, tonality)
@@ -204,7 +205,7 @@ public class DiatonicChordMidiFromDiatonicFunctionTest {
     }
 
     @Test
-    public void fromDiatonicFunction16() {
+    public void fromDiatonicFunction16() throws BuildingException {
         Tonality tonality = Tonality.from(Chromatic.FF, Scale.MINOR);
         DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder()
                 .from(DiatonicFunction.IV, tonality)
@@ -217,7 +218,7 @@ public class DiatonicChordMidiFromDiatonicFunctionTest {
     }
 
     @Test
-    public void fromDiatonicFunction17() {
+    public void fromDiatonicFunction17() throws BuildingException {
         Tonality tonality = Tonality.from(Chromatic.FF, Scale.MINOR);
         DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder()
                 .from(DiatonicFunction.V, tonality)
@@ -230,7 +231,7 @@ public class DiatonicChordMidiFromDiatonicFunctionTest {
     }
 
     @Test
-    public void fromDiatonicFunction18() {
+    public void fromDiatonicFunction18() throws BuildingException {
         Tonality tonality = Tonality.from(Chromatic.FF, Scale.MINOR);
         DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder()
                 .from(DiatonicFunction.VI, tonality)
@@ -243,7 +244,7 @@ public class DiatonicChordMidiFromDiatonicFunctionTest {
     }
 
     @Test
-    public void fromDiatonicFunction19() {
+    public void fromDiatonicFunction19() throws BuildingException {
         Tonality tonality = Tonality.from(Chromatic.FF, Scale.MINOR);
         DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder()
                 .from(DiatonicFunction.VII, tonality)
@@ -257,7 +258,7 @@ public class DiatonicChordMidiFromDiatonicFunctionTest {
 
 
     @Test
-    public void fromDiatonicFunction20() {
+    public void fromDiatonicFunction20() throws BuildingException {
         Tonality s = Tonality.B;
         int o = 5;
         DiatonicChordMidi c1 = DiatonicChordMidi.builder()
@@ -274,7 +275,7 @@ public class DiatonicChordMidiFromDiatonicFunctionTest {
     }
 
     @Test
-    public void fromDiatonicFunction21() {
+    public void fromDiatonicFunction21() throws BuildingException {
         DiatonicChordMidi c = DiatonicChordMidi.builder()
                 .from(DiatonicFunction.I, Tonality.C)
                 .octave(5)

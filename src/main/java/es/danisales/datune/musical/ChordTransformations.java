@@ -30,11 +30,11 @@ public class ChordTransformations {
 
     public static void removeHigherDuplicates(ChromaticChordMidi self) {
         ChromaticChordMidi out = ChromaticChordMidi.builder().build();
-        for (ChromaticMidi n : self) {
+        for (ChromaticMidi chromaticMidi : self) {
             boolean found = false;
-            for (ChromaticMidi n2 : out) {
-                Chromatic chromaticN2 = Chromatic.from(n2);
-                Chromatic chromaticN = Chromatic.from(n);
+            for (ChromaticMidi chromaticMidi2 : out) {
+                Chromatic chromaticN2 = chromaticMidi2.getPitch().getChromatic();
+                Chromatic chromaticN = chromaticMidi.getPitch().getChromatic();
                 if (chromaticN2.ordinal() == chromaticN.ordinal()) {
                     found = true;
                     break;
@@ -42,7 +42,7 @@ public class ChordTransformations {
             }
 
             if (!found)
-                out.add(n);
+                out.add(chromaticMidi);
         }
 
         self.clear();

@@ -46,9 +46,9 @@ abstract class ChordMutableNonMidi<N extends SymbolicPitch, I extends Interval>
     }
 
     @Override
-    public final void removeInv() {
+    public final void toFundamental() {
         try {
-            super.removeInv();
+            super.toFundamental();
         } catch (PitchException e) {
             throw NEVER_HAPPENS_EXCEPTION;
         }

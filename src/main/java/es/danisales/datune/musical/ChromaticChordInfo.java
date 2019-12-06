@@ -198,14 +198,14 @@ public final class ChromaticChordInfo implements Cloneable {
 	private ChromaticChordInfo(Quality q, String str, ChromaticChordPattern pattern) {
 		quality = q;
 		this.str = str;
-		this.pattern = ChromaticChordPattern.immutablePatern(pattern);
+		this.pattern = ChromaticChordPattern.immutableOf(pattern);
 	}
 
 	private static ChromaticChordMutable getFundamentalChordOf(ChromaticChordMutable chromaticChord) { // todo: move to transformations
 		ChromaticChordMutable chromaticChordTmp;
 		if (chromaticChord.getRootIndex() > 0) {
 			chromaticChordTmp = chromaticChord.clone();
-			chromaticChordTmp.removeInv();
+			chromaticChordTmp.toFundamental();
 		} else
 			chromaticChordTmp = chromaticChord;
 
@@ -244,7 +244,7 @@ public final class ChromaticChordInfo implements Cloneable {
 
 	@SuppressWarnings("WeakerAccess")
 	public ChromaticChordPattern getPattern() {
-		return ChromaticChordPattern.immutablePatern(pattern);
+		return ChromaticChordPattern.immutableOf(pattern);
 	}
 
 	@SuppressWarnings("WeakerAccess")
