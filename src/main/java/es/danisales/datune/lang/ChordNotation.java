@@ -5,9 +5,6 @@ package es.danisales.datune.lang;
  */
 @SuppressWarnings("WeakerAccess")
 public final class ChordNotation {
-	public static final String INV = "Inv";
-	public static final String DUPLICATED = " (dup)";
-
 	public static final String FLAT = "b";
 	public static final String SHARP = "#";
 

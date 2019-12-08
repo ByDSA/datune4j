@@ -1,11 +1,10 @@
-package es.danisales.datune.musical.transformations;
+package es.danisales.datune.lang;
 
 import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.absolutedegree.Diatonic;
 import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.interval.IntervalDiatonic;
-import es.danisales.datune.lang.ChordNotation;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.musical.Quality;

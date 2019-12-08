@@ -1,31 +1,27 @@
 package es.danisales.datune.musical;
 
-import es.danisales.datastructures.ListProxy;
 import es.danisales.datune.interval.Interval;
 import es.danisales.datune.lang.ChordNotation;
 import es.danisales.datune.pitch.*;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.*;
 
 public abstract class ChordProxy<C extends ChordCommon<N>, N extends CyclicAbsoluteDegree<?, I>, I extends Interval>
-        extends ListProxy<N>
         implements ChordMutableInterface<N, I> {
     private static final NeverHappensException NEVER_HAPPENS_EXCEPTION
             = NeverHappensException.make("Los ChordProxy son siempre de Chromatic o Diatonic y no tienen problemas de octava mínima o máxima");
 
-    C innerChord;
+    protected C innerChord;
     private boolean fixed;
 
-
     ChordProxy() {
-        super(new ArrayList<>());
         fixed = false;
     }
 
     ChordProxy(C chromaticChordInterface) {
-        super(chromaticChordInterface);
         innerChord = chromaticChordInterface;
         fixed = true;
     }
@@ -137,9 +133,8 @@ public abstract class ChordProxy<C extends ChordCommon<N>, N extends CyclicAbsol
         return innerChord.getRootIndex();
     }
 
-    @NonNull
     @Override
-    public final N getRoot() {
+    public final @Nullable N getRoot() {
         return innerChord.getRoot();
     }
 
@@ -198,6 +193,11 @@ public abstract class ChordProxy<C extends ChordCommon<N>, N extends CyclicAbsol
     @NonNull
     public final <T> T[] toArray(@NonNull T[] a) {
         return innerChord.toArray(a);
+    }
+
+    @Override
+    public @NonNull Object[] toArray() {
+        return innerChord.toArray();
     }
 
     @Override

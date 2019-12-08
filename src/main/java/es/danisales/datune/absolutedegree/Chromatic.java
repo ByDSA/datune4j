@@ -2,9 +2,9 @@ package es.danisales.datune.absolutedegree;
 
 import es.danisales.datune.degree.ChromaticDegree;
 import es.danisales.datune.interval.IntervalChromatic;
+import es.danisales.datune.lang.Namer;
 import es.danisales.datune.midi.pitch.PitchDiatonicMidi;
 import es.danisales.datune.musical.DiatonicAlt;
-import es.danisales.datune.musical.transformations.Namer;
 import es.danisales.datune.pitch.CyclicAbsoluteDegree;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.utils.MathUtils;

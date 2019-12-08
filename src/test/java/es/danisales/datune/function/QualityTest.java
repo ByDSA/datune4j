@@ -1,7 +1,7 @@
 package es.danisales.datune.function;
 
+import es.danisales.datune.lang.Namer;
 import es.danisales.datune.musical.Quality;
-import es.danisales.datune.musical.transformations.Namer;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;

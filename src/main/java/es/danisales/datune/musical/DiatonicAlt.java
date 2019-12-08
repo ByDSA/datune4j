@@ -2,8 +2,8 @@ package es.danisales.datune.musical;
 
 import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.absolutedegree.Diatonic;
+import es.danisales.datune.lang.Namer;
 import es.danisales.datune.midi.ChromaticMidi;
-import es.danisales.datune.musical.transformations.Namer;
 import es.danisales.datune.pitch.CyclicAbsoluteDegree;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.pitch.SymbolicPitch;
