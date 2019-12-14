@@ -99,12 +99,11 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
 
         @NonNull
         @Override
-        public ChromaticChord build() {
+        public ChromaticChord build() throws BuildingException {
             try {
                 return tonality.getChordFrom(diatonicFunction);
-            } catch (ScaleDegreeException e) { // todo: comprobar al asignar en builder y así evitar lanzar BuildingException
-                //throw new BuildingException(e);
-                return null;
+            } catch (ScaleDegreeException e) {
+                throw new BuildingException(e);
             }
         }
     }
@@ -117,12 +116,11 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
 
         @NonNull
         @Override
-        public ChromaticChord build() {
+        public ChromaticChord build() throws BuildingException {
             try {
                 return tonality.getChordFrom(chromaticFunction);
-            } catch (TonalityException | ScaleDegreeException e) { // todo: comprobar al asignar en builder y así evitar lanzar BuildingException
-                //throw new BuildingException(e);
-                return null;
+            } catch (TonalityException | ScaleDegreeException e) {
+                throw new BuildingException(e);
             }
         }
     }

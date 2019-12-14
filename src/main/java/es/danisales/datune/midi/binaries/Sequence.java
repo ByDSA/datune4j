@@ -9,16 +9,21 @@ import es.danisales.datune.midi.binaries.events.Header;
 import es.danisales.datune.midi.binaries.events.NoteOff;
 import es.danisales.datune.midi.binaries.events.NoteOn;
 import es.danisales.datune.midi.binaries.events.TempoEvent;
-import es.danisales.io.binary.BinaryFile;
+import es.danisales.io.binary.BinData;
+import es.danisales.io.binary.BinEncoder;
+import es.danisales.io.binary.BinFile;
+import es.danisales.io.binary.BinSize;
 
 import javax.sound.midi.*;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-public class Sequence extends BinaryFile {
+public class Sequence extends BinFile {
 	public final static int MILLISECONDS = 0;
 	public final static int MIDI = 1;
 
@@ -50,7 +55,7 @@ public class Sequence extends BinaryFile {
 		} catch (MidiUnavailableException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
 
 		//getAllFrom and load default instrument and channel lists
 		instr = midiSynth.getDefaultSoundbank().getInstruments();
@@ -160,48 +165,47 @@ public class Sequence extends BinaryFile {
 		System.out.println("END!");
 	}
 	 */
-	@Override
-	public void write(ByteBuffer buff) {
-		//ready(MIDI);
 
-		Header h = generateHeader();
+	static {
+		BinEncoder.register(Sequence.class, (Sequence self, BinEncoder.EncoderSettings settings) -> {
+			DataOutputStream dataOutputStream = settings.dataOutputStream;
+			ByteArrayOutputStream byteArrayOutputStream = settings.byteArrayOutputStream;
+			Header h = self.generateHeader();
 
-		h.write( buff );
+			BinData.encoder()
+					.from(h)
+					.to(settings)
+					.putIntoStream();
 
 
-		for(Track c : tracks) {
-			c.write( buff );
-		}
+			for (Track c : self.tracks) {
+				BinData.encoder()
+						.from(c)
+						.to(settings)
+						.putIntoStream();
+			}
+		});
 
-		if ( !save() )
-			throw new RuntimeException("No se pudo guardar");
+		BinSize.registerSize(Sequence.class, (Sequence self, BinEncoder.EncoderSettings settings) -> {
+			int s = 0;
+			Header h = self.generateHeader();
+			s += BinSize.getBinarySizeOf(h);
+			for (Track c : self.tracks) {
+				s += c.sizeBytes();
+			}
+			return s;
+		});
 	}
-	
+
 	private Header generateHeader() {
 		return new Header(Header.MULTIPLE_TRACK, tracks.size(), new byte[]{0x03, (byte)0xc0});
-	}
-	
-	@Override
-	public int sizeBytes() {
-		int s = 0;
-		s += generateHeader().sizeBytes();
-		for(Track c : tracks) {
-			s += c.sizeBytes();
-		}
-		return s;
-	}
-
-	@Override
-	public void read(ByteBuffer buff) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public int getTempo() {
 		return tempo;
 	}
 
-	public Sequence setTempo(int time, int tem) {	
+	public Sequence setTempo(int time, int tem) {
 		firstChannel.add(time, new TempoEvent(tem));
 
 		return this;
@@ -241,7 +245,7 @@ public class Sequence extends BinaryFile {
 			//System.out.println("Track " + trackNumber + ": size = " + track.size());
 			Track t = null;
 			//System.out.println();
-			for (int i=0; i < track.size(); i++) { 
+			for (int i = 0; i < track.size(); i++) {
 				MidiEvent event = track.get(i);
 				//System.out.print("@" + event.getTick() / (float)sequence.getResolution() + " ");
 				MidiMessage message = event.getMessage();
@@ -279,9 +283,13 @@ public class Sequence extends BinaryFile {
 						int type = sm.getData1();
 						int data = sm.getData2();
 						switch(type) {
-						case 0x0A: t.setPan(data); break;
-						case 0x07: t.setVolume(data); break;
-						//default: System.out.println("Type:" + type);
+							case 0x0A:
+								t.setPan(data);
+								break;
+							case 0x07:
+								t.setVolume(data);
+								break;
+							//default: System.out.println("Type:" + type);
 						}
 
 					} else {
@@ -296,5 +304,19 @@ public class Sequence extends BinaryFile {
 		}
 
 		return song;
+	}
+
+	@Override
+	protected byte[] encode() {
+		return BinData.encoder()
+				.from(this)
+				.getBytes();
+	}
+
+	@Override
+	protected void decode(byte[] byteArray) {
+		BinData.decoder(Sequence.class)
+				.from(ByteBuffer.wrap(byteArray))
+				.getInstance();
 	}
 }

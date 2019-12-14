@@ -2,14 +2,17 @@ package es.danisales.datune.midi.binaries.events;
 
 import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.io.binary.BinData;
+import es.danisales.io.binary.BinSize;
 
-import java.nio.ByteBuffer;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 
-public interface EventComplex extends Event {	
+public interface EventComplex extends Event {
 	EventSequence getEvents();
 	default EventSequence getBasicEvents() {
 		EventSequence seq = new EventSequence();
@@ -32,28 +35,21 @@ public interface EventComplex extends Event {
 
 		return seq;
 	}
-	
-	@Override
+
 	default int sizeBytes() {
 		EventSequence e = getBasicEvents();
 		AtomicInteger s = new AtomicInteger(0);
 		e.getMap().forEach( (Long key, ArrayList<Event> value) -> {
 			for (Event ev : value) {
-				s.addAndGet( ev.sizeBytes() );
+				s.addAndGet(BinSize.getBinarySizeOf(ev));
 			}
 				
 		});
 		
 		return s.get();
 	}
-	
-	@Override
-	default void read(ByteBuffer buff) {
-		// TODO
-	}
 
-	@Override
-	default void write(ByteBuffer buff) {
+	default void writeInto(DataOutputStream dataOutputStream, ByteArrayOutputStream buff) {
 		EventSequence e = getBasicEvents();
 
         AtomicReference<Tonality> tonalityAtomicReference = new AtomicReference<>(null);
@@ -86,7 +82,10 @@ public interface EventComplex extends Event {
 					if (ev instanceof ChunkData)
 						((ChunkData) me).setDelta(delta);
 
-					buff.put( me.getBytes() );
+					BinData.encoder()
+							.from(me)
+							.to(dataOutputStream, buff)
+							.putIntoStream();
 				}
 			}
 		});

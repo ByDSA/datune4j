@@ -1,8 +1,10 @@
 package es.danisales.datune.midi.binaries.events;
 
 import es.danisales.datune.midi.binaries.Utils;
+import es.danisales.io.binary.BinData;
 
-import java.nio.ByteBuffer;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 
 public abstract class ChunkData implements Event {
 	int delta;
@@ -34,7 +36,6 @@ public abstract class ChunkData implements Event {
 		return data;
 	}
 
-	@Override
 	public int sizeBytes() {
 		byte[] deltaByte = Utils.deltaByte(delta);
 		int l = deltaByte.length;
@@ -42,15 +43,25 @@ public abstract class ChunkData implements Event {
 		return 1+l+data.length;
 	}
 
-	@Override
-	public void write(ByteBuffer buff) {
+	public void writeInto(DataOutputStream dataOutputStream, ByteArrayOutputStream buff) {
 		if (data == null)
 			throw new NullPointerException("No se ha especificado 'data'");
 
 		byte[] deltaByte = Utils.deltaByte(delta);
-		buff.put( deltaByte );
-		buff.put( status );
-		buff.put( data );
+		BinData.encoder()
+				.from(deltaByte)
+				.to(dataOutputStream, buff)
+				.putIntoStream();
+
+		BinData.encoder()
+				.from(status)
+				.to(dataOutputStream, buff)
+				.putIntoStream();
+
+		BinData.encoder()
+				.from(data)
+				.to(dataOutputStream, buff)
+				.putIntoStream();
 	}
 
 	void cloneInto(ChunkData cd) {
@@ -59,12 +70,6 @@ public abstract class ChunkData implements Event {
 		int len = data.length;
 		cd.data = new byte[len];
 		System.arraycopy(data, 0, cd.data, 0, len);
-	}
-
-	@Override
-	public void read(ByteBuffer buff) {
-		// TODO Auto-generated method stub
-
 	}
 	
 	public abstract ChunkData clone();
