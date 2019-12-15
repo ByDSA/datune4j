@@ -13,6 +13,7 @@ import es.danisales.io.binary.BinData;
 import es.danisales.io.binary.BinEncoder;
 import es.danisales.io.binary.BinFile;
 import es.danisales.io.binary.BinSize;
+import es.danisales.utils.building.BuildingException;
 
 import javax.sound.midi.*;
 import java.io.ByteArrayOutputStream;
@@ -168,20 +169,20 @@ public class Sequence extends BinFile {
 
 	static {
 		BinEncoder.register(Sequence.class, (Sequence self, BinEncoder.EncoderSettings settings) -> {
-			DataOutputStream dataOutputStream = settings.dataOutputStream;
-			ByteArrayOutputStream byteArrayOutputStream = settings.byteArrayOutputStream;
+			DataOutputStream dataOutputStream = settings.getDataOutputStream();
+			ByteArrayOutputStream byteArrayOutputStream = settings.getByteArrayOutputStream();
 			Header h = self.generateHeader();
 
 			BinData.encoder()
 					.from(h)
-					.to(settings)
+					.toStream(dataOutputStream, byteArrayOutputStream)
 					.putIntoStream();
 
 
 			for (Track c : self.tracks) {
 				BinData.encoder()
 						.from(c)
-						.to(settings)
+						.toStream(dataOutputStream, byteArrayOutputStream)
 						.putIntoStream();
 			}
 		});
@@ -267,7 +268,16 @@ public class Sequence extends BinFile {
 						//String noteName = NOTE_NAMES[note];
 						int velocity = sm.getData2();
 						//System.out.println("Note on, " + noteName + octave + " key=" + key + " velocity: " + velocity);
-						t.add(time, new NoteOn( key, velocity ));
+						NoteOn noteOn;
+						try {
+							noteOn = NoteOn.builder()
+									.key(key)
+									.velocity(velocity)
+									.build();
+						} catch (BuildingException e) {
+							continue;
+						}
+						t.add(time, noteOn);
 					} else if (sm.getCommand() == 0x80) { // Note Off
 						int key = sm.getData1();
 						int octave = (key / 12)-1;
@@ -275,7 +285,16 @@ public class Sequence extends BinFile {
 						//String noteName = NOTE_NAMES[note];
 						int velocity = sm.getData2();
 						//System.out.println("Note off, " + noteName + octave + " key=" + key + " velocity: " + velocity);
-						t.add(time, new NoteOff(key, velocity));
+						NoteOff noteOff;
+						try {
+							noteOff = NoteOff.builder()
+									.key(key)
+									.velocity(velocity)
+									.build();
+						} catch (BuildingException e) {
+							continue;
+						}
+						t.add(time, noteOff);
 					} else if (sm.getCommand() == 0xC0) { // Program Change
 						int ins = sm.getData1();
 						t.setInstrument(Instrument.get(ins));

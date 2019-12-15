@@ -25,9 +25,9 @@ public class EventSequence implements Durable, EventComplex {
 		map = new TreeMap<>();
 	}
 
-	public void add(long t, Event e) {
-		map.computeIfAbsent(t, k -> new ArrayList<>());
-		map.get( t ).add( e );
+	public void add(long time, Event event) {
+		map.computeIfAbsent(time, k -> new ArrayList<>());
+		map.get(time).add(event);
 	}
 	/*
 	 * public void addFunction(long t, Class cl, Function f, long size) {
@@ -129,7 +129,7 @@ public class EventSequence implements Durable, EventComplex {
 		this.forEach( (time, ev) -> {
 			float tf = time / (float) Duration.L1;
 			if ( ev instanceof NoteOn ) {
-                int nc = ((NoteOn) ev).getNote().getPitch().getMidiCode();
+				int nc = ((NoteOn) ev).getMidiCode();
 				assert nc >= 0;
 				if ( notesOn.get( nc ) == null ) {
 					Queue<Long> q1 = new LinkedList<Long>();
@@ -145,7 +145,7 @@ public class EventSequence implements Durable, EventComplex {
 
 				assert notesOn.get( nc ) != null;
 			} else if ( ev instanceof NoteOff ) {
-                int nc = ((NoteOff) ev).getNote().getPitch().getMidiCode();
+				int nc = ((NoteOff) ev).getMidiCode();
 				assert nc >= 0;
 
 				Queue<NoteOn> evOnQueue = notesOnEvent.get( nc );
@@ -164,7 +164,7 @@ public class EventSequence implements Durable, EventComplex {
 					ChromaticMidi n = ChromaticMidi.builder()
                             .pitch(pitchChromaticMidi)
 							.length( (int) ( time - onTime ) )
-                            .velocity(evOn.getNote().getVelocity())
+							.velocity(evOn.getVelocity())
 							.build();
 					es.add( onTime, n );
 
@@ -277,10 +277,10 @@ public class EventSequence implements Durable, EventComplex {
                 lastTime.set(time);
                 if (ev instanceof NoteOn) {
                     NoteOn n = (NoteOn) ev;
-                    Midi.mChannels[0].noteOn(n.getNote().getPitch().getMidiCode(), n.getNote().getVelocity());
+					Midi.mChannels[0].noteOn(n.getMidiCode(), n.getVelocity());
                 } else if (ev instanceof NoteOff) {
                     NoteOff n = (NoteOff) ev;
-                    Midi.mChannels[0].noteOff(n.getNote().getPitch().getMidiCode());
+					Midi.mChannels[0].noteOff(n.getMidiCode());
                 }
 
                 return true;

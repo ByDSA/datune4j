@@ -6,6 +6,8 @@ import es.danisales.datune.midi.binaries.events.NoteOff;
 import es.danisales.datune.midi.binaries.events.NoteOn;
 import es.danisales.datune.midi.pitch.PitchMidiInterface;
 import es.danisales.datune.pitch.SymbolicPitch;
+import es.danisales.utils.NeverHappensException;
+import es.danisales.utils.building.BuildingException;
 
 public abstract class NoteMidi<P extends PitchMidiInterface> implements SymbolicPitch, EventComplex, Durable, Velocitiable {
     protected int velocity;
@@ -41,8 +43,22 @@ public abstract class NoteMidi<P extends PitchMidiInterface> implements Symbolic
     @Override
     public final EventSequence getEvents() {
         EventSequence es = new EventSequence();
-        es.add(0, new NoteOn(this));
-        es.add(length, new NoteOff(this));
+        NoteOn noteOn;
+        try {
+            noteOn = NoteOn.builder()
+                    .from(this)
+                    .build();
+
+            es.add(0, noteOn);
+
+            NoteOff noteOff = NoteOff.builder()
+                    .from(this)
+                    .build();
+            es.add(length, noteOff);
+
+        } catch (BuildingException ignored) {
+            throw NeverHappensException.make("");
+        }
 
         return es;
     }

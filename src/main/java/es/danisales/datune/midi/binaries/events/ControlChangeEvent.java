@@ -1,27 +1,28 @@
 package es.danisales.datune.midi.binaries.events;
 
-public class ControlChangeEvent extends ChannelEvent {
+public abstract class ControlChangeEvent extends ChannelEvent {
 	private int value;
 	private byte controllerNumber;
 
-	private ControlChangeEvent(int delta, byte status, byte c, int channel, int v) {
+	protected ControlChangeEvent(int delta, byte status, byte controllerNumber, int channel, int value) {
 		super(delta, status, channel);
-		
-		controllerNumber = c;
-		setValue(v);
-	}
-	
-	ControlChangeEvent(int delta, byte status, byte c, int v) {
-		this(delta, status, c, 0, v);
-	}
-	
-	public ControlChangeEvent(byte status, byte c, int v) {
-		this(0, status, c, 0, v);
+
+		this.controllerNumber = controllerNumber;
+		setValue(value);
 	}
 
 	public void setValue(int v) {
 		value = v;
 
-		setData(new byte[]{controllerNumber, (byte)(value & 0x7F)});
+		updateData();
+	}
+
+	public int getValue() {
+		return value;
+	}
+
+	@Override
+	public byte[] generateData() {
+		return new byte[]{controllerNumber, (byte) (value & 0x7F)};
 	}
 }

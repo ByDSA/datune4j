@@ -1,33 +1,30 @@
 package es.danisales.datune.midi.binaries.events;
 
-public class MetaEvent extends ChunkData {
+import es.danisales.io.binary.BinEncoder;
+
+import java.io.IOException;
+
+public abstract class MetaEvent extends ChunkData {
+	static final byte STATUS = (byte) 0xFF;
 	byte type;
-	
-	private MetaEvent() {
-		super(0, (byte) 0);
-	}
-	
-	protected MetaEvent(int d, byte t) {
-		super(d, (byte)0xFF);
-		
-		type = t;
-	}
-	
-	protected byte[] getMetaBytes() {
-		byte[] ret = new byte[4+data.length];
-		ret[0] = (byte)delta;
-		ret[1] = status;
-		ret[2] = type;
-		ret[3] = (byte)data.length;
-		System.arraycopy(data, 0, ret, 4, data.length);
-		
-		return ret;
+
+	protected MetaEvent(int delta, byte type) {
+		super(delta, STATUS);
+
+		this.type = type;
 	}
 
-	@Override
-	public MetaEvent clone() {
-		MetaEvent m = new MetaEvent();
-		m.type =  type;
-		return m;
+	protected static void getMetaBytes(MetaEvent self, BinEncoder.EncoderSettings settings) {
+		byte[] ret = new byte[4 + self.getData().length];
+		ret[0] = (byte) self.getDelta();
+		ret[1] = self.getStatus();
+		ret[2] = self.type;
+		ret[3] = (byte) self.getData().length;
+		System.arraycopy(self.getData(), 0, ret, 4, self.getData().length);
+
+		try {
+			settings.getDataOutputStream().write(ret);
+		} catch (IOException ignored) {
+		}
 	}
 }

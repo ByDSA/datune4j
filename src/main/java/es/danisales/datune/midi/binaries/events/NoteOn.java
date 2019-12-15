@@ -1,49 +1,61 @@
 package es.danisales.datune.midi.binaries.events;
 
-import es.danisales.datune.midi.NoteMidi;
-import es.danisales.datune.midi.Settings;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import es.danisales.datune.midi.pitch.PitchChromaticMidi;
+import es.danisales.datune.midi.pitch.PitchMidiException;
+import es.danisales.io.binary.BinEncoder;
+import es.danisales.io.binary.BinSize;
+import es.danisales.utils.NeverHappensException;
+import es.danisales.utils.building.BuildingException;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
-public class NoteOn extends ChannelEvent {
-	private NoteMidi note;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 
-	public NoteOn(NoteMidi n) {
-		this(0, n.getPitch().getMidiCode(), n.getVelocity());
-		note = n;
+import static com.google.common.base.Preconditions.checkState;
+
+public final class NoteOn extends NoteEvent {
+	static final byte STATUS_BASE = (byte) (0x90);
+
+	static {
+		BinEncoder.register(NoteOn.class, (BiConsumer<ChannelEvent, BinEncoder.EncoderSettings>) ChunkData::encoder);
+		BinSize.registerSize(NoteOn.class, (BiFunction<ChannelEvent, BinEncoder.EncoderSettings, Integer>) ChunkData::getBinarySize);
 	}
 
-	private NoteOn(int delta, int key, int vel) {
-		super(delta, (byte)(0x90));
-		
-		byte code = (byte)key;
-		byte velocity = (byte)vel;
-		
-		
-		setData( new byte[]{ code, velocity });
-	}
-	
-	public NoteOn(int key, int vel) {
-		this(0, key, vel);
-	}
-	
-	public NoteOn(int key) {
-		this(0, key, Settings.DefaultValues.VELOCITY);
+	public static Builder builder() {
+		return new Builder();
 	}
 
-	public @Nullable NoteMidi getNote() {
-		return note;
+	public static class Builder extends NoteEvent.Builder<NoteOn> {
+		private Builder() {
+		}
+
+		@NonNull
+		@Override
+		public NoteOn build() throws BuildingException {
+			checkState(key > -1);
+			try {
+				PitchMidiException.check(key);
+				return new NoteOn(delta, key, velocity, channel);
+			} catch (PitchMidiException e) {
+				throw new BuildingException(e);
+			}
+		}
+	}
+
+	private NoteOn(int delta, int key, int velocity, int channel) {
+		super(delta, key, velocity, STATUS_BASE, channel);
 	}
 	
 	public String toString() {
-		return "NoteOn " + note;
+		try {
+			return "NoteOn " + PitchChromaticMidi.from(getMidiCode());
+		} catch (PitchMidiException e) {
+			throw NeverHappensException.make("El código siempre es válido");
+		}
 	}
 
-	@SuppressWarnings("MethodDoesntCallSuperMethod")
 	@Override
 	public NoteOn clone() {
-		NoteOn r = new NoteOn(note.clone());
-		r.setData(getData());
-
-		return r;
+		return new NoteOn(getDelta(), getMidiCode(), getVelocity(), getChannel());
 	}
 }

@@ -1,35 +1,21 @@
 package es.danisales.datune.midi.binaries.events;
 
-public class ChannelEvent extends ChunkData {
+abstract class ChannelEvent extends ChunkData {
 	private int channel;
 	private byte statusBase;
 
-	private ChannelEvent() {
-		super(0, (byte)0);
+	ChannelEvent(int delta, byte status, int channelNumber) {
+		super(delta, status);
+		statusBase = status;
+		setChannel(channelNumber);
 	}
 
-	ChannelEvent(int d, byte s, int n) {
-		super(d, s);
-		statusBase = s;
-		setChannel(n);
+	void setChannel(int channelNumber) {
+		channel = channelNumber;
+		setStatus((byte) (statusBase + (channelNumber & 0x0F)));
 	}
 
-	ChannelEvent(int d, byte s) {
-		this(d, s, 0);
-	}
-
-	void setChannel(int n) {
-		channel = n;
-		setStatus((byte)(statusBase + (n & 0x0F)));
-	}
-
-	@Override
-	public ChannelEvent clone() {
-		ChannelEvent ce = new ChannelEvent();
-		cloneInto(ce);
-		ce.channel = channel;
-		ce.statusBase = statusBase;
-
-		return ce;
+	int getChannel() {
+		return channel;
 	}
 }

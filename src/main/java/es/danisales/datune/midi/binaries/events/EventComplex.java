@@ -49,7 +49,7 @@ public interface EventComplex extends Event {
 		return s.get();
 	}
 
-	default void writeInto(DataOutputStream dataOutputStream, ByteArrayOutputStream buff) {
+	default void writeInto(DataOutputStream dataOutputStream, ByteArrayOutputStream byteArrayOutputStream) {
 		EventSequence e = getBasicEvents();
 
         AtomicReference<Tonality> tonalityAtomicReference = new AtomicReference<>(null);
@@ -84,7 +84,7 @@ public interface EventComplex extends Event {
 
 					BinData.encoder()
 							.from(me)
-							.to(dataOutputStream, buff)
+							.toStream(dataOutputStream, byteArrayOutputStream)
 							.putIntoStream();
 				}
 			}

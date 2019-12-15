@@ -1,44 +1,61 @@
 package es.danisales.datune.midi.binaries.events;
 
-import es.danisales.datune.midi.NoteMidi;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import es.danisales.datune.midi.pitch.PitchChromaticMidi;
+import es.danisales.datune.midi.pitch.PitchMidiException;
+import es.danisales.io.binary.BinEncoder;
+import es.danisales.io.binary.BinSize;
+import es.danisales.utils.NeverHappensException;
+import es.danisales.utils.building.BuildingException;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
-public class NoteOff extends ChannelEvent {
-    private NoteMidi note;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 
-    public NoteOff(NoteMidi n) {
-        this(0, n.getPitch().getMidiCode(), n.getVelocity());
-		note = n;
+import static com.google.common.base.Preconditions.checkState;
+
+public final class NoteOff extends NoteEvent {
+	static final byte STATUS_BASE = (byte) 0x80;
+
+	static {
+		BinEncoder.register(NoteOn.class, (BiConsumer<ChannelEvent, BinEncoder.EncoderSettings>) ChunkData::encoder);
+		BinSize.registerSize(NoteOn.class, (BiFunction<ChannelEvent, BinEncoder.EncoderSettings, Integer>) ChunkData::getBinarySize);
 	}
 
-    private NoteOff(int d, int key, int vel) {
-		super(d, (byte)(0x80));
-		
-		byte code = (byte)key;
-		byte velocity = (byte)vel;
-		
-		
-		setData( new byte[]{ code, velocity });
+	public static Builder builder() {
+		return new Builder();
 	}
-	
-	public NoteOff(int code, int v) {
-		this(0, code, v);
+
+	public static class Builder extends NoteEvent.Builder<NoteOff> {
+		private Builder() {
+		}
+
+		@NonNull
+		@Override
+		public NoteOff build() throws BuildingException {
+			checkState(key > -1);
+			try {
+				PitchMidiException.check(key);
+				return new NoteOff(delta, key, velocity, channel);
+			} catch (PitchMidiException e) {
+				throw new BuildingException(e);
+			}
+		}
 	}
-	
+
+	private NoteOff(int delta, int key, int velocity, int channel) {
+		super(delta, key, velocity, STATUS_BASE, channel);
+	}
+
 	public String toString() {
-		return "NoteOff " + note;
+		try {
+			return "NoteOn " + PitchChromaticMidi.from(getMidiCode());
+		} catch (PitchMidiException e) {
+			throw NeverHappensException.make("El código siempre es válido");
+		}
 	}
 
-    public @Nullable NoteMidi getNote() {
-        return note;
-    }
-
-    @SuppressWarnings("MethodDoesntCallSuperMethod")
 	@Override
 	public NoteOff clone() {
-		NoteOff r = new NoteOff(note.clone());
-		r.setData(getData());
-		
-		return r;
+		return new NoteOff(getDelta(), getMidiCode(), getVelocity(), getChannel());
 	}
 }

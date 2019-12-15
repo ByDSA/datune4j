@@ -4,8 +4,10 @@ import es.danisales.datune.midi.Progressions.Progression;
 import es.danisales.datune.midi.binaries.Sequence;
 import es.danisales.datune.midi.binaries.events.*;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.io.binary.BinData;
 
-import java.nio.ByteBuffer;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 
 public class Track extends EventSequence {
 	private int channel;
@@ -47,11 +49,16 @@ public class Track extends EventSequence {
 	}
 
 	public void setPan(int p) {
-		add(0, new Pan(p));
+		Pan pan = Pan.builder()
+				.delta(0)
+				.value(p)
+				.channel(channel)
+				.build();
+		add(0, pan);
 	}
 
 	public void setVolume(int p) {
-		add(0, new Volume(p));
+		add(0, new Volume(0, p, channel));
 	}
 
 	public void setScale(int t, Tonality s) {
@@ -82,45 +89,59 @@ public class Track extends EventSequence {
 		add(d, new ProgramChange(getChannel(), v));
 	}
 
-	@Override
-	public void write(ByteBuffer buff) {
-		EventSequence e = getBasicEvents();
-		TrackChunk tc = new TrackChunk();
+	class MetaEvent20 extends MetaEvent {
+		public MetaEvent20() {
+			super(0, (byte) 0x20);
+		}
+
+		@Override
+		protected byte[] generateData() {
+			return new byte[]{(byte) channel};
+		}
+
+		@Override
+		public MetaEvent20 clone() {
+			return new MetaEvent20();
+		}
+	}
+
+	public void writeIn(DataOutputStream dataOutputStream, ByteArrayOutputStream byteArrayOutputStream) {
+		EventSequence eventSequence = getBasicEvents();
+		TrackChunk trackChunk = new TrackChunk();
 
 		if (sequence != null) {
 			TempoEvent t = new TempoEvent( sequence.getTempo() );
-			tc.add( t );
+			trackChunk.add(t);
 
 			final byte[] timeSigEvent = new byte[]
 					{
-						0x00, (byte)0xFF, 0x58, 0x04,
-						0x04, // numerator
-						0x02, // denominator (2==4, because it's a power fromIndex 2)
-						0x18, // ticks per click (not used)
-						0x08  // 32nd notes per crotchet 
+							0x00, (byte) 0xFF, 0x58, 0x04,
+							0x04, // numerator
+							0x02, // denominator (2==4, because it's a power fromIndex 2)
+							0x18, // ticks per click (not used)
+							0x08  // 32nd notes per crotchet
 					};
-			tc.add (timeSigEvent);
+			trackChunk.add(timeSigEvent);
 		} else {
-			tc.add(new MetaEvent(0, (byte)0x20) {
-				{
-					setData(new byte[]{(byte)channel});
-				}
-			});
+			trackChunk.add(new MetaEvent20());
 
-			tc.add( new ProgramChange(channel, midiInstrument) );
+			trackChunk.add(new ProgramChange(channel, midiInstrument));
 		}
 
-		tc.add(e);
+		trackChunk.add(eventSequence);
 
 		// Standard footer
 		final byte[] footer = new byte[]
 				{
-					0x00,
-					(byte)0xFF, 0x2F, 0x00
+						0x00,
+						(byte) 0xFF, 0x2F, 0x00
 				};
 
-		tc.add(footer);
+		trackChunk.add(footer);
 
-		tc.write( buff );
+		BinData.encoder()
+				.from(trackChunk)
+				.toStream(dataOutputStream, byteArrayOutputStream)
+				.putIntoStream();
 	}
 }

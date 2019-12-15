@@ -230,7 +230,7 @@ public class Power extends Song {
 
 		channelPad.add(seek, chorusPad());
 
-		drums.add(seek, Drums.POWER);
+		drums.add(seek, DrumsSequence.POWER);
 
 		return startPad().getDuration();
 
@@ -323,8 +323,8 @@ public class Power extends Song {
 
 		channelGuitars2.add(seek, cad);
 
-		for(int i = 0; i < cad.getDuration(); i+= Drums.POWER.getLength())
-			drums.add(seek+ i, Drums.POWER);
+		for (int i = 0; i < cad.getDuration(); i += DrumsSequence.POWER.getLength())
+			drums.add(seek + i, DrumsSequence.POWER);
 
 		return cad.getDuration();
 	}

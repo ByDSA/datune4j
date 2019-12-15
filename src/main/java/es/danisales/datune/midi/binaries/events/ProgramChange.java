@@ -2,35 +2,33 @@ package es.danisales.datune.midi.binaries.events;
 
 import es.danisales.datune.eventsequences.Instrument;
 
-public class ProgramChange extends ChannelEvent {
-	private Instrument value;
+public final class ProgramChange extends ChannelEvent {
+	static final byte STATUS = (byte) 0xC0;
+	private Instrument instrument;
 
-	public ProgramChange(int delta, int channel, Instrument v) {
-		super(delta, (byte)0xC0, channel);
-		
-		setValue(v);
+	private ProgramChange(int delta, int channel, Instrument instrument) {
+		super(delta, STATUS, channel);
+
+		setInstrument(instrument);
 	}
-	
+
 	public ProgramChange(int channel, Instrument v) {
 		this(0, channel, v);
 	}
-	
-	public ProgramChange(Instrument v) {
-		this(0, 0, v);
-	}
-	
-	public void setValue(Instrument v) {
-		value = v;
 
-		setData(new byte[]{(byte)(value.val() & 0x7F)});
+	public void setInstrument(Instrument v) {
+		instrument = v;
+
+		updateData();
 	}
 
-	@SuppressWarnings("MethodDoesntCallSuperMethod")
+	@Override
+	public byte[] generateData() {
+		return new byte[]{(byte) (instrument.val() & 0x7F)};
+	}
+
 	@Override
 	public ProgramChange clone() {
-		ProgramChange r = new ProgramChange(value);
-		r.setData(getData());
-
-		return r;
+		return new ProgramChange(getDelta(), getChannel(), instrument);
 	}
 }

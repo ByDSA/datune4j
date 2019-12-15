@@ -4,17 +4,15 @@ import es.danisales.io.binary.BinData;
 import es.danisales.io.binary.BinEncoder;
 import es.danisales.io.binary.BinSize;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Chunk<This extends Chunk> implements Event {
     static {
         BinEncoder.register(Chunk.class, (Chunk<?> self, BinEncoder.EncoderSettings settings) -> {
-            ByteArrayOutputStream byteArrayOutputStream = settings.byteArrayOutputStream;
             BinData.encoder()
                     .from(self.type)
-                    .to(settings)
+					.toStream(settings.getDataOutputStream(), settings.getByteArrayOutputStream())
                     .putIntoStream();
 
             byte[] lengthBytes = new byte[4];
@@ -25,19 +23,17 @@ public class Chunk<This extends Chunk> implements Event {
 
             BinData.encoder()
                     .from(lengthBytes)
-                    .to(settings)
+					.toStream(settings.getDataOutputStream(), settings.getByteArrayOutputStream())
                     .putIntoStream();
 
             for (Object b : self.data)
                 BinData.encoder()
                         .from(b)
-                        .to(settings)
+						.toStream(settings.getDataOutputStream(), settings.getByteArrayOutputStream())
                         .putIntoStream();
         });
 
-        BinSize.registerSize(Chunk.class, (Chunk<?> self, BinEncoder.EncoderSettings settings) -> {
-            return 4 + self.type.length + self.dataSizeBytes();
-        });
+		BinSize.registerSize(Chunk.class, (Chunk<?> self, BinEncoder.EncoderSettings settings) -> 4 + self.type.length + self.dataSizeBytes());
     }
 
 	protected byte[] type;

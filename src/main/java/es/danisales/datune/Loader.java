@@ -20,6 +20,7 @@ import es.danisales.datune.pitch.ChordNamer;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.ScaleDegreeException;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.utils.NeverHappensException;
 import es.danisales.utils.building.BuildingException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -272,15 +273,33 @@ class Loader {
 
     private static <T extends NoteMidi<?>> void play(ChordMidi<T, ?, ?> diatonicChordMidi) {
         EventSequence es = new EventSequence();
-        for (T diatonicMidi : diatonicChordMidi)
-            es.add(0, new NoteOn(diatonicMidi));
+        for (T diatonicMidi : diatonicChordMidi) {
+            NoteOn noteOn = null;
+            try {
+                noteOn = NoteOn.builder()
+                        .from(diatonicMidi)
+                        .build();
+            } catch (BuildingException e) {
+                throw NeverHappensException.make("");
+            }
+            es.add(0, noteOn);
+        }
         es.play();
     }
 
     private static <T extends NoteMidi<?>> void stop(ChordMidi<T, ?, ?> diatonicChordMidi) {
         EventSequence es = new EventSequence();
-        for (T diatonicMidi : diatonicChordMidi)
-            es.add(0, new NoteOff(diatonicMidi));
+        for (T diatonicMidi : diatonicChordMidi) {
+            NoteOff noteOff = null;
+            try {
+                noteOff = NoteOff.builder()
+                        .from(diatonicMidi)
+                        .build();
+            } catch (BuildingException e) {
+                throw NeverHappensException.make("");
+            }
+            es.add(0, noteOff);
+        }
         es.play();
     }
 }
