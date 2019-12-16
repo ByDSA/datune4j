@@ -23,7 +23,7 @@ public class DrumsSequence extends EventSequence {
         NoteOn noteOn;
         try {
             noteOn = NoteOn.builder()
-                    .key(pitchNumber.getCode())
+                    .pitch(pitchNumber.getCode())
                     .build();
         } catch (BuildingException e) {
             throw NeverHappensException.make("La entrada siempre es válida al ser de un enum con valores controlados");

@@ -14,7 +14,7 @@ import java.util.function.BiFunction;
 import static com.google.common.base.Preconditions.checkState;
 
 public final class NoteOff extends NoteEvent {
-	static final byte STATUS_BASE = (byte) 0x80;
+	public static final byte STATUS_BASE = (byte) 0x80;
 
 	static {
 		BinEncoder.register(NoteOn.class, (BiConsumer<ChannelEvent, BinEncoder.EncoderSettings>) ChunkData::encoder);
@@ -32,18 +32,18 @@ public final class NoteOff extends NoteEvent {
 		@NonNull
 		@Override
 		public NoteOff build() throws BuildingException {
-			checkState(key > -1);
+			checkState(pitch > -1);
 			try {
-				PitchMidiException.check(key);
-				return new NoteOff(delta, key, velocity, channel);
+				PitchMidiException.check(pitch);
+				return new NoteOff(delta, pitch, velocity, channel);
 			} catch (PitchMidiException e) {
 				throw new BuildingException(e);
 			}
 		}
 	}
 
-	private NoteOff(int delta, int key, int velocity, int channel) {
-		super(delta, key, velocity, STATUS_BASE, channel);
+	private NoteOff(int delta, int pitch, int velocity, int channel) {
+		super(delta, pitch, velocity, STATUS_BASE, channel);
 	}
 
 	public String toString() {

@@ -13,6 +13,10 @@ abstract class ChunkData implements Event {
 	private byte status;
 	private byte[] data;
 
+    public static int boundDelta(int delta) {
+        return es.danisales.utils.Utils.bound(delta, 0, 65535); // 2 bytes
+    }
+
 	ChunkData(int delta, byte status) {
 		this.delta = delta;
 		setStatus(status);
@@ -22,7 +26,7 @@ abstract class ChunkData implements Event {
 		delta = d;
 	}
 
-	protected final void updateData() {
+    final void updateData() {
 		data = generateData();
 	}
 
@@ -89,4 +93,16 @@ abstract class ChunkData implements Event {
 	public String toString() {
 		return "Delta: " + delta + " Status: " + status + " Data: " + Arrays.toString(data);
 	}
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof ChunkData))
+            return false;
+
+        ChunkData casted = (ChunkData) o;
+
+        return delta == casted.delta
+                && status == casted.status
+                && Arrays.equals(data, casted.data);
+    }
 }

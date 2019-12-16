@@ -7,19 +7,19 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 @SuppressWarnings("WeakerAccess")
 public class PitchMidiException extends PitchException {
 	public PitchMidiException(int n) {
-		super( "La figura musical está fuera de rango: " + n );
+        super("PitchMidi out of range: " + n);
 	}
 
 	public PitchMidiException(@NonNull PitchChromaticMidiImmutable n) {
-		super( "La figura musical " + n + "está fuera de rango: " + n.getCode() );
+        super("PitchMidi of " + n + " is out of range: " + n.getCode());
 	}
 
 	public PitchMidiException(@NonNull PitchDiatonicMidi n) {
-		super("La figura musical está fuera de rango: Degree=" + n.degree + " Tonality=" + n.tonality + " Octave=" + n.octave);
+        super("PitchMidi out of range: Degree=" + n.degree + " Tonality=" + n.tonality + " Octave=" + n.octave);
 	}
 
     public PitchMidiException(Chromatic chromatic, int octave) {
-        super("La figura musical está fuera de rango: " + chromatic + " " + octave);
+        super("PitchMidi out of range: " + chromatic + " " + octave);
     }
 
     public static void check(int code) throws PitchMidiException {

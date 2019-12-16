@@ -26,11 +26,17 @@ enum PitchChromaticMidiImmutable implements PitchChromaticSingle, PitchOctave, P
     }
 
     public PitchChromaticMidiImmutable getWithShiftOctave(int o) throws PitchMidiException {
-        return from(getCode() + Chromatic.NUMBER * o);
+        int code = getCode() + Chromatic.NUMBER * o;
+        PitchMidiException.check(code);
+        if (code != PitchChromaticMidi.boundCode(code))
+            throw new PitchMidiException(code);
+        return from(code);
     }
 
     public PitchChromaticMidiImmutable getWithOctave(int o) throws PitchMidiException {
-        return from(getCode() % Chromatic.NUMBER + Chromatic.NUMBER * o);
+        int code = getCode() % Chromatic.NUMBER + Chromatic.NUMBER * o;
+        PitchMidiException.check(code);
+        return from(code);
     }
 
     public int getCode() {
@@ -351,11 +357,13 @@ enum PitchChromaticMidiImmutable implements PitchChromaticSingle, PitchOctave, P
     }
 
     public @NonNull PitchChromaticMidiImmutable getShift(@NonNull IntervalChromatic intervalChromatic) throws PitchMidiException {
-        return getShift(intervalChromatic.getSemitones());
+        int semitonesShift = intervalChromatic.getSemitones();
+        return getShift(semitonesShift);
     }
 
     public @NonNull PitchChromaticMidiImmutable getShiftNegative(@NonNull IntervalChromatic intervalChromatic) throws PitchMidiException {
-        return getShift(-intervalChromatic.getSemitones());
+        int semitonesShift = -intervalChromatic.getSemitones();
+        return getShift(semitonesShift);
     }
 
     @Override

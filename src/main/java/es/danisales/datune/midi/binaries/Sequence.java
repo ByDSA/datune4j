@@ -98,7 +98,7 @@ public class Sequence extends BinFile {
 			//e.show(Note.V1);
 
 			for(Map.Entry<Long, ArrayList<Event>> entry : e.getMap().entrySet()) {
-				Long key = entry.getKey();
+				Long pitch = entry.getKey();
 				ArrayList<Event> value = entry.getMidiCode();
 
 				for(Event ev : value) {
@@ -107,9 +107,9 @@ public class Sequence extends BinFile {
 
 					long ms;
 					if (type == MILLISECONDS)
-						ms = (long)(60*1000.0 / tempo * key / Note.V4);
+						ms = (long)(60*1000.0 / tempo * pitch / Note.V4);
 					else if (type == MIDI)
-						ms = key;
+						ms = pitch;
 					else
 						ms = -1;
 					events.getWithSemiAdded(ms, ev);
@@ -140,9 +140,9 @@ public class Sequence extends BinFile {
 				Iterator<Map.Entry<Long, ArrayList<Event>>> it = events.getMap().entrySet().iterator();
 				if (it.hasNext() ) {
 					Map.Entry<Long, ArrayList<Event>> entry = it.nextDiatonic();
-					Long key = entry.getKey();
+					Long pitch = entry.getKey();
 					ArrayList<Event> value = entry.getMidiCode();
-					if (key > ms)
+					if (pitch > ms)
 						break;
 
 					for(Event e : value) {
@@ -157,7 +157,7 @@ public class Sequence extends BinFile {
 						}
 					}
 
-					events.remove(key);
+					events.remove(pitch);
 				} else
 					break;
 			}
@@ -261,34 +261,34 @@ public class Sequence extends BinFile {
 						song.add(t);
 					}
 
-					if (sm.getCommand() == 0x90) { // Note On
-						int key = sm.getData1();
-						int octave = (key / 12)-1;
-						int note = key % 12;
+					if (sm.getCommand() == (int) NoteOn.STATUS_BASE) { // Note On
+						int pitch = sm.getData1();
+						int octave = (pitch / 12) - 1;
+						int note = pitch % 12;
 						//String noteName = NOTE_NAMES[note];
 						int velocity = sm.getData2();
-						//System.out.println("Note on, " + noteName + octave + " key=" + key + " velocity: " + velocity);
+						//System.out.println("Note on, " + noteName + octave + " pitch=" + pitch + " velocity: " + velocity);
 						NoteOn noteOn;
 						try {
 							noteOn = NoteOn.builder()
-									.key(key)
+									.pitch(pitch)
 									.velocity(velocity)
 									.build();
 						} catch (BuildingException e) {
 							continue;
 						}
 						t.add(time, noteOn);
-					} else if (sm.getCommand() == 0x80) { // Note Off
-						int key = sm.getData1();
-						int octave = (key / 12)-1;
-						int note = key % 12;
+					} else if (sm.getCommand() == (int) NoteOff.STATUS_BASE) { // Note Off
+						int pitch = sm.getData1();
+						int octave = (pitch / 12) - 1;
+						int note = pitch % 12;
 						//String noteName = NOTE_NAMES[note];
 						int velocity = sm.getData2();
-						//System.out.println("Note off, " + noteName + octave + " key=" + key + " velocity: " + velocity);
+						//System.out.println("Note off, " + noteName + octave + " pitch=" + pitch + " velocity: " + velocity);
 						NoteOff noteOff;
 						try {
 							noteOff = NoteOff.builder()
-									.key(key)
+									.pitch(pitch)
 									.velocity(velocity)
 									.build();
 						} catch (BuildingException e) {

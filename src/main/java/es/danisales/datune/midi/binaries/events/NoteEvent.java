@@ -7,46 +7,47 @@ import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public abstract class NoteEvent extends ChannelEvent {
-    private int key;
+abstract class NoteEvent extends ChannelEvent {
+    private int pitch;
     private int velocity;
 
-    public static abstract class Builder<N extends NoteEvent> extends es.danisales.utils.building.Builder<Builder<N>, N> {
+    public static abstract class Builder<N extends NoteEvent>
+            extends es.danisales.utils.building.Builder<Builder<N>, N> {
         protected int delta = 0;
-        protected int key = -1;
+        protected int pitch = 0;
         protected int velocity = Settings.DefaultValues.VELOCITY;
         protected int channel = 0;
 
-        protected Builder() {
+        Builder() {
         }
 
         public Builder<N> delta(int delta) {
-            this.delta = delta;
+            this.delta = boundDelta(delta);
 
             return self();
         }
 
-        public Builder<N> key(int key) {
-            this.key = key;
+        public Builder<N> pitch(int pitch) {
+            this.pitch = PitchChromaticMidi.boundCode(pitch);
 
             return self();
         }
 
         public Builder<N> from(@NonNull NoteMidi noteMidi) {
-            this.key = noteMidi.getPitch().getMidiCode();
+            this.pitch = noteMidi.getPitch().getMidiCode();
             this.velocity = noteMidi.getVelocity();
 
             return self();
         }
 
         public Builder<N> velocity(int velocity) {
-            this.velocity = velocity;
+            this.velocity = boundVelocity(velocity);
 
             return self();
         }
 
         public Builder<N> channel(int channel) {
-            this.channel = channel;
+            this.channel = ChannelEvent.boundChannel(channel);
 
             return self();
         }
@@ -56,20 +57,23 @@ public abstract class NoteEvent extends ChannelEvent {
         protected Builder<N> self() {
             return this;
         }
-
     }
 
-    protected NoteEvent(int delta, int key, int velocity, byte statusBase, int channel) {
+    static int boundVelocity(int velocity) {
+        return es.danisales.utils.Utils.bound(velocity, 0, 127);
+    }
+
+    NoteEvent(int delta, int pitch, int velocity, byte statusBase, int channel) {
         super(delta, statusBase, channel);
 
-        this.key = key;
+        this.pitch = pitch;
         this.velocity = velocity;
 
         updateData();
     }
 
     public int getMidiCode() {
-        return key;
+        return pitch;
     }
 
     public int getVelocity() {
@@ -78,7 +82,7 @@ public abstract class NoteEvent extends ChannelEvent {
 
     @Override
     protected byte[] generateData() {
-        byte keyByte = (byte) key;
+        byte keyByte = (byte) pitch;
         byte velocityByte = (byte) velocity;
 
         return new byte[]{keyByte, velocityByte};
@@ -86,7 +90,7 @@ public abstract class NoteEvent extends ChannelEvent {
 
     public String toString() {
         try {
-            return "NoteOn " + PitchChromaticMidi.from(key);
+            return "NoteOn: " + PitchChromaticMidi.from(pitch);
         } catch (PitchMidiException e) {
             throw NeverHappensException.make("El código siempre es válido");
         }

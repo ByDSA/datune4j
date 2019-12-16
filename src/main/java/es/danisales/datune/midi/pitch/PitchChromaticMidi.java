@@ -8,6 +8,7 @@ import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.tonality.ScaleDegreeException;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.utils.NeverHappensException;
+import es.danisales.utils.Utils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInterface<IntervalChromatic> {
@@ -380,6 +381,14 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
 
     private PitchChromaticMidi() {
         fixed = false;
+    }
+
+    public static int boundCode(int key) {
+        return Utils.bound(key, PitchChromaticMidi.MIN.getMidiCode(), PitchChromaticMidi.MAX.getMidiCode());
+    }
+
+    public static int getCodeFrom(Chromatic chromatic, int octave) {
+        return octave * Chromatic.NUMBER + chromatic.ordinal();
     }
 
     @SuppressWarnings("MethodDoesntCallSuperMethod")

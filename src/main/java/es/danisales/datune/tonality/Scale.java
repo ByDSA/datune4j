@@ -269,7 +269,7 @@ public class Scale implements Iterable<ScaleDistance> {
 	/**
 	 * The function scale is obtained fromDiatonicAlt a chain fromDiatonicAlt six successive fifths
 	 It is either a sequence fromDiatonicAlt successive natural notes or a transposition thereof.
-	 It can be written using seven consecutive notes without accidentals on a staff with no key signature or, when transposed, with a conventional key signature or with accidentals.
+     It can be written using seven consecutive notes without accidentals on a staff with no pitch signature or, when transposed, with a conventional pitch signature or with accidentals.
 	 * @return if it's function
 	 */
 	public boolean isDiatonic() {

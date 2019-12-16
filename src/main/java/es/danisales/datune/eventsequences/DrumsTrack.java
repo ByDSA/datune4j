@@ -14,7 +14,7 @@ public class DrumsTrack extends Track {
             add(
                     time,
                     NoteOn.builder()
-                            .key(pitchNumber.getCode())
+                            .pitch(pitchNumber.getCode())
                             .build()
             );
         } catch (BuildingException e) {

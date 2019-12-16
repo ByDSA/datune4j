@@ -1,5 +1,6 @@
 package es.danisales.datune.midi.pitch;
 
+import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.absolutedegree.Diatonic;
 import es.danisales.datune.degree.Degree;
 import es.danisales.datune.degree.DiatonicDegree;
@@ -118,13 +119,17 @@ public class PitchDiatonicMidi implements PitchOctaveMidiEditable, PitchMidiInte
 
 	@Override
 	public void shiftOctave(int octaveShift) throws PitchMidiException {
+        PitchMidiException.check(getMidiCode() + Chromatic.NUMBER * octaveShift);
 		setOctave(octave + octaveShift);
 	}
 
 	@Override
 	public void setOctave(int octave) throws PitchMidiException {
+        PitchDiatonicMidi cloned = clone();
+        cloned.octave = octave;
+        PitchMidiException.check(cloned);
+
 		this.octave = octave;
-		PitchMidiException.check(this);
 	}
 
 	public void setDegree(@NonNull DiatonicDegree diatonicDegree) {
