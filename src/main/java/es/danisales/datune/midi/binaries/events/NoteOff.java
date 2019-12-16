@@ -5,20 +5,17 @@ import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.io.binary.BinEncoder;
 import es.danisales.io.binary.BinSize;
 import es.danisales.utils.NeverHappensException;
-import es.danisales.utils.building.BuildingException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
-import static com.google.common.base.Preconditions.checkState;
-
 public final class NoteOff extends NoteEvent {
 	public static final byte STATUS_BASE = (byte) 0x80;
 
 	static {
-		BinEncoder.register(NoteOn.class, (BiConsumer<ChannelEvent, BinEncoder.EncoderSettings>) ChunkData::encoder);
-		BinSize.registerSize(NoteOn.class, (BiFunction<ChannelEvent, BinEncoder.EncoderSettings, Integer>) ChunkData::getBinarySize);
+        BinEncoder.register(NoteOff.class, (BiConsumer<ChannelEvent, BinEncoder.EncoderSettings>) ChunkData::encoder);
+        BinSize.registerSize(NoteOff.class, (BiFunction<ChannelEvent, BinEncoder.EncoderSettings, Integer>) ChunkData::getBinarySize);
 	}
 
 	public static Builder builder() {
@@ -31,14 +28,8 @@ public final class NoteOff extends NoteEvent {
 
 		@NonNull
 		@Override
-		public NoteOff build() throws BuildingException {
-			checkState(pitch > -1);
-			try {
-				PitchMidiException.check(pitch);
-				return new NoteOff(delta, pitch, velocity, channel);
-			} catch (PitchMidiException e) {
-				throw new BuildingException(e);
-			}
+        public NoteOff build() {
+            return new NoteOff(delta, pitch, velocity, channel);
 		}
 	}
 
@@ -48,7 +39,7 @@ public final class NoteOff extends NoteEvent {
 
 	public String toString() {
 		try {
-			return "NoteOn " + PitchChromaticMidi.from(getMidiCode());
+            return "NoteOff: " + PitchChromaticMidi.from(getMidiCode());
 		} catch (PitchMidiException e) {
 			throw NeverHappensException.make("El código siempre es válido");
 		}
@@ -58,4 +49,12 @@ public final class NoteOff extends NoteEvent {
 	public NoteOff clone() {
 		return new NoteOff(getDelta(), getMidiCode(), getVelocity(), getChannel());
 	}
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof NoteOff))
+            return false;
+
+        return super.equals(o);
+    }
 }
