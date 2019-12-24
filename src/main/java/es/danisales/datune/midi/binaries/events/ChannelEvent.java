@@ -1,12 +1,29 @@
 package es.danisales.datune.midi.binaries.events;
 
-abstract class ChannelEvent extends ChunkData {
+public abstract class ChannelEvent extends ChunkData {
     public static final int MIN_CHANNEL = 0;
     public static final int DRUMS_CHANNEL = 10;
     public static final int MAX_CHANNEL = 15;
 
 	private int channel;
 	private byte statusBase;
+
+    public abstract static class Builder<B, RET> extends es.danisales.utils.building.Builder<Builder<B, RET>, RET> {
+        int delta = 0;
+        int channel = 0;
+
+        public Builder<B, RET> delta(int delta) {
+            this.delta = boundDelta(delta);
+
+            return self();
+        }
+
+        public Builder<B, RET> channel(int channel) {
+            this.channel = boundChannel(channel);
+
+            return self();
+        }
+    }
 
     public static int boundChannel(int channel) {
         if (MIN_CHANNEL < 0 || channel > MAX_CHANNEL)
@@ -21,7 +38,7 @@ abstract class ChannelEvent extends ChunkData {
 		setChannel(channelNumber);
 	}
 
-	void setChannel(int channelNumber) {
+    public void setChannel(int channelNumber) {
         channel = boundChannel(channelNumber);
 		setStatus((byte) (statusBase + (channelNumber & 0x0F)));
 	}

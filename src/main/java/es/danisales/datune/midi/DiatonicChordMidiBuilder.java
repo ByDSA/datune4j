@@ -110,7 +110,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                         .pitch(tonality.getNote(d), octave)
                         .length(Settings.DefaultValues.LENGTH_CHORD)
                         .build();
-                self.add(n);
+                self.addData(n);
                 ChromaticMidi n2 = n.clone();
                 try {
                     n2.getPitch().shift(IntervalChromatic.PERFECT_FIFTH);
@@ -119,7 +119,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                     throw new RuntimeException();
                 }
                 //assert !n.equalsEnharmonic( n2 ) : n2;
-                self.add(n2);
+                self.addData(n2);
             } else if (ArrayUtils.contains(t, ChromaticFunction.TENSIONS)) {
                 DiatonicMidi n = null;
                 switch (t) {

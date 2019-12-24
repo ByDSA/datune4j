@@ -1,6 +1,14 @@
 package es.danisales.datune.midi.binaries.events;
 
+import es.danisales.io.binary.BinEncoder;
+
 public class Header extends Chunk {
+    public static final byte[] TICKS_DEFAULT = new byte[]{0x03, (byte) 0xc0};
+
+    static {
+        BinEncoder.register(Header.class, BinEncoder.getEncondingFunction(Chunk.class));
+    }
+
 	// Standard MIDI file header, for one-track file
 	// 4D, 54... are just magic numbers to identify the
 	//  headers
@@ -16,17 +24,17 @@ public class Header extends Chunk {
 
 	public Header(byte type, int tracks, byte[] ticks) {
 		super(new byte[]{'M', 'T', 'h', 'd'}); // 0x4d, 0x54, 0x68, 0x64
+
 		this.type = type;
 		this.tracks = tracks;
 		this.ticks = ticks;
 
-		add( new byte[]{ 0x00, type, // single-track format
+        addData(new byte[]{0x00, type, // single-track format
 				0x00, (byte)tracks, // tracks
 				ticks[0], ticks[1], // 16 ticks per quarter
 		});
 	}
 
-	@SuppressWarnings("MethodDoesntCallSuperMethod")
 	@Override
 	public Header clone() {
 		return new Header(type, tracks, ticks.clone());

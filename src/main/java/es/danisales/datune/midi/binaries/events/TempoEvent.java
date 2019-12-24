@@ -2,6 +2,7 @@ package es.danisales.datune.midi.binaries.events;
 
 import es.danisales.datune.midi.binaries.Utils;
 import es.danisales.io.binary.BinEncoder;
+import es.danisales.io.binary.BinSize;
 import es.danisales.utils.MathUtils;
 
 import java.io.IOException;
@@ -27,6 +28,11 @@ public class TempoEvent extends MetaEvent {
 				settings.getDataOutputStream().write(ret);
 			} catch (IOException ignored) {
 			}
+		});
+
+		BinSize.registerSize(TempoEvent.class, (TempoEvent self, BinEncoder.EncoderSettings settings) -> {
+			int l = Utils.deltaByte(self.getDelta()).length;
+			return 3 + l + self.getData().length;
 		});
 	}
 

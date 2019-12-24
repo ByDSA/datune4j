@@ -5,11 +5,53 @@ import es.danisales.datune.midi.binaries.Sequence;
 import es.danisales.datune.midi.binaries.events.*;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.io.binary.BinData;
+import es.danisales.io.binary.BinEncoder;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
+import java.util.function.BiConsumer;
 
 public class Track extends EventSequence {
+	static {
+		BinEncoder.register(Track.class, (Track self, BinEncoder.EncoderSettings settings) -> {
+			EventSequence eventSequence = self.getBasicEvents();
+			TrackChunk trackChunk = new TrackChunk();
+
+			if (self.sequence != null) {
+				TempoEvent t = new TempoEvent(self.sequence.getTempo());
+				trackChunk.addData(t);
+
+				final byte[] timeSigEvent = new byte[]
+						{
+								0x00, (byte) 0xFF, 0x58, 0x04,
+								0x04, // numerator
+								0x02, // denominator (2==4, because it's a power fromIndex 2)
+								0x18, // ticks per click (not used)
+								0x08  // 32nd notes per crotchet
+						};
+				trackChunk.addData(timeSigEvent);
+			} else {
+				trackChunk.addData(new MetaEvent20(self.channel));
+
+				trackChunk.addData(new ProgramChange(self.channel, self.midiInstrument));
+			}
+
+			trackChunk.addData(eventSequence);
+
+			// Standard footer
+			final byte[] footer = new byte[]
+					{
+							0x00,
+							(byte) 0xFF, 0x2F, 0x00
+					};
+
+			trackChunk.addData(footer);
+
+			BinData.encoder()
+					.from(trackChunk)
+					.toStream(settings.getDataOutputStream(), settings.getByteArrayOutputStream())
+					.putIntoStream();
+		});
+	}
+
 	private int channel;
 	private Instrument midiInstrument;
 
@@ -89,9 +131,17 @@ public class Track extends EventSequence {
 		add(d, new ProgramChange(getChannel(), v));
 	}
 
-	class MetaEvent20 extends MetaEvent {
-		public MetaEvent20() {
+	public static class MetaEvent20 extends MetaEvent {
+		static {
+			BinEncoder.register(MetaEvent20.class, (BiConsumer<MetaEvent20, BinEncoder.EncoderSettings>) ChunkData::encoder);
+		}
+
+		int channel;
+
+		public MetaEvent20(int channel) {
 			super(0, (byte) 0x20);
+
+			this.channel = ChannelEvent.boundChannel(channel);
 		}
 
 		@Override
@@ -101,47 +151,7 @@ public class Track extends EventSequence {
 
 		@Override
 		public MetaEvent20 clone() {
-			return new MetaEvent20();
+			return new MetaEvent20(channel);
 		}
-	}
-
-	public void writeIn(DataOutputStream dataOutputStream, ByteArrayOutputStream byteArrayOutputStream) {
-		EventSequence eventSequence = getBasicEvents();
-		TrackChunk trackChunk = new TrackChunk();
-
-		if (sequence != null) {
-			TempoEvent t = new TempoEvent( sequence.getTempo() );
-			trackChunk.add(t);
-
-			final byte[] timeSigEvent = new byte[]
-					{
-							0x00, (byte) 0xFF, 0x58, 0x04,
-							0x04, // numerator
-							0x02, // denominator (2==4, because it's a power fromIndex 2)
-							0x18, // ticks per click (not used)
-							0x08  // 32nd notes per crotchet
-					};
-			trackChunk.add(timeSigEvent);
-		} else {
-			trackChunk.add(new MetaEvent20());
-
-			trackChunk.add(new ProgramChange(channel, midiInstrument));
-		}
-
-		trackChunk.add(eventSequence);
-
-		// Standard footer
-		final byte[] footer = new byte[]
-				{
-						0x00,
-						(byte) 0xFF, 0x2F, 0x00
-				};
-
-		trackChunk.add(footer);
-
-		BinData.encoder()
-				.from(trackChunk)
-				.toStream(dataOutputStream, byteArrayOutputStream)
-				.putIntoStream();
 	}
 }

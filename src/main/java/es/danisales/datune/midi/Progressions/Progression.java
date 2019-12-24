@@ -94,19 +94,19 @@ public class Progression<This extends Progression> implements EventComplex {
 
 	/** A�adir acordes de dos notas **/
 	/*
-	public ChordFunc add(Degree degree, IntervalDiatonic i) {
-		return add(degree, i, 0);
+	public ChordFunc addData(Degree degree, IntervalDiatonic i) {
+		return addData(degree, i, 0);
 	}
 
-	public ChordFunc add(Degree degree, IntervalDiatonic i, int o) {
+	public ChordFunc addData(Degree degree, IntervalDiatonic i, int o) {
 		ChordFunc c = null;
 		o += octave;
 
 		c = new ChordFunc(tonality, o);
-		c.add(degree);
-		c.add( NoteDiatonic.add(c.fromIndex(0), i) );
+		c.addData(degree);
+		c.addData( NoteDiatonic.addData(c.fromIndex(0), i) );
 
-		return add(c);
+		return addData(c);
 	}
 	 */
 	public Progression setTonality(Tonality s) {

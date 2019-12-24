@@ -40,7 +40,7 @@ public final class ChordNotation {
 	public static final String a5 = AUGMENTED2 + FIFTH;
 	public static final String a9 = AUGMENTED2 + NINTH;
 	public static final String a11 = AUGMENTED2 + ELEVENTH;
-	public static final String ADD = "add";
+    public static final String ADD = "addData";
 	public static final String ADD_SIXTH = ADD + SIXTH;
 	public static final String ADD_NINTH = ADD + NINTH;
 	public static final String ADD_ELEVENTH = ADD + ELEVENTH;

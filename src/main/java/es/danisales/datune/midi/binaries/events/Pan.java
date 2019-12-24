@@ -1,5 +1,6 @@
 package es.danisales.datune.midi.binaries.events;
 
+import es.danisales.utils.Utils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class Pan extends ControlChangeEvent {
@@ -7,39 +8,39 @@ public class Pan extends ControlChangeEvent {
 	static final byte CONTROLLER_NUMBER = (byte) 0x0A;
 
 	public static final int RIGHT = 127;
-	public static final int LEFT = 0;
 	public static final int MID = 63;
+    public static final int LEFT = 0;
 
 	private Pan(int delta, int value, int channel) {
 		super(delta, STATUS, CONTROLLER_NUMBER, channel, value);
 	}
 
+    private static int boundPanValue(int value) {
+        return Utils.bound(value, LEFT, RIGHT);
+    }
+
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public static class Builder extends es.danisales.utils.building.Builder<Builder, Pan> {
-		int delta = 0;
+    public static class Builder extends ControlChangeEvent.Builder<Builder, Pan> {
 		int value = MID;
-		int channel = 0;
-
-		public Builder delta(int delta) {
-			this.delta = delta;
-
-			return self();
-		}
 
 		public Builder value(int value) {
-			this.value = value;
+            this.value = boundPanValue(value);
 
 			return self();
 		}
 
-		public Builder channel(int channel) {
-			this.channel = channel;
+        @Override
+        public Builder delta(int delta) {
+            return (Builder) super.delta(delta);
+        }
 
-			return self();
-		}
+        @Override
+        public Builder channel(int channel) {
+            return (Builder) super.channel(channel);
+        }
 
 		@NonNull
 		@Override

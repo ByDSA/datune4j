@@ -104,7 +104,6 @@ public class Tonality implements Iterable<DiatonicAlt> {
         return TonalityChordRetrieval.getRelativeMinorFrom(this);
     }
 
-    @SuppressWarnings("WeakerAccess")
     public Tonality getRelativeMajor() {
         return TonalityChordRetrieval.getRelativeMajorFrom(this);
     }

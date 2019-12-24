@@ -55,7 +55,7 @@ class Loader {
         }
 /*
         for (ChromaticFunction chromaticFunction : ChromaticFunction.values())
-            chromaticChordSet.add(
+            chromaticChordSet.addData(
                     ChromaticChord.builder()
                             .tonality(tonality)
                             .chromaticFunction(chromaticFunction)

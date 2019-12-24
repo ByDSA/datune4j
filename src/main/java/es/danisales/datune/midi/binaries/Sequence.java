@@ -14,6 +14,7 @@ import es.danisales.io.binary.BinEncoder;
 import es.danisales.io.binary.BinFile;
 import es.danisales.io.binary.BinSize;
 import es.danisales.utils.building.BuildingException;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import javax.sound.midi.*;
 import java.io.ByteArrayOutputStream;
@@ -23,13 +24,14 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Sequence extends BinFile {
 	public final static int MILLISECONDS = 0;
 	public final static int MIDI = 1;
 
 	protected int tempo;
-	protected ArrayList<Track> tracks;
+	protected List<Track> tracks;
 	protected Track firstChannel;
 
 	protected EventSequence events;
@@ -39,9 +41,9 @@ public class Sequence extends BinFile {
 
 	Synthesizer midiSynth;
 
-	public Sequence(Path path, int t) {
+	public Sequence(@NonNull Path path, int tempo) {
 		super(path);
-		tempo = t;
+		this.tempo = tempo;
 		tracks = new ArrayList<>();
 
 		firstChannel = new Track(0);
@@ -171,10 +173,10 @@ public class Sequence extends BinFile {
 		BinEncoder.register(Sequence.class, (Sequence self, BinEncoder.EncoderSettings settings) -> {
 			DataOutputStream dataOutputStream = settings.getDataOutputStream();
 			ByteArrayOutputStream byteArrayOutputStream = settings.getByteArrayOutputStream();
-			Header h = self.generateHeader();
+			Header header = self.generateHeader();
 
 			BinData.encoder()
-					.from(h)
+					.from(header)
 					.toStream(dataOutputStream, byteArrayOutputStream)
 					.putIntoStream();
 
@@ -199,7 +201,7 @@ public class Sequence extends BinFile {
 	}
 
 	private Header generateHeader() {
-		return new Header(Header.MULTIPLE_TRACK, tracks.size(), new byte[]{0x03, (byte)0xc0});
+		return new Header(Header.MULTIPLE_TRACK, tracks.size(), Header.TICKS_DEFAULT);
 	}
 
 	public int getTempo() {

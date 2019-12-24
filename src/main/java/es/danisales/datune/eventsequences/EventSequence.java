@@ -5,19 +5,68 @@ import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.Durable;
 import es.danisales.datune.midi.Duration;
 import es.danisales.datune.midi.binaries.Midi;
-import es.danisales.datune.midi.binaries.events.Event;
-import es.danisales.datune.midi.binaries.events.EventComplex;
-import es.danisales.datune.midi.binaries.events.NoteOff;
-import es.danisales.datune.midi.binaries.events.NoteOn;
+import es.danisales.datune.midi.binaries.events.*;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
+import es.danisales.datune.tonality.Tonality;
+import es.danisales.io.binary.BinData;
+import es.danisales.io.binary.BinEncoder;
+import es.danisales.io.binary.BinSize;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class EventSequence implements Durable, EventComplex {
+	static {
+		BinEncoder.register(EventSequence.class, (EventSequence self, BinEncoder.EncoderSettings settings) -> {
+			EventSequence e = self.getBasicEvents();
+
+			AtomicReference<Tonality> tonalityAtomicReference = new AtomicReference<>(null);
+			AtomicLong last = new AtomicLong(0);
+
+			e.getMap().forEach((Long key, ArrayList<Event> value) -> {
+				int size = value.size();
+				if (size == 0)
+					return; // continue
+
+				for (Event ev : value) {
+					int delta = (int) (key - last.get());
+
+					Event me = null;
+					if (ev instanceof ChannelEvent) {
+						me = ev;
+						((ChannelEvent) me).setChannel(0); // TODO
+					} else if (ev instanceof KeySignatureEvent) {
+						KeySignatureEvent ks = ((KeySignatureEvent) ev);
+						if (tonalityAtomicReference.get() != null
+								&& !ks.getTonality().equals(tonalityAtomicReference.get())) {
+							me = ks;
+						} else
+							tonalityAtomicReference.set(ks.getTonality());
+					} else if (ev != null)
+						me = ev;
+
+					if (me != null) {
+						last.set(key);
+						if (ev instanceof ChunkData)
+							((ChunkData) me).setDelta(delta);
+
+						BinData.encoder()
+								.from(me)
+								.toStream(settings.getDataOutputStream(), settings.getByteArrayOutputStream())
+								.putIntoStream();
+					}
+				}
+			});
+		});
+		BinSize.registerSize(EventSequence.class, (EventSequence self, BinEncoder.EncoderSettings settings) -> {
+			return BinData.encoder().from(self).getBytes().length;
+		});
+	}
+
 	protected TreeMap<Long, ArrayList<Event>>	map;
 	protected int								duration;
 
@@ -76,7 +125,7 @@ public class EventSequence implements Durable, EventComplex {
 				.hasNext(); ) {
 			Map.Entry<Long, ArrayList<Event>> entry = it.next();
 			Long key = entry.getKey();
-			ArrayList<Event> value = entry.getValue();
+			List<Event> value = entry.getValue();
 
 			n += value.size();
 		}

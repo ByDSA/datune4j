@@ -1,10 +1,10 @@
 package es.danisales.datune.midi.binaries.events;
 
-public abstract class ControlChangeEvent extends ChannelEvent {
+abstract class ControlChangeEvent extends ChannelEvent {
 	private int value;
 	private byte controllerNumber;
 
-	protected ControlChangeEvent(int delta, byte status, byte controllerNumber, int channel, int value) {
+    ControlChangeEvent(int delta, byte status, byte controllerNumber, int channel, int value) {
 		super(delta, status, channel);
 
 		this.controllerNumber = controllerNumber;
