@@ -41,12 +41,12 @@ public class DiatonicChordMidiNamesTest {
         diatonicChordMidi.inv();
         assertEquals("F5/C (IV5)", diatonicChordMidi.toString());
 
-        diatonicChordMidi = DiatonicChordMidi.builder().from(DiatonicFunction.I2, Tonality.C).build();
-        assertEquals("Csus2 (I2)", diatonicChordMidi.toString());
-        diatonicChordMidi = DiatonicChordMidi.builder().from(DiatonicFunction.V4, Tonality.C).build();
-        assertEquals("Gsus4 (V4)", diatonicChordMidi.toString());
+        diatonicChordMidi = DiatonicChordMidi.builder().from(DiatonicFunction.ISUS2, Tonality.C).build();
+        assertEquals("Csus2 (ISUS2)", diatonicChordMidi.toString());
+        diatonicChordMidi = DiatonicChordMidi.builder().from(DiatonicFunction.VSUS4, Tonality.C).build();
+        assertEquals("Gsus4 (VSUS4)", diatonicChordMidi.toString());
         diatonicChordMidi.inv();
-        assertEquals("Gsus4/C (V4)", diatonicChordMidi.toString());
+        assertEquals("Gsus4/C (VSUS4)", diatonicChordMidi.toString());
 
         ChromaticChord chromaticChord = ChromaticChord.builder().addAll(
                 Arrays.asList(Chromatic.C, Chromatic.D, Chromatic.G)
@@ -54,7 +54,7 @@ public class DiatonicChordMidiNamesTest {
         diatonicChordMidi = DiatonicChordMidi.builder()
                 .from(chromaticChord, Tonality.C)
                 .build();
-        assertEquals("Csus2 (I2)", diatonicChordMidi.toString());
+        assertEquals("Csus2 (ISUS2)", diatonicChordMidi.toString());
     }
 
     @Test

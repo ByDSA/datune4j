@@ -53,8 +53,8 @@ public enum DiatonicDegree implements Degree {
 	public static @NonNull DiatonicDegree from(@NonNull DiatonicFunction diatonicFunction) {
 		switch ( diatonicFunction ) {
 			case I:
-			case I2:
-			case I4:
+			case ISUS2:
+			case ISUS4:
 			case I6:
 			case I7:
 			case I9:
@@ -70,8 +70,8 @@ public enum DiatonicDegree implements Degree {
 			case I13:
 				return DiatonicDegree.I;
 			case II:
-			case II2:
-			case II4:
+			case IISUS2:
+			case IISUS4:
 			case II6:
 			case II7:
 			case II9:
@@ -87,8 +87,8 @@ public enum DiatonicDegree implements Degree {
 			case II13:
 				return DiatonicDegree.II;
 			case III:
-			case III2:
-			case III4:
+			case IIISUS2:
+			case IIISUS4:
 			case III6:
 			case III7:
 			case III9:
@@ -104,8 +104,8 @@ public enum DiatonicDegree implements Degree {
 			case III13:
 				return DiatonicDegree.III;
 			case IV:
-			case IV2:
-			case IV4:
+			case IVSUS2:
+			case IVSUS4:
 			case IV6:
 			case IV7:
 			case IV9:
@@ -121,8 +121,8 @@ public enum DiatonicDegree implements Degree {
 			case IV13:
 				return DiatonicDegree.IV;
 			case V:
-			case V2:
-			case V4:
+			case VSUS2:
+			case VSUS4:
 			case V6:
 			case V7:
 			case V9:
@@ -138,8 +138,8 @@ public enum DiatonicDegree implements Degree {
 			case V13:
 				return DiatonicDegree.V;
 			case VI:
-			case VI2:
-			case VI4:
+			case VISUS2:
+			case VISUS4:
 			case VI6:
 			case VI7:
 			case VI9:
@@ -155,8 +155,8 @@ public enum DiatonicDegree implements Degree {
 			case VI13:
 				return DiatonicDegree.VI;
 			case VII:
-			case VII2:
-			case VII4:
+			case VIISUS2:
+			case VIISUS4:
 			case VII6:
 			case VII7:
 			case VII9:
@@ -207,11 +207,13 @@ public enum DiatonicDegree implements Degree {
 			case VI5:
 			case vi:
 			case VI0:
+			case bVI:
 				return DiatonicDegree.VI;
 			case VII:
 			case VII5:
 			case vii:
 			case VII0:
+			case bVII:
 				return DiatonicDegree.VII;
 			case SUBV7:
 			case V7ALT:

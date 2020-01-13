@@ -51,22 +51,22 @@ class DiatonicChordInterfaceAdapter {
             case VII7:
                 return DiatonicChordPattern.SEVENTH;
 
-            case I2:
-            case II2:
-            case III2:
-            case IV2:
-            case V2:
-            case VI2:
-            case VII2:
+            case ISUS2:
+            case IISUS2:
+            case IIISUS2:
+            case IVSUS2:
+            case VSUS2:
+            case VISUS2:
+            case VIISUS2:
                 return DiatonicChordPattern.SUS2;
 
-            case I4:
-            case II4:
-            case III4:
-            case IV4:
-            case V4:
-            case VI4:
-            case VII4:
+            case ISUS4:
+            case IISUS4:
+            case IIISUS4:
+            case IVSUS4:
+            case VSUS4:
+            case VISUS4:
+            case VIISUS4:
                 return DiatonicChordPattern.SUS4;
 
             case I6:

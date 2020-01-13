@@ -9,6 +9,7 @@ import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
+import es.danisales.datune.tonality.ChordRetrievalFromTonality;
 import es.danisales.datune.tonality.ScaleDegreeException;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
@@ -101,7 +102,7 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
         @Override
         public ChromaticChord build() throws BuildingException {
             try {
-                return tonality.getChordFrom(diatonicFunction);
+                return ChordRetrievalFromTonality.getFromDiatonicFunction(tonality, diatonicFunction);
             } catch (ScaleDegreeException e) {
                 throw new BuildingException(e);
             }
@@ -118,8 +119,8 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
         @Override
         public ChromaticChord build() throws BuildingException {
             try {
-                return tonality.getChordFrom(chromaticFunction);
-            } catch (TonalityException | ScaleDegreeException e) {
+                return ChordRetrievalFromTonality.getFromChromaticFunction(tonality, chromaticFunction);
+            } catch (ScaleDegreeException e) {
                 throw new BuildingException(e);
             }
         }

@@ -24,22 +24,33 @@ class TonalityGetDiatonicFunctionMajor {
 				case V: return ChromaticChord.G;
 				case VI: return ChromaticChord.Am;
 				case VII: return ChromaticChord.Bdim;
-				case I2: return ChromaticChord.Csus2;
-				case II2: return ChromaticChord.Dsus2;
-				case III2: return ChromaticChord.Esusb2;
-				case IV2: return ChromaticChord.Fsus2;
-				case V2: return ChromaticChord.Gsus2;
-				case VI2: return ChromaticChord.Asus2;
-                case VII2:
+                case ISUS2:
+                    return ChromaticChord.Csus2;
+                case IISUS2:
+                    return ChromaticChord.Dsus2;
+                case IIISUS2:
+                    return ChromaticChord.Esusb2;
+                case IVSUS2:
+                    return ChromaticChord.Fsus2;
+                case VSUS2:
+                    return ChromaticChord.Gsus2;
+                case VISUS2:
+                    return ChromaticChord.Asus2;
+                case VIISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.B, Chromatic.C, Chromatic.F)).build(); // Fsus(#4)/B
-				case I4: return ChromaticChord.Csus4;
-				case II4: return ChromaticChord.Dsus4;
-				case III4: return ChromaticChord.Esus4;
-                case IV4:
+                case ISUS4:
+                    return ChromaticChord.Csus4;
+                case IISUS4:
+                    return ChromaticChord.Dsus4;
+                case IIISUS4:
+                    return ChromaticChord.Esus4;
+                case IVSUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.F, Chromatic.B, Chromatic.C)).build(); // Fsus(#4)
-				case V4: return ChromaticChord.Gsus4;
-				case VI4: return ChromaticChord.Asus4;
-                case VII4:
+                case VSUS4:
+                    return ChromaticChord.Gsus4;
+                case VISUS4:
+                    return ChromaticChord.Asus4;
+                case VIISUS4:
                     ChromaticChord ret = ChromaticChord.builder().addAll(ChromaticChord.Esusb2).build();
                     ret.over(Chromatic.B);
                     return ret;
@@ -240,33 +251,33 @@ class TonalityGetDiatonicFunctionMajor {
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.F)).build();
                 case VII:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.FF)).build();
-                case I2:
+                case ISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.CC, Chromatic.DD, Chromatic.GG)).build();
-                case II2:
+                case IISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.DD, Chromatic.F, Chromatic.AA)).build();
-                case III2:
+                case IIISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.F, Chromatic.FF, Chromatic.C)).build();
-                case IV2:
+                case IVSUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.FF, Chromatic.GG, Chromatic.CC)).build();
-                case V2:
+                case VSUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.GG, Chromatic.AA, Chromatic.DD)).build();
-                case VI2:
+                case VISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.AA, Chromatic.C, Chromatic.F)).build();
-                case VII2:
+                case VIISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.C, Chromatic.CC, Chromatic.FF)).build();
-                case I4:
+                case ISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.CC, Chromatic.FF, Chromatic.GG)).build();
-                case II4:
+                case IISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.DD, Chromatic.GG, Chromatic.AA)).build();
-                case III4:
+                case IIISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.F, Chromatic.AA, Chromatic.C)).build();
-                case IV4:
+                case IVSUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.FF, Chromatic.C, Chromatic.CC)).build();
-                case V4:
+                case VSUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.GG, Chromatic.CC, Chromatic.DD)).build();
-                case VI4:
+                case VISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.AA, Chromatic.DD, Chromatic.F)).build();
-                case VII4:
+                case VIISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.C, Chromatic.F, Chromatic.FF)).build();
                 case I6:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.CC, Chromatic.F, Chromatic.GG, Chromatic.AA)).build();
@@ -462,24 +473,33 @@ class TonalityGetDiatonicFunctionMajor {
 				case VI: return ChromaticChord.Bm;
                 case VII:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.G)).build();
-				case I2: return ChromaticChord.Dsus2;
-				case II2: return ChromaticChord.Esus2;
-                case III2:
+                case ISUS2:
+                    return ChromaticChord.Dsus2;
+                case IISUS2:
+                    return ChromaticChord.Esus2;
+                case IIISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.FF, Chromatic.G, Chromatic.CC)).build();
-				case IV2: return ChromaticChord.Gsus2;
-				case V2: return ChromaticChord.Asus2;
-				case VI2: return ChromaticChord.Bsus2;
-                case VII2:
+                case IVSUS2:
+                    return ChromaticChord.Gsus2;
+                case VSUS2:
+                    return ChromaticChord.Asus2;
+                case VISUS2:
+                    return ChromaticChord.Bsus2;
+                case VIISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.CC, Chromatic.D, Chromatic.G)).build();
-				case I4: return ChromaticChord.Dsus4;
-				case II4: return ChromaticChord.Esus4;
-                case III4:
+                case ISUS4:
+                    return ChromaticChord.Dsus4;
+                case IISUS4:
+                    return ChromaticChord.Esus4;
+                case IIISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.FF, Chromatic.B, Chromatic.CC)).build();
-                case IV4:
+                case IVSUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.G, Chromatic.CC, Chromatic.D)).build();
-				case V4: return ChromaticChord.Asus4;
-				case VI4: return ChromaticChord.Bsus4;
-                case VII4:
+                case VSUS4:
+                    return ChromaticChord.Asus4;
+                case VISUS4:
+                    return ChromaticChord.Bsus4;
+                case VIISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.CC, Chromatic.FF, Chromatic.G)).build();
 				case I6: return ChromaticChord.D6;
 				case II6: return ChromaticChord.Em6;
@@ -661,33 +681,33 @@ class TonalityGetDiatonicFunctionMajor {
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.C, Chromatic.DD, Chromatic.G)).build();
                 case VII:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.D, Chromatic.F, Chromatic.GG)).build();
-                case I2:
+                case ISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.DD, Chromatic.F, Chromatic.AA)).build();
-                case II2:
+                case IISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.F, Chromatic.G, Chromatic.C)).build();
-                case III2:
+                case IIISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.G, Chromatic.GG, Chromatic.D)).build();
-                case IV2:
+                case IVSUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.GG, Chromatic.AA, Chromatic.DD)).build();
-                case V2:
+                case VSUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.AA, Chromatic.C, Chromatic.F)).build();
-                case VI2:
+                case VISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.C, Chromatic.D, Chromatic.G)).build();
-                case VII2:
+                case VIISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.D, Chromatic.DD, Chromatic.GG)).build();
-                case I4:
+                case ISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.DD, Chromatic.GG, Chromatic.AA)).build();
-                case II4:
+                case IISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.F, Chromatic.AA, Chromatic.C)).build();
-                case III4:
+                case IIISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.D)).build();
-                case IV4:
+                case IVSUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.GG, Chromatic.D, Chromatic.DD)).build();
-                case V4:
+                case VSUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.AA, Chromatic.DD, Chromatic.F)).build();
-                case VI4:
+                case VISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.C, Chromatic.F, Chromatic.G)).build();
-                case VII4:
+                case VIISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.D, Chromatic.G, Chromatic.GG)).build();
                 case I6:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.DD, Chromatic.G, Chromatic.AA, Chromatic.C)).build();
@@ -885,28 +905,33 @@ class TonalityGetDiatonicFunctionMajor {
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.CC, Chromatic.E, Chromatic.GG)).build();
                 case VII:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.A)).build();
-				case I2: return ChromaticChord.Esus2;
-                case II2:
+                case ISUS2:
+                    return ChromaticChord.Esus2;
+                case IISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.FF, Chromatic.GG, Chromatic.CC)).build();
-                case III2:
+                case IIISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.GG, Chromatic.A, Chromatic.DD)).build();
-				case IV2: return ChromaticChord.Asus2;
-				case V2: return ChromaticChord.Bsus2;
-                case VI2:
+                case IVSUS2:
+                    return ChromaticChord.Asus2;
+                case VSUS2:
+                    return ChromaticChord.Bsus2;
+                case VISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.CC, Chromatic.DD, Chromatic.GG)).build();
-                case VII2:
+                case VIISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.DD, Chromatic.E, Chromatic.A)).build();
-				case I4: return ChromaticChord.Esus4;
-                case II4:
+                case ISUS4:
+                    return ChromaticChord.Esus4;
+                case IISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.FF, Chromatic.B, Chromatic.CC)).build();
-                case III4:
+                case IIISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.GG, Chromatic.CC, Chromatic.DD)).build();
-                case IV4:
+                case IVSUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.A, Chromatic.DD, Chromatic.E)).build();
-				case V4: return ChromaticChord.Bsus4;
-                case VI4:
+                case VSUS4:
+                    return ChromaticChord.Bsus4;
+                case VISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.CC, Chromatic.FF, Chromatic.GG)).build();
-                case VII4:
+                case VIISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.DD, Chromatic.GG, Chromatic.A)).build();
 				case I6: return ChromaticChord.E6;
                 case II6:
@@ -1090,24 +1115,33 @@ class TonalityGetDiatonicFunctionMajor {
 				case V: return ChromaticChord.C;
 				case VI: return ChromaticChord.Dm;
 				case VII: return ChromaticChord.Edim;
-				case I2: return ChromaticChord.Fsus2;
-				case II2: return ChromaticChord.Gsus2;
-                case III2:
+                case ISUS2:
+                    return ChromaticChord.Fsus2;
+                case IISUS2:
+                    return ChromaticChord.Gsus2;
+                case IIISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.A, Chromatic.AA, Chromatic.E)).build();
-                case IV2:
+                case IVSUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.AA, Chromatic.C, Chromatic.F)).build();
-				case V2: return ChromaticChord.Csus2;
-				case VI2: return ChromaticChord.Dsus2;
-                case VII2:
+                case VSUS2:
+                    return ChromaticChord.Csus2;
+                case VISUS2:
+                    return ChromaticChord.Dsus2;
+                case VIISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.E, Chromatic.F, Chromatic.AA)).build();
-				case I4: return ChromaticChord.Fsus4;
-				case II4: return ChromaticChord.Gsus4;
-				case III4: return ChromaticChord.Asus4;
-                case IV4:
+                case ISUS4:
+                    return ChromaticChord.Fsus4;
+                case IISUS4:
+                    return ChromaticChord.Gsus4;
+                case IIISUS4:
+                    return ChromaticChord.Asus4;
+                case IVSUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.AA, Chromatic.E, Chromatic.F)).build();
-				case V4: return ChromaticChord.Csus4;
-				case VI4: return ChromaticChord.Dsus4;
-                case VII4:
+                case VSUS4:
+                    return ChromaticChord.Csus4;
+                case VISUS4:
+                    return ChromaticChord.Dsus4;
+                case VIISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.E, Chromatic.A, Chromatic.AA)).build();
 				case I6: return ChromaticChord.F6;
 				case II6: return ChromaticChord.Gm6;
@@ -1289,32 +1323,33 @@ class TonalityGetDiatonicFunctionMajor {
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.DD, Chromatic.FF, Chromatic.AA)).build();
                 case VII:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.B)).build();
-                case I2:
+                case ISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.FF, Chromatic.GG, Chromatic.CC)).build();
-                case II2:
+                case IISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.GG, Chromatic.AA, Chromatic.DD)).build();
-                case III2:
+                case IIISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.AA, Chromatic.B, Chromatic.F)).build();
-				case IV2: return ChromaticChord.Bsus2;
-                case V2:
+                case IVSUS2:
+                    return ChromaticChord.Bsus2;
+                case VSUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.CC, Chromatic.DD, Chromatic.GG)).build();
-                case VI2:
+                case VISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.DD, Chromatic.F, Chromatic.AA)).build();
-                case VII2:
+                case VIISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.F, Chromatic.FF, Chromatic.B)).build();
-                case I4:
+                case ISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.FF, Chromatic.B, Chromatic.CC)).build();
-                case II4:
+                case IISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.GG, Chromatic.CC, Chromatic.DD)).build();
-                case III4:
+                case IIISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.AA, Chromatic.DD, Chromatic.F)).build();
-                case IV4:
+                case IVSUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.B, Chromatic.F, Chromatic.FF)).build();
-                case V4:
+                case VSUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.CC, Chromatic.FF, Chromatic.GG)).build();
-                case VI4:
+                case VISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.DD, Chromatic.GG, Chromatic.AA)).build();
-                case VII4:
+                case VIISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.F, Chromatic.AA, Chromatic.B)).build();
                 case I6:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.FF, Chromatic.AA, Chromatic.CC, Chromatic.DD)).build();
@@ -1506,23 +1541,33 @@ class TonalityGetDiatonicFunctionMajor {
 				case VI: return ChromaticChord.Em;
                 case VII:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.C)).build();
-				case I2: return ChromaticChord.Gsus2;
-				case II2: return ChromaticChord.Asus2;
-                case III2:
+                case ISUS2:
+                    return ChromaticChord.Gsus2;
+                case IISUS2:
+                    return ChromaticChord.Asus2;
+                case IIISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.B, Chromatic.C, Chromatic.FF)).build();
-				case IV2: return ChromaticChord.Csus2;
-				case V2: return ChromaticChord.Dsus2;
-				case VI2: return ChromaticChord.Esus2;
-                case VII2:
+                case IVSUS2:
+                    return ChromaticChord.Csus2;
+                case VSUS2:
+                    return ChromaticChord.Dsus2;
+                case VISUS2:
+                    return ChromaticChord.Esus2;
+                case VIISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.FF, Chromatic.G, Chromatic.C)).build();
-				case I4: return ChromaticChord.Gsus4;
-				case II4: return ChromaticChord.Asus4;
-				case III4: return ChromaticChord.Bsus4;
-                case IV4:
+                case ISUS4:
+                    return ChromaticChord.Gsus4;
+                case IISUS4:
+                    return ChromaticChord.Asus4;
+                case IIISUS4:
+                    return ChromaticChord.Bsus4;
+                case IVSUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.C, Chromatic.FF, Chromatic.G)).build();
-				case V4: return ChromaticChord.Dsus4;
-				case VI4: return ChromaticChord.Esus4;
-                case VII4:
+                case VSUS4:
+                    return ChromaticChord.Dsus4;
+                case VISUS4:
+                    return ChromaticChord.Esus4;
+                case VIISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.FF, Chromatic.B, Chromatic.C)).build();
 				case I6: return ChromaticChord.G6;
 				case II6: return ChromaticChord.Am6;
@@ -1703,33 +1748,33 @@ class TonalityGetDiatonicFunctionMajor {
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.F, Chromatic.GG, Chromatic.C)).build();
                 case VII:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.CC)).build();
-                case I2:
+                case ISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.GG, Chromatic.AA, Chromatic.DD)).build();
-                case II2:
+                case IISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.AA, Chromatic.C, Chromatic.F)).build();
-                case III2:
+                case IIISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.C, Chromatic.CC, Chromatic.G)).build();
-                case IV2:
+                case IVSUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.CC, Chromatic.DD, Chromatic.GG)).build();
-                case V2:
+                case VSUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.DD, Chromatic.F, Chromatic.AA)).build();
-                case VI2:
+                case VISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.F, Chromatic.G, Chromatic.C)).build();
-                case VII2:
+                case VIISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.G, Chromatic.GG, Chromatic.CC)).build();
-                case I4:
+                case ISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.GG, Chromatic.CC, Chromatic.DD)).build();
-                case II4:
+                case IISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.AA, Chromatic.DD, Chromatic.F)).build();
-                case III4:
+                case IIISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.C, Chromatic.F, Chromatic.G)).build();
-                case IV4:
+                case IVSUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.CC, Chromatic.G, Chromatic.GG)).build();
-                case V4:
+                case VSUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.DD, Chromatic.GG, Chromatic.AA)).build();
-                case VI4:
+                case VISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.F, Chromatic.AA, Chromatic.C)).build();
-                case VII4:
+                case VIISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.CC)).build();
                 case I6:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.GG, Chromatic.C, Chromatic.DD, Chromatic.F)).build();
@@ -1926,26 +1971,33 @@ class TonalityGetDiatonicFunctionMajor {
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.FF, Chromatic.A, Chromatic.CC)).build();
                 case VII:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.D)).build();
-				case I2: return ChromaticChord.Asus2;
-				case II2: return ChromaticChord.Bsus2;
-                case III2:
+                case ISUS2:
+                    return ChromaticChord.Asus2;
+                case IISUS2:
+                    return ChromaticChord.Bsus2;
+                case IIISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.CC, Chromatic.D, Chromatic.GG)).build();
-				case IV2: return ChromaticChord.Dsus2;
-				case V2: return ChromaticChord.Esus2;
-                case VI2:
+                case IVSUS2:
+                    return ChromaticChord.Dsus2;
+                case VSUS2:
+                    return ChromaticChord.Esus2;
+                case VISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.FF, Chromatic.GG, Chromatic.CC)).build();
-                case VII2:
+                case VIISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.GG, Chromatic.A, Chromatic.D)).build();
-				case I4: return ChromaticChord.Asus4;
-				case II4: return ChromaticChord.Bsus4;
-                case III4:
+                case ISUS4:
+                    return ChromaticChord.Asus4;
+                case IISUS4:
+                    return ChromaticChord.Bsus4;
+                case IIISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.CC, Chromatic.FF, Chromatic.GG)).build();
-                case IV4:
+                case IVSUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.D, Chromatic.GG, Chromatic.A)).build();
-				case V4: return ChromaticChord.Esus4;
-                case VI4:
+                case VSUS4:
+                    return ChromaticChord.Esus4;
+                case VISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.FF, Chromatic.B, Chromatic.CC)).build();
-                case VII4:
+                case VIISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.GG, Chromatic.CC, Chromatic.D)).build();
 				case I6: return ChromaticChord.A6;
 				case II6: return ChromaticChord.Bm6;
@@ -2130,33 +2182,33 @@ class TonalityGetDiatonicFunctionMajor {
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.G, Chromatic.AA, Chromatic.D)).build();
                 case VII:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.A, Chromatic.C, Chromatic.DD)).build();
-                case I2:
+                case ISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.AA, Chromatic.C, Chromatic.F)).build();
-                case II2:
+                case IISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.C, Chromatic.D, Chromatic.G)).build();
-                case III2:
+                case IIISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.D, Chromatic.DD, Chromatic.A)).build();
-                case IV2:
+                case IVSUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.DD, Chromatic.F, Chromatic.AA)).build();
-                case V2:
+                case VSUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.F, Chromatic.G, Chromatic.C)).build();
-                case VI2:
+                case VISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.G, Chromatic.A, Chromatic.D)).build();
-                case VII2:
+                case VIISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.A, Chromatic.AA, Chromatic.DD)).build();
-                case I4:
+                case ISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.AA, Chromatic.DD, Chromatic.F)).build();
-                case II4:
+                case IISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.C, Chromatic.F, Chromatic.G)).build();
-                case III4:
+                case IIISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.D, Chromatic.G, Chromatic.A)).build();
-                case IV4:
+                case IVSUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.DD, Chromatic.A, Chromatic.AA)).build();
-                case V4:
+                case VSUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.F, Chromatic.AA, Chromatic.C)).build();
-                case VI4:
+                case VISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.D)).build();
-                case VII4:
+                case VIISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.A, Chromatic.D, Chromatic.DD)).build();
                 case I6:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.AA, Chromatic.D, Chromatic.F, Chromatic.G)).build();
@@ -2355,30 +2407,33 @@ class TonalityGetDiatonicFunctionMajor {
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.GG, Chromatic.B, Chromatic.DD)).build();
                 case VII:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.AA, Chromatic.CC, Chromatic.E)).build();
-				case I2: return ChromaticChord.Bsus2;
-                case II2:
+                case ISUS2:
+                    return ChromaticChord.Bsus2;
+                case IISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.CC, Chromatic.DD, Chromatic.GG)).build();
-                case III2:
+                case IIISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.DD, Chromatic.E, Chromatic.AA)).build();
-				case IV2: return ChromaticChord.Esus2;
-                case V2:
+                case IVSUS2:
+                    return ChromaticChord.Esus2;
+                case VSUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.FF, Chromatic.GG, Chromatic.CC)).build();
-                case VI2:
+                case VISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.GG, Chromatic.AA, Chromatic.DD)).build();
-                case VII2:
+                case VIISUS2:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.AA, Chromatic.B, Chromatic.E)).build();
-				case I4: return ChromaticChord.Bsus4;
-                case II4:
+                case ISUS4:
+                    return ChromaticChord.Bsus4;
+                case IISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.CC, Chromatic.FF, Chromatic.GG)).build();
-                case III4:
+                case IIISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.DD, Chromatic.GG, Chromatic.AA)).build();
-                case IV4:
+                case IVSUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.E, Chromatic.AA, Chromatic.B)).build();
-                case V4:
+                case VSUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.FF, Chromatic.B, Chromatic.CC)).build();
-                case VI4:
+                case VISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.GG, Chromatic.CC, Chromatic.DD)).build();
-                case VII4:
+                case VIISUS4:
                     return ChromaticChord.builder().addAll(Arrays.asList(Chromatic.AA, Chromatic.DD, Chromatic.E)).build();
 				case I6: return ChromaticChord.B6;
                 case II6:

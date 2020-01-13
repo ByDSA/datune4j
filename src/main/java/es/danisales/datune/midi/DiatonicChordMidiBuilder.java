@@ -66,7 +66,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
 
     private void chromaticFunctionProcess2(DiatonicChordMidi self) throws TonalityException, PitchMidiException, ScaleDegreeException {
         ChromaticFunction chromaticFunction = (ChromaticFunction) function;
-        ChromaticChord chromaticChord = TonalityGetChromaticFunction.get(self.tonality, chromaticFunction);
+        ChromaticChord chromaticChord = ChordRetrievalFromTonality.getFromChromaticFunction(self.tonality, chromaticFunction);
         tonality = TonalityGetChromaticFunction.getTonalityFromChromaticFunction(tonality, chromaticFunction);
         self.tonality = Objects.requireNonNull(tonality, chromaticFunction.toString());
 

@@ -109,7 +109,7 @@ public class Sequence extends BinFile {
 
 					long ms;
 					if (type == MILLISECONDS)
-						ms = (long)(60*1000.0 / tempo * pitch / Note.V4);
+						ms = (long)(60*1000.0 / tempo * pitch / Note.VSUS4);
 					else if (type == MIDI)
 						ms = pitch;
 					else

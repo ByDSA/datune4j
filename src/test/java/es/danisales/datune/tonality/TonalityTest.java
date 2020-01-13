@@ -796,53 +796,53 @@ public class TonalityTest {
 
         assertEquals(ChromaticChord.Csus2, ChromaticChord.builder()
                 .tonality(ton)
-                .diatonicFunction(DiatonicFunction.I2)
+                .diatonicFunction(DiatonicFunction.ISUS2)
                 .build()
         );
         assertEquals(ChromaticChord.Dsus2, ChromaticChord.builder()
                 .tonality(ton)
-                .diatonicFunction(DiatonicFunction.II2)
+                .diatonicFunction(DiatonicFunction.IISUS2)
                 .build()
         );
         assertEquals(ChromaticChord.Fsus2, ChromaticChord.builder()
                 .tonality(ton)
-                .diatonicFunction(DiatonicFunction.IV2)
+                .diatonicFunction(DiatonicFunction.IVSUS2)
                 .build()
         );
         assertEquals(ChromaticChord.Gsus2, ChromaticChord.builder()
                 .tonality(ton)
-                .diatonicFunction(DiatonicFunction.V2)
+                .diatonicFunction(DiatonicFunction.VSUS2)
                 .build()
         );
         assertEquals(ChromaticChord.Asus2, ChromaticChord.builder()
                 .tonality(ton)
-                .diatonicFunction(DiatonicFunction.VI2)
+                .diatonicFunction(DiatonicFunction.VISUS2)
                 .build()
         );
 
         assertEquals(ChromaticChord.Csus4, ChromaticChord.builder()
                 .tonality(ton)
-                .diatonicFunction(DiatonicFunction.I4)
+                .diatonicFunction(DiatonicFunction.ISUS4)
                 .build()
         );
         assertEquals(ChromaticChord.Dsus4, ChromaticChord.builder()
                 .tonality(ton)
-                .diatonicFunction(DiatonicFunction.II4)
+                .diatonicFunction(DiatonicFunction.IISUS4)
                 .build()
         );
         assertEquals(ChromaticChord.Esus4, ChromaticChord.builder()
                 .tonality(ton)
-                .diatonicFunction(DiatonicFunction.III4)
+                .diatonicFunction(DiatonicFunction.IIISUS4)
                 .build()
         );
         assertEquals(ChromaticChord.Gsus4, ChromaticChord.builder()
                 .tonality(ton)
-                .diatonicFunction(DiatonicFunction.V4)
+                .diatonicFunction(DiatonicFunction.VSUS4)
                 .build()
         );
         assertEquals(ChromaticChord.Asus4, ChromaticChord.builder()
                 .tonality(ton)
-                .diatonicFunction(DiatonicFunction.VI4)
+                .diatonicFunction(DiatonicFunction.VISUS4)
                 .build()
         );
 
@@ -1037,20 +1037,20 @@ public class TonalityTest {
                 ChromaticChord.Csus2,
                 ChromaticChord.builder()
                         .tonality(ton)
-                        .diatonicFunction(DiatonicFunction.I2)
+                        .diatonicFunction(DiatonicFunction.ISUS2)
                         .build()
         );
-        assertEquals(DiatonicFunction.I2, ton.getFunctionFrom(ChromaticChord.Csus2));
-        assertEquals(DiatonicFunction.II2, ton.getFunctionFrom(ChromaticChord.Dsus2));
-        assertEquals(DiatonicFunction.IV2, ton.getFunctionFrom(ChromaticChord.Fsus2));
-        assertEquals(DiatonicFunction.V2, ton.getFunctionFrom(ChromaticChord.Gsus2));
-        assertEquals(DiatonicFunction.VI2, ton.getFunctionFrom(ChromaticChord.Asus2));
+        assertEquals(DiatonicFunction.ISUS2, ton.getFunctionFrom(ChromaticChord.Csus2));
+        assertEquals(DiatonicFunction.IISUS2, ton.getFunctionFrom(ChromaticChord.Dsus2));
+        assertEquals(DiatonicFunction.IVSUS2, ton.getFunctionFrom(ChromaticChord.Fsus2));
+        assertEquals(DiatonicFunction.VSUS2, ton.getFunctionFrom(ChromaticChord.Gsus2));
+        assertEquals(DiatonicFunction.VISUS2, ton.getFunctionFrom(ChromaticChord.Asus2));
 
-        assertEquals(DiatonicFunction.I4, ton.getFunctionFrom(ChromaticChord.Csus4));
-        assertEquals(DiatonicFunction.II4, ton.getFunctionFrom(ChromaticChord.Dsus4));
-        assertEquals(DiatonicFunction.III4, ton.getFunctionFrom(ChromaticChord.Esus4));
-        assertEquals(DiatonicFunction.V4, ton.getFunctionFrom(ChromaticChord.Gsus4));
-        assertEquals(DiatonicFunction.VI4, ton.getFunctionFrom(ChromaticChord.Asus4));
+        assertEquals(DiatonicFunction.ISUS4, ton.getFunctionFrom(ChromaticChord.Csus4));
+        assertEquals(DiatonicFunction.IISUS4, ton.getFunctionFrom(ChromaticChord.Dsus4));
+        assertEquals(DiatonicFunction.IIISUS4, ton.getFunctionFrom(ChromaticChord.Esus4));
+        assertEquals(DiatonicFunction.VSUS4, ton.getFunctionFrom(ChromaticChord.Gsus4));
+        assertEquals(DiatonicFunction.VISUS4, ton.getFunctionFrom(ChromaticChord.Asus4));
 
         assertEquals(DiatonicFunction.I6, ton.getFunctionFrom(ChromaticChord.C6));
         assertEquals(DiatonicFunction.II6, ton.getFunctionFrom(ChromaticChord.Dm6));

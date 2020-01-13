@@ -13,7 +13,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import java.util.Objects;
 
 public class TonalityGetChromaticFunction {
-	private static @Nullable ChromaticChordPattern getChromaticChordPatternFromChromaticFunction(@NonNull ChromaticFunction chromaticFunction) {
+	static @Nullable ChromaticChordPattern getChromaticChordPatternFromChromaticFunction(@NonNull ChromaticFunction chromaticFunction) {
 		switch (chromaticFunction) {
 			case I:
 			case II:
@@ -54,7 +54,7 @@ public class TonalityGetChromaticFunction {
 		}
 	}
 
-	private static @NonNull DiatonicFunction getDiatonicFunctionFromChromaticFunction(@NonNull ChromaticFunction chromaticFunction) {
+	static @NonNull DiatonicFunction getDiatonicFunctionFromChromaticFunction(@NonNull ChromaticFunction chromaticFunction) {
 		switch (chromaticFunction) {
 			case V_II:
 			case V_III:
@@ -79,85 +79,6 @@ public class TonalityGetChromaticFunction {
 			default:
 				throw new RuntimeException();
 		}
-	}
-
-	public static @NonNull ChromaticChord get(@NonNull Tonality tonality, @NonNull ChromaticFunction chromaticFunction) throws TonalityException, ScaleDegreeException {
-		Objects.requireNonNull(tonality);
-		Objects.requireNonNull(chromaticFunction);
-
-		switch (chromaticFunction) {
-			case I:
-			case II:
-			case III:
-			case IV:
-			case V:
-			case VI:
-			case VII:
-			case i:
-			case ii:
-			case iii:
-			case iv:
-			case v:
-			case vi:
-			case vii:
-			case I0:
-			case II0:
-			case III0:
-			case IV0:
-			case V0:
-			case VI0:
-			case VII0:
-			case I5:
-			case II5:
-			case III5:
-			case IV5:
-			case V5:
-			case VI5:
-			case VII5:
-			case N6:
-				ChromaticChordPattern chromaticChordPattern = getChromaticChordPatternFromChromaticFunction(chromaticFunction);
-				Objects.requireNonNull(chromaticChordPattern);
-				DiatonicAlt noteBase = getNoteBaseFromChromaticFunctionAndTonality(tonality, chromaticFunction);
-				if (noteBase == null)
-					throw new TonalityException(tonality, chromaticFunction);
-
-				Chromatic noteBaseChromatic = Chromatic.from(noteBase);
-				ChromaticChord ret = ChromaticChord.builder()
-						.chromaticBase(noteBaseChromatic)
-						.chromaticChordPattern(chromaticChordPattern)
-						.build();
-
-				if (chromaticFunction == ChromaticFunction.N6)
-					ret.setRootIndex(2);
-
-				return ret;
-			case V_II:
-			case V_III:
-			case V_IV:
-			case V_V:
-			case V_VI:
-			case V7_II:
-			case V7_III:
-			case V7_IV:
-			case V7_V:
-			case V7_VI:
-			case SUBV7:
-			case SUBV7_II:
-			case SUBV7_III:
-			case SUBV7_IV:
-			case SUBV7_V:
-			case SUBV7_VI:
-			case V7ALT:
-				DiatonicFunction diatonicFunction = getDiatonicFunctionFromChromaticFunction(chromaticFunction);
-				tonality = getTonalityFromChromaticFunction(tonality, chromaticFunction);
-
-				return ChromaticChord.builder()
-						.tonality(tonality)
-						.diatonicFunction(diatonicFunction)
-						.build();
-		}
-
-		return null;
 	}
 
     @SuppressWarnings("ConstantConditions") // DiatonicFunction.patternFrom nunca devuelve null en este contexto
@@ -220,6 +141,8 @@ public class TonalityGetChromaticFunction {
 			case V5:
 			case VI5:
 			case VII5:
+			case bVII:
+			case bVI:
 				if (tonality.hasAsDiatonicFunction(chromaticFunction))
 					return tonality;
 
@@ -312,7 +235,7 @@ public class TonalityGetChromaticFunction {
 		}
 	}
 
-	private static @Nullable DiatonicAlt getNoteBaseFromChromaticFunctionAndTonality(Tonality tonality, @NonNull ChromaticFunction chromaticFunction) throws ScaleDegreeException {
+	static @NonNull DiatonicAlt getNoteBaseFromChromaticFunctionAndTonality(Tonality tonality, @NonNull ChromaticFunction chromaticFunction) throws ScaleDegreeException {
 		switch (chromaticFunction) {
 			case I:
 			case i:

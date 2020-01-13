@@ -1,6 +1,8 @@
 package es.danisales.datune.musical;
 
 import es.danisales.datune.absolutedegree.Chromatic;
+import es.danisales.datune.function.ChromaticFunction;
+import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.lang.Language;
 import es.danisales.datune.tonality.Tonality;
 import org.junit.Assert;
@@ -250,7 +252,7 @@ public class ChromaticChordTest {
 
     // Fuente: https://es.wikipedia.org/wiki/Anexo:Especies_de_acordes
     @Test
-    public void codes() {
+    public void contentImmutableChords() {
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
                 Chromatic.G
@@ -904,5 +906,41 @@ public class ChromaticChordTest {
                 Chromatic.A
         ), ChromaticChord.CMaj13a5a9omit11.getNotes());
 
+    }
+
+    public static class BuilderTest {
+        @Test
+        public void fromFunction() {
+            ChromaticChord chromaticChord = ChromaticChord.builder()
+                    .diatonicFunction(DiatonicFunction.I)
+                    .tonality(Tonality.C)
+                    .build();
+
+            assertEquals(ChromaticChord.C, chromaticChord);
+        }
+
+        @Test
+        public void fromFunction_bVII() {
+            ChromaticChord chromaticChord = ChromaticChord.builder()
+                    .chromaticFunction(ChromaticFunction.bVII)
+                    .tonality(Tonality.C)
+                    .build();
+
+            ChromaticChord chromaticChordReference = ChromaticChord.AA;
+
+            assertEquals(chromaticChordReference, chromaticChord);
+        }
+
+        @Test
+        public void fromFunction_bVI() {
+            ChromaticChord chromaticChord = ChromaticChord.builder()
+                    .chromaticFunction(ChromaticFunction.bVI)
+                    .tonality(Tonality.C)
+                    .build();
+
+            ChromaticChord chromaticChordReference = ChromaticChord.GG;
+
+            assertEquals(chromaticChordReference, chromaticChord);
+        }
     }
 }

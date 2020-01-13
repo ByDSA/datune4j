@@ -308,24 +308,6 @@ public class Tonality implements Iterable<DiatonicAlt> {
         return IntervalChromatic.from( id, distSemitones );
     }
 
-    public @NonNull ChromaticChord getChordFrom(@NonNull DiatonicFunction diatonicFunction) throws ScaleDegreeException { // todo: move to retrievalChord
-        Objects.requireNonNull(diatonicFunction);
-
-        ChromaticChord ret = TonalityGetDiatonicFunctionMajor.get(this, diatonicFunction);
-        if (ret == null)
-            ret = TonalityGetDiatonicFunctionMinor.get(this, diatonicFunction);
-        if (ret == null)
-            ret = TonalityGetDiatonicFunctionDefault.get(this, diatonicFunction);
-
-        return ret;
-    }
-
-    public @NonNull ChromaticChord getChordFrom(@NonNull ChromaticFunction chromaticFunction) throws TonalityException, ScaleDegreeException { // todo: move to retrievalChord
-        Objects.requireNonNull(chromaticFunction);
-
-        return TonalityGetChromaticFunction.get(this, chromaticFunction);
-    }
-
     public @NonNull Scale getScale() {
         return innerTonality.getScale();
     }

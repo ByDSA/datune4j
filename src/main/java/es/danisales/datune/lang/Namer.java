@@ -19,18 +19,25 @@ public class Namer {
     private Namer() {
     }
 
+    public static String alt(int alt) {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (alt < 0) {
+            for (int i = alt; i < 0; i++)
+                stringBuilder.append(ChordNotation.FLAT);
+        } else if (alt > 0) {
+            for (int i = 0; i < alt; i++)
+                stringBuilder.append(ChordNotation.SHARP);
+        }
+
+        return stringBuilder.toString();
+    }
+
     public static String from(@NonNull DiatonicAlt diatonicAlt) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append( diatonicAlt.getDiatonic() );
         float alterations = diatonicAlt.getUnsignedAlterations();
         if (alterations > 0) {
-            if (diatonicAlt.getSemitonesAdded() < 0) {
-                for (int i = 0; i <= alterations-1; i++)
-                    stringBuilder.append(ChordNotation.FLAT);
-            } else if (diatonicAlt.getSemitonesAdded() > 0) {
-                for (int i = 0; i <= alterations-1; i++)
-                    stringBuilder.append(ChordNotation.SHARP);
-            }
+            stringBuilder.append(alt(diatonicAlt.getSemitonesAdded()));
 
             float decimalPart = diatonicAlt.getMicrotonalPartAdded();
             if (Math.abs(decimalPart) > 0) {

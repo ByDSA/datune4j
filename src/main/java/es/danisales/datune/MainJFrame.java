@@ -13,11 +13,8 @@ import java.util.Objects;
 public class MainJFrame extends JFrame {
     private JPanel panel;
 
-    private boolean sus24 = false;
-    private boolean modal = false;
-
-    JComboBox<Tonality> tonalitiesComboBox;
-    JComboBox<Instrument> instrumentJComboBox;
+    private JComboBox<Tonality> tonalitiesComboBox;
+    private JComboBox<Instrument> instrumentJComboBox;
 
     private @NonNull Tonality getSelectedTonality() {
         return Objects.requireNonNull((Tonality) tonalitiesComboBox.getSelectedItem());
@@ -51,22 +48,6 @@ public class MainJFrame extends JFrame {
 
         initializeTonalitiesJComboBox();
         selectorPanel.add(tonalitiesComboBox);
-
-        JCheckBox susBox = new JCheckBox("sus2-4");
-        susBox.addItemListener(e -> {
-            sus24 = susBox.isSelected();
-            Tonality tonality = getSelectedTonality();
-            new Loader(tonality, panel).load();
-        });
-        selectorPanel.add(susBox);
-
-        JCheckBox modalBox = new JCheckBox("modal");
-        modalBox.addItemListener(e -> {
-            modal = modalBox.isSelected();
-            Tonality tonality = getSelectedTonality();
-            new Loader(tonality, panel).load();
-        });
-        selectorPanel.add(modalBox);
 
         initialiceInstrumentJComboBox();
         selectorPanel.add(instrumentJComboBox);

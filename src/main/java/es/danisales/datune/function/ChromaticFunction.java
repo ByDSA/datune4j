@@ -22,10 +22,12 @@ public enum ChromaticFunction implements HarmonicFunction {
 	/** Diminished */
 	I0, II0, III0, IV0, V0, VI0, VII0,
 
-	/** The i5. */
+	/**
+	 * Powe Chord.
+	 */
 	I5, II5, III5, IV5, V5, VI5, VII5,
 
-	/** The sexta napolitana. */
+	/** sexta napolitana. */
 	N6,
 
 	/** Quinto de... */
@@ -38,7 +40,11 @@ public enum ChromaticFunction implements HarmonicFunction {
 	SUBV7, SUBV7_II, SUBV7_III, SUBV7_IV, SUBV7_V, SUBV7_VI,
 
 	/** The v7alt. */
-	V7ALT;
+	V7ALT,
+
+	/* altered */
+	bVII,
+	bVI;
 
 	/** Funciones de triada */
 	public static final ChromaticFunction[] TRIAD_FUNCTIONS = new ChromaticFunction[] {
@@ -237,6 +243,10 @@ public enum ChromaticFunction implements HarmonicFunction {
 				return "VI0";
 			case VII0:
 				return "VII0";
+			case bVII:
+				return "bVII";
+			case bVI:
+				return "bVI";
 		}
 
 		throw new RuntimeException();

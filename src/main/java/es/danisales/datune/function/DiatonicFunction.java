@@ -14,8 +14,8 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  */
 public enum DiatonicFunction implements HarmonicFunction {
 	I, II, III, IV, V, VI, VII,
-	I2, II2, III2, IV2, V2, VI2, VII2,
-	I4, II4, III4, IV4, V4, VI4, VII4,
+    ISUS2, IISUS2, IIISUS2, IVSUS2, VSUS2, VISUS2, VIISUS2,
+    ISUS4, IISUS4, IIISUS4, IVSUS4, VSUS4, VISUS4, VIISUS4,
 	I6, II6, III6, IV6, V6, VI6, VII6,
 	I7, II7, III7, IV7, V7, VI7, VII7,
 	I9, II9, III9, IV9, V9, VI9, VII9,
@@ -47,24 +47,24 @@ public enum DiatonicFunction implements HarmonicFunction {
 
 	/** SUS2 */
 	public static final DiatonicFunction[] SUS2 = new DiatonicFunction[] {
-			I2,
-			II2,
-			III2,
-			IV2,
-			V2,
-			VI2,
-			VII2
+            ISUS2,
+            IISUS2,
+            IIISUS2,
+            IVSUS2,
+            VSUS2,
+            VISUS2,
+            VIISUS2
 	};
 
 	/** SUS4 */
 	public static final DiatonicFunction[] SUS4 = new DiatonicFunction[] {
-			I4,
-			II4,
-			III4,
-			IV4,
-			V4,
-			VI4,
-			VII4,
+            ISUS4,
+            IISUS4,
+            IIISUS4,
+            IVSUS4,
+            VSUS4,
+            VISUS4,
+            VIISUS4,
 	};
 
 	/** Triadas con sexta */
@@ -234,11 +234,13 @@ public enum DiatonicFunction implements HarmonicFunction {
 			case vi:
 			case VI0:
             case VI5:
+            case bVI:
 				return DiatonicFunction.VI;
 			case VII:
 			case vii:
 			case VII0:
             case VII5:
+            case bVII:
 				return DiatonicFunction.VII;
 		}
 
@@ -248,11 +250,11 @@ public enum DiatonicFunction implements HarmonicFunction {
 	public String toString() {
 		switch ( this ) {
 			case I_SECOND:
-			case I2:
-				return "I2";
+            case ISUS2:
+                return "ISUS2";
 			case I_FOURTH:
-			case I4:
-				return "I4";
+            case ISUS4:
+                return "ISUS4";
 			case I6_O5:
 			case I6:
 				return "I6";
@@ -271,11 +273,11 @@ public enum DiatonicFunction implements HarmonicFunction {
 				return "I";
 
 			case II_SECOND:
-			case II2:
-				return "II2";
+            case IISUS2:
+                return "IISUS2";
 			case II_FOURTH:
-			case II4:
-				return "II4";
+            case IISUS4:
+                return "IISUS4";
 			case II6_O5:
 			case II6:
 				return "II6";
@@ -294,11 +296,11 @@ public enum DiatonicFunction implements HarmonicFunction {
 				return "II";
 
 			case III_SECOND:
-			case III2:
-				return "III2";
+            case IIISUS2:
+                return "IIISUS2";
 			case III_FOURTH:
-			case III4:
-				return "III4";
+            case IIISUS4:
+                return "IIISUS4";
 			case III6_O5:
 			case III6:
 				return "III6";
@@ -317,11 +319,11 @@ public enum DiatonicFunction implements HarmonicFunction {
 				return "III";
 
 			case IV_SECOND:
-			case IV2:
-				return "IV2";
+            case IVSUS2:
+                return "IVSUS2";
 			case IV_FOURTH:
-			case IV4:
-				return "IV4";
+            case IVSUS4:
+                return "IVSUS4";
 			case IV6_O5:
 			case IV6:
 				return "IV6";
@@ -340,11 +342,11 @@ public enum DiatonicFunction implements HarmonicFunction {
 				return "IV";
 
 			case V_SECOND:
-			case V2:
-				return "V2";
+            case VSUS2:
+                return "VSUS2";
 			case V_FOURTH:
-			case V4:
-				return "V4";
+            case VSUS4:
+                return "VSUS4";
 			case V6_O5:
 			case V6:
 				return "V6";
@@ -364,11 +366,11 @@ public enum DiatonicFunction implements HarmonicFunction {
 				return "V7";
 
 			case VI_SECOND:
-			case VI2:
-				return "VI2";
+            case VISUS2:
+                return "VISUS2";
 			case VI_FOURTH:
-			case VI4:
-				return "VI4";
+            case VISUS4:
+                return "VISUS4";
 			case VI6_O5:
 			case VI6:
 				return "VI6";
@@ -387,11 +389,11 @@ public enum DiatonicFunction implements HarmonicFunction {
 				return "VI";
 
 			case VII_SECOND:
-			case VII2:
-				return "VII2";
+            case VIISUS2:
+                return "VIISUS2";
 			case VII_FOURTH:
-			case VII4:
-				return "VII4";
+            case VIISUS4:
+                return "VIISUS4";
 			case VII6_O5:
 			case VII6:
 				return "VII6";

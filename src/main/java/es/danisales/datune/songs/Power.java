@@ -40,9 +40,9 @@ public class Power extends Song {
 				add(DiatonicFunction.I).inv(2);
 				add(DiatonicFunction.V);
 
-				add(DiatonicFunction.VI4).inv(-1);
+                add(DiatonicFunction.VISUS4).inv(-1);
 				add(DiatonicFunction.IV6);
-				add(DiatonicFunction.I4).inv(1);
+                add(DiatonicFunction.ISUS4).inv(1);
 				DiatonicChordMidi dc = add(ChromaticFunction.V_V);
 				dc.inv(1);
 				dc.setLength(Duration.L2);

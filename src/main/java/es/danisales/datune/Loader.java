@@ -29,9 +29,12 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.List;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
+
+import static es.danisales.datune.tonality.TonalityGetChromaticFunction.getTonalityFromChromaticFunction;
 
 class Loader {
     private Tonality tonality;
@@ -44,8 +47,7 @@ class Loader {
         this.panel = Objects.requireNonNull(panel);
     }
 
-    private Set<ChromaticChord> chords() {
-        Set<ChromaticChord> chromaticChordSet = new HashSet<>();
+    private void addDiatonicChords(Set<ChromaticChord> chromaticChordSet) {
         for (DiatonicFunction diatonicFunction : DiatonicFunction.TRIADS) {
             ChromaticChord chromaticChord = ChromaticChord.builder()
                     .tonality(tonality)
@@ -53,15 +55,27 @@ class Loader {
                     .build();
             chromaticChordSet.add(chromaticChord);
         }
-/*
+
+        for (DiatonicFunction diatonicFunction : DiatonicFunction.SUS4) {
+            ChromaticChord chromaticChord = ChromaticChord.builder()
+                    .tonality(tonality)
+                    .diatonicFunction(diatonicFunction)
+                    .build();
+            chromaticChordSet.add(chromaticChord);
+        }
+    }
+
+    private void addChromaticFunctions(Set<ChromaticChord> chromaticChordSet) {
         for (ChromaticFunction chromaticFunction : ChromaticFunction.values())
-            chromaticChordSet.addData(
+            chromaticChordSet.add(
                     ChromaticChord.builder()
                             .tonality(tonality)
                             .chromaticFunction(chromaticFunction)
                             .build()
             );
-*/
+    }
+
+    private void addBorrowedChords(Set<ChromaticChord> chromaticChordSet) {
         if (tonality.isMajorOrMinor()) {
             Tonality otherTonality = tonality.clone();
             if (otherTonality.isMajor())
@@ -74,11 +88,20 @@ class Loader {
                         .tonality(otherTonality)
                         .diatonicFunction(diatonicFunction)
                         .build();
-                System.out.println(chromaticChord + " " + otherTonality);
+                System.out.println("Added borrowed chord: " + chromaticChord + " from " + otherTonality);
                 chromaticChordSet.add(chromaticChord);
             }
         }
+    }
 
+    private Set<ChromaticChord> chords() {
+        Set<ChromaticChord> chromaticChordSet = new HashSet<>();
+
+        addDiatonicChords(chromaticChordSet);
+
+        //addChromaticFunctions(chromaticChordSet);
+
+        addBorrowedChords(chromaticChordSet);
 
         return chromaticChordSet;
     }
@@ -190,12 +213,35 @@ class Loader {
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(myKeyEventDispatcher);
 
         for (ChromaticChord chromaticChord : chords()) {
-            Tonality ton = tonality.clone();
-            if (HarmonicFunction.get(chromaticChord, ton) == null)
-                if (ton.isMajor())
-                    ton.setScale(Scale.MINOR);
-                else if (ton.isMinor())
-                    ton.setScale(Scale.MAJOR);
+            Tonality ton = null;
+            HarmonicFunction harmonicFunction = HarmonicFunction.get(chromaticChord, tonality);
+            if (harmonicFunction == null) {
+                List<Tonality> modes = tonality.getModesSameRoot();
+                for (Tonality t : modes) {
+                    harmonicFunction = HarmonicFunction.get(chromaticChord, t);
+                    if (harmonicFunction != null) {
+                        ton = t;
+                        break;
+                    }
+                }
+
+                if (harmonicFunction == null) {
+                    System.out.println("nop: " + chromaticChord);
+                    continue;
+                }
+            }
+
+            if (ton == null) {
+                try {
+                    if (harmonicFunction instanceof DiatonicFunction)
+                        ton = tonality.clone();
+                    else
+                        ton = getTonalityFromChromaticFunction(tonality, (ChromaticFunction) harmonicFunction);
+                } catch (ScaleDegreeException e) {
+                    e.printStackTrace();
+                    continue;
+                }
+            }
 
             DiatonicChordMidi diatonicChordMidi;
             try {
@@ -204,6 +250,7 @@ class Loader {
                         .build();
                 check(diatonicChordMidi, chromaticChord, ton);
             } catch (RuntimeException | BuildingException e) {
+                System.out.println(chromaticChord + " " + harmonicFunction + " " + ton);
                 System.err.println("Fail " + chromaticChord + " " + chromaticChord.getNotes());
                 e.printStackTrace();
                 continue;
@@ -213,9 +260,8 @@ class Loader {
                 continue;
             addedChords.add(chromaticChord);
 
-            JButton jButton = addButton(diatonicChordMidi, chromaticChord);
-            HarmonicFunction harmonicFunction = HarmonicFunction.get(chromaticChord, tonality);
-            if (harmonicFunction != null && mapKey.inverse().get(harmonicFunction) != null) {
+            JButton jButton = addButton(diatonicChordMidi, chromaticChord, harmonicFunction, tonality);
+            if (mapKey.inverse().get(harmonicFunction) != null) {
                 mapButton.put(harmonicFunction, jButton);
             }
         }
@@ -224,11 +270,10 @@ class Loader {
         System.out.println("Tonalidad cambiada a " + tonality);
     }
 
-    private JButton addButton(DiatonicChordMidi diatonicChordMidi, @NonNull ChromaticChord chromaticChord) {
-        HarmonicFunction harmonicFunction = diatonicChordMidi.getTonality().getFunctionFrom(chromaticChord);
+    private JButton addButton(DiatonicChordMidi diatonicChordMidi, @NonNull ChromaticChord chromaticChord, @NonNull HarmonicFunction harmonicFunction, Tonality tonality) {
         DiatonicDegree degree = getDegree(harmonicFunction);
 
-        JButton jButton = new JButton(chromaticChord.toString());
+        JButton jButton = new JButton(harmonicFunction.toString());
 
         int degreeOrdinal = degree.ordinal();
         panels[degreeOrdinal][chromaticChord.size() - 2].add(jButton);
@@ -236,8 +281,10 @@ class Loader {
         if (!diatonicChordMidi.getTonality().equals(tonality)) {
             if (ArrayUtils.contains(harmonicFunction, ChromaticFunction.TENSIONS))
                 jButton.setForeground(Color.BLUE);
-            else
+            else {
                 jButton.setForeground(Color.RED);
+                jButton.setText(harmonicFunction + " (" + diatonicChordMidi.getTonality() + ")");
+            }
             jButton.setOpaque(true);
         }
 
@@ -274,7 +321,7 @@ class Loader {
     private static <T extends NoteMidi<?>> void play(ChordMidi<T, ?, ?> diatonicChordMidi) {
         EventSequence es = new EventSequence();
         for (T diatonicMidi : diatonicChordMidi) {
-            NoteOn noteOn = null;
+            NoteOn noteOn;
             try {
                 noteOn = NoteOn.builder()
                         .from(diatonicMidi)
