@@ -31,6 +31,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.List;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
@@ -46,26 +47,24 @@ class Loader {
         this.panel = Objects.requireNonNull(panel);
     }
 
-    private void addDiatonicChords(Set<ParametricChord> chromaticChordSet) {
+    private void addDiatonicChords(List<ParametricChord> chromaticChordSet) {
         for (DiatonicFunction diatonicFunction : DiatonicFunction.TRIADS) {
             ParametricChord parametricChord = ParametricChord.from(tonality, diatonicFunction);
             chromaticChordSet.add(parametricChord);
         }
+    }
 
-        for (DiatonicFunction diatonicFunction : DiatonicFunction.SUS4) {
-            ParametricChord parametricChord = ParametricChord.from(tonality, diatonicFunction);
-            chromaticChordSet.add(parametricChord);
+    private void addChromaticFunctions(List<ParametricChord> chromaticChordSet) {
+        for (ChromaticFunction chromaticFunction : ChromaticFunction.values()) {
+            if (ArrayUtils.contains(chromaticFunction, ChromaticFunction.TRIAD_FUNCTIONS))
+                continue;
+            ParametricChord chromaticChord = ParametricChord.from(tonality, chromaticFunction);
+            chromaticChordSet.add(chromaticChord);
+            System.out.println("Added chord: " + chromaticFunction + " from " + tonality);
         }
     }
 
-    private void addChromaticFunctions(Set<ParametricChord> chromaticChordSet) {
-        for (ChromaticFunction chromaticFunction : ChromaticFunction.values())
-            chromaticChordSet.add(
-                    ParametricChord.from(tonality, chromaticFunction)
-            );
-    }
-
-    private void addBorrowedChords(Set<ParametricChord> chromaticChordSet) {
+    private void addBorrowedChords(List<ParametricChord> chromaticChordSet) {
         if (tonality.isMajorOrMinor()) {
             Tonality otherTonality = tonality.clone();
             if (otherTonality.isMajor())
@@ -74,6 +73,8 @@ class Loader {
                 otherTonality.setScale(Scale.MAJOR);
 
             for (DiatonicFunction diatonicFunction : DiatonicFunction.TRIADS) {
+                if (diatonicFunction == DiatonicFunction.I)
+                    continue;
                 ParametricChord chromaticChord = ParametricChord.from(otherTonality, diatonicFunction);
                 System.out.println("Added borrowed chord: " + chromaticChord + " from " + otherTonality);
                 chromaticChordSet.add(chromaticChord);
@@ -81,12 +82,12 @@ class Loader {
         }
     }
 
-    private Set<ParametricChord> chords() {
-        Set<ParametricChord> chromaticChordSet = new HashSet<>();
+    private List<ParametricChord> chords() {
+        List<ParametricChord> chromaticChordSet = new ArrayList<>();
 
         addDiatonicChords(chromaticChordSet);
 
-        //addChromaticFunctions(chromaticChordSet);
+        addChromaticFunctions(chromaticChordSet);
 
         addBorrowedChords(chromaticChordSet);
 
@@ -225,7 +226,7 @@ class Loader {
             addedChords.add(chromaticChord);
 
             JButton jButton = addButton(diatonicChordMidi, parametricChord, tonality);
-            if (mapKey.inverse().get(parametricChord.getHarmonicFunction()) != null) {
+            if (mapKey.inverse().get(parametricChord.getHarmonicFunction()) != null && parametricChord.getTonality().equals(tonality)) {
                 mapButton.put(parametricChord.getHarmonicFunction(), jButton);
             }
         }
@@ -235,7 +236,7 @@ class Loader {
     }
 
     private JButton addButton(DiatonicChordMidi diatonicChordMidi, ParametricChord parametricChord, Tonality tonality) {
-        HarmonicFunction harmonicFunction = parametricChord.getHarmonicFunction();
+        final HarmonicFunction harmonicFunction = parametricChord.getHarmonicFunction();
         DiatonicDegree degree = getDegree(harmonicFunction);
 
         JButton jButton = new JButton(harmonicFunction.toString());

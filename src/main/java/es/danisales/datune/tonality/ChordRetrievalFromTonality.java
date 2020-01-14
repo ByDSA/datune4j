@@ -32,6 +32,13 @@ public class ChordRetrievalFromTonality {
         Objects.requireNonNull(chromaticFunction);
 
         switch (chromaticFunction) {
+            case ISUS4:
+            case IISUS4:
+            case bIIISUS4:
+            case IVSUS4:
+            case VSUS4:
+            case VISUS4:
+            case bVIISUS4:
             case I:
             case II:
             case III:
@@ -62,7 +69,7 @@ public class ChordRetrievalFromTonality {
             case VII5:
             case N6:
                 ChromaticChordPattern chromaticChordPattern = TonalityGetChromaticFunction.getChromaticChordPatternFromChromaticFunction(chromaticFunction);
-                Objects.requireNonNull(chromaticChordPattern);
+                Objects.requireNonNull(chromaticChordPattern, chromaticFunction.toString());
                 DiatonicAlt noteBase = TonalityGetChromaticFunction.getNoteBaseFromChromaticFunctionAndTonality(tonality, chromaticFunction);
 
                 Chromatic noteBaseChromatic = Chromatic.from(noteBase);
@@ -120,6 +127,18 @@ public class ChordRetrievalFromTonality {
 
                 return ChromaticChord.builder()
                         .diatonicFunction(DiatonicFunction.VI)
+                        .tonality(parallelMinor)
+                        .build();
+            }
+            case bIII: {
+                Tonality parallelMinor;
+                if (tonality.getScale().equals(Scale.MINOR))
+                    parallelMinor = tonality;
+                else
+                    parallelMinor = Tonality.from(tonality.getRoot(), Scale.MINOR);
+
+                return ChromaticChord.builder()
+                        .diatonicFunction(DiatonicFunction.III)
                         .tonality(parallelMinor)
                         .build();
             }

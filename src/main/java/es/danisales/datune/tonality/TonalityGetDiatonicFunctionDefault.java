@@ -27,8 +27,6 @@ public class TonalityGetDiatonicFunctionDefault {
     private static DiatonicAlt getNoteBaseFrom(Tonality tonality, DiatonicFunction diatonicFunction) throws ScaleDegreeException {
         switch (diatonicFunction) {
             case I:
-            case ISUS2:
-            case ISUS4:
             case I6:
             case I7:
             case I9:
@@ -44,8 +42,6 @@ public class TonalityGetDiatonicFunctionDefault {
             case I9_O3_O7:
                 return tonality.getNote(DiatonicDegree.I);
             case II:
-            case IISUS2:
-            case IISUS4:
             case II6:
             case II7:
             case II9:
@@ -61,8 +57,6 @@ public class TonalityGetDiatonicFunctionDefault {
             case II9_O3_O7:
                 return tonality.getNote(DiatonicDegree.II);
             case III:
-            case IIISUS2:
-            case IIISUS4:
             case III6:
             case III7:
             case III9:
@@ -78,8 +72,6 @@ public class TonalityGetDiatonicFunctionDefault {
             case III9_O3_O7:
                 return tonality.getNote(DiatonicDegree.III);
             case IV:
-            case IVSUS2:
-            case IVSUS4:
             case IV6:
             case IV7:
             case IV9:
@@ -95,8 +87,6 @@ public class TonalityGetDiatonicFunctionDefault {
             case IV9_O3_O7:
                 return tonality.getNote(DiatonicDegree.IV);
             case V:
-            case VSUS2:
-            case VSUS4:
             case V6:
             case V7:
             case V9:
@@ -112,8 +102,6 @@ public class TonalityGetDiatonicFunctionDefault {
             case V9_O3_O7:
                 return tonality.getNote(DiatonicDegree.V);
             case VI:
-            case VISUS2:
-            case VISUS4:
             case VI6:
             case VI7:
             case VI9:
@@ -129,8 +117,6 @@ public class TonalityGetDiatonicFunctionDefault {
             case VI9_O3_O7:
                 return tonality.getNote(DiatonicDegree.VI);
             case VII:
-            case VIISUS2:
-            case VIISUS4:
             case VII6:
             case VII7:
             case VII9:
@@ -160,22 +146,6 @@ public class TonalityGetDiatonicFunctionDefault {
             case VI:
             case VII:
                 return DiatonicChordPattern.TRIAD;
-            case ISUS2:
-            case IISUS2:
-            case IIISUS2:
-            case IVSUS2:
-            case VSUS2:
-            case VISUS2:
-            case VIISUS2:
-                return DiatonicChordPattern.SUS2;
-            case ISUS4:
-            case IISUS4:
-            case IIISUS4:
-            case IVSUS4:
-            case VSUS4:
-            case VISUS4:
-            case VIISUS4:
-                return DiatonicChordPattern.SUS4;
             case I6:
             case II6:
             case III6:

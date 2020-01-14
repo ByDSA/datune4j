@@ -453,7 +453,8 @@ public class Main {
 			c.inv( 2 );
 			c.shiftOctave( -1 );
 
-            c = p.add(DiatonicFunction.IVSUS2);
+            c = p.add(ChromaticFunction.IVSUS4);
+            c.inv(-1);
 			c.setLength( (int) ( Duration.L4 * 3.25 ) );
 			c.inv( 0 );
 

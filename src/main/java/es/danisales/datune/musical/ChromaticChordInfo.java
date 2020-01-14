@@ -17,7 +17,6 @@ public final class ChromaticChordInfo implements Cloneable {
 	static final ChromaticChordInfo TRIAD_DIMINISHED = new ChromaticChordInfo(Quality.DIMINISHED, ChordNotation.DIMINISHED, ChromaticChordPattern.TRIAD_DIMINISHED);
 	static final ChromaticChordInfo TRIAD_AUGMENTED = new ChromaticChordInfo(Quality.AUGMENTED, ChordNotation.AUGMENTED, ChromaticChordPattern.TRIAD_AUGMENTED);
 	static final ChromaticChordInfo SUS4 = new ChromaticChordInfo(Quality.INDETERMINATED, ChordNotation.SUS4, ChromaticChordPattern.SUS4);
-	static final ChromaticChordInfo SUS2 = new ChromaticChordInfo(Quality.INDETERMINATED, ChordNotation.SUS2, ChromaticChordPattern.SUS2);
 	static final ChromaticChordInfo SEVENTH = new ChromaticChordInfo(Quality.MAJOR, ChordNotation.SEVENTH, ChromaticChordPattern.SEVENTH);
 	static final ChromaticChordInfo SEVENTH_MAJ7 = new ChromaticChordInfo(Quality.MAJOR, ChordNotation.MAJOR2 + ChordNotation.SEVENTH, ChromaticChordPattern.SEVENTH_MAJ7);
 	static final ChromaticChordInfo SEVENTH_MINOR = new ChromaticChordInfo(Quality.MINOR, ChordNotation.MINOR2 + ChordNotation.SEVENTH, ChromaticChordPattern.SEVENTH_MINOR);
@@ -106,7 +105,6 @@ public final class ChromaticChordInfo implements Cloneable {
 		putMap(TRIAD_DIMINISHED);
 		putMap(TRIAD_AUGMENTED);
 		putMap(SUS4);
-		putMap(SUS2);
 		putMap(SEVENTH);
 		putMap(SEVENTH_MAJ7);
 		putMap(SEVENTH_MINOR);

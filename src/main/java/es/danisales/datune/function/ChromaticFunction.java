@@ -27,8 +27,13 @@ public enum ChromaticFunction implements HarmonicFunction {
 	 */
 	I5, II5, III5, IV5, V5, VI5, VII5,
 
+    /**
+     * SUS
+     **/
+    ISUS4, IISUS4, bIIISUS4, IVSUS4, VSUS4, VISUS4, bVIISUS4,
+
 	/** sexta napolitana. */
-	N6,
+	N6, //bII
 
 	/** Quinto de... */
 	V_II, V_III, V_IV, V_V, V_VI,
@@ -43,6 +48,7 @@ public enum ChromaticFunction implements HarmonicFunction {
 	V7ALT,
 
 	/* altered */
+	bIII,
 	bVII,
 	bVI;
 
@@ -68,7 +74,10 @@ public enum ChromaticFunction implements HarmonicFunction {
 			IV0,
 			V0,
 			VI0,
-			VII0,
+            VII0,
+            bIII,
+            bVI,
+			bVII
 	};
 
 	/** Funciones POWER */
@@ -108,7 +117,20 @@ public enum ChromaticFunction implements HarmonicFunction {
 			SUBV7_IV,
 			SUBV7_V,
 			SUBV7_VI,
-	};
+    };
+
+    /**
+     * SUS4
+     */
+    public static final ChromaticFunction[] SUS4 = new ChromaticFunction[]{
+            ISUS4,
+            IISUS4,
+            bIIISUS4,
+            IVSUS4,
+            VSUS4,
+            VISUS4,
+            bVIISUS4,
+    };
 
 	/** Otras funciones */
 	public static final ChromaticFunction[] OTHERS = new ChromaticFunction[] {
@@ -167,11 +189,23 @@ public enum ChromaticFunction implements HarmonicFunction {
 			case V_V:
 				return "V/V";
 			case V_VI:
-				return "V/VI";
-
+                return "V/VI";
+            case ISUS4:
+                return "ISUS4";
+            case IISUS4:
+                return "IISUS4";
+            case bIIISUS4:
+                return "bIIISUS4";
+            case IVSUS4:
+                return "IVSUS4";
+            case VSUS4:
+                return "VSUS4";
+            case VISUS4:
+                return "VISUS4";
+            case bVIISUS4:
+				return "bVIISUS4";
 			case N6:
 				return "N6";
-
 			case SUBV7:
 				return "subV7";
 			case SUBV7_II:
@@ -229,20 +263,22 @@ public enum ChromaticFunction implements HarmonicFunction {
 				return "vi";
 			case vii:
 				return "vii";
-			case I0:
-				return "I0";
-			case II0:
-				return "II0";
-			case III0:
-				return "III0";
-			case IV0:
-				return "IV0";
-			case V0:
-				return "V0";
-			case VI0:
-				return "VI0";
-			case VII0:
-				return "VII0";
+            case I0:
+				return "Iº";
+            case II0:
+				return "IIº";
+            case III0:
+				return "IIIº";
+            case IV0:
+				return "IVº";
+            case V0:
+				return "Vº";
+            case VI0:
+				return "VIº";
+            case VII0:
+                return "VIIº";
+            case bIII:
+				return "bIII";
 			case bVII:
 				return "bVII";
 			case bVI:

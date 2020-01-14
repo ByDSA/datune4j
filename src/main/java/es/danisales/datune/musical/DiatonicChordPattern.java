@@ -14,12 +14,8 @@ import static com.google.common.base.Preconditions.checkArgument;
 public final class DiatonicChordPattern extends Pattern {
     public static final DiatonicChordPattern TRIAD = new DiatonicChordPattern(0, 2, 4);
     public static final DiatonicChordPattern THIRD = new DiatonicChordPattern(0, 2);
-    public static final DiatonicChordPattern SUS2 = new DiatonicChordPattern(0, 1, 4);
-    @SuppressWarnings("WeakerAccess")
-    public static final DiatonicChordPattern SUS2_O5 = new DiatonicChordPattern(0, 1);
-    public static final DiatonicChordPattern SUS4 = new DiatonicChordPattern(0, 3, 4);
-    @SuppressWarnings("WeakerAccess")
-    public static final DiatonicChordPattern SUS4_O5 = new DiatonicChordPattern(0, 3);
+    public static final DiatonicChordPattern SECOND = new DiatonicChordPattern(0, 1);
+    public static final DiatonicChordPattern FOURTH = new DiatonicChordPattern(0, 3);
     public static final DiatonicChordPattern SIXTH = new DiatonicChordPattern(0, 2, 4, 5);
     public static final DiatonicChordPattern SIXTH_O5 = new DiatonicChordPattern(0, 2, 5);
     public static final DiatonicChordPattern SEVENTH = new DiatonicChordPattern(0, 2, 4, 6);
@@ -76,10 +72,6 @@ public final class DiatonicChordPattern extends Pattern {
         return new DiatonicChordPattern[]{
                 TRIAD,
                 THIRD,
-                SUS2,
-                SUS2_O5,
-                SUS4,
-                SUS4_O5,
                 SIXTH,
                 SIXTH_O5,
                 SEVENTH,

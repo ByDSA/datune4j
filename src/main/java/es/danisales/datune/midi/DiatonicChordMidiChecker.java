@@ -279,11 +279,11 @@ public class DiatonicChordMidiChecker {
                     switch ((DiatonicFunction) diatonicChordMidi.function) {
                         case ISUS2:
                         case IISUS2:
-                        case IIISUS2:
+                        case bIIISUS2:
                         case IVSUS2:
                         case VSUS2:
-                        case VISUS2:
-                        case VIISUS2:
+                        case bVISUS2:
+                        case bVIISUS2:
                         case I_SECOND:
                         case II_SECOND:
                         case III_SECOND:
@@ -302,11 +302,11 @@ public class DiatonicChordMidiChecker {
                     switch ((DiatonicFunction) diatonicChordMidi.function) {
                         case ISUS4:
                         case IISUS4:
-                        case IIISUS4:
+                        case bIIISUS4:
                         case IVSUS4:
                         case VSUS4:
                         case VISUS4:
-                        case VIISUS4:
+                        case bVIISUS4:
                         case I_FOURTH:
                         case II_FOURTH:
                         case III_FOURTH:

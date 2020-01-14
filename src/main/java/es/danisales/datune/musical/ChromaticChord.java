@@ -98,20 +98,6 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
     public static final ChromaticChord AAsus4 = new ChromaticChord(ChromaticChordImmutable.AAsus4);
     public static final ChromaticChord Bsus4 = new ChromaticChord(ChromaticChordImmutable.Bsus4);
 
-    // Segunda suspendida
-    public static final ChromaticChord Csus2 = new ChromaticChord(ChromaticChordImmutable.Csus2);
-    public static final ChromaticChord CCsus2 = new ChromaticChord(ChromaticChordImmutable.CCsus2);
-    public static final ChromaticChord Dsus2 = new ChromaticChord(ChromaticChordImmutable.Dsus2);
-    public static final ChromaticChord DDsus2 = new ChromaticChord(ChromaticChordImmutable.DDsus2);
-    public static final ChromaticChord Esus2 = new ChromaticChord(ChromaticChordImmutable.Esus2);
-    public static final ChromaticChord Fsus2 = new ChromaticChord(ChromaticChordImmutable.Fsus2);
-    public static final ChromaticChord FFsus2 = new ChromaticChord(ChromaticChordImmutable.FFsus2);
-    public static final ChromaticChord Gsus2 = new ChromaticChord(ChromaticChordImmutable.Gsus2);
-    public static final ChromaticChord GGsus2 = new ChromaticChord(ChromaticChordImmutable.GGsus2);
-    public static final ChromaticChord Asus2 = new ChromaticChord(ChromaticChordImmutable.Asus2);
-    public static final ChromaticChord AAsus2 = new ChromaticChord(ChromaticChordImmutable.AAsus2);
-    public static final ChromaticChord Bsus2 = new ChromaticChord(ChromaticChordImmutable.Bsus2);
-
     // Séptima (de dominante)
     public static final ChromaticChord C7 = new ChromaticChord(ChromaticChordImmutable.C7);
     public static final ChromaticChord CC7 = new ChromaticChord(ChromaticChordImmutable.CC7);
@@ -1286,20 +1272,6 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             ChromaticChord.AAsus4,
             ChromaticChord.Bsus4
     ));
-    protected static final Set<ChromaticChord> CHORDS_SUS2 = ImmutableSet.copyOf(Arrays.asList(
-            ChromaticChord.Csus2,
-            ChromaticChord.CCsus2,
-            ChromaticChord.Dsus2,
-            ChromaticChord.DDsus2,
-            ChromaticChord.Esus2,
-            ChromaticChord.Fsus2,
-            ChromaticChord.FFsus2,
-            ChromaticChord.Gsus2,
-            ChromaticChord.GGsus2,
-            ChromaticChord.Asus2,
-            ChromaticChord.AAsus2,
-            ChromaticChord.Bsus2
-    ));
     protected static final Set<ChromaticChord> CHORDS_7 = ImmutableSet.copyOf(Arrays.asList(
             ChromaticChord.C7,
             ChromaticChord.CC7,
@@ -2364,8 +2336,7 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
             CHORDS_MINOR,
             CHORDS_DIMINISHED,
             CHORDS_AUGMENTED,
-            CHORDS_SUS4,
-            CHORDS_SUS2
+            CHORDS_SUS4
     );
 
     protected static final Set<ChromaticChord> SEVENTH_CHORDS = SetUtils.concatImmutable(

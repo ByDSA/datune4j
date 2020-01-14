@@ -20,7 +20,6 @@ public final class ChromaticChordPattern extends Pattern {
     public static final ChromaticChordPattern TRIAD_DIMINISHED = new ChromaticChordPattern(0, 3, 6);
     public static final ChromaticChordPattern TRIAD_AUGMENTED = new ChromaticChordPattern(0, 4, 8);
     public static final ChromaticChordPattern SUS4 = new ChromaticChordPattern(0, 5, 7);
-    public static final ChromaticChordPattern SUS2 = new ChromaticChordPattern(0, 2, 7);
     public static final ChromaticChordPattern SEVENTH = new ChromaticChordPattern(0, 4, 7, 10);
     public static final ChromaticChordPattern SEVENTH_b5 = new ChromaticChordPattern(0, 4, 6, 10);
     public static final ChromaticChordPattern SEVENTH_a5 = new ChromaticChordPattern(0, 4, 8, 10);
@@ -150,7 +149,6 @@ public final class ChromaticChordPattern extends Pattern {
                 TRIAD_DIMINISHED,
                 TRIAD_AUGMENTED,
                 SUS4,
-                SUS2,
                 SEVENTH,
                 SEVENTH_b5,
                 SEVENTH_a5,

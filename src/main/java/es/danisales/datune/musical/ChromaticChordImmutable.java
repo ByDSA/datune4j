@@ -94,20 +94,6 @@ enum ChromaticChordImmutable implements PitchChromaticChord<Chromatic>, Chromati
 	AAsus4(ChromaticChordInfo.SUS4, Chromatic.AA),
 	Bsus4(ChromaticChordInfo.SUS4, Chromatic.B),
 
-	// Segunda suspendida
-	Csus2(ChromaticChordInfo.SUS2, Chromatic.C),
-	CCsus2(ChromaticChordInfo.SUS2, Chromatic.CC),
-	Dsus2(ChromaticChordInfo.SUS2, Chromatic.D),
-	DDsus2(ChromaticChordInfo.SUS2, Chromatic.DD),
-	Esus2(ChromaticChordInfo.SUS2, Chromatic.E),
-	Fsus2(ChromaticChordInfo.SUS2, Chromatic.F),
-	FFsus2(ChromaticChordInfo.SUS2, Chromatic.FF),
-	Gsus2(ChromaticChordInfo.SUS2, Chromatic.G),
-	GGsus2(ChromaticChordInfo.SUS2, Chromatic.GG),
-	Asus2(ChromaticChordInfo.SUS2, Chromatic.A),
-	AAsus2(ChromaticChordInfo.SUS2, Chromatic.AA),
-	Bsus2(ChromaticChordInfo.SUS2, Chromatic.B),
-
 	// Séptima (de dominante)
 	C7(ChromaticChordInfo.SEVENTH, Chromatic.C),
 	CC7(ChromaticChordInfo.SEVENTH, Chromatic.CC),

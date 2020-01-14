@@ -14,8 +14,6 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  */
 public enum DiatonicFunction implements HarmonicFunction {
 	I, II, III, IV, V, VI, VII,
-    ISUS2, IISUS2, IIISUS2, IVSUS2, VSUS2, VISUS2, VIISUS2,
-    ISUS4, IISUS4, IIISUS4, IVSUS4, VSUS4, VISUS4, VIISUS4,
 	I6, II6, III6, IV6, V6, VI6, VII6,
 	I7, II7, III7, IV7, V7, VI7, VII7,
 	I9, II9, III9, IV9, V9, VI9, VII9,
@@ -43,28 +41,6 @@ public enum DiatonicFunction implements HarmonicFunction {
 			V,
 			VI,
 			VII
-	};
-
-	/** SUS2 */
-	public static final DiatonicFunction[] SUS2 = new DiatonicFunction[] {
-            ISUS2,
-            IISUS2,
-            IIISUS2,
-            IVSUS2,
-            VSUS2,
-            VISUS2,
-            VIISUS2
-	};
-
-	/** SUS4 */
-	public static final DiatonicFunction[] SUS4 = new DiatonicFunction[] {
-            ISUS4,
-            IISUS4,
-            IIISUS4,
-            IVSUS4,
-            VSUS4,
-            VISUS4,
-            VIISUS4,
 	};
 
 	/** Triadas con sexta */
@@ -115,7 +91,7 @@ public enum DiatonicFunction implements HarmonicFunction {
 
 	/** Todas */
 	public static final DiatonicFunction[] COMMON = ArrayUtils
-			.concat( TRIADS, SUS2, SUS4, SIXTH, SEVENTH, NINTH, ELEVENTH );
+            .concat(TRIADS, SIXTH, SEVENTH, NINTH, ELEVENTH);
 
 	/** Intervalos */
 	public static final DiatonicFunction[] INTERVALS = new DiatonicFunction[] {
@@ -219,6 +195,7 @@ public enum DiatonicFunction implements HarmonicFunction {
 			case iii:
 			case III0:
             case III5:
+            case bIII:
 				return DiatonicFunction.III;
 			case IV:
 			case iv:
@@ -250,10 +227,8 @@ public enum DiatonicFunction implements HarmonicFunction {
 	public String toString() {
 		switch ( this ) {
 			case I_SECOND:
-            case ISUS2:
                 return "ISUS2";
 			case I_FOURTH:
-            case ISUS4:
                 return "ISUS4";
 			case I6_O5:
 			case I6:
@@ -273,10 +248,8 @@ public enum DiatonicFunction implements HarmonicFunction {
 				return "I";
 
 			case II_SECOND:
-            case IISUS2:
                 return "IISUS2";
 			case II_FOURTH:
-            case IISUS4:
                 return "IISUS4";
 			case II6_O5:
 			case II6:
@@ -296,11 +269,9 @@ public enum DiatonicFunction implements HarmonicFunction {
 				return "II";
 
 			case III_SECOND:
-            case IIISUS2:
-                return "IIISUS2";
+                return "bIIISUS2";
 			case III_FOURTH:
-            case IIISUS4:
-                return "IIISUS4";
+                return "bIIISUS4";
 			case III6_O5:
 			case III6:
 				return "III6";
@@ -319,10 +290,8 @@ public enum DiatonicFunction implements HarmonicFunction {
 				return "III";
 
 			case IV_SECOND:
-            case IVSUS2:
                 return "IVSUS2";
 			case IV_FOURTH:
-            case IVSUS4:
                 return "IVSUS4";
 			case IV6_O5:
 			case IV6:
@@ -342,10 +311,8 @@ public enum DiatonicFunction implements HarmonicFunction {
 				return "IV";
 
 			case V_SECOND:
-            case VSUS2:
                 return "VSUS2";
 			case V_FOURTH:
-            case VSUS4:
                 return "VSUS4";
 			case V6_O5:
 			case V6:
@@ -366,10 +333,8 @@ public enum DiatonicFunction implements HarmonicFunction {
 				return "V7";
 
 			case VI_SECOND:
-            case VISUS2:
-                return "VISUS2";
+                return "bVISUS2";
 			case VI_FOURTH:
-            case VISUS4:
                 return "VISUS4";
 			case VI6_O5:
 			case VI6:
@@ -389,11 +354,9 @@ public enum DiatonicFunction implements HarmonicFunction {
 				return "VI";
 
 			case VII_SECOND:
-            case VIISUS2:
-                return "VIISUS2";
+                return "bVIISUS2";
 			case VII_FOURTH:
-            case VIISUS4:
-                return "VIISUS4";
+                return "bVIISUS4";
 			case VII6_O5:
 			case VII6:
 				return "VII6";

@@ -10,6 +10,8 @@ import es.danisales.datune.musical.DiatonicAlt;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class TonalityGetChromaticFunction {
@@ -47,11 +49,57 @@ public class TonalityGetChromaticFunction {
 			case VI5:
 			case VII5:
 				return ChromaticChordPattern.POWER_CHORD;
+			case ISUS4:
+			case IISUS4:
+			case bIIISUS4:
+			case IVSUS4:
+			case VSUS4:
+			case VISUS4:
+			case bVIISUS4:
+				return ChromaticChordPattern.SUS4;
 			case N6:
 				return ChromaticChordPattern.N6;
-			default:
-				return null;
+			case V_II:
+				break;
+			case V_III:
+				break;
+			case V_IV:
+				break;
+			case V_V:
+				break;
+			case V_VI:
+				break;
+			case V7_II:
+				break;
+			case V7_III:
+				break;
+			case V7_IV:
+				break;
+			case V7_V:
+				break;
+			case V7_VI:
+				break;
+			case SUBV7:
+				break;
+			case SUBV7_II:
+				break;
+			case SUBV7_III:
+				break;
+			case SUBV7_IV:
+				break;
+			case SUBV7_V:
+				break;
+			case SUBV7_VI:
+				break;
+			case V7ALT:
+				break;
+			case bVII:
+				return ChromaticChordPattern.TRIAD_MAJOR;
+			case bVI:
+				return ChromaticChordPattern.TRIAD_MAJOR;
 		}
+
+		return null;
 	}
 
 	static @NonNull DiatonicFunction getDiatonicFunctionFromChromaticFunction(@NonNull ChromaticFunction chromaticFunction) {
@@ -81,7 +129,7 @@ public class TonalityGetChromaticFunction {
 		}
 	}
 
-    @SuppressWarnings("ConstantConditions") // DiatonicFunction.patternFrom nunca devuelve null en este contexto
+	@SuppressWarnings("ConstantConditions") // DiatonicFunction.patternFrom nunca devuelve null en este contexto
 	private static @Nullable Tonality getT(@NonNull Tonality tonality, @NonNull ChromaticFunction chromaticFunction) {
 		DiatonicFunction diatonicFunction = DiatonicFunction.from(chromaticFunction);
 		ChromaticChord chromaticChord = ChromaticChord.builder()
@@ -143,6 +191,7 @@ public class TonalityGetChromaticFunction {
 			case VII5:
 			case bVII:
 			case bVI:
+			case bIII:
 				if (tonality.hasAsDiatonicFunction(chromaticFunction))
 					return tonality;
 
@@ -151,7 +200,28 @@ public class TonalityGetChromaticFunction {
 						.tonality(tonality)
 						.build();
 
-				for (Tonality mode : tonality.getModesSameRoot()) {
+				List<Tonality> modesSameRoot;
+				if (tonality.getScale().equals(Scale.MAJOR)
+						|| tonality.getScale().equals(Scale.MINOR)
+						|| tonality.getScale().equals(Scale.DORIAN)
+						|| tonality.getScale().equals(Scale.MIXOLYDIAN)
+						|| tonality.getScale().equals(Scale.PHRYGIAN)
+						|| tonality.getScale().equals(Scale.LYDIAN)
+						|| tonality.getScale().equals(Scale.LOCRIAN)
+				)
+					modesSameRoot = Arrays.asList(
+							Tonality.from(tonality.getRoot(), Scale.MAJOR),
+							Tonality.from(tonality.getRoot(), Scale.MINOR),
+							Tonality.from(tonality.getRoot(), Scale.MIXOLYDIAN),
+							Tonality.from(tonality.getRoot(), Scale.DORIAN),
+							Tonality.from(tonality.getRoot(), Scale.PHRYGIAN),
+							Tonality.from(tonality.getRoot(), Scale.LYDIAN),
+							Tonality.from(tonality.getRoot(), Scale.LOCRIAN)
+					);
+				else
+					modesSameRoot = tonality.getModesSameRoot();
+
+				for (Tonality mode : modesSameRoot) {
 					DiatonicFunction diatonicFunction = DiatonicFunction.from(chromaticFunction);
 
 					Objects.requireNonNull(diatonicFunction, chromaticFunction.toString());
@@ -165,6 +235,17 @@ public class TonalityGetChromaticFunction {
 						return mode;
 				}
 				return TonalityRetrieval.listFromChordFirst(chromaticChord4);
+			case ISUS4:
+			case IISUS4:
+			case VSUS4:
+			case VISUS4:
+				return Tonality.from(tonality.getRoot(), Scale.MAJOR);
+			case IVSUS4:
+				return Tonality.from(tonality.getRoot(), Scale.MINOR);
+
+			case bIIISUS4:
+			case bVIISUS4:
+				return Tonality.from(tonality.getRoot(), Scale.MINOR);
 			case N6:
 				DiatonicAlt diatonicAlt = tonality.getRoot().getAddSemi(1);
 				return Tonality.from(diatonicAlt, Scale.MAJOR);
@@ -242,36 +323,54 @@ public class TonalityGetChromaticFunction {
 			case I0:
 			case I5:
 				return tonality.getNote(DiatonicDegree.I);
+			case ISUS4:
+				return Tonality.from(tonality.getRoot(), Scale.MAJOR).getNote(DiatonicDegree.I);
 			case II:
 			case ii:
 			case II0:
 			case II5:
 				return tonality.getNote(DiatonicDegree.II);
+			case IISUS4:
+				return Tonality.from(tonality.getRoot(), Scale.MAJOR).getNote(DiatonicDegree.II);
 			case III:
 			case iii:
 			case III0:
 			case III5:
 				return tonality.getNote(DiatonicDegree.III);
+			case bIIISUS4:
+			case bIII:
+				return Tonality.from(tonality.getRoot(), Scale.MINOR).getNote(DiatonicDegree.III);
 			case IV:
 			case iv:
 			case IV0:
 			case IV5:
 				return tonality.getNote(DiatonicDegree.IV);
+			case IVSUS4:
+				return Tonality.from(tonality.getRoot(), Scale.MAJOR).getNote(DiatonicDegree.IV);
 			case V:
 			case v:
 			case V0:
 			case V5:
 				return tonality.getNote(DiatonicDegree.V);
+			case VSUS4:
+				return Tonality.from(tonality.getRoot(), Scale.MAJOR).getNote(DiatonicDegree.V);
 			case VI:
 			case vi:
 			case VI0:
 			case VI5:
 				return tonality.getNote(DiatonicDegree.VI);
+			case VISUS4:
+				return Tonality.from(tonality.getRoot(), Scale.MAJOR).getNote(DiatonicDegree.VI);
+			case bVI:
+				return Tonality.from(tonality.getRoot(), Scale.MINOR).getNote(DiatonicDegree.VI);
 			case VII:
 			case vii:
 			case VII0:
 			case VII5:
 				return tonality.getNote(DiatonicDegree.VII);
+			case bVII:
+			case bVIISUS4:
+				return Tonality.from(tonality.getRoot(), Scale.MINOR).getNote(DiatonicDegree.VII);
 			case N6:
 				return tonality.getNote(DiatonicDegree.I);
 		}
