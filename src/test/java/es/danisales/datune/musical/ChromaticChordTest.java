@@ -86,7 +86,6 @@ public class ChromaticChordTest {
         assertEquals( "Cm", ChromaticChord.Cm.toString() );
         assertEquals( "C7", ChromaticChord.C7.toString() );
         assertEquals( "F5", ChromaticChord.F5.toString() );
-        assertEquals( "Csus2", ChromaticChord.Csus2.toString() );
         assertEquals( "Gsus4", ChromaticChord.Gsus4.toString() );
         assertEquals( "C13#5#9", ChromaticChord.C13a5a9.toString() );
         assertEquals( "C#13#5b9 (omit11)", ChromaticChord.CC13a5b9omit11.toString() );
@@ -96,7 +95,6 @@ public class ChromaticChordTest {
         assertEquals("Dom", ChromaticChord.Cm.toString());
         assertEquals("Do7", ChromaticChord.C7.toString());
         assertEquals("Fa5", ChromaticChord.F5.toString());
-        assertEquals("Dosus2", ChromaticChord.Csus2.toString());
         assertEquals("Solsus4", ChromaticChord.Gsus4.toString());
         assertEquals("Do13#5#9", ChromaticChord.C13a5a9.toString());
         assertEquals("Do#13#5b9 (omit11)", ChromaticChord.CC13a5b9omit11.toString());
@@ -137,10 +135,6 @@ public class ChromaticChordTest {
         chromaticChord.inv();
         assertEquals( "F5/C", chromaticChord.toString() );
 
-        chromaticChord = ChromaticChord.Csus2.clone();
-        chromaticChord.inv();
-        assertEquals( "Csus2/D", chromaticChord.toString() );
-
         chromaticChord = ChromaticChord.Gsus4.clone();
         chromaticChord.inv();
         assertEquals( "Gsus4/C", chromaticChord.toString() );
@@ -161,23 +155,9 @@ public class ChromaticChordTest {
         chromaticChord.inv();
         assertEquals("Fa5/Do", chromaticChord.toString());
 
-        chromaticChord = ChromaticChord.Csus2.clone();
-        chromaticChord.inv();
-        assertEquals("Dosus2/Re", chromaticChord.toString());
-
         chromaticChord = ChromaticChord.Gsus4.clone();
         chromaticChord.inv();
         assertEquals("Solsus4/Do", chromaticChord.toString());
-    }
-
-    @Test
-    public void sameNotesAndDifferentRootAreDifferent() {
-        ChromaticChord Csus2 = ChromaticChord.Csus2;
-        ChromaticChord Gsus4_inv = ChromaticChord.Gsus4.clone();
-        Gsus4_inv.inv();
-        assertEquals(Csus2.getNotes(), Gsus4_inv.getNotes());
-        assertNotEquals(Csus2.getRootIndex(), Gsus4_inv.getRootIndex());
-        assertNotEquals(Csus2, Gsus4_inv);
     }
 
     @Test
@@ -287,12 +267,6 @@ public class ChromaticChordTest {
                 Chromatic.F,
                 Chromatic.G
         ), ChromaticChord.Csus4.getNotes());
-
-        Assert.assertEquals(Arrays.asList(
-                Chromatic.C,
-                Chromatic.D,
-                Chromatic.G
-        ), ChromaticChord.Csus2.getNotes());
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,

@@ -55,7 +55,7 @@ public abstract class ChunkData implements Event {
 
 	ChunkData(int delta, byte status) {
 		this.delta = delta;
-		setStatus(status);
+		this.status = status;
 	}
 
 	public void setDelta(int d) {

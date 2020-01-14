@@ -23,6 +23,11 @@ public class Pan extends ControlChangeEvent {
 		return new Builder();
 	}
 
+	@Override
+	public void setStatus(byte status) {
+		throw new UnsupportedOperationException();
+	}
+
     public static class Builder extends ControlChangeEvent.Builder<Builder, Pan> {
 		int value = MID;
 

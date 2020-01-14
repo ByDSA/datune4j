@@ -26,8 +26,10 @@ public abstract class ChannelEvent extends ChunkData {
     }
 
     public static int boundChannel(int channel) {
-        if (MIN_CHANNEL < 0 || channel > MAX_CHANNEL)
-            return 0;
+        if (channel < MIN_CHANNEL)
+            return MIN_CHANNEL;
+        else if (channel > MAX_CHANNEL)
+            return MAX_CHANNEL;
 
         return channel;
     }
@@ -40,7 +42,7 @@ public abstract class ChannelEvent extends ChunkData {
 
     public void setChannel(int channelNumber) {
         channel = boundChannel(channelNumber);
-		setStatus((byte) (statusBase + (channelNumber & 0x0F)));
+        super.setStatus((byte) (statusBase + (channelNumber & 0x0F)));
 	}
 
 	int getChannel() {

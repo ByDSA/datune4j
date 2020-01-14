@@ -5,6 +5,7 @@ import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.absolutedegree.Diatonic;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
+import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.midi.DiatonicMidi;
@@ -242,6 +243,15 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
         this.diatonicFunction = Objects.requireNonNull(diatonicFunction);
 
         return self();
+    }
+
+    public @NonNull ChromaticChordBuilder harmonicFunction(@NonNull HarmonicFunction harmonicFunction) {
+        if (harmonicFunction instanceof DiatonicFunction)
+            return diatonicFunction((DiatonicFunction) harmonicFunction);
+        else if (harmonicFunction instanceof ChromaticFunction)
+            return chromaticFunction((ChromaticFunction) harmonicFunction);
+
+        throw NeverHappensException.make("HarmonicFunction must be DiatonicFunction or ChromaticFunction");
     }
 
     public @NonNull ChromaticChordBuilder chromaticFunction(@NonNull ChromaticFunction chromaticFunction) {

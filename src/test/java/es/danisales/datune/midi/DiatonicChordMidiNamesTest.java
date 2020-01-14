@@ -15,7 +15,7 @@ import java.util.Arrays;
 import static org.junit.Assert.assertEquals;
 
 public class DiatonicChordMidiNamesTest {
-    {
+    static {
         Language.current = Language.ENG;
     }
 
@@ -41,9 +41,7 @@ public class DiatonicChordMidiNamesTest {
         diatonicChordMidi.inv();
         assertEquals("F5/C (IV5)", diatonicChordMidi.toString());
 
-        diatonicChordMidi = DiatonicChordMidi.builder().from(DiatonicFunction.ISUS2, Tonality.C).build();
-        assertEquals("Csus2 (ISUS2)", diatonicChordMidi.toString());
-        diatonicChordMidi = DiatonicChordMidi.builder().from(DiatonicFunction.VSUS4, Tonality.C).build();
+        diatonicChordMidi = DiatonicChordMidi.builder().from(ChromaticFunction.VSUS4, Tonality.C).build();
         assertEquals("Gsus4 (VSUS4)", diatonicChordMidi.toString());
         diatonicChordMidi.inv();
         assertEquals("Gsus4/C (VSUS4)", diatonicChordMidi.toString());

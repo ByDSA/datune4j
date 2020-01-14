@@ -38,4 +38,19 @@ public class ParametricChord {
     public String toString() {
         return tonality + " " + harmonicFunction;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof ParametricChord))
+            return false;
+
+        ParametricChord other = (ParametricChord) o;
+
+        return other.getTonality().equals(getTonality()) && other.getHarmonicFunction().equals(getHarmonicFunction());
+    }
+
+    @Override
+    public int hashCode() {
+        return getTonality().hashCode() + getHarmonicFunction().hashCode();
+    }
 }

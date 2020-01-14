@@ -1,6 +1,5 @@
 package es.danisales.datune.musical;
 
-import es.danisales.datastructures.EnumTreeSet;
 import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.pitch.PitchChromaticChord;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -1186,16 +1185,6 @@ Cm13omit11(ChromaticChordInfo.THIRTEENTH_MINOR_OMIT11, Chromatic.C),
 	Asusb2b5(ChromaticChordInfo.SUS2b2b5, Chromatic.A),
 	AAsusb2b5(ChromaticChordInfo.SUS2b2b5, Chromatic.AA),
 	Bsusb2b5(ChromaticChordInfo.SUS2b2b5, Chromatic.B);
-
-
-	static EnumTreeSet<Chromatic, ChromaticChordImmutable> chordTree; // todo: mirar para qué sirve esto
-
-	static {
-		chordTree = new EnumTreeSet<>(Chromatic.class, ChromaticChordImmutable.class);
-		for (ChromaticChordImmutable c : values()) {
-			chordTree.addContent( c, c.notes );
-		}
-	}
 
 	/** Variables */
 	final List<Chromatic> notes;

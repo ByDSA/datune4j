@@ -92,7 +92,7 @@ public class ChromaticChordEnumTest {
         assertEquals(Quality.MINOR, ChromaticChordImmutable.Cm.getInfo().getQuality());
         assertEquals(Quality.DIMINISHED, ChromaticChordImmutable.Cdim.getInfo().getQuality());
         assertEquals(Quality.AUGMENTED, ChromaticChordImmutable.Caug.getInfo().getQuality());
-        assertEquals(Quality.INDETERMINATED, ChromaticChordImmutable.Csus2.getInfo().getQuality());
+		assertEquals(Quality.INDETERMINATED, ChromaticChordImmutable.Csus4.getInfo().getQuality());
 	}
 
 	@Test
@@ -120,7 +120,7 @@ public class ChromaticChordEnumTest {
 		assertTrue(ChromaticChordImmutable.C7.containsAll(c));
 		assertTrue(ChromaticChordImmutable.C6.containsAll(c));
 		assertFalse(ChromaticChordImmutable.Csus4.containsAll(c));
-		assertFalse(ChromaticChordImmutable.Csus2.containsAll(c));
+		assertFalse(ChromaticChordImmutable.Csus4.containsAll(c));
 		assertFalse(ChromaticChordImmutable.C5.containsAll(c));
 	}
 
