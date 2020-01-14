@@ -520,7 +520,7 @@ public class DiatonicChordMidiTest {
         assertEquals(true, chords.size() > 0);
         DiatonicChordMidi c2 = chords.getDistance(0);
         assertEquals(Duration.L1, c2.getDistance(0).getLength());
-        assertEquals(c.getArpegio(), c2.getArpegio());
+        assertEquals(c.getArpeggio(), c2.getArpeggio());
         assertEquals(c.getLength(), c2.getLength());
         assertEquals(ChordNamer.patternFrom(c), ChordNamer.patternFrom(c2));
         assertEquals(c.getDistance(0).getPitch(), c2.getDistance(0).getPitch());

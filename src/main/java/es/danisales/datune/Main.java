@@ -489,7 +489,7 @@ public class Main {
 			c2.setLength( Duration.L1);
 		}
 
-		// p.setArpegio(new ArpegioDesc(Duration.V1, Duration.V16));
+        // p.setArpeggio(new ArpegioDesc(Duration.V1, Duration.V16));
 
 		strings.add( 0, p );
 		channel.add( 0, m );
@@ -690,7 +690,7 @@ public class Main {
 		/*
 		 * TestProgression p = generate(ChordFunction.I, Scale.FFm);
 		 *
-		 * p.progression.setArpegio(new ArpegioAscDesc(Duration.V1, Duration.V8));
+         * p.progression.setArpeggio(new ArpegioAscDesc(Duration.V1, Duration.V8));
 		 *
 		 * for(Chord c : p.progression.getChords()) c.show();
 		 */
@@ -705,13 +705,13 @@ public class Main {
          * addAll(ChordFunction.VII, -1).setLength(Duration.VSUS2).inv(1).show(); Chord c =
          * addAll(ChordFunction.VII, -1).setScaleAsMajor().setLength(Duration.VSUS2).show();
 		 *
-		 * progression.setArpegio(a);
+         * progression.setArpeggio(a);
 		 *
 		 * ArrayList<Chord> chords = Chord.whatIsIt(c); for(Chord cc : chords) if
 		 * (cc.meta.type == ChordFunction.VII) cc.show(); } };
 		 */
 
-		// p.progression.setArpegio(new ArpegioAsc(Duration.V1, Duration.V128));
+        // p.progression.setArpeggio(new ArpegioAsc(Duration.V1, Duration.V128));
 
 		/*
 		 * for(Scale s : new Scale(Chromatic.GG, Mode.MAJOR).getSameNotesScale(true))

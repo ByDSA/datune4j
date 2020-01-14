@@ -1,7 +1,7 @@
 package es.danisales.datune.midi.arpegios;
 
-public class ArpegioV extends Arpegio {
-	public ArpegioV(int noteLength, int arpLength) {
+public class ArpeggioV extends Arpeggio {
+	public ArpeggioV(int noteLength, int arpLength) {
 		super((This) -> {
 			This.add(0, -1, This.chord.size());
 			
@@ -10,8 +10,8 @@ public class ArpegioV extends Arpegio {
 			}
 		});
 	}
-	
-	public ArpegioV(int a) {
+
+	public ArpeggioV(int a) {
 		this(a, a);
 	}
 }

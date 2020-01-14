@@ -1,7 +1,7 @@
 package es.danisales.datune.midi.arpegios;
 
-public class ArpegioAsc extends Arpegio {
-	public ArpegioAsc(int length, int freq) {
+public class ArpeggioAsc extends Arpeggio {
+	public ArpeggioAsc(int length, int freq) {
 		super((This) -> {
 			int n = (int)Math.ceil(length / (float)freq);
 			for(int i = 0; i < n; i++) {

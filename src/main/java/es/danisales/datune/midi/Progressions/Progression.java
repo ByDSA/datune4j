@@ -5,8 +5,8 @@ import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.midi.Duration;
-import es.danisales.datune.midi.arpegios.Arpegio;
-import es.danisales.datune.midi.arpegios.ArpegioDefault;
+import es.danisales.datune.midi.arpegios.Arpeggio;
+import es.danisales.datune.midi.arpegios.ArpeggioDefault;
 import es.danisales.datune.midi.binaries.events.EventComplex;
 import es.danisales.datune.midi.binaries.events.KeySignatureEvent;
 import es.danisales.datune.midi.pitch.PitchMidiException;
@@ -26,7 +26,7 @@ public class Progression<This extends Progression> implements EventComplex {
 		super();
 		nodes = new ArrayList<>();
 
-		setArpegio(new ArpegioDefault());
+		setArpegio(new ArpeggioDefault());
 	}
 
 	public Progression(Tonality s, int o) {
@@ -138,21 +138,22 @@ public class Progression<This extends Progression> implements EventComplex {
 		return es;
 	}
 
-	public Progression setArpegio(Arpegio a) {
+	public Progression setArpegio(Arpeggio a) {
 		for (DiatonicChordMidi n : nodes) {
-			n.setArpegio(a);
+			n.setArpeggio(a);
 		}
 
 		return this;
 	}
-	public Progression setArpegio(int n, Arpegio a) {
+
+	public Progression setArpegio(int n, Arpeggio a) {
 		DiatonicChordMidi nn = this.getChords().get(n);
-		nn.setArpegio(a);
+		nn.setArpeggio(a);
 
 		return this;
 	}
 
-	public Progression setArpegio(int[] n, Arpegio a) {
+	public Progression setArpegio(int[] n, Arpeggio a) {
 		for (int i1 : n) setArpegio(i1, a);
 
 		return this;

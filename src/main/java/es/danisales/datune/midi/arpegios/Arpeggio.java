@@ -8,18 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class Arpegio implements Durable, Cloneable {
+public class Arpeggio implements Durable, Cloneable {
     private List<Node> nodes;
 	ChordMidi chord;
-	private Consumer<Arpegio> build;
+	private Consumer<Arpeggio> build;
 	private int length;
 
-	public Arpegio() {
-		this( (Arpegio a) -> {
+	public Arpeggio() {
+		this((Arpeggio a) -> {
 		} );
 	}
 
-	public Arpegio(Consumer<Arpegio> b) {
+	public Arpeggio(Consumer<Arpeggio> b) {
 		nodes = new ArrayList<Node>();
 		build = b;
 		length = 0;
@@ -30,7 +30,7 @@ public class Arpegio implements Durable, Cloneable {
 		build.accept( this );
 	}
 
-	public Arpegio add(int t, int n, int d) {
+	public Arpeggio add(int t, int n, int d) {
 		Node node = new Node();
 		node.time = t;
 		node.note = n;
@@ -40,7 +40,7 @@ public class Arpegio implements Durable, Cloneable {
 		return this;
 	}
 
-	public Arpegio add(int t, int d) {
+	public Arpeggio add(int t, int d) {
 		for ( int i = 0; i < chord.size(); i++ ) {
 			Node node = new Node();
 			node.time = t;
@@ -53,7 +53,7 @@ public class Arpegio implements Durable, Cloneable {
 		return this;
 	}
 
-	public Arpegio add(Node n) {
+	public Arpeggio add(Node n) {
 		nodes.add( n );
 
 		return this;
@@ -101,8 +101,8 @@ public class Arpegio implements Durable, Cloneable {
         }
     }
 
-	public Arpegio clone() {
-		Arpegio a = new Arpegio( build );
+	public Arpeggio clone() {
+		Arpeggio a = new Arpeggio(build);
 		a.length = length;
 		if ( chord != null )
             a.chord = chord;//.duplicate( b );
@@ -119,10 +119,10 @@ public class Arpegio implements Durable, Cloneable {
 
 	@Override
 	public boolean equals(Object o) {
-		if ( !( o instanceof Arpegio ) )
+		if (!(o instanceof Arpeggio))
 			return false;
 
-		Arpegio a = (Arpegio) o;
+		Arpeggio a = (Arpeggio) o;
 
 		if ( length != a.length )
 			return false;

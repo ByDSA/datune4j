@@ -68,7 +68,7 @@ public final class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDia
     public boolean add(@NonNull DiatonicMidi n) throws AddedException {
         super.add( n );
 
-        setArpegioIfNull();
+        setArpeggioIfNull();
 
         return true;
     }

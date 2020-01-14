@@ -9,10 +9,10 @@ import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.midi.Duration;
 import es.danisales.datune.midi.Progressions.Progression;
-import es.danisales.datune.midi.arpegios.ArpegioAsc;
-import es.danisales.datune.midi.arpegios.ArpegioDefault;
-import es.danisales.datune.midi.arpegios.ArpegioDesc;
-import es.danisales.datune.midi.arpegios.ArpegioPowerGuitars;
+import es.danisales.datune.midi.arpegios.ArpeggioAsc;
+import es.danisales.datune.midi.arpegios.ArpeggioDefault;
+import es.danisales.datune.midi.arpegios.ArpeggioDesc;
+import es.danisales.datune.midi.arpegios.ArpeggioPowerGuitars;
 import es.danisales.datune.midi.binaries.Song;
 import es.danisales.datune.midi.binaries.events.EventComplex;
 import es.danisales.datune.midi.binaries.events.Pan;
@@ -52,7 +52,7 @@ public class Power extends Song {
 			}
 		};
 
-		startProgression.setArpegio(new ArpegioDefault());
+		startProgression.setArpegio(new ArpeggioDefault());
 	}
 
 	public Power() throws PitchMidiException {
@@ -172,11 +172,11 @@ public class Power extends Song {
 
 	Progression startOrganProgression() throws PitchMidiException {
         Progression p = startProgression.clone()
-				.setArpegio(new ArpegioDesc(Duration.L1, Duration.L4_3))
-				.setArpegio(new int[]{2, 3, 4, 6}, new ArpegioAsc(Duration.L1, Duration.L4_3))
-				.setArpegio(new int[]{4}, new ArpegioDesc(Duration.L1, Duration.L4_3))
-				.setArpegio(new int[]{5, 6}, new ArpegioAsc(Duration.L1, Duration.L4_3))
-				.setArpegio(new int[]{7, 8}, new ArpegioAsc(Duration.L1, Duration.L8))
+				.setArpegio(new ArpeggioDesc(Duration.L1, Duration.L4_3))
+				.setArpegio(new int[]{2, 3, 4, 6}, new ArpeggioAsc(Duration.L1, Duration.L4_3))
+				.setArpegio(new int[]{4}, new ArpeggioDesc(Duration.L1, Duration.L4_3))
+				.setArpegio(new int[]{5, 6}, new ArpeggioAsc(Duration.L1, Duration.L4_3))
+				.setArpegio(new int[]{7, 8}, new ArpeggioAsc(Duration.L1, Duration.L8))
 				.shiftOctave(3);
 
 		return p;
@@ -245,14 +245,14 @@ public class Power extends Song {
 				else
 					c1 = add(DiatonicFunction.VI, -1);
 				c1.setLength(Duration.L1 *2);
-				c1.setArpegio(new ArpegioPowerGuitars());
+				c1.setArpeggio(new ArpeggioPowerGuitars());
 
 				if (n == 2)
 					c2 = add(DiatonicFunction.V, -1);
 				else
 					c2 = add(DiatonicFunction.V, -1);
 				c2.setLength(Duration.L1 *2);
-				c2.setArpegio(new ArpegioDefault(Duration.L1 *2));
+				c2.setArpeggio(new ArpeggioDefault(Duration.L1 * 2));
 			}
 		};
 
@@ -272,7 +272,7 @@ public class Power extends Song {
 			}
 
         Progression cad_pad = cad.clone();
-		cad_pad.setArpegio(new ArpegioDefault(Duration.L1 *2))
+		cad_pad.setArpegio(new ArpeggioDefault(Duration.L1 * 2))
 				.shiftOctave(2);
 		channelPad.add(seek, cad_pad);
 
@@ -366,7 +366,7 @@ public class Power extends Song {
 
         Progression arp = cad.clone().shiftOctave(2);
 
-		arp.setArpegio(new ArpegioDesc(Duration.L4, Duration.L4_3));
+		arp.setArpegio(new ArpeggioDesc(Duration.L4, Duration.L4_3));
 		channelOrgan.add(seek, arp);
 		/*
 		for(int i = 0; i < cad.getNodes().size()-1; i++) {
@@ -374,7 +374,7 @@ public class Power extends Song {
 			ch.getWithSemiAdded(Interval.OCTAVE)
 			.getWithSemiAdded(Interval.TENTH)
 			.inv(2)
-			.setArpegio(new ArpegioDefault());
+			.setArpeggio(new ArpegioDefault());
 
 		}*/
 
@@ -440,7 +440,7 @@ public class Power extends Song {
 
 			//c.getWithSemiAdded(Interval.OCTAVE).getWithSemiAdded(Interval.TENTH);
 
-			c.setArpegio( new ArpegioDefault() );
+			c.setArpeggio(new ArpeggioDefault());
 
 			try {
 				switch (i) {
@@ -486,7 +486,7 @@ public class Power extends Song {
 		}
 
 		Progression arp = cad.clone().shiftOctave(1);
-		arp.setArpegio(new ArpegioDesc(Duration.L4, Duration.L4_3));
+		arp.setArpegio(new ArpeggioDesc(Duration.L4, Duration.L4_3));
 		channelOrgan.add(seek, arp);
 
 		for(int i = 0; i < cad.getDuration(); i+= Duration.L1) {

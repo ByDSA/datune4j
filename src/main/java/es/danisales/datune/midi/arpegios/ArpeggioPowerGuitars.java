@@ -2,9 +2,9 @@ package es.danisales.datune.midi.arpegios;
 
 import es.danisales.datune.midi.Duration;
 
-public class ArpegioPowerGuitars extends Arpegio {
+public class ArpeggioPowerGuitars extends Arpeggio {
 
-	public ArpegioPowerGuitars() {
+	public ArpeggioPowerGuitars() {
 		super((This) -> {
 			int length2 = This.chord.getLength() / Duration.L1;
 			This.add(0, -1, Duration.L1);

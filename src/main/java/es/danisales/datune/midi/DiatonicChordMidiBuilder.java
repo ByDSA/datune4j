@@ -5,8 +5,8 @@ import es.danisales.datune.degree.DiatonicDegree;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
-import es.danisales.datune.midi.arpegios.Arpegio;
-import es.danisales.datune.midi.arpegios.ArpegioDefault;
+import es.danisales.datune.midi.arpegios.Arpeggio;
+import es.danisales.datune.midi.arpegios.ArpeggioDefault;
 import es.danisales.datune.midi.pitch.PitchDiatonicMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.musical.ChromaticChord;
@@ -26,7 +26,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
     private int length = Settings.DefaultValues.LENGTH_CHORD;
     private int velocity = Settings.DefaultValues.VELOCITY_CHORD;
     private HarmonicFunction function;
-    private Arpegio arpegio;
+    private Arpeggio arpegio;
     private int octave = Settings.DefaultValues.OCTAVE;
 
     @NonNull
@@ -52,7 +52,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
 
     private void initArpegio(DiatonicChordMidi diatonicChordMidi) {
         if (arpegio == null)
-            diatonicChordMidi.setArpegio(new ArpegioDefault());
+            diatonicChordMidi.setArpeggio(new ArpeggioDefault());
         else
             diatonicChordMidi.arpegio = arpegio;
     }
@@ -472,7 +472,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
             length = ( (ChordMidi) ns ).length;
         }
 */
-        diatonicChordMidi.setArpegioIfNull();
+        diatonicChordMidi.setArpeggioIfNull();
         diatonicChordMidi.building = false;
 
         return diatonicChordMidi;

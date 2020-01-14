@@ -2,8 +2,8 @@ package es.danisales.datune.midi.arpegios;
 
 import es.danisales.datune.midi.Duration;
 
-public class ArpegioV2_3 extends Arpegio {	
-	public ArpegioV2_3(int duration) {
+public class ArpeggioV2_3 extends Arpeggio {
+	public ArpeggioV2_3(int duration) {
 		super((This) -> {
 			for(int j = 0; j < duration; j += Duration.L2_3)
 				for(int i = 0; i < This.chord.size(); i++) {
@@ -17,8 +17,8 @@ public class ArpegioV2_3 extends Arpegio {
 				}
 		});
 	}
-	
-	public ArpegioV2_3() {
+
+	public ArpeggioV2_3() {
 		this(Duration.L1);
 	}
 }

@@ -2,8 +2,8 @@ package es.danisales.datune.midi;
 
 import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.interval.Interval;
-import es.danisales.datune.midi.arpegios.Arpegio;
-import es.danisales.datune.midi.arpegios.ArpegioDefault;
+import es.danisales.datune.midi.arpegios.Arpeggio;
+import es.danisales.datune.midi.arpegios.ArpeggioDefault;
 import es.danisales.datune.midi.binaries.events.EventComplex;
 import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.midi.pitch.PitchMidiInterface;
@@ -22,7 +22,7 @@ import java.util.Objects;
 public abstract class ChordMidi<N extends NoteMidi<P>, I extends Interval, P extends PitchMidiInterface>
 		extends ChordMutable<N, I>
 		implements Durable, Velocitiable, PitchOctaveMidiEditable, PitchOctave, EventComplex {
-	protected Arpegio	arpegio;
+	protected Arpeggio arpegio;
 	protected int		length;
 
 	ChordMidi() {
@@ -42,9 +42,9 @@ public abstract class ChordMidi<N extends NoteMidi<P>, I extends Interval, P ext
 	public EventSequence getEvents() {
 		EventSequence es = new EventSequence();
 
-		Arpegio aNodes;
+		Arpeggio aNodes;
 		if ( arpegio == null )
-			this.setArpegio( new ArpegioDefault() );
+			this.setArpeggio(new ArpeggioDefault());
 		int arpDuration = arpegio.getLength();
 
 		if ( length != 0 && length > arpDuration ) {
@@ -53,7 +53,7 @@ public abstract class ChordMidi<N extends NoteMidi<P>, I extends Interval, P ext
 
 			while ( length > newArpDuration ) {
 				int currentLoop = newArpDuration;
-				for ( Arpegio.Node n : arpegio.getNodes() ) {
+				for (Arpeggio.Node n : arpegio.getNodes()) {
 					aNodes.add( currentLoop + n.time, n.note, n.length );
 				}
 				newArpDuration += arpDuration;
@@ -61,7 +61,7 @@ public abstract class ChordMidi<N extends NoteMidi<P>, I extends Interval, P ext
 		} else
 			aNodes = arpegio;
 
-		for ( Arpegio.Node node : aNodes.getNodes() ) {
+		for (Arpeggio.Node node : aNodes.getNodes()) {
 			if ( length != 0 && node.time > length || node.note < 0 )
 				continue;
 
@@ -84,11 +84,11 @@ public abstract class ChordMidi<N extends NoteMidi<P>, I extends Interval, P ext
 		return max;
 	}
 
-	public @Nullable Arpegio getArpegio() {
+	public @Nullable Arpeggio getArpeggio() {
 		return arpegio;
 	}
 
-	public void setArpegio(@NonNull Arpegio a) {
+	public void setArpeggio(@NonNull Arpeggio a) {
 		Objects.requireNonNull(a);
 
 		arpegio = a.clone();
@@ -217,9 +217,9 @@ public abstract class ChordMidi<N extends NoteMidi<P>, I extends Interval, P ext
 		return get(0).getPitch().getOctave();
 	}
 
-	void setArpegioIfNull() {
+	void setArpeggioIfNull() {
 		if (arpegio == null)
-			setArpegio(new ArpegioDefault());
+			setArpeggio(new ArpeggioDefault());
 	}
 
 	@SuppressWarnings("unchecked")

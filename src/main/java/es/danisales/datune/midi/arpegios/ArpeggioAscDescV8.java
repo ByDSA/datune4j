@@ -2,8 +2,8 @@ package es.danisales.datune.midi.arpegios;
 
 import es.danisales.datune.midi.Duration;
 
-public class ArpegioAscDescV8 extends Arpegio {
-	public ArpegioAscDescV8(int a, int n) {
+public class ArpeggioAscDescV8 extends Arpeggio {
+	public ArpeggioAscDescV8(int a, int n) {
 		super((This) -> {
 			int aa = a-1;
 			for(int i = 0; i < n; i++) {
