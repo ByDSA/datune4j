@@ -25,12 +25,12 @@ public enum Diatonic implements PitchDiatonicSingle, CyclicAbsoluteDegree<Diaton
 		return DiatonicAdapter.from( d );
 	}
 
-    private static final Map<Integer, Function<CyclicAbsoluteDegree, Diatonic>> mapConversor = new HashMap<>();
+	private static final Map<Integer, Function<CyclicAbsoluteDegree, Diatonic>> mapConverter = new HashMap<>();
 
 	static {
-        mapConversor.put(7, (CyclicAbsoluteDegree absoluteDegree) -> (Diatonic) absoluteDegree);
+		mapConverter.put(7, (CyclicAbsoluteDegree absoluteDegree) -> (Diatonic) absoluteDegree);
 
-        mapConversor.put(12, (CyclicAbsoluteDegree absoluteDegree) -> {
+		mapConverter.put(12, (CyclicAbsoluteDegree absoluteDegree) -> {
 			Chromatic chromatic = (Chromatic) absoluteDegree;
 
 			switch (chromatic) {
@@ -58,7 +58,7 @@ public enum Diatonic implements PitchDiatonicSingle, CyclicAbsoluteDegree<Diaton
 			return null;
 		});
 
-        mapConversor.put(5, (CyclicAbsoluteDegree absoluteDegree) -> {
+		mapConverter.put(5, (CyclicAbsoluteDegree absoluteDegree) -> {
 			Pentatonic pentatonic = (Pentatonic) absoluteDegree;
 
 			switch (pentatonic) {
@@ -78,7 +78,7 @@ public enum Diatonic implements PitchDiatonicSingle, CyclicAbsoluteDegree<Diaton
 			return (Diatonic) absoluteDegree;
 
         Integer number = CyclicAbsoluteDegreeAdapter.getNumber(absoluteDegree);
-        Function<CyclicAbsoluteDegree, Diatonic> f = mapConversor.get(number);
+		Function<CyclicAbsoluteDegree, Diatonic> f = mapConverter.get(number);
 		if (f == null)
 			f = Diatonic::defaultAbsoluteDegreeFunction;
 		return f.apply(absoluteDegree);

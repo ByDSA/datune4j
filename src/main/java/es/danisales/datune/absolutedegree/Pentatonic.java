@@ -1,11 +1,9 @@
 package es.danisales.datune.absolutedegree;
 
 import es.danisales.datune.degree.PentatonicDegree;
-import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.interval.IntervalPentatonic;
 import es.danisales.datune.musical.DiatonicAlt;
 import es.danisales.datune.pitch.CyclicAbsoluteDegree;
-import es.danisales.utils.MathUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -65,12 +63,5 @@ public enum Pentatonic implements CyclicAbsoluteDegree<PentatonicDegree, Interva
 	@Override
     public @NonNull PentatonicDegree getDegree() {
 		return PentatonicDegree.values()[ ordinal() ];
-	}
-
-    public @NonNull IntervalDiatonic dist(@NonNull Pentatonic n2) {
-		int d = n2.getDegree().ordinal() - getDegree().ordinal();
-		d = MathUtils.rotativeTrim(d, Pentatonic.NUMBER);
-
-		return IntervalDiatonic.values()[d];
 	}
 }

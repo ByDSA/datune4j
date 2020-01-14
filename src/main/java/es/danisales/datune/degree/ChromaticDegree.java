@@ -2,9 +2,6 @@ package es.danisales.datune.degree;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-/**
- * Grado cromático
- */
 public enum ChromaticDegree implements Degree {
     I, II, III, IV, V, VI, VII, VIII, IX, X, XI, XII;
 

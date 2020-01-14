@@ -7,9 +7,6 @@ import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-/**
- * Grado diatónico
- */
 public enum DiatonicDegree implements Degree {
 	I, II, III, IV, V, VI, VII;
 

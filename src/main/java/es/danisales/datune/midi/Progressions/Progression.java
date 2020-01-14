@@ -214,8 +214,7 @@ public class Progression<This extends Progression> implements EventComplex {
 	}
 
 	public DiatonicChordMidi getChord(int n) {
-		DiatonicChordMidi nn = nodes.get(n);
-		return nn;
+		return nodes.get(n);
 	}
 
 	public DiatonicChordMidi getChordAtTime(int t) {

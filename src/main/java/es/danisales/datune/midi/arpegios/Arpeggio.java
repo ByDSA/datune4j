@@ -20,7 +20,7 @@ public class Arpeggio implements Durable, Cloneable {
 	}
 
 	public Arpeggio(Consumer<Arpeggio> b) {
-		nodes = new ArrayList<Node>();
+		nodes = new ArrayList<>();
 		build = b;
 		length = 0;
 	}
@@ -85,6 +85,7 @@ public class Arpeggio implements Durable, Cloneable {
 			return note == a.note && time == a.time && length == a.length;
 		}
 
+		@SuppressWarnings({"CloneDoesntDeclareCloneNotSupportedException", "MethodDoesntCallSuperMethod"})
 		@Override
 		protected Node clone() {
 			Node n = new Node();
@@ -101,11 +102,12 @@ public class Arpeggio implements Durable, Cloneable {
         }
     }
 
+	@SuppressWarnings("MethodDoesntCallSuperMethod")
 	public Arpeggio clone() {
 		Arpeggio a = new Arpeggio(build);
 		a.length = length;
 		if ( chord != null )
-            a.chord = chord;//.duplicate( b );
+			a.chord = chord;//.duplicate( b );
 		for ( Node n : nodes )
 			a.nodes.add( n.clone() );
 

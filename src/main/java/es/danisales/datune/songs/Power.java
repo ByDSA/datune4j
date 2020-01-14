@@ -95,7 +95,7 @@ public class Power extends Song {
 		seek += chorus(seek);
 	}
 
-	EventComplex startMelody() throws PitchMidiException {
+	private EventComplex startMelody() throws PitchMidiException {
 		List<DiatonicChordMidi> chords = ChordMidiTransformations.shiftOctaveList(ChordTransformations.duplicateList(startProgression.getChords()), 2);
 
 		MelodyByChords l = new MelodyByChords(chords);
@@ -152,8 +152,8 @@ public class Power extends Song {
 		return l;
 	}
 
-	Progression chorusGuitarsProgression() {
-		Progression l = new Progression(tonality, 3) {
+	private Progression chorusGuitarsProgression() {
+		return new Progression(tonality, 3) {
 			{
 				add(DiatonicFunction.VI).inv(-2);
 				add(DiatonicFunction.IV, 1).inv(1);
@@ -166,20 +166,16 @@ public class Power extends Song {
 				add(DiatonicFunction.V).inv(-2);
 			}
 		};
-
-		return l;
 	}
 
-	Progression startOrganProgression() throws PitchMidiException {
-        Progression p = startProgression.clone()
+	private Progression startOrganProgression() throws PitchMidiException {
+		return startProgression.clone()
 				.setArpegio(new ArpeggioDesc(Duration.L1, Duration.L4_3))
 				.setArpegio(new int[]{2, 3, 4, 6}, new ArpeggioAsc(Duration.L1, Duration.L4_3))
 				.setArpegio(new int[]{4}, new ArpeggioDesc(Duration.L1, Duration.L4_3))
 				.setArpegio(new int[]{5, 6}, new ArpeggioAsc(Duration.L1, Duration.L4_3))
 				.setArpegio(new int[]{7, 8}, new ArpeggioAsc(Duration.L1, Duration.L8))
 				.shiftOctave(3);
-
-		return p;
 	}
 
 	Progression startPad() throws PitchMidiException {

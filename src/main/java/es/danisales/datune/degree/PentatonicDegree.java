@@ -2,9 +2,6 @@ package es.danisales.datune.degree;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-/**
- * Grado pentatónico
- */
 public enum PentatonicDegree implements Degree {
 	I, II, III, IV, V;
 

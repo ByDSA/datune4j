@@ -52,7 +52,6 @@ public enum ChromaticFunction implements HarmonicFunction {
 	bVII,
 	bVI;
 
-	/** Funciones de triada */
 	public static final ChromaticFunction[] TRIAD_FUNCTIONS = new ChromaticFunction[] {
 			I,
 			II,
@@ -80,7 +79,6 @@ public enum ChromaticFunction implements HarmonicFunction {
 			bVII
 	};
 
-	/** Funciones POWER */
 	public static final ChromaticFunction[] POWER_CHORDS = new ChromaticFunction[] {
 			I5,
 			II5,
@@ -109,7 +107,6 @@ public enum ChromaticFunction implements HarmonicFunction {
 			V7_VI,
 	};
 
-	/** Funciones SUBV7. */
 	public static final ChromaticFunction[] SUBV7_FUNCTIONS = new ChromaticFunction[] {
 			SUBV7,
 			SUBV7_II,
@@ -117,19 +114,6 @@ public enum ChromaticFunction implements HarmonicFunction {
 			SUBV7_IV,
 			SUBV7_V,
 			SUBV7_VI,
-    };
-
-    /**
-     * SUS4
-     */
-    public static final ChromaticFunction[] SUS4 = new ChromaticFunction[]{
-            ISUS4,
-            IISUS4,
-            bIIISUS4,
-            IVSUS4,
-            VSUS4,
-            VISUS4,
-            bVIISUS4,
     };
 
 	/** Otras funciones */

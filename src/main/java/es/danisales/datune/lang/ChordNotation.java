@@ -19,15 +19,10 @@ public final class ChordNotation {
 	public static final String DIMINISHED2 = FLAT;
 	public static final String SUS = "sus";
 	public static final String SUS4 = SUS + "4";
-	public static final String SUS2 = SUS + "2";
 	public static final String SUSb2 = SUS + "(" + DIMINISHED2 + "2)";
 	public static final String SUSb2b5 = SUS + "(" + DIMINISHED2 + "2)" + DIMINISHED2 + "5";
-	public static final String SUSb4 = SUS + "(" + DIMINISHED2+ "4)";
 	public static final String SUSa4 = SUS + "(" + AUGMENTED2 + "4)";
-	public static final String OMIT3 = omit("3");
-	public static final String OMIT7 = omit("7");
 	public static final String OMIT11 = omit("11");
-
 
 	public static final String SIXTH = "6";
 	public static final String SEVENTH = "7";
@@ -47,7 +42,8 @@ public final class ChordNotation {
 	public static final String ADD_THIRTEEN = ADD + THIRTEEN;
 	public static final String EMPTY_CHORD = "(Empty chord)";
 
-    private static String omit(String s) {
+	@SuppressWarnings("SameParameterValue")
+	private static String omit(String s) {
 		return " (omit" + s + ")";
 	}
 	
