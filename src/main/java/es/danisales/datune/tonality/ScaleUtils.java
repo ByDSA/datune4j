@@ -134,4 +134,8 @@ public class ScaleUtils {
             ret.add(tuple);
         }
     }
+
+    public static boolean isMajorOrMinor(@NonNull Scale scale) {
+        return scale.equals(Scale.MAJOR) || scale.equals(Scale.MINOR);
+    }
 }

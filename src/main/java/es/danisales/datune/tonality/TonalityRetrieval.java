@@ -1,6 +1,9 @@
 package es.danisales.datune.tonality;
 
+import es.danisales.arrays.ArrayUtils;
+import es.danisales.datune.absolutedegree.Diatonic;
 import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.midi.DiatonicChordMidiBuilder;
 import es.danisales.datune.midi.DiatonicChordMidiInfo;
@@ -21,7 +24,7 @@ public class TonalityRetrieval {
     private TonalityRetrieval() {
     }
 
-    private static final Set<Tonality> mainMajorTonalities = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+    private static final Set<Tonality> mainMajorScaleTonalities = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.C,
             Tonality.Db,
             Tonality.D,
@@ -37,7 +40,7 @@ public class TonalityRetrieval {
             Tonality.B
     )));
 
-    private static final Set<Tonality> mainMinorTonalities = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+    private static final Set<Tonality> mainMinorScaleTonalities = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.Cm,
             Tonality.CCm,
             Tonality.Dm,
@@ -53,23 +56,23 @@ public class TonalityRetrieval {
             Tonality.Bm
     )));
 
-    private static final Set<Tonality> mainMajorAndMinorTonalities = Collections.unmodifiableSet(
-            Stream.concat(mainMajorTonalities.stream(), mainMinorTonalities.stream())
+    private static final Set<Tonality> mainMajorAndMinorScaleTonalities = Collections.unmodifiableSet(
+            Stream.concat(mainMajorScaleTonalities.stream(), mainMinorScaleTonalities.stream())
                     .collect(Collectors.toSet())
     );
 
     @SuppressWarnings("WeakerAccess")
-    public static @NonNull Set<Tonality> getMainMajorTonalities() {
-        return mainMajorTonalities;
+    public static @NonNull Set<Tonality> getMainMajorScaleTonalities() {
+        return mainMajorScaleTonalities;
     }
 
     @SuppressWarnings("WeakerAccess")
-    public static @NonNull Set<Tonality> getMainMinorTonalities() {
-        return mainMinorTonalities;
+    public static @NonNull Set<Tonality> getMainMinorScaleTonalities() {
+        return mainMinorScaleTonalities;
     }
 
-    public static @NonNull Set<Tonality> getMainMajorAndMinorTonalities() {
-        return mainMajorAndMinorTonalities;
+    public static @NonNull Set<Tonality> getMainMajorAndMinorScaleTonalities() {
+        return mainMajorAndMinorScaleTonalities;
     }
 
     public static @NonNull List<Tonality> allUsualKeys() {
@@ -110,7 +113,7 @@ public class TonalityRetrieval {
     public static @NonNull List<Tonality> listFromChordAllFunctions(@NonNull ChromaticChord c) {
         List<Tonality> out = new ArrayList<>();
         for (Tonality t : TonalityRetrieval.allUsualKeys()) {
-            if (t.hasAsChromaticFunction(c))
+            if (hasAsChromaticFunction(t, c))
                 out.add( t );
         }
 
@@ -238,5 +241,32 @@ public class TonalityRetrieval {
         }
 
         return candidates;
+    }
+
+    public static boolean hasAsChromaticFunction(@NonNull Tonality tonality, @NonNull ChromaticChord chromaticChord) {
+        Objects.requireNonNull(chromaticChord);
+
+        for (ChromaticFunction f : ChromaticFunction.ALL) {
+            if (tonality.size() != Diatonic.NUMBER && ArrayUtils.contains(f, ChromaticFunction.TENSIONS))
+                continue;
+
+            ChromaticChord c2 = ChromaticChord.builder()
+                    .chromaticFunction(f)
+                    .tonality(tonality)
+                    .build();
+            if (chromaticChord.getNotes().equals(c2.getNotes()))
+                return true;
+        }
+
+        return false;
+    }
+
+
+    public static boolean hasAsDiatonicFunction(@NonNull Tonality tonality, @NonNull ChromaticFunction chromaticFunction) {
+        ChromaticChord chromaticChord2 = ChromaticChord.builder()
+                .chromaticFunction(chromaticFunction)
+                .tonality(tonality)
+                .build();
+        return tonality.containsAll(chromaticChord2);
     }
 }

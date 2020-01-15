@@ -26,7 +26,7 @@ public class MainJFrame extends JFrame {
 
     private void initializeTonalitiesJComboBox() {
         tonalitiesComboBox = new JComboBox<>();
-        for (Tonality t : TonalityRetrieval.getMainMajorAndMinorTonalities())
+        for (Tonality t : TonalityRetrieval.getMainMajorAndMinorScaleTonalities())
             tonalitiesComboBox.addItem(t);
 
         tonalitiesComboBox.addActionListener(e -> {

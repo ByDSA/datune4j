@@ -3,6 +3,7 @@ package es.danisales.datune.midi;
 import es.danisales.datune.absolutedegree.Chromatic;
 import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.musical.ChromaticChord;
+import es.danisales.datune.tonality.ScaleUtils;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityRetrieval;
 
@@ -38,8 +39,8 @@ public class DiatonicChordMidiTransformations {
         assert f != null;
         assert cs != null;
         showPossibleProgressions((DiatonicChordMidi c) -> {
-            return (c.tonality != null && c.tonality.isMajorOrMinor()
-                    || c.tonality.isMajorOrMinor()) && f.apply(c);
+            return (c.tonality != null && ScaleUtils.isMajorOrMinor(c.tonality.getScale())
+                    || ScaleUtils.isMajorOrMinor(c.tonality.getScale())) && f.apply(c);
         }, cs);
     }
 
@@ -61,7 +62,7 @@ public class DiatonicChordMidiTransformations {
 
         // Mostrar por consola
         for (Tonality tonality : possibleTonalitiesList) {
-            if (tonality.isMajorOrMinor()) {
+            if (ScaleUtils.isMajorOrMinor(tonality.getScale())) {
                 StringBuilder sb = new StringBuilder();
                 boolean yep = true;
                 sb.append("----").append(tonality).append("----");

@@ -5,11 +5,14 @@ import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.midi.Duration;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityChordRetrieval;
 import es.danisales.utils.building.BuildingException;
 import org.junit.Test;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import static junit.framework.TestCase.assertNotNull;
 
 public class SequenceTest {
     @Test
@@ -38,8 +41,10 @@ public class SequenceTest {
                 .length(Duration.L2)
                 .build();
         track.add((Duration.L1 * 3), diatonicChordMidi);
+        Tonality tonalityRelative = TonalityChordRetrieval.getRelativeMajorFrom(tonality);
+        assertNotNull(tonalityRelative);
         diatonicChordMidi = DiatonicChordMidi.builder()
-                .from(DiatonicFunction.VII, tonality.getRelativeMajor())
+                .from(DiatonicFunction.VII, tonalityRelative)
                 .length(Duration.L2)
                 .build();
         track.add((int) (Duration.L1 * 3.5), diatonicChordMidi);

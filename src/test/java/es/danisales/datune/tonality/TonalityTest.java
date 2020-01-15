@@ -61,7 +61,7 @@ public class TonalityTest {
     public void allContainsValues() {
         List<Tonality> tonalities = TonalityRetrieval.allUsualKeys();
 
-        Set<Tonality> values = TonalityRetrieval.getMainMajorAndMinorTonalities();
+        Set<Tonality> values = TonalityRetrieval.getMainMajorAndMinorScaleTonalities();
 
         for (Tonality tonality : values)
             assertTrue( tonality.toString(), tonalities.contains(tonality) );
@@ -69,19 +69,19 @@ public class TonalityTest {
 
     @Test
     public void valuesSize() {
-        Set<Tonality> tonalities = TonalityRetrieval.getMainMajorAndMinorTonalities();
+        Set<Tonality> tonalities = TonalityRetrieval.getMainMajorAndMinorScaleTonalities();
 
         assertEquals( 26, tonalities.size() );
     }
 
     private void valuesContains(Tonality tonality) {
-        Set<Tonality> tonalities = TonalityRetrieval.getMainMajorAndMinorTonalities();
+        Set<Tonality> tonalities = TonalityRetrieval.getMainMajorAndMinorScaleTonalities();
 
         assertTrue( tonality.toString(), tonalities.contains(tonality) );
     }
 
     private void valuesNotContains(Tonality tonality) {
-        Set<Tonality> tonalities = TonalityRetrieval.getMainMajorAndMinorTonalities();
+        Set<Tonality> tonalities = TonalityRetrieval.getMainMajorAndMinorScaleTonalities();
 
         assertFalse( tonality.toString(), tonalities.contains(tonality) );
     }
@@ -166,83 +166,88 @@ public class TonalityTest {
 
     @Test
     public void getRelativeMinor() {
-        Tonality tonality = Tonality.C.getRelativeMinor();
+        Tonality tonality = TonalityChordRetrieval.getRelativeMinorFrom(Tonality.C);
         assertEquals(Tonality.Cm, tonality);
     }
 
     @Test
     public void getRelativeMinorAlready() {
-        Tonality tonality = Tonality.Cm.getRelativeMinor();
+        Tonality tonality = TonalityChordRetrieval.getRelativeMinorFrom(Tonality.Cm);
         assertEquals(Tonality.Cm, tonality);
     }
 
     @Test
     public void getRelativeMinor2() {
-        Tonality tonality = Tonality.from(Chromatic.C, Scale.DORIAN).getRelativeMinor();
+        Tonality tonality = Tonality.from(Chromatic.C, Scale.DORIAN);
+        tonality = TonalityChordRetrieval.getRelativeMinorFrom(tonality);
         assertEquals(Tonality.Cm, tonality);
     }
 
     @Test
     public void getRelativeMinorNull() {
-        Tonality tonality = Tonality.from(Chromatic.C, Scale.PENTATONIC).getRelativeMinor();
+        Tonality tonality = Tonality.from(Chromatic.C, Scale.PENTATONIC);
+        tonality = TonalityChordRetrieval.getRelativeMinorFrom(tonality);
         assertNull(tonality);
     }
 
     @Test
     public void getRelativeMajor() {
-        Tonality tonality = Tonality.Cm.getRelativeMajor();
+        Tonality tonality = TonalityChordRetrieval.getRelativeMajorFrom(Tonality.Cm);
         assertEquals(Tonality.C, tonality);
     }
 
     @Test
     public void getRelativeMajor2() {
-        Tonality tonality = Tonality.from(Chromatic.C, Scale.DORIAN).getRelativeMajor();
+        Tonality tonality = Tonality.from(Chromatic.C, Scale.DORIAN);
+        tonality = TonalityChordRetrieval.getRelativeMajorFrom(tonality);
         assertEquals(Tonality.C, tonality);
     }
 
     @Test
     public void getRelativeMajorNull() {
-        Tonality tonality = Tonality.from(Chromatic.C, Scale.PENTATONIC).getRelativeMajor();
+        Tonality tonality = Tonality.from(Chromatic.C, Scale.PENTATONIC);
+        tonality = TonalityChordRetrieval.getRelativeMajorFrom(tonality);
         assertNull(tonality);
     }
 
     @Test
     public void getRelativeMajorAlready() {
-        Tonality tonality = Tonality.C.getRelativeMajor();
+        Tonality tonality = Tonality.C;
+        tonality = TonalityChordRetrieval.getRelativeMajorFrom(tonality);
         assertEquals(Tonality.C, tonality);
     }
 
     @Test
     public void isMajorOrMinor() {
-        assertTrue(Tonality.C.isMajorOrMinor());
-        assertTrue(Tonality.Cm.isMajorOrMinor());
-        assertTrue(Tonality.from(Chromatic.C, Scale.LYDIAN).isMajorOrMinor());
-        assertTrue(Tonality.from(Chromatic.C, Scale.DORIAN).isMajorOrMinor());
-        assertTrue(Tonality.from(Chromatic.C, Scale.PENTATONIC_MINOR).isMajorOrMinor());
-        assertTrue(Tonality.from(Chromatic.C, Scale.PENTATONIC).isMajorOrMinor());
-        assertFalse(Tonality.from(Chromatic.C, Scale.CHROMATIC).isMajorOrMinor());
+        assertTrue(TonalityUtils.isMajorOrMinor(Tonality.C));
+        assertTrue(TonalityUtils.isMajorOrMinor(Tonality.Cm));
+        assertTrue(TonalityUtils.isMajorOrMinor(Tonality.from(Chromatic.C, Scale.LYDIAN)));
+        assertTrue(TonalityUtils.isMajorOrMinor(Tonality.from(Chromatic.C, Scale.DORIAN)));
+        assertTrue(TonalityUtils.isMajorOrMinor(Tonality.from(Chromatic.C, Scale.PENTATONIC_MINOR)));
+        assertTrue(TonalityUtils.isMajorOrMinor(Tonality.from(Chromatic.C, Scale.PENTATONIC)));
+        assertFalse(TonalityUtils.isMajorOrMinor(Tonality.from(Chromatic.C, Scale.CHROMATIC)));
     }
 
     @Test
     public void isMajor() {
-        assertTrue(Tonality.C.isMajor());
-        assertFalse(Tonality.Cm.isMajor());
-        assertTrue(Tonality.from(Chromatic.C, Scale.LYDIAN).isMajor());
-        assertFalse(Tonality.from(Chromatic.C, Scale.DORIAN).isMajor());
-        assertFalse(Tonality.from(Chromatic.C, Scale.PENTATONIC_MINOR).isMajor());
-        assertTrue(Tonality.from(Chromatic.C, Scale.PENTATONIC).isMajor());
-        assertFalse(Tonality.from(Chromatic.C, Scale.CHROMATIC).isMajor());
+        assertTrue(TonalityUtils.isMajor(Tonality.C));
+        assertFalse(TonalityUtils.isMajor(Tonality.Cm));
+        assertTrue(TonalityUtils.isMajor(Tonality.from(Chromatic.C, Scale.LYDIAN)));
+        assertFalse(TonalityUtils.isMajor(Tonality.from(Chromatic.C, Scale.DORIAN)));
+        assertFalse(TonalityUtils.isMajor(Tonality.from(Chromatic.C, Scale.PENTATONIC_MINOR)));
+        assertTrue(TonalityUtils.isMajor(Tonality.from(Chromatic.C, Scale.PENTATONIC)));
+        assertFalse(TonalityUtils.isMajor(Tonality.from(Chromatic.C, Scale.CHROMATIC)));
     }
 
     @Test
     public void isMinor() {
-        assertFalse(Tonality.C.isMinor());
-        assertTrue(Tonality.Cm.isMajorOrMinor());
-        assertFalse(Tonality.from(Chromatic.C, Scale.LYDIAN).isMinor());
-        assertTrue(Tonality.from(Chromatic.C, Scale.DORIAN).isMinor());
-        assertTrue(Tonality.from(Chromatic.C, Scale.PENTATONIC_MINOR).isMinor());
-        assertFalse(Tonality.from(Chromatic.C, Scale.PENTATONIC).isMinor());
-        assertFalse(Tonality.from(Chromatic.C, Scale.CHROMATIC).isMinor());
+        assertFalse(TonalityUtils.isMinor(Tonality.C));
+        assertTrue(TonalityUtils.isMinor(Tonality.Cm));
+        assertFalse(TonalityUtils.isMinor(Tonality.from(Chromatic.C, Scale.LYDIAN)));
+        assertTrue(TonalityUtils.isMinor(Tonality.from(Chromatic.C, Scale.DORIAN)));
+        assertTrue(TonalityUtils.isMinor(Tonality.from(Chromatic.C, Scale.PENTATONIC_MINOR)));
+        assertFalse(TonalityUtils.isMinor(Tonality.from(Chromatic.C, Scale.PENTATONIC)));
+        assertFalse(TonalityUtils.isMinor(Tonality.from(Chromatic.C, Scale.CHROMATIC)));
     }
 
     @Test
@@ -729,7 +734,7 @@ public class TonalityTest {
 
     @Test
     public void hasFromDiatonicFunction() {
-        for (Tonality t : TonalityRetrieval.getMainMajorAndMinorTonalities())
+        for (Tonality t : TonalityRetrieval.getMainMajorAndMinorScaleTonalities())
             for (DiatonicFunction df : DiatonicFunction.COMMON) {
                 ChromaticChord chromaticChord = ChromaticChord.builder()
                         .tonality(t)

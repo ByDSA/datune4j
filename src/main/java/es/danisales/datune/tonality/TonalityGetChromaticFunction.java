@@ -192,7 +192,7 @@ public class TonalityGetChromaticFunction {
 			case bVII:
 			case bVI:
 			case bIII:
-				if (tonality.hasAsDiatonicFunction(chromaticFunction))
+				if (TonalityRetrieval.hasAsDiatonicFunction(tonality, chromaticFunction))
 					return tonality;
 
 				ChromaticChord chromaticChord4 = ChromaticChord.builder()

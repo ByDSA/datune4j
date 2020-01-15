@@ -9,7 +9,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import java.util.*;
 
 @SuppressWarnings("WeakerAccess")
-public class Scale implements Iterable<ScaleDistance> {
+public final class Scale implements Iterable<ScaleDistance> {
 	/**
 	 * Constant Scales
 	 */

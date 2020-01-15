@@ -22,6 +22,7 @@ import es.danisales.datune.pitch.ChordNamer;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.ScaleDegreeException;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityUtils;
 import es.danisales.utils.NeverHappensException;
 import es.danisales.utils.building.BuildingException;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -65,9 +66,9 @@ class Loader {
     }
 
     private void addBorrowedChords(List<ParametricChord> chromaticChordSet) {
-        if (tonality.isMajorOrMinor()) {
+        if (tonality.getScale().equals(Scale.MAJOR) || tonality.getScale().equals(Scale.MINOR)) {
             Tonality otherTonality = tonality.clone();
-            if (otherTonality.isMajor())
+            if (TonalityUtils.isMajor(otherTonality))
                 otherTonality.setScale(Scale.MINOR);
             else
                 otherTonality.setScale(Scale.MAJOR);
