@@ -17,7 +17,7 @@ abstract class Chunk implements Event {
             } catch (IOException ignored) {
             }
         });
-        BinSize.registerSize(byte[].class, (byte[] self, BinEncoder.EncoderSettings settings) -> { // todo: move to datils
+        BinSize.register(byte[].class, (byte[] self, BinEncoder.EncoderSettings settings) -> { // todo: move to datils
             return self.length;
         });
 
@@ -36,7 +36,7 @@ abstract class Chunk implements Event {
             }
         });
 
-        BinSize.registerSize(Chunk.class, (Chunk self, BinEncoder.EncoderSettings settings) -> 4 + self.type.length + self.dataSizeBytes());
+        BinSize.register(Chunk.class, (Chunk self, BinEncoder.EncoderSettings settings) -> 4 + self.type.length + self.dataSizeBytes());
     }
 
     private static void writeLength(int length, ByteArrayOutputStream byteOutputStream) throws IOException {

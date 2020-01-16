@@ -30,7 +30,7 @@ public class TempoEvent extends MetaEvent {
 			}
 		});
 
-		BinSize.registerSize(TempoEvent.class, (TempoEvent self, BinEncoder.EncoderSettings settings) -> {
+		BinSize.register(TempoEvent.class, (TempoEvent self, BinEncoder.EncoderSettings settings) -> {
 			int l = Utils.deltaByte(self.getDelta()).length;
 			return 3 + l + self.getData().length;
 		});

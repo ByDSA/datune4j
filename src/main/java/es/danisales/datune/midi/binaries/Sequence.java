@@ -189,7 +189,7 @@ public class Sequence extends BinFile {
 			}
 		});
 
-		BinSize.registerSize(Sequence.class, (Sequence self, BinEncoder.EncoderSettings settings) -> {
+		BinSize.register(Sequence.class, (Sequence self, BinEncoder.EncoderSettings settings) -> {
 			int s = 0;
 			Header h = self.generateHeader();
 			s += BinSize.getBinarySizeOf(h);

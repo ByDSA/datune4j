@@ -62,7 +62,7 @@ public class EventSequence implements Durable, EventComplex {
 				}
 			});
 		});
-		BinSize.registerSize(EventSequence.class, (EventSequence self, BinEncoder.EncoderSettings settings) -> {
+		BinSize.register(EventSequence.class, (EventSequence self, BinEncoder.EncoderSettings settings) -> {
 			return BinData.encoder().from(self).getBytes().length;
 		});
 	}

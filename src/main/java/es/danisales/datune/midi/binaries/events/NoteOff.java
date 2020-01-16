@@ -15,7 +15,7 @@ public final class NoteOff extends NoteEvent {
 
 	static {
         BinEncoder.register(NoteOff.class, (BiConsumer<ChannelEvent, BinEncoder.EncoderSettings>) ChunkData::encoder);
-        BinSize.registerSize(NoteOff.class, (BiFunction<ChannelEvent, BinEncoder.EncoderSettings, Integer>) ChunkData::getBinarySize);
+        BinSize.register(NoteOff.class, (BiFunction<ChannelEvent, BinEncoder.EncoderSettings, Integer>) ChunkData::getBinarySize);
 	}
 
 	public static Builder builder() {
