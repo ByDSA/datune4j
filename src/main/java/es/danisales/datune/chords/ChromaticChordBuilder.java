@@ -2,7 +2,7 @@ package es.danisales.datune.chords;
 
 import com.google.common.collect.ImmutableList;
 import es.danisales.datune.degrees.octave.Chromatic;
-import es.danisales.datune.degrees.octave.Diatonic;
+import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
@@ -26,7 +26,7 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
     private ChromaticChord chromaticChord;
     private Chromatic chromaticBase;
     private Tonality tonality;
-    private DiatonicChordPattern diatonicChordPattern;
+    private DiatonicDegreePattern diatonicDegreePattern;
     private ChromaticChordPattern chromaticChordPattern;
     private DiatonicFunction diatonicFunction;
     private ChromaticFunction chromaticFunction;
@@ -66,27 +66,26 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
         }
     }
 
-    class ChromaticBaseAndDiatonicChordPatternAndTonalityWay implements BuildingWay<ChromaticChord> {
+    class DiatonicChordPatternAndTonalityWay implements BuildingWay<ChromaticChord> {
         @Override
         public boolean isReadyToBuild() {
-            return chromaticBase != null && diatonicChordPattern != null && tonality != null;
+            return diatonicDegreePattern != null && tonality != null;
         }
 
         @NonNull
         @Override
-        public ChromaticChord build() {
+        public ChromaticChord build() throws BuildingException {
             ChromaticChord ret = new EmptyWay().build();
 
-            try {
-                int posBase = tonality.getDegreeFrom(chromaticBase).ordinal();
-                for (Integer diatonic : diatonicChordPattern) {
-                    int pos = (posBase + diatonic) % Diatonic.NUMBER;
-                    DiatonicAlt diatonicAlt = tonality.getNotes().get(pos);
-                    Chromatic chromatic = Chromatic.from(diatonicAlt);
-                    ret.add(chromatic);
+            for (DiatonicDegree diatonicDegree : diatonicDegreePattern) {
+                DiatonicAlt diatonicAlt;
+                try {
+                    diatonicAlt = tonality.getNote(diatonicDegree);
+                } catch (ScaleRelativeDegreeException e) {
+                    throw new BuildingException(e);
                 }
-            } catch (TonalityException e) {
-                throw new RuntimeException();
+                Chromatic chromatic = Chromatic.from(diatonicAlt);
+                ret.add(chromatic);
             }
 
             return ret;
@@ -146,7 +145,7 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
             EmptyWay.class,
             ChromaticChordWay.class,
             ChromaticBaseAndChromaticChordPatternWay.class,
-            ChromaticBaseAndDiatonicChordPatternAndTonalityWay.class,
+            DiatonicChordPatternAndTonalityWay.class,
             DiatonicFunctionAndTonalityWay.class,
             ChromaticFunctionAndTonalityWay.class
     );
@@ -221,8 +220,8 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
         return self();
     }
 
-    public @NonNull ChromaticChordBuilder diatonicChordPattern(@NonNull DiatonicChordPattern diatonicChordPattern) {
-        this.diatonicChordPattern = Objects.requireNonNull(diatonicChordPattern);
+    public @NonNull ChromaticChordBuilder diatonicDegreePattern(@NonNull DiatonicDegreePattern diatonicChordPattern) {
+        this.diatonicDegreePattern = Objects.requireNonNull(diatonicChordPattern);
 
         return self();
     }
@@ -260,12 +259,11 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
         return self();
     }
 
-    public static @NonNull ChromaticChord from(@NonNull DiatonicChord diatonicChord, @NonNull Tonality tonality) throws TonalityException {
+    public static @NonNull ChromaticChord from(@NonNull DiatonicAltChord diatonicChord, @NonNull Tonality tonality) throws TonalityException {
         ChromaticChord chromaticChord = new ChromaticChord();
         chromaticChord.innerChord = ChromaticChordInterfaceAdapter.from(ImmutableList.of());
 
-        for (Diatonic diatonic : diatonicChord) {
-            DiatonicAlt diatonicAlt = DiatonicAlt.from(diatonic, tonality);
+        for (DiatonicAlt diatonicAlt : diatonicChord) {
             Chromatic chromatic = Chromatic.from(diatonicAlt);
             chromaticChord.add(chromatic);
         }

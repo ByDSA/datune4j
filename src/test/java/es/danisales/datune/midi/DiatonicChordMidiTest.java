@@ -5,11 +5,11 @@ import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
+import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.chords.ChromaticChord;
 import es.danisales.datune.chords.ChromaticChordInterface;
-import es.danisales.datune.chords.DiatonicChord;
 import es.danisales.datune.pitch.PitchException;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;
@@ -29,7 +29,7 @@ public class DiatonicChordMidiTest {
     @Test
     public void addDuplicate() throws PitchMidiException, BuildingException {
         DiatonicChordMidi c = DiatonicChordMidi.builder()
-                .from(DiatonicFunction.II_THIRD, Tonality.Gm)
+                .from(DiatonicDegree.II, IntervalDiatonic.THIRD, Tonality.Gm)
                 .octave(6)
                 .build();
         DiatonicChordMidiTransformations.addDuplicate(c, 1);
@@ -43,7 +43,7 @@ public class DiatonicChordMidiTest {
     @Test
     public void addDuplicate2() throws PitchMidiException, BuildingException {
         DiatonicChordMidi c = DiatonicChordMidi.builder()
-                .from(DiatonicFunction.VI_THIRD, Tonality.Gm)
+                .from(DiatonicDegree.VI, IntervalDiatonic.THIRD, Tonality.Gm)
                 .build();
         DiatonicChordMidiTransformations.addDuplicate(c, 2);
         assertEquals(4, c.size());
@@ -56,7 +56,7 @@ public class DiatonicChordMidiTest {
     @Test(expected = AddedException.class)
     public void addDuplicate3() throws PitchMidiException, BuildingException {
         DiatonicChordMidi c = DiatonicChordMidi.builder()
-                .from(DiatonicFunction.VI_THIRD, Tonality.Gm)
+                .from(DiatonicDegree.VI, IntervalDiatonic.THIRD, Tonality.Gm)
                 .build();
         DiatonicChordMidiTransformations.addDuplicate(c, 0);
     }
@@ -295,10 +295,6 @@ public class DiatonicChordMidiTest {
         ton = Tonality.FFm;
         dcm = DiatonicChordMidi.builder().from(DiatonicFunction.I, ton).build();
         assertEquals(ChromaticChord.FFm, ChromaticChord.builder().fromDiatonicChordMidi(dcm).build());
-
-        assertEquals(
-                DiatonicChord.from(Arrays.asList(Diatonic.D, Diatonic.F, Diatonic.A)), DiatonicChord.from(DiatonicFunction.II, Diatonic.C)
-        );
 
         assertEquals(
                 ChromaticChord.GGdim,

@@ -19,8 +19,7 @@ public class ChromaticChordTest {
     @Test
     public void fromChromaticDiatonicChordTonality() {
         ChromaticChord chromaticChord = ChromaticChord.builder()
-                .chromaticBase(Chromatic.B)
-                .diatonicChordPattern(DiatonicChordPattern.NINTH)
+                .diatonicDegreePattern(DiatonicDegreePattern.VII9)
                 .tonality(Tonality.C)
                 .build();
         assertEquals( Arrays.asList(

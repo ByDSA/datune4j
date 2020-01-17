@@ -17,7 +17,7 @@ public enum DiatonicDegree implements ScaleDegree {
 	}
 
 	/**
-     * Returns the relativedegree with the added interval function
+	 * Returns the relativedegree with the added interval function
 	 *
 	 * @param id the id
 	 * @return the relativedegree
@@ -61,14 +61,6 @@ public enum DiatonicDegree implements ScaleDegree {
 			case I6:
 			case I7:
 			case I9:
-			case I_THIRD:
-			case I_SECOND:
-			case I_FOURTH:
-			case I6_O5:
-			case I7_O5:
-			case I7_O3:
-			case I9_O7:
-			case I9_O3_O7:
 			case I11:
 			case I13:
 				return DiatonicDegree.I;
@@ -77,14 +69,6 @@ public enum DiatonicDegree implements ScaleDegree {
 			case II7:
 			case II9:
 			case II11:
-			case II_THIRD:
-			case II_SECOND:
-			case II_FOURTH:
-			case II6_O5:
-			case II7_O5:
-			case II7_O3:
-			case II9_O7:
-			case II9_O3_O7:
 			case II13:
 				return DiatonicDegree.II;
 			case III:
@@ -92,14 +76,6 @@ public enum DiatonicDegree implements ScaleDegree {
 			case III7:
 			case III9:
 			case III11:
-			case III_THIRD:
-			case III_SECOND:
-			case III_FOURTH:
-			case III6_O5:
-			case III7_O5:
-			case III7_O3:
-			case III9_O7:
-			case III9_O3_O7:
 			case III13:
 				return DiatonicDegree.III;
 			case IV:
@@ -107,14 +83,6 @@ public enum DiatonicDegree implements ScaleDegree {
 			case IV7:
 			case IV9:
 			case IV11:
-			case IV_THIRD:
-			case IV_SECOND:
-			case IV_FOURTH:
-			case IV6_O5:
-			case IV7_O5:
-			case IV7_O3:
-			case IV9_O7:
-			case IV9_O3_O7:
 			case IV13:
 				return DiatonicDegree.IV;
 			case V:
@@ -122,14 +90,6 @@ public enum DiatonicDegree implements ScaleDegree {
 			case V7:
 			case V9:
 			case V11:
-			case V_THIRD:
-			case V_SECOND:
-			case V_FOURTH:
-			case V6_O5:
-			case V7_O5:
-			case V7_O3:
-			case V9_O7:
-			case V9_O3_O7:
 			case V13:
 				return DiatonicDegree.V;
 			case VI:
@@ -137,14 +97,6 @@ public enum DiatonicDegree implements ScaleDegree {
 			case VI7:
 			case VI9:
 			case VI11:
-			case VI_THIRD:
-			case VI_SECOND:
-			case VI_FOURTH:
-			case VI6_O5:
-			case VI7_O5:
-			case VI7_O3:
-			case VI9_O7:
-			case VI9_O3_O7:
 			case VI13:
 				return DiatonicDegree.VI;
 			case VII:
@@ -152,14 +104,6 @@ public enum DiatonicDegree implements ScaleDegree {
 			case VII7:
 			case VII9:
 			case VII11:
-			case VII_THIRD:
-			case VII_SECOND:
-			case VII_FOURTH:
-			case VII6_O5:
-			case VII7_O5:
-			case VII7_O3:
-			case VII9_O7:
-			case VII9_O3_O7:
 			case VII13:
 				return DiatonicDegree.VII;
 		}
@@ -172,47 +116,47 @@ public enum DiatonicDegree implements ScaleDegree {
 			case I5:
 			case i:
 			case I0:
-            case ISUS4:
+			case ISUS4:
 				return DiatonicDegree.I;
 			case II:
 			case II5:
 			case ii:
 			case II0:
 			case N6:
-            case IISUS4:
+			case IISUS4:
 				return DiatonicDegree.II;
 			case III:
 			case III5:
 			case iii:
 			case III0:
-            case bIII:
-            case bIIISUS4:
+			case bIII:
+			case bIIISUS4:
 				return DiatonicDegree.III;
 			case IV:
 			case IV5:
 			case iv:
 			case IV0:
-            case IVSUS4:
+			case IVSUS4:
 				return DiatonicDegree.IV;
 			case V:
 			case V5:
 			case v:
 			case V0:
-            case VSUS4:
+			case VSUS4:
 				return DiatonicDegree.V;
 			case VI:
 			case VI5:
 			case vi:
 			case VI0:
 			case bVI:
-            case VISUS4:
+			case VISUS4:
 				return DiatonicDegree.VI;
 			case VII:
 			case VII5:
 			case vii:
 			case VII0:
 			case bVII:
-            case bVIISUS4:
+			case bVIISUS4:
 				return DiatonicDegree.VII;
 			case SUBV7:
 			case V7ALT:
@@ -242,14 +186,14 @@ public enum DiatonicDegree implements ScaleDegree {
 		throw NeverHappensException.switchOf(chromaticFunction);
 	}
 
-    @NonNull
+	@NonNull
 	@Override
-    public DiatonicDegree getNext() {
-        int index = (ordinal() + 1) % DiatonicDegree.values().length;
-        return values()[index];
-    }
+	public DiatonicDegree getNext() {
+		int index = (ordinal() + 1) % DiatonicDegree.values().length;
+		return values()[index];
+	}
 
-    @NonNull
+	@NonNull
 	@Override
 	public DiatonicDegree getPrevious() {
 		int index = Utils.rotativeTrimLowerOnce(ordinal() - 1, values().length);
@@ -257,8 +201,8 @@ public enum DiatonicDegree implements ScaleDegree {
 		return values()[index];
 	}
 
-    @Override
-    public String toString() {
-        return "Diatonic " + super.toString();
-    }
+	@Override
+	public String toString() {
+		return "Diatonic " + super.toString();
+	}
 }

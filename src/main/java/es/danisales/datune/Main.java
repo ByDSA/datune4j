@@ -477,7 +477,7 @@ public class Main {
 			c1.inv( 0 );
 			c1.shiftOctave( 0 );
 			c1.get(2).getPitch().shiftOctave(-1);
-			DiatonicChordMidi c2 = p.add( DiatonicFunction.VII_THIRD );
+			DiatonicChordMidi c2 = p.add( DiatonicFunction.VII ); // DiatonicFunction.VII_THIRD
 			c2.setLength( DurationMidi.L4 * 3 );
 			c2.setScaleAs(Scale.MAJOR);
 			c2.shiftOctave( -1 );

@@ -296,7 +296,7 @@ public final class ChromaticChordPattern extends Pattern {
     }
 
     @Override
-    public DiatonicChordPattern clone() {
-        return (DiatonicChordPattern) super.clone();
+    public ChromaticChordPattern clone() {
+        return (ChromaticChordPattern) super.clone();
     }
 }

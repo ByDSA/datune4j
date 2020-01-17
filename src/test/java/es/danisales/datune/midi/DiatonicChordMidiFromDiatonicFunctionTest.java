@@ -1,7 +1,9 @@
 package es.danisales.datune.midi;
 
 import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.DiatonicFunction;
+import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
@@ -32,7 +34,7 @@ public class DiatonicChordMidiFromDiatonicFunctionTest {
     @Test
     public void fromDiatonicFunction2() throws BuildingException {
         DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder()
-                .from(DiatonicFunction.I_THIRD, Tonality.C)
+                .from(IntervalDiatonic.THIRD, Tonality.C)
                 .octave(5)
                 .build();
         assertEquals(2, diatonicChordMidi.size());
@@ -43,7 +45,7 @@ public class DiatonicChordMidiFromDiatonicFunctionTest {
     @Test
     public void fromDiatonicFunction3() throws BuildingException {
         DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder()
-                .from(DiatonicFunction.I_THIRD, Tonality.Gm)
+                .from(IntervalDiatonic.THIRD, Tonality.Gm)
                 .octave(5)
                 .build();
         assertEquals(2, diatonicChordMidi.size());
@@ -54,7 +56,7 @@ public class DiatonicChordMidiFromDiatonicFunctionTest {
     @Test
     public void fromDiatonicFunction4() throws BuildingException {
         DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder()
-                .from(DiatonicFunction.II_THIRD, Tonality.Gm)
+                .from(DiatonicDegree.II, IntervalDiatonic.THIRD, Tonality.Gm)
                 .octave(6)
                 .build();
         assertEquals(2, diatonicChordMidi.size());
@@ -65,7 +67,7 @@ public class DiatonicChordMidiFromDiatonicFunctionTest {
     @Test
     public void fromDiatonicFunction5() throws BuildingException {
         DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder()
-                .from(DiatonicFunction.VI_THIRD, Tonality.Gm)
+                .from(DiatonicDegree.VI, IntervalDiatonic.THIRD, Tonality.Gm)
                 .octave(5)
                 .build();
         assertEquals(2, diatonicChordMidi.size());

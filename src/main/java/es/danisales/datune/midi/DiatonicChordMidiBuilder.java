@@ -1,16 +1,17 @@
 package es.danisales.datune.midi;
 
+import es.danisales.datune.chords.ChromaticChord;
+import es.danisales.datune.chords.DiatonicDegreePattern;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
+import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.midi.arpegios.Arpeggio;
 import es.danisales.datune.midi.arpegios.ArpeggioDefault;
 import es.danisales.datune.midi.pitch.PitchDiatonicMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
-import es.danisales.datune.chords.ChromaticChord;
-import es.danisales.datune.chords.DiatonicChordPattern;
 import es.danisales.datune.tonality.*;
 import es.danisales.utils.building.Builder;
 import es.danisales.utils.building.BuildingException;
@@ -26,6 +27,8 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
     private int length = Settings.DefaultValues.LENGTH_CHORD;
     private int velocity = Settings.DefaultValues.VELOCITY_CHORD;
     private HarmonicFunction function;
+    private IntervalDiatonic intervalDiatonic;
+    private DiatonicDegree diatonicDegree;
     private Arpeggio arpegio;
     private int octave = Settings.DefaultValues.OCTAVE;
 
@@ -36,7 +39,13 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
         diatonicChordMidi.tonality = Objects.requireNonNull(tonality);
 
         try {
-            initFromFunction(diatonicChordMidi);
+            if (intervalDiatonic != null) {
+                diatonicChordMidi.add(diatonicDegree);
+                DiatonicDegree otherDegree = diatonicDegree.getShifted( intervalDiatonic.ordinal() );
+                diatonicChordMidi.add(otherDegree);
+            } else {
+                initFromFunction(diatonicChordMidi);
+            }
         } catch (TonalityException | PitchMidiException | ScaleRelativeDegreeException e) {
             throw new BuildingException(e);
         }
@@ -346,20 +355,15 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
     */
     private void initFromDiatonicFunction(DiatonicChordMidi diatonicChordMidi) {
         DiatonicFunction diatonicFunction = (DiatonicFunction) function;
-        DiatonicChordPattern diatonicChordPattern = DiatonicChordPattern.from(diatonicFunction);
-        DiatonicDegree diatonicDegree = DiatonicDegree.from(diatonicFunction);
-        initFromDiatonicFunctionAddNotes(diatonicChordMidi, diatonicDegree, diatonicChordPattern);
+        DiatonicDegreePattern diatonicChordPattern = DiatonicDegreePattern.from(diatonicFunction);
+        initFromDiatonicFunctionAddNotes(diatonicChordMidi, diatonicChordPattern);
         diatonicChordMidi.setRootIndex(0);
     }
 
-    private void initFromDiatonicFunctionAddNotes(DiatonicChordMidi self, DiatonicDegree diatonicDegreeBase, DiatonicChordPattern diatonicChordPattern) {
-        PitchDiatonicMidi pitchDiatonicMidiBase;
+    private void initFromDiatonicFunctionAddNotes(DiatonicChordMidi self, DiatonicDegreePattern diatonicChordPattern) {
         try {
-            pitchDiatonicMidiBase = PitchDiatonicMidi.from(diatonicDegreeBase, tonality, octave);
-
-            for (final Integer diatonic : diatonicChordPattern) {
-                PitchDiatonicMidi pitchDiatonicMidi = pitchDiatonicMidiBase.clone();
-                pitchDiatonicMidi.shift(diatonic);
+            for (final DiatonicDegree diatonicDegree : diatonicChordPattern) {
+                PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(diatonicDegree, tonality, octave);
                 DiatonicMidi diatonicMidi = DiatonicMidi.builder()
                         .pitch(pitchDiatonicMidi)
                         .build();
@@ -385,6 +389,19 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
         this.tonality = Objects.requireNonNull(tonality);
 
         return self();
+    }
+
+    public DiatonicChordMidiBuilder from(@NonNull IntervalDiatonic intervalDiatonic, @NonNull Tonality tonality) {
+        this.intervalDiatonic = Objects.requireNonNull(intervalDiatonic);
+        this.tonality = Objects.requireNonNull(tonality);
+
+        return self();
+    }
+
+    public DiatonicChordMidiBuilder from(@NonNull DiatonicDegree diatonicDegree, @NonNull IntervalDiatonic intervalDiatonic, @NonNull Tonality tonality) {
+        this.diatonicDegree = Objects.requireNonNull(diatonicDegree);
+
+        return from(intervalDiatonic, tonality);
     }
 
     public DiatonicChordMidiBuilder length(int length) {
