@@ -1,6 +1,6 @@
 package es.danisales.datune.midi;
 
-import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.midi.pitch.PitchDiatonicMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
@@ -26,14 +26,14 @@ public class ChromaticMidiTest {
 	public void fromDiatonicMidi() throws PitchMidiException {
 		DiatonicMidi diatonicMidi = DiatonicMidi.builder()
 				.pitch(PitchDiatonicMidi.from(DiatonicDegree.I, Tonality.C, 5))
-				.length(Duration.L16)
+				.length(DurationMidi.L16)
 				.velocity(32)
 				.build();
 
 		ChromaticMidi chromaticMidi = ChromaticMidi.from(diatonicMidi);
 
 		assertEquals(PitchChromaticMidi.C5, chromaticMidi.getPitch());
-		assertEquals(Duration.L16, chromaticMidi.getLength());
+		assertEquals(DurationMidi.L16, chromaticMidi.getLength());
 		assertEquals(32, chromaticMidi.getVelocity());
 	}
 

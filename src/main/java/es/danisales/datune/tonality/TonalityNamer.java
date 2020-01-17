@@ -1,6 +1,6 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.musical.DiatonicAlt;
+import es.danisales.datune.chords.DiatonicAlt;
 import es.danisales.log.string.Logging;
 
 public class TonalityNamer {

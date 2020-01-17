@@ -1,15 +1,14 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.arrays.ArrayUtils;
-import es.danisales.datune.absolutedegree.Diatonic;
-import es.danisales.datune.degree.DiatonicDegree;
-import es.danisales.datune.function.ChromaticFunction;
+import es.danisales.datune.degrees.scale.DiatonicDegree;
+import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.midi.DiatonicChordMidiBuilder;
 import es.danisales.datune.midi.DiatonicChordMidiInfo;
-import es.danisales.datune.musical.ChromaticChord;
-import es.danisales.datune.musical.DiatonicAlt;
-import es.danisales.datune.musical.DiatonicAltRetrieval;
+import es.danisales.datune.chords.ChromaticChord;
+import es.danisales.datune.chords.DiatonicAlt;
+import es.danisales.datune.chords.DiatonicAltRetrieval;
+import es.danisales.datune.chords.PitchChromaticChord;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -113,7 +112,7 @@ public class TonalityRetrieval {
     public static @NonNull List<Tonality> listFromChordAllFunctions(@NonNull ChromaticChord c) {
         List<Tonality> out = new ArrayList<>();
         for (Tonality t : TonalityRetrieval.allUsualKeys()) {
-            if (hasAsChromaticFunction(t, c))
+            if (TonalityUtils.hasAsChromaticFunction(t, c))
                 out.add( t );
         }
 
@@ -152,7 +151,7 @@ public class TonalityRetrieval {
             if (notFound) {
                 try {
                     tonalityNotes[i] = base.getNote(diatonicDegree);
-                } catch (ScaleDegreeException e) {
+                } catch (ScaleRelativeDegreeException e) {
                     throw NeverHappensException.make("Las escalas diatónicas tienen todos los DiatonicDegree");
                 }
             }
@@ -243,30 +242,53 @@ public class TonalityRetrieval {
         return candidates;
     }
 
-    public static boolean hasAsChromaticFunction(@NonNull Tonality tonality, @NonNull ChromaticChord chromaticChord) {
-        Objects.requireNonNull(chromaticChord);
+    public static Tonality searchInModeSameRoot(Tonality tonality, PitchChromaticChord c) {
+        List<Tonality> ts;
+        if ( tonality.getScale().isDiatonic() ) {
+            ts = new ArrayList<>();
+            ts.add( Tonality.from( tonality.getRoot(), Scale.MAJOR ) );
+            ts.add( Tonality.from( tonality.getRoot(), Scale.MINOR ) );
+            ts.add( Tonality.from( tonality.getRoot(), Scale.DORIAN ) );
+            ts.add( Tonality.from( tonality.getRoot(), Scale.PHRYGIAN ) );
+            ts.add( Tonality.from( tonality.getRoot(), Scale.LYDIAN ) );
+            ts.add( Tonality.from( tonality.getRoot(), Scale.MIXOLYDIAN ) );
+            ts.add( Tonality.from( tonality.getRoot(), Scale.LOCRIAN ) );
+        } else
+            ts = tonality.getModesSameRoot();
 
-        for (ChromaticFunction f : ChromaticFunction.ALL) {
-            if (tonality.size() != Diatonic.NUMBER && ArrayUtils.contains(f, ChromaticFunction.TENSIONS))
+        for ( Tonality t : ts ) {
+            if ( t.equals( tonality ) )
                 continue;
-
-            ChromaticChord c2 = ChromaticChord.builder()
-                    .chromaticFunction(f)
-                    .tonality(tonality)
-                    .build();
-            if (chromaticChord.getNotes().equals(c2.getNotes()))
-                return true;
+            ChromaticChord chromaticChord = ChromaticChord.builder().fromChromaticMidi(c).build();
+            DiatonicFunction diatonicFunction = DiatonicFunction.from(chromaticChord, t);
+            if (diatonicFunction != null)
+                return t;
         }
 
-        return false;
+        return null;
     }
 
-
-    public static boolean hasAsDiatonicFunction(@NonNull Tonality tonality, @NonNull ChromaticFunction chromaticFunction) {
-        ChromaticChord chromaticChord2 = ChromaticChord.builder()
-                .chromaticFunction(chromaticFunction)
-                .tonality(tonality)
-                .build();
-        return tonality.containsAll(chromaticChord2);
+    public static @Nullable Tonality getRelativeMinorFrom(@NonNull Tonality tonality) {
+        return getRelativeFrom(tonality, Scale.MINOR);
     }
+
+    public static @Nullable Tonality getRelativeMajorFrom(@NonNull Tonality tonality) {
+        return getRelativeFrom(tonality, Scale.MAJOR);
+    }
+
+    private static @Nullable Tonality getRelativeFrom(@NonNull Tonality tonalityBase, @NonNull Scale scale) {
+        Objects.requireNonNull(tonalityBase);
+        Objects.requireNonNull(scale);
+
+        if (tonalityBase.getScale().equals(scale))
+            return tonalityBase;
+
+        List<Tonality> modes = tonalityBase.getModes();
+        for ( Tonality tonality : modes )
+            if ( tonality.getScale().equals( scale ) )
+                return tonality;
+
+        return null;
+    }
+
 }

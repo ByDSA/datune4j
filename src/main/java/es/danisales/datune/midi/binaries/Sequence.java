@@ -4,7 +4,7 @@ import es.danisales.datune.eventsequences.DrumsTrack;
 import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.eventsequences.Instrument;
 import es.danisales.datune.eventsequences.Track;
-import es.danisales.datune.midi.Duration;
+import es.danisales.datune.midi.DurationMidi;
 import es.danisales.datune.midi.binaries.events.Header;
 import es.danisales.datune.midi.binaries.events.NoteOff;
 import es.danisales.datune.midi.binaries.events.NoteOn;
@@ -255,7 +255,7 @@ public class Sequence extends BinFile {
 				if (message instanceof ShortMessage) {
 					ShortMessage sm = (ShortMessage) message;
 					//System.out.print("Channel: " + sm.getChannel() + " ");
-					long time = Duration.L4 * event.getTick() / sequence.getResolution();
+					long time = DurationMidi.L4 * event.getTick() / sequence.getResolution();
 					if (t == null) {
 						int ins = 0; // sequence.getPatchList()[sm.getChannel()].getProgram()
 

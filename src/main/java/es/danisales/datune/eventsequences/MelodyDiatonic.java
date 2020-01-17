@@ -1,6 +1,6 @@
 package es.danisales.datune.eventsequences;
 
-import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.midi.Settings.DefaultValues;
 import es.danisales.datune.midi.binaries.events.Event;
@@ -107,7 +107,7 @@ public class MelodyDiatonic extends Melody {
 		/*int duration = 0;
 		for(NoteDiatonic n : notesDiatonic) {
 			Tonality s = n.getTonality();
-			if (duration % Duration.V1 == 0)
+			if (duration % DurationMidi.V1 == 0)
 				notes.getWithSemiAdded(duration, new KeySignatureEvent(s));
 
 			notes.getWithSemiAdded(duration, n);

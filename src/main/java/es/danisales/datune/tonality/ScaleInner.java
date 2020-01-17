@@ -1,7 +1,7 @@
 package es.danisales.datune.tonality;
 
 import com.google.common.collect.ImmutableSet;
-import es.danisales.datune.degree.Degree;
+import es.danisales.datune.degrees.scale.ScaleDegree;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.utils.MathUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -27,16 +27,16 @@ interface ScaleInner {
 	}
 
 	// private
-	default List<Degree> getMainDegrees() {
-		return Degree.getMainDegreesFromScaleSize(size());
+	default List<ScaleDegree> getMainDegrees() {
+		return ScaleDegree.getDefaultDegreesFromScaleSize(size());
 	}
 
-	default @NonNull Set<Degree> getRelativeDegreeByIndex(int i) {
+	default @NonNull Set<ScaleDegree> getRelativeDegreeByIndex(int i) {
 		ScaleDegreeReparametrizer scaleDegreeReparametrizer = getScaleDegreeReparametrizer();
 		i = MathUtils.rotativeTrim(i, size());
 
-		Set<Degree> ret = new HashSet<>();
-		Degree iDegree = getMainDegrees().get(i);
+		Set<ScaleDegree> ret = new HashSet<>();
+		ScaleDegree iDegree = getMainDegrees().get(i);
 		ret.add(iDegree);
 
 		if (scaleDegreeReparametrizer == null)
@@ -47,7 +47,7 @@ interface ScaleInner {
 		return ImmutableSet.copyOf(ret);
 	}
 
-	default int getIndexByDegree(Degree relativeDegree) throws ScaleDegreeException {
+	default int getIndexByDegree(ScaleDegree relativeDegree) throws ScaleRelativeDegreeException {
 		ScaleDegreeReparametrizer scaleDegreeReparametrizer = getScaleDegreeReparametrizer();
 		if (scaleDegreeReparametrizer == null)
 			return getIndexByDegreeDefault(relativeDegree);
@@ -60,16 +60,16 @@ interface ScaleInner {
 	}
 
 	// private
-	default int getIndexByDegreeDefault(Degree degree) throws ScaleDegreeException {
-		List<Degree> mainDegrees = getMainDegrees();
+	default int getIndexByDegreeDefault(ScaleDegree degree) throws ScaleRelativeDegreeException {
+		List<ScaleDegree> mainDegrees = getMainDegrees();
 		for (int i = 0; i < mainDegrees.size(); i++)
 			if (mainDegrees.get(i).equals(degree))
 				return i;
 
-		throw new ScaleDegreeException(degree, this);
+		throw new ScaleRelativeDegreeException(degree, this);
 	}
 
-	default @NonNull ScaleInner getModeFrom(@NonNull Degree relativeDegree) throws ScaleDegreeException {
+	default @NonNull ScaleInner getModeFrom(@NonNull ScaleDegree relativeDegree) throws ScaleRelativeDegreeException {
 		List<ScaleDistance> baseValues = new ArrayList<>( this.getCode() );
 		int pos = getIndexByDegree(relativeDegree);
 		Collections.rotate(baseValues, -pos);
@@ -77,10 +77,10 @@ interface ScaleInner {
 	}
 
 	// protected
-	default @NonNull ScaleInner getModeFromSecure(@NonNull Degree relativeDegree) {
+	default @NonNull ScaleInner getModeFromSecure(@NonNull ScaleDegree relativeDegree) {
 		try {
 			return getModeFrom(relativeDegree);
-		} catch (ScaleDegreeException e) {
+		} catch (ScaleRelativeDegreeException e) {
 			throw new RuntimeException(e.getMessage());
 		}
 	}
@@ -99,7 +99,7 @@ interface ScaleInner {
 	int size();
 
 	@NonNull
-	default ScaleDistance getDistance(Degree relativeDegree) throws ScaleDegreeException {
+	default ScaleDistance getDistance(ScaleDegree relativeDegree) throws ScaleRelativeDegreeException {
 		int index = getIndexByDegree(relativeDegree);
 		if (index == 0)
 			return ScaleDistance.NONE;

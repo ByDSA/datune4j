@@ -3,7 +3,7 @@ package es.danisales.datune.eventsequences;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.midi.DiatonicChordMidiChecker;
 import es.danisales.datune.midi.DiatonicMidi;
-import es.danisales.datune.midi.Duration;
+import es.danisales.datune.midi.DurationMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
 
 import java.util.List;
@@ -28,7 +28,7 @@ public class MelodyByChords extends Melody {
 	
 	public class OutOfTimeException extends RuntimeException {
 		public OutOfTimeException(int t) {
-			super("No se pudo acceder al " + (t/Duration.L1 +1) + ":" + ((t % Duration.L1) / (float)Duration.L4 +1));
+			super("No se pudo acceder al " + (t/ DurationMidi.L1 +1) + ":" + ((t % DurationMidi.L1) / (float) DurationMidi.L4 +1));
 		}
 	}
 
@@ -55,7 +55,7 @@ public class MelodyByChords extends Melody {
 		int duration = 0;
 		for(Chord n : chords) {
 			Tonality s = n.getTonality();
-			if (duration % Duration.V1 == 0)
+			if (duration % DurationMidi.V1 == 0)
 				es.getWithSemiAdded(duration, new KeySignatureEvent(s));
 
 			es.getWithSemiAdded(duration, n);

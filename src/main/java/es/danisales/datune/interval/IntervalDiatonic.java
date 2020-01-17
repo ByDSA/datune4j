@@ -1,7 +1,7 @@
 package es.danisales.datune.interval;
 
-import es.danisales.datune.absolutedegree.Diatonic;
-import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.degrees.octave.Diatonic;
+import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.lang.Namer;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;

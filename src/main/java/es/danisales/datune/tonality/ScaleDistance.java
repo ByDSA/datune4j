@@ -13,7 +13,7 @@ public enum ScaleDistance {
         value = v;
     }
 
-    public int getSemitones() {
+    public int getIntegerSemitones() {
         return Math.round(value);
     }
     public float getMicrotonalSemitones() {
@@ -36,13 +36,6 @@ public enum ScaleDistance {
         }
 
         throw new RuntimeException("Value invalid: " + value);
-    }
-
-    public static @NonNull ScaleDistance fromMicrotonal(float value) {
-        if (value == 0.5f)
-            return QUARTER;
-        else
-            return from((int)value);
     }
 
     @Override

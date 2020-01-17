@@ -2,8 +2,8 @@ package es.danisales.datune.tonality;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
-import es.danisales.datune.musical.DiatonicAlt;
-import es.danisales.datune.musical.DiatonicAltRetrieval;
+import es.danisales.datune.chords.DiatonicAlt;
+import es.danisales.datune.chords.DiatonicAltRetrieval;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 

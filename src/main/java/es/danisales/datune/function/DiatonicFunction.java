@@ -1,8 +1,8 @@
 package es.danisales.datune.function;
 
 import es.danisales.arrays.ArrayUtils;
-import es.danisales.datune.degree.DiatonicDegree;
-import es.danisales.datune.musical.ChromaticChord;
+import es.danisales.datune.degrees.scale.DiatonicDegree;
+import es.danisales.datune.chords.ChromaticChord;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;

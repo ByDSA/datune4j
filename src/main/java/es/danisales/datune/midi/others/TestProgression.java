@@ -41,8 +41,8 @@ public class TestProgression extends Song {
 		track.add(0, progression);
 	}
 	/*
-	public ChordFunc getWithSemiAdded(Degree degree, IntervalDiatonic i) {
-		return progression.getWithSemiAdded(degree, i);
+	public ChordFunc getWithSemiAdded(ScaleDegree relativedegree, IntervalDiatonic i) {
+		return progression.getWithSemiAdded(relativedegree, i);
 	}
 	*/
 	public Melody add(Melody m) {

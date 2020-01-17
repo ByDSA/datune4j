@@ -1,13 +1,13 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.absolutedegree.Chromatic;
-import es.danisales.datune.absolutedegree.Diatonic;
-import es.danisales.datune.degree.Degree;
+import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.degrees.octave.Diatonic;
+import es.danisales.datune.degrees.scale.ScaleDegree;
 import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.midi.DiatonicMidi;
-import es.danisales.datune.musical.ChromaticChord;
-import es.danisales.datune.musical.DiatonicAlt;
-import es.danisales.datune.pitch.ChordNamer;
+import es.danisales.datune.chords.ChromaticChord;
+import es.danisales.datune.chords.DiatonicAlt;
+import es.danisales.datune.chords.ChordNamer;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class TonalityException extends Exception {
@@ -48,7 +48,7 @@ public class TonalityException extends Exception {
 				);
 	}
 
-	public TonalityException(@NonNull Degree relativeDegree, @NonNull Tonality tonality, int octave) {
+	public TonalityException(@NonNull ScaleDegree relativeDegree, @NonNull Tonality tonality, int octave) {
 		super(relativeDegree + " " + tonality + " " + octave);
 	}
 

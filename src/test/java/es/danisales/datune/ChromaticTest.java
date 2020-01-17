@@ -1,8 +1,8 @@
 package es.danisales.datune;
 
-import es.danisales.datune.absolutedegree.Chromatic;
-import es.danisales.datune.musical.DiatonicAlt;
-import es.danisales.datune.musical.transformations.EnharmonicsRetrieval;
+import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.chords.DiatonicAlt;
+import es.danisales.datune.chords.transformations.EnharmonicsRetrieval;
 import es.danisales.datune.tonality.ScaleDistance;
 import org.junit.Test;
 

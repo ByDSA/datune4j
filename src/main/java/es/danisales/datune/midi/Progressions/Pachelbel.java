@@ -1,7 +1,7 @@
 package es.danisales.datune.midi.Progressions;
 
 import es.danisales.datune.function.DiatonicFunction;
-import es.danisales.datune.midi.Duration;
+import es.danisales.datune.midi.DurationMidi;
 import es.danisales.datune.midi.arpegios.ArpeggioAscDesc;
 import es.danisales.datune.tonality.Tonality;
 
@@ -22,7 +22,7 @@ public class Pachelbel extends Progression {
 		add(DiatonicFunction.V7);
 
 		if (type == ARPEGIO) {
-			this.setArpegio(new ArpeggioAscDesc(Duration.L1, Duration.L4));
+			this.setArpegio(new ArpeggioAscDesc(DurationMidi.L1, DurationMidi.L4));
 		}
 	}
 }

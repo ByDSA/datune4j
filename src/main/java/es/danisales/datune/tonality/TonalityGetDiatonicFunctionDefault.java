@@ -1,15 +1,15 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.absolutedegree.Chromatic;
-import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.interval.IntervalDiatonic;
-import es.danisales.datune.musical.ChromaticChord;
-import es.danisales.datune.musical.DiatonicAlt;
-import es.danisales.datune.musical.DiatonicChordPattern;
+import es.danisales.datune.chords.ChromaticChord;
+import es.danisales.datune.chords.DiatonicAlt;
+import es.danisales.datune.chords.DiatonicChordPattern;
 
 public class TonalityGetDiatonicFunctionDefault {
-    public static ChromaticChord get(Tonality tonality, DiatonicFunction diatonicFunction) throws ScaleDegreeException {
+    public static ChromaticChord get(Tonality tonality, DiatonicFunction diatonicFunction) throws ScaleRelativeDegreeException {
         DiatonicAlt noteBase = getNoteBaseFrom(tonality, diatonicFunction);
         DiatonicChordPattern diatonicChordPattern = getDiatonicChordPatternFrom(diatonicFunction);
 
@@ -24,7 +24,7 @@ public class TonalityGetDiatonicFunctionDefault {
                 .build();
     }
 
-    private static DiatonicAlt getNoteBaseFrom(Tonality tonality, DiatonicFunction diatonicFunction) throws ScaleDegreeException {
+    private static DiatonicAlt getNoteBaseFrom(Tonality tonality, DiatonicFunction diatonicFunction) throws ScaleRelativeDegreeException {
         switch (diatonicFunction) {
             case I:
             case I6:

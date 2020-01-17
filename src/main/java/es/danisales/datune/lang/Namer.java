@@ -1,14 +1,14 @@
 package es.danisales.datune.lang;
 
-import es.danisales.datune.absolutedegree.Chromatic;
-import es.danisales.datune.absolutedegree.Diatonic;
-import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.degrees.octave.Diatonic;
+import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.midi.ChromaticMidi;
-import es.danisales.datune.musical.DiatonicAlt;
-import es.danisales.datune.musical.Quality;
-import es.danisales.datune.tonality.ScaleDegreeException;
+import es.danisales.datune.chords.DiatonicAlt;
+import es.danisales.datune.chords.Quality;
+import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.ScaleDistance;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
@@ -77,7 +77,7 @@ public class Namer {
         throw NeverHappensException.switchOf(chromatic);
     }
 
-    public static String from(@NonNull ChromaticMidi chromaticMidi, @NonNull Tonality tonality) throws TonalityException, ScaleDegreeException {
+    public static String from(@NonNull ChromaticMidi chromaticMidi, @NonNull Tonality tonality) throws TonalityException, ScaleRelativeDegreeException {
         Chromatic chromatic = chromaticMidi.getPitch().getChromatic();
         DiatonicDegree diatonicDegree = (DiatonicDegree)tonality.getDegreeFrom(chromatic);
         DiatonicAlt diatonicAlt = tonality.getNote(diatonicDegree);

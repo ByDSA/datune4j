@@ -2,7 +2,7 @@ package es.danisales.datune.midi;
 
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
-import es.danisales.datune.musical.ChromaticChord;
+import es.danisales.datune.chords.ChromaticChord;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityRetrieval;
 import org.checkerframework.checker.nullness.qual.NonNull;

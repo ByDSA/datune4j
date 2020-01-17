@@ -1,10 +1,10 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.degree.ChromaticDegree;
-import es.danisales.datune.degree.Degree;
-import es.danisales.datune.degree.DiatonicDegree;
-import es.danisales.datune.degree.PentatonicDegree;
-import es.danisales.datune.musical.DiatonicAlt;
+import es.danisales.datune.degrees.scale.ChromaticDegree;
+import es.danisales.datune.degrees.scale.ScaleDegree;
+import es.danisales.datune.degrees.scale.DiatonicDegree;
+import es.danisales.datune.degrees.scale.PentatonicDegree;
+import es.danisales.datune.chords.DiatonicAlt;
 import org.junit.Test;
 
 import java.util.*;
@@ -204,7 +204,7 @@ public class ScaleTest {
     }
 
     @Test
-    public void fromDiatonicAlt_List() throws ScaleDegreeException {
+    public void fromDiatonicAlt_List() throws ScaleRelativeDegreeException {
         Tonality s = Tonality.A;
         List<DiatonicAlt> notes = new ArrayList<>();
         for (DiatonicDegree diatonicDegree : DiatonicDegree.values())
@@ -217,22 +217,22 @@ public class ScaleTest {
     /* getMode */
 
     @Test
-    public void getMode() throws ScaleDegreeException {
+    public void getMode() throws ScaleRelativeDegreeException {
         assertEquals(Scale.DORIAN, Scale.IONIAN.getModeFrom(DiatonicDegree.II));
     }
 
     @Test
-    public void getMode_Pentatonic() throws ScaleDegreeException {
+    public void getMode_Pentatonic() throws ScaleRelativeDegreeException {
         assertEquals(Scale.PENTATONIC, Scale.PENTATONIC_MINOR.getModeFrom(PentatonicDegree.II));
     }
 
     @Test
-    public void getMode_PentatonicDiatonicDegree() throws ScaleDegreeException {
+    public void getMode_PentatonicDiatonicDegree() throws ScaleRelativeDegreeException {
         assertEquals(Scale.PENTATONIC, Scale.PENTATONIC_MINOR.getModeFrom(DiatonicDegree.III));
     }
 
-    @Test(expected = ScaleDegreeException.class)
-    public void getModePentatonicDiatonicDegreeImpossible() throws ScaleDegreeException {
+    @Test(expected = ScaleRelativeDegreeException.class)
+    public void getModePentatonicDiatonicDegreeImpossible() throws ScaleRelativeDegreeException {
         assertEquals(Scale.PENTATONIC, Scale.PENTATONIC_MINOR.getModeFrom(DiatonicDegree.II));
     }
 
@@ -372,10 +372,10 @@ public class ScaleTest {
         iterator.next();
     }
 
-    /* getDistance Degree */
+    /* getDistance ScaleDegree */
 
     @Test
-    public void getDistance() throws ScaleDegreeException {
+    public void getDistance() throws ScaleRelativeDegreeException {
         assertEquals(ScaleDistance.NONE, Scale.MAJOR.getDistance(DiatonicDegree.I));
         assertEquals(ScaleDistance.WHOLE, Scale.MAJOR.getDistance(DiatonicDegree.II));
         assertEquals(ScaleDistance.HALF, Scale.MAJOR.getDistance(DiatonicDegree.IV));
@@ -383,14 +383,14 @@ public class ScaleTest {
     }
 
     @Test
-    public void getDistance_PentatonicScale() throws ScaleDegreeException {
+    public void getDistance_PentatonicScale() throws ScaleRelativeDegreeException {
         assertEquals(ScaleDistance.NONE, Scale.PENTATONIC.getDistance(PentatonicDegree.I));
         assertEquals(ScaleDistance.WHOLE, Scale.PENTATONIC.getDistance(PentatonicDegree.II));
         assertEquals(ScaleDistance.WHOLE_HALF, Scale.PENTATONIC.getDistance(PentatonicDegree.IV));
     }
 
     @Test
-    public void getDistance_ChromaticScale() throws ScaleDegreeException {
+    public void getDistance_ChromaticScale() throws ScaleRelativeDegreeException {
         for (ChromaticDegree chromaticDegree = ChromaticDegree.I;
              chromaticDegree.getPrevious() != ChromaticDegree.XII;
              chromaticDegree = chromaticDegree.getNext())
@@ -401,9 +401,9 @@ public class ScaleTest {
     }
 
     @Test
-    public void getDistance_WholeToneScale() throws ScaleDegreeException {
-        List<Degree> degrees = Degree.getMainDegreesFromScaleSize(Scale.WHOLE_TONE.size());
-        for (Degree degree : degrees)
+    public void getDistance_WholeToneScale() throws ScaleRelativeDegreeException {
+        List<ScaleDegree> degrees = ScaleDegree.getDefaultDegreesFromScaleSize(Scale.WHOLE_TONE.size());
+        for (ScaleDegree degree : degrees)
             if (degree == degrees.get(0))
                 assertEquals(ScaleDistance.NONE, Scale.WHOLE_TONE.getDistance(degree));
             else
@@ -411,19 +411,19 @@ public class ScaleTest {
     }
 
     @Test
-    public void getDistance_PentatonicScale_DiatonicDegree_Found() throws ScaleDegreeException {
+    public void getDistance_PentatonicScale_DiatonicDegree_Found() throws ScaleRelativeDegreeException {
         assertEquals(ScaleDistance.NONE, Scale.PENTATONIC.getDistance(DiatonicDegree.I));
     }
 
-    @Test(expected = ScaleDegreeException.class)
-    public void getDistance_PentatonicScale_DiatonicDegree_NotFound() throws ScaleDegreeException {
+    @Test(expected = ScaleRelativeDegreeException.class)
+    public void getDistance_PentatonicScale_DiatonicDegree_NotFound() throws ScaleRelativeDegreeException {
         Scale.PENTATONIC.getDistance(DiatonicDegree.VII);
     }
 
     /* getIndexByDegree */
 
     @Test
-    public void getIndexByDegree() throws ScaleDegreeException {
+    public void getIndexByDegree() throws ScaleRelativeDegreeException {
         Scale scale = Scale.MAJOR;
         DiatonicDegree diatonicDegree = DiatonicDegree.VII;
         Integer ret = scale.getIndexByDegree(diatonicDegree);
@@ -431,22 +431,22 @@ public class ScaleTest {
     }
 
     @Test
-    public void getIndexByDegree_PentatonicScale_DiatonicDegree_Found() throws ScaleDegreeException {
+    public void getIndexByDegree_PentatonicScale_DiatonicDegree_Found() throws ScaleRelativeDegreeException {
         Scale scale = Scale.PENTATONIC;
         DiatonicDegree diatonicDegree = DiatonicDegree.I;
         Integer ret = scale.getIndexByDegree(diatonicDegree);
         assertEquals((Integer) 0, ret);
     }
 
-    @Test(expected = ScaleDegreeException.class)
-    public void getIndexByDegree_PentatonicScale_DiatonicDegree_NotFound() throws ScaleDegreeException {
+    @Test(expected = ScaleRelativeDegreeException.class)
+    public void getIndexByDegree_PentatonicScale_DiatonicDegree_NotFound() throws ScaleRelativeDegreeException {
         Scale scale = Scale.PENTATONIC_MINOR;
         DiatonicDegree diatonicDegree = DiatonicDegree.II;
         scale.getIndexByDegree(diatonicDegree);
     }
 
     @Test
-    public void getIndexByDegree_PentatonicScale_PentatonicDegree() throws ScaleDegreeException {
+    public void getIndexByDegree_PentatonicScale_PentatonicDegree() throws ScaleRelativeDegreeException {
         Scale scale = Scale.PENTATONIC_MINOR;
         PentatonicDegree pentatonicDegree = PentatonicDegree.II;
         Integer ret = scale.getIndexByDegree(pentatonicDegree);
@@ -458,7 +458,7 @@ public class ScaleTest {
     @Test
     public void degreeGetter() {
         Scale scale = Scale.MAJOR;
-        Set<Degree> degreeSet = scale.degreeGetter()
+        Set<ScaleDegree> degreeSet = scale.degreeGetter()
                 .index(0)
                 .get();
         assertEquals(1, degreeSet.size());
@@ -468,7 +468,7 @@ public class ScaleTest {
     @Test
     public void degreeGetter_Pentatonic() {
         Scale scale = Scale.PENTATONIC;
-        Set<Degree> degreeSet = scale.degreeGetter()
+        Set<ScaleDegree> degreeSet = scale.degreeGetter()
                 .index(0)
                 .get();
         assertEquals(2, degreeSet.size());
@@ -479,7 +479,7 @@ public class ScaleTest {
     @Test
     public void degreeGetter_Pentatonic2() {
         Scale scale = Scale.PENTATONIC_MINOR;
-        Set<Degree> degreeSet = scale.degreeGetter()
+        Set<ScaleDegree> degreeSet = scale.degreeGetter()
                 .index(1)
                 .get();
         assertEquals(2, degreeSet.size());
@@ -490,7 +490,7 @@ public class ScaleTest {
     @Test
     public void degreeGetter_Chromatic() {
         Scale scale = Scale.CHROMATIC;
-        Set<Degree> degreeSet = scale.degreeGetter()
+        Set<ScaleDegree> degreeSet = scale.degreeGetter()
                 .index(7)
                 .get();
         assertEquals(2, degreeSet.size());

@@ -1,7 +1,7 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.degree.DiatonicDegree;
-import es.danisales.datune.degree.PentatonicDegree;
+import es.danisales.datune.degrees.scale.DiatonicDegree;
+import es.danisales.datune.degrees.scale.PentatonicDegree;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 

@@ -8,7 +8,7 @@ import es.danisales.datune.midi.binaries.events.EventComplex;
 import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.midi.pitch.PitchMidiInterface;
 import es.danisales.datune.midi.pitch.PitchOctaveMidiEditable;
-import es.danisales.datune.pitch.ChordMutable;
+import es.danisales.datune.chords.ChordMutable;
 import es.danisales.datune.pitch.PitchOctave;
 import es.danisales.utils.HashingUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;

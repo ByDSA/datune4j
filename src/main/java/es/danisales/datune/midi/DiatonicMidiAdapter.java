@@ -1,7 +1,7 @@
 package es.danisales.datune.midi;
 
-import es.danisales.datune.absolutedegree.Chromatic;
-import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.midi.pitch.PitchDiatonicMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.tonality.Tonality;

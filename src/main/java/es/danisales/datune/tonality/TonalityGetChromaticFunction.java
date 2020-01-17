@@ -1,12 +1,12 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.absolutedegree.Chromatic;
-import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
-import es.danisales.datune.musical.ChromaticChord;
-import es.danisales.datune.musical.ChromaticChordPattern;
-import es.danisales.datune.musical.DiatonicAlt;
+import es.danisales.datune.chords.ChromaticChord;
+import es.danisales.datune.chords.ChromaticChordPattern;
+import es.danisales.datune.chords.DiatonicAlt;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -159,7 +159,7 @@ public class TonalityGetChromaticFunction {
 		return null;
 	}
 
-	public static @NonNull Tonality getTonalityFromChromaticFunction(@NonNull Tonality tonality, @NonNull ChromaticFunction chromaticFunction) throws ScaleDegreeException {
+	public static @NonNull Tonality getTonalityFromChromaticFunction(@NonNull Tonality tonality, @NonNull ChromaticFunction chromaticFunction) throws ScaleRelativeDegreeException {
 		switch (chromaticFunction) {
 			case I:
 			case II:
@@ -192,7 +192,7 @@ public class TonalityGetChromaticFunction {
 			case bVII:
 			case bVI:
 			case bIII:
-				if (TonalityRetrieval.hasAsDiatonicFunction(tonality, chromaticFunction))
+				if (TonalityUtils.hasAsDiatonicFunction(tonality, chromaticFunction))
 					return tonality;
 
 				ChromaticChord chromaticChord4 = ChromaticChord.builder()
@@ -316,7 +316,7 @@ public class TonalityGetChromaticFunction {
 		}
 	}
 
-	static @NonNull DiatonicAlt getNoteBaseFromChromaticFunctionAndTonality(Tonality tonality, @NonNull ChromaticFunction chromaticFunction) throws ScaleDegreeException {
+	static @NonNull DiatonicAlt getNoteBaseFromChromaticFunctionAndTonality(Tonality tonality, @NonNull ChromaticFunction chromaticFunction) throws ScaleRelativeDegreeException {
 		switch (chromaticFunction) {
 			case I:
 			case i:

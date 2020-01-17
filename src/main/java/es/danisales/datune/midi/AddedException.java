@@ -1,9 +1,8 @@
 package es.danisales.datune.midi;
 
+import es.danisales.datune.chords.ChordNamer;
 import es.danisales.datune.interval.Interval;
 import es.danisales.datune.midi.pitch.PitchMidiInterface;
-import es.danisales.datune.pitch.ChordCommon;
-import es.danisales.datune.pitch.ChordNamer;
 import es.danisales.datune.pitch.SymbolicPitch;
 
 public class AddedException extends RuntimeException {
@@ -11,7 +10,7 @@ public class AddedException extends RuntimeException {
 		super("Already exists " + n + " in chord (" + ChordNamer.from(c) + ").");
 	}
 
-	<N extends SymbolicPitch> AddedException(ChordCommon<N> c) {
+	<N extends NoteMidi<?>> AddedException(ChordMidi<N, ?, ?> c) {
 		super("Already exists in chord (" + ChordNamer.from(c) + ").");
 	}
 }

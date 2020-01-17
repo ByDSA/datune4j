@@ -1,6 +1,6 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.degree.Degree;
+import es.danisales.datune.degrees.scale.ScaleDegree;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -20,13 +20,13 @@ public class ScaleDegreeGetter {
         return this;
     }
 
-    public @NonNull Set<Degree> get() {
+    public @NonNull Set<ScaleDegree> get() {
         return scale.innerScale.getRelativeDegreeByIndex(index);
     }
 
     @SuppressWarnings({"unchecked", "WeakerAccess"})
-    public <T extends Degree> @Nullable T getFirstOfClass(Class<T> tClass) {
-        for (Degree relativeDegree : get())
+    public <T extends ScaleDegree> @Nullable T getFirstOfClass(Class<T> tClass) {
+        for (ScaleDegree relativeDegree : get())
             if (tClass.isInstance(relativeDegree))
                 return (T) relativeDegree;
 

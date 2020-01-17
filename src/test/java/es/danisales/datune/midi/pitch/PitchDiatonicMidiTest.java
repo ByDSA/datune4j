@@ -1,9 +1,9 @@
 package es.danisales.datune.midi.pitch;
 
-import es.danisales.datune.absolutedegree.Chromatic;
-import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.interval.IntervalDiatonic;
-import es.danisales.datune.musical.DiatonicAlt;
+import es.danisales.datune.chords.DiatonicAlt;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;

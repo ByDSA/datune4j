@@ -1,6 +1,6 @@
 package es.danisales.datune.midi.pitch;
 
-import es.danisales.datune.absolutedegree.Chromatic;
+import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.interval.IntervalChromatic;
 import org.junit.Test;
 

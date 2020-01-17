@@ -1,12 +1,12 @@
 package es.danisales.datune.midi.pitch;
 
-import es.danisales.datune.absolutedegree.Chromatic;
-import es.danisales.datune.absolutedegree.Diatonic;
-import es.danisales.datune.degree.Degree;
-import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.degrees.octave.Diatonic;
+import es.danisales.datune.degrees.scale.ScaleDegree;
+import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.interval.IntervalDiatonic;
-import es.danisales.datune.musical.DiatonicAlt;
-import es.danisales.datune.tonality.ScaleDegreeException;
+import es.danisales.datune.chords.DiatonicAlt;
+import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
 import es.danisales.utils.NeverHappensException;
@@ -15,7 +15,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.Objects;
 
 public class PitchDiatonicMidi implements PitchOctaveMidiEditable, PitchMidiInterface<IntervalDiatonic> {
-	protected Degree degree;
+	protected ScaleDegree degree;
 	protected int octave;
 	protected Tonality tonality;
 
@@ -27,7 +27,7 @@ public class PitchDiatonicMidi implements PitchOctaveMidiEditable, PitchMidiInte
 		}
 	}
 
-	public static @NonNull PitchDiatonicMidi from(@NonNull Degree diatonicDegree, @NonNull Tonality tonality, int octave) throws PitchMidiException {
+	public static @NonNull PitchDiatonicMidi from(@NonNull ScaleDegree diatonicDegree, @NonNull Tonality tonality, int octave) throws PitchMidiException {
 		return PitchDiatonicMidiAdapter.from(diatonicDegree, tonality, octave);
 	}
 
@@ -35,16 +35,16 @@ public class PitchDiatonicMidi implements PitchOctaveMidiEditable, PitchMidiInte
 		return PitchDiatonicMidiAdapter.from(pitchChromaticMidi, tonality);
 	}
 
-	public @NonNull Degree getDegree() {
+	public @NonNull ScaleDegree getDegree() {
 		return degree;
 	}
 
 	public @NonNull DiatonicAlt getDiatonicAlt() {
 		try {
 			return tonality.getNote(degree);
-		} catch (ScaleDegreeException e) {
+		} catch (ScaleRelativeDegreeException e) {
 			e.printStackTrace();
-			throw NeverHappensException.make("Si PitchDiatonicMidi es consistente, la Tonality siempre va a tener Degree y nunca devolverá null");
+			throw NeverHappensException.make("Si PitchDiatonicMidi es consistente, la Tonality siempre va a tener ScaleDegree y nunca devolverá null");
 		}
 	}
 

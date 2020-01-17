@@ -1,8 +1,8 @@
 package es.danisales.datune.tonality;
 
 import com.google.common.collect.ImmutableList;
-import es.danisales.datune.degree.Degree;
-import es.danisales.datune.musical.DiatonicAlt;
+import es.danisales.datune.degrees.scale.ScaleDegree;
+import es.danisales.datune.chords.DiatonicAlt;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -29,6 +29,7 @@ public final class Scale implements Iterable<ScaleDistance> {
 	public static final Scale LOCRIAN_H6 = new Scale(ScaleInnerImmutable.LOCRIAN_H6);
 	public static final Scale IONIAN_H5 = new Scale(ScaleInnerImmutable.IONIAN_H5);
 	public static final Scale DORIAN_H4 = new Scale(ScaleInnerImmutable.DORIAN_H4);
+	@SuppressWarnings("unused")
 	public static final Scale UKRANIAN_MINOR_SCALE = new Scale(ScaleInnerImmutable.UKRANIAN_MINOR_SCALE);
 	public static final Scale MIXOLIDIAN_b9_b13 = new Scale(ScaleInnerImmutable.MIXOLIDIAN_b9_b13);
 	public static final Scale LYDIAN_H2 = new Scale(ScaleInnerImmutable.LYDIAN_H2);
@@ -184,7 +185,7 @@ public final class Scale implements Iterable<ScaleDistance> {
 		this.fixed = fixed;
 	}
 
-	public @NonNull Scale getModeFrom(@NonNull Degree degree) throws ScaleDegreeException {
+	public @NonNull Scale getModeFrom(@NonNull ScaleDegree degree) throws ScaleRelativeDegreeException {
 		ScaleInner mode = innerScale.getModeFrom(degree);
 		List<ScaleDistance> code = mode.getCode();
 		return Scale.fromDistances(code);
@@ -219,11 +220,11 @@ public final class Scale implements Iterable<ScaleDistance> {
 		return innerScale.getCode().iterator();
 	}
 
-	public @NonNull ScaleDistance getDistance(@NonNull Degree degree) throws ScaleDegreeException {
+	public @NonNull ScaleDistance getDistance(@NonNull ScaleDegree degree) throws ScaleRelativeDegreeException {
 		return innerScale.getDistance(degree);
 	}
 
-	public int getIndexByDegree(Degree degree) throws ScaleDegreeException {
+	public int getIndexByDegree(ScaleDegree degree) throws ScaleRelativeDegreeException {
 		return innerScale.getIndexByDegree(degree);
 	}
 

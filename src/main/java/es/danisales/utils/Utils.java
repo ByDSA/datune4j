@@ -9,4 +9,11 @@ public class Utils { // todo: to datils
         else
             return x;
     }
+
+    public static int rotativeTrimLowerOnce(int i, int n) {
+        if (i < 0)
+            i += n;
+
+        return i;
+    }
 }

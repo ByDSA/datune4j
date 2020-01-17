@@ -3,7 +3,7 @@ package es.danisales.datune;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import es.danisales.arrays.ArrayUtils;
-import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
@@ -14,13 +14,13 @@ import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.midi.NoteMidi;
 import es.danisales.datune.midi.binaries.events.NoteOff;
 import es.danisales.datune.midi.binaries.events.NoteOn;
-import es.danisales.datune.musical.ChromaticChord;
-import es.danisales.datune.musical.ChromaticChordBuilder;
-import es.danisales.datune.musical.DiatonicAlt;
-import es.danisales.datune.musical.ParametricChord;
-import es.danisales.datune.pitch.ChordNamer;
+import es.danisales.datune.chords.ChromaticChord;
+import es.danisales.datune.chords.ChromaticChordBuilder;
+import es.danisales.datune.chords.DiatonicAlt;
+import es.danisales.datune.chords.ParametricChord;
+import es.danisales.datune.chords.ChordNamer;
 import es.danisales.datune.tonality.Scale;
-import es.danisales.datune.tonality.ScaleDegreeException;
+import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityUtils;
 import es.danisales.utils.NeverHappensException;
@@ -120,7 +120,7 @@ class Loader {
             DiatonicAlt diatonicAlt;
             try {
                 diatonicAlt = tonality.getNote(diatonicDegree);
-            } catch (ScaleDegreeException e) {
+            } catch (ScaleRelativeDegreeException e) {
                 continue;
             }
             panelF[i].add(new JLabel(diatonicAlt.toString()));

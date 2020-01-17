@@ -7,7 +7,7 @@ import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.midi.ChordMidiTransformations;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.midi.DiatonicMidi;
-import es.danisales.datune.midi.Duration;
+import es.danisales.datune.midi.DurationMidi;
 import es.danisales.datune.midi.Progressions.Progression;
 import es.danisales.datune.midi.arpegios.ArpeggioAsc;
 import es.danisales.datune.midi.arpegios.ArpeggioDefault;
@@ -18,7 +18,7 @@ import es.danisales.datune.midi.binaries.events.EventComplex;
 import es.danisales.datune.midi.binaries.events.Pan;
 import es.danisales.datune.midi.binaries.events.Volume;
 import es.danisales.datune.midi.pitch.PitchMidiException;
-import es.danisales.datune.musical.ChordTransformations;
+import es.danisales.datune.chords.ChordTransformations;
 import es.danisales.datune.tonality.Tonality;
 
 import java.util.List;
@@ -45,10 +45,10 @@ public class Power extends Song {
                 add(ChromaticFunction.ISUS4).inv(1);
 				DiatonicChordMidi dc = add(ChromaticFunction.V_V);
 				dc.inv(1);
-				dc.setLength(Duration.L2);
+				dc.setLength(DurationMidi.L2);
 				dc = add(DiatonicFunction.V7);
 				dc.inv(-1);
-				dc.setLength(Duration.L2);
+				dc.setLength(DurationMidi.L2);
 			}
 		};
 
@@ -90,7 +90,7 @@ public class Power extends Song {
 
 		seek += bridge(seek, 2);
 
-		seek += Duration.L2;
+		seek += DurationMidi.L2;
 
 		seek += chorus(seek);
 	}
@@ -102,36 +102,36 @@ public class Power extends Song {
 
 		for(int i = 0; i < 8; i++) {
 			if (i == 3) {
-				l.add(i*Duration.L1 + 0, 2, Duration.L4);
-				l.add(i*Duration.L1 + Duration.L4, 1, Duration.L4);
-				l.add(i*Duration.L1 + Duration.L2, 0, Duration.L8);
-				l.add(i*Duration.L1 + Duration.L2 + Duration.L8, 1, Duration.L8);
-				l.add(i*Duration.L1 + Duration.L2 + Duration.L4, 2, Duration.L8);
-				l.add(i*Duration.L1 + Duration.L2 + Duration.L4 + Duration.L8, 1, Duration.L8);
+				l.add(i* DurationMidi.L1 + 0, 2, DurationMidi.L4);
+				l.add(i* DurationMidi.L1 + DurationMidi.L4, 1, DurationMidi.L4);
+				l.add(i* DurationMidi.L1 + DurationMidi.L2, 0, DurationMidi.L8);
+				l.add(i* DurationMidi.L1 + DurationMidi.L2 + DurationMidi.L8, 1, DurationMidi.L8);
+				l.add(i* DurationMidi.L1 + DurationMidi.L2 + DurationMidi.L4, 2, DurationMidi.L8);
+				l.add(i* DurationMidi.L1 + DurationMidi.L2 + DurationMidi.L4 + DurationMidi.L8, 1, DurationMidi.L8);
 			} else if (i == 5) {
-				l.add(i*Duration.L1 + 0, 4, Duration.L4);
-				l.add(i*Duration.L1 + Duration.L4, 5, Duration.L4);
-				l.add(i*Duration.L1 + Duration.L2, 4, Duration.L8);
-				l.add(i*Duration.L1 + Duration.L2 + Duration.L8, 2, Duration.L8);
-				l.add(i*Duration.L1 + Duration.L2 + Duration.L4, 4, Duration.L8);
-				l.add(i*Duration.L1 + Duration.L2 + Duration.L4 + Duration.L8, 3, Duration.L8);
+				l.add(i* DurationMidi.L1 + 0, 4, DurationMidi.L4);
+				l.add(i* DurationMidi.L1 + DurationMidi.L4, 5, DurationMidi.L4);
+				l.add(i* DurationMidi.L1 + DurationMidi.L2, 4, DurationMidi.L8);
+				l.add(i* DurationMidi.L1 + DurationMidi.L2 + DurationMidi.L8, 2, DurationMidi.L8);
+				l.add(i* DurationMidi.L1 + DurationMidi.L2 + DurationMidi.L4, 4, DurationMidi.L8);
+				l.add(i* DurationMidi.L1 + DurationMidi.L2 + DurationMidi.L4 + DurationMidi.L8, 3, DurationMidi.L8);
 			} else if (i == 6) {
-				l.add(i*Duration.L1 + 0, 3, Duration.L4 +Duration.L8);
-				l.add(i*Duration.L1 + Duration.L4 +Duration.L8, 2, Duration.L8);
-				DiatonicMidi dm = l.add(i * Duration.L1 + Duration.L2, 1, Duration.L2_3);
+				l.add(i* DurationMidi.L1 + 0, 3, DurationMidi.L4 + DurationMidi.L8);
+				l.add(i* DurationMidi.L1 + DurationMidi.L4 + DurationMidi.L8, 2, DurationMidi.L8);
+				DiatonicMidi dm = l.add(i * DurationMidi.L1 + DurationMidi.L2, 1, DurationMidi.L2_3);
 				dm.getPitch().shift(IntervalDiatonic.SECOND);
-				l.add(i*Duration.L1 + Duration.L2 +Duration.L2_3, 2, Duration.L2_3);
-				l.add(i*Duration.L1 + Duration.L2 +2*Duration.L2_3, 3, Duration.L2_3);
+				l.add(i* DurationMidi.L1 + DurationMidi.L2 + DurationMidi.L2_3, 2, DurationMidi.L2_3);
+				l.add(i* DurationMidi.L1 + DurationMidi.L2 +2* DurationMidi.L2_3, 3, DurationMidi.L2_3);
 			} else if (i == 7) {
-				l.add(i*Duration.L1 + 0, 2, 2*Duration.L4_3);
-				l.add(i*Duration.L1 + 2*Duration.L4_3, 3, Duration.L4_3);
-				l.add(i*Duration.L1 + Duration.L4, 4, Duration.L4_3);
-				l.add(i*Duration.L1 + Duration.L4 + Duration.L4_3, 3, Duration.L4_3);
-				l.add(i*Duration.L1 + Duration.L4 + 2*Duration.L4_3, 2, Duration.L4_3);
+				l.add(i* DurationMidi.L1 + 0, 2, 2* DurationMidi.L4_3);
+				l.add(i* DurationMidi.L1 + 2* DurationMidi.L4_3, 3, DurationMidi.L4_3);
+				l.add(i* DurationMidi.L1 + DurationMidi.L4, 4, DurationMidi.L4_3);
+				l.add(i* DurationMidi.L1 + DurationMidi.L4 + DurationMidi.L4_3, 3, DurationMidi.L4_3);
+				l.add(i* DurationMidi.L1 + DurationMidi.L4 + 2* DurationMidi.L4_3, 2, DurationMidi.L4_3);
 
-				l.add(i*Duration.L1 + Duration.L2 + 0, 0, Duration.L2_3);
-				l.add(i*Duration.L1 + Duration.L2 + Duration.L2_3, 1, Duration.L2_3);
-				l.add(i*Duration.L1 + Duration.L2 + 2*Duration.L2_3, 2, Duration.L2_3);
+				l.add(i* DurationMidi.L1 + DurationMidi.L2 + 0, 0, DurationMidi.L2_3);
+				l.add(i* DurationMidi.L1 + DurationMidi.L2 + DurationMidi.L2_3, 1, DurationMidi.L2_3);
+				l.add(i* DurationMidi.L1 + DurationMidi.L2 + 2* DurationMidi.L2_3, 2, DurationMidi.L2_3);
 			} else {
 				int s = 0;
 				if (i == 1)
@@ -141,11 +141,11 @@ public class Power extends Song {
 				if (i == 4)
 					s = 1;
 
-				l.add(i*Duration.L1 + 0, 					2+s, Duration.L4 +Duration.L8);
-				l.add(i*Duration.L1 + Duration.L4 +Duration.L8, 		1+s, Duration.L8);
-				l.add(i*Duration.L1 + Duration.L2, 				0+s, Duration.L2_3);
-				l.add(i*Duration.L1 + Duration.L2 +Duration.L2_3, 	1+s, Duration.L2_3);
-				l.add(i*Duration.L1 + Duration.L2 +2*Duration.L2_3, 	2+s, Duration.L2_3);
+				l.add(i* DurationMidi.L1 + 0, 					2+s, DurationMidi.L4 + DurationMidi.L8);
+				l.add(i* DurationMidi.L1 + DurationMidi.L4 + DurationMidi.L8, 		1+s, DurationMidi.L8);
+				l.add(i* DurationMidi.L1 + DurationMidi.L2, 				0+s, DurationMidi.L2_3);
+				l.add(i* DurationMidi.L1 + DurationMidi.L2 + DurationMidi.L2_3, 	1+s, DurationMidi.L2_3);
+				l.add(i* DurationMidi.L1 + DurationMidi.L2 +2* DurationMidi.L2_3, 	2+s, DurationMidi.L2_3);
 			}
 		}
 
@@ -170,11 +170,11 @@ public class Power extends Song {
 
 	private Progression startOrganProgression() throws PitchMidiException {
 		return startProgression.clone()
-				.setArpegio(new ArpeggioDesc(Duration.L1, Duration.L4_3))
-				.setArpegio(new int[]{2, 3, 4, 6}, new ArpeggioAsc(Duration.L1, Duration.L4_3))
-				.setArpegio(new int[]{4}, new ArpeggioDesc(Duration.L1, Duration.L4_3))
-				.setArpegio(new int[]{5, 6}, new ArpeggioAsc(Duration.L1, Duration.L4_3))
-				.setArpegio(new int[]{7, 8}, new ArpeggioAsc(Duration.L1, Duration.L8))
+				.setArpegio(new ArpeggioDesc(DurationMidi.L1, DurationMidi.L4_3))
+				.setArpegio(new int[]{2, 3, 4, 6}, new ArpeggioAsc(DurationMidi.L1, DurationMidi.L4_3))
+				.setArpegio(new int[]{4}, new ArpeggioDesc(DurationMidi.L1, DurationMidi.L4_3))
+				.setArpegio(new int[]{5, 6}, new ArpeggioAsc(DurationMidi.L1, DurationMidi.L4_3))
+				.setArpegio(new int[]{7, 8}, new ArpeggioAsc(DurationMidi.L1, DurationMidi.L8))
 				.shiftOctave(3);
 	}
 
@@ -195,22 +195,22 @@ public class Power extends Song {
 
 		channelPad.add(seek, startPad());
 
-		for(int i = Duration.L2; i <= Duration.L1 *7; i+= Duration.L2)
-			if (i != Duration.L2 + Duration.L1 *3)
+		for(int i = DurationMidi.L2; i <= DurationMidi.L1 *7; i+= DurationMidi.L2)
+			if (i != DurationMidi.L2 + DurationMidi.L1 *3)
 				drums.add(seek + i, 						Drums.BASS_DRUM1);
 
-		for(int i = 0; i <= Duration.L1 *8; i+= Duration.L1)
+		for(int i = 0; i <= DurationMidi.L1 *8; i+= DurationMidi.L1)
 			drums.add(seek + i, 							Drums.ACOUSTIC_SNARE);
-		drums.add(seek + Duration.L1 *4-Duration.L2 - Duration.L4, 		Drums.ACOUSTIC_SNARE);
-		drums.add(seek + Duration.L1 *4-Duration.L2, 				Drums.ACOUSTIC_SNARE);
-		drums.add(seek + Duration.L1 *4-Duration.L4 -Duration.L8, 		Drums.ACOUSTIC_SNARE);
-		drums.add(seek + Duration.L1 *4-Duration.L4, 				Drums.ACOUSTIC_SNARE);
-		drums.add(seek + Duration.L1 *4-Duration.L8, 				Drums.ACOUSTIC_SNARE);
-		drums.add(seek + Duration.L1 *8-Duration.L2 -Duration.L2_3 *2, 	Drums.ACOUSTIC_SNARE);
-		drums.add(seek + Duration.L1 *8-Duration.L2 -Duration.L2_3, 		Drums.ACOUSTIC_SNARE);
-		drums.add(seek + Duration.L1 *8-Duration.L2, 				Drums.ACOUSTIC_SNARE);
-		drums.add(seek + Duration.L1 *8-Duration.L2 +Duration.L2_3, 		Drums.ACOUSTIC_SNARE);
-		drums.add(seek + Duration.L1 *8-Duration.L2 +Duration.L2_3 *2, 	Drums.ACOUSTIC_SNARE);
+		drums.add(seek + DurationMidi.L1 *4- DurationMidi.L2 - DurationMidi.L4, 		Drums.ACOUSTIC_SNARE);
+		drums.add(seek + DurationMidi.L1 *4- DurationMidi.L2, 				Drums.ACOUSTIC_SNARE);
+		drums.add(seek + DurationMidi.L1 *4- DurationMidi.L4 - DurationMidi.L8, 		Drums.ACOUSTIC_SNARE);
+		drums.add(seek + DurationMidi.L1 *4- DurationMidi.L4, 				Drums.ACOUSTIC_SNARE);
+		drums.add(seek + DurationMidi.L1 *4- DurationMidi.L8, 				Drums.ACOUSTIC_SNARE);
+		drums.add(seek + DurationMidi.L1 *8- DurationMidi.L2 - DurationMidi.L2_3 *2, 	Drums.ACOUSTIC_SNARE);
+		drums.add(seek + DurationMidi.L1 *8- DurationMidi.L2 - DurationMidi.L2_3, 		Drums.ACOUSTIC_SNARE);
+		drums.add(seek + DurationMidi.L1 *8- DurationMidi.L2, 				Drums.ACOUSTIC_SNARE);
+		drums.add(seek + DurationMidi.L1 *8- DurationMidi.L2 + DurationMidi.L2_3, 		Drums.ACOUSTIC_SNARE);
+		drums.add(seek + DurationMidi.L1 *8- DurationMidi.L2 + DurationMidi.L2_3 *2, 	Drums.ACOUSTIC_SNARE);
 
 		return startPad().getDuration();
 	}
@@ -240,15 +240,15 @@ public class Power extends Song {
 					c1 = add(DiatonicFunction.VI, -1);
 				else
 					c1 = add(DiatonicFunction.VI, -1);
-				c1.setLength(Duration.L1 *2);
+				c1.setLength(DurationMidi.L1 *2);
 				c1.setArpeggio(new ArpeggioPowerGuitars());
 
 				if (n == 2)
 					c2 = add(DiatonicFunction.V, -1);
 				else
 					c2 = add(DiatonicFunction.V, -1);
-				c2.setLength(Duration.L1 *2);
-				c2.setArpeggio(new ArpeggioDefault(Duration.L1 * 2));
+				c2.setLength(DurationMidi.L1 *2);
+				c2.setArpeggio(new ArpeggioDefault(DurationMidi.L1 * 2));
 			}
 		};
 
@@ -268,7 +268,7 @@ public class Power extends Song {
 			}
 
         Progression cad_pad = cad.clone();
-		cad_pad.setArpegio(new ArpeggioDefault(Duration.L1 * 2))
+		cad_pad.setArpegio(new ArpeggioDefault(DurationMidi.L1 * 2))
 				.shiftOctave(2);
 		channelPad.add(seek, cad_pad);
 
@@ -278,39 +278,39 @@ public class Power extends Song {
 		switch(n) {
 			case 0:
 				for(int i = 0; i < 4; i++) {
-					guitar1.add(i*Duration.L1 + 0, 1, Duration.L4 -Duration.L16);
-					guitar1.add(i*Duration.L1 + 0, 3, Duration.L4 -Duration.L16);
-					guitar1.add(i*Duration.L1 + Duration.L4, 2, Duration.L8);
-					guitar1.add(i*Duration.L1 + Duration.L4, 4, Duration.L8);
-					guitar1.add(i*Duration.L1 + Duration.L4 + Duration.L8, 1, Duration.L4);
-					guitar1.add(i*Duration.L1 + Duration.L4 + Duration.L8, 3, Duration.L4);
-					guitar1.add(i*Duration.L1 + Duration.L4 *2 + Duration.L8, 0, Duration.L4);
-					guitar1.add(i*Duration.L1 + Duration.L4 *2 + Duration.L8, 2, Duration.L4);
+					guitar1.add(i* DurationMidi.L1 + 0, 1, DurationMidi.L4 - DurationMidi.L16);
+					guitar1.add(i* DurationMidi.L1 + 0, 3, DurationMidi.L4 - DurationMidi.L16);
+					guitar1.add(i* DurationMidi.L1 + DurationMidi.L4, 2, DurationMidi.L8);
+					guitar1.add(i* DurationMidi.L1 + DurationMidi.L4, 4, DurationMidi.L8);
+					guitar1.add(i* DurationMidi.L1 + DurationMidi.L4 + DurationMidi.L8, 1, DurationMidi.L4);
+					guitar1.add(i* DurationMidi.L1 + DurationMidi.L4 + DurationMidi.L8, 3, DurationMidi.L4);
+					guitar1.add(i* DurationMidi.L1 + DurationMidi.L4 *2 + DurationMidi.L8, 0, DurationMidi.L4);
+					guitar1.add(i* DurationMidi.L1 + DurationMidi.L4 *2 + DurationMidi.L8, 2, DurationMidi.L4);
 				}
 				break;
 
 			case 1:
 				for(int i = 0; i < 4; i++) {
-					guitar1.add(i*Duration.L1 + 0, 0, Duration.L4 -Duration.L16);
-					guitar1.add(i*Duration.L1 + 0, 1, Duration.L4 -Duration.L16);
-					guitar1.add(i*Duration.L1 + Duration.L4, 1, Duration.L8);
-					guitar1.add(i*Duration.L1 + Duration.L4, 2, Duration.L8);
-					guitar1.add(i*Duration.L1 + Duration.L4 + Duration.L8, 2, Duration.L4);
-					guitar1.add(i*Duration.L1 + Duration.L4 + Duration.L8, 3, Duration.L4);
-					guitar1.add(i*Duration.L1 + Duration.L4 *2 + Duration.L8, 3, Duration.L4);
-					guitar1.add(i*Duration.L1 + Duration.L4 *2 + Duration.L8, 4, Duration.L4);
+					guitar1.add(i* DurationMidi.L1 + 0, 0, DurationMidi.L4 - DurationMidi.L16);
+					guitar1.add(i* DurationMidi.L1 + 0, 1, DurationMidi.L4 - DurationMidi.L16);
+					guitar1.add(i* DurationMidi.L1 + DurationMidi.L4, 1, DurationMidi.L8);
+					guitar1.add(i* DurationMidi.L1 + DurationMidi.L4, 2, DurationMidi.L8);
+					guitar1.add(i* DurationMidi.L1 + DurationMidi.L4 + DurationMidi.L8, 2, DurationMidi.L4);
+					guitar1.add(i* DurationMidi.L1 + DurationMidi.L4 + DurationMidi.L8, 3, DurationMidi.L4);
+					guitar1.add(i* DurationMidi.L1 + DurationMidi.L4 *2 + DurationMidi.L8, 3, DurationMidi.L4);
+					guitar1.add(i* DurationMidi.L1 + DurationMidi.L4 *2 + DurationMidi.L8, 4, DurationMidi.L4);
 				}
 				break;
 			case 2:
 				for(int i = 0; i < 4; i++) {
-					guitar1.add(i*Duration.L1 + 0, 3, Duration.L4 -Duration.L16);
-					guitar1.add(i*Duration.L1 + 0, 4, Duration.L4 -Duration.L16);
-					guitar1.add(i*Duration.L1 + Duration.L4, 2, Duration.L8);
-					guitar1.add(i*Duration.L1 + Duration.L4, 3, Duration.L8);
-					guitar1.add(i*Duration.L1 + Duration.L4 + Duration.L8, 1, Duration.L8);
-					guitar1.add(i*Duration.L1 + Duration.L4 + Duration.L8, 2, Duration.L8);
-					guitar1.add(i*Duration.L1 + Duration.L2 + Duration.L8, 0, Duration.L4);
-					guitar1.add(i*Duration.L1 + Duration.L2 + Duration.L8, 1, Duration.L4);
+					guitar1.add(i* DurationMidi.L1 + 0, 3, DurationMidi.L4 - DurationMidi.L16);
+					guitar1.add(i* DurationMidi.L1 + 0, 4, DurationMidi.L4 - DurationMidi.L16);
+					guitar1.add(i* DurationMidi.L1 + DurationMidi.L4, 2, DurationMidi.L8);
+					guitar1.add(i* DurationMidi.L1 + DurationMidi.L4, 3, DurationMidi.L8);
+					guitar1.add(i* DurationMidi.L1 + DurationMidi.L4 + DurationMidi.L8, 1, DurationMidi.L8);
+					guitar1.add(i* DurationMidi.L1 + DurationMidi.L4 + DurationMidi.L8, 2, DurationMidi.L8);
+					guitar1.add(i* DurationMidi.L1 + DurationMidi.L2 + DurationMidi.L8, 0, DurationMidi.L4);
+					guitar1.add(i* DurationMidi.L1 + DurationMidi.L2 + DurationMidi.L8, 1, DurationMidi.L4);
 				}
 				break;
 		}
@@ -330,31 +330,31 @@ public class Power extends Song {
 			{
 				DiatonicChordMidi dcm = add(DiatonicFunction.I);
 				dcm.inv(1);
-				dcm.setLength(Duration.L1);
-				add(DiatonicFunction.IV).setLength(Duration.L2);
-				add(DiatonicFunction.V).setLength(Duration.L2);
-				add(DiatonicFunction.VI).setLength(Duration.L1);
+				dcm.setLength(DurationMidi.L1);
+				add(DiatonicFunction.IV).setLength(DurationMidi.L2);
+				add(DiatonicFunction.V).setLength(DurationMidi.L2);
+				add(DiatonicFunction.VI).setLength(DurationMidi.L1);
 				dcm = add(DiatonicFunction.V);
 				dcm.inv(-1);
-				dcm.setLength(Duration.L1);
+				dcm.setLength(DurationMidi.L1);
 
-				add(DiatonicFunction.I).setLength(Duration.L1);
+				add(DiatonicFunction.I).setLength(DurationMidi.L1);
 
 				dcm = add(DiatonicFunction.IV);
 				dcm.inv(-1);
-				dcm.setLength(Duration.L2);
+				dcm.setLength(DurationMidi.L2);
 
 				dcm = add(DiatonicFunction.V);
 				dcm.inv(-1);
-				dcm.setLength(Duration.L2);
+				dcm.setLength(DurationMidi.L2);
 
 				dcm = add(DiatonicFunction.VI);
 				dcm.inv(-1);
-				dcm.setLength(Duration.L1);
+				dcm.setLength(DurationMidi.L1);
 
 				dcm = add(DiatonicFunction.VII);
 				dcm.inv(-1);
-				dcm.setLength(Duration.L1);
+				dcm.setLength(DurationMidi.L1);
 			}
 		};
 
@@ -362,7 +362,7 @@ public class Power extends Song {
 
         Progression arp = cad.clone().shiftOctave(2);
 
-		arp.setArpegio(new ArpeggioDesc(Duration.L4, Duration.L4_3));
+		arp.setArpegio(new ArpeggioDesc(DurationMidi.L4, DurationMidi.L4_3));
 		channelOrgan.add(seek, arp);
 		/*
 		for(int i = 0; i < cad.getNodes().size()-1; i++) {
@@ -374,19 +374,19 @@ public class Power extends Song {
 
 		}*/
 
-		for(int i = 0; i < cad.getDuration() / 2; i+= Duration.L4) {
-			if ((i + Duration.L4) % Duration.L1 == 0) {
+		for(int i = 0; i < cad.getDuration() / 2; i+= DurationMidi.L4) {
+			if ((i + DurationMidi.L4) % DurationMidi.L1 == 0) {
 				drums.add(seek + i, 						Drums.ACOUSTIC_SNARE);
 				drums.add(seek + i, 						Drums.SPLASH_CYMBAL);
 			} else
 				drums.add(seek + i, 						Drums.BASS_DRUM1);
-			if ((i + Duration.L4) % (Duration.L1 *4) == 0)
-				drums.add(seek + i + Duration.L8, 						Drums.BASS_DRUM1);
+			if ((i + DurationMidi.L4) % (DurationMidi.L1 *4) == 0)
+				drums.add(seek + i + DurationMidi.L8, 						Drums.BASS_DRUM1);
 
-			if ((i % (Duration.L1) == 0 || i == Duration.L1 + Duration.L2) && (i + Duration.L4) % Duration.L1 != 0) {
+			if ((i % (DurationMidi.L1) == 0 || i == DurationMidi.L1 + DurationMidi.L2) && (i + DurationMidi.L4) % DurationMidi.L1 != 0) {
 				drums.add(seek + i, 						Drums.CRASH_CYMBAL2);
 				drums.add(seek + i, 						Drums.CRASH_CYMBAL1);
-			} else if (i == cad.getDuration() / 2 - Duration.L4)
+			} else if (i == cad.getDuration() / 2 - DurationMidi.L4)
 				drums.add(seek + i, 						Drums.CHINESE_CYMBAL);
 			else
 				drums.add(seek + i, 						Drums.RIDE_CYMBAL2);
@@ -394,19 +394,19 @@ public class Power extends Song {
 
 		}
 
-		for(int i = cad.getDuration() / 2; i < cad.getDuration(); i+= Duration.L2) {
+		for(int i = cad.getDuration() / 2; i < cad.getDuration(); i+= DurationMidi.L2) {
 			drums.add(seek + i, 						Drums.BASS_DRUM1);
-			drums.add(seek + i + Duration.L16 *3, 						Drums.BASS_DRUM1);
+			drums.add(seek + i + DurationMidi.L16 *3, 						Drums.BASS_DRUM1);
 
-			if (i % (Duration.L1) == 0 || (i == Duration.L1 + Duration.L2)) {
+			if (i % (DurationMidi.L1) == 0 || (i == DurationMidi.L1 + DurationMidi.L2)) {
 				drums.add(seek + i, 						Drums.CRASH_CYMBAL2);
 				drums.add(seek + i, 						Drums.CRASH_CYMBAL1);
 			} else
 				drums.add(seek + i, 						Drums.RIDE_CYMBAL2);
-			drums.add(seek + i + Duration.L4, 						Drums.RIDE_CYMBAL1);
-			drums.add(seek + i + Duration.L4, 						Drums.ACOUSTIC_SNARE);
-			if (i % Duration.L1 == 0)
-				drums.add(seek + i + Duration.L4 + Duration.L8, 						Drums.ACOUSTIC_SNARE);
+			drums.add(seek + i + DurationMidi.L4, 						Drums.RIDE_CYMBAL1);
+			drums.add(seek + i + DurationMidi.L4, 						Drums.ACOUSTIC_SNARE);
+			if (i % DurationMidi.L1 == 0)
+				drums.add(seek + i + DurationMidi.L4 + DurationMidi.L8, 						Drums.ACOUSTIC_SNARE);
 		}
 
 		return cad.getDuration();
@@ -415,17 +415,17 @@ public class Power extends Song {
 	int b(int seek) throws PitchMidiException {
 		Progression cad = new Progression(tonality, 5) {
 			{
-				add(DiatonicFunction.VI,-1).setLength(Duration.L1);
-				add(DiatonicFunction.V).setLength(Duration.L2);
-				add(DiatonicFunction.IV).setLength(Duration.L2);
-				add(DiatonicFunction.III).setLength(Duration.L1);
-				add(DiatonicFunction.IV).setLength(Duration.L1);
+				add(DiatonicFunction.VI,-1).setLength(DurationMidi.L1);
+				add(DiatonicFunction.V).setLength(DurationMidi.L2);
+				add(DiatonicFunction.IV).setLength(DurationMidi.L2);
+				add(DiatonicFunction.III).setLength(DurationMidi.L1);
+				add(DiatonicFunction.IV).setLength(DurationMidi.L1);
 
-				add(DiatonicFunction.VI,-1).setLength(Duration.L1);
-				add(DiatonicFunction.V).setLength(Duration.L1);
-				add(DiatonicFunction.IV).setLength(Duration.L2);
-				add(DiatonicFunction.III).setLength(Duration.L2);
-				add(DiatonicFunction.VII,-1).setLength(Duration.L1);
+				add(DiatonicFunction.VI,-1).setLength(DurationMidi.L1);
+				add(DiatonicFunction.V).setLength(DurationMidi.L1);
+				add(DiatonicFunction.IV).setLength(DurationMidi.L2);
+				add(DiatonicFunction.III).setLength(DurationMidi.L2);
+				add(DiatonicFunction.VII,-1).setLength(DurationMidi.L1);
 			}
 		};
 
@@ -482,20 +482,20 @@ public class Power extends Song {
 		}
 
 		Progression arp = cad.clone().shiftOctave(1);
-		arp.setArpegio(new ArpeggioDesc(Duration.L4, Duration.L4_3));
+		arp.setArpegio(new ArpeggioDesc(DurationMidi.L4, DurationMidi.L4_3));
 		channelOrgan.add(seek, arp);
 
-		for(int i = 0; i < cad.getDuration(); i+= Duration.L1) {
+		for(int i = 0; i < cad.getDuration(); i+= DurationMidi.L1) {
 			drums.add(seek + i, 						Drums.BASS_DRUM1);
 			if (i >= cad.getDuration()/2)
-				drums.add(seek + i + Duration.L4, 						Drums.BASS_DRUM1);
-			drums.add(seek + i + Duration.L2 -Duration.L8, 						Drums.BASS_DRUM1);
-			drums.add(seek + i + Duration.L2, 						Drums.ACOUSTIC_SNARE);
-			drums.add(seek + i + Duration.L2 +Duration.L8, 						Drums.BASS_DRUM1);
+				drums.add(seek + i + DurationMidi.L4, 						Drums.BASS_DRUM1);
+			drums.add(seek + i + DurationMidi.L2 - DurationMidi.L8, 						Drums.BASS_DRUM1);
+			drums.add(seek + i + DurationMidi.L2, 						Drums.ACOUSTIC_SNARE);
+			drums.add(seek + i + DurationMidi.L2 + DurationMidi.L8, 						Drums.BASS_DRUM1);
 			if (i >= cad.getDuration()/4*3)
-				drums.add(seek + i + Duration.L2 +Duration.L4, 						Drums.BASS_DRUM1);
+				drums.add(seek + i + DurationMidi.L2 + DurationMidi.L4, 						Drums.BASS_DRUM1);
 			if (i >= cad.getDuration()/8*7)
-				drums.add(seek + i + Duration.L2 +Duration.L4 +Duration.L8, 						Drums.BASS_DRUM1);
+				drums.add(seek + i + DurationMidi.L2 + DurationMidi.L4 + DurationMidi.L8, 						Drums.BASS_DRUM1);
 		}
 
 		return cad.getDuration();

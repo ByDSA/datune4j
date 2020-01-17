@@ -1,10 +1,10 @@
 package es.danisales.datune.midi;
 
-import es.danisales.datune.absolutedegree.Chromatic;
+import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.lang.Language;
-import es.danisales.datune.musical.ChromaticChord;
+import es.danisales.datune.chords.ChromaticChord;
 import es.danisales.datune.pitch.PitchException;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.utils.building.BuildingException;

@@ -1,6 +1,6 @@
 package es.danisales.datune.midi.pitch;
 
-import es.danisales.datune.absolutedegree.Chromatic;
+import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.pitch.PitchException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -15,7 +15,7 @@ public class PitchMidiException extends PitchException {
 	}
 
 	public PitchMidiException(@NonNull PitchDiatonicMidi n) {
-        super("PitchMidi out of range: Degree=" + n.degree + " Tonality=" + n.tonality + " Octave=" + n.octave);
+        super("PitchMidi out of range: ScaleDegree=" + n.degree + " Tonality=" + n.tonality + " Octave=" + n.octave);
 	}
 
     public PitchMidiException(Chromatic chromatic, int octave) {

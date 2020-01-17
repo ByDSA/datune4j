@@ -1,8 +1,8 @@
 package es.danisales.datune.midi.binaries.events;
 
-import es.danisales.datune.absolutedegree.Chromatic;
+import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.eventsequences.Track;
-import es.danisales.datune.musical.DiatonicAlt;
+import es.danisales.datune.chords.DiatonicAlt;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.io.binary.BinEncoder;

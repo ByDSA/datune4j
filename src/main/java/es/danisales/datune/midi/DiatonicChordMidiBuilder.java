@@ -1,7 +1,7 @@
 package es.danisales.datune.midi;
 
-import es.danisales.datune.absolutedegree.Chromatic;
-import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
@@ -9,8 +9,8 @@ import es.danisales.datune.midi.arpegios.Arpeggio;
 import es.danisales.datune.midi.arpegios.ArpeggioDefault;
 import es.danisales.datune.midi.pitch.PitchDiatonicMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
-import es.danisales.datune.musical.ChromaticChord;
-import es.danisales.datune.musical.DiatonicChordPattern;
+import es.danisales.datune.chords.ChromaticChord;
+import es.danisales.datune.chords.DiatonicChordPattern;
 import es.danisales.datune.tonality.*;
 import es.danisales.utils.building.Builder;
 import es.danisales.utils.building.BuildingException;
@@ -37,7 +37,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
 
         try {
             initFromFunction(diatonicChordMidi);
-        } catch (TonalityException | PitchMidiException | ScaleDegreeException e) {
+        } catch (TonalityException | PitchMidiException | ScaleRelativeDegreeException e) {
             throw new BuildingException(e);
         }
 
@@ -57,14 +57,14 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
             diatonicChordMidi.arpegio = arpegio;
     }
 
-    private void initFromFunction(DiatonicChordMidi diatonicChordMidi) throws TonalityException, PitchMidiException, ScaleDegreeException {
+    private void initFromFunction(DiatonicChordMidi diatonicChordMidi) throws TonalityException, PitchMidiException, ScaleRelativeDegreeException {
         if (function instanceof ChromaticFunction) {
             chromaticFunctionProcess2(diatonicChordMidi);
         } else if (function instanceof DiatonicFunction)
             initFromDiatonicFunction(diatonicChordMidi);
     }
 
-    private void chromaticFunctionProcess2(DiatonicChordMidi self) throws TonalityException, PitchMidiException, ScaleDegreeException {
+    private void chromaticFunctionProcess2(DiatonicChordMidi self) throws TonalityException, PitchMidiException, ScaleRelativeDegreeException {
         ChromaticFunction chromaticFunction = (ChromaticFunction) function;
         ChromaticChord chromaticChord = ChordRetrievalFromTonality.getFromChromaticFunction(self.tonality, chromaticFunction);
         tonality = TonalityGetChromaticFunction.getTonalityFromChromaticFunction(tonality, chromaticFunction);
@@ -451,7 +451,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
         } catch (TonalityException e) {
             diatonicChordMidi.clear();
 
-            diatonicChordMidi.tonality = TonalityChordRetrieval.searchInModeSameRoot(diatonicChordMidi.tonality, ns);
+            diatonicChordMidi.tonality = TonalityRetrieval.searchInModeSameRoot(diatonicChordMidi.tonality, ns);
 
             checkState(diatonicChordMidi.tonality != null);
 

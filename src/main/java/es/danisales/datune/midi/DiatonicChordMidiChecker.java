@@ -1,13 +1,13 @@
 package es.danisales.datune.midi;
 
-import es.danisales.datune.absolutedegree.Chromatic;
-import es.danisales.datune.degree.Degree;
-import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.degrees.scale.ScaleDegree;
+import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.midi.pitch.PitchMidiException;
-import es.danisales.datune.musical.transformations.ChordChecker;
-import es.danisales.datune.tonality.ScaleDegreeException;
+import es.danisales.datune.chords.transformations.ChordChecker;
+import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.utils.NeverHappensException;
 import es.danisales.utils.building.BuildingException;
@@ -113,11 +113,11 @@ public class DiatonicChordMidiChecker {
     }
 
     public static DiatonicChordMidi relative(DiatonicChordMidi self, DiatonicFunction diatonicFunction) {
-        Degree relativeDegree = self.get(0).getPitch().getDegree();
+        ScaleDegree relativeDegree = self.get(0).getPitch().getDegree();
         Tonality tonality;
         try {
             tonality = self.tonality.getRelativeScaleDiatonic(relativeDegree);
-        } catch (ScaleDegreeException e) {
+        } catch (ScaleRelativeDegreeException e) {
             throw NeverHappensException.make("Si self.getDistance(0).getPitch() es consistente es imposible");
         }
 

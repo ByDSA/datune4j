@@ -1,11 +1,11 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.absolutedegree.Chromatic;
+import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
-import es.danisales.datune.musical.ChromaticChord;
-import es.danisales.datune.musical.ChromaticChordPattern;
-import es.danisales.datune.musical.DiatonicAlt;
+import es.danisales.datune.chords.ChromaticChord;
+import es.danisales.datune.chords.ChromaticChordPattern;
+import es.danisales.datune.chords.DiatonicAlt;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -15,7 +15,7 @@ public class ChordRetrievalFromTonality {
     private ChordRetrievalFromTonality() {
     }
 
-    public static @NonNull ChromaticChord getFromDiatonicFunction(@NonNull Tonality tonality, @NonNull DiatonicFunction diatonicFunction) throws ScaleDegreeException {
+    public static @NonNull ChromaticChord getFromDiatonicFunction(@NonNull Tonality tonality, @NonNull DiatonicFunction diatonicFunction) throws ScaleRelativeDegreeException {
         Objects.requireNonNull(diatonicFunction);
 
         ChromaticChord chromaticChord = TonalityGetDiatonicFunctionMajor.get(tonality, diatonicFunction);
@@ -27,7 +27,7 @@ public class ChordRetrievalFromTonality {
         return chromaticChord;
     }
 
-    public static @NonNull ChromaticChord getFromChromaticFunction(@NonNull Tonality tonality, @NonNull ChromaticFunction chromaticFunction) throws ScaleDegreeException {
+    public static @NonNull ChromaticChord getFromChromaticFunction(@NonNull Tonality tonality, @NonNull ChromaticFunction chromaticFunction) throws ScaleRelativeDegreeException {
         Objects.requireNonNull(tonality);
         Objects.requireNonNull(chromaticFunction);
 

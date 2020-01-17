@@ -1,67 +1,14 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.DiatonicFunction;
-import es.danisales.datune.musical.ChromaticChord;
-import es.danisales.datune.pitch.PitchChromaticChord;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import es.danisales.datune.chords.ChromaticChord;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class TonalityChordRetrieval {
     private TonalityChordRetrieval() {
-    }
-
-    public static Tonality searchInModeSameRoot(Tonality tonality, PitchChromaticChord c) {
-        List<Tonality> ts;
-        if ( tonality.getScale().isDiatonic() ) {
-            ts = new ArrayList<>();
-            ts.add( Tonality.from( tonality.getRoot(), Scale.MAJOR ) );
-            ts.add( Tonality.from( tonality.getRoot(), Scale.MINOR ) );
-            ts.add( Tonality.from( tonality.getRoot(), Scale.DORIAN ) );
-            ts.add( Tonality.from( tonality.getRoot(), Scale.PHRYGIAN ) );
-            ts.add( Tonality.from( tonality.getRoot(), Scale.LYDIAN ) );
-            ts.add( Tonality.from( tonality.getRoot(), Scale.MIXOLYDIAN ) );
-            ts.add( Tonality.from( tonality.getRoot(), Scale.LOCRIAN ) );
-        } else
-            ts = tonality.getModesSameRoot();
-
-        for ( Tonality t : ts ) {
-            if ( t.equals( tonality ) )
-                continue;
-            ChromaticChord chromaticChord = ChromaticChord.builder().fromChromaticMidi(c).build();
-            DiatonicFunction diatonicFunction = DiatonicFunction.from(chromaticChord, t);
-            if (diatonicFunction != null)
-                return t;
-        }
-
-        return null;
-    }
-
-    public static @Nullable Tonality getRelativeMinorFrom(@NonNull Tonality tonality) {
-        return getRelativeFrom(tonality, Scale.MINOR);
-    }
-
-    public static @Nullable Tonality getRelativeMajorFrom(@NonNull Tonality tonality) {
-        return getRelativeFrom(tonality, Scale.MAJOR);
-    }
-
-    private static @Nullable Tonality getRelativeFrom(@NonNull Tonality tonalityBase, @NonNull Scale scale) {
-        Objects.requireNonNull(tonalityBase);
-        Objects.requireNonNull(scale);
-
-        if (tonalityBase.getScale().equals(scale))
-            return tonalityBase;
-
-        List<Tonality> modes = tonalityBase.getModes();
-        for ( Tonality tonality : modes )
-            if ( tonality.getScale().equals( scale ) )
-                return tonality;
-
-        return null;
     }
 
     public static List<ChromaticChord> getTriadChordsFrom(Tonality tonality) {

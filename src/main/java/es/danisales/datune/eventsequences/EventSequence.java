@@ -3,7 +3,7 @@ package es.danisales.datune.eventsequences;
 import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.Durable;
-import es.danisales.datune.midi.Duration;
+import es.danisales.datune.midi.DurationMidi;
 import es.danisales.datune.midi.binaries.Midi;
 import es.danisales.datune.midi.binaries.events.*;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
@@ -176,7 +176,7 @@ public class EventSequence implements Durable, EventComplex {
 		HashMap<Integer, Queue<NoteOn>> notesOnEvent = new HashMap<>();
 
 		this.forEach( (time, ev) -> {
-			float tf = time / (float) Duration.L1;
+			float tf = time / (float) DurationMidi.L1;
 			if ( ev instanceof NoteOn ) {
 				int nc = ((NoteOn) ev).getMidiCode();
 				assert nc >= 0;

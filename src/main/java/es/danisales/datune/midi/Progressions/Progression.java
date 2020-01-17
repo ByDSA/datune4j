@@ -4,7 +4,7 @@ import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.midi.DiatonicChordMidi;
-import es.danisales.datune.midi.Duration;
+import es.danisales.datune.midi.DurationMidi;
 import es.danisales.datune.midi.arpegios.Arpeggio;
 import es.danisales.datune.midi.arpegios.ArpeggioDefault;
 import es.danisales.datune.midi.binaries.events.EventComplex;
@@ -94,16 +94,16 @@ public class Progression<This extends Progression> implements EventComplex {
 
 	/** A�adir acordes de dos notas **/
 	/*
-	public ChordFunc addData(Degree degree, IntervalDiatonic i) {
-		return addData(degree, i, 0);
+	public ChordFunc addData(ScaleDegree relativedegree, IntervalDiatonic i) {
+		return addData(relativedegree, i, 0);
 	}
 
-	public ChordFunc addData(Degree degree, IntervalDiatonic i, int o) {
+	public ChordFunc addData(ScaleDegree relativedegree, IntervalDiatonic i, int o) {
 		ChordFunc c = null;
 		o += octave;
 
 		c = new ChordFunc(tonality, o);
-		c.addData(degree);
+		c.addData(relativedegree);
 		c.addData( NoteDiatonic.addData(c.fromIndex(0), i) );
 
 		return addData(c);
@@ -128,7 +128,7 @@ public class Progression<This extends Progression> implements EventComplex {
 		int duration = 0;
 		for(DiatonicChordMidi node : nodes) {
 			Tonality s = node.getTonality();
-			if (duration % Duration.L1 == 0)
+			if (duration % DurationMidi.L1 == 0)
 				es.add(duration, new KeySignatureEvent(s));
 
 			es.add(duration, node);

@@ -1,9 +1,9 @@
 package es.danisales.datune;
 
-import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.midi.*;
-import es.danisales.datune.musical.ChromaticChord;
+import es.danisales.datune.chords.ChromaticChord;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.utils.building.BuildingException;
 import org.junit.Test;

@@ -1,11 +1,11 @@
 package es.danisales.datune.midi;
 
-import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.lang.ChordNotation;
 import es.danisales.datune.midi.pitch.PitchDiatonicMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
-import es.danisales.datune.musical.DiatonicChordCommon;
+import es.danisales.datune.chords.DiatonicChordCommon;
 import es.danisales.datune.pitch.PitchDiatonic;
 import es.danisales.datune.pitch.PitchException;
 import es.danisales.datune.tonality.Scale;

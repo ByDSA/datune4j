@@ -1,6 +1,6 @@
 package es.danisales.datune;
 
-import es.danisales.datune.musical.DiatonicAlt;
+import es.danisales.datune.chords.DiatonicAlt;
 import es.danisales.datune.tuning.NoteTuning;
 import es.danisales.datune.tuning.PythagoreanTemperament;
 import es.danisales.datune.tuning.Temperament;

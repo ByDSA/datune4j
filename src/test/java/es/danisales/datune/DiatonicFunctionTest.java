@@ -1,6 +1,6 @@
 package es.danisales.datune;
 
-import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.DiatonicFunction;
 import org.junit.Test;
 

@@ -1,14 +1,13 @@
 package es.danisales.datune.midi.pitch;
 
-import es.danisales.datune.absolutedegree.Chromatic;
-import es.danisales.datune.degree.ChromaticDegree;
+import es.danisales.datune.degrees.OrderedDegree;
+import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.interval.IntervalChromatic;
-import es.danisales.datune.pitch.PitchAbsoluteDegree;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.pitch.PitchOctave;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-enum PitchChromaticMidiImmutable implements PitchChromaticSingle, PitchOctave, PitchAbsoluteDegree<ChromaticDegree, IntervalChromatic> {
+enum PitchChromaticMidiImmutable implements PitchChromaticSingle, PitchOctave, OrderedDegree {
     C0, CC0, D0, DD0, E0, F0, FF0, G0, GG0, A0, AA0, B0,
     C1, CC1, D1, DD1, E1, F1, FF1, G1, GG1, A1, AA1, B1,
     C2, CC2, D2, DD2, E2, F2, FF2, G2, GG2, A2, AA2, B2,
@@ -367,11 +366,6 @@ enum PitchChromaticMidiImmutable implements PitchChromaticSingle, PitchOctave, P
     }
 
     @Override
-    public ChromaticDegree getDegree() {
-        return ChromaticDegree.values()[getChromatic().ordinal()];
-    }
-
-    @Override
     public @NonNull PitchChromaticMidiImmutable getNext() throws PitchMidiException {
         return from(getCode() + 1);
     }
@@ -381,13 +375,18 @@ enum PitchChromaticMidiImmutable implements PitchChromaticSingle, PitchOctave, P
         return from(getCode() - 1);
     }
 
-    @Override
     public @NonNull PitchChromaticMidiImmutable getShifted(IntervalChromatic intervalChromatic) throws PitchMidiException {
-        return PitchChromaticMidiImmutable.from(ordinal() + intervalChromatic.getSemitones());
+        return getShifted(intervalChromatic.getSemitones());
+    }
+
+    public @NonNull PitchChromaticMidiImmutable getShiftedNegative(IntervalChromatic intervalChromatic) throws PitchMidiException {
+        return getShifted(-intervalChromatic.getSemitones());
     }
 
     @Override
-    public @NonNull PitchChromaticMidiImmutable getShiftedNegative(IntervalChromatic intervalChromatic) throws PitchMidiException {
-        return PitchChromaticMidiImmutable.from(ordinal() - intervalChromatic.getSemitones());
+    public PitchChromaticMidiImmutable getShifted(int i) throws PitchMidiException {
+        int index = ordinal() + i;
+
+        return from(index);
     }
 }

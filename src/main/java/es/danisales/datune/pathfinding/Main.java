@@ -4,11 +4,11 @@ import es.danisales.datune.eventsequences.Instrument;
 import es.danisales.datune.eventsequences.Track;
 import es.danisales.datune.midi.ChordMidi;
 import es.danisales.datune.midi.ChromaticChordMidi;
-import es.danisales.datune.midi.Duration;
+import es.danisales.datune.midi.DurationMidi;
 import es.danisales.datune.midi.binaries.Midi;
 import es.danisales.datune.midi.binaries.Song;
 import es.danisales.datune.midi.binaries.events.Volume;
-import es.danisales.datune.musical.ChromaticChord;
+import es.danisales.datune.chords.ChromaticChord;
 import es.danisales.datune.pitch.ProgressionChromaticChordMidi;
 import es.danisales.datune.tonality.Tonality;
 
@@ -49,9 +49,9 @@ class Main {
 			ChordMidi c = pcm.get( i );
             int l;
 			if ( i <= 2 || i == 5 || true ) {
-				l = Duration.L1;
+				l = DurationMidi.L1;
 			} else {
-				l = Duration.L2;
+				l = DurationMidi.L2;
 			}
 
 			c.setLength( l );

@@ -1,7 +1,7 @@
 package es.danisales.datune.midi.binaries.events;
 
 import es.danisales.datune.midi.ChromaticMidi;
-import es.danisales.datune.midi.Duration;
+import es.danisales.datune.midi.DurationMidi;
 import es.danisales.datune.midi.Settings;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.io.binary.BinData;
@@ -19,7 +19,7 @@ public class NoteOnTest {
         ChromaticMidi chromaticMidi = ChromaticMidi.builder()
                 .pitch(PitchChromaticMidi.C5)
                 .velocity(100)
-                .length(Duration.L4)
+                .length(DurationMidi.L4)
                 .build();
 
         NoteOn noteOn = NoteOn.builder()

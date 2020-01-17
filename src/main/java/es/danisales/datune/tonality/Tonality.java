@@ -1,13 +1,13 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.absolutedegree.Chromatic;
-import es.danisales.datune.degree.Degree;
+import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.degrees.scale.ScaleDegree;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.midi.DiatonicChordMidi;
-import es.danisales.datune.musical.ChromaticChord;
-import es.danisales.datune.musical.DiatonicAlt;
+import es.danisales.datune.chords.ChromaticChord;
+import es.danisales.datune.chords.DiatonicAlt;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -98,9 +98,9 @@ public class Tonality implements Iterable<DiatonicAlt> {
         return getScale().size();
     }
 
-    public @NonNull DiatonicAlt getNote(@NonNull Degree degree) throws ScaleDegreeException {
-        List<Degree> mainDegrees = Degree.getMainDegreesFromScaleSize(getScale().size());
-        Degree firstMainDegree = mainDegrees.get(0);
+    public @NonNull DiatonicAlt getNote(@NonNull ScaleDegree degree) throws ScaleRelativeDegreeException {
+        List<ScaleDegree> mainDegrees = ScaleDegree.getDefaultDegreesFromScaleSize(getScale().size());
+        ScaleDegree firstMainDegree = mainDegrees.get(0);
         if (degree.getClass().equals(firstMainDegree.getClass()))
             return getNotes().get(degree.ordinal());
 
@@ -148,10 +148,10 @@ public class Tonality implements Iterable<DiatonicAlt> {
         return ret;
     }
 
-    public @Nullable Degree getDegreeFrom(@NonNull DiatonicAlt diatonicAlt) {
+    public @Nullable ScaleDegree getDegreeFrom(@NonNull DiatonicAlt diatonicAlt) {
         Objects.requireNonNull(diatonicAlt, "No se ha especificado nota");
 
-        for (Degree degree : getScaleMainDegrees()) {
+        for (ScaleDegree degree : getScaleMainDegrees()) {
             DiatonicAlt diatonicAlt1 = getNoteSecure(degree);
             if (diatonicAlt1.equals(diatonicAlt))
                 return degree;
@@ -160,22 +160,22 @@ public class Tonality implements Iterable<DiatonicAlt> {
         return null;
     }
 
-    private DiatonicAlt getNoteSecure(Degree degree) {
+    private DiatonicAlt getNoteSecure(ScaleDegree degree) {
         try {
             return getNote(degree);
-        } catch (ScaleDegreeException e) {
+        } catch (ScaleRelativeDegreeException e) {
             throw NeverHappensException.make("Siempre tiene los MainDegreea");
         }
     }
 
-    private List<Degree> getScaleMainDegrees() {
-        return Degree.getMainDegreesFromScaleSize(getNotes().size());
+    private List<ScaleDegree> getScaleMainDegrees() {
+        return ScaleDegree.getDefaultDegreesFromScaleSize(getNotes().size());
     }
 
-    public @NonNull Degree getDegreeFrom(@NonNull Chromatic chromatic) throws TonalityException {
+    public @NonNull ScaleDegree getDegreeFrom(@NonNull Chromatic chromatic) throws TonalityException {
         Objects.requireNonNull(chromatic, "No se ha especificado nota");
 
-        for (Degree degree : getScaleMainDegrees()) {
+        for (ScaleDegree degree : getScaleMainDegrees()) {
             DiatonicAlt diatonicAlt = getNoteSecure(degree);
 
             Chromatic chromatic1 = Chromatic.from(diatonicAlt);
@@ -253,7 +253,7 @@ public class Tonality implements Iterable<DiatonicAlt> {
         return true;
     }
 
-    public @NonNull Tonality getRelativeScaleDiatonic(Degree relativeDegree) throws ScaleDegreeException { // todo: sólo function
+    public @NonNull Tonality getRelativeScaleDiatonic(ScaleDegree relativeDegree) throws ScaleRelativeDegreeException { // todo: sólo function
         DiatonicAlt diatonicAlt = getNote(relativeDegree);
 
         return Tonality.from(diatonicAlt, getScale());

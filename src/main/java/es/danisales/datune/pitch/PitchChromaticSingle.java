@@ -1,5 +1,5 @@
 package es.danisales.datune.pitch;
 
-public interface PitchChromaticSingle extends PitchChromatic, SymbolicPitch {
+public interface PitchChromaticSingle extends SymbolicPitch {
 
 }

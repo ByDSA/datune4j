@@ -2,10 +2,10 @@ package es.danisales.datune.midi;
 
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
-import es.danisales.datune.musical.ChromaticChord;
-import es.danisales.datune.musical.DiatonicAlt;
+import es.danisales.datune.chords.ChromaticChord;
+import es.danisales.datune.chords.DiatonicAlt;
 import es.danisales.datune.tonality.Scale;
-import es.danisales.datune.tonality.ScaleDegreeException;
+import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.utils.building.BuildingException;
 import org.junit.Test;
@@ -26,7 +26,7 @@ public class DiatonicChordMidiFromChromaticFunctionTest {
         assertPitchInChord(PitchChromaticMidi.G5, diatonicChordMidi, 1);
     }
 
-    @Test(expected = ScaleDegreeException.class)
+    @Test(expected = ScaleRelativeDegreeException.class)
     public void fromPowerChordFunction2() throws Exception {
         try {
             DiatonicChordMidi.builder()

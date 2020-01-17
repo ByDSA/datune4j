@@ -6,7 +6,7 @@ import es.danisales.datune.lang.Namer;
 import es.danisales.datune.midi.binaries.events.EventComplex;
 import es.danisales.datune.midi.pitch.PitchDiatonicMidi;
 import es.danisales.datune.pitch.PitchDiatonicSingle;
-import es.danisales.datune.tonality.ScaleDegreeException;
+import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -67,7 +67,7 @@ public final class DiatonicMidi extends NoteMidi<PitchDiatonicMidi> implements P
 					.append(")");
 
 			return stringBuilder.toString();
-		} catch (TonalityException | ScaleDegreeException e) {
+		} catch (TonalityException | ScaleRelativeDegreeException e) {
 			e.printStackTrace();
 			return null;
 		}

@@ -1,11 +1,10 @@
 package es.danisales.datune.midi.pitch;
 
-import es.danisales.datune.absolutedegree.Chromatic;
-import es.danisales.datune.degree.ChromaticDegree;
-import es.danisales.datune.degree.Degree;
+import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.degrees.scale.ScaleDegree;
 import es.danisales.datune.interval.IntervalChromatic;
-import es.danisales.datune.musical.DiatonicAlt;
-import es.danisales.datune.tonality.ScaleDegreeException;
+import es.danisales.datune.chords.DiatonicAlt;
+import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.utils.NeverHappensException;
 import es.danisales.utils.Utils;
@@ -294,13 +293,13 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
 
     public static @NonNull PitchChromaticMidi from(@NonNull PitchDiatonicMidi pitchDiatonicMidi) {
         Tonality tonality = pitchDiatonicMidi.tonality;
-        Degree degree = pitchDiatonicMidi.degree;
+        ScaleDegree degree = pitchDiatonicMidi.degree;
 
         DiatonicAlt diatonicAlt;
         try {
             diatonicAlt = tonality.getNote(degree);
-        } catch (ScaleDegreeException e) {
-            throw NeverHappensException.make("Si PitchDiatonicMidi es consistente, es imposible que no exista el Degree en la Tonality");
+        } catch (ScaleRelativeDegreeException e) {
+            throw NeverHappensException.make("Si PitchDiatonicMidi es consistente, es imposible que no exista el ScaleDegree en la Tonality");
         }
         Chromatic chromatic = Chromatic.from(diatonicAlt);
 
@@ -314,15 +313,15 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
         }
     }
 
-    private static @NonNull DiatonicAlt tonalityGetNoteSecure(@NonNull Tonality tonality, @NonNull Degree degree) {
+    private static @NonNull DiatonicAlt tonalityGetNoteSecure(@NonNull Tonality tonality, @NonNull ScaleDegree degree) {
         try {
             return tonality.getNote(degree);
-        } catch (ScaleDegreeException e) {
-            throw NeverHappensException.make("Se supone que si se llama a 'secure' es porque la Tonality siempre tiene el Degree");
+        } catch (ScaleRelativeDegreeException e) {
+            throw NeverHappensException.make("Se supone que si se llama a 'secure' es porque la Tonality siempre tiene el ScaleDegree");
         }
     }
 
-    private static int octaveCorrector(@NonNull Tonality tonality, @NonNull Degree degree) {
+    private static int octaveCorrector(@NonNull Tonality tonality, @NonNull ScaleDegree degree) {
         int octave = 0;
 
         octave += octaveCorrectorAltRoot(tonality);
@@ -349,7 +348,7 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
         return octave;
     }
 
-    private static int octaveCorrectorDegree(@NonNull Tonality tonality, @NonNull Degree degree) {
+    private static int octaveCorrectorDegree(@NonNull Tonality tonality, @NonNull ScaleDegree degree) {
         int octave = 0;
 
         DiatonicAlt degreeDiatonicAlt = tonalityGetNoteSecure(tonality, degree);
@@ -397,10 +396,6 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
         PitchChromaticMidi pitchChromaticMidi = new PitchChromaticMidi();
         pitchChromaticMidi.immutable = immutable;
         return pitchChromaticMidi;
-    }
-
-    public ChromaticDegree getDegree() {
-        return immutable.getDegree();
     }
 
     private void excepIfFixed() {

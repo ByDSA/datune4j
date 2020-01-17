@@ -1,6 +1,6 @@
 package es.danisales.datune.midi.arpegios;
 
-import es.danisales.datune.midi.Duration;
+import es.danisales.datune.midi.DurationMidi;
 
 public class ArpeggioDefault extends Arpeggio {
 	public ArpeggioDefault(int duration) {
@@ -12,6 +12,6 @@ public class ArpeggioDefault extends Arpeggio {
 	}
 
 	public ArpeggioDefault() {
-		this(Duration.L1);
+		this(DurationMidi.L1);
 	}
 }

@@ -1,7 +1,7 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.musical.DiatonicAlt;
-import es.danisales.datune.musical.DiatonicAltRetrieval;
+import es.danisales.datune.chords.DiatonicAlt;
+import es.danisales.datune.chords.DiatonicAltRetrieval;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Collections;

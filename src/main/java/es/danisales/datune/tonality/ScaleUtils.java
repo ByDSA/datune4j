@@ -1,8 +1,8 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.absolutedegree.Chromatic;
-import es.danisales.datune.degree.Degree;
-import es.danisales.datune.degree.DiatonicDegree;
+import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.degrees.scale.ScaleDegree;
+import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.interval.IntervalChromatic;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -46,10 +46,10 @@ public class ScaleUtils {
     }
 
     private static class Tuple {
-        Degree relativeDegree;
+        ScaleDegree relativeDegree;
         int diff;
 
-        Tuple(Degree relativeDegree, int diff) {
+        Tuple(ScaleDegree relativeDegree, int diff) {
             this.relativeDegree = relativeDegree;
             this.diff = diff;
         }
@@ -128,7 +128,7 @@ public class ScaleUtils {
         }
 
         void makeTupleAndAdd(DiatonicDegree diatonicDegree, ScaleDistance scaleDistance) {
-            alteredScale += scaleDistance.getSemitones();
+            alteredScale += scaleDistance.getIntegerSemitones();
             int diff = alteredScale - majorScaleSemitonesSum[diatonicDegree.ordinal()];
             Tuple tuple = new Tuple(diatonicDegree, diff);
             ret.add(tuple);
