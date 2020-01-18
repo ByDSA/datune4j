@@ -1,5 +1,6 @@
 package es.danisales.datune.degrees.scale;
 
+import es.danisales.datune.chords.DiatonicDegreePattern;
 import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;

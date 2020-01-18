@@ -1,8 +1,10 @@
 package es.danisales.datune.chords;
 
 import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
+import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.lang.Language;
 import es.danisales.datune.tonality.Tonality;
 import org.junit.Assert;
@@ -914,6 +916,79 @@ public class ChromaticChordTest {
             ChromaticChord chromaticChordReference = ChromaticChord.GG;
 
             assertEquals(chromaticChordReference, chromaticChord);
+        }
+
+        @Test
+        public void fromInterval_C_I_Third() {
+            ChromaticChord chromaticChord = ChromaticChord.builder()
+                    .intervalDiatonic(IntervalDiatonic.THIRD)
+                    .tonality(Tonality.C)
+                    .build();
+
+            assertEquals(2, chromaticChord.size());
+            assertEquals(Chromatic.C, chromaticChord.get(0));
+            assertEquals(Chromatic.E, chromaticChord.get(1));
+        }
+
+        @Test
+        public void fromInterval_C_VII_Second() {
+            ChromaticChord chromaticChord = ChromaticChord.builder()
+                    .intervalDiatonic(DiatonicDegree.VII, IntervalDiatonic.SECOND)
+                    .tonality(Tonality.C)
+                    .build();
+
+            assertEquals(2, chromaticChord.size());
+            assertEquals(Chromatic.B, chromaticChord.get(0));
+            assertEquals(Chromatic.C, chromaticChord.get(1));
+        }
+
+        @Test
+        public void fromInterval_Cm_I_Third() {
+            ChromaticChord chromaticChord = ChromaticChord.builder()
+                    .intervalDiatonic(IntervalDiatonic.THIRD)
+                    .tonality(Tonality.Cm)
+                    .build();
+
+            assertEquals(2, chromaticChord.size());
+            assertEquals(Chromatic.C, chromaticChord.get(0));
+            assertEquals(Chromatic.DD, chromaticChord.get(1));
+        }
+
+        public static void assertPitchInChord(Chromatic chromatic, ChromaticChord chromaticChord, int pos) {
+            assertEquals(chromatic, chromaticChord.get(pos));
+        }
+
+        @Test
+        public void fromDiatonicFunction3() {
+            ChromaticChord diatonicChordMidi = ChromaticChord.builder()
+                    .intervalDiatonic(IntervalDiatonic.THIRD)
+                    .tonality(Tonality.Gm)
+                    .build();
+            Assert.assertEquals(2, diatonicChordMidi.size());
+            assertPitchInChord(Chromatic.G, diatonicChordMidi, 0);
+            assertPitchInChord(Chromatic.AA, diatonicChordMidi, 1);
+        }
+
+        @Test
+        public void fromDiatonicFunction4() {
+            ChromaticChord diatonicChordMidi = ChromaticChord.builder()
+                    .intervalDiatonic(DiatonicDegree.II, IntervalDiatonic.THIRD)
+                    .tonality(Tonality.Gm)
+                    .build();
+            Assert.assertEquals(2, diatonicChordMidi.size());
+            assertPitchInChord(Chromatic.A, diatonicChordMidi, 0);
+            assertPitchInChord(Chromatic.C, diatonicChordMidi, 1);
+        }
+
+        @Test
+        public void fromDiatonicFunction5() {
+            ChromaticChord diatonicChordMidi = ChromaticChord.builder()
+                    .intervalDiatonic(DiatonicDegree.VI, IntervalDiatonic.THIRD)
+                    .tonality(Tonality.Gm)
+                    .build();
+            Assert.assertEquals(2, diatonicChordMidi.size());
+            assertPitchInChord(Chromatic.DD, diatonicChordMidi, 0);
+            assertPitchInChord(Chromatic.G, diatonicChordMidi, 1);
         }
     }
 }

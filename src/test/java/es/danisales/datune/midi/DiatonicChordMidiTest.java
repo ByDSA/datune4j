@@ -25,7 +25,7 @@ import static es.danisales.datune.midi.DiatonicChordMidiFromDiatonicFunctionTest
 import static org.junit.Assert.*;
 
 public class DiatonicChordMidiTest {
-
+/*
     @Test
     public void addDuplicate() throws PitchMidiException, BuildingException {
         DiatonicChordMidi c = DiatonicChordMidi.builder()
@@ -60,7 +60,7 @@ public class DiatonicChordMidiTest {
                 .build();
         DiatonicChordMidiTransformations.addDuplicate(c, 0);
     }
-
+*/
     @Test
     public void cloneTest() throws BuildingException {
         DiatonicChordMidi ca = DiatonicChordMidi.builder()

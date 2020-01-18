@@ -32,50 +32,6 @@ public class DiatonicChordMidiFromDiatonicFunctionTest {
     }
 
     @Test
-    public void fromDiatonicFunction2() throws BuildingException {
-        DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder()
-                .from(IntervalDiatonic.THIRD, Tonality.C)
-                .octave(5)
-                .build();
-        assertEquals(2, diatonicChordMidi.size());
-        assertPitchInChord(PitchChromaticMidi.C5, diatonicChordMidi, 0);
-        assertPitchInChord(PitchChromaticMidi.E5, diatonicChordMidi, 1);
-    }
-
-    @Test
-    public void fromDiatonicFunction3() throws BuildingException {
-        DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder()
-                .from(IntervalDiatonic.THIRD, Tonality.Gm)
-                .octave(5)
-                .build();
-        assertEquals(2, diatonicChordMidi.size());
-        assertPitchInChord(PitchChromaticMidi.G5, diatonicChordMidi, 0);
-        assertPitchInChord(PitchChromaticMidi.AA5, diatonicChordMidi, 1);
-    }
-
-    @Test
-    public void fromDiatonicFunction4() throws BuildingException {
-        DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder()
-                .from(DiatonicDegree.II, IntervalDiatonic.THIRD, Tonality.Gm)
-                .octave(6)
-                .build();
-        assertEquals(2, diatonicChordMidi.size());
-        assertPitchInChord(PitchChromaticMidi.A6, diatonicChordMidi, 0);
-        assertPitchInChord(PitchChromaticMidi.C7, diatonicChordMidi, 1);
-    }
-
-    @Test
-    public void fromDiatonicFunction5() throws BuildingException {
-        DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder()
-                .from(DiatonicDegree.VI, IntervalDiatonic.THIRD, Tonality.Gm)
-                .octave(5)
-                .build();
-        assertEquals(2, diatonicChordMidi.size());
-        assertPitchInChord(PitchChromaticMidi.DD6, diatonicChordMidi, 0);
-        assertPitchInChord(PitchChromaticMidi.G6, diatonicChordMidi, 1);
-    }
-
-    @Test
     public void fromDiatonicFunction6() throws BuildingException {
         Tonality tonality = Tonality.from(Chromatic.C, Scale.MAJOR);
         DiatonicChordMidi diatonicChordMidi;

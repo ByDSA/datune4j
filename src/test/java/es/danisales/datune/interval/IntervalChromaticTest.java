@@ -1,4 +1,4 @@
-package es.danisales.datune.function;
+package es.danisales.datune.interval;
 
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.interval.IntervalDiatonic;

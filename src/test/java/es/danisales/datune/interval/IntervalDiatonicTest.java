@@ -1,11 +1,11 @@
-package es.danisales.datune.function;
+package es.danisales.datune.interval;
 
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.interval.IntervalDiatonic;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.*;
 
 public class IntervalDiatonicTest {
     @Test
@@ -78,5 +78,20 @@ public class IntervalDiatonicTest {
     public void toStringTestNotNull() {
         for (IntervalDiatonic intervalDiatonic : IntervalDiatonic.values())
             assertNotNull(intervalDiatonic.toString());
+    }
+
+    @Test
+    public void isCompound_Octave() {
+        assertFalse(IntervalDiatonic.OCTAVE.isCompound());
+    }
+
+    @Test
+    public void isCompound_Seventh() {
+        assertFalse(IntervalDiatonic.SEVENTH.isCompound());
+    }
+
+    @Test
+    public void isCompound_Ninth() {
+        assertTrue(IntervalDiatonic.NINTH.isCompound());
     }
 }

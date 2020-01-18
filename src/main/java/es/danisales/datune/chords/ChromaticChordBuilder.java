@@ -2,10 +2,12 @@ package es.danisales.datune.chords;
 
 import com.google.common.collect.ImmutableList;
 import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
+import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.midi.DiatonicMidi;
@@ -26,6 +28,8 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
     private ChromaticChord chromaticChord;
     private Chromatic chromaticBase;
     private Tonality tonality;
+    private IntervalDiatonic intervalDiatonic;
+    private DiatonicDegree diatonicDegree = DiatonicDegree.I;
     private DiatonicDegreePattern diatonicDegreePattern;
     private ChromaticChordPattern chromaticChordPattern;
     private DiatonicFunction diatonicFunction;
@@ -69,13 +73,19 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
     class DiatonicChordPatternAndTonalityWay implements BuildingWay<ChromaticChord> {
         @Override
         public boolean isReadyToBuild() {
-            return diatonicDegreePattern != null && tonality != null;
+            return (diatonicDegreePattern != null || intervalDiatonic != null) && tonality != null;
         }
+
+
 
         @NonNull
         @Override
         public ChromaticChord build() throws BuildingException {
             ChromaticChord ret = new EmptyWay().build();
+
+            if (diatonicDegreePattern == null && intervalDiatonic != null) {
+                diatonicDegreePattern = DiatonicDegreePattern.from(diatonicDegree, intervalDiatonic);
+            }
 
             for (DiatonicDegree diatonicDegree : diatonicDegreePattern) {
                 DiatonicAlt diatonicAlt;
@@ -258,6 +268,20 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
 
         return self();
     }
+
+    public @NonNull ChromaticChordBuilder intervalDiatonic(@NonNull IntervalDiatonic intervalDiatonic) {
+        this.intervalDiatonic = Objects.requireNonNull(intervalDiatonic);
+
+        return self();
+    }
+
+    public @NonNull ChromaticChordBuilder intervalDiatonic(@NonNull DiatonicDegree diatonicDegree, @NonNull IntervalDiatonic intervalDiatonic) {
+        this.diatonicDegree = Objects.requireNonNull(diatonicDegree);
+
+        return intervalDiatonic(intervalDiatonic);
+    }
+
+
 
     public static @NonNull ChromaticChord from(@NonNull DiatonicAltChord diatonicChord, @NonNull Tonality tonality) throws TonalityException {
         ChromaticChord chromaticChord = new ChromaticChord();
