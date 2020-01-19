@@ -2429,6 +2429,13 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
         return new ChromaticChordBuilder();
     }
 
+    public static ChromaticChord immutableFrom(@NonNull ParametricChord parametricChord) {
+        return builder()
+                .harmonicFunction(parametricChord.getHarmonicFunction())
+                .tonality(parametricChord.getTonality())
+                .build();
+    }
+
     ChromaticChord() {
         super();
     }

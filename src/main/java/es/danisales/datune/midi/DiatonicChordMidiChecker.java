@@ -1,5 +1,6 @@
 package es.danisales.datune.midi;
 
+import es.danisales.datune.chords.ParametricChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.ScaleDegree;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
@@ -123,7 +124,7 @@ public class DiatonicChordMidiChecker {
 
         try {
             return DiatonicChordMidi.builder()
-                    .from(diatonicFunction, tonality)
+                    .from(ParametricChord.from(tonality, diatonicFunction))
                     .octave(self.getOctave())
                     .build();
         } catch (BuildingException e) {

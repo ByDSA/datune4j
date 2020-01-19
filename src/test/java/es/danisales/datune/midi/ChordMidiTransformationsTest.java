@@ -1,5 +1,6 @@
 package es.danisales.datune.midi;
 
+import es.danisales.datune.chords.ParametricChord;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.tonality.Tonality;
@@ -36,7 +37,7 @@ public class ChordMidiTransformationsTest {
     @Test
     public void getAllDispositionsWithInv() throws BuildingException {
         DiatonicChordMidi diatonicChordMidiOther = DiatonicChordMidi.builder()
-                .from(DiatonicFunction.I, Tonality.C)
+                .from(ParametricChord.from(Tonality.C, DiatonicFunction.I))
                 .build();
         List<DiatonicChordMidi> list = ChordMidiTransformations.getAllDispositionsWithInv(diatonicChordMidiOther);
         assertEquals(518, list.size());
@@ -61,13 +62,13 @@ public class ChordMidiTransformationsTest {
     @Test
     public void minimizeDistanceTo() throws BuildingException {
         DiatonicChordMidi diatonicChordMidiEditing = DiatonicChordMidi.builder()
-                .from(DiatonicFunction.VII, Tonality.C)
+                .from(ParametricChord.from(Tonality.C, DiatonicFunction.VII))
                 .build();
 
         DiatonicChordMidi diatonicChordMidiSource = diatonicChordMidiEditing.clone();
 
         DiatonicChordMidi diatonicChordMidiOther = DiatonicChordMidi.builder()
-                .from(DiatonicFunction.I, Tonality.C)
+                .from(ParametricChord.from(Tonality.C, DiatonicFunction.I))
                 .build();
         ChordMidiTransformations.minimizeDistanceTo(diatonicChordMidiEditing, diatonicChordMidiOther);
 

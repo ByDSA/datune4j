@@ -82,13 +82,13 @@ public class DiatonicDegreePattern implements Iterable<DiatonicDegree> {
     public static final DiatonicDegreePattern VII = new DiatonicDegreePattern(DiatonicDegree.VII, DiatonicDegree.II, DiatonicDegree.IV);
 
     // Sixth
-    public static final DiatonicDegreePattern I6 = new DiatonicDegreePattern(DiatonicDegree.I, DiatonicDegree.III, DiatonicDegree.VI);
-    public static final DiatonicDegreePattern II6 = new DiatonicDegreePattern(DiatonicDegree.II, DiatonicDegree.IV, DiatonicDegree.VII);
-    public static final DiatonicDegreePattern III6 = new DiatonicDegreePattern(DiatonicDegree.III, DiatonicDegree.V, DiatonicDegree.I);
-    public static final DiatonicDegreePattern IV6 = new DiatonicDegreePattern(DiatonicDegree.IV, DiatonicDegree.VI, DiatonicDegree.II);
-    public static final DiatonicDegreePattern V6 = new DiatonicDegreePattern(DiatonicDegree.V, DiatonicDegree.VII, DiatonicDegree.III);
-    public static final DiatonicDegreePattern VI6 = new DiatonicDegreePattern(DiatonicDegree.VI, DiatonicDegree.I, DiatonicDegree.IV);
-    public static final DiatonicDegreePattern VII6 = new DiatonicDegreePattern(DiatonicDegree.VII, DiatonicDegree.II, DiatonicDegree.V);
+    public static final DiatonicDegreePattern I6 = new DiatonicDegreePattern(DiatonicDegree.I, DiatonicDegree.III, DiatonicDegree.V, DiatonicDegree.VI);
+    public static final DiatonicDegreePattern II6 = new DiatonicDegreePattern(DiatonicDegree.II, DiatonicDegree.IV, DiatonicDegree.VI, DiatonicDegree.VII);
+    public static final DiatonicDegreePattern III6 = new DiatonicDegreePattern(DiatonicDegree.III, DiatonicDegree.V, DiatonicDegree.VII, DiatonicDegree.I);
+    public static final DiatonicDegreePattern IV6 = new DiatonicDegreePattern(DiatonicDegree.IV, DiatonicDegree.VI, DiatonicDegree.I, DiatonicDegree.II);
+    public static final DiatonicDegreePattern V6 = new DiatonicDegreePattern(DiatonicDegree.V, DiatonicDegree.VII, DiatonicDegree.II, DiatonicDegree.III);
+    public static final DiatonicDegreePattern VI6 = new DiatonicDegreePattern(DiatonicDegree.VI, DiatonicDegree.I, DiatonicDegree.III, DiatonicDegree.IV);
+    public static final DiatonicDegreePattern VII6 = new DiatonicDegreePattern(DiatonicDegree.VII, DiatonicDegree.II, DiatonicDegree.IV, DiatonicDegree.V);
 
     // Seventh
     public static final DiatonicDegreePattern I7 = new DiatonicDegreePattern(DiatonicDegree.I, DiatonicDegree.III, DiatonicDegree.V, DiatonicDegree.VII);

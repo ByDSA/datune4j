@@ -22,7 +22,7 @@ class DiatonicChordMidiAdapter {
             if (harmonicFunction == null)
                 continue;
 
-            DiatonicChordMidiInfo diatonicChordMidiInfo = new DiatonicChordMidiInfo(chromaticChord, harmonicFunction, tonality);
+            DiatonicChordMidiInfo diatonicChordMidiInfo = new DiatonicChordMidiInfo(harmonicFunction, tonality);
             out.add(diatonicChordMidiInfo);
         }
 
@@ -38,7 +38,7 @@ class DiatonicChordMidiAdapter {
                 continue;
 
             for (DiatonicFunction diatonicFunction : diatonicFunctionList) {
-                DiatonicChordMidiInfo diatonicChordMidiInfo = new DiatonicChordMidiInfo(chromaticChord, diatonicFunction, tonality);
+                DiatonicChordMidiInfo diatonicChordMidiInfo = new DiatonicChordMidiInfo(diatonicFunction, tonality);
                 out.add(diatonicChordMidiInfo);
             }
         }

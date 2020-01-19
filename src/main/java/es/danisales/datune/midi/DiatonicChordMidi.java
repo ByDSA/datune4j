@@ -185,9 +185,7 @@ public final class DiatonicChordMidi extends ChordMidi<DiatonicMidi, IntervalDia
                         .append(" inv, ");
             }
 
-            stringBuilder.append(info.getFunction())
-                    .append(", ")
-                    .append(tonality)
+            stringBuilder.append(info.getParametricChord())
                     .append(", oct ")
                     .append(getOctave())
                     .append(")");

@@ -1,5 +1,6 @@
 package es.danisales.datune.midi;
 
+import es.danisales.datune.chords.ParametricChord;
 import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.chords.ChromaticChord;
 import es.danisales.datune.tonality.Tonality;
@@ -8,17 +9,15 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 public class DiatonicChordMidiInfo implements Cloneable {
     private ChromaticChord chromaticChord;
-    private HarmonicFunction function;
-    private Tonality tonality;
+    private ParametricChord parametricChord;
     private DiatonicChordMidi diatonicChordMidi;
 
     private DiatonicChordMidiInfo() {
     }
 
-    DiatonicChordMidiInfo(ChromaticChord chromaticChord, HarmonicFunction harmonicFunction, Tonality tonality) {
-        this.chromaticChord = chromaticChord;
-        this.function = harmonicFunction;
-        this.tonality = tonality;
+    DiatonicChordMidiInfo(HarmonicFunction harmonicFunction, Tonality tonality) {
+        this.parametricChord = ParametricChord.from(tonality, harmonicFunction);
+        this.chromaticChord = ChromaticChord.immutableFrom(parametricChord);
     }
 
     DiatonicChordMidiInfo(DiatonicChordMidi diatonicChordMidi) {
@@ -30,9 +29,9 @@ public class DiatonicChordMidiInfo implements Cloneable {
                 .fromDiatonicChordMidi(diatonicChordMidi)
                 .build();
 
-        tonality = diatonicChordMidi.tonality;
-
-        function = tonality.getFunctionFrom(chromaticChord);
+        Tonality tonality = diatonicChordMidi.tonality;
+        HarmonicFunction harmonicFunction = tonality.getFunctionFrom(chromaticChord);
+        parametricChord = ParametricChord.from(tonality, harmonicFunction);
     }
 
     public @NonNull ChromaticChord getChromaticChord() {
@@ -44,8 +43,8 @@ public class DiatonicChordMidiInfo implements Cloneable {
         }
     }
 
-    public @Nullable HarmonicFunction getFunction() {
-        return function;
+    public @Nullable ParametricChord getParametricChord() {
+        return parametricChord;
     }
 
     @SuppressWarnings("MethodDoesntCallSuperMethod")
@@ -54,17 +53,12 @@ public class DiatonicChordMidiInfo implements Cloneable {
         DiatonicChordMidiInfo info = new DiatonicChordMidiInfo();
         info.diatonicChordMidi = diatonicChordMidi;
         info.chromaticChord = chromaticChord != null ? chromaticChord.clone() : null;
-        info.tonality = tonality != null ? tonality.clone() : null;
-        info.function = function;
+        info.parametricChord = parametricChord;
         return info;
-    }
-
-    public Tonality getTonality() {
-        return tonality;
     }
 
     @Override
     public String toString() {
-        return function + " " + tonality;
+        return parametricChord.toString();
     }
 }

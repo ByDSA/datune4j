@@ -2,6 +2,7 @@ package es.danisales.datune.midi;
 
 import es.danisales.datune.chords.ChromaticChord;
 import es.danisales.datune.chords.DiatonicDegreePattern;
+import es.danisales.datune.chords.ParametricChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.ChromaticFunction;
@@ -348,11 +349,11 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
     private void initFromDiatonicFunction(DiatonicChordMidi diatonicChordMidi) {
         DiatonicFunction diatonicFunction = (DiatonicFunction) function;
         DiatonicDegreePattern diatonicChordPattern = DiatonicDegreePattern.from(diatonicFunction);
-        initFromDiatonicFunctionAddNotes(diatonicChordMidi, diatonicChordPattern);
+        initFromDiatonicDegreePattern(diatonicChordMidi, diatonicChordPattern);
         diatonicChordMidi.setRootIndex(0);
     }
 
-    private void initFromDiatonicFunctionAddNotes(DiatonicChordMidi self, DiatonicDegreePattern diatonicChordPattern) {
+    private void initFromDiatonicDegreePattern(DiatonicChordMidi self, DiatonicDegreePattern diatonicChordPattern) {
         try {
             DiatonicDegree previousDiatonicDegree = null;
             for (final DiatonicDegree diatonicDegree : diatonicChordPattern) {
@@ -365,6 +366,8 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
                 self.add(diatonicMidi);
                 previousDiatonicDegree = diatonicDegree;
             }
+
+            self.getInfo().update();
 
         } catch (PitchMidiException e) {
             e.printStackTrace();
@@ -380,9 +383,9 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
         return self();
     }
 
-    public DiatonicChordMidiBuilder from(@NonNull HarmonicFunction harmonicFunction, @NonNull Tonality tonality) {
-        this.function = Objects.requireNonNull(harmonicFunction);
-        this.tonality = Objects.requireNonNull(tonality);
+    public DiatonicChordMidiBuilder from(@NonNull ParametricChord parametricChord) {
+        this.function = Objects.requireNonNull(parametricChord.getHarmonicFunction());
+        this.tonality = Objects.requireNonNull(parametricChord.getTonality());
 
         return self();
     }

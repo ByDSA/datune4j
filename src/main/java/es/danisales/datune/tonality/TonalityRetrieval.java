@@ -213,7 +213,7 @@ public class TonalityRetrieval {
                 );
                 if ( first ) {
                     for (DiatonicChordMidiInfo c : possibleChords) {
-                        Tonality t = c.getTonality();
+                        Tonality t = c.getParametricChord().getTonality();
                         if ( !candidates.contains( t ) )
                             candidates.add( t );
                     }
@@ -223,8 +223,8 @@ public class TonalityRetrieval {
 
                     for (DiatonicChordMidiInfo c : possibleChords) {
                         for ( Tonality t : candidatesPrev )
-                            if ((c.getTonality().equals(t)
-                                    || c.getTonality().isModeOf( t ) )
+                            if ((c.getParametricChord().getTonality().equals(t)
+                                    || c.getParametricChord().getTonality().isModeOf( t ) )
                                     && !candidates.contains( t ) )
                                 candidates.add( t );
                     }

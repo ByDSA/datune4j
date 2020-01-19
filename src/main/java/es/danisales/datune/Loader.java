@@ -61,7 +61,7 @@ class Loader {
                 continue;
             ParametricChord chromaticChord = ParametricChord.from(tonality, chromaticFunction);
             chromaticChordSet.add(chromaticChord);
-            System.out.println("Added chord: " + chromaticFunction + " from " + tonality);
+            System.out.println("Added chord: " + chromaticFunction + " immutableFrom " + tonality);
         }
     }
 
@@ -77,7 +77,7 @@ class Loader {
                 if (diatonicFunction == DiatonicFunction.I)
                     continue;
                 ParametricChord chromaticChord = ParametricChord.from(otherTonality, diatonicFunction);
-                System.out.println("Added borrowed chord: " + chromaticChord + " from " + otherTonality);
+                System.out.println("Added borrowed chord: " + chromaticChord + " immutableFrom " + otherTonality);
                 chromaticChordSet.add(chromaticChord);
             }
         }
@@ -205,7 +205,7 @@ class Loader {
             DiatonicChordMidi diatonicChordMidi;
             try {
                 diatonicChordMidi = DiatonicChordMidi.builder()
-                        .from(parametricChord.getHarmonicFunction(), parametricChord.getTonality())
+                        .from(parametricChord)
                         .build();
                 // check(diatonicChordMidi, parametricChord, ton);
             } catch (RuntimeException | BuildingException e) {
