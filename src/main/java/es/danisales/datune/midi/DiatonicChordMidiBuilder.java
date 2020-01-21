@@ -2,7 +2,7 @@ package es.danisales.datune.midi;
 
 import es.danisales.datune.chords.ChromaticChord;
 import es.danisales.datune.chords.DiatonicDegreePattern;
-import es.danisales.datune.chords.ParametricChord;
+import es.danisales.datune.chords.TonalChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.ChromaticFunction;
@@ -383,7 +383,7 @@ public class DiatonicChordMidiBuilder extends Builder<DiatonicChordMidiBuilder, 
         return self();
     }
 
-    public DiatonicChordMidiBuilder from(@NonNull ParametricChord parametricChord) {
+    public DiatonicChordMidiBuilder from(@NonNull TonalChord parametricChord) {
         this.function = Objects.requireNonNull(parametricChord.getHarmonicFunction());
         this.tonality = Objects.requireNonNull(parametricChord.getTonality());
 

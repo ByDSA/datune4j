@@ -3,6 +3,7 @@ package es.danisales.datune;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import es.danisales.arrays.ArrayUtils;
+import es.danisales.datune.chords.*;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.function.ChromaticFunction;
@@ -14,11 +15,7 @@ import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.midi.NoteMidi;
 import es.danisales.datune.midi.binaries.events.NoteOff;
 import es.danisales.datune.midi.binaries.events.NoteOn;
-import es.danisales.datune.chords.ChromaticChord;
-import es.danisales.datune.chords.ChromaticChordBuilder;
-import es.danisales.datune.chords.DiatonicAlt;
-import es.danisales.datune.chords.ParametricChord;
-import es.danisales.datune.chords.ChordNamer;
+import es.danisales.datune.chords.TonalChord;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;
@@ -48,24 +45,34 @@ class Loader {
         this.panel = Objects.requireNonNull(panel);
     }
 
-    private void addDiatonicChords(List<ParametricChord> chromaticChordSet) {
-        for (DiatonicFunction diatonicFunction : DiatonicFunction.TRIADS) {
-            ParametricChord parametricChord = ParametricChord.from(tonality, diatonicFunction);
+    private void addDiatonicChords(List<TonalChord> chromaticChordSet) {
+        for (DiatonicFunction diatonicFunction : DiatonicFunction.values()) {
+            TonalChord parametricChord = TonalChord.from(tonality, diatonicFunction);
             chromaticChordSet.add(parametricChord);
         }
     }
 
-    private void addChromaticFunctions(List<ParametricChord> chromaticChordSet) {
+    private void addChromaticFunctions(List<TonalChord> chromaticChordSet) {
         for (ChromaticFunction chromaticFunction : ChromaticFunction.values()) {
             if (ArrayUtils.contains(chromaticFunction, ChromaticFunction.TRIAD_FUNCTIONS))
                 continue;
-            ParametricChord chromaticChord = ParametricChord.from(tonality, chromaticFunction);
-            chromaticChordSet.add(chromaticChord);
-            System.out.println("Added chord: " + chromaticFunction + " immutableFrom " + tonality);
+            TonalChord parametricChord = TonalChord.from(tonality, chromaticFunction);
+
+            if (!ArrayUtils.contains(chromaticFunction, ChromaticFunction.SUS4)) {
+                chromaticChordSet.add(parametricChord);
+                System.out.println("Added chord: " + chromaticFunction + " from " + tonality);
+            } else {
+                ChromaticChord chromaticChord = ChromaticChord.from(parametricChord);
+
+                if ( tonality.containsAll(chromaticChord) ) {
+                    chromaticChordSet.add(parametricChord);
+                    System.out.println("Added chord: " + chromaticFunction + " from " + tonality);
+                }
+            }
         }
     }
 
-    private void addBorrowedChords(List<ParametricChord> chromaticChordSet) {
+    private void addBorrowedChords(List<TonalChord> chromaticChordSet) {
         if (tonality.getScale().equals(Scale.MAJOR) || tonality.getScale().equals(Scale.MINOR)) {
             Tonality otherTonality = tonality.clone();
             if (TonalityUtils.isMajor(otherTonality))
@@ -76,15 +83,15 @@ class Loader {
             for (DiatonicFunction diatonicFunction : DiatonicFunction.TRIADS) {
                 if (diatonicFunction == DiatonicFunction.I)
                     continue;
-                ParametricChord chromaticChord = ParametricChord.from(otherTonality, diatonicFunction);
-                System.out.println("Added borrowed chord: " + chromaticChord + " immutableFrom " + otherTonality);
+                TonalChord chromaticChord = TonalChord.from(otherTonality, diatonicFunction);
+                System.out.println("Added borrowed chord: " + chromaticChord + " from " + otherTonality);
                 chromaticChordSet.add(chromaticChord);
             }
         }
     }
 
-    private List<ParametricChord> chords() {
-        List<ParametricChord> chromaticChordSet = new ArrayList<>();
+    private List<TonalChord> chords() {
+        List<TonalChord> chromaticChordSet = new ArrayList<>();
 
         addDiatonicChords(chromaticChordSet);
 
@@ -201,7 +208,7 @@ class Loader {
         };
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(myKeyEventDispatcher);
 
-        for (ParametricChord parametricChord : chords()) {
+        for (TonalChord parametricChord : chords()) {
             DiatonicChordMidi diatonicChordMidi;
             try {
                 diatonicChordMidi = DiatonicChordMidi.builder()
@@ -236,7 +243,7 @@ class Loader {
         System.out.println("Tonalidad cambiada a " + tonality);
     }
 
-    private JButton addButton(DiatonicChordMidi diatonicChordMidi, ParametricChord parametricChord, Tonality tonality) {
+    private JButton addButton(DiatonicChordMidi diatonicChordMidi, TonalChord parametricChord, Tonality tonality) {
         final HarmonicFunction harmonicFunction = parametricChord.getHarmonicFunction();
         DiatonicDegree degree = getDegree(harmonicFunction);
 

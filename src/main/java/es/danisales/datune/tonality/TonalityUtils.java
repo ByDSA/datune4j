@@ -31,7 +31,7 @@ public class TonalityUtils {
     public static boolean hasAsChromaticFunction(@NonNull Tonality tonality, @NonNull ChromaticChord chromaticChord) {
         Objects.requireNonNull(chromaticChord);
 
-        for (ChromaticFunction f : ChromaticFunction.ALL) {
+        for (ChromaticFunction f : ChromaticFunction.values()) {
             if (tonality.size() != Diatonic.NUMBER && ArrayUtils.contains(f, ChromaticFunction.TENSIONS))
                 continue;
 

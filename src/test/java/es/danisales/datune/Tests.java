@@ -1,6 +1,6 @@
 package es.danisales.datune;
 
-import es.danisales.datune.chords.ParametricChord;
+import es.danisales.datune.chords.TonalChord;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.midi.*;
@@ -24,7 +24,7 @@ public class Tests {
 	public void whatIsItStatic() throws BuildingException {
 		Tonality tonality = Tonality.C;
 		DiatonicChordMidi c = DiatonicChordMidi.builder()
-				.from(ParametricChord.from(tonality, DiatonicFunction.I))
+				.from(TonalChord.from(tonality, DiatonicFunction.I))
 				.octave(5)
 				.build();
 

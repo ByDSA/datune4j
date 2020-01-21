@@ -1,8 +1,8 @@
 package es.danisales.datune.function;
 
 import es.danisales.arrays.ArrayUtils;
-import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.chords.ChromaticChord;
+import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -23,7 +23,7 @@ public enum ChromaticFunction implements HarmonicFunction {
 	I0, II0, III0, IV0, V0, VI0, VII0,
 
 	/**
-	 * Powe Chord.
+	 * Power Chord.
 	 */
 	I5, II5, III5, IV5, V5, VI5, VII5,
 
@@ -117,18 +117,22 @@ public enum ChromaticFunction implements HarmonicFunction {
     };
 
 	/** Otras funciones */
-	public static final ChromaticFunction[] OTHERS = new ChromaticFunction[] {
-			N6,
+	public static final ChromaticFunction[] OTHER_TENSIONS = new ChromaticFunction[] {
 			V7ALT,
 	};
 
 	/** The Constant TENSIONS. */
 	public static final ChromaticFunction[] TENSIONS = ArrayUtils
-			.concat( V_FUNCTIONS, V7_FUNCTIONS, SUBV7_FUNCTIONS, OTHERS );
-
-	/** The Constant ALL. */
-	public static final ChromaticFunction[] ALL = ArrayUtils
-			.concat( POWER_CHORDS, TENSIONS );
+			.concat( V_FUNCTIONS, V7_FUNCTIONS, SUBV7_FUNCTIONS, OTHER_TENSIONS);
+	public static final ChromaticFunction[] SUS4 = new ChromaticFunction[] {
+			ISUS4,
+			IISUS4,
+			bIIISUS4,
+			IVSUS4,
+			VSUS4,
+			VISUS4,
+			bVIISUS4,
+	};
 
 	/*
 	 * FIN CONSTANTES

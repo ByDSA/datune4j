@@ -61,7 +61,7 @@ public class TonalityTest {
     public void allContainsValues() {
         List<Tonality> tonalities = TonalityRetrieval.allUsualKeys();
 
-        Set<Tonality> values = TonalityRetrieval.getMainMajorAndMinorScaleTonalities();
+        Set<Tonality> values = TonalityRetrieval.ET12.ALL_MAJOR_MINOR;
 
         for (Tonality tonality : values)
             assertTrue( tonality.toString(), tonalities.contains(tonality) );
@@ -69,19 +69,19 @@ public class TonalityTest {
 
     @Test
     public void valuesSize() {
-        Set<Tonality> tonalities = TonalityRetrieval.getMainMajorAndMinorScaleTonalities();
+        Set<Tonality> tonalities = TonalityRetrieval.ET12.ALL_MAJOR_MINOR;
 
-        assertEquals( 26, tonalities.size() );
+        assertEquals( 24, tonalities.size() );
     }
 
     private void valuesContains(Tonality tonality) {
-        Set<Tonality> tonalities = TonalityRetrieval.getMainMajorAndMinorScaleTonalities();
+        Set<Tonality> tonalities = TonalityRetrieval.ET12.ALL_MAJOR_MINOR;
 
         assertTrue( tonality.toString(), tonalities.contains(tonality) );
     }
 
     private void valuesNotContains(Tonality tonality) {
-        Set<Tonality> tonalities = TonalityRetrieval.getMainMajorAndMinorScaleTonalities();
+        Set<Tonality> tonalities = TonalityRetrieval.ET12.ALL_MAJOR_MINOR;
 
         assertFalse( tonality.toString(), tonalities.contains(tonality) );
     }
@@ -734,8 +734,8 @@ public class TonalityTest {
 
     @Test
     public void hasFromDiatonicFunction() {
-        for (Tonality t : TonalityRetrieval.getMainMajorAndMinorScaleTonalities())
-            for (DiatonicFunction df : DiatonicFunction.COMMON) {
+        for (Tonality t : TonalityRetrieval.ET12.ALL_MAJOR_MINOR)
+            for (DiatonicFunction df : DiatonicFunction.values()) {
                 ChromaticChord chromaticChord = ChromaticChord.builder()
                         .tonality(t)
                         .diatonicFunction(df)

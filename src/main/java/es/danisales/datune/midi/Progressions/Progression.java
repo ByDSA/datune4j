@@ -1,6 +1,6 @@
 package es.danisales.datune.midi.Progressions;
 
-import es.danisales.datune.chords.ParametricChord;
+import es.danisales.datune.chords.TonalChord;
 import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
@@ -49,7 +49,7 @@ public class Progression<This extends Progression> implements EventComplex {
 
 		try {
 			c = DiatonicChordMidi.builder()
-					.from(ParametricChord.from(tonality, diatonicFunction))
+					.from(TonalChord.from(tonality, diatonicFunction))
 					.octave(o)
 					.build();
 		} catch (BuildingException e) {
@@ -83,7 +83,7 @@ public class Progression<This extends Progression> implements EventComplex {
 
 		try {
 			c = DiatonicChordMidi.builder()
-					.from(ParametricChord.from(tonality, t))
+					.from(TonalChord.from(tonality, t))
 					.octave(o)
 					.build();
 		} catch (BuildingException e) {

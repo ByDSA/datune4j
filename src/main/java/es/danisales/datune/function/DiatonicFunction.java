@@ -8,6 +8,8 @@ import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
+import java.util.List;
+
 /**
  * Functiones diatónicas
  *
@@ -77,9 +79,15 @@ public enum DiatonicFunction implements HarmonicFunction {
 			VII11,
 	};
 
-	/** Todas */
-	public static final DiatonicFunction[] COMMON = ArrayUtils
-			.concat(TRIADS, SIXTH, SEVENTH, NINTH, ELEVENTH);
+	public static final DiatonicFunction[] THIRTEENTH = new DiatonicFunction[] {
+			I13,
+			II13,
+			III13,
+			IV13,
+			V13,
+			VI13,
+			VII13,
+	};
 
 	@SuppressWarnings("Duplicates")
 	public static @NonNull DiatonicFunction from(@NonNull DiatonicDegree diatonicDegree) {

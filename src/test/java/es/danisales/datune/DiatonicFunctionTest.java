@@ -17,7 +17,7 @@ public class DiatonicFunctionTest {
 
 	public void checkTonality(Tonality ton) {
 		DiatonicChordMidi diatonicChordMidi = null;
-		for ( DiatonicFunction df : DiatonicFunction.COMMON ) {
+		for ( DiatonicFunction df : DiatonicFunction.ALL ) {
 			diatonicChordMidi = ton.getAllFrom( df ).toDiatonicChordMidi( ton );
 			assertEquals( df, DiatonicFunction.getAllFrom( diatonicChordMidi ) );
 		}

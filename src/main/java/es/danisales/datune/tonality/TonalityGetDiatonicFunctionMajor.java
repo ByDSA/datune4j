@@ -29,16 +29,19 @@ class TonalityGetDiatonicFunctionMajor {
                 case III6:
                     ChromaticChord ret = ChromaticChord.builder().addAll(ChromaticChord.CMaj7).build();
                     ret.over(Chromatic.E);
+                    ret.resetRoot();
                     return ret;
 				case IV6: return ChromaticChord.F6;
 				case V6: return ChromaticChord.G6;
                 case VI6:
                     ret = ChromaticChord.builder().addAll(ChromaticChord.FMaj7).build();
                     ret.over(Chromatic.A);
+                    ret.resetRoot();
                     return ret;
                 case VII6:
                     ret = ChromaticChord.builder().addAll(ChromaticChord.G7).build();
                     ret.over(Chromatic.B);
+                    ret.resetRoot();
                     return ret;
 				case I7: return ChromaticChord.CMaj7;
 				case II7: return ChromaticChord.Dm7;
@@ -52,6 +55,7 @@ class TonalityGetDiatonicFunctionMajor {
                 case III9:
                     ret = ChromaticChord.builder().addAll(ChromaticChord.G7add13).build();
                     ret.over(Chromatic.E);
+                    ret.resetRoot();
                     return ret;
 				case IV9: return ChromaticChord.FMaj9;
 				case V9: return ChromaticChord.G9;
@@ -70,27 +74,33 @@ class TonalityGetDiatonicFunctionMajor {
                 case I13:
                     ret = ChromaticChord.builder().addAll(ChromaticChord.Dm13).build();
                     ret.over(Chromatic.C);
+                    ret.resetRoot();
                     return ret;
 				case II13: return ChromaticChord.Dm13;
                 case III13:
                     ret = ChromaticChord.builder().addAll(ChromaticChord.Dm13).build();
                     ret.over(Chromatic.E);
+                    ret.resetRoot();
                     return ret;
                 case IV13:
                     ret = ChromaticChord.builder().addAll(ChromaticChord.Dm13).build();
                     ret.over(Chromatic.F);
+                    ret.resetRoot();
                     return ret;
                 case V13:
                     ret = ChromaticChord.builder().addAll(ChromaticChord.Dm13).build();
                     ret.over(Chromatic.G);
+                    ret.resetRoot();
                     return ret;
                 case VI13:
                     ret = ChromaticChord.builder().addAll(ChromaticChord.Dm13).build();
                     ret.over(Chromatic.A);
+                    ret.resetRoot();
                     return ret;
                 case VII13:
                     ret = ChromaticChord.builder().addAll(ChromaticChord.Dm13).build();
                     ret.over(Chromatic.B);
+                    ret.resetRoot();
                     return ret;
 			}
 		} else if ( t.equals( Tonality.Db) ) {

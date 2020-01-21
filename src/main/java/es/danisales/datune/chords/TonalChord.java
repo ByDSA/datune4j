@@ -4,18 +4,22 @@ import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public class ParametricChord {
+public class TonalChord {
     private Tonality tonality;
     private HarmonicFunction harmonicFunction;
 
-    private ParametricChord() {
+    private TonalChord() {
     }
 
-    public static @NonNull ParametricChord from(@NonNull Tonality tonality, HarmonicFunction harmonicFunction) {
-        ParametricChord parametricChord = new ParametricChord();
+    public static @NonNull TonalChord from(@NonNull Tonality tonality, HarmonicFunction harmonicFunction) {
+        TonalChord parametricChord = new TonalChord();
         parametricChord.tonality = tonality;
         parametricChord.harmonicFunction = harmonicFunction;
         return parametricChord;
+    }
+
+    public static ParametricChordRetrieval retrieval() {
+        return new ParametricChordRetrieval();
     }
 
     public Tonality getTonality() {
@@ -41,10 +45,10 @@ public class ParametricChord {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof ParametricChord))
+        if (!(o instanceof TonalChord))
             return false;
 
-        ParametricChord other = (ParametricChord) o;
+        TonalChord other = (TonalChord) o;
 
         return other.getTonality().equals(getTonality()) && other.getHarmonicFunction().equals(getHarmonicFunction());
     }

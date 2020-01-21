@@ -16,18 +16,18 @@ public class ChromaticChordNamesTest {
     }
 
     public static class FromParametricChord {
-        private static ParametricChord parametricChord;
+        private static TonalChord parametricChord;
         private static ChromaticChord chromaticChord;
 
         static void updateChromaticChord() {
-            chromaticChord = ChromaticChord.immutableFrom(parametricChord);
+            chromaticChord = ChromaticChord.from(parametricChord);
             if (chromaticChord.innerChord instanceof ChromaticChordImmutable)
                 chromaticChord = chromaticChord.clone();
         }
 
         @Test
         public void C_I() {
-            parametricChord = ParametricChord.from(Tonality.C, DiatonicFunction.I);
+            parametricChord = TonalChord.from(Tonality.C, DiatonicFunction.I);
             updateChromaticChord();
 
             assertEquals("C", chromaticChord.toString());
@@ -35,7 +35,7 @@ public class ChromaticChordNamesTest {
 
         @Test
         public void Cm_I() {
-            parametricChord = ParametricChord.from(Tonality.Cm, DiatonicFunction.I);
+            parametricChord = TonalChord.from(Tonality.Cm, DiatonicFunction.I);
             updateChromaticChord();
 
             assertEquals("Cm", chromaticChord.toString());
@@ -43,7 +43,7 @@ public class ChromaticChordNamesTest {
 
         @Test
         public void C_I_inv() {
-            parametricChord = ParametricChord.from(Tonality.C, DiatonicFunction.I);
+            parametricChord = TonalChord.from(Tonality.C, DiatonicFunction.I);
             updateChromaticChord();
             chromaticChord.inv();
 
@@ -52,7 +52,7 @@ public class ChromaticChordNamesTest {
 
         @Test
         public void C_I_inv2() {
-            parametricChord = ParametricChord.from(Tonality.C, DiatonicFunction.I);
+            parametricChord = TonalChord.from(Tonality.C, DiatonicFunction.I);
             updateChromaticChord();
             chromaticChord.inv(2);
 
@@ -61,7 +61,7 @@ public class ChromaticChordNamesTest {
 
         @Test
         public void C_I_inv3() {
-            parametricChord = ParametricChord.from(Tonality.C, DiatonicFunction.I);
+            parametricChord = TonalChord.from(Tonality.C, DiatonicFunction.I);
             updateChromaticChord();
             chromaticChord.inv(3);
 
@@ -70,7 +70,7 @@ public class ChromaticChordNamesTest {
 
         @Test
         public void C_IV5() {
-            parametricChord = ParametricChord.from(Tonality.C, ChromaticFunction.IV5);
+            parametricChord = TonalChord.from(Tonality.C, ChromaticFunction.IV5);
             updateChromaticChord();
 
             assertEquals("F5", chromaticChord.toString());
@@ -78,7 +78,7 @@ public class ChromaticChordNamesTest {
 
         @Test
         public void C_IV5_inv() {
-            parametricChord = ParametricChord.from(Tonality.C, ChromaticFunction.IV5);
+            parametricChord = TonalChord.from(Tonality.C, ChromaticFunction.IV5);
             updateChromaticChord();
             chromaticChord.inv();
 
@@ -87,7 +87,7 @@ public class ChromaticChordNamesTest {
 
         @Test
         public void C_VSUS4() {
-            parametricChord = ParametricChord.from(Tonality.C, ChromaticFunction.VSUS4);
+            parametricChord = TonalChord.from(Tonality.C, ChromaticFunction.VSUS4);
             updateChromaticChord();
 
             assertEquals("Gsus4", chromaticChord.toString());
@@ -95,7 +95,7 @@ public class ChromaticChordNamesTest {
 
         @Test
         public void C_VSUS4_inv() {
-            parametricChord = ParametricChord.from(Tonality.C, ChromaticFunction.VSUS4);
+            parametricChord = TonalChord.from(Tonality.C, ChromaticFunction.VSUS4);
             updateChromaticChord();
             chromaticChord.inv();
 
@@ -105,14 +105,14 @@ public class ChromaticChordNamesTest {
 /*
     @Test
     public void names() throws PitchException, BuildingException {
-        ParametricChord parametricChord = ParametricChord.immutableFrom(Tonality.C, DiatonicFunction.I);
-        ChromaticChord chromaticChord = ChromaticChord.immutableFrom(parametricChord);
+        TonalChord parametricChord = TonalChord.from(Tonality.C, DiatonicFunction.I);
+        ChromaticChord chromaticChord = ChromaticChord.from(parametricChord);
 
         chromaticChord = ChromaticChord.builder().addAll(
                 Arrays.asList(Chromatic.C, Chromatic.D, Chromatic.G)
                 ;
         parametricChord = DiatonicChordMidi.builder()
-                .immutableFrom(chromaticChord, Tonality.C)
+                .from(chromaticChord, Tonality.C)
                 .build();
         assertEquals("Csus2 (ISUS2)", parametricChord.toString());
     }

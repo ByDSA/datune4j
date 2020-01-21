@@ -222,6 +222,26 @@ public class ChromaticChordTest {
     }
 
     @Test
+    public void equals_sameNotesDifferentRoot() {
+        TonalChord parametricChord1 = TonalChord.from(Tonality.C, DiatonicFunction.I7);
+        TonalChord parametricChord2 = TonalChord.from(Tonality.C, DiatonicFunction.III6);
+        ChromaticChord chromaticChord1 = ChromaticChord.from(parametricChord1);
+        ChromaticChord chromaticChord2 = ChromaticChord.from(parametricChord2);
+
+        assertNotEquals(chromaticChord1, chromaticChord2);
+        assertNotEquals(chromaticChord2, chromaticChord1);
+    }
+
+    @Test
+    public void rootPosInitialIsZero() {
+        for (DiatonicFunction diatonicFunction : DiatonicFunction.values()) {
+            TonalChord parametricChord1 = TonalChord.from(Tonality.C, diatonicFunction);
+            ChromaticChord chromaticChord1 = ChromaticChord.from(parametricChord1);
+            assertEquals(0, chromaticChord1.getInversionNumber());
+        }
+    }
+
+    @Test
     public void set() {
         ChromaticChord chromaticChord = ChromaticChord.C.clone();
         assertEquals(ChromaticChord.C.innerChord, chromaticChord.innerChord);
