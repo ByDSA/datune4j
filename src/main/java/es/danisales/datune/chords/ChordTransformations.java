@@ -1,5 +1,6 @@
 package es.danisales.datune.chords;
 
+import es.danisales.datune.degrees.CyclicDegree;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.OrderedDegree;
 import es.danisales.datune.interval.Interval;
@@ -14,19 +15,17 @@ public class ChordTransformations {
     private ChordTransformations() {
     }
 
-    public static <N extends SymbolicPitch, T extends ChordCommon<N>> T removeHigherDuplicates(ChordMutableInterface<N, ?> chordMutableInterface) {
-        ChordMutableInterface<N, ?> out = chordMutableInterface.clone();
-        for (N n : chordMutableInterface) {
-            boolean found = false;
-
-            if (!found)
-                out.add(n);
+    public static <C extends CyclicDegree, T extends Chord<C>> T removeHigherDuplicates(T inputChord) {
+        Chord<C> chord = new Chord<C>();
+        for (C n : inputChord) {
+            if (!chord.contains(n))
+                chord.add(n);
         }
 
-        chordMutableInterface.clear();
-        chordMutableInterface.addAll(out);
+        inputChord.clear();
+        inputChord.addAll(chord);
 
-        return (T) out;
+        return (T) chord;
     }
 
     public static void removeHigherDuplicates(ChromaticChordMidi self) {
@@ -50,55 +49,15 @@ public class ChordTransformations {
         self.addAll(out);
     }
 
-    public static <IN extends ChordCommon<N>, C extends ChordMutableInterface<N, I>, N extends OrderedDegree, I extends Interval> List<C> getAllInversionsFrom(C chordMutableInterface) {
-        List<C> ret = new ArrayList<>();
+    public static <CH extends Chord<C>, C extends CyclicDegree> List<CH> getAllInversionsFrom(CH chordMutableInterface) {
+        List<CH> ret = new ArrayList<>();
 
-        C last = (C) chordMutableInterface.clone();
+        CH last = (CH) chordMutableInterface.clone();
         for (int i = 0; i < chordMutableInterface.size(); i++) {
-            ret.add((C) last.clone());
+            ret.add((CH) last.clone());
             if (i < chordMutableInterface.size() - 1) {
-                try {
-                    last.inv();
-                } catch (PitchException e) {
-                    e.printStackTrace();
-                    throw new RuntimeException();
-                }
+                last.inv();
             }
-        }
-
-        return ret;
-    }
-
-    public static <C extends ChordProxy<ChordMutableInterface<N, I>, N, I>, N extends OrderedDegree, I extends Interval> List<C> getAllInversions(C normalChordCommon) {
-        List<ChordMutableInterface<N, I>> customDiatonicChords = getAllInversionsRaw(normalChordCommon);
-
-        return createListFrom(normalChordCommon, customDiatonicChords);
-    }
-
-    private static <IN extends ChordCommon<N>, C extends ChordProxy<IN, N, I>, N extends OrderedDegree, I extends Interval> List<ChordMutableInterface<N, I>> getAllInversionsRaw(C normalChordCommon) {
-        List<ChordMutableInterface<N, I>> customDiatonicChords;
-
-        if (normalChordCommon.InnerIsMutable()) {
-            ChordMutableInterface<N, I> chordMutableInterface = normalChordCommon.castCustom(normalChordCommon.innerChord);
-            customDiatonicChords = ChordTransformations.getAllInversionsFrom(normalChordCommon);
-        } else {
-            IN tmp = normalChordCommon.innerChord;
-            normalChordCommon.turnInnerIntoMutable();
-            ChordMutableInterface<N, I> chordMutableInterface = normalChordCommon.castCustom(normalChordCommon.innerChord);
-            customDiatonicChords = ChordTransformations.getAllInversionsFrom(normalChordCommon);
-            normalChordCommon.innerChord = tmp;
-        }
-
-        return customDiatonicChords;
-    }
-
-    private static <C extends ChordProxy<ChordMutableInterface<N, I>, N, I>, N extends OrderedDegree, I extends Interval> List<C> createListFrom(C self, List<ChordMutableInterface<N, I>> list) {
-        List<C> ret = new ArrayList<>();
-        for (ChordMutableInterface<N, I> customChromaticChord : list) {
-            C chromaticChord = (C) self.create();
-            chromaticChord.innerChord = customChromaticChord;
-            chromaticChord.turnInnerChordIntoImmutableIfPossible();
-            ret.add(chromaticChord);
         }
 
         return ret;

@@ -1,5 +1,6 @@
 package es.danisales.datune.midi;
 
+import es.danisales.datastructures.ListProxy;
 import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.interval.Interval;
 import es.danisales.datune.midi.arpegios.Arpeggio;
@@ -20,7 +21,7 @@ import java.util.Comparator;
 import java.util.Objects;
 
 public abstract class ChordMidi<N extends NoteMidi<P>, I extends Interval, P extends PitchMidiInterface>
-		extends ChordMutable<N, I>
+		extends ListProxy<N>
 		implements Durable, Velocitiable, PitchOctaveMidiEditable, PitchOctave, EventComplex {
 	protected Arpeggio arpegio;
 	protected int		length;

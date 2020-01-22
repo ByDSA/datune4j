@@ -1,5 +1,6 @@
 package es.danisales.datune.chords;
 
+import es.danisales.datune.degrees.CyclicDegree;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.degrees.scale.ScaleDegree;
@@ -29,13 +30,17 @@ public class DiatonicAltRetrieval {
         return ret;
     }
 
-    public static @NonNull List<DiatonicAlt> listFrom(@NonNull DiatonicAlt noteBase, @NonNull final Scale scale) {
-        if (scale.size() == 7)
-            return sevenListFrom(noteBase, scale);
-        else if (scale.size() < 7)
-            return lowerThan7ListFrom(noteBase, scale);
-        else
-            return genericListFrom(noteBase, scale);
+    public static <C extends CyclicDegree> @NonNull List<C> listFrom(@NonNull C noteBase, @NonNull final Scale scale) {
+        if (noteBase instanceof DiatonicAlt) {
+            if (scale.size() == 7)
+                return (List<C>)sevenListFrom((DiatonicAlt)noteBase, scale);
+            else if (scale.size() < 7)
+                return (List<C>)lowerThan7ListFrom((DiatonicAlt)noteBase, scale);
+            else
+                return (List<C>)genericListFrom((DiatonicAlt)noteBase, scale);
+        }
+
+        throw new RuntimeException();
     }
 
     private static @NonNull List<DiatonicAlt> genericListFrom(@NonNull DiatonicAlt noteBase, @NonNull final Scale scale) {

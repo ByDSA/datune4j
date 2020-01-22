@@ -4,6 +4,7 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import es.danisales.arrays.ArrayUtils;
 import es.danisales.datune.chords.*;
+import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.function.ChromaticFunction;
@@ -35,7 +36,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
 class Loader {
-    private Tonality tonality;
+    private Tonality<DiatonicAlt> tonality;
     private JPanel panel;
     private JPanel[][] panels = new JPanel[7][6];
     private AtomicReference<DiatonicChordMidi> lastPlayed;

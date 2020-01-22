@@ -65,7 +65,7 @@ class DiatonicAdapter {
         return Diatonic.from( degree );
     }
 
-    public @NonNull Diatonic from(@NonNull PitchChromaticMidi pitchMidi, @NonNull Tonality tonality) throws ScaleRelativeDegreeException, TonalityException {
+    public @NonNull Diatonic from(@NonNull PitchChromaticMidi pitchMidi, @NonNull Tonality<DiatonicAlt> tonality) throws ScaleRelativeDegreeException, TonalityException {
         Chromatic chromatic = pitchMidi.getChromatic();
         DiatonicDegree diatonicDegree = (DiatonicDegree)tonality.getDegreeFrom(chromatic);
         DiatonicAlt diatonicAlt = tonality.getNote(diatonicDegree);

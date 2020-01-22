@@ -23,7 +23,7 @@ public enum ChromaticFunction implements HarmonicFunction {
 	I0, II0, III0, IV0, V0, VI0, VII0,
 
 	/**
-	 * Power Chord.
+	 * Power ChordProxy.
 	 */
 	I5, II5, III5, IV5, V5, VI5, VII5,
 

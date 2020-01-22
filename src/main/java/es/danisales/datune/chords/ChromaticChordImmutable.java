@@ -7,7 +7,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import javax.annotation.Nonnull;
 import java.util.*;
 
-enum ChromaticChordImmutable implements PitchChromaticChord<Chromatic>, ChromaticChordInterface, ChordImmutable<Chromatic> {
+enum ChromaticChordImmutable implements PitchChromaticChord<Chromatic>, ChordCommon<Chromatic> {
 	// Quintas
 	C5(ChromaticChordInfo.POWER_CHORD, Chromatic.C),
 	CC5(ChromaticChordInfo.POWER_CHORD, Chromatic.CC),

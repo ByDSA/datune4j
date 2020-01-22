@@ -50,7 +50,7 @@ class PitchDiatonicMidiAdapter {
         return octave;
     }
 
-    private static DiatonicAlt getNoteSecure(Tonality tonality, ScaleDegree degree) {
+    private static DiatonicAlt getNoteSecure(Tonality<DiatonicAlt> tonality, ScaleDegree degree) {
         try {
             return tonality.getNote(degree);
         } catch (ScaleRelativeDegreeException e) {
@@ -60,7 +60,7 @@ class PitchDiatonicMidiAdapter {
 
     // todo: hacer test con ScaleDegree que no sea el por defecto de su cantidad de notas (ej: DiatonicDegree en Pentatonic)
     // todo: coger cosas comunes para octaveCorrector entre covnersores. Es lo mismo pero cambiado de signo
-    private static int octaveCorrectionDegree(ScaleDegree degree1, Tonality tonality) {
+    private static int octaveCorrectionDegree(ScaleDegree degree1, Tonality<DiatonicAlt> tonality) {
         int octave = 0;
 
         DiatonicAlt degreeDiatonicAlt = getNoteSecure(tonality, degree1);
@@ -73,7 +73,7 @@ class PitchDiatonicMidiAdapter {
         return octave;
     }
 
-    private static int octaveCorrectionRootAlt(Tonality tonality) {
+    private static int octaveCorrectionRootAlt(Tonality<DiatonicAlt> tonality) {
         Diatonic diatonicRoot = tonality.getRoot().getDiatonic();
         float semis = Chromatic.from(diatonicRoot).ordinal() + tonality.getRoot().getAlterations();
         int octaveVariation = 0;
@@ -91,7 +91,7 @@ class PitchDiatonicMidiAdapter {
         return octaveVariation;
     }
 
-    private static int getRootOctaveWithoutAlts(PitchChromaticMidi pitchChromaticMidi, Tonality tonality) {
+    private static int getRootOctaveWithoutAlts(PitchChromaticMidi pitchChromaticMidi, Tonality<DiatonicAlt> tonality) {
         Diatonic diatonicRoot = tonality.getRoot().getDiatonic();
         Chromatic chromaticRootWithoutAlts = Chromatic.from(diatonicRoot);
 

@@ -205,7 +205,7 @@ public class ScaleTest {
 
     @Test
     public void fromDiatonicAlt_List() throws ScaleRelativeDegreeException {
-        Tonality s = Tonality.A;
+        Tonality<DiatonicAlt> s = Tonality.A;
         List<DiatonicAlt> notes = new ArrayList<>();
         for (DiatonicDegree diatonicDegree : DiatonicDegree.values())
             notes.add(s.getNote(diatonicDegree));

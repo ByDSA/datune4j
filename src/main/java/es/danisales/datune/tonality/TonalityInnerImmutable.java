@@ -4,6 +4,7 @@ import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import es.danisales.datune.chords.DiatonicAlt;
 import es.danisales.datune.chords.DiatonicAltRetrieval;
+import es.danisales.datune.degrees.CyclicDegree;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -11,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-enum TonalityInnerImmutable implements TonalityInner {
+enum TonalityInnerImmutable implements TonalityInner<DiatonicAlt> {
 	C( DiatonicAlt.C, Scale.MAJOR ),
 	D( DiatonicAlt.D, Scale.MAJOR ),
 	E( DiatonicAlt.E, Scale.MAJOR ),
@@ -51,7 +52,7 @@ enum TonalityInnerImmutable implements TonalityInner {
 			table.put(tonalityEnum.root, tonalityEnum.scale, tonalityEnum);
 	}
 
-	static @Nullable TonalityInnerImmutable from(@NonNull DiatonicAlt diatonicAlt, @NonNull Scale scale) {
+	static <C extends CyclicDegree> @Nullable TonalityInnerImmutable from(@NonNull C diatonicAlt, @NonNull Scale scale) {
 		Objects.requireNonNull(diatonicAlt);
 		Objects.requireNonNull(scale);
 

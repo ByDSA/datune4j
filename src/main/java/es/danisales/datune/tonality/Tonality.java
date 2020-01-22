@@ -1,5 +1,7 @@
 package es.danisales.datune.tonality;
 
+import es.danisales.datune.chords.Chord;
+import es.danisales.datune.degrees.CyclicDegree;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.ScaleDegree;
 import es.danisales.datune.function.ChromaticFunction;
@@ -13,52 +15,50 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static com.google.common.base.Preconditions.checkState;
 
-public class Tonality implements Iterable<DiatonicAlt> {
-    public static final Tonality C = new Tonality(TonalityInnerImmutable.C);
+public class Tonality<C extends CyclicDegree> implements Iterable<C> {
+    public static final Tonality<DiatonicAlt> C = new Tonality<>(TonalityInnerImmutable.C);
     @SuppressWarnings("WeakerAccess")
-    public static final Tonality Db = new Tonality(TonalityInnerImmutable.Db);
-    public static final Tonality D = new Tonality(TonalityInnerImmutable.D);
-    public static final Tonality Eb = new Tonality(TonalityInnerImmutable.Eb);
-    public static final Tonality E = new Tonality(TonalityInnerImmutable.E);
-    public static final Tonality F = new Tonality(TonalityInnerImmutable.F);
-    public static final Tonality FF = new Tonality(TonalityInnerImmutable.FF);
+    public static final Tonality<DiatonicAlt> Db = new Tonality<>(TonalityInnerImmutable.Db);
+    public static final Tonality<DiatonicAlt> D = new Tonality<>(TonalityInnerImmutable.D);
+    public static final Tonality<DiatonicAlt> Eb = new Tonality<>(TonalityInnerImmutable.Eb);
+    public static final Tonality<DiatonicAlt> E = new Tonality<>(TonalityInnerImmutable.E);
+    public static final Tonality<DiatonicAlt> F = new Tonality<>(TonalityInnerImmutable.F);
+    public static final Tonality<DiatonicAlt> FF = new Tonality<>(TonalityInnerImmutable.FF);
     @SuppressWarnings("WeakerAccess")
-    public static final Tonality Gb = new Tonality(TonalityInnerImmutable.Gb);
-    public static final Tonality G = new Tonality(TonalityInnerImmutable.G);
+    public static final Tonality<DiatonicAlt> Gb = new Tonality<>(TonalityInnerImmutable.Gb);
+    public static final Tonality<DiatonicAlt> G = new Tonality<>(TonalityInnerImmutable.G);
     @SuppressWarnings("WeakerAccess")
-    public static final Tonality Ab = new Tonality(TonalityInnerImmutable.Ab);
-    public static final Tonality A = new Tonality(TonalityInnerImmutable.A);
-    public static final Tonality Bb = new Tonality(TonalityInnerImmutable.Bb);
-    public static final Tonality B = new Tonality(TonalityInnerImmutable.B);
+    public static final Tonality<DiatonicAlt> Ab = new Tonality<>(TonalityInnerImmutable.Ab);
+    public static final Tonality<DiatonicAlt> A = new Tonality<>(TonalityInnerImmutable.A);
+    public static final Tonality<DiatonicAlt> Bb = new Tonality<>(TonalityInnerImmutable.Bb);
+    public static final Tonality<DiatonicAlt> B = new Tonality<>(TonalityInnerImmutable.B);
 
-    public static final Tonality Cm = new Tonality(TonalityInnerImmutable.Cm);
-    public static final Tonality CCm = new Tonality(TonalityInnerImmutable.CCm);
-    public static final Tonality Dm = new Tonality(TonalityInnerImmutable.Dm);
-    public static final Tonality DDm = new Tonality(TonalityInnerImmutable.DDm);
+    public static final Tonality<DiatonicAlt> Cm = new Tonality<>(TonalityInnerImmutable.Cm);
+    public static final Tonality<DiatonicAlt> CCm = new Tonality<>(TonalityInnerImmutable.CCm);
+    public static final Tonality<DiatonicAlt> Dm = new Tonality<>(TonalityInnerImmutable.Dm);
+    public static final Tonality<DiatonicAlt> DDm = new Tonality<>(TonalityInnerImmutable.DDm);
     @SuppressWarnings("WeakerAccess")
-    public static final Tonality Ebm = new Tonality(TonalityInnerImmutable.Ebm);
-    public static final Tonality Em = new Tonality(TonalityInnerImmutable.Em);
-    public static final Tonality Fm = new Tonality(TonalityInnerImmutable.Fm);
-    public static final Tonality FFm = new Tonality(TonalityInnerImmutable.FFm);
-    public static final Tonality Gm = new Tonality(TonalityInnerImmutable.Gm);
-    public static final Tonality GGm = new Tonality(TonalityInnerImmutable.GGm);
-    public static final Tonality Am = new Tonality(TonalityInnerImmutable.Am);
-    public static final Tonality Bbm = new Tonality(TonalityInnerImmutable.Bbm);
-    public static final Tonality Bm = new Tonality(TonalityInnerImmutable.Bm);
+    public static final Tonality<DiatonicAlt> Ebm = new Tonality<>(TonalityInnerImmutable.Ebm);
+    public static final Tonality<DiatonicAlt> Em = new Tonality<>(TonalityInnerImmutable.Em);
+    public static final Tonality<DiatonicAlt> Fm = new Tonality<>(TonalityInnerImmutable.Fm);
+    public static final Tonality<DiatonicAlt> FFm = new Tonality<>(TonalityInnerImmutable.FFm);
+    public static final Tonality<DiatonicAlt> Gm = new Tonality<>(TonalityInnerImmutable.Gm);
+    public static final Tonality<DiatonicAlt> GGm = new Tonality<>(TonalityInnerImmutable.GGm);
+    public static final Tonality<DiatonicAlt> Am = new Tonality<>(TonalityInnerImmutable.Am);
+    public static final Tonality<DiatonicAlt> Bbm = new Tonality<>(TonalityInnerImmutable.Bbm);
+    public static final Tonality<DiatonicAlt> Bm = new Tonality<>(TonalityInnerImmutable.Bm);
 
     /**
      * END CONSTANT TONALITIES
      ******************************************************************************/
 
-    TonalityInner innerTonality;
+    TonalityInner<C> innerTonality;
     private final boolean fixed;
 
-    private Map<Chromatic, DiatonicAlt> chromaticDiatonicAltMap;
+    private Map<Chromatic, C> chromaticDiatonicAltMap;
     private Map<ChromaticChord, List<ChromaticFunction>> cacheChromaticMap;
     private Map<ChromaticChord, List<DiatonicFunction>> cacheDiatonicMap;
 
@@ -66,11 +66,11 @@ public class Tonality implements Iterable<DiatonicAlt> {
      * Building
      **/
 
-    private Tonality(TonalityInner tonalityInterface) {
+    private Tonality(TonalityInner<C> tonalityInterface) {
         this(tonalityInterface, true);
     }
 
-    private Tonality(TonalityInner tonalityInterface, boolean fixed) {
+    private Tonality(TonalityInner<C> tonalityInterface, boolean fixed) {
         innerTonality = tonalityInterface;
         this.fixed = fixed;
 
@@ -81,7 +81,7 @@ public class Tonality implements Iterable<DiatonicAlt> {
         return TonalityRetrieval.fromDiatonicChordMidi(c, base);
     }
 
-    public static @NonNull Tonality from(@NonNull DiatonicAlt diatonicAlt, @NonNull Scale scale) {
+    public static <C extends CyclicDegree> @NonNull Tonality<C> from(@NonNull C diatonicAlt, @NonNull Scale scale) {
         TonalityInner tonalityInterface = TonalityInnerImmutable.from(diatonicAlt, scale);
         if (tonalityInterface == null)
             tonalityInterface = new TonalityInnerMutable(diatonicAlt, scale);
@@ -100,7 +100,7 @@ public class Tonality implements Iterable<DiatonicAlt> {
         return getScale().size();
     }
 
-    public @NonNull DiatonicAlt getNote(@NonNull ScaleDegree degree) throws ScaleRelativeDegreeException {
+    public @NonNull C getNote(@NonNull ScaleDegree degree) throws ScaleRelativeDegreeException {
         List<ScaleDegree> mainDegrees = ScaleDegree.getDefaultDegreesFromScaleSize(getScale().size());
         ScaleDegree firstMainDegree = mainDegrees.get(0);
         if (degree.getClass().equals(firstMainDegree.getClass()))
@@ -128,9 +128,10 @@ public class Tonality implements Iterable<DiatonicAlt> {
 
     int getDiatonicAlterationsNumber() {
         Objects.requireNonNull(getNotes());
+        checkState(getNotes().get(0) instanceof DiatonicAlt);
 
         int ret = 0;
-        for ( DiatonicAlt c : getNotes() )
+        for ( DiatonicAlt c : (List<DiatonicAlt>)getNotes() )
             ret += c.getUnsignedAlterations();
 
         return ret;
@@ -150,11 +151,11 @@ public class Tonality implements Iterable<DiatonicAlt> {
         return ret;
     }
 
-    public @Nullable ScaleDegree getDegreeFrom(@NonNull DiatonicAlt diatonicAlt) {
+    public @Nullable ScaleDegree getDegreeFrom(@NonNull C diatonicAlt) {
         Objects.requireNonNull(diatonicAlt, "No se ha especificado nota");
 
         for (ScaleDegree degree : getScaleMainDegrees()) {
-            DiatonicAlt diatonicAlt1 = getNoteSecure(degree);
+            C diatonicAlt1 = getNoteSecure(degree);
             if (diatonicAlt1.equals(diatonicAlt))
                 return degree;
         }
@@ -162,7 +163,7 @@ public class Tonality implements Iterable<DiatonicAlt> {
         return null;
     }
 
-    private DiatonicAlt getNoteSecure(ScaleDegree degree) {
+    private C getNoteSecure(ScaleDegree degree) {
         try {
             return getNote(degree);
         } catch (ScaleRelativeDegreeException e) {
@@ -176,11 +177,12 @@ public class Tonality implements Iterable<DiatonicAlt> {
 
     public @NonNull ScaleDegree getDegreeFrom(@NonNull Chromatic chromatic) throws TonalityException {
         Objects.requireNonNull(chromatic, "No se ha especificado nota");
+        checkState(getNotes().get(0) instanceof DiatonicAlt);
 
         for (ScaleDegree degree : getScaleMainDegrees()) {
-            DiatonicAlt diatonicAlt = getNoteSecure(degree);
+            C diatonicAlt = getNoteSecure(degree);
 
-            Chromatic chromatic1 = Chromatic.from(diatonicAlt);
+            Chromatic chromatic1 = Chromatic.from((DiatonicAlt)diatonicAlt);
             if (chromatic1 == chromatic)
                 return degree;
         }
@@ -220,9 +222,11 @@ public class Tonality implements Iterable<DiatonicAlt> {
     }
 
     private void turnIntoImmutableIfPossible() {
-        TonalityInnerImmutable tonalityInnerImmutable = TonalityInnerImmutable.from(getRoot(), getScale());
-        if (tonalityInnerImmutable != null)
-            innerTonality = tonalityInnerImmutable;
+        if (getRoot() instanceof DiatonicAlt) {
+            TonalityInnerImmutable tonalityInnerImmutable = TonalityInnerImmutable.from(getRoot(), getScale());
+            if (tonalityInnerImmutable != null)
+                innerTonality = (TonalityInner<C>)tonalityInnerImmutable;
+        }
     }
 
     private boolean innerIsImmutable() {
@@ -233,7 +237,7 @@ public class Tonality implements Iterable<DiatonicAlt> {
         innerTonality = new TonalityInnerMutable(innerTonality.getRoot(), innerTonality.getScale());
     }
 
-    public boolean contains(DiatonicAlt note) {
+    public boolean contains(C note) {
         return getDegreeFrom( note ) != null;
     }
 
@@ -255,8 +259,8 @@ public class Tonality implements Iterable<DiatonicAlt> {
         return true;
     }
 
-    public @NonNull Tonality getRelativeScaleDiatonic(ScaleDegree relativeDegree) throws ScaleRelativeDegreeException { // todo: sólo function
-        DiatonicAlt diatonicAlt = getNote(relativeDegree);
+    public @NonNull Tonality<C> getRelativeScaleDiatonic(ScaleDegree relativeDegree) throws ScaleRelativeDegreeException { // todo: sólo function
+        C diatonicAlt = getNote(relativeDegree);
 
         return Tonality.from(diatonicAlt, getScale());
     }
@@ -265,11 +269,11 @@ public class Tonality implements Iterable<DiatonicAlt> {
         return innerTonality.getScale();
     }
 
-    public @NonNull DiatonicAlt getRoot() {
+    public @NonNull C getRoot() {
         return innerTonality.getRoot();
     }
 
-    public @NonNull List<DiatonicAlt> getNotes() {
+    public @NonNull List<C> getNotes() {
         return innerTonality.getNotes();
     }
 
@@ -331,7 +335,7 @@ public class Tonality implements Iterable<DiatonicAlt> {
 
     private void createChromaticToDiatonicAltCache() {
         chromaticDiatonicAltMap = new HashMap<>();
-        for ( DiatonicAlt diatonicAlt : innerTonality.getNotes() ) {
+        for ( C diatonicAlt : innerTonality.getNotes() ) {
             Chromatic chromatic = Chromatic.from(diatonicAlt);
             chromaticDiatonicAltMap.put(chromatic, diatonicAlt);
         }
@@ -373,7 +377,7 @@ public class Tonality implements Iterable<DiatonicAlt> {
         checkState(cacheDiatonicMap != null && cacheChromaticMap != null);
     }
 
-    public @Nullable DiatonicAlt getNote(@NonNull Chromatic chromatic) {
+    public @Nullable C getNote(@NonNull Chromatic chromatic) {
         Objects.requireNonNull(chromatic);
 
         return chromaticDiatonicAltMap.get( chromatic );
@@ -381,7 +385,7 @@ public class Tonality implements Iterable<DiatonicAlt> {
 
     @Override
     @NonNull
-    public Iterator<DiatonicAlt> iterator() {
+    public Iterator<C> iterator() {
         return innerTonality.getNotes().iterator();
     }
 
@@ -409,5 +413,9 @@ public class Tonality implements Iterable<DiatonicAlt> {
     @Override
     public Tonality clone() {
         return from(getRoot(), getScale());
+    }
+
+    public Chord<C> getChordFromHarmonicFunction(@NonNull HarmonicFunction harmonicFunction) {
+        return null;
     }
 }

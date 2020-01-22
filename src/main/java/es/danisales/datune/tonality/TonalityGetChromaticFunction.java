@@ -1,5 +1,6 @@
 package es.danisales.datune.tonality;
 
+import es.danisales.datune.degrees.CyclicDegree;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.ChromaticFunction;
@@ -130,7 +131,7 @@ public class TonalityGetChromaticFunction {
 	}
 
 	@SuppressWarnings("ConstantConditions") // DiatonicFunction.patternFrom nunca devuelve null en este contexto
-	private static @Nullable Tonality getT(@NonNull Tonality tonality, @NonNull ChromaticFunction chromaticFunction) {
+	private static <C extends CyclicDegree> @Nullable Tonality getT(@NonNull Tonality<C> tonality, @NonNull ChromaticFunction chromaticFunction) {
 		DiatonicFunction diatonicFunction = DiatonicFunction.from(chromaticFunction);
 		ChromaticChord chromaticChord = ChromaticChord.builder()
 				.diatonicFunction(diatonicFunction)
@@ -142,8 +143,8 @@ public class TonalityGetChromaticFunction {
 				.tonality(tonality)
 				.build();
 
-		if (!chromaticChord.equals(chromaticChord2)) {
-			for (Tonality mode : tonality.getModesSameRoot()) {
+		if ( !chromaticChord.equals(chromaticChord2) ) {
+			for (Tonality<C> mode : tonality.getModesSameRoot()) {
 				if (mode.equals(tonality))
 					continue;
 
@@ -159,7 +160,7 @@ public class TonalityGetChromaticFunction {
 		return null;
 	}
 
-	public static @NonNull Tonality getTonalityFromChromaticFunction(@NonNull Tonality tonality, @NonNull ChromaticFunction chromaticFunction) throws ScaleRelativeDegreeException {
+	public static @NonNull Tonality getTonalityFromChromaticFunction(@NonNull Tonality<DiatonicAlt> tonality, @NonNull ChromaticFunction chromaticFunction) throws ScaleRelativeDegreeException {
 		switch (chromaticFunction) {
 			case I:
 			case II:
@@ -316,7 +317,7 @@ public class TonalityGetChromaticFunction {
 		}
 	}
 
-	static @NonNull DiatonicAlt getNoteBaseFromChromaticFunctionAndTonality(Tonality tonality, @NonNull ChromaticFunction chromaticFunction) throws ScaleRelativeDegreeException {
+	static @NonNull DiatonicAlt getNoteBaseFromChromaticFunctionAndTonality(Tonality<DiatonicAlt> tonality, @NonNull ChromaticFunction chromaticFunction) throws ScaleRelativeDegreeException {
 		switch (chromaticFunction) {
 			case I:
 			case i:

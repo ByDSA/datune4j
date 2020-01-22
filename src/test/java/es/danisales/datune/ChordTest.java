@@ -6,8 +6,8 @@ public class ChordTest {
 		PitchChord cm = ChromaticChordEnum.C;
 		PitchChord cm2 = cm.clone();
 
-		assertEquals(true, cm instanceof Chord);
-		assertEquals(true, cm2 instanceof Chord);
+		assertEquals(true, cm instanceof ChordProxy);
+		assertEquals(true, cm2 instanceof ChordProxy);
 		assertEquals( cm.size(), cm2.size() );
 		assertEquals( cm.getRoot(), cm2.getRoot() );
 		for ( int i = 0; i < cm.size(); i++ ) {
@@ -17,8 +17,8 @@ public class ChordTest {
 		cm = new DiatonicChordMidi( TonalityEnum.C, ChromaticChordEnum.C );
 		cm2 = cm.clone();
 
-		assertEquals(true, cm instanceof Chord);
-		assertEquals(true, cm2 instanceof Chord);
+		assertEquals(true, cm instanceof ChordProxy);
+		assertEquals(true, cm2 instanceof ChordProxy);
 		assertEquals( cm.size(), cm2.size() );
 		assertEquals( cm.getRoot(), cm2.getRoot() );
 		for ( int i = 0; i < cm.size(); i++ ) {

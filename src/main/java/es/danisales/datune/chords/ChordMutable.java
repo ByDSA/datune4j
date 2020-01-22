@@ -1,8 +1,7 @@
 package es.danisales.datune.chords;
 
 import es.danisales.datastructures.ListProxy;
-import es.danisales.datune.interval.Interval;
-import es.danisales.datune.pitch.SymbolicPitch;
+import es.danisales.datune.degrees.CyclicDegree;
 import es.danisales.utils.HashingUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -11,20 +10,21 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class ChordMutable<N extends SymbolicPitch, I extends Interval> extends ListProxy<N> implements ChordMutableInterface<N, I> {
+public abstract class ChordMutable<C extends CyclicDegree>
+		extends ListProxy<C>
+		implements Chord<C> {
 	private static final int NO_VALUE = -1;
-
 	protected int rootIndex = NO_VALUE;
-	private final List<N> innerList;
+	private final List<C> innerList;
 
-	protected ChordMutable(List<N> listAdapter) {
+	protected ChordMutable(List<C> listAdapter) {
 		super(listAdapter);
 
 		innerList = listAdapter;
 	}
 
 	@Override
-	public boolean add(@NonNull N note) {
+	public boolean add(@NonNull C note) {
 		Objects.requireNonNull(note);
 
 		innerList.add( note );
@@ -34,7 +34,7 @@ public abstract class ChordMutable<N extends SymbolicPitch, I extends Interval> 
 	}
 
 	@Override
-	public void add(int n, @NonNull N note) {
+	public void add(int n, @NonNull C note) {
 		innerList.add( n, note );
 
 		if (n <= rootIndex)
@@ -44,7 +44,7 @@ public abstract class ChordMutable<N extends SymbolicPitch, I extends Interval> 
 	}
 
 	@Override
-	public boolean addAll(@NonNull Collection<? extends N> collection) {
+	public boolean addAll(@NonNull Collection<? extends C> collection) {
 		boolean ret = innerList.addAll(collection);
 
 		resetRootIfNeededElseOnMutation();
@@ -53,7 +53,7 @@ public abstract class ChordMutable<N extends SymbolicPitch, I extends Interval> 
 	}
 
 	@Override
-	public boolean addAll(int index, @NonNull Collection<? extends N> collection) {
+	public boolean addAll(int index, @NonNull Collection<? extends C> collection) {
 		boolean ret = innerList.addAll(index, collection);
 
 		if (index <= rootIndex)
@@ -65,9 +65,9 @@ public abstract class ChordMutable<N extends SymbolicPitch, I extends Interval> 
 	}
 
 	@Override
-	public final N remove(int n) {
-		N root = getRoot();
-		N ret = innerList.remove( n );
+	public final C remove(int n) {
+		C root = getRoot();
+		C ret = innerList.remove( n );
 		if ( ret == root )
 			resetRoot();
 		else if (ret != null)
@@ -110,7 +110,7 @@ public abstract class ChordMutable<N extends SymbolicPitch, I extends Interval> 
 	}
 
 	@Override
-	public final @Nullable N getRoot() {
+	public final @Nullable C getRoot() {
 		if (rootIndex == NO_VALUE)
 			return null;
 		return get(rootIndex);
@@ -122,7 +122,7 @@ public abstract class ChordMutable<N extends SymbolicPitch, I extends Interval> 
 	}
 
 	@Override
-	public abstract ChordMutable<N, I> clone();
+	public abstract ChordMutable<C> clone();
 
 	@Override
 	public boolean equals(Object o) {

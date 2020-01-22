@@ -366,7 +366,7 @@ public class Power extends Song {
 		channelOrgan.add(seek, arp);
 		/*
 		for(int i = 0; i < cad.getNodes().size()-1; i++) {
-			Chord ch = cad.getChord(i);
+			ChordProxy ch = cad.getChord(i);
 			ch.getWithSemiAdded(Interval.OCTAVE)
 			.getWithSemiAdded(Interval.TENTH)
 			.inv(2)

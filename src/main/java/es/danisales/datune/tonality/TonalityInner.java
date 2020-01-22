@@ -1,14 +1,14 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.chords.DiatonicAlt;
+import es.danisales.datune.degrees.CyclicDegree;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.List;
 
-public interface TonalityInner {
+interface TonalityInner<C extends CyclicDegree> {
     @NonNull Scale getScale();
 
-    @NonNull DiatonicAlt getRoot();
+    @NonNull C getRoot();
 
-    @NonNull List<DiatonicAlt> getNotes();
+    @NonNull List<C> getNotes();
 }

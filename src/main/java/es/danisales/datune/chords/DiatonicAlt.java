@@ -1,12 +1,12 @@
 package es.danisales.datune.chords;
 
+import es.danisales.datune.degrees.CyclicDegree;
 import es.danisales.datune.degrees.octave.Chromatic;
-import es.danisales.datune.degrees.octave.OctaveDegree;
 import es.danisales.datune.degrees.octave.Diatonic;
+import es.danisales.datune.degrees.octave.OctaveDegree;
 import es.danisales.datune.lang.Namer;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.pitch.PitchChromaticSingle;
-import es.danisales.datune.pitch.SymbolicPitch;
 import es.danisales.datune.tonality.ScaleDistance;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
@@ -19,7 +19,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @SuppressWarnings("WeakerAccess")
-public class DiatonicAlt implements SymbolicPitch {
+public class DiatonicAlt implements CyclicDegree {
 	public static final DiatonicAlt C = new DiatonicAlt(Diatonic.C, 0);
 	public static final DiatonicAlt D = new DiatonicAlt(Diatonic.D, 0);
 	public static final DiatonicAlt E = new DiatonicAlt(Diatonic.E, 0);
@@ -137,7 +137,7 @@ public class DiatonicAlt implements SymbolicPitch {
 		return DiatonicAltAdapter.from(chromaticMidi);
 	}
 
-	public static @NonNull DiatonicAlt from(@NonNull Diatonic diatonic, @NonNull Tonality tonality) throws TonalityException {
+	public static @NonNull DiatonicAlt from(@NonNull Diatonic diatonic, @NonNull Tonality<DiatonicAlt> tonality) throws TonalityException {
 		for ( DiatonicAlt diatonicAlt : tonality.getNotes() )
 			if (diatonicAlt.getDiatonic().equals(diatonic))
 				return diatonicAlt;
@@ -209,5 +209,25 @@ public class DiatonicAlt implements SymbolicPitch {
 	@Override
 	public int hashCode() {
 		return diatonicBase.hashCode() + Float.hashCode(alt);
+	}
+
+	@Override
+	public DiatonicAlt getNext() {
+		return null;
+	}
+
+	@Override
+	public DiatonicAlt getPrevious() {
+		return null;
+	}
+
+	@Override
+	public DiatonicAlt getShifted(int i) {
+		return null;
+	}
+
+	@Override
+	public int ordinal() {
+		return diatonicBase.ordinal();
 	}
 }

@@ -1,5 +1,6 @@
 package es.danisales.datune.midi.pitch;
 
+import es.danisales.datune.degrees.CyclicDegree;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.degrees.scale.ScaleDegree;
@@ -41,15 +42,11 @@ public class PitchDiatonicMidi implements PitchOctaveMidiEditable, PitchMidiInte
 
 	public @NonNull DiatonicAlt getDiatonicAlt() {
 		try {
-			return tonality.getNote(degree);
+			return (DiatonicAlt)tonality.getNote(degree);
 		} catch (ScaleRelativeDegreeException e) {
 			e.printStackTrace();
 			throw NeverHappensException.make("Si PitchDiatonicMidi es consistente, la Tonality siempre va a tener ScaleDegree y nunca devolverá null");
 		}
-	}
-
-	public @NonNull Diatonic getDiatonic() {
-		return getDiatonicAlt().getDiatonic();
 	}
 
 	@SuppressWarnings("MethodDoesntCallSuperMethod")

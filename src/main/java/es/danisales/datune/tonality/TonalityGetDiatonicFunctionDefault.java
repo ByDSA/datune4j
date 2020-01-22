@@ -23,7 +23,7 @@ public class TonalityGetDiatonicFunctionDefault {
                 .build();
     }
 
-    private static DiatonicAlt getNoteBaseFrom(Tonality tonality, DiatonicFunction diatonicFunction) throws ScaleRelativeDegreeException {
+    private static DiatonicAlt getNoteBaseFrom(Tonality<DiatonicAlt> tonality, DiatonicFunction diatonicFunction) throws ScaleRelativeDegreeException {
         return tonality.getNote( DiatonicDegree.from(diatonicFunction) );
     }
 }

@@ -4,6 +4,7 @@ import es.danisales.datune.chords.ChromaticChord;
 import es.danisales.datune.chords.DiatonicAlt;
 import es.danisales.datune.chords.DiatonicAltRetrieval;
 import es.danisales.datune.chords.PitchChromaticChord;
+import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.midi.DiatonicChordMidi;
@@ -656,13 +657,13 @@ public class TonalityRetrieval {
         return out;
     }
 
-    static @NonNull Tonality fromDiatonicChordMidi(@NonNull DiatonicChordMidi c, @NonNull Tonality base) {
+    static @NonNull Tonality<DiatonicAlt> fromDiatonicChordMidi(@NonNull DiatonicChordMidi c, @NonNull Tonality<DiatonicAlt> base) {
         if ( base.size() != 7 )
             throw new RuntimeException( "No tiene 7 notas la escala" );
 
         DiatonicAlt[] notesChord = new DiatonicAlt[c.size()];
         for ( int i = 0; i < c.size(); i++ )
-            notesChord[i] = c.get(i).getPitch().getDiatonicAlt();
+            notesChord[i] = (DiatonicAlt)c.get(i).getPitch().getDiatonicAlt();
 
         int posChordCorrector = 7 - c.get(0).getPitch().getDegree().ordinal();
 
@@ -700,7 +701,7 @@ public class TonalityRetrieval {
     }
 
     @SuppressWarnings("WeakerAccess")
-    public static @NonNull Set<Tonality> getEnharmonicFrom(@NonNull Tonality tonality, int maxAlterations) {
+    public static @NonNull Set<Tonality> getEnharmonicFrom(@NonNull Tonality<DiatonicAlt> tonality, int maxAlterations) {
         Set<Tonality> ret = new HashSet<>();
         Set<DiatonicAlt> possibleRootList = DiatonicAltRetrieval.getEnharmonicsFrom(tonality.getRoot(), maxAlterations);
 

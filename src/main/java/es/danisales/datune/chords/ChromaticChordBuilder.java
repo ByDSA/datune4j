@@ -1,8 +1,7 @@
 package es.danisales.datune.chords;
 
-import com.google.common.collect.ImmutableList;
+import es.danisales.datune.degrees.CyclicDegree;
 import es.danisales.datune.degrees.octave.Chromatic;
-import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
@@ -15,7 +14,6 @@ import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.tonality.ChordRetrievalFromTonality;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;
-import es.danisales.datune.tonality.TonalityException;
 import es.danisales.utils.NeverHappensException;
 import es.danisales.utils.building.BuilderOfWays;
 import es.danisales.utils.building.BuildingException;
@@ -83,12 +81,12 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
         public ChromaticChord build() throws BuildingException {
             ChromaticChord ret = new EmptyWay().build();
 
-            if (diatonicDegreePattern == null && intervalDiatonic != null) {
+            if (diatonicDegreePattern == null) {
                 diatonicDegreePattern = DiatonicDegreePattern.from(diatonicDegree, intervalDiatonic);
             }
 
             for (DiatonicDegree diatonicDegree : diatonicDegreePattern) {
-                DiatonicAlt diatonicAlt;
+                CyclicDegree diatonicAlt;
                 try {
                     diatonicAlt = tonality.getNote(diatonicDegree);
                 } catch (ScaleRelativeDegreeException e) {
@@ -145,9 +143,7 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
         @NonNull
         @Override
         public ChromaticChord build() {
-            ChromaticChord ret = new ChromaticChord();
-            ret.innerChord = ChromaticChordInterfaceAdapter.from(ImmutableList.of());
-            return ret;
+            return new ChromaticChord();
         }
     }
 
@@ -187,10 +183,9 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
     }
 
     public @NonNull ChromaticChordBuilder addAll(@NonNull Collection<Chromatic> chromaticList) {
-        ChromaticChord chromaticChord = new ChromaticChord();
-        chromaticChord.innerChord = new ChromaticChordMutable();
-        chromaticChord.addAll(chromaticList);
-        this.chromaticChord = chromaticChord;
+        if (this.chromaticChord == null)
+            this.chromaticChord = new ChromaticChord();
+        this.chromaticChord.addAll(chromaticList);
 
         return self();
     }
@@ -281,11 +276,8 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
         return intervalDiatonic(intervalDiatonic);
     }
 
-
-
-    public static @NonNull ChromaticChord from(@NonNull DiatonicAltChord diatonicChord, @NonNull Tonality tonality) throws TonalityException {
+    public static @NonNull ChromaticChord from(@NonNull DiatonicAltChord diatonicChord) {
         ChromaticChord chromaticChord = new ChromaticChord();
-        chromaticChord.innerChord = ChromaticChordInterfaceAdapter.from(ImmutableList.of());
 
         for (DiatonicAlt diatonicAlt : diatonicChord) {
             Chromatic chromatic = Chromatic.from(diatonicAlt);

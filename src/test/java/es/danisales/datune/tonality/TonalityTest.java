@@ -1,5 +1,6 @@
 package es.danisales.datune.tonality;
 
+import es.danisales.datune.chords.DiatonicAltChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.ChromaticDegree;
 import es.danisales.datune.degrees.scale.ScaleDegree;
@@ -443,7 +444,7 @@ public class TonalityTest {
                 DiatonicAlt.A,
                 DiatonicAlt.B
         );
-        assertEquals(notes, Tonality.C.getNotes() );
+        assertEquals(notes, Tonality.C );
     }
 
     @Test
@@ -457,12 +458,12 @@ public class TonalityTest {
                 DiatonicAlt.F,
                 DiatonicAlt.G
         );
-        assertEquals(notes, Tonality.Am.getNotes() );
+        assertEquals(notes, Tonality.Am );
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void tryToEditNotes() {
-        Tonality.C.getNotes().set(0, DiatonicAlt.CC);
+        //Tonality.C.set(0, DiatonicAlt.CC);
     }
 
     @Test
@@ -517,9 +518,9 @@ public class TonalityTest {
     @Test
     public void getAlterationsNumberCustom() {
         Tonality tonality = Tonality.from(DiatonicAlt.FF, Scale.CHROMATIC);
-        assertEquals(tonality.getNotes().toString(), 5, tonality.getDiatonicAlterationsNumber());
+        assertEquals(tonality.toString(), 5, tonality.getDiatonicAlterationsNumber());
         tonality = Tonality.from(DiatonicAlt.Gb, Scale.CHROMATIC);
-        assertEquals(tonality.getNotes().toString(), 5, tonality.getDiatonicAlterationsNumber());
+        assertEquals(tonality.toString(), 5, tonality.getDiatonicAlterationsNumber());
     }
 
     @Test
@@ -935,7 +936,7 @@ public class TonalityTest {
                 .build());
         assertEquals(ChromaticChord.builder()
                 .tonality(ton)
-                .chromaticFunction(ChromaticFunction.V7_IV).build().getNotes(), ChromaticChord.C7.getNotes());
+                .chromaticFunction(ChromaticFunction.V7_IV).build(), ChromaticChord.C7);
         assertEquals(ChromaticChord.D7, ChromaticChord.builder()
                 .tonality(ton)
                 .chromaticFunction(ChromaticFunction.V7_V)
@@ -947,29 +948,29 @@ public class TonalityTest {
 
         assertEquals(ChromaticChord.builder()
                 .tonality(ton)
-                .chromaticFunction(ChromaticFunction.SUBV7).build().getNotes(), ChromaticChord.CC7.getNotes());
+                .chromaticFunction(ChromaticFunction.SUBV7).build(), ChromaticChord.CC7);
 
         assertEquals(ChromaticChord.builder()
                 .tonality(ton)
-                .chromaticFunction(ChromaticFunction.SUBV7_II).build().getNotes(), ChromaticChord.DD7.getNotes());
+                .chromaticFunction(ChromaticFunction.SUBV7_II).build(), ChromaticChord.DD7);
 
         assertEquals(ChromaticChord.builder()
                 .tonality(ton)
-                .chromaticFunction(ChromaticFunction.SUBV7_III).build().getNotes(), ChromaticChord.F7.getNotes());
+                .chromaticFunction(ChromaticFunction.SUBV7_III).build(), ChromaticChord.F7);
 
         assertEquals(ChromaticChord.builder()
                 .tonality(ton)
-                .chromaticFunction(ChromaticFunction.SUBV7_IV).build().getNotes(), ChromaticChord.FF7.getNotes());
+                .chromaticFunction(ChromaticFunction.SUBV7_IV).build(), ChromaticChord.FF7);
 
         assertEquals(ChromaticChord.builder()
                 .tonality(ton)
-                .chromaticFunction(ChromaticFunction.SUBV7_V).build().getNotes(), ChromaticChord.GG7.getNotes());
+                .chromaticFunction(ChromaticFunction.SUBV7_V).build(), ChromaticChord.GG7);
 
         assertEquals(ChromaticChord.builder()
                 .tonality(ton)
                 .chromaticFunction(ChromaticFunction.SUBV7_VI).toString(), ChromaticChord.builder()
                 .tonality(ton)
-                .chromaticFunction(ChromaticFunction.SUBV7_VI).build().getNotes(), ChromaticChord.AA7.getNotes());
+                .chromaticFunction(ChromaticFunction.SUBV7_VI).build(), ChromaticChord.AA7);
 
         ChromaticChord c = ChromaticChord.CC.clone();
         c.inv();
@@ -983,17 +984,17 @@ public class TonalityTest {
 
         assertEquals(ChromaticChord.builder()
                 .tonality(ton)
-                .chromaticFunction(ChromaticFunction.V7ALT).build().getNotes(), ChromaticChord.Gm7b5.getNotes());
+                .chromaticFunction(ChromaticFunction.V7ALT).build(), ChromaticChord.Gm7b5);
 
         ton = Tonality.Cm;
         assertEquals(ChromaticChord.builder()
                 .tonality(ton)
-                .diatonicFunction(DiatonicFunction.VII7).build().getNotes(), ChromaticChord.AA7.getNotes());
+                .diatonicFunction(DiatonicFunction.VII7).build(), ChromaticChord.AA7);
 
         ton = Tonality.Db;
         assertEquals(ChromaticChord.builder()
                 .tonality(ton)
-                .diatonicFunction(DiatonicFunction.II).build().getNotes(), ChromaticChord.DDm.getNotes());
+                .diatonicFunction(DiatonicFunction.II).build(), ChromaticChord.DDm);
     }
 
     @Test
@@ -1047,6 +1048,13 @@ public class TonalityTest {
                     .chromaticFunction(cf)
                     .build());
         }
+    }
+
+    @Test
+    public void getChordFromHarmonicFunction() {
+        Tonality t = Tonality.C;
+
+        t.getChordFromHarmonicFunction(DiatonicFunction.I);
     }
 
     @Test

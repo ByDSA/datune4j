@@ -43,24 +43,6 @@ public class ChromaticChordMidi extends ChordMidi<ChromaticMidi, IntervalChromat
     }
 
     @Override
-    public void shift(IntervalChromatic intervalChromatic) throws PitchMidiException {
-        for (ChromaticMidi chromaticMidi : this) {
-            chromaticMidi.getPitch().shift(intervalChromatic);
-        }
-
-        onMutation();
-    }
-
-    @Override
-    public void shiftNegative(IntervalChromatic intervalChromatic) throws PitchMidiException {
-        for (ChromaticMidi chromaticMidi : this) {
-            chromaticMidi.getPitch().shiftNegative(intervalChromatic);
-        }
-
-        onMutation();
-    }
-
-    @Override
     public @NonNull ChromaticMidi getCyclic(int noteNumber) throws PitchMidiException {
         ChromaticMidi n;
 

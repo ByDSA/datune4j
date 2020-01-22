@@ -45,7 +45,7 @@ public class KeySignatureEvent extends MetaEvent {
 	static final byte STATUS = (byte) 0x59;
 
 	public Track channel;
-	private Tonality tonality;
+	private Tonality<DiatonicAlt> tonality;
 
 	public KeySignatureEvent(int delta, Tonality tonality) {
 		super(delta, STATUS);

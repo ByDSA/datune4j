@@ -77,7 +77,7 @@ public class Namer {
         throw NeverHappensException.switchOf(chromatic);
     }
 
-    public static String from(@NonNull ChromaticMidi chromaticMidi, @NonNull Tonality tonality) throws TonalityException, ScaleRelativeDegreeException {
+    public static String from(@NonNull ChromaticMidi chromaticMidi, @NonNull Tonality<DiatonicAlt> tonality) throws TonalityException, ScaleRelativeDegreeException {
         Chromatic chromatic = chromaticMidi.getPitch().getChromatic();
         DiatonicDegree diatonicDegree = (DiatonicDegree)tonality.getDegreeFrom(chromatic);
         DiatonicAlt diatonicAlt = tonality.getNote(diatonicDegree);

@@ -93,7 +93,7 @@ public class TonalityRetrievalTest {
             assertTrue(ScaleUtils.isMajorOrMinor(tonality.getScale()));
     }
 
-    /* From Chord */
+    /* From ChordProxy */
 
     @Test
     public void fromChordDiatonicFunction() {

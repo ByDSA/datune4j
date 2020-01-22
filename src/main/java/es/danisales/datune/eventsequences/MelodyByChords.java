@@ -53,7 +53,7 @@ public class MelodyByChords extends Melody {
 	public EventSequence getEvents() {
 		/*EventSequence es = new EventSequence();
 		int duration = 0;
-		for(Chord n : chords) {
+		for(ChordProxy n : chords) {
 			Tonality s = n.getTonality();
 			if (duration % DurationMidi.V1 == 0)
 				es.getWithSemiAdded(duration, new KeySignatureEvent(s));

@@ -2,18 +2,19 @@ package es.danisales.datune.tonality;
 
 import es.danisales.datune.chords.DiatonicAlt;
 import es.danisales.datune.chords.DiatonicAltRetrieval;
+import es.danisales.datune.degrees.CyclicDegree;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-class TonalityInnerMutable implements TonalityInner {
-	private DiatonicAlt root;
+class TonalityInnerMutable<C extends CyclicDegree> implements TonalityInner<C> {
+	private C root;
 	private Scale scale;
-	private List<DiatonicAlt> notes;
+	private List<C> notes;
 
-	TonalityInnerMutable(DiatonicAlt noteBase, Scale scale) {
+	TonalityInnerMutable(C noteBase, Scale scale) {
 		this.root = noteBase;
 		this.scale = scale;
 
@@ -31,7 +32,7 @@ class TonalityInnerMutable implements TonalityInner {
 		updateNotes();
 	}
 
-	void setRoot(@NonNull DiatonicAlt root) {
+	void setRoot(@NonNull C root) {
 		this.root = root;
 
 		updateNotes();
@@ -41,12 +42,12 @@ class TonalityInnerMutable implements TonalityInner {
 		return scale;
 	}
 
-	public @NonNull DiatonicAlt getRoot() {
+	public @NonNull C getRoot() {
 		return root;
 	}
 
 	@Override
-	public @NonNull List<DiatonicAlt> getNotes() {
+	public @NonNull List<C> getNotes() {
 		return Collections.unmodifiableList(notes);
 	}
 }

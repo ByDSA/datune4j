@@ -1,6 +1,7 @@
 package es.danisales.datune.degrees.octave;
 
 import es.danisales.datune.chords.DiatonicAlt;
+import es.danisales.datune.degrees.CyclicDegree;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.lang.Namer;
 import es.danisales.datune.midi.pitch.PitchDiatonicMidi;
@@ -15,7 +16,7 @@ import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkState;
 
-public enum Chromatic implements PitchChromaticSingle, OctaveDegree {
+public enum Chromatic implements PitchChromaticSingle, OctaveDegree, CyclicDegree {
 	C, CC, D, DD, E, F, FF, G, GG, A, AA, B;
 
 	public static final int NUMBER = values().length;
@@ -93,6 +94,11 @@ public enum Chromatic implements PitchChromaticSingle, OctaveDegree {
 		}
 
 		return ret;
+	}
+
+
+	public static @NonNull Chromatic from(@NonNull CyclicDegree diatonicAlt) {
+		return null;
 	}
 
 	@SuppressWarnings("Duplicates")

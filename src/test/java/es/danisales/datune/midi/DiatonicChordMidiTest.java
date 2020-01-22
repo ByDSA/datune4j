@@ -8,7 +8,6 @@ import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.chords.ChromaticChord;
-import es.danisales.datune.chords.ChromaticChordInterface;
 import es.danisales.datune.pitch.PitchException;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;

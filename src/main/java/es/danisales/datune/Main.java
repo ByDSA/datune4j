@@ -692,7 +692,7 @@ public class Main {
 		 *
          * p.progression.setArpeggio(new ArpegioAscDesc(DurationMidi.V1, DurationMidi.V8));
 		 *
-		 * for(Chord c : p.progression.getChords()) c.show();
+		 * for(ChordProxy c : p.progression.getChords()) c.show();
 		 */
 
 		/*
@@ -702,12 +702,12 @@ public class Main {
 		 * -1).setScaleAsMajor().inv(2).show(); addAll(ChordFunction.VI, -1).inv(1).show();
 		 * addAll(ChordFunction.I).show(); addAll(ChordFunction.VI, -1).inv(1).show();
 		 * addAll(ChordFunction.VI, -1).setScaleAsMajor().inv(1).show();
-         * addAll(ChordFunction.VII, -1).setLength(DurationMidi.VSUS2).inv(1).show(); Chord c =
+         * addAll(ChordFunction.VII, -1).setLength(DurationMidi.VSUS2).inv(1).show(); ChordProxy c =
          * addAll(ChordFunction.VII, -1).setScaleAsMajor().setLength(DurationMidi.VSUS2).show();
 		 *
          * progression.setArpeggio(a);
 		 *
-		 * ArrayList<Chord> chords = Chord.whatIsIt(c); for(Chord cc : chords) if
+		 * ArrayList<ChordProxy> chords = ChordProxy.whatIsIt(c); for(ChordProxy cc : chords) if
 		 * (cc.meta.type == ChordFunction.VII) cc.show(); } };
 		 */
 
@@ -722,8 +722,8 @@ public class Main {
 		 * ArrayList<Note> notes = new ArrayList<Note>(); notes.addAll( new Note(Note.E) );
 		 * notes.addAll( new Note(Note.GG) ); notes.addAll( (Note)new Note(Note.B) );
 		 *
-		 * ArrayList<Chord> chords = Chord.whatIsIt(notes);
-		 * System.out.println("Encontrados " + chords.size() + " acordes!"); for(Chord
+		 * ArrayList<ChordProxy> chords = ChordProxy.whatIsIt(notes);
+		 * System.out.println("Encontrados " + chords.size() + " acordes!"); for(ChordProxy
 		 * cc : chords) System.out.println(cc);
 		 */
 
@@ -731,7 +731,7 @@ public class Main {
 		 * for(int i = 0; i < 12; i++) { for(int j = 0; j < 12; j++) { Scale scale1 =
 		 * new Scale(i, Mode.LYDIAN); Scale scale2 = new Scale(j, Mode.LOCRIAN);
 		 *
-		 * ArrayList<Chord[]> chords = scale1.commonChords(scale2); for(Chord[] cs :
+		 * ArrayList<ChordProxy[]> chords = scale1.commonChords(scale2); for(ChordProxy[] cs :
 		 * chords) { if (cs[0].size() >= 4) continue; System.out.println(cs[0]);
 		 * System.out.println(cs[1]); System.out.println("----"); } } }
 		 *
@@ -745,24 +745,24 @@ public class Main {
 		 *
 		 * channel = new Track(0, 0); strings = new Track(1, 48);
 		 *
-		 * Progression p = new Progression(scale, 4) { { addChord(Chord.I) .inv(-2)
+		 * Progression p = new Progression(scale, 4) { { addChord(ChordProxy.I) .inv(-2)
 		 * .setLength(Note.V1);
 		 *
-		 * addChord(Chord.III) .inv(-1) .setLength(Note.V1);
+		 * addChord(ChordProxy.III) .inv(-1) .setLength(Note.V1);
 		 *
-		 * addChord(Chord.VI) .setLength(Note.V1);
+		 * addChord(ChordProxy.VI) .setLength(Note.V1);
 		 *
-		 * addChord(Chord.V7_V) .setLength(Note.V1);
+		 * addChord(ChordProxy.V7_V) .setLength(Note.V1);
 		 *
-		 * addChord(Chord.IV) .setLength(Note.V1);
+		 * addChord(ChordProxy.IV) .setLength(Note.V1);
 		 *
-		 * addChord(Chord.I) .inv(-2) .setLength(Note.V1);
+		 * addChord(ChordProxy.I) .inv(-2) .setLength(Note.V1);
 		 *
-		 * addChord(Chord.V7_V) .setLength(Note.V1);
+		 * addChord(ChordProxy.V7_V) .setLength(Note.V1);
 		 *
-         * addChord(Chord.IV) .setLength(Note.VSUS2);
+         * addChord(ChordProxy.IV) .setLength(Note.VSUS2);
 		 *
-         * addChord(Chord.V) .setLength(Note.VSUS2); } }; p.setChordArpegio( new
+         * addChord(ChordProxy.V) .setLength(Note.VSUS2); } }; p.setChordArpegio( new
 		 * ArpegioV4() );
 		 *
 		 * channel.addAll(p); sequence.addAll(channel); } };
@@ -811,25 +811,25 @@ public class Main {
 		 * p.addNote(0).setLength(Note.V2D);
 		 *
 		 * Progression p2 = new Progression(scale, 5);
-         * p2.addChord(Chord.I).setLength(Note.VSUS2);
-         * p2.addChord(Chord.V).inv(2).setLength(Note.VSUS2);
+         * p2.addChord(ChordProxy.I).setLength(Note.VSUS2);
+         * p2.addChord(ChordProxy.V).inv(2).setLength(Note.VSUS2);
 		 *
-         * p2.addChord(Chord.I).inv(-1).setLength(Note.VSUS2);
-         * p2.addChord(Chord.V).inv(1).setLength(Note.VSUS2);
+         * p2.addChord(ChordProxy.I).inv(-1).setLength(Note.VSUS2);
+         * p2.addChord(ChordProxy.V).inv(1).setLength(Note.VSUS2);
 		 *
-         * p2.addChord(Chord.I).inv(-1).setLength(Note.VSUS2);
-         * p2.addChord(Chord.III).setLength(Note.VSUS2);
+         * p2.addChord(ChordProxy.I).inv(-1).setLength(Note.VSUS2);
+         * p2.addChord(ChordProxy.III).setLength(Note.VSUS2);
 		 *
-		 * p2.addChord(Chord.IV).setLength(Note.V1);
+		 * p2.addChord(ChordProxy.IV).setLength(Note.V1);
 		 *
-         * p2.addChord(Chord.I).inv(-1).setLength(Note.VSUS2);
-         * p2.addChord(Chord.III).setLength(Note.VSUS2);
+         * p2.addChord(ChordProxy.I).inv(-1).setLength(Note.VSUS2);
+         * p2.addChord(ChordProxy.III).setLength(Note.VSUS2);
 		 *
-		 * p2.addChord(Chord.I).inv(-1).setLength(Note.V1);
+		 * p2.addChord(ChordProxy.I).inv(-1).setLength(Note.V1);
 		 *
-		 * p2.addChord(Chord.V).inv(1).setLength(Note.V1);
+		 * p2.addChord(ChordProxy.V).inv(1).setLength(Note.V1);
 		 *
-		 * p2.addChord(Chord.I).inv(-1).setLength(Note.V1);
+		 * p2.addChord(ChordProxy.I).inv(-1).setLength(Note.V1);
 		 *
          * //p2.setChordArpegio(new ArpegioAscDesc(Note.VSUS2, Note.V8));
 		 *
@@ -898,8 +898,8 @@ public class Main {
 
 /*
  * Scale s = new Scale(Note.D, Tonality.MAJOR); Progression l = new
- * Progression(s, 5) { { addAll(Chord.I); addAll(Chord.vi); addAll(Chord.iii);
- * addAll(Chord.V); addAll(Chord.I);
+ * Progression(s, 5) { { addAll(ChordProxy.I); addAll(ChordProxy.vi); addAll(ChordProxy.iii);
+ * addAll(ChordProxy.V); addAll(ChordProxy.I);
  *
  * setChordArpegio(new ArpegioV2_3(3)); setChordArpegio(4, new
  * ArpegioDefault(3)); } }; c.addAll(0, l);
@@ -913,15 +913,15 @@ public class Main {
  * seq.addAll(c); seq.addAll(c2); seq.addAll(c3); Scale s = new Scale(note,
  * Tonality.MINOR); for(int i = 0; i < 4; i++) { Progression l = new
  * Progression(s, octave-1) { { // F# G# A B C# D E F# G# A# B C# D# F
- * addAll(Chord.I); // F# A C# I III V
+ * addAll(ChordProxy.I); // F# A C# I III V
  *
- * addAll(Chord.VI).inv(2); // F# A D I-III-VI VI 2� inv
+ * addAll(ChordProxy.VI).inv(2); // F# A D I-III-VI VI 2� inv
  *
- * addAll(Chord.IV).inv(); // F# B D I IV VI IV 1� inv
+ * addAll(ChordProxy.IV).inv(); // F# B D I IV VI IV 1� inv
  *
- * addAll(Chord.VII, -1).setLength(Note.VSUS2); // E G# B VII II IV VII
+ * addAll(ChordProxy.VII, -1).setLength(Note.VSUS2); // E G# B VII II IV VII
  *
- * addAll(Chord.VII, -1, s.getMajor()).setLength(Note.VSUS2); // F G# B 3�m 5�� } };
+ * addAll(ChordProxy.VII, -1, s.getMajor()).setLength(Note.VSUS2); // F G# B 3�m 5�� } };
  * c.addAll(Note.V1*4*i, l);
  *
  * c2.setScale(s); int pre = Note.V1*4*i + Note.VSUS4 + Note.V8; c2.addAll(pre, new
@@ -951,15 +951,15 @@ public class Main {
  * NoteScale(2, octave, s, Note.VSUS4));
  *
  * Progression l2 = new Progression(s, octave-1) { { // F# G# A B C# D E F# G#
- * A# B C# D# F addAll(Chord.I); // F# A C# I III V
+ * A# B C# D# F addAll(ChordProxy.I); // F# A C# I III V
  *
- * addAll(Chord.VI) .inv(2); // F# A D I-III-VI VI 2� inv
+ * addAll(ChordProxy.VI) .inv(2); // F# A D I-III-VI VI 2� inv
  *
- * addAll(Chord.IV) .inv(); // F# B D I IV VI IV 1� inv
+ * addAll(ChordProxy.IV) .inv(); // F# B D I IV VI IV 1� inv
  *
- * addAll(Chord.VII, -1) .setLength(Note.VSUS2); // E G# B VII II IV VII
+ * addAll(ChordProxy.VII, -1) .setLength(Note.VSUS2); // E G# B VII II IV VII
  *
- * addAll(Chord.VII, -1, s.getMajor()) .setLength(Note.VSUS2); // F G# B 3�m 5��
+ * addAll(ChordProxy.VII, -1, s.getMajor()) .setLength(Note.VSUS2); // F G# B 3�m 5��
  *
  * setChordArpegio(new ArpegioAscDesc(3, Note.V1, Note.V16)); setChordArpegio(3,
  * new ArpegioAscDesc(3, Note.V1, Note.V16)); setChordArpegio(4, new
@@ -974,23 +974,23 @@ public class Main {
 
 /*
  * for(int i = 0; i < 4; i++) { Progression l = new Progression(s, octave) { {
- * addAll(Chord.I);
+ * addAll(ChordProxy.I);
  *
- * addAll(Chord.IV).inv(1);
+ * addAll(ChordProxy.IV).inv(1);
  *
- * addAll(Chord.VII).inv(2);
+ * addAll(ChordProxy.VII).inv(2);
  *
- * addAll(Chord.III).inv(1);
+ * addAll(ChordProxy.III).inv(1);
  *
- * addAll(Chord.VI).inv(2);
+ * addAll(ChordProxy.VI).inv(2);
  *
- * addAll(Chord.II).inv(1);
+ * addAll(ChordProxy.II).inv(1);
  *
- * addAll(Chord.V, 0) .inv(2) .setLength(Note.VSUS2);
+ * addAll(ChordProxy.V, 0) .inv(2) .setLength(Note.VSUS2);
  *
- * addAll(Chord.VII, 0, s.getMajor()) .inv(2) .setLength(Note.VSUS2);
+ * addAll(ChordProxy.VII, 0, s.getMajor()) .inv(2) .setLength(Note.VSUS2);
  *
- * addAll(Chord.I, 1) .inv(2);
+ * addAll(ChordProxy.I, 1) .inv(2);
  *
  * setChordArpegio(new ArpegioAscDesc(3, Note.V1, Note.V16)); } };
  * c.addAll(Note.V1*8*i, l); }
@@ -998,34 +998,34 @@ public class Main {
 
 /*
  * Progression l = new Progression(s, octave) { { int[] primary = new
- * int[]{Chord.I, Chord.IV, Chord.V}; int[] secondary = new int[]{Chord.II,
- * Chord.III, Chord.VI};
+ * int[]{ChordProxy.I, ChordProxy.IV, ChordProxy.V}; int[] secondary = new int[]{ChordProxy.II,
+ * ChordProxy.III, ChordProxy.VI};
  *
  * addAll(primary[0]); for (int i = 0; i < 10; i++) { int rnd = new
  * SecureRandom().nextInt(primary.size); addAll(primary[rnd]); rnd = new
  * SecureRandom().nextInt(secondary.size); addAll(secondary[rnd]); rnd = new
  * SecureRandom().nextInt(primary.size); addAll(primary[rnd]);
- * addAll(Chord.VII).inv(2); }
+ * addAll(ChordProxy.VII).inv(2); }
  *
  * setChordArpegio(new ArpegioAscDesc(3, Note.V1, Note.V16)); } }; c.addAll(0, l);
  */
 
 /*
- * addAll(Chord.I);
+ * addAll(ChordProxy.I);
  *
- * addAll(Chord.V).inv(2);
+ * addAll(ChordProxy.V).inv(2);
  *
- * addAll(Chord.VI).inv(2);
+ * addAll(ChordProxy.VI).inv(2);
  *
- * addAll(Chord.IV).inv(1);
+ * addAll(ChordProxy.IV).inv(1);
  *
- * addAll(Chord.I).inv(1);
+ * addAll(ChordProxy.I).inv(1);
  *
- * addAll(Chord.IV).inv(2);
+ * addAll(ChordProxy.IV).inv(2);
  *
- * addAll(Chord.VI).inv(2);
+ * addAll(ChordProxy.VI).inv(2);
  *
- * addAll(Chord.V).inv(2);
+ * addAll(ChordProxy.V).inv(2);
  */
 
 // setChordArpegio(new ArpegioAscDesc(3, Note.V1, Note.V8));

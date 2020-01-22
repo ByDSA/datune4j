@@ -10,8 +10,9 @@ import java.util.Arrays;
 import java.util.Set;
 
 @SuppressWarnings("WeakerAccess")
-public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Chromatic, IntervalChromatic>
-        implements ChordCommon<Chromatic>, Iterable<Chromatic>, PitchChromaticChord<Chromatic> {
+public final class ChromaticChord
+        extends Chord<Chromatic>
+        implements PitchChromaticChord<Chromatic>, IntervalShifter<IntervalChromatic> {
     // Quintas
     public static final ChromaticChord C5 = new ChromaticChord(ChromaticChordImmutable.C5);
     public static final ChromaticChord CC5 = new ChromaticChord(ChromaticChordImmutable.CC5);
@@ -2425,6 +2426,8 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
      * END CONSTANT CHORDS
      *****************************************************************************************************************/
 
+    ChromaticChordInfo info;
+
     public static ChromaticChordBuilder builder() {
         return new ChromaticChordBuilder();
     }
@@ -2440,49 +2443,13 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
         super();
     }
 
-    private ChromaticChord(ChromaticChordInterface chromaticChordInterface) {
+    private ChromaticChord(ChromaticChordImmutable chromaticChordInterface) {
         super(chromaticChordInterface);
     }
 
     @Override
-    protected final void turnInnerChordIntoImmutableIfPossible() {
-        if (getRootIndex() != 0)
-            return;
-        ChromaticChordImmutable chromaticChordImmutable = ChromaticChordImmutable.from(innerChord);
-        if (chromaticChordImmutable != null)
-            innerChord = chromaticChordImmutable;
-    }
-
-    @Override
-    protected final void turnInnerIntoMutable() {
-        innerChord = ChromaticChordMutable.from(innerChord);
-    }
-
-    @Override
-    protected final boolean innerIsImmutable() {
-        return innerChord instanceof ChromaticChordImmutable;
-    }
-
-    @Override
-    protected final boolean InnerIsMutable() {
-        return innerChord instanceof ChromaticChordMutable;
-    }
-
-    @Override
-    protected final ChromaticChordMutable castCustom(ChromaticChordInterface chord) {
-        return (ChromaticChordMutable) innerChord;
-    }
-
-    @Override
-    protected final ChromaticChord create() {
-        ChromaticChord chromaticChord = new ChromaticChord();
-        chromaticChord.innerChord = new ChromaticChordMutable();
-        return chromaticChord;
-    }
-
-    @Override
     public @NonNull ChromaticChordInfo getInfo() {
-        return innerChord.getInfo();
+        return info;
     }
 
     @Override
@@ -2498,17 +2465,7 @@ public final class ChromaticChord extends ChordProxy<ChromaticChordInterface, Ch
     }
 
     @Override
-    public final ChromaticChord clone() {
-        return (ChromaticChord) super.clone();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if ( !(o instanceof ChromaticChord) )
-            return false;
-
-        ChromaticChord casted = (ChromaticChord)o;
-
-        return casted.innerChord.equals(innerChord);
+    public ChromaticChord clone() {
+        return (ChromaticChord)super.clone();
     }
 }

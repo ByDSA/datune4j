@@ -36,7 +36,7 @@ public class Progression<This extends Progression> implements EventComplex {
 		octave = o;
 	}
 
-	/** Replace Chord
+	/** Replace ChordProxy
 	 *
 	 * @param n    número de corde en el tiempo
 	 * @param diatonicFunction    Grado del acorde
@@ -185,20 +185,20 @@ public class Progression<This extends Progression> implements EventComplex {
 			/*
 			if (n instanceof NodeChord)
 				switch(((NodeChord) n).type) {
-				case Chord.I: sb.append("I"); break;
-				case Chord.II: sb.append("II"); break;
-				case Chord.III: sb.append("III"); break;
-				case Chord.IV: sb.append("IV"); break;
-				case Chord.V: sb.append("V"); break;
-				case Chord.VI: sb.append("VI"); break;
-				case Chord.VII: sb.append("VII"); break;
-				case Chord.i: sb.append("i"); break;
-				case Chord.ii: sb.append("ii"); break;
-				case Chord.iii: sb.append("iii"); break;
-				case Chord.iv: sb.append("iv"); break;
-				case Chord.v: sb.append("v"); break;
-				case Chord.vi: sb.append("vi"); break;
-				case Chord.vii: sb.append("vii"); break;
+				case ChordProxy.I: sb.append("I"); break;
+				case ChordProxy.II: sb.append("II"); break;
+				case ChordProxy.III: sb.append("III"); break;
+				case ChordProxy.IV: sb.append("IV"); break;
+				case ChordProxy.V: sb.append("V"); break;
+				case ChordProxy.VI: sb.append("VI"); break;
+				case ChordProxy.VII: sb.append("VII"); break;
+				case ChordProxy.i: sb.append("i"); break;
+				case ChordProxy.ii: sb.append("ii"); break;
+				case ChordProxy.iii: sb.append("iii"); break;
+				case ChordProxy.iv: sb.append("iv"); break;
+				case ChordProxy.v: sb.append("v"); break;
+				case ChordProxy.vi: sb.append("vi"); break;
+				case ChordProxy.vii: sb.append("vii"); break;
 				}
 			 */
 		}
