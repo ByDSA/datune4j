@@ -11,7 +11,6 @@ import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.midi.ChordMidi;
-import es.danisales.datune.midi.ChordMidiTransformations;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.NoteMidi;
 import es.danisales.datune.midi.binaries.events.NoteOff;
@@ -37,12 +36,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
 class Loader {
-    private Tonality<DiatonicAlt> tonality;
+    private Tonality<Chromatic> tonality;
     private JPanel panel;
     private JPanel[][] panels = new JPanel[7][6];
     private AtomicReference<ChordMidi> lastPlayed;
 
-    Loader(@NonNull Tonality tonality, @NonNull JPanel panel) {
+    Loader(@NonNull Tonality<Chromatic> tonality, @NonNull JPanel panel) {
         this.tonality = Objects.requireNonNull(tonality);
         this.panel = Objects.requireNonNull(panel);
     }
@@ -126,7 +125,7 @@ class Loader {
         for (int i = 0; i < panels.length; i++) {
             panelF[i] = new JPanel();
             DiatonicDegree diatonicDegree = DiatonicDegree.values()[i];
-            DiatonicAlt diatonicAlt;
+            Chromatic diatonicAlt;
             try {
                 diatonicAlt = tonality.getNote(diatonicDegree);
             } catch (ScaleRelativeDegreeException e) {
@@ -203,9 +202,9 @@ class Loader {
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(myKeyEventDispatcher);
 
         for (TonalChord parametricChord : chords()) {
-            ChordMidi diatonicChordMidi;
+            ChordMidi chordMidi;
             try {
-                diatonicChordMidi = ChordMidi.builder()
+                chordMidi = ChordMidi.builder()
                         .fromChromaticChord(ChromaticChord.from(parametricChord))
                         .build();
                 // check(diatonicChordMidi, parametricChord, ton);
@@ -227,7 +226,7 @@ class Loader {
                 continue;
             addedChords.add(chromaticChord);
 
-            JButton jButton = addButton(diatonicChordMidi, parametricChord, tonality);
+            JButton jButton = addButton(chordMidi, chromaticChord, parametricChord, tonality);
             if (mapKey.inverse().get(parametricChord.getHarmonicFunction()) != null && parametricChord.getTonality().equals(tonality)) {
                 mapButton.put(parametricChord.getHarmonicFunction(), jButton);
             }
@@ -237,16 +236,16 @@ class Loader {
         System.out.println("Tonalidad cambiada a " + tonality);
     }
 
-    private JButton addButton(ChordMidi chordMidi, TonalChord parametricChord, Tonality tonality) {
+    private JButton addButton(ChordMidi chordMidi, ChromaticChord chromaticChord, TonalChord parametricChord, Tonality<Chromatic> tonality) {
         final HarmonicFunction harmonicFunction = parametricChord.getHarmonicFunction();
         DiatonicDegree degree = getDegree(harmonicFunction);
 
         JButton jButton = new JButton(harmonicFunction.toString());
 
         int degreeOrdinal = degree.ordinal();
-        panels[degreeOrdinal][chordMidi.size() - 2].add(jButton);
+        panels[degreeOrdinal][chromaticChord.size() - 2].add(jButton);
 
-        if (!tonality.contains(chordMidi)) {
+        if (!tonality.containsAll(chromaticChord)) {
             if (ArrayUtils.contains(harmonicFunction, ChromaticFunction.TENSIONS))
                 jButton.setForeground(Color.BLUE);
             else {

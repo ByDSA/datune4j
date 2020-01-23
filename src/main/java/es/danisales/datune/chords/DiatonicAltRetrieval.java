@@ -12,6 +12,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -38,9 +39,33 @@ public class DiatonicAltRetrieval {
                 return (List<C>)lowerThan7ListFrom((DiatonicAlt)noteBase, scale);
             else
                 return (List<C>)genericListFrom((DiatonicAlt)noteBase, scale);
+        } else if (noteBase instanceof Chromatic) {
+            if (scale.size() <= Chromatic.NUMBER) {
+                return (List<C>)chromaticListFrom((Chromatic)noteBase, scale);
+            } else
+                throw new RuntimeException();
         }
 
         throw new RuntimeException();
+    }
+
+    private static List<Chromatic> chromaticListFrom(@NonNull Chromatic noteBase, @NonNull Scale scale) {
+        List<Chromatic> ret = new ArrayList<>();
+        ret.add(noteBase);
+        float semitones = noteBase.ordinal();
+        for (ScaleDistance scaleDistance : scale) {
+            semitones += scaleDistance.getMicrotonalSemitones();
+            int semitonesInt = Math.round(semitones);
+            Chromatic currentChromatic = Chromatic.from(semitonesInt % Chromatic.NUMBER);
+            if ( ret.contains(currentChromatic) )
+                throw new RuntimeException();
+            ret.add(currentChromatic);
+
+            if (ret.size() == scale.size())
+                break;
+        }
+
+        return ret;
     }
 
     private static @NonNull List<DiatonicAlt> genericListFrom(@NonNull DiatonicAlt noteBase, @NonNull final Scale scale) {

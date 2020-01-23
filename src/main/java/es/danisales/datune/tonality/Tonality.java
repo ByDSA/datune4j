@@ -3,20 +3,19 @@ package es.danisales.datune.tonality;
 import es.danisales.datune.chords.Chord;
 import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.degrees.octave.Chromatic;
-import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.degrees.scale.ScaleDegree;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.chords.ChromaticChord;
 import es.danisales.datune.chords.DiatonicAlt;
-import es.danisales.datune.midi.ChordMidi;
-import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -53,6 +52,38 @@ public class Tonality<C extends CyclicDegree> implements Iterable<C> {
     public static final Tonality<DiatonicAlt> Bbm = new Tonality<>(TonalityInnerImmutable.Bbm);
     public static final Tonality<DiatonicAlt> Bm = new Tonality<>(TonalityInnerImmutable.Bm);
 
+    public static class ET12 {
+        private ET12() {
+        }
+
+        public static final Tonality<Chromatic> C = Tonality.from(Chromatic.C, Scale.MAJOR);
+        public static final Tonality<Chromatic> CC = Tonality.from(Chromatic.CC, Scale.MAJOR);
+        public static final Tonality<Chromatic> D = Tonality.from(Chromatic.D, Scale.MAJOR);
+        public static final Tonality<Chromatic> DD = Tonality.from(Chromatic.DD, Scale.MAJOR);
+        public static final Tonality<Chromatic> E = Tonality.from(Chromatic.E, Scale.MAJOR);
+        public static final Tonality<Chromatic> F = Tonality.from(Chromatic.F, Scale.MAJOR);
+        public static final Tonality<Chromatic> FF = Tonality.from(Chromatic.FF, Scale.MAJOR);
+        public static final Tonality<Chromatic> G = Tonality.from(Chromatic.G, Scale.MAJOR);
+        public static final Tonality<Chromatic> GG = Tonality.from(Chromatic.GG, Scale.MAJOR);
+        public static final Tonality<Chromatic> A = Tonality.from(Chromatic.A, Scale.MAJOR);
+        public static final Tonality<Chromatic> AA = Tonality.from(Chromatic.AA, Scale.MAJOR);
+        public static final Tonality<Chromatic> B = Tonality.from(Chromatic.B, Scale.MAJOR);
+
+        public static final Tonality<Chromatic> Cm = Tonality.from(Chromatic.C, Scale.MINOR);
+        public static final Tonality<Chromatic> CCm = Tonality.from(Chromatic.CC, Scale.MINOR);
+        public static final Tonality<Chromatic> Dm = Tonality.from(Chromatic.D, Scale.MINOR);
+        public static final Tonality<Chromatic> DDm = Tonality.from(Chromatic.DD, Scale.MINOR);
+        public static final Tonality<Chromatic> Em = Tonality.from(Chromatic.E, Scale.MINOR);
+        public static final Tonality<Chromatic> Fm = Tonality.from(Chromatic.F, Scale.MINOR);
+        public static final Tonality<Chromatic> FFm = Tonality.from(Chromatic.FF, Scale.MINOR);
+        public static final Tonality<Chromatic> Gm = Tonality.from(Chromatic.G, Scale.MINOR);
+        public static final Tonality<Chromatic> GGm = Tonality.from(Chromatic.GG, Scale.MINOR);
+        public static final Tonality<Chromatic> Am = Tonality.from(Chromatic.A, Scale.MINOR);
+        public static final Tonality<Chromatic> AAm = Tonality.from(Chromatic.AA, Scale.MINOR);
+        public static final Tonality<Chromatic> Bm = Tonality.from(Chromatic.B, Scale.MINOR);
+
+    }
+
     /**
      * END CONSTANT TONALITIES
      ******************************************************************************/
@@ -60,7 +91,6 @@ public class Tonality<C extends CyclicDegree> implements Iterable<C> {
     TonalityInner<C> innerTonality;
     private final boolean fixed;
 
-    private Map<Chromatic, C> chromaticDiatonicAltMap;
     private Map<ChromaticChord, List<ChromaticFunction>> cacheChromaticMap;
     private Map<ChromaticChord, List<DiatonicFunction>> cacheDiatonicMap;
 
@@ -75,21 +105,14 @@ public class Tonality<C extends CyclicDegree> implements Iterable<C> {
     private Tonality(TonalityInner<C> tonalityInterface, boolean fixed) {
         innerTonality = tonalityInterface;
         this.fixed = fixed;
-
-        createChromaticToDiatonicAltCache();
     }
 
-    public static <C extends CyclicDegree> @NonNull Tonality<C> from(@NonNull C diatonicAlt, @NonNull Scale scale) {
-        TonalityInner tonalityInterface = TonalityInnerImmutable.from(diatonicAlt, scale);
+    public static <C extends CyclicDegree> @NonNull Tonality<C> from(@NonNull C cyclicDegree, @NonNull Scale scale) {
+        TonalityInner tonalityInterface = TonalityInnerImmutable.from(cyclicDegree, scale);
         if (tonalityInterface == null)
-            tonalityInterface = new TonalityInnerMutable(diatonicAlt, scale);
+            tonalityInterface = new TonalityInnerMutable(cyclicDegree, scale);
 
         return new Tonality(tonalityInterface, false);
-    }
-
-    public static @NonNull Tonality from(@NonNull Chromatic chromatic, @NonNull Scale scale) {
-        DiatonicAlt diatonicAlt = DiatonicAlt.from(chromatic);
-        return from(diatonicAlt, scale);
     }
 
     /** Notes **/
@@ -135,18 +158,25 @@ public class Tonality<C extends CyclicDegree> implements Iterable<C> {
         return ret;
     }
 
-    public List<Tonality> getModesSameRoot() {
-        List<Tonality> ret = new ArrayList<>();
+    public List<Tonality<C>> getModesSameRoot() {
+        List<Tonality<C>> ret = new ArrayList<>();
 
-        for ( Scale s : getScale().getModes() )
-            for ( Chromatic chromatic : Chromatic.values() ) {
-                Tonality t = Tonality.from( chromatic, s );
-                if (t.innerTonality instanceof TonalityInnerMutable)
-                    t = TonalityRetrieval.getEnharmonicMinimalAltsFrom(t).iterator().next();
+        for ( Scale scale : getScale().getModes() )
+            for ( C c : (List<C>)values(getNotes().get(0).getClass()) ) {
+                Tonality<C> t = Tonality.from( c, scale );
+               /* if (t.innerTonality instanceof TonalityInnerMutable)
+                    t = TonalityRetrieval.getEnharmonicMinimalAltsFrom(t).iterator().next();*/
                 ret.add(t);
             }
 
         return ret;
+    }
+
+    private static <C extends CyclicDegree> List<C> values(Class<C> cClass) {
+        if (cClass.equals(Chromatic.class))
+            return (List<C>) Arrays.asList( Chromatic.values() );
+        else
+            throw new RuntimeException();
     }
 
     public @Nullable ScaleDegree getDegreeFrom(@NonNull C diatonicAlt) {
@@ -173,27 +203,12 @@ public class Tonality<C extends CyclicDegree> implements Iterable<C> {
         return ScaleDegree.getDefaultDegreesFromScaleSize(getNotes().size());
     }
 
-    public @NonNull ScaleDegree getDegreeFrom(@NonNull Chromatic chromatic) throws TonalityException {
-        Objects.requireNonNull(chromatic, "No se ha especificado nota");
-        checkState(getNotes().get(0) instanceof DiatonicAlt);
-
-        for (ScaleDegree degree : getScaleMainDegrees()) {
-            C diatonicAlt = getNoteSecure(degree);
-
-            Chromatic chromatic1 = Chromatic.from((DiatonicAlt)diatonicAlt);
-            if (chromatic1 == chromatic)
-                return degree;
-        }
-
-        throw new TonalityException(chromatic, this);
-    }
-
     private void excepIfFixed() {
         if (fixed)
             throw new UnsupportedOperationException();
     }
 
-    public void setRoot(@NonNull DiatonicAlt root) {
+    public void setRoot(@NonNull C root) {
         excepIfFixed();
 
         if (!getRoot().equals(root))
@@ -235,26 +250,8 @@ public class Tonality<C extends CyclicDegree> implements Iterable<C> {
         innerTonality = new TonalityInnerMutable(innerTonality.getRoot(), innerTonality.getScale());
     }
 
-    public boolean contains(C note) {
+    public boolean containsAll(C note) {
         return getDegreeFrom( note ) != null;
-    }
-
-    public boolean contains(@NonNull Chromatic chromatic) {
-        try {
-            getDegreeFrom(chromatic);
-            return true;
-        } catch (TonalityException e) {
-            return false;
-        }
-    }
-
-    public boolean containsAll(@NonNull Iterable<Chromatic> notes) {
-        for (Chromatic chromatic : notes) {
-            if (!contains(chromatic))
-                return false;
-        }
-
-        return true;
     }
 
     public @NonNull Tonality<C> getRelativeScaleDiatonic(ScaleDegree relativeDegree) throws ScaleRelativeDegreeException { // todo: sólo function
@@ -331,14 +328,6 @@ public class Tonality<C extends CyclicDegree> implements Iterable<C> {
         return chromaticChord;
     }
 
-    private void createChromaticToDiatonicAltCache() {
-        chromaticDiatonicAltMap = new HashMap<>();
-        for ( C diatonicAlt : innerTonality.getNotes() ) {
-            Chromatic chromatic = Chromatic.from(diatonicAlt);
-            chromaticDiatonicAltMap.put(chromatic, diatonicAlt);
-        }
-    }
-
     @SuppressWarnings("Duplicates")
     private void createCache() {
         cacheDiatonicMap = new HashMap<>();
@@ -375,12 +364,6 @@ public class Tonality<C extends CyclicDegree> implements Iterable<C> {
         checkState(cacheDiatonicMap != null && cacheChromaticMap != null);
     }
 
-    public @Nullable C getNote(@NonNull Chromatic chromatic) {
-        Objects.requireNonNull(chromatic);
-
-        return chromaticDiatonicAltMap.get( chromatic );
-    }
-
     @Override
     @NonNull
     public Iterator<C> iterator() {
@@ -409,7 +392,7 @@ public class Tonality<C extends CyclicDegree> implements Iterable<C> {
 
     @SuppressWarnings("MethodDoesntCallSuperMethod")
     @Override
-    public Tonality clone() {
+    public Tonality<C> clone() {
         return from(getRoot(), getScale());
     }
 
@@ -420,9 +403,9 @@ public class Tonality<C extends CyclicDegree> implements Iterable<C> {
                 .build();
     }
 
-    public boolean contains(ChordMidi diatonicChordMidi) {
-        for (ChromaticMidi chromaticMidi : diatonicChordMidi)
-            if (!contains(chromaticMidi.getPitch().getNote()))
+    public boolean containsAll(Chord<C> chord) {
+        for (C cyclicDegree : chord)
+            if (!containsAll(cyclicDegree))
                 return false;
 
         return true;

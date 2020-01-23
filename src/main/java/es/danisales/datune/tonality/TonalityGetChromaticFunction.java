@@ -160,7 +160,7 @@ public class TonalityGetChromaticFunction {
 		return null;
 	}
 
-	public static @NonNull Tonality getTonalityFromChromaticFunction(@NonNull Tonality<DiatonicAlt> tonality, @NonNull ChromaticFunction chromaticFunction) throws ScaleRelativeDegreeException {
+	public static @NonNull Tonality<Chromatic> getTonalityFromChromaticFunction(@NonNull Tonality<Chromatic> tonality, @NonNull ChromaticFunction chromaticFunction) throws ScaleRelativeDegreeException {
 		switch (chromaticFunction) {
 			case I:
 			case II:
@@ -201,7 +201,7 @@ public class TonalityGetChromaticFunction {
 						.tonality(tonality)
 						.build();
 
-				List<Tonality> modesSameRoot;
+				List<Tonality<Chromatic>> modesSameRoot;
 				if (tonality.getScale().equals(Scale.MAJOR)
 						|| tonality.getScale().equals(Scale.MINOR)
 						|| tonality.getScale().equals(Scale.DORIAN)
@@ -248,11 +248,12 @@ public class TonalityGetChromaticFunction {
 			case bVIISUS4:
 				return Tonality.from(tonality.getRoot(), Scale.MINOR);
 			case N6:
-				DiatonicAlt diatonicAlt = tonality.getRoot().getAddSemi(1);
+				//DiatonicAlt diatonicAlt = tonality.getRoot().getAddSemi(1);
+				Chromatic diatonicAlt = Chromatic.from(tonality.getRoot().ordinal()+1);
 				return Tonality.from(diatonicAlt, Scale.MAJOR);
 			case V_II:
 			case V7_II:
-				DiatonicAlt newRoot = tonality.getNote(DiatonicDegree.II);
+				Chromatic newRoot = tonality.getNote(DiatonicDegree.II);
 				return Tonality.from(newRoot, tonality.getScale());
 			case V_III:
 			case V7_III:
@@ -317,7 +318,7 @@ public class TonalityGetChromaticFunction {
 		}
 	}
 
-	static @NonNull DiatonicAlt getNoteBaseFromChromaticFunctionAndTonality(Tonality<DiatonicAlt> tonality, @NonNull ChromaticFunction chromaticFunction) throws ScaleRelativeDegreeException {
+	static @NonNull Chromatic getNoteBaseFromChromaticFunctionAndTonality(Tonality<Chromatic> tonality, @NonNull ChromaticFunction chromaticFunction) throws ScaleRelativeDegreeException {
 		switch (chromaticFunction) {
 			case I:
 			case i:

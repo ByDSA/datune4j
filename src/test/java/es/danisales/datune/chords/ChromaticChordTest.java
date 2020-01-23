@@ -1028,7 +1028,7 @@ public class ChromaticChordTest {
         public void fromChromaticFunction_ISUS4() {
             ChromaticChord chromaticChord = ChromaticChord.builder()
                     .chromaticFunction(ChromaticFunction.ISUS4)
-                    .tonality(Tonality.C)
+                    .tonality(Tonality.ET12.C)
                     .build();
             Assert.assertEquals(3, chromaticChord.size());
             assertPitchInChord(Chromatic.C, chromaticChord, 0);

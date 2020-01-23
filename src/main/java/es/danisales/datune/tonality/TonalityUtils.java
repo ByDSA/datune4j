@@ -5,6 +5,7 @@ import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.chords.ChromaticChord;
+import es.danisales.utils.building.BuildingException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Objects;
@@ -35,7 +36,14 @@ public class TonalityUtils {
             if (tonality.size() != Diatonic.NUMBER && ArrayUtils.contains(f, ChromaticFunction.TENSIONS))
                 continue;
 
-            ChromaticChord c2 = ChromaticChord.builder()
+            try {
+                ChromaticChord c = ChordRetrievalFromTonality.getFromChromaticFunction(tonality, f);
+            } catch (ScaleRelativeDegreeException e) {
+                continue;
+            }
+
+            ChromaticChord c2;
+            c2 = ChromaticChord.builder()
                     .chromaticFunction(f)
                     .tonality(tonality)
                     .build();

@@ -56,10 +56,10 @@ public final class DiatonicMidi extends NoteMidi<PitchDiatonicMidi> implements P
 	public String toString() {
 		try {
 			StringBuilder stringBuilder = new StringBuilder();
-			ChromaticMidi chromatidMidi = ChromaticMidi.from(this);
+			ChromaticMidi chromaticMidi = ChromaticMidi.from(this);
 
 			stringBuilder
-					.append(Namer.from(chromatidMidi, pitch.getTonality()))
+					.append(Namer.from(chromaticMidi, pitch.getTonality()))
 					.append(" (")
 					.append(pitch.getDegree())
 					.append(", ")
@@ -67,7 +67,7 @@ public final class DiatonicMidi extends NoteMidi<PitchDiatonicMidi> implements P
 					.append(")");
 
 			return stringBuilder.toString();
-		} catch (TonalityException | ScaleRelativeDegreeException e) {
+		} catch (ScaleRelativeDegreeException e) {
 			e.printStackTrace();
 			return null;
 		}

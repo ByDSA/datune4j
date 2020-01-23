@@ -18,8 +18,8 @@ public class TonalChord {
         return parametricChord;
     }
 
-    public static TonalChordRetrieval retrieval() {
-        return new TonalChordRetrieval();
+    public static TonalChordRetrievalChromatic retrieval() {
+        return new TonalChordRetrievalChromatic();
     }
 
     public Tonality getTonality() {

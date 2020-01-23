@@ -3,6 +3,7 @@ package es.danisales.datune.tonality;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.chords.ChromaticChord;
 import es.danisales.datune.chords.DiatonicAlt;
+import junit.framework.TestCase;
 import org.junit.Test;
 
 import java.util.List;
@@ -17,32 +18,32 @@ public class TonalityRetrievalTest {
 
     @Test
     public void mainMajorSize() {
-        Set<Tonality> tonalitySet = TonalityRetrieval.ET12.ALL_MAJOR;
+        Set<Tonality<Chromatic>> tonalitySet = TonalityRetrieval.ET12.ALL_MAJOR;
 
         assertEquals(12, tonalitySet.size());
     }
 
     @Test
     public void mainMajorContent() {
-        Set<Tonality> tonalitySet = TonalityRetrieval.ET12.ALL_MAJOR;
+        Set<Tonality<Chromatic>> tonalitySet = TonalityRetrieval.ET12.ALL_MAJOR;
 
-        assertTrue(tonalitySet.contains(Tonality.C));
-        assertTrue(tonalitySet.contains(Tonality.Db));
-        assertTrue(tonalitySet.contains(Tonality.D));
-        assertTrue(tonalitySet.contains(Tonality.Eb));
-        assertTrue(tonalitySet.contains(Tonality.E));
-        assertTrue(tonalitySet.contains(Tonality.F));
-        assertTrue(tonalitySet.contains(Tonality.Gb));
-        assertTrue(tonalitySet.contains(Tonality.G));
-        assertTrue(tonalitySet.contains(Tonality.Ab));
-        assertTrue(tonalitySet.contains(Tonality.A));
-        assertTrue(tonalitySet.contains(Tonality.Bb));
-        assertTrue(tonalitySet.contains(Tonality.B));
+        assertTrue(tonalitySet.contains(Tonality.ET12.C));
+        assertTrue(tonalitySet.contains(Tonality.ET12.CC));
+        assertTrue(tonalitySet.contains(Tonality.ET12.D));
+        assertTrue(tonalitySet.contains(Tonality.ET12.DD));
+        assertTrue(tonalitySet.contains(Tonality.ET12.E));
+        assertTrue(tonalitySet.contains(Tonality.ET12.F));
+        assertTrue(tonalitySet.contains(Tonality.ET12.FF));
+        assertTrue(tonalitySet.contains(Tonality.ET12.G));
+        assertTrue(tonalitySet.contains(Tonality.ET12.GG));
+        assertTrue(tonalitySet.contains(Tonality.ET12.A));
+        assertTrue(tonalitySet.contains(Tonality.ET12.AA));
+        assertTrue(tonalitySet.contains(Tonality.ET12.B));
     }
 
     @Test
     public void mainMajorAreReallyMajor() {
-        Set<Tonality> tonalitySet = TonalityRetrieval.ET12.ALL_MAJOR;
+        Set<Tonality<Chromatic>> tonalitySet = TonalityRetrieval.ET12.ALL_MAJOR;
 
         for (Tonality tonality : tonalitySet)
             assertEquals(tonality.getScale(), Scale.MAJOR);
@@ -51,59 +52,55 @@ public class TonalityRetrievalTest {
     /* Main Minor */
 
     @Test
+    public void getScale_ALL_MINOR() {
+        Set<Tonality<Chromatic>> tonalities = TonalityRetrieval.ET12.ALL_MINOR;
+        for (Tonality<Chromatic> tonality : tonalities)
+            TestCase.assertEquals(tonality.getScale(), Scale.MINOR);
+    }
+
+    @Test
+    public void getScale_ALL_MAJOR() {
+        Set<Tonality<Chromatic>> tonalities = TonalityRetrieval.ET12.ALL_MAJOR;
+        for (Tonality<Chromatic> tonality : tonalities)
+            TestCase.assertEquals(tonality.getScale(), Scale.MAJOR);
+    }
+
+    @Test
     public void mainMinorSize() {
-        Set<Tonality> tonalityList = TonalityRetrieval.ET12.ALL_MINOR;
+        Set<Tonality<Chromatic>> tonalityList = TonalityRetrieval.ET12.ALL_MINOR;
 
         assertEquals(12, tonalityList.size());
     }
 
     @Test
     public void mainMinorContent() {
-        Set<Tonality> tonalitySet = TonalityRetrieval.ET12.ALL_MINOR;
+        Set<Tonality<Chromatic>> tonalitySet = TonalityRetrieval.ET12.ALL_MINOR;
 
-        assertTrue(tonalitySet.contains(Tonality.Cm));
-        assertTrue(tonalitySet.contains(Tonality.CCm));
-        assertTrue(tonalitySet.contains(Tonality.Dm));
-        assertTrue(tonalitySet.contains(Tonality.Ebm));
-        assertTrue(tonalitySet.contains(Tonality.Em));
-        assertTrue(tonalitySet.contains(Tonality.Fm));
-        assertTrue(tonalitySet.contains(Tonality.FFm));
-        assertTrue(tonalitySet.contains(Tonality.Gm));
-        assertTrue(tonalitySet.contains(Tonality.GGm));
-        assertTrue(tonalitySet.contains(Tonality.Am));
-        assertTrue(tonalitySet.contains(Tonality.Bbm));
-        assertTrue(tonalitySet.contains(Tonality.Bm));
+        assertTrue(tonalitySet.contains(Tonality.ET12.Cm));
+        assertTrue(tonalitySet.contains(Tonality.ET12.CCm));
+        assertTrue(tonalitySet.contains(Tonality.ET12.Dm));
+        assertTrue(tonalitySet.contains(Tonality.ET12.DDm));
+        assertTrue(tonalitySet.contains(Tonality.ET12.Em));
+        assertTrue(tonalitySet.contains(Tonality.ET12.Fm));
+        assertTrue(tonalitySet.contains(Tonality.ET12.FFm));
+        assertTrue(tonalitySet.contains(Tonality.ET12.Gm));
+        assertTrue(tonalitySet.contains(Tonality.ET12.GGm));
+        assertTrue(tonalitySet.contains(Tonality.ET12.Am));
+        assertTrue(tonalitySet.contains(Tonality.ET12.AAm));
+        assertTrue(tonalitySet.contains(Tonality.ET12.Bm));
     }
 
     @Test
     public void mainMinorAreRealleMinor() {
-        Set<Tonality> tonalityList = TonalityRetrieval.ET12.ALL_MINOR;
+        Set<Tonality<Chromatic>> tonalityList = TonalityRetrieval.ET12.ALL_MINOR;
 
         for (Tonality tonality : tonalityList)
             assertEquals(tonality.getScale(), Scale.MINOR);
     }
 
-    /* Main Major And Minor */
-
-    @Test
-    public void mainMajorMinorAreMajorOrMinor() {
-        Set<Tonality> tonalityList = TonalityRetrieval.ET12.ALL_MAJOR_MINOR;
-
-        for (Tonality tonality : tonalityList)
-            assertTrue(ScaleUtils.isMajorOrMinor(tonality.getScale()));
-    }
-
-    /* From ChordProxy */
-
-    @Test
-    public void fromChordDiatonicFunction() {
-        List<Tonality> ts = TonalityRetrieval.listFromChordDiatonicFunction(ChromaticChord.C);
-        assertFalse(ts.isEmpty());
-    }
-
     @Test(timeout = 1000)
     public void fromChordHarmonicFunction() {
-        List<Tonality> ts = TonalityRetrieval.listFromChordAllFunctions(ChromaticChord.C);
+        List<Tonality<Chromatic>> ts = TonalityRetrieval.listFromChordAllFunctions(ChromaticChord.C);
         assertFalse(ts.isEmpty());
     }
 
@@ -126,17 +123,6 @@ public class TonalityRetrievalTest {
         Tonality tonality = Tonality.from(DiatonicAlt.EEE, Scale.MAJOR);
         Set<Tonality> result = TonalityRetrieval.getEnharmonicMinimalAltsFrom(tonality);
 
-        assertEquals(2, result.size());
-        assertTrue(result.contains(target1));
-        assertTrue(result.contains(target2));
-    }
-
-    @Test
-    public void getEnharmonicMinimalAltsFromChromatic() {
-        Tonality target1 = Tonality.from(Chromatic.FF, Scale.CHROMATIC);
-        Tonality target2 = Tonality.from(DiatonicAlt.Gb, Scale.CHROMATIC);
-        Tonality tonality = Tonality.from(DiatonicAlt.EEE, Scale.CHROMATIC);
-        Set<Tonality> result = TonalityRetrieval.getEnharmonicMinimalAltsFrom(tonality);
         assertEquals(2, result.size());
         assertTrue(result.contains(target1));
         assertTrue(result.contains(target2));

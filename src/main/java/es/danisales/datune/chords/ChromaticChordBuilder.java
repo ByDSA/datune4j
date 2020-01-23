@@ -166,6 +166,7 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
         try {
             return BuilderOfWays.super.build();
         } catch (BuildingException e) {
+            e.getInnerException().printStackTrace();
             throw NeverHappensException.make("Se supone que se han comprobado la consistencia de los parámetros conforme se añadían");
         }
     }

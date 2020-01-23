@@ -89,10 +89,13 @@ public enum Chromatic implements PitchChromaticSingle, CyclicDegree, OrderedDegr
 	static {
 		conversionMap.put(DiatonicAlt.class, Chromatic::fromDiatonicAlt);
 		conversionMap.put(Diatonic.class, Chromatic::fromDiatonic);
+		conversionMap.put(Chromatic.class, Chromatic::fromChromatic);
 	}
 
 	public static @NonNull Chromatic from(@NonNull CyclicDegree cyclicDegree) {
-		return conversionMap.get(cyclicDegree.getClass()).apply(cyclicDegree);
+		Class<? extends CyclicDegree> cClass = cyclicDegree.getClass();
+		Function<CyclicDegree, Chromatic> function = conversionMap.get(cClass);
+		return function.apply(cyclicDegree);
 	}
 
 	private static @NonNull Chromatic fromDiatonicAlt(@NonNull CyclicDegree cyclicDegree) {
@@ -106,6 +109,10 @@ public enum Chromatic implements PitchChromaticSingle, CyclicDegree, OrderedDegr
 		}
 
 		return ret;
+	}
+
+	private static @NonNull Chromatic fromChromatic(@NonNull CyclicDegree cyclicDegree) {
+		return (Chromatic)cyclicDegree;
 	}
 
 	@SuppressWarnings("Duplicates")

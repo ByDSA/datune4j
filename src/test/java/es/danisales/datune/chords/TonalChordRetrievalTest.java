@@ -1,5 +1,6 @@
 package es.danisales.datune.chords;
 
+import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityRetrieval;
@@ -22,13 +23,13 @@ public class TonalChordRetrievalTest {
         List<TonalChord> parametricChordList = TonalChord.retrieval()
                 .from(ChromaticChord.C)
                 .harmonicFunctions(DiatonicFunction.values())
-                .tonalities(Tonality.C)
+                .tonalities(Tonality.ET12.C)
                 .retrieve();
 
         assertEquals(1, parametricChordList.size());
         contains(parametricChordList,
                 Collections.singletonList(
-                        TonalChord.from(Tonality.C, DiatonicFunction.I)
+                        TonalChord.from(Tonality.ET12.C, DiatonicFunction.I)
                 )
         );
     }
@@ -38,14 +39,14 @@ public class TonalChordRetrievalTest {
         List<TonalChord> parametricChordList = TonalChord.retrieval()
                 .from(ChromaticChord.C)
                 .harmonicFunctions(DiatonicFunction.values())
-                .tonalities(Tonality.C, Tonality.Am)
+                .tonalities(Tonality.ET12.C, Tonality.ET12.Am)
                 .retrieve();
 
         assertEquals(2, parametricChordList.size());
         contains(parametricChordList,
                 Arrays.asList(
-                        TonalChord.from(Tonality.C, DiatonicFunction.I),
-                        TonalChord.from(Tonality.Am, DiatonicFunction.III)
+                        TonalChord.from(Tonality.ET12.C, DiatonicFunction.I),
+                        TonalChord.from(Tonality.ET12.Am, DiatonicFunction.III)
                 )
         );
     }
@@ -61,12 +62,12 @@ public class TonalChordRetrievalTest {
         assertEquals(6, parametricChordList.size());
         contains(parametricChordList,
                 Arrays.asList(
-                        TonalChord.from(Tonality.C, DiatonicFunction.I),
-                        TonalChord.from(Tonality.Dm, DiatonicFunction.VII),
-                        TonalChord.from(Tonality.Em, DiatonicFunction.VI),
-                        TonalChord.from(Tonality.F, DiatonicFunction.V),
-                        TonalChord.from(Tonality.G, DiatonicFunction.IV),
-                        TonalChord.from(Tonality.Am, DiatonicFunction.III)
+                        TonalChord.from(Tonality.ET12.C, DiatonicFunction.I),
+                        TonalChord.from(Tonality.ET12.Dm, DiatonicFunction.VII),
+                        TonalChord.from(Tonality.ET12.Em, DiatonicFunction.VI),
+                        TonalChord.from(Tonality.ET12.F, DiatonicFunction.V),
+                        TonalChord.from(Tonality.ET12.G, DiatonicFunction.IV),
+                        TonalChord.from(Tonality.ET12.Am, DiatonicFunction.III)
                 )
         );
     }
@@ -82,10 +83,10 @@ public class TonalChordRetrievalTest {
         assertEquals(4, parametricChordList.size());
         contains(parametricChordList,
                 Arrays.asList(
-                        TonalChord.from(Tonality.C, DiatonicFunction.I7),
-                        TonalChord.from(Tonality.Em, DiatonicFunction.VI7),
-                        TonalChord.from(Tonality.G, DiatonicFunction.IV7),
-                        TonalChord.from(Tonality.Am, DiatonicFunction.III7)
+                        TonalChord.from(Tonality.ET12.C, DiatonicFunction.I7),
+                        TonalChord.from(Tonality.ET12.Em, DiatonicFunction.VI7),
+                        TonalChord.from(Tonality.ET12.G, DiatonicFunction.IV7),
+                        TonalChord.from(Tonality.ET12.Am, DiatonicFunction.III7)
                 )
         );
     }
@@ -96,7 +97,7 @@ public class TonalChordRetrievalTest {
                 .from(ChromaticChord.C)
                 .harmonicFunctions(DiatonicFunction.TRIADS)
                 .main21ModesET12()
-                .root(DiatonicAlt.C)
+                .root(Chromatic.C)
                 .retrieve();
 
         assertEquals(4, parametricChordList.size());

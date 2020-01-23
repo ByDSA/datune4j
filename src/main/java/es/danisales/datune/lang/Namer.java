@@ -77,10 +77,10 @@ public class Namer {
         throw NeverHappensException.switchOf(chromatic);
     }
 
-    public static String from(@NonNull ChromaticMidi chromaticMidi, @NonNull Tonality<DiatonicAlt> tonality) throws TonalityException, ScaleRelativeDegreeException {
+    public static String from(@NonNull ChromaticMidi chromaticMidi, @NonNull Tonality<Chromatic> tonality) throws ScaleRelativeDegreeException {
         Chromatic chromatic = chromaticMidi.getPitch().getNote();
         DiatonicDegree diatonicDegree = (DiatonicDegree)tonality.getDegreeFrom(chromatic);
-        DiatonicAlt diatonicAlt = tonality.getNote(diatonicDegree);
+        Chromatic diatonicAlt = tonality.getNote(diatonicDegree);
         return diatonicAlt.toString() + chromaticMidi.getPitch().getOctave();
     }
 

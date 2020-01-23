@@ -1,11 +1,10 @@
 package es.danisales.datune.tonality;
 
+import es.danisales.datune.chords.ChromaticChord;
+import es.danisales.datune.chords.ChromaticChordPattern;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
-import es.danisales.datune.chords.ChromaticChord;
-import es.danisales.datune.chords.ChromaticChordPattern;
-import es.danisales.datune.chords.DiatonicAlt;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -27,7 +26,7 @@ public class ChordRetrievalFromTonality {
         return chromaticChord;
     }
 
-    public static @NonNull ChromaticChord getFromChromaticFunction(@NonNull Tonality tonality, @NonNull ChromaticFunction chromaticFunction) throws ScaleRelativeDegreeException {
+    public static @NonNull ChromaticChord getFromChromaticFunction(@NonNull Tonality<Chromatic> tonality, @NonNull ChromaticFunction chromaticFunction) throws ScaleRelativeDegreeException {
         Objects.requireNonNull(tonality);
         Objects.requireNonNull(chromaticFunction);
 
@@ -70,11 +69,10 @@ public class ChordRetrievalFromTonality {
             case N6:
                 ChromaticChordPattern chromaticChordPattern = TonalityGetChromaticFunction.getChromaticChordPatternFromChromaticFunction(chromaticFunction);
                 Objects.requireNonNull(chromaticChordPattern, chromaticFunction.toString());
-                DiatonicAlt noteBase = TonalityGetChromaticFunction.getNoteBaseFromChromaticFunctionAndTonality(tonality, chromaticFunction);
+                Chromatic noteBase = TonalityGetChromaticFunction.getNoteBaseFromChromaticFunctionAndTonality(tonality, chromaticFunction);
 
-                Chromatic noteBaseChromatic = Chromatic.from(noteBase);
                 ChromaticChord ret = ChromaticChord.builder()
-                        .chromaticBase(noteBaseChromatic)
+                        .chromaticBase(noteBase)
                         .chromaticChordPattern(chromaticChordPattern)
                         .build();
 
