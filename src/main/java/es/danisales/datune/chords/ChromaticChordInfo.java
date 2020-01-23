@@ -199,17 +199,6 @@ public final class ChromaticChordInfo implements Cloneable {
 		this.pattern = ChromaticChordPattern.immutableOf(pattern);
 	}
 
-	private static ChromaticChordMutable getFundamentalChordOf(ChromaticChordMutable chromaticChord) { // todo: move to transformations
-		ChromaticChordMutable chromaticChordTmp;
-		if (chromaticChord.getRootIndex() > 0) {
-			chromaticChordTmp = chromaticChord.clone();
-			chromaticChordTmp.toFundamental();
-		} else
-			chromaticChordTmp = chromaticChord;
-
-		return chromaticChordTmp;
-	}
-
 	private static ChromaticChord getFundamentalChordOf(ChromaticChord chromaticChord) {
 		ChromaticChord chromaticChordTmp;
 		if (chromaticChord.getRootIndex() > 0) {
@@ -219,13 +208,6 @@ public final class ChromaticChordInfo implements Cloneable {
 			chromaticChordTmp = chromaticChord;
 
 		return chromaticChordTmp;
-	}
-
-	public static @Nullable ChromaticChordInfo from(@NonNull ChromaticChordMutable chromaticChord) {
-		chromaticChord = getFundamentalChordOf(Objects.requireNonNull(chromaticChord));
-
-		ChromaticChordPattern chromaticChordPattern = ChromaticChordPattern.from(chromaticChord);
-		return metaMap.get(chromaticChordPattern);
 	}
 
 	public static @Nullable ChromaticChordInfo from(@NonNull ChromaticChord chromaticChord) {

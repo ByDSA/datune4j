@@ -3,6 +3,7 @@ package es.danisales.datune.midi;
 import es.danisales.datune.chords.TonalChord;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
+import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
 import es.danisales.utils.building.BuildingException;
@@ -33,19 +34,19 @@ public class ChordMidiTransformationsTest {
     public void dist() {
         fail();
     }
-
+/*
     @Test
-    public void getAllDispositionsWithInv() throws BuildingException {
-        DiatonicChordMidi diatonicChordMidiOther = DiatonicChordMidi.builder()
+    public void getAllDispositionsWithInv() throws PitchMidiException {
+        ChordMidi diatonicChordMidiOther = ChordMidi.builder()
                 .from(TonalChord.from(Tonality.C, DiatonicFunction.I))
                 .build();
-        List<DiatonicChordMidi> list = ChordMidiTransformations.getAllDispositionsWithInv(diatonicChordMidiOther);
+        List<ChordMidi> list = ChordMidiTransformations.getAllAbsoluteVoicesWithInv(diatonicChordMidiOther);
         assertEquals(518, list.size());
     }
 
     @Test
     public void minimize() throws TonalityException, BuildingException {
-        DiatonicChordMidi diatonicChordMidi = DiatonicChordMidi.builder().tonality(Tonality.C).build();
+        ChordMidi diatonicChordMidi = ChordMidi.builder().tonality(Tonality.C).build();
         diatonicChordMidi.addAll(
                 Arrays.asList(
                         ChromaticMidi.builder().pitch(PitchChromaticMidi.C5).build(),
@@ -61,13 +62,13 @@ public class ChordMidiTransformationsTest {
 
     @Test
     public void minimizeDistanceTo() throws BuildingException {
-        DiatonicChordMidi diatonicChordMidiEditing = DiatonicChordMidi.builder()
+        ChordMidi diatonicChordMidiEditing = ChordMidi.builder()
                 .from(TonalChord.from(Tonality.C, DiatonicFunction.VII))
                 .build();
 
-        DiatonicChordMidi diatonicChordMidiSource = diatonicChordMidiEditing.clone();
+        ChordMidi diatonicChordMidiSource = diatonicChordMidiEditing.clone();
 
-        DiatonicChordMidi diatonicChordMidiOther = DiatonicChordMidi.builder()
+        ChordMidi diatonicChordMidiOther = ChordMidi.builder()
                 .from(TonalChord.from(Tonality.C, DiatonicFunction.I))
                 .build();
         ChordMidiTransformations.minimizeDistanceTo(diatonicChordMidiEditing, diatonicChordMidiOther);
@@ -78,7 +79,7 @@ public class ChordMidiTransformationsTest {
         assertEquals(PitchChromaticMidi.F5.getMidiCode(), diatonicChordMidiEditing.get(1).getPitch().getMidiCode());
         assertEquals(PitchChromaticMidi.B5.getMidiCode(), diatonicChordMidiEditing.get(2).getPitch().getMidiCode());
     }
-
+*/
     @Test
     public void dist1() {
         fail();

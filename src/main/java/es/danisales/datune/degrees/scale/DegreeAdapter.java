@@ -1,7 +1,7 @@
 package es.danisales.datune.degrees.scale;
 
 import com.google.common.collect.ImmutableList;
-import es.danisales.datune.degrees.CyclicDegree;
+import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.utils.MathUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 

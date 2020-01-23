@@ -268,7 +268,7 @@ public final class ChromaticChordPattern extends Pattern {
         return from((List<Chromatic>) chromaticChordBase);
     }
 
-    public static <N extends NoteMidi<?>> @NonNull ChromaticChordPattern from(@NonNull ChordMidi<N, ?, ?> chordMidi) {
+    public static <N extends NoteMidi<?>> @NonNull ChromaticChordPattern from(@NonNull ChordMidi chordMidi) {
         checkArgument(!chordMidi.isEmpty());
 
         Integer[] integerPitchMidiArray = new Integer[chordMidi.size()];

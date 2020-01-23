@@ -39,7 +39,7 @@ public class TonalityUtils {
                     .chromaticFunction(f)
                     .tonality(tonality)
                     .build();
-            if (chromaticChord.getNotes().equals(c2.getNotes()))
+            if (chromaticChord.equals(c2))
                 return true;
         }
 

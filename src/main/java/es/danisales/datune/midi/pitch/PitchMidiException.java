@@ -31,6 +31,7 @@ public class PitchMidiException extends PitchException {
 		try {
 			PitchChromaticMidi.from(pitchDiatonicMidi);
 		} catch (RuntimeException e) {
+			e.printStackTrace();
 			throw new PitchMidiException(pitchDiatonicMidi);
 		}
 	}

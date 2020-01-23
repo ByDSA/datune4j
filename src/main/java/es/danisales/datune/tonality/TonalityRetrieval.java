@@ -4,12 +4,10 @@ import es.danisales.datune.chords.ChromaticChord;
 import es.danisales.datune.chords.DiatonicAlt;
 import es.danisales.datune.chords.DiatonicAltRetrieval;
 import es.danisales.datune.chords.PitchChromaticChord;
+import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.DiatonicFunction;
-import es.danisales.datune.midi.DiatonicChordMidi;
-import es.danisales.datune.midi.DiatonicChordMidiBuilder;
-import es.danisales.datune.midi.DiatonicChordMidiInfo;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -657,28 +655,29 @@ public class TonalityRetrieval {
         return out;
     }
 
-    static @NonNull Tonality<DiatonicAlt> fromDiatonicChordMidi(@NonNull DiatonicChordMidi c, @NonNull Tonality<DiatonicAlt> base) {
+    static @NonNull Tonality<Chromatic> fromDiatonicChordMidi(@NonNull ChromaticChord c, @NonNull Tonality<DiatonicAlt> base) {
         if ( base.size() != 7 )
             throw new RuntimeException( "No tiene 7 notas la escala" );
 
-        DiatonicAlt[] notesChord = new DiatonicAlt[c.size()];
+        Chromatic[] notesChord = new Chromatic[c.size()];
         for ( int i = 0; i < c.size(); i++ )
-            notesChord[i] = (DiatonicAlt)c.get(i).getPitch().getDiatonicAlt();
+            notesChord[i] = c.get(i);
 
-        int posChordCorrector = 7 - c.get(0).getPitch().getDegree().ordinal();
+        int posChordCorrector = 7 - c.get(0).ordinal();
 
         // Integer posBaseCorrector = base.getDegreeFrom(notesChord[0]);
-        int posBaseCorrector = (notesChord[0].getDiatonic().ordinal()
+        Diatonic diatonic = base.getNotes().get(0).getDiatonic();
+        int posBaseCorrector = (diatonic.ordinal()
                 - base.getRoot().getDiatonic().ordinal() + 7) % 7;
 
-        DiatonicAlt[] tonalityNotes = new DiatonicAlt[7];
+        Chromatic[] tonalityNotes = new Chromatic[7];
         for ( int i = 0; i < 7; i++ ) {
             int pos = ( posBaseCorrector + i ) % DiatonicDegree.values().length;
             DiatonicDegree diatonicDegree = DiatonicDegree.values()[pos];
 
             boolean notFound = true;
             for ( int j = 0; j < notesChord.length; j++ ) {
-                int index = (c.get(j).getPitch().getDegree().ordinal() + posChordCorrector) % base.getScale().size();
+                int index = (c.get(j).ordinal() + posChordCorrector) % base.getScale().size();
                 if (index == i) {
                     tonalityNotes[i] = notesChord[j];
                     notFound = false;
@@ -688,15 +687,17 @@ public class TonalityRetrieval {
 
             if (notFound) {
                 try {
-                    tonalityNotes[i] = base.getNote(diatonicDegree);
+                    tonalityNotes[i] = Chromatic.from( base.getNote(diatonicDegree) );
                 } catch (ScaleRelativeDegreeException e) {
                     throw NeverHappensException.make("Las escalas diatónicas tienen todos los DiatonicDegree");
                 }
             }
         }
 
-        List<DiatonicAlt> notes = Arrays.asList(tonalityNotes);
-        Scale scale = Scale.fromDiatonicAlt(notes);
+        List<DiatonicAlt> diatonicAltList = new ArrayList<>();
+        for (Chromatic chromatic : tonalityNotes)
+            diatonicAltList.add( DiatonicAlt.from(chromatic) );
+        Scale scale = Scale.fromDiatonicAlt(diatonicAltList);
         return Tonality.from(notesChord[0], scale);
     }
 
@@ -730,54 +731,6 @@ public class TonalityRetrieval {
         }
 
         return Collections.unmodifiableSet(ret);
-    }
-
-    public static @NonNull List<Tonality> getFromChords(boolean outScale, @NonNull List<ChromaticChord> chords) {
-        checkArgument(chords.size() > 0);
-        List<Tonality> candidates = new ArrayList<>();
-
-        boolean first = true;
-        for (ChromaticChord chord : chords) {
-            if ( chord.isEmpty() )
-                continue;
-            ChromaticChord chordCopy = chord.clone();
-
-            List<Tonality> candidatesPrev = candidates;
-
-            do {
-                List<DiatonicChordMidiInfo> possibleChords = DiatonicChordMidiBuilder.fromChromaticChord(
-                        chordCopy,
-                        outScale
-                );
-                if ( first ) {
-                    for (DiatonicChordMidiInfo c : possibleChords) {
-                        Tonality t = c.getParametricChord().getTonality();
-                        if ( !candidates.contains( t ) )
-                            candidates.add( t );
-                    }
-                    first = false;
-                } else {
-                    candidates = new ArrayList<>();
-
-                    for (DiatonicChordMidiInfo c : possibleChords) {
-                        for ( Tonality t : candidatesPrev )
-                            if ((c.getParametricChord().getTonality().equals(t)
-                                    || c.getParametricChord().getTonality().isModeOf( t ) )
-                                    && !candidates.contains( t ) )
-                                candidates.add( t );
-                    }
-                }
-
-                if ( candidates.isEmpty() ) {
-                    chordCopy = ChromaticChord.builder()
-                            .addAll(
-                                    chordCopy.subList(0, chordCopy.size() - 1)
-                            ).build();
-                }
-            } while ( candidates.isEmpty() && !chordCopy.isEmpty() );
-        }
-
-        return candidates;
     }
 
     public static Tonality searchInModeSameRoot(Tonality tonality, PitchChromaticChord c) {

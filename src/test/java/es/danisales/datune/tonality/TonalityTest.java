@@ -444,7 +444,8 @@ public class TonalityTest {
                 DiatonicAlt.A,
                 DiatonicAlt.B
         );
-        assertEquals(notes, Tonality.C );
+
+        assertEquals(notes, Tonality.C.getNotes() );
     }
 
     @Test
@@ -458,12 +459,7 @@ public class TonalityTest {
                 DiatonicAlt.F,
                 DiatonicAlt.G
         );
-        assertEquals(notes, Tonality.Am );
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void tryToEditNotes() {
-        //Tonality.C.set(0, DiatonicAlt.CC);
+        assertEquals(notes, Tonality.Am.getNotes() );
     }
 
     @Test
@@ -749,9 +745,9 @@ public class TonalityTest {
     public void getDegree() throws TonalityException {
         Tonality ton = Tonality.C;
 
-        assertEquals(DiatonicDegree.I, ton.getDegreeFrom(PitchChromaticMidi.C5.getChromatic()));
-        assertEquals(DiatonicDegree.II, ton.getDegreeFrom(PitchChromaticMidi.D5.getChromatic()));
-        assertEquals(DiatonicDegree.III, ton.getDegreeFrom(PitchChromaticMidi.E6.getChromatic()));
+        assertEquals(DiatonicDegree.I, ton.getDegreeFrom(PitchChromaticMidi.C5.getNote()));
+        assertEquals(DiatonicDegree.II, ton.getDegreeFrom(PitchChromaticMidi.D5.getNote()));
+        assertEquals(DiatonicDegree.III, ton.getDegreeFrom(PitchChromaticMidi.E6.getNote()));
         assertEquals(DiatonicDegree.IV, ton.getDegreeFrom(Chromatic.F));
         assertNull(ton.getDegreeFrom(DiatonicAlt.EEEE));
         assertEquals(DiatonicDegree.V, ton.getDegreeFrom(Chromatic.from(DiatonicAlt.EEEE)));
@@ -1007,6 +1003,8 @@ public class TonalityTest {
         assertEquals(DiatonicFunction.V, ton.getFunctionFrom(ChromaticChord.G));
         assertEquals(DiatonicFunction.VI, ton.getFunctionFrom(ChromaticChord.Am));
         assertEquals(DiatonicFunction.VII, ton.getFunctionFrom(ChromaticChord.Bdim));
+
+        ton.getChordFromHarmonicFunction(ChromaticFunction.ISUS4);
 
         assertEquals(ChromaticFunction.ISUS4, ton.getFunctionFrom(ChromaticChord.Csus4));
         assertEquals(ChromaticFunction.IISUS4, ton.getFunctionFrom(ChromaticChord.Dsus4));

@@ -7,7 +7,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import javax.annotation.Nonnull;
 import java.util.*;
 
-enum ChromaticChordImmutable implements PitchChromaticChord<Chromatic>, ChordCommon<Chromatic> {
+enum ChromaticChordEnum implements PitchChromaticChord<Chromatic>, ChordCommon<Chromatic> {
 	// Quintas
 	C5(ChromaticChordInfo.POWER_CHORD, Chromatic.C),
 	CC5(ChromaticChordInfo.POWER_CHORD, Chromatic.CC),
@@ -1189,7 +1189,7 @@ Cm13omit11(ChromaticChordInfo.THIRTEENTH_MINOR_OMIT11, Chromatic.C),
 	final List<Chromatic> notes;
 	final private ChromaticChordInfo info;
 
-	ChromaticChordImmutable(@NonNull ChromaticChordInfo chromaticChordInfo, @NonNull Chromatic base) {
+	ChromaticChordEnum(@NonNull ChromaticChordInfo chromaticChordInfo, @NonNull Chromatic base) {
 		Objects.requireNonNull(chromaticChordInfo);
 		Objects.requireNonNull(base);
 		Objects.requireNonNull(chromaticChordInfo.getPattern());
@@ -1204,8 +1204,8 @@ Cm13omit11(ChromaticChordInfo.THIRTEENTH_MINOR_OMIT11, Chromatic.C),
 		info = chromaticChordInfo;
 	}
 
-	static @Nullable ChromaticChordImmutable from(@NonNull Iterable<Chromatic> chromaticCollection) {
-		for (ChromaticChordImmutable chromaticChordEnum : ChromaticChordImmutable.values())
+	static @Nullable ChromaticChordEnum from(@NonNull Iterable<Chromatic> chromaticCollection) {
+		for (ChromaticChordEnum chromaticChordEnum : ChromaticChordEnum.values())
 			if (chromaticChordEnum.hasSameNotesAs(chromaticCollection))
 				return chromaticChordEnum;
 

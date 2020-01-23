@@ -4,7 +4,7 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import es.danisales.arrays.ArrayUtils;
 import es.danisales.datune.chords.*;
-import es.danisales.datune.degrees.octave.Diatonic;
+import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.function.ChromaticFunction;
@@ -12,11 +12,12 @@ import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.midi.ChordMidi;
 import es.danisales.datune.midi.ChordMidiTransformations;
-import es.danisales.datune.midi.DiatonicChordMidi;
+import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.NoteMidi;
 import es.danisales.datune.midi.binaries.events.NoteOff;
 import es.danisales.datune.midi.binaries.events.NoteOn;
 import es.danisales.datune.chords.TonalChord;
+import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;
@@ -39,7 +40,7 @@ class Loader {
     private Tonality<DiatonicAlt> tonality;
     private JPanel panel;
     private JPanel[][] panels = new JPanel[7][6];
-    private AtomicReference<DiatonicChordMidi> lastPlayed;
+    private AtomicReference<ChordMidi> lastPlayed;
 
     Loader(@NonNull Tonality tonality, @NonNull JPanel panel) {
         this.tonality = Objects.requireNonNull(tonality);
@@ -176,14 +177,6 @@ class Loader {
         jButton.getChangeListeners()[0].stateChanged(new ChangeEvent(jButton));
     }
 
-    private void check(DiatonicChordMidi diatonicChordMidi, ChromaticChord chromaticChord, Tonality ton) {
-        ChromaticChord chromaticChord1 = ChromaticChord.builder()
-                .fromDiatonicChordMidi(diatonicChordMidi)
-                .build();
-        if (!chromaticChord1.equals(chromaticChord))
-            System.err.println(chromaticChord1 + " " + chromaticChord + " " + ton);
-    }
-
     void load() {
         initializePanels();
 
@@ -210,13 +203,13 @@ class Loader {
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(myKeyEventDispatcher);
 
         for (TonalChord parametricChord : chords()) {
-            DiatonicChordMidi diatonicChordMidi;
+            ChordMidi diatonicChordMidi;
             try {
-                diatonicChordMidi = DiatonicChordMidi.builder()
-                        .from(parametricChord)
+                diatonicChordMidi = ChordMidi.builder()
+                        .fromChromaticChord(ChromaticChord.from(parametricChord))
                         .build();
                 // check(diatonicChordMidi, parametricChord, ton);
-            } catch (RuntimeException | BuildingException e) {
+            } catch (RuntimeException | PitchMidiException e) {
                 System.out.println(parametricChord);
                 e.printStackTrace();
                 continue;
@@ -244,21 +237,21 @@ class Loader {
         System.out.println("Tonalidad cambiada a " + tonality);
     }
 
-    private JButton addButton(DiatonicChordMidi diatonicChordMidi, TonalChord parametricChord, Tonality tonality) {
+    private JButton addButton(ChordMidi chordMidi, TonalChord parametricChord, Tonality tonality) {
         final HarmonicFunction harmonicFunction = parametricChord.getHarmonicFunction();
         DiatonicDegree degree = getDegree(harmonicFunction);
 
         JButton jButton = new JButton(harmonicFunction.toString());
 
         int degreeOrdinal = degree.ordinal();
-        panels[degreeOrdinal][diatonicChordMidi.size() - 2].add(jButton);
+        panels[degreeOrdinal][chordMidi.size() - 2].add(jButton);
 
-        if (!diatonicChordMidi.getTonality().equals(tonality)) {
+        if (!tonality.contains(chordMidi)) {
             if (ArrayUtils.contains(harmonicFunction, ChromaticFunction.TENSIONS))
                 jButton.setForeground(Color.BLUE);
             else {
                 jButton.setForeground(Color.RED);
-                jButton.setText(harmonicFunction + " (" + diatonicChordMidi.getTonality() + ")");
+                jButton.setText(harmonicFunction.toString());
             }
             jButton.setOpaque(true);
         }
@@ -275,16 +268,16 @@ class Loader {
                     pressed = model.isPressed();
                     if (pressed) {
                         if (lastPlayed.get() != null) {
-                            ChordMidiTransformations.minimizeDistanceTo(diatonicChordMidi, lastPlayed.get());
+                            //ChordMidiTransformations.minimizeDistanceTo(chordMidi, lastPlayed.get());
                         }
 
-                        lastPlayed.set(diatonicChordMidi);
+                        lastPlayed.set(chordMidi);
 
-                        play(diatonicChordMidi);
-                        System.out.println("Press " + jButton.getText() + " " + diatonicChordMidi + " " + ChordNamer.from(diatonicChordMidi));
+                        play(chordMidi);
+                        System.out.println("Press " + jButton.getText() + " " + chordMidi);
                     } else {
-                        stop(diatonicChordMidi);
-                        System.out.println("Release " + jButton.getText() + " " + diatonicChordMidi);
+                        stop(chordMidi);
+                        System.out.println("Release " + jButton.getText() + " " + chordMidi);
                     }
                 }
             }
@@ -293,9 +286,9 @@ class Loader {
         return jButton;
     }
 
-    private static <T extends NoteMidi<?>> void play(ChordMidi<T, ?, ?> diatonicChordMidi) {
+    private static <T extends NoteMidi<?>> void play(ChordMidi diatonicChordMidi) {
         EventSequence es = new EventSequence();
-        for (T diatonicMidi : diatonicChordMidi) {
+        for (ChromaticMidi diatonicMidi : diatonicChordMidi) {
             NoteOn noteOn;
             try {
                 noteOn = NoteOn.builder()
@@ -309,9 +302,9 @@ class Loader {
         es.play();
     }
 
-    private static <T extends NoteMidi<?>> void stop(ChordMidi<T, ?, ?> diatonicChordMidi) {
+    private static <T extends NoteMidi<?>> void stop(ChordMidi diatonicChordMidi) {
         EventSequence es = new EventSequence();
-        for (T diatonicMidi : diatonicChordMidi) {
+        for (ChromaticMidi diatonicMidi : diatonicChordMidi) {
             NoteOff noteOff = null;
             try {
                 noteOff = NoteOff.builder()

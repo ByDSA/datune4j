@@ -3,7 +3,6 @@ package es.danisales.datune.pathfinding;
 import es.danisales.datune.eventsequences.Instrument;
 import es.danisales.datune.eventsequences.Track;
 import es.danisales.datune.midi.ChordMidi;
-import es.danisales.datune.midi.ChromaticChordMidi;
 import es.danisales.datune.midi.DurationMidi;
 import es.danisales.datune.midi.binaries.Midi;
 import es.danisales.datune.midi.binaries.Song;
@@ -34,11 +33,11 @@ class Main {
 				ChromaticChord.C
 		);
 
-		PathProgression<ChromaticChordMidi> p2 = new PathProgression( pcm );
+		PathProgression p2 = new PathProgression( pcm );
 		List<NodeProgression> nodes = p2.aStar();
 		for ( int i = 0; i < nodes.size(); i++ ) {
 			NodeProgression n = nodes.get( i );
-			pcm.set( i, (ChromaticChordMidi)n.object );
+			pcm.set( i, n.object );
 			System.out.println(n.object);
 		}
 

@@ -1,7 +1,6 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.chords.DiatonicAlt;
-import es.danisales.datune.degrees.CyclicDegree;
+import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.log.string.Logging;
 
 public class TonalityNamer {

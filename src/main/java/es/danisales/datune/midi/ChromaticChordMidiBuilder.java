@@ -1,8 +1,11 @@
 package es.danisales.datune.midi;
 
+import es.danisales.datune.chords.ChromaticChord;
+import es.danisales.datune.chords.TonalChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
+import es.danisales.datune.tuning.DiatonicTemperament;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
@@ -10,19 +13,14 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Builder<ChromaticChordMidiBuilder, ChromaticChordMidi> {
+public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Builder<ChromaticChordMidiBuilder, ChordMidi> {
     private List<Chromatic> fromChromatic;
     private List<ChromaticMidi> fromChromaticMidi;
-    private DiatonicChordMidi diatonicChordMidi;
     private int octave = Settings.DefaultValues.OCTAVE;
     private int length = Settings.DefaultValues.LENGTH_CHORD;
     private int velocity = Settings.DefaultValues.VELOCITY;
 
     ChromaticChordMidiBuilder() {
-    }
-
-    public ChromaticChordMidiBuilder fromChromatic(@NonNull Chromatic... cs) throws PitchMidiException {
-        return fromChromaticChord(Arrays.asList(cs));
     }
 
     public ChromaticChordMidiBuilder fromChromaticChord(@NonNull Iterable<Chromatic> cs) throws PitchMidiException {
@@ -72,8 +70,8 @@ public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Build
 
     @NonNull
     @Override
-    public ChromaticChordMidi build() {
-        ChromaticChordMidi chromaticChordMidi = new ChromaticChordMidi();
+    public ChordMidi build() {
+        ChordMidi chromaticChordMidi = new ChordMidi();
         if (fromChromatic != null) {
             int currentOctave = octave;
             for (int i = 0; i < fromChromatic.size(); i++) {
@@ -98,8 +96,6 @@ public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Build
             }
         } else if (fromChromaticMidi != null) {
             chromaticChordMidi.addAll(fromChromaticMidi);
-        } else if (diatonicChordMidi != null) {
-            return ChromaticChordMidiAdapter.fromDiatonicChordMidi(diatonicChordMidi);
         }
 
         return chromaticChordMidi;
@@ -131,12 +127,9 @@ public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Build
         return add(chromaticMidi);
     }
 
-    public @NonNull ChromaticChordMidiBuilder fromDiatonicChordMidi(@NonNull DiatonicChordMidi diatonicChordMidi) {
-        this.diatonicChordMidi = diatonicChordMidi;
-
-        return self();
+    public ChromaticChordMidiBuilder from(TonalChord from) throws PitchMidiException {
+        return fromChromaticChord(ChromaticChord.from(from));
     }
-
 
     @Override
     @NonNull

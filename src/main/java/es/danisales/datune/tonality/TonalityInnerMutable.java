@@ -1,8 +1,7 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.chords.DiatonicAlt;
 import es.danisales.datune.chords.DiatonicAltRetrieval;
-import es.danisales.datune.degrees.CyclicDegree;
+import es.danisales.datune.degrees.octave.CyclicDegree;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Collections;

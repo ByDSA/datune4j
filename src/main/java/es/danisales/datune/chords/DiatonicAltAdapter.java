@@ -1,7 +1,7 @@
 package es.danisales.datune.chords;
 
 import es.danisales.datune.degrees.octave.Chromatic;
-import es.danisales.datune.degrees.octave.OctaveDegree;
+import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.degrees.octave.Pentatonic;
 import es.danisales.datune.midi.ChromaticMidi;
@@ -20,13 +20,13 @@ class DiatonicAltAdapter {
             return from((OrderedDegree) pitchChromaticSingle, diatonic);
         } else if (pitchChromaticSingle instanceof ChromaticMidi) {
             ChromaticMidi chromaticMidi = (ChromaticMidi) pitchChromaticSingle;
-            OrderedDegree chromatic = chromaticMidi.getPitch().getChromatic();
+            OrderedDegree chromatic = chromaticMidi.getPitch().getNote();
             return from(chromatic, diatonic);
         } else
             throw NeverHappensException.make("PitchChromaticSingle es siempre Chromatic o ChromaticMidi y se supone que nunca es " + pitchChromaticSingle.getClass());
     }
 
-    static @NonNull DiatonicAlt from(@NonNull PitchChromaticSingle pitchChromaticSingle, float microPart, @NonNull OctaveDegree absoluteDegree) {
+    static @NonNull DiatonicAlt from(@NonNull PitchChromaticSingle pitchChromaticSingle, float microPart, @NonNull CyclicDegree absoluteDegree) {
         checkArgument(microPart < 1);
 
         Diatonic diatonic = Diatonic.from(absoluteDegree);
@@ -40,7 +40,7 @@ class DiatonicAltAdapter {
         return DiatonicAlt.from(diatonicAltWithourMicro.getDiatonic(), alt);
     }
 
-    static @NonNull DiatonicAlt from(float semis, @NonNull OctaveDegree absoluteDegree) {
+    static @NonNull DiatonicAlt from(float semis, @NonNull CyclicDegree absoluteDegree) {
         Diatonic diatonic = Diatonic.from(absoluteDegree);
         Objects.requireNonNull(diatonic);
 
@@ -323,7 +323,7 @@ class DiatonicAltAdapter {
     }
 
     static @NonNull DiatonicAlt from(@NonNull ChromaticMidi chromaticMidi) {
-        Chromatic chromatic = chromaticMidi.getPitch().getChromatic();
+        Chromatic chromatic = chromaticMidi.getPitch().getNote();
         return from(chromatic);
     }
 }

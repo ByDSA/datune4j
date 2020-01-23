@@ -1,5 +1,6 @@
 package es.danisales.datune.degrees.octave;
 
+import es.danisales.datune.degrees.OrderedDegree;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.lang.Language;
@@ -12,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-public enum Diatonic implements PitchDiatonicSingle, OctaveDegree {
+public enum Diatonic implements PitchDiatonicSingle, CyclicDegree, OrderedDegree {
 	C, D, E, F, G, A, B;
 
 	public static final int NUMBER = 7;
@@ -23,12 +24,12 @@ public enum Diatonic implements PitchDiatonicSingle, OctaveDegree {
 		return DiatonicAdapter.from( d );
 	}
 
-	private static final Map<Integer, Function<OctaveDegree, Diatonic>> mapConverter = new HashMap<>();
+	private static final Map<Integer, Function<CyclicDegree, Diatonic>> mapConverter = new HashMap<>();
 
 	static {
-		mapConverter.put(7, (OctaveDegree absoluteDegree) -> (Diatonic) absoluteDegree);
+		mapConverter.put(7, (CyclicDegree absoluteDegree) -> (Diatonic) absoluteDegree);
 
-		mapConverter.put(12, (OctaveDegree absoluteDegree) -> {
+		mapConverter.put(12, (CyclicDegree absoluteDegree) -> {
 			Chromatic chromatic = (Chromatic) absoluteDegree;
 
 			switch (chromatic) {
@@ -56,7 +57,7 @@ public enum Diatonic implements PitchDiatonicSingle, OctaveDegree {
 			return null;
 		});
 
-		mapConverter.put(5, (OctaveDegree absoluteDegree) -> {
+		mapConverter.put(5, (CyclicDegree absoluteDegree) -> {
 			Pentatonic pentatonic = (Pentatonic) absoluteDegree;
 
 			switch (pentatonic) {
@@ -71,21 +72,21 @@ public enum Diatonic implements PitchDiatonicSingle, OctaveDegree {
 		});
 	}
 
-    public static Diatonic from(@NonNull OctaveDegree absoluteDegree) {
+    public static Diatonic from(@NonNull CyclicDegree absoluteDegree) {
 		if (absoluteDegree instanceof Diatonic)
 			return (Diatonic) absoluteDegree;
 
-        Integer number = OctaveDegreeAdapter.getNumber(absoluteDegree);
-		Function<OctaveDegree, Diatonic> f = mapConverter.get(number);
+        Integer number = CyclicDegreeAdapter.getNumber(absoluteDegree);
+		Function<CyclicDegree, Diatonic> f = mapConverter.get(number);
 		if (f == null)
 			f = Diatonic::defaultAbsoluteDegreeFunction;
 		return f.apply(absoluteDegree);
 	}
 
-    private static Diatonic defaultAbsoluteDegreeFunction(OctaveDegree absoluteDegree) {
+    private static Diatonic defaultAbsoluteDegreeFunction(CyclicDegree absoluteDegree) {
 		int index = absoluteDegree.ordinal();
 
-        int absoluteDegreeNumber = OctaveDegreeAdapter.getNumber(absoluteDegree);
+        int absoluteDegreeNumber = CyclicDegreeAdapter.getNumber(absoluteDegree);
 		if (absoluteDegreeNumber > Diatonic.NUMBER)
 			index = (int)Math.round((double) (Diatonic.NUMBER) / absoluteDegreeNumber * index) % Diatonic.NUMBER;
 

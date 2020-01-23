@@ -15,7 +15,7 @@ import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
 public class ChromaticChordTest {
     @Test
@@ -26,7 +26,7 @@ public class ChromaticChordTest {
                 .build();
         assertEquals( Arrays.asList(
                 Chromatic.B, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C),
-                chromaticChord.getNotes()
+                chromaticChord
         );
     }
 
@@ -39,7 +39,7 @@ public class ChromaticChordTest {
                 Chromatic.D,
                 Chromatic.G
                 ),
-                chromaticChord.getNotes()
+                chromaticChord
         );
         assertEquals(2, chromaticChord.getRootIndex());
         chromaticChord.inv(2);
@@ -48,7 +48,7 @@ public class ChromaticChordTest {
                 Chromatic.C,
                 Chromatic.D
                 ),
-                chromaticChord.getNotes()
+                chromaticChord
         );
         assertEquals(0, chromaticChord.getRootIndex());
     }
@@ -213,12 +213,25 @@ public class ChromaticChordTest {
     @Test
     public void duplicateEnum() {
         ChromaticChord chromaticChord = ChromaticChord.C.clone();
-        assertEquals(ChromaticChord.C.innerChord, chromaticChord.innerChord);
+        assertEquals(ChromaticChord.C, chromaticChord);
 
 
         chromaticChord.set(1, Chromatic.DD);
 
-        assertNotEquals(ChromaticChord.C.innerChord, chromaticChord.innerChord);
+        assertNotEquals(ChromaticChord.C, chromaticChord);
+    }
+
+    @Test
+    public void cloneTest() {
+        ChromaticChord chromaticChord = ChromaticChord.C.clone();
+        assertEquals(ChromaticChord.C, chromaticChord);
+        assertNotSame(ChromaticChord.C, chromaticChord);
+    }
+
+    @Test
+    public void equals_self() {
+        assertEquals(ChromaticChord.C, ChromaticChord.C);
+        assertSame(ChromaticChord.C, ChromaticChord.C);
     }
 
     @Test
@@ -244,7 +257,7 @@ public class ChromaticChordTest {
     @Test
     public void set() {
         ChromaticChord chromaticChord = ChromaticChord.C.clone();
-        assertEquals(ChromaticChord.C.innerChord, chromaticChord.innerChord);
+        assertEquals(ChromaticChord.C, chromaticChord);
 
         chromaticChord.set(1, Chromatic.DD);
 
@@ -257,114 +270,114 @@ public class ChromaticChordTest {
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
                 Chromatic.G
-        ), ChromaticChord.C5.getNotes());
+        ), ChromaticChord.C5);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
                 Chromatic.E,
                 Chromatic.G
-        ), ChromaticChord.C.getNotes());
+        ), ChromaticChord.C);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
                 Chromatic.DD,
                 Chromatic.G
-        ), ChromaticChord.Cm.getNotes());
+        ), ChromaticChord.Cm);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
                 Chromatic.E,
                 Chromatic.GG
-        ), ChromaticChord.Caug.getNotes());
+        ), ChromaticChord.Caug);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
                 Chromatic.DD,
                 Chromatic.FF
-        ), ChromaticChord.Cdim.getNotes());
+        ), ChromaticChord.Cdim);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
                 Chromatic.F,
                 Chromatic.G
-        ), ChromaticChord.Csus4.getNotes());
+        ), ChromaticChord.Csus4);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
                 Chromatic.E,
                 Chromatic.G,
                 Chromatic.AA
-        ), ChromaticChord.C7.getNotes());
+        ), ChromaticChord.C7);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
                 Chromatic.E,
                 Chromatic.FF,
                 Chromatic.AA
-        ), ChromaticChord.C7b5.getNotes());
+        ), ChromaticChord.C7b5);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
                 Chromatic.E,
                 Chromatic.GG,
                 Chromatic.AA
-        ), ChromaticChord.C7a5.getNotes());
+        ), ChromaticChord.C7a5);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
                 Chromatic.F,
                 Chromatic.G,
                 Chromatic.AA
-        ), ChromaticChord.C7sus4.getNotes());
+        ), ChromaticChord.C7sus4);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
                 Chromatic.DD,
                 Chromatic.G,
                 Chromatic.AA
-        ), ChromaticChord.Cm7.getNotes());
+        ), ChromaticChord.Cm7);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
                 Chromatic.DD,
                 Chromatic.FF,
                 Chromatic.AA
-        ), ChromaticChord.Cm7b5.getNotes());
+        ), ChromaticChord.Cm7b5);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
                 Chromatic.DD,
                 Chromatic.GG,
                 Chromatic.AA
-        ), ChromaticChord.Cm7a5.getNotes());
+        ), ChromaticChord.Cm7a5);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
                 Chromatic.E,
                 Chromatic.G,
                 Chromatic.A
-        ), ChromaticChord.C6.getNotes());
+        ), ChromaticChord.C6);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
                 Chromatic.F,
                 Chromatic.G,
                 Chromatic.A
-        ), ChromaticChord.C6sus4.getNotes());
+        ), ChromaticChord.C6sus4);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
                 Chromatic.E,
                 Chromatic.G,
                 Chromatic.B
-        ), ChromaticChord.CMaj7.getNotes());
+        ), ChromaticChord.CMaj7);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
                 Chromatic.DD,
                 Chromatic.G,
                 Chromatic.B
-        ), ChromaticChord.CmMaj7.getNotes());
+        ), ChromaticChord.CmMaj7);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -372,7 +385,7 @@ public class ChromaticChordTest {
                 Chromatic.G,
                 Chromatic.A,
                 Chromatic.D
-        ), ChromaticChord.C6add9.getNotes());
+        ), ChromaticChord.C6add9);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -380,7 +393,7 @@ public class ChromaticChordTest {
                 Chromatic.G,
                 Chromatic.A,
                 Chromatic.D
-        ), ChromaticChord.Cm6add9.getNotes());
+        ), ChromaticChord.Cm6add9);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -388,7 +401,7 @@ public class ChromaticChordTest {
                 Chromatic.G,
                 Chromatic.AA,
                 Chromatic.CC
-        ), ChromaticChord.C7b9.getNotes());
+        ), ChromaticChord.C7b9);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -396,7 +409,7 @@ public class ChromaticChordTest {
                 Chromatic.G,
                 Chromatic.AA,
                 Chromatic.DD
-        ), ChromaticChord.C7a9.getNotes());
+        ), ChromaticChord.C7a9);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -404,7 +417,7 @@ public class ChromaticChordTest {
                 Chromatic.G,
                 Chromatic.AA,
                 Chromatic.CC
-        ), ChromaticChord.Cm7b9.getNotes());
+        ), ChromaticChord.Cm7b9);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -412,7 +425,7 @@ public class ChromaticChordTest {
                 Chromatic.G,
                 Chromatic.AA,
                 Chromatic.CC
-        ), ChromaticChord.Cm7b9.getNotes());
+        ), ChromaticChord.Cm7b9);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -420,7 +433,7 @@ public class ChromaticChordTest {
                 Chromatic.G,
                 Chromatic.AA,
                 Chromatic.F
-        ), ChromaticChord.C7add11.getNotes());
+        ), ChromaticChord.C7add11);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -428,7 +441,7 @@ public class ChromaticChordTest {
                 Chromatic.G,
                 Chromatic.AA,
                 Chromatic.A
-        ), ChromaticChord.C7add13.getNotes());
+        ), ChromaticChord.C7add13);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -436,7 +449,7 @@ public class ChromaticChordTest {
                 Chromatic.G,
                 Chromatic.AA,
                 Chromatic.D
-        ), ChromaticChord.C9.getNotes());
+        ), ChromaticChord.C9);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -444,7 +457,7 @@ public class ChromaticChordTest {
                 Chromatic.G,
                 Chromatic.AA,
                 Chromatic.D
-        ), ChromaticChord.Cm9.getNotes());
+        ), ChromaticChord.Cm9);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -452,7 +465,7 @@ public class ChromaticChordTest {
                 Chromatic.FF,
                 Chromatic.AA,
                 Chromatic.D
-        ), ChromaticChord.C9b5.getNotes());
+        ), ChromaticChord.C9b5);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -460,7 +473,7 @@ public class ChromaticChordTest {
                 Chromatic.GG,
                 Chromatic.AA,
                 Chromatic.D
-        ), ChromaticChord.C9a5.getNotes());
+        ), ChromaticChord.C9a5);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -468,7 +481,7 @@ public class ChromaticChordTest {
                 Chromatic.G,
                 Chromatic.AA,
                 Chromatic.D
-        ), ChromaticChord.C9sus4.getNotes());
+        ), ChromaticChord.C9sus4);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -476,7 +489,7 @@ public class ChromaticChordTest {
                 Chromatic.G,
                 Chromatic.B,
                 Chromatic.D
-        ), ChromaticChord.CMaj9.getNotes());
+        ), ChromaticChord.CMaj9);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -484,7 +497,7 @@ public class ChromaticChordTest {
                 Chromatic.G,
                 Chromatic.B,
                 Chromatic.D
-        ), ChromaticChord.CmMaj9.getNotes());
+        ), ChromaticChord.CmMaj9);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -493,7 +506,7 @@ public class ChromaticChordTest {
                 Chromatic.A,
                 Chromatic.AA,
                 Chromatic.D
-        ), ChromaticChord.C9add6.getNotes());
+        ), ChromaticChord.C9add6);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -502,7 +515,7 @@ public class ChromaticChordTest {
                 Chromatic.AA,
                 Chromatic.D,
                 Chromatic.FF
-        ), ChromaticChord.C9a11.getNotes());
+        ), ChromaticChord.C9a11);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -511,7 +524,7 @@ public class ChromaticChordTest {
                 Chromatic.B,
                 Chromatic.D,
                 Chromatic.FF
-        ), ChromaticChord.CMaj9a11.getNotes());
+        ), ChromaticChord.CMaj9a11);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -520,7 +533,7 @@ public class ChromaticChordTest {
                 Chromatic.AA,
                 Chromatic.D,
                 Chromatic.F
-        ), ChromaticChord.C11.getNotes());
+        ), ChromaticChord.C11);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -529,7 +542,7 @@ public class ChromaticChordTest {
                 Chromatic.AA,
                 Chromatic.D,
                 Chromatic.F
-        ), ChromaticChord.Cm11.getNotes());
+        ), ChromaticChord.Cm11);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -538,7 +551,7 @@ public class ChromaticChordTest {
                 Chromatic.AA,
                 Chromatic.CC,
                 Chromatic.F
-        ), ChromaticChord.C11b9.getNotes());
+        ), ChromaticChord.C11b9);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -547,7 +560,7 @@ public class ChromaticChordTest {
                 Chromatic.AA,
                 Chromatic.DD,
                 Chromatic.F
-        ), ChromaticChord.C11a9.getNotes());
+        ), ChromaticChord.C11a9);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -556,7 +569,7 @@ public class ChromaticChordTest {
                 Chromatic.B,
                 Chromatic.D,
                 Chromatic.F
-        ), ChromaticChord.CMaj11.getNotes());
+        ), ChromaticChord.CMaj11);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -565,7 +578,7 @@ public class ChromaticChordTest {
                 Chromatic.B,
                 Chromatic.D,
                 Chromatic.F
-        ), ChromaticChord.CmMaj11.getNotes());
+        ), ChromaticChord.CmMaj11);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -575,7 +588,7 @@ public class ChromaticChordTest {
                 Chromatic.D,
                 Chromatic.F,
                 Chromatic.A
-        ), ChromaticChord.Cm13.getNotes());
+        ), ChromaticChord.Cm13);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -584,7 +597,7 @@ public class ChromaticChordTest {
                 Chromatic.AA,
                 Chromatic.D,
                 Chromatic.A
-        ), ChromaticChord.Cm13omit11.getNotes());
+        ), ChromaticChord.Cm13omit11);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -594,7 +607,7 @@ public class ChromaticChordTest {
                 Chromatic.D,
                 Chromatic.F,
                 Chromatic.A
-        ), ChromaticChord.C13sus4.getNotes());
+        ), ChromaticChord.C13sus4);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -603,7 +616,7 @@ public class ChromaticChordTest {
                 Chromatic.AA,
                 Chromatic.D,
                 Chromatic.A
-        ), ChromaticChord.C13sus4omit11.getNotes());
+        ), ChromaticChord.C13sus4omit11);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -613,7 +626,7 @@ public class ChromaticChordTest {
                 Chromatic.D,
                 Chromatic.F,
                 Chromatic.A
-        ), ChromaticChord.C13b5.getNotes());
+        ), ChromaticChord.C13b5);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -622,7 +635,7 @@ public class ChromaticChordTest {
                 Chromatic.AA,
                 Chromatic.D,
                 Chromatic.A
-        ), ChromaticChord.C13b5omit11.getNotes());
+        ), ChromaticChord.C13b5omit11);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -632,7 +645,7 @@ public class ChromaticChordTest {
                 Chromatic.D,
                 Chromatic.F,
                 Chromatic.A
-        ), ChromaticChord.C13a5.getNotes());
+        ), ChromaticChord.C13a5);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -641,7 +654,7 @@ public class ChromaticChordTest {
                 Chromatic.AA,
                 Chromatic.D,
                 Chromatic.A
-        ), ChromaticChord.C13a5omit11.getNotes());
+        ), ChromaticChord.C13a5omit11);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -651,7 +664,7 @@ public class ChromaticChordTest {
                 Chromatic.CC,
                 Chromatic.F,
                 Chromatic.A
-        ), ChromaticChord.C13b9.getNotes());
+        ), ChromaticChord.C13b9);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -660,7 +673,7 @@ public class ChromaticChordTest {
                 Chromatic.AA,
                 Chromatic.CC,
                 Chromatic.A
-        ), ChromaticChord.C13b9omit11.getNotes());
+        ), ChromaticChord.C13b9omit11);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -670,7 +683,7 @@ public class ChromaticChordTest {
                 Chromatic.DD,
                 Chromatic.F,
                 Chromatic.A
-        ), ChromaticChord.C13a9.getNotes());
+        ), ChromaticChord.C13a9);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -679,7 +692,7 @@ public class ChromaticChordTest {
                 Chromatic.AA,
                 Chromatic.DD,
                 Chromatic.A
-        ), ChromaticChord.C13a9omit11.getNotes());
+        ), ChromaticChord.C13a9omit11);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -689,7 +702,7 @@ public class ChromaticChordTest {
                 Chromatic.CC,
                 Chromatic.F,
                 Chromatic.A
-        ), ChromaticChord.C13b5b9.getNotes());
+        ), ChromaticChord.C13b5b9);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -698,7 +711,7 @@ public class ChromaticChordTest {
                 Chromatic.AA,
                 Chromatic.CC,
                 Chromatic.A
-        ), ChromaticChord.C13b5b9omit11.getNotes());
+        ), ChromaticChord.C13b5b9omit11);
 
         // Do treceava mayor
         Assert.assertEquals(Arrays.asList(
@@ -709,7 +722,7 @@ public class ChromaticChordTest {
                 Chromatic.D,
                 Chromatic.F,
                 Chromatic.A
-        ), ChromaticChord.CMaj13.getNotes());
+        ), ChromaticChord.CMaj13);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -718,7 +731,7 @@ public class ChromaticChordTest {
                 Chromatic.B,
                 Chromatic.D,
                 Chromatic.A
-        ), ChromaticChord.CMaj13omit11.getNotes());
+        ), ChromaticChord.CMaj13omit11);
 
         // Do menor treceava mayor
         Assert.assertEquals(Arrays.asList(
@@ -729,7 +742,7 @@ public class ChromaticChordTest {
                 Chromatic.D,
                 Chromatic.F,
                 Chromatic.A
-        ), ChromaticChord.CmMaj13.getNotes());
+        ), ChromaticChord.CmMaj13);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -738,7 +751,7 @@ public class ChromaticChordTest {
                 Chromatic.B,
                 Chromatic.D,
                 Chromatic.A
-        ), ChromaticChord.CmMaj13omit11.getNotes());
+        ), ChromaticChord.CmMaj13omit11);
 
         // Do treceava mayor con quinta bemol
         Assert.assertEquals(Arrays.asList(
@@ -749,7 +762,7 @@ public class ChromaticChordTest {
                 Chromatic.D,
                 Chromatic.F,
                 Chromatic.A
-        ), ChromaticChord.CMaj13b5.getNotes());
+        ), ChromaticChord.CMaj13b5);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -758,7 +771,7 @@ public class ChromaticChordTest {
                 Chromatic.B,
                 Chromatic.D,
                 Chromatic.A
-        ), ChromaticChord.CMaj13b5omit11.getNotes());
+        ), ChromaticChord.CMaj13b5omit11);
 
         // Do treceava mayor con quinta aumentada
         Assert.assertEquals(Arrays.asList(
@@ -769,7 +782,7 @@ public class ChromaticChordTest {
                 Chromatic.DD,
                 Chromatic.F,
                 Chromatic.A
-        ), ChromaticChord.CMaj13a9.getNotes());
+        ), ChromaticChord.CMaj13a9);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -778,7 +791,7 @@ public class ChromaticChordTest {
                 Chromatic.B,
                 Chromatic.DD,
                 Chromatic.A
-        ), ChromaticChord.CMaj13a9omit11.getNotes());
+        ), ChromaticChord.CMaj13a9omit11);
 
         // Do treceava mayor con novena bemol
         Assert.assertEquals(Arrays.asList(
@@ -789,7 +802,7 @@ public class ChromaticChordTest {
                 Chromatic.CC,
                 Chromatic.F,
                 Chromatic.A
-        ), ChromaticChord.CMaj13b9.getNotes());
+        ), ChromaticChord.CMaj13b9);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -798,7 +811,7 @@ public class ChromaticChordTest {
                 Chromatic.B,
                 Chromatic.CC,
                 Chromatic.A
-        ), ChromaticChord.CMaj13b9omit11.getNotes());
+        ), ChromaticChord.CMaj13b9omit11);
 
 
         // Do treceava mayor con novena aumentada
@@ -810,7 +823,7 @@ public class ChromaticChordTest {
                 Chromatic.DD,
                 Chromatic.F,
                 Chromatic.A
-        ), ChromaticChord.CMaj13a9.getNotes());
+        ), ChromaticChord.CMaj13a9);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -819,7 +832,7 @@ public class ChromaticChordTest {
                 Chromatic.B,
                 Chromatic.DD,
                 Chromatic.A
-        ), ChromaticChord.CMaj13a9omit11.getNotes());
+        ), ChromaticChord.CMaj13a9omit11);
 
         // Do treceava mayor con quinta y novena bemoles
         Assert.assertEquals(Arrays.asList(
@@ -830,7 +843,7 @@ public class ChromaticChordTest {
                 Chromatic.CC,
                 Chromatic.F,
                 Chromatic.A
-        ), ChromaticChord.CMaj13b5b9.getNotes());
+        ), ChromaticChord.CMaj13b5b9);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -839,7 +852,7 @@ public class ChromaticChordTest {
                 Chromatic.B,
                 Chromatic.CC,
                 Chromatic.A
-        ), ChromaticChord.CMaj13b5b9omit11.getNotes());
+        ), ChromaticChord.CMaj13b5b9omit11);
 
         // Do treceava mayor con quinta bemol y novena aumentada
         Assert.assertEquals(Arrays.asList(
@@ -850,7 +863,7 @@ public class ChromaticChordTest {
                 Chromatic.DD,
                 Chromatic.F,
                 Chromatic.A
-        ), ChromaticChord.CMaj13b5a9.getNotes());
+        ), ChromaticChord.CMaj13b5a9);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -859,7 +872,7 @@ public class ChromaticChordTest {
                 Chromatic.B,
                 Chromatic.DD,
                 Chromatic.A
-        ), ChromaticChord.CMaj13b5a9omit11.getNotes());
+        ), ChromaticChord.CMaj13b5a9omit11);
 
         //Do treceava mayor con quinta aumentada y novena bemol
         Assert.assertEquals(Arrays.asList(
@@ -870,7 +883,7 @@ public class ChromaticChordTest {
                 Chromatic.CC,
                 Chromatic.F,
                 Chromatic.A
-        ), ChromaticChord.CMaj13a5b9.getNotes());
+        ), ChromaticChord.CMaj13a5b9);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -879,7 +892,7 @@ public class ChromaticChordTest {
                 Chromatic.B,
                 Chromatic.CC,
                 Chromatic.A
-        ), ChromaticChord.CMaj13a5b9omit11.getNotes());
+        ), ChromaticChord.CMaj13a5b9omit11);
 
         // Do treceava mayor con quinta y novena aumentadas
         Assert.assertEquals(Arrays.asList(
@@ -890,7 +903,7 @@ public class ChromaticChordTest {
                 Chromatic.DD,
                 Chromatic.F,
                 Chromatic.A
-        ), ChromaticChord.CMaj13a5a9.getNotes());
+        ), ChromaticChord.CMaj13a5a9);
 
         Assert.assertEquals(Arrays.asList(
                 Chromatic.C,
@@ -899,7 +912,7 @@ public class ChromaticChordTest {
                 Chromatic.B,
                 Chromatic.DD,
                 Chromatic.A
-        ), ChromaticChord.CMaj13a5a9omit11.getNotes());
+        ), ChromaticChord.CMaj13a5a9omit11);
 
     }
 
@@ -1002,13 +1015,25 @@ public class ChromaticChordTest {
 
         @Test
         public void fromDiatonicFunction5() {
-            ChromaticChord diatonicChordMidi = ChromaticChord.builder()
+            ChromaticChord chromaticChord = ChromaticChord.builder()
                     .intervalDiatonic(DiatonicDegree.VI, IntervalDiatonic.THIRD)
                     .tonality(Tonality.Gm)
                     .build();
-            Assert.assertEquals(2, diatonicChordMidi.size());
-            assertPitchInChord(Chromatic.DD, diatonicChordMidi, 0);
-            assertPitchInChord(Chromatic.G, diatonicChordMidi, 1);
+            Assert.assertEquals(2, chromaticChord.size());
+            assertPitchInChord(Chromatic.DD, chromaticChord, 0);
+            assertPitchInChord(Chromatic.G, chromaticChord, 1);
+        }
+
+        @Test
+        public void fromChromaticFunction_ISUS4() {
+            ChromaticChord chromaticChord = ChromaticChord.builder()
+                    .chromaticFunction(ChromaticFunction.ISUS4)
+                    .tonality(Tonality.C)
+                    .build();
+            Assert.assertEquals(3, chromaticChord.size());
+            assertPitchInChord(Chromatic.C, chromaticChord, 0);
+            assertPitchInChord(Chromatic.F, chromaticChord, 1);
+            assertPitchInChord(Chromatic.G, chromaticChord, 2);
         }
     }
 }

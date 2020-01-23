@@ -4,7 +4,7 @@ import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import es.danisales.datune.chords.DiatonicAlt;
 import es.danisales.datune.chords.DiatonicAltRetrieval;
-import es.danisales.datune.degrees.CyclicDegree;
+import es.danisales.datune.degrees.octave.CyclicDegree;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 

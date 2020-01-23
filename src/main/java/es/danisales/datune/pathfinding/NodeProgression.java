@@ -1,8 +1,8 @@
 package es.danisales.datune.pathfinding;
 
-import java.util.List;
-
 import es.danisales.datune.midi.ChordMidi;
+
+import java.util.List;
 
 public class NodeProgression extends Node<ChordMidi, NodeProgression> {
 	protected List<NodeProgression> next;

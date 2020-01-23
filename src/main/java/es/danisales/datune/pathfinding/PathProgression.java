@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-public class PathProgression<N extends ChordMidi> extends Path<NodeProgression> {
+public class PathProgression extends Path<NodeProgression> {
 	private List<List<NodeProgression>> nodes;
 
 	protected final Function<NodeProgression, List<NodeProgression>> sucesores_f = (NodeProgression n) -> {
@@ -23,8 +23,8 @@ public class PathProgression<N extends ChordMidi> extends Path<NodeProgression> 
 		assert array.size() > 2;
 		nodes = new ArrayList<>();
 
-		for (int i = 1; i < array.size()-1; i++) {
-			List<ChordMidi> cs = ChordMidiTransformations.getAllDispositionsWithInv(array.get(i));
+		for (int i = 1; i < array.size()-1; i++) { // todo
+			List<ChordMidi> cs = null;//ChordMidiTransformations.getAllAbsoluteVoicesWithInv(array.get(i));
 			List<NodeProgression> ns = new ArrayList<>();
 			for (ChordMidi c : cs) {
 				ns.add( new NodeProgression(c) );

@@ -13,9 +13,9 @@ public class ChromaticChordRetrieval {
     private ChromaticChordRetrieval() {
     }
 
-    public static EnumSet<ChromaticChordImmutable> getChordsWithRepeatedNotes() {
-        EnumSet<ChromaticChordImmutable> chords = EnumSet.noneOf(ChromaticChordImmutable.class);
-        for (ChromaticChordImmutable cc : ChromaticChordImmutable.values()) {
+    public static EnumSet<ChromaticChordEnum> getChordsWithRepeatedNotes() {
+        EnumSet<ChromaticChordEnum> chords = EnumSet.noneOf(ChromaticChordEnum.class);
+        for (ChromaticChordEnum cc : ChromaticChordEnum.values()) {
             EnumMap<Chromatic, Integer> e = new EnumMap<>( Chromatic.class );
             for (Chromatic c : Chromatic.values())
                 e.put( c, 0 );

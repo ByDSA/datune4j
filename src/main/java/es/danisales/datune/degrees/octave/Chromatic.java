@@ -1,7 +1,7 @@
 package es.danisales.datune.degrees.octave;
 
 import es.danisales.datune.chords.DiatonicAlt;
-import es.danisales.datune.degrees.CyclicDegree;
+import es.danisales.datune.degrees.OrderedDegree;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.lang.Namer;
 import es.danisales.datune.midi.pitch.PitchDiatonicMidi;
@@ -13,10 +13,11 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 
 import static com.google.common.base.Preconditions.checkState;
 
-public enum Chromatic implements PitchChromaticSingle, OctaveDegree, CyclicDegree {
+public enum Chromatic implements PitchChromaticSingle, CyclicDegree, OrderedDegree {
 	C, CC, D, DD, E, F, FF, G, GG, A, AA, B;
 
 	public static final int NUMBER = values().length;
@@ -83,26 +84,33 @@ public enum Chromatic implements PitchChromaticSingle, OctaveDegree, CyclicDegre
 		diatonicAltChromaticMap.put(DiatonicAlt.Cbbb, Chromatic.A);
 	}
 
-	public static @NonNull Chromatic from(@NonNull DiatonicAlt diatonicAlt) {
-		Objects.requireNonNull(diatonicAlt);
+	private static Map<Class<? extends CyclicDegree>, Function<CyclicDegree, Chromatic>> conversionMap = new HashMap<>();
+
+	static {
+		conversionMap.put(DiatonicAlt.class, Chromatic::fromDiatonicAlt);
+		conversionMap.put(Diatonic.class, Chromatic::fromDiatonic);
+	}
+
+	public static @NonNull Chromatic from(@NonNull CyclicDegree cyclicDegree) {
+		return conversionMap.get(cyclicDegree.getClass()).apply(cyclicDegree);
+	}
+
+	private static @NonNull Chromatic fromDiatonicAlt(@NonNull CyclicDegree cyclicDegree) {
+		DiatonicAlt diatonicAlt = (DiatonicAlt)Objects.requireNonNull(cyclicDegree);
 		Chromatic ret = diatonicAltChromaticMap.get(diatonicAlt);
 		if (ret == null) {
 			Diatonic diatonicOriginal = diatonicAlt.getDiatonic();
 			int semitones = Math.round(diatonicAlt.getSemitonesAdded() + diatonicAlt.getMicrotonalPartAdded());
 			Chromatic chromaticDiatonicOriginal = Chromatic.from(diatonicOriginal);
-            ret = chromaticDiatonicOriginal.getNext(semitones);
+			ret = chromaticDiatonicOriginal.getNext(semitones);
 		}
 
 		return ret;
 	}
 
-
-	public static @NonNull Chromatic from(@NonNull CyclicDegree diatonicAlt) {
-		return null;
-	}
-
 	@SuppressWarnings("Duplicates")
-    public static @NonNull Chromatic from(@NonNull Diatonic diatonic) {
+    private static @NonNull Chromatic fromDiatonic(@NonNull CyclicDegree cyclicDegree) {
+		Diatonic diatonic = (Diatonic)Objects.requireNonNull(cyclicDegree);
 		switch (diatonic) {
 			case C: return C;
 			case D: return D;

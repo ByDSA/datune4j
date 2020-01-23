@@ -1,15 +1,17 @@
 package es.danisales.datune.voicing;
 
-import es.danisales.datune.degrees.CyclicDegree;
+import es.danisales.datune.degrees.octave.CyclicDegree;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AbsoluteVoicing<C extends CyclicDegree> {
-    private List<AbsoluteOctavePitch<C>> relativeVoices;
-
+public class AbsoluteVoicing<C extends CyclicDegree> extends ArrayList<AbsoluteOctavePitch<C>> {
     private AbsoluteVoicing(List<AbsoluteOctavePitch<C>> relativeVoices) {
-        this.relativeVoices = relativeVoices;
+        super(relativeVoices);
+    }
+
+    public AbsoluteVoicing<C> clone() {
+        return new AbsoluteVoicing<>(this);
     }
 
     public static <C extends CyclicDegree> AbsoluteVoicing<C> from(Voicing<C> voicing, int absoluteOctaveBase) {

@@ -1,6 +1,6 @@
 package es.danisales.datune.chords;
 
-import es.danisales.datune.degrees.CyclicDegree;
+import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.ChromaticFunction;
@@ -8,9 +8,6 @@ import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.midi.ChromaticMidi;
-import es.danisales.datune.midi.DiatonicChordMidi;
-import es.danisales.datune.midi.DiatonicMidi;
-import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.tonality.ChordRetrievalFromTonality;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;
@@ -73,8 +70,6 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
         public boolean isReadyToBuild() {
             return (diatonicDegreePattern != null || intervalDiatonic != null) && tonality != null;
         }
-
-
 
         @NonNull
         @Override
@@ -186,6 +181,7 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
         if (this.chromaticChord == null)
             this.chromaticChord = new ChromaticChord();
         this.chromaticChord.addAll(chromaticList);
+        this.chromaticChord.resetRoot();
 
         return self();
     }
@@ -194,29 +190,13 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
         List<Chromatic> list = new ArrayList<>();
 
         for (ChromaticMidi chromaticMidi : chromaticChordMidi)
-            list.add(chromaticMidi.getPitch().getChromatic());
+            list.add(chromaticMidi.getPitch().getNote());
 
         return addAll(list);
     }
 
     public @NonNull ChromaticChordBuilder addAll(@NonNull Chromatic... chromaticChord) {
         return addAll(Arrays.asList(chromaticChord));
-    }
-
-    public @NonNull ChromaticChordBuilder fromDiatonicChordMidi(@NonNull DiatonicChordMidi diatonicChordMidi) {
-        tonality = diatonicChordMidi.getTonality();
-
-        List<Chromatic> chromaticList = new ArrayList<>();
-        for (DiatonicMidi diatonicMidi : diatonicChordMidi) {
-            PitchChromaticMidi pitchChromaticMidi = PitchChromaticMidi.from(diatonicMidi.getPitch());
-            Chromatic chromatic = pitchChromaticMidi.getChromatic();
-            chromaticList.add(chromatic);
-        }
-
-        addAll(chromaticList);
-        chromaticChord.setRootIndex(diatonicChordMidi.getRootIndex());
-
-        return self();
     }
 
     public @NonNull ChromaticChordBuilder chromaticBase(@NonNull Chromatic chromaticBase) {

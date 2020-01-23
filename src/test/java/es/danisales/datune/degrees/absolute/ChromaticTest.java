@@ -52,7 +52,8 @@ public class ChromaticTest {
 
     @Test
     public void from_pitchDiatonicMidi() throws PitchMidiException {
-        PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(DiatonicDegree.I, Tonality.from(DiatonicAlt.Cb, Scale.MINOR), 5);
+        Tonality<DiatonicAlt> tonality = Tonality.from(DiatonicAlt.Cb, Scale.MINOR);
+        PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(DiatonicDegree.I, tonality, 5);
         assertSame(Chromatic.B, Chromatic.from(pitchDiatonicMidi));
     }
 

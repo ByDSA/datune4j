@@ -20,9 +20,7 @@ public class ChromaticChordNamesTest {
         private static ChromaticChord chromaticChord;
 
         static void updateChromaticChord() {
-            chromaticChord = ChromaticChord.from(parametricChord);
-            if (chromaticChord.innerChord instanceof ChromaticChordImmutable)
-                chromaticChord = chromaticChord.clone();
+            chromaticChord = ChromaticChord.from(parametricChord).clone();
         }
 
         @Test

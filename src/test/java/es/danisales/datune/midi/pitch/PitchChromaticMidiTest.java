@@ -10,8 +10,8 @@ import static org.junit.Assert.assertSame;
 public class PitchChromaticMidiTest {
     @Test
     public void getChromatic() {
-        assertSame( Chromatic.C, PitchChromaticMidi.C5.getChromatic() );
-        assertSame( Chromatic.B, PitchChromaticMidi.B7.getChromatic() );
+        assertSame( Chromatic.C, PitchChromaticMidi.C5.getNote() );
+        assertSame( Chromatic.B, PitchChromaticMidi.B7.getNote() );
     }
 
     @Test

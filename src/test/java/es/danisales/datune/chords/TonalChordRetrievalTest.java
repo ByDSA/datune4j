@@ -6,14 +6,31 @@ import es.danisales.datune.tonality.TonalityRetrieval;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class ParametricChordRetrievalTest {
+public class TonalChordRetrievalTest {
     private static void contains(List<TonalChord> parametricChordExpectedList, List<TonalChord> parametricChordActualList) {
         assertTrue(parametricChordExpectedList.containsAll(parametricChordActualList));
+    }
+
+    @Test
+    public void C_in_C() {
+        List<TonalChord> parametricChordList = TonalChord.retrieval()
+                .from(ChromaticChord.C)
+                .harmonicFunctions(DiatonicFunction.values())
+                .tonalities(Tonality.C)
+                .retrieve();
+
+        assertEquals(1, parametricChordList.size());
+        contains(parametricChordList,
+                Collections.singletonList(
+                        TonalChord.from(Tonality.C, DiatonicFunction.I)
+                )
+        );
     }
 
     @Test

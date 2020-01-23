@@ -1,9 +1,9 @@
 package es.danisales.datune.degrees.scale;
 
-import es.danisales.datune.chords.DiatonicDegreePattern;
 import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
+import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.utils.MathUtils;
 import es.danisales.utils.NeverHappensException;
@@ -54,6 +54,13 @@ public enum DiatonicDegree implements ScaleDegree {
 		if ( n < 0 )
 			n += Diatonic.NUMBER;
 		return n;
+	}
+
+	public static @NonNull DiatonicDegree from(@NonNull HarmonicFunction harmonicFunction) {
+		if (harmonicFunction instanceof DiatonicFunction)
+			return from((DiatonicFunction)harmonicFunction);
+		else
+			return from((ChromaticFunction)harmonicFunction);
 	}
 
 	public static @NonNull DiatonicDegree from(@NonNull DiatonicFunction diatonicFunction) {

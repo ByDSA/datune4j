@@ -1,15 +1,17 @@
 package es.danisales.datune.tonality;
 
 import es.danisales.datune.chords.Chord;
-import es.danisales.datune.degrees.CyclicDegree;
+import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.degrees.scale.ScaleDegree;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
-import es.danisales.datune.midi.DiatonicChordMidi;
 import es.danisales.datune.chords.ChromaticChord;
 import es.danisales.datune.chords.DiatonicAlt;
+import es.danisales.datune.midi.ChordMidi;
+import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -75,10 +77,6 @@ public class Tonality<C extends CyclicDegree> implements Iterable<C> {
         this.fixed = fixed;
 
         createChromaticToDiatonicAltCache();
-    }
-
-    public static Tonality fromDiatonicChordMidi(@NonNull DiatonicChordMidi c, @NonNull Tonality base) { // todo
-        return TonalityRetrieval.fromDiatonicChordMidi(c, base);
     }
 
     public static <C extends CyclicDegree> @NonNull Tonality<C> from(@NonNull C diatonicAlt, @NonNull Scale scale) {
@@ -416,6 +414,17 @@ public class Tonality<C extends CyclicDegree> implements Iterable<C> {
     }
 
     public Chord<C> getChordFromHarmonicFunction(@NonNull HarmonicFunction harmonicFunction) {
-        return null;
+        return (Chord<C>)ChromaticChord.builder()
+                .harmonicFunction(harmonicFunction)
+                .tonality(this)
+                .build();
+    }
+
+    public boolean contains(ChordMidi diatonicChordMidi) {
+        for (ChromaticMidi chromaticMidi : diatonicChordMidi)
+            if (!contains(chromaticMidi.getPitch().getNote()))
+                return false;
+
+        return true;
     }
 }

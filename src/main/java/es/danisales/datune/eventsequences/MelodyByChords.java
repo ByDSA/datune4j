@@ -1,7 +1,6 @@
 package es.danisales.datune.eventsequences;
 
-import es.danisales.datune.midi.DiatonicChordMidi;
-import es.danisales.datune.midi.DiatonicChordMidiChecker;
+import es.danisales.datune.midi.ChordMidi;
 import es.danisales.datune.midi.DiatonicMidi;
 import es.danisales.datune.midi.DurationMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
@@ -9,15 +8,15 @@ import es.danisales.datune.midi.pitch.PitchMidiException;
 import java.util.List;
 
 public class MelodyByChords extends Melody {
-    protected List<DiatonicChordMidi> chords;
+    protected List<ChordMidi> chords;
 
-    public MelodyByChords(List<DiatonicChordMidi> c) {
+    public MelodyByChords(List<ChordMidi> c) {
 		chords = c;
 	}
 
-	public DiatonicChordMidi getChord(int t) throws OutOfTimeException {
+	public ChordMidi getChord(int t) throws OutOfTimeException {
 		int count = 0;
-		for (DiatonicChordMidi c : chords) {
+		for (ChordMidi c : chords) {
 			count += c.getLength();
 			if (count > t)
 				return c;
@@ -31,19 +30,19 @@ public class MelodyByChords extends Melody {
 			super("No se pudo acceder al " + (t/ DurationMidi.L1 +1) + ":" + ((t % DurationMidi.L1) / (float) DurationMidi.L4 +1));
 		}
 	}
-
+/*
 	public DiatonicMidi add(int t, int p, int d) {
-		DiatonicChordMidi c = getChord(t);
-        DiatonicMidi n = DiatonicChordMidiChecker.getFromBase(c, p).clone();
+		ChordMidi c = getChord(t);
+        DiatonicMidi n = ChordMidiChecker.getFromBase(c, p).clone();
 		n.setLength(d);
 
 		notes.add(t, n);
 
 		return n;
 	}
-
+*/
 	public Melody shiftOctave(int o) throws PitchMidiException {
-		for (DiatonicChordMidi c : chords) {
+		for (ChordMidi c : chords) {
 			c.shiftOctave(o);
 		}
 		

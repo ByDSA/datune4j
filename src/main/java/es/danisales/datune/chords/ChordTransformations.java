@@ -1,12 +1,9 @@
 package es.danisales.datune.chords;
 
-import es.danisales.datune.degrees.CyclicDegree;
+import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.degrees.octave.Chromatic;
-import es.danisales.datune.degrees.OrderedDegree;
-import es.danisales.datune.interval.Interval;
-import es.danisales.datune.midi.ChromaticChordMidi;
+import es.danisales.datune.midi.ChordMidi;
 import es.danisales.datune.midi.ChromaticMidi;
-import es.danisales.datune.pitch.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +25,13 @@ public class ChordTransformations {
         return (T) chord;
     }
 
-    public static void removeHigherDuplicates(ChromaticChordMidi self) {
-        ChromaticChordMidi out = ChromaticChordMidi.builder().build();
+    public static void removeHigherDuplicates(ChordMidi self) {
+        ChordMidi out = ChordMidi.builder().build();
         for (ChromaticMidi chromaticMidi : self) {
             boolean found = false;
             for (ChromaticMidi chromaticMidi2 : out) {
-                Chromatic chromaticN2 = chromaticMidi2.getPitch().getChromatic();
-                Chromatic chromaticN = chromaticMidi.getPitch().getChromatic();
+                Chromatic chromaticN2 = chromaticMidi2.getPitch().getNote();
+                Chromatic chromaticN = chromaticMidi.getPitch().getNote();
                 if (chromaticN2.ordinal() == chromaticN.ordinal()) {
                     found = true;
                     break;
@@ -64,7 +61,7 @@ public class ChordTransformations {
     }
 
     @SuppressWarnings("unchecked")
-    public static <C extends ChordMutable> ArrayList<C> duplicateList(List<C> a) {
+    public static <C extends Chord> ArrayList<C> duplicateList(List<C> a) {
         ArrayList<C> b = new ArrayList<>();
         for (C c : a)
             b.add((C) c.clone());

@@ -10,8 +10,8 @@ class ChromaticChordMidiAdapter {
     private ChromaticChordMidiAdapter() {
     }
 
-    public static <N extends PitchChromaticSingle> @NonNull ChromaticChordMidi from(@NonNull Iterable<N> iterable) throws PitchMidiException {
-        ChromaticChordMidi self = new ChromaticChordMidi();
+    public static <N extends PitchChromaticSingle> @NonNull ChordMidi from(@NonNull Iterable<N> iterable) throws PitchMidiException {
+        ChordMidi self = new ChordMidi();
 
         for (N n : iterable) {
             ChromaticMidiBuilder builder = ChromaticMidi.builder();
@@ -20,7 +20,7 @@ class ChromaticChordMidiAdapter {
             if (n instanceof Chromatic)
                 chromaticN = (Chromatic) n;
             else if (n instanceof ChromaticMidi)
-                chromaticN = ((ChromaticMidi) n).getPitch().getChromatic();
+                chromaticN = ((ChromaticMidi) n).getPitch().getNote();
 
             if (n instanceof PitchOctave)
                 builder.pitch(chromaticN, (((PitchOctave) n).getOctave()));
@@ -39,9 +39,9 @@ class ChromaticChordMidiAdapter {
                     .build();
 
             if (self.size() > 0) {
-                Chromatic chromaticCm = chromaticMidi.getPitch().getChromatic();
+                Chromatic chromaticCm = chromaticMidi.getPitch().getNote();
                 ChromaticMidi previous = self.get(self.size() - 1);
-                Chromatic prevChromatic = previous.getPitch().getChromatic();
+                Chromatic prevChromatic = previous.getPitch().getNote();
                 chromaticMidi.getPitch().setOctave(previous.getPitch().getOctave());
                 if (!(n instanceof PitchOctave) && self.size() > 0 && chromaticCm.ordinal() <= prevChromatic.ordinal()) {
                     chromaticMidi.getPitch().shiftOctave(1);
@@ -52,18 +52,5 @@ class ChromaticChordMidiAdapter {
         }
 
         return self;
-    }
-
-    public static @NonNull ChromaticChordMidi fromDiatonicChordMidi(@NonNull DiatonicChordMidi diatonicChordMidi) {
-        ChromaticChordMidi chromaticChordMidi = new ChromaticChordMidi();
-        for (DiatonicMidi diatonicMidi : diatonicChordMidi) {
-            ChromaticMidi nChromatic = ChromaticMidi.from(diatonicMidi);
-            chromaticChordMidi.add(nChromatic);
-        }
-        chromaticChordMidi.arpegio = diatonicChordMidi.arpegio;
-        chromaticChordMidi.length = diatonicChordMidi.length;
-        chromaticChordMidi.setRootIndex(diatonicChordMidi.getRootIndex());
-
-        return chromaticChordMidi;
     }
 }

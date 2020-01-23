@@ -55,7 +55,7 @@ enum PitchChromaticMidiImmutable implements PitchChromaticSingle, PitchOctave, O
         return from(n, o);
     }
 
-    public static @NonNull PitchChromaticMidiImmutable from(Chromatic chromatic, int octave) throws PitchMidiException {
+    public static @NonNull PitchChromaticMidiImmutable from(@NonNull Chromatic chromatic, int octave) throws PitchMidiException {
         switch (octave) {
             case 0:
                 switch (chromatic) {

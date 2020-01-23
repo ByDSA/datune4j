@@ -1,6 +1,6 @@
 package es.danisales.datune.midi.pitch;
 
-import es.danisales.datune.degrees.CyclicDegree;
+import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.ScaleDegree;
 import es.danisales.datune.interval.IntervalChromatic;

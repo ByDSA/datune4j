@@ -1,9 +1,8 @@
 package es.danisales.datune.chords;
 
-import es.danisales.datune.degrees.CyclicDegree;
+import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.octave.Diatonic;
-import es.danisales.datune.degrees.octave.OctaveDegree;
 import es.danisales.datune.lang.Namer;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.pitch.PitchChromaticSingle;
@@ -145,11 +144,11 @@ public class DiatonicAlt implements CyclicDegree {
 		throw new TonalityException(diatonic, tonality);
 	}
 
-    public static DiatonicAlt from(@NonNull Chromatic chromatic, float microPart, @NonNull OctaveDegree absoluteDegree) {
+    public static DiatonicAlt from(@NonNull Chromatic chromatic, float microPart, @NonNull CyclicDegree absoluteDegree) {
 		return DiatonicAltAdapter.from(chromatic, microPart, absoluteDegree);
 	}
 
-    public static DiatonicAlt from(float semis, @NonNull OctaveDegree absoluteDegree) {
+    public static DiatonicAlt from(float semis, @NonNull CyclicDegree absoluteDegree) {
 		return DiatonicAltAdapter.from(semis, absoluteDegree);
 	}
 

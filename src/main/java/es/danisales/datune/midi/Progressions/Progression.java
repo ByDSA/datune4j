@@ -1,10 +1,11 @@
 package es.danisales.datune.midi.Progressions;
 
+import es.danisales.datune.chords.ChromaticChord;
 import es.danisales.datune.chords.TonalChord;
 import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
-import es.danisales.datune.midi.DiatonicChordMidi;
+import es.danisales.datune.midi.ChordMidi;
 import es.danisales.datune.midi.DurationMidi;
 import es.danisales.datune.midi.arpegios.Arpeggio;
 import es.danisales.datune.midi.arpegios.ArpeggioDefault;
@@ -21,7 +22,7 @@ public class Progression<This extends Progression> implements EventComplex {
 	protected Tonality tonality;
 	protected int octave;
 
-	private List<DiatonicChordMidi> nodes;
+	private List<ChordMidi> nodes;
 
 	private Progression() {
 		super();
@@ -43,16 +44,16 @@ public class Progression<This extends Progression> implements EventComplex {
 	 * @param o	Desplazamiento de octava
 	 * @return Acorde reemplazado
 	 */
-	public DiatonicChordMidi replaceChord(int n, DiatonicFunction diatonicFunction, int o) {
-		DiatonicChordMidi c = null;
+	public ChordMidi replaceChord(int n, DiatonicFunction diatonicFunction, int o) {
+		ChordMidi c = null;
 		o += octave;
 
 		try {
-			c = DiatonicChordMidi.builder()
-					.from(TonalChord.from(tonality, diatonicFunction))
-					.octave(o)
+			c = ChordMidi.builder()
+					.fromChromaticChord(ChromaticChord.from(TonalChord.from(tonality, diatonicFunction)))
+					.octaveBase(o)
 					.build();
-		} catch (BuildingException e) {
+		} catch (PitchMidiException e) {
 			e.printStackTrace();
 		}
 
@@ -61,32 +62,32 @@ public class Progression<This extends Progression> implements EventComplex {
 		return c;
 	}
 
-	public DiatonicChordMidi replaceChord(int n, DiatonicFunction t) {
+	public ChordMidi replaceChord(int n, DiatonicFunction t) {
 		return replaceChord(n, t, 0);
 	}
 
 	/** A�adir acordes **/
 
-	public DiatonicChordMidi add(HarmonicFunction t) {
+	public ChordMidi add(HarmonicFunction t) {
 		return add(t, 0);
 	}
 
-	public DiatonicChordMidi add(DiatonicChordMidi c) {
+	public ChordMidi add(ChordMidi c) {
 		nodes.add(c);
 
 		return c;
 	}
 
-	public DiatonicChordMidi add(HarmonicFunction t, int o) {
-		DiatonicChordMidi c = null;
+	public ChordMidi add(HarmonicFunction t, int o) {
+		ChordMidi c = null;
 		o += octave;
 
 		try {
-			c = DiatonicChordMidi.builder()
-					.from(TonalChord.from(tonality, t))
-					.octave(o)
+			c = ChordMidi.builder()
+					.fromChromaticChord(ChromaticChord.from(TonalChord.from(tonality, t)))
+					.octaveBase(o)
 					.build();
-		} catch (BuildingException e) {
+		} catch (PitchMidiException e) {
 			e.printStackTrace();
 		}
 
@@ -113,10 +114,6 @@ public class Progression<This extends Progression> implements EventComplex {
 	public Progression setTonality(Tonality s) {
 		tonality = s;
 
-		for(DiatonicChordMidi n : nodes) {
-			n.setTonality(tonality);
-		}
-
 		return this;
 	}
 
@@ -127,10 +124,9 @@ public class Progression<This extends Progression> implements EventComplex {
 	public EventSequence getEvents() {
 		EventSequence es = new EventSequence();
 		int duration = 0;
-		for(DiatonicChordMidi node : nodes) {
-			Tonality s = node.getTonality();
+		for(ChordMidi node : nodes) {
 			if (duration % DurationMidi.L1 == 0)
-				es.add(duration, new KeySignatureEvent(s));
+				es.add(duration, new KeySignatureEvent(tonality));
 
 			es.add(duration, node);
 			duration += node.getLength();
@@ -140,7 +136,7 @@ public class Progression<This extends Progression> implements EventComplex {
 	}
 
 	public Progression setArpegio(Arpeggio a) {
-		for (DiatonicChordMidi n : nodes) {
+		for (ChordMidi n : nodes) {
 			n.setArpeggio(a);
 		}
 
@@ -148,7 +144,7 @@ public class Progression<This extends Progression> implements EventComplex {
 	}
 
 	public Progression setArpegio(int n, Arpeggio a) {
-		DiatonicChordMidi nn = this.getChords().get(n);
+		ChordMidi nn = this.getChords().get(n);
 		nn.setArpeggio(a);
 
 		return this;
@@ -167,7 +163,7 @@ public class Progression<This extends Progression> implements EventComplex {
 	}
 
 	public Progression shiftOctave(int o) throws PitchMidiException {
-		for(DiatonicChordMidi n : nodes)
+		for(ChordMidi n : nodes)
 			n.shiftOctave(o);
 
 		return setOctave(octave + o);
@@ -177,7 +173,7 @@ public class Progression<This extends Progression> implements EventComplex {
 		StringBuilder sb = new StringBuilder();
 		boolean first = true;
 
-		for(DiatonicChordMidi n : nodes) {
+		for(ChordMidi n : nodes) {
 			if (first)
 				first = false;
 			else
@@ -210,17 +206,17 @@ public class Progression<This extends Progression> implements EventComplex {
 		return nodes.size();
 	}
 
-	public List<DiatonicChordMidi> getChords() {
+	public List<ChordMidi> getChords() {
 		return nodes;
 	}
 
-	public DiatonicChordMidi getChord(int n) {
+	public ChordMidi getChord(int n) {
 		return nodes.get(n);
 	}
 
-	public DiatonicChordMidi getChordAtTime(int t) {
+	public ChordMidi getChordAtTime(int t) {
 		int duration = 0;
-		for(DiatonicChordMidi n : nodes) {
+		for(ChordMidi n : nodes) {
 			int d = n.getLength();
 			if (duration + d > t)
 				return n;
@@ -232,7 +228,7 @@ public class Progression<This extends Progression> implements EventComplex {
 
 	public int getDuration() {
 		int d = 0;
-		for(DiatonicChordMidi n : nodes)
+		for(ChordMidi n : nodes)
 			d += n.getLength();
 
 		return d;
@@ -244,8 +240,8 @@ public class Progression<This extends Progression> implements EventComplex {
 
 		p.octave = octave;
 
-		for(DiatonicChordMidi n : nodes) {
-            p.nodes.add(n.clone());
+		for(ChordMidi n : nodes) {
+			p.nodes.add(n.clone());
 		}
 
 		p.tonality = Tonality.from(tonality.getRoot(),tonality.getScale());
@@ -255,7 +251,7 @@ public class Progression<This extends Progression> implements EventComplex {
 
 	static class OutOfTimeException extends RuntimeException {
 		OutOfTimeException(int t, int d) {
-            super(t + " " + d);
+			super(t + " " + d);
 		}
 	}
 }

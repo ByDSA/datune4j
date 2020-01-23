@@ -18,11 +18,9 @@ public class ChromaticChordMidiTest {
     @Test
     public void fromChromaticChord() throws PitchMidiException {
         ChromaticChord chromaticChord = ChromaticChord.F5;
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder().fromChromaticChord(chromaticChord).build();
+        ChordMidi chromaticChordMidi = ChordMidi.builder().fromChromaticChord(chromaticChord).build();
         for (int i = 0; i < chromaticChord.size(); i++)
-            assertEquals(chromaticChord.get(i), chromaticChordMidi.get(i).getPitch().getChromatic());
-
-        assertEquals(0, chromaticChordMidi.getRootIndex());
+            assertEquals(chromaticChord.get(i), chromaticChordMidi.get(i).getPitch().getNote());
 
         assertEquals(PitchChromaticMidi.F5, chromaticChordMidi.get(0).getPitch());
         assertEquals(PitchChromaticMidi.C6, chromaticChordMidi.get(1).getPitch());
@@ -31,11 +29,9 @@ public class ChromaticChordMidiTest {
     @Test
     public void fromChromaticChord2() throws PitchMidiException {
         ChromaticChord chromaticChord = ChromaticChord.B9;
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder().fromChromaticChord(chromaticChord).build();
+        ChordMidi chromaticChordMidi = ChordMidi.builder().fromChromaticChord(chromaticChord).build();
         for (int i = 0; i < chromaticChord.size(); i++)
-            assertEquals(chromaticChord.get(i), chromaticChordMidi.get(i).getPitch().getChromatic());
-
-        assertEquals(0, chromaticChordMidi.getRootIndex());
+            assertEquals(chromaticChord.get(i), chromaticChordMidi.get(i).getPitch().getNote());
 
         assertEquals(PitchChromaticMidi.B5, chromaticChordMidi.get(0).getPitch());
         assertEquals(PitchChromaticMidi.DD6, chromaticChordMidi.get(1).getPitch());
@@ -46,7 +42,7 @@ public class ChromaticChordMidiTest {
 
     @Test
     public void setOctave() throws PitchMidiException {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder()
+        ChordMidi chromaticChordMidi = ChordMidi.builder()
                 .fromChromaticChord(ChromaticChord.B9)
                 .build();
         System.out.println(chromaticChordMidi);
@@ -63,8 +59,8 @@ public class ChromaticChordMidiTest {
 
     @Test
     public void dist() throws PitchMidiException {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder().fromChromaticChord(ChromaticChord.C).build();
-        ChromaticChordMidi chromaticChordMidi2 = chromaticChordMidi.clone();
+        ChordMidi chromaticChordMidi = ChordMidi.builder().fromChromaticChord(ChromaticChord.C).build();
+        ChordMidi chromaticChordMidi2 = chromaticChordMidi.clone();
         chromaticChordMidi2.shiftOctave(1);
 
         assertEquals(26, ChordMidiTransformations.dist(chromaticChordMidi, chromaticChordMidi2));
@@ -72,8 +68,8 @@ public class ChromaticChordMidiTest {
 
     @Test
     public void dist2() throws PitchMidiException {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder().fromChromaticChord(ChromaticChord.C).build();
-        ChromaticChordMidi chromaticChordMidi2 = chromaticChordMidi.clone();
+        ChordMidi chromaticChordMidi = ChordMidi.builder().fromChromaticChord(ChromaticChord.C).build();
+        ChordMidi chromaticChordMidi2 = chromaticChordMidi.clone();
         chromaticChordMidi2.shiftOctave(1);
 
         assertNotEquals(0, ChordMidiTransformations.dist(chromaticChordMidi, chromaticChordMidi2));
@@ -81,12 +77,12 @@ public class ChromaticChordMidiTest {
 
     @Test
     public void dist3() throws PitchMidiException {
-        ChromaticChordMidi ccm = ChromaticChordMidi.builder().fromChromaticMidi(
+        ChordMidi ccm = ChordMidi.builder().fromChromaticMidi(
                 ChromaticMidi.builder().pitch(67).build(),
                 ChromaticMidi.builder().pitch(69).build(),
                 ChromaticMidi.builder().pitch(74).build()
         ).build();
-        ChromaticChordMidi ccm2 = ChromaticChordMidi.builder().fromChromaticMidi(
+        ChordMidi ccm2 = ChordMidi.builder().fromChromaticMidi(
                 ChromaticMidi.builder().pitch(4).build(),
                 ChromaticMidi.builder().pitch(69).build(),
                 ChromaticMidi.builder().pitch(74).build()
@@ -99,21 +95,21 @@ public class ChromaticChordMidiTest {
 
     @Test
     public void distItself() throws PitchMidiException {
-        ChromaticChordMidi ccm = ChromaticChordMidi.builder().fromChromaticChord(ChromaticChord.C).build();
+        ChordMidi ccm = ChordMidi.builder().fromChromaticChord(ChromaticChord.C).build();
         assertEquals(0.0f, ChordMidiTransformations.dist(ccm, ccm), 0);
     }
 
     @Test
     public void distSameBidirectional() throws PitchMidiException {
-        ChromaticChordMidi ccm = ChromaticChordMidi.builder().fromChromaticChord(ChromaticChord.C).build();
-        ChromaticChordMidi ccm2 = ChromaticChordMidi.builder().fromChromaticChord(ChromaticChord.D).build();
+        ChordMidi ccm = ChordMidi.builder().fromChromaticChord(ChromaticChord.C).build();
+        ChordMidi ccm2 = ChordMidi.builder().fromChromaticChord(ChromaticChord.D).build();
         assertEquals(ChordMidiTransformations.dist(ccm2, ccm), ChordMidiTransformations.dist(ccm, ccm2), 0);
         assertNotEquals(0, ChordMidiTransformations.dist(ccm, ccm2));
     }
 
     @Test
     public void setMinOctave() throws PitchMidiException {
-        ChromaticChordMidi ccm = ChromaticChordMidi.builder()
+        ChordMidi ccm = ChordMidi.builder()
                 .fromChromaticChord(ChromaticChord.C5)
                 .build();
         ccm.setMinOctave();
@@ -122,7 +118,7 @@ public class ChromaticChordMidiTest {
 
     @Test
     public void noteSorting() throws PitchMidiException {
-        ChromaticChordMidi notes = ChromaticChordMidi.builder().fromChromaticMidi(
+        ChordMidi notes = ChordMidi.builder().fromChromaticMidi(
                 ChromaticMidi.builder().pitch(Chromatic.A).build(),
                 ChromaticMidi.builder().pitch(Chromatic.E).build(),
                 ChromaticMidi.builder().pitch(Chromatic.F).build(),
@@ -141,7 +137,7 @@ public class ChromaticChordMidiTest {
 
     @Test
     public void whatIsIt3() {
-        ChromaticChordMidi cu = ChromaticChordMidi.builder().fromChromaticMidi(
+        ChordMidi cu = ChordMidi.builder().fromChromaticMidi(
                 ChromaticMidi.builder().pitch(Chromatic.C).build(),
                 ChromaticMidi.builder().pitch(Chromatic.E).build(),
                 ChromaticMidi.builder().pitch(Chromatic.G).build()
@@ -151,7 +147,7 @@ public class ChromaticChordMidiTest {
 
     @Test
     public void octave_default() throws PitchMidiException {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder()
+        ChordMidi chromaticChordMidi = ChordMidi.builder()
                 .fromChromaticChord(ChromaticChord.C5)
                 .build();
         Assert.assertEquals(5, chromaticChordMidi.getOctave());
@@ -159,7 +155,7 @@ public class ChromaticChordMidiTest {
 
     @Test
     public void shiftOctave() throws PitchMidiException {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder()
+        ChordMidi chromaticChordMidi = ChordMidi.builder()
                 .fromChromaticChord(ChromaticChord.C5)
                 .build();
         chromaticChordMidi.shiftOctave(-1);
@@ -169,14 +165,14 @@ public class ChromaticChordMidiTest {
     @Test
     public void sizeSameAsChromaticChord() throws PitchMidiException {
         for (ChromaticChord chromaticChord : ChromaticChord.immutableValues()) {
-            assertEquals(chromaticChord.size(), ChromaticChordMidi.builder().fromChromaticChord(chromaticChord).build().size());
+            assertEquals(chromaticChord.size(), ChordMidi.builder().fromChromaticChord(chromaticChord).build().size());
         }
     }
 
 
     @Test
     public void sizeFromNew() {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder().build();
+        ChordMidi chromaticChordMidi = ChordMidi.builder().build();
         chromaticChordMidi.add(ChromaticMidi.builder().pitch(PitchChromaticMidi.C5).build());
         chromaticChordMidi.add(ChromaticMidi.builder().pitch(PitchChromaticMidi.E5).build());
         chromaticChordMidi.add(ChromaticMidi.builder().pitch(PitchChromaticMidi.G5).build());
@@ -196,13 +192,12 @@ public class ChromaticChordMidiTest {
 
     @Test
     public void add() {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder().build();
+        ChordMidi chromaticChordMidi = ChordMidi.builder().build();
         chromaticChordMidi.add(ChromaticMidi.builder().pitch(PitchChromaticMidi.C5).build());
         chromaticChordMidi.add(ChromaticMidi.builder().pitch(PitchChromaticMidi.E5).build());
         chromaticChordMidi.add(ChromaticMidi.builder().pitch(PitchChromaticMidi.G5).build());
 
         assertEquals(3, chromaticChordMidi.size());
-        assertEquals(0, chromaticChordMidi.getRootIndex());
         assertEquals(PitchChromaticMidi.C5, chromaticChordMidi.get(0).getPitch());
         assertEquals(PitchChromaticMidi.E5, chromaticChordMidi.get(1).getPitch());
         assertEquals(PitchChromaticMidi.G5, chromaticChordMidi.get(2).getPitch());
@@ -211,19 +206,18 @@ public class ChromaticChordMidiTest {
     @SuppressWarnings("ConstantConditions")
     @Test(expected = NullPointerException.class)
     public void add_null() {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder().build();
+        ChordMidi chromaticChordMidi = ChordMidi.builder().build();
         chromaticChordMidi.add(null);
     }
 
     @Test
     public void add_index() {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder().build();
+        ChordMidi chromaticChordMidi = ChordMidi.builder().build();
         chromaticChordMidi.add(0, ChromaticMidi.builder().pitch(PitchChromaticMidi.G5).build());
         chromaticChordMidi.add(0, ChromaticMidi.builder().pitch(PitchChromaticMidi.E5).build());
         chromaticChordMidi.add(0, ChromaticMidi.builder().pitch(PitchChromaticMidi.C5).build());
 
         assertEquals(3, chromaticChordMidi.size());
-        assertEquals(2, chromaticChordMidi.getRootIndex());
         assertEquals(PitchChromaticMidi.C5, chromaticChordMidi.get(0).getPitch());
         assertEquals(PitchChromaticMidi.E5, chromaticChordMidi.get(1).getPitch());
         assertEquals(PitchChromaticMidi.G5, chromaticChordMidi.get(2).getPitch());
@@ -231,20 +225,20 @@ public class ChromaticChordMidiTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void add_index_greaterThanSize() {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder().build();
+        ChordMidi chromaticChordMidi = ChordMidi.builder().build();
         chromaticChordMidi.add(1, ChromaticMidi.builder().pitch(PitchChromaticMidi.E5).build());
     }
 
     @SuppressWarnings("ConstantConditions")
     @Test(expected = NullPointerException.class)
     public void add_index_null() {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder().build();
+        ChordMidi chromaticChordMidi = ChordMidi.builder().build();
         chromaticChordMidi.add(0, null);
     }
 
     @Test
     public void setVelocity() {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder()
+        ChordMidi chromaticChordMidi = ChordMidi.builder()
                 .add(ChromaticMidi.builder().pitch(PitchChromaticMidi.C5).build())
                 .add(ChromaticMidi.builder().pitch(PitchChromaticMidi.E5).velocity(50).build())
                 .add(ChromaticMidi.builder().pitch(PitchChromaticMidi.G5).velocity(0).build())
@@ -259,7 +253,7 @@ public class ChromaticChordMidiTest {
 
     @Test
     public void setVelocity2() {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder()
+        ChordMidi chromaticChordMidi = ChordMidi.builder()
                 .add(ChromaticMidi.builder().pitch(PitchChromaticMidi.C5).build())
                 .add(ChromaticMidi.builder().pitch(PitchChromaticMidi.E5).velocity(50).build())
                 .add(ChromaticMidi.builder().pitch(PitchChromaticMidi.G5).velocity(0).build())
@@ -274,7 +268,7 @@ public class ChromaticChordMidiTest {
 
     @Test
     public void getOctave() {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder()
+        ChordMidi chromaticChordMidi = ChordMidi.builder()
                 .add(PitchChromaticMidi.C6)
                 .add(PitchChromaticMidi.E7)
                 .add(PitchChromaticMidi.G5)
@@ -285,13 +279,13 @@ public class ChromaticChordMidiTest {
 
     @Test
     public void equals() {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder()
+        ChordMidi chromaticChordMidi = ChordMidi.builder()
                 .add(PitchChromaticMidi.C6)
                 .add(PitchChromaticMidi.E7)
                 .add(PitchChromaticMidi.G5)
                 .build();
 
-        ChromaticChordMidi chromaticChordMidi2 = ChromaticChordMidi.builder()
+        ChordMidi chromaticChordMidi2 = ChordMidi.builder()
                 .add(PitchChromaticMidi.G5)
                 .add(PitchChromaticMidi.C6)
                 .add(PitchChromaticMidi.E7)
@@ -302,13 +296,13 @@ public class ChromaticChordMidiTest {
 
     @Test
     public void cloneTest() {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder()
+        ChordMidi chromaticChordMidi = ChordMidi.builder()
                 .add(PitchChromaticMidi.C6)
                 .add(PitchChromaticMidi.E7)
                 .add(PitchChromaticMidi.G5)
                 .build();
 
-        ChromaticChordMidi chromaticChordMidi2 = chromaticChordMidi.clone();
+        ChordMidi chromaticChordMidi2 = chromaticChordMidi.clone();
 
         assertEquals(chromaticChordMidi, chromaticChordMidi2);
         assertNotSame(chromaticChordMidi, chromaticChordMidi2);
@@ -321,7 +315,7 @@ public class ChromaticChordMidiTest {
 
     @Test
     public void remove() {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder()
+        ChordMidi chromaticChordMidi = ChordMidi.builder()
                 .add(PitchChromaticMidi.C5)
                 .add(PitchChromaticMidi.E5)
                 .add(PitchChromaticMidi.G5)
@@ -336,7 +330,7 @@ public class ChromaticChordMidiTest {
 
     @Test
     public void remove_notFound() {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder()
+        ChordMidi chromaticChordMidi = ChordMidi.builder()
                 .add(PitchChromaticMidi.C5)
                 .add(PitchChromaticMidi.E5)
                 .add(PitchChromaticMidi.G5)
@@ -351,49 +345,25 @@ public class ChromaticChordMidiTest {
     }
 
     @Test
-    public void setRootIndex() {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder()
-                .add(PitchChromaticMidi.C5)
-                .add(PitchChromaticMidi.E5)
-                .add(PitchChromaticMidi.G5)
-                .build();
-
-        chromaticChordMidi.setRootIndex(2);
-
-        assertEquals(2, chromaticChordMidi.getRootIndex());
-    }
-
-    @Test
-    public void getRoot() {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder()
-                .add(PitchChromaticMidi.C5)
-                .add(PitchChromaticMidi.E5)
-                .add(PitchChromaticMidi.G5)
-                .build();
-
-        assertEquals(ChromaticMidi.builder().pitch(PitchChromaticMidi.C5).build(), chromaticChordMidi.getRoot());
-    }
-
-    @Test
     public void hashCodeTest() {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder()
+        ChordMidi chromaticChordMidi = ChordMidi.builder()
                 .add(PitchChromaticMidi.C5)
                 .add(PitchChromaticMidi.E5)
                 .add(PitchChromaticMidi.G5)
                 .build();
-        ChromaticChordMidi chromaticChordMidi2 = chromaticChordMidi.clone();
+        ChordMidi chromaticChordMidi2 = chromaticChordMidi.clone();
 
         assertEquals(chromaticChordMidi.hashCode(), chromaticChordMidi2.hashCode());
     }
 
     @Test
     public void hashCodeTest_different() {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder()
+        ChordMidi chromaticChordMidi = ChordMidi.builder()
                 .add(PitchChromaticMidi.C5)
                 .add(PitchChromaticMidi.E5)
                 .add(PitchChromaticMidi.G5)
                 .build();
-        ChromaticChordMidi chromaticChordMidi2 = chromaticChordMidi.clone();
+        ChordMidi chromaticChordMidi2 = chromaticChordMidi.clone();
         chromaticChordMidi2.get(0).setVelocity(50);
 
         assertNotEquals(chromaticChordMidi.hashCode(), chromaticChordMidi2.hashCode());
@@ -401,12 +371,12 @@ public class ChromaticChordMidiTest {
 
     @Test
     public void hashCodeTest_different_emptyChord() {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder()
+        ChordMidi chromaticChordMidi = ChordMidi.builder()
                 .add(PitchChromaticMidi.C5)
                 .add(PitchChromaticMidi.E5)
                 .add(PitchChromaticMidi.G5)
                 .build();
-        ChromaticChordMidi chromaticChordMidi2 = chromaticChordMidi.clone();
+        ChordMidi chromaticChordMidi2 = chromaticChordMidi.clone();
         chromaticChordMidi2.clear();
 
         assertNotEquals(chromaticChordMidi.hashCode(), chromaticChordMidi2.hashCode());
@@ -414,7 +384,7 @@ public class ChromaticChordMidiTest {
 
     @Test
     public void clear() {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder()
+        ChordMidi chromaticChordMidi = ChordMidi.builder()
                 .add(PitchChromaticMidi.C5)
                 .add(PitchChromaticMidi.E5)
                 .add(PitchChromaticMidi.G5)
@@ -422,31 +392,29 @@ public class ChromaticChordMidiTest {
         chromaticChordMidi.clear();
 
         assertEquals(0, chromaticChordMidi.size());
-        assertEquals(-1, chromaticChordMidi.getRootIndex());
-        assertNull(chromaticChordMidi.getRoot());
     }
 
     @Test
     public void containsPitch() throws PitchMidiException {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder().fromChromaticChord(ChromaticChord.C).build();
+        ChordMidi chromaticChordMidi = ChordMidi.builder().fromChromaticChord(ChromaticChord.C).build();
         ChromaticMidi chromaticMidi = ChromaticMidi.builder().pitch(60).build();
         assertTrue(chromaticChordMidi.containsPitch(chromaticMidi));
     }
 
     @Test
     public void containsPitchFalse() throws PitchMidiException {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder().fromChromaticChord(ChromaticChord.C).build();
+        ChordMidi chromaticChordMidi = ChordMidi.builder().fromChromaticChord(ChromaticChord.C).build();
         ChromaticMidi chromaticMidi = ChromaticMidi.builder().pitch(61).build();
         assertFalse(chromaticChordMidi.containsPitch(chromaticMidi));
     }
 
     @Test
     public void containsPitchAllChromaticChordMidi() throws PitchMidiException {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder().fromChromaticChord(ChromaticChord.C).build();
+        ChordMidi chromaticChordMidi = ChordMidi.builder().fromChromaticChord(ChromaticChord.C).build();
         ChromaticMidi chromaticMidi = ChromaticMidi.builder().pitch(60).build();
         ChromaticMidi chromaticMidi2 = ChromaticMidi.builder().pitch(64).build();
         ChromaticMidi chromaticMidi3 = ChromaticMidi.builder().pitch(67).build();
-        ChromaticChordMidi chromaticChordMidi2 = ChromaticChordMidi.builder().fromChromaticMidi(
+        ChordMidi chromaticChordMidi2 = ChordMidi.builder().fromChromaticMidi(
                 Arrays.asList(
                         chromaticMidi,
                         chromaticMidi2,
@@ -458,7 +426,7 @@ public class ChromaticChordMidiTest {
 
     @Test
     public void containsPitchAllList() throws PitchMidiException {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder().fromChromaticChord(ChromaticChord.C).build();
+        ChordMidi chromaticChordMidi = ChordMidi.builder().fromChromaticChord(ChromaticChord.C).build();
         ChromaticMidi chromaticMidi = ChromaticMidi.builder().pitch(60).build();
         ChromaticMidi chromaticMidi2 = ChromaticMidi.builder().pitch(64).build();
         ChromaticMidi chromaticMidi3 = ChromaticMidi.builder().pitch(67).build();
@@ -472,7 +440,7 @@ public class ChromaticChordMidiTest {
 
     @Test
     public void get() throws PitchMidiException {
-        ChromaticChordMidi chromaticChordMidi = ChromaticChordMidi.builder().fromChromaticChord(ChromaticChord.C).build();
+        ChordMidi chromaticChordMidi = ChordMidi.builder().fromChromaticChord(ChromaticChord.C).build();
         ChromaticMidi chromaticMidi = ChromaticMidi.builder().pitch(60).build();
         ChromaticMidi chromaticMidi2 = ChromaticMidi.builder().pitch(64).build();
         ChromaticMidi chromaticMidi3 = ChromaticMidi.builder().pitch(67).build();

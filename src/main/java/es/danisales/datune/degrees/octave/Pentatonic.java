@@ -5,7 +5,7 @@ import es.danisales.datune.degrees.scale.PentatonicDegree;
 import es.danisales.utils.MathUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public enum Pentatonic implements OctaveDegree {
+public enum Pentatonic implements CyclicDegree {
 	C, D, E, G, A;
 
 	public static final int NUMBER = 5;

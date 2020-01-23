@@ -1,6 +1,6 @@
 package es.danisales.datune.eventsequences;
 
-import es.danisales.datune.midi.ChromaticChordMidi;
+import es.danisales.datune.midi.ChordMidi;
 import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.Durable;
 import es.danisales.datune.midi.DurationMidi;
@@ -148,9 +148,9 @@ public class EventSequence implements Durable, EventComplex {
 		}
 	}
 
-	public static ChromaticChordMidi whatNotesArePlaying(EventSequence es, long time) {
+	public static ChordMidi whatNotesArePlaying(EventSequence es, long time) {
 		assert time < es.getLength();
-		ChromaticChordMidi notes = ChromaticChordMidi.builder().build();
+		ChordMidi notes = ChordMidi.builder().build();
 
 		es.forEach( (Long t, Event ev) -> {
 			if ( t > time )

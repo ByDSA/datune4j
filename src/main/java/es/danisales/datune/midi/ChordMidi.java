@@ -2,167 +2,207 @@ package es.danisales.datune.midi;
 
 import es.danisales.datastructures.ListProxy;
 import es.danisales.datune.eventsequences.EventSequence;
-import es.danisales.datune.interval.Interval;
+import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.midi.arpegios.Arpeggio;
 import es.danisales.datune.midi.arpegios.ArpeggioDefault;
 import es.danisales.datune.midi.binaries.events.EventComplex;
 import es.danisales.datune.midi.pitch.PitchMidiException;
-import es.danisales.datune.midi.pitch.PitchMidiInterface;
+import es.danisales.datune.chords.transformations.DistanceCalculator;
 import es.danisales.datune.midi.pitch.PitchOctaveMidiEditable;
-import es.danisales.datune.chords.ChordMutable;
 import es.danisales.datune.pitch.PitchOctave;
 import es.danisales.utils.HashingUtils;
+import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Objects;
+import java.util.*;
 
-public abstract class ChordMidi<N extends NoteMidi<P>, I extends Interval, P extends PitchMidiInterface>
-		extends ListProxy<N>
-		implements Durable, Velocitiable, PitchOctaveMidiEditable, PitchOctave, EventComplex {
-	protected Arpeggio arpegio;
-	protected int		length;
+public class ChordMidi
+        extends ListProxy<ChromaticMidi>
+        implements Durable, Velocitiable, PitchOctaveMidiEditable, PitchOctave, EventComplex {
 
-	ChordMidi() {
-		super(new ArrayList<>());
-	}
+    public ChordMidi(List<ChromaticMidi> listAdapter) {
+        super(listAdapter);
+    }
 
-	<T extends ChordMidi<N, I, P>> void assign(@NonNull T c) {
-		Objects.requireNonNull(c);
-		clear();
-		this.addAll(c);
-		arpegio = c.arpegio;
-		length = c.length;
-	}
+    public ChordMidi() {
+        this(new ArrayList<>());
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public EventSequence getEvents() {
-		EventSequence es = new EventSequence();
+    public static ChromaticChordMidiBuilder builder() {
+        return new ChromaticChordMidiBuilder();
+    }
 
-		Arpeggio aNodes;
-		if ( arpegio == null )
-			this.setArpeggio(new ArpeggioDefault());
-		int arpDuration = arpegio.getLength();
+    public void compact() {
+        for (int i = 1; i < this.size(); i++) {
+            int distFromPrevious = DistanceCalculator.calculateDistanceInSemitones(get(i - 1), get(i));
+            if (distFromPrevious > IntervalChromatic.PERFECT_OCTAVE.getSemitones()) {
+                try {
+                    get(i).getPitch().shiftOctave(
+                            -distFromPrevious / IntervalChromatic.PERFECT_OCTAVE.getSemitones()
+                    );
+                } catch (PitchMidiException e) {
+                    NeverHappensException.msg("Si antes era válido, la versión compactada lo seguirá siendo siempre");
+                }
+            }
+        }
+    }
 
-		if ( length != 0 && length > arpDuration ) {
-			aNodes = arpegio.clone();
-			int newArpDuration = arpDuration;
+    @Override
+    public @NonNull ChordMidi clone() {
+        ChordMidi chromaticChordMidi = new ChordMidi();
+        for (ChromaticMidi n : this)
+            chromaticChordMidi.add((ChromaticMidi) n.clone());
 
-			while ( length > newArpDuration ) {
-				int currentLoop = newArpDuration;
-				for (Arpeggio.Node n : arpegio.getNodes()) {
-					aNodes.add( currentLoop + n.time, n.note, n.length );
-				}
-				newArpDuration += arpDuration;
-			}
-		} else
-			aNodes = arpegio;
+        if (arpegio != null)
+            chromaticChordMidi.arpegio = arpegio.clone();
+        chromaticChordMidi.length = length;
+        return chromaticChordMidi;
+    }
 
-		for (Arpeggio.Node node : aNodes.getNodes()) {
-			if ( length != 0 && node.time > length || node.note < 0 )
-				continue;
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (ChromaticMidi chromaticMidi : this)
+            stringBuilder.append(chromaticMidi.toString()).append("\n");
 
-			N n = (N) get( node.note ).clone();
+        return stringBuilder.toString();
+    }
 
-			if ( length != 0 )
-				n.setLength( Math.min( node.time + node.length, length ) - node.time );
-			else
-				n.setLength( node.length );
-			es.add( node.time, n );
-		}
-		return es;
-	}
+    protected Arpeggio arpegio;
+    protected int		length;
 
-	private int getMaxNoteLength() {
-		int max = length;
-		for ( N n : this )
-			max = Math.max( max, n.getLength() );
+    void assign(@NonNull ChordMidi c) {
+        Objects.requireNonNull(c);
+        clear();
+        this.addAll(c);
+        arpegio = c.arpegio;
+        length = c.length;
+    }
 
-		return max;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public EventSequence getEvents() {
+        EventSequence es = new EventSequence();
 
-	public @Nullable Arpeggio getArpeggio() {
-		return arpegio;
-	}
+        Arpeggio aNodes;
+        if ( arpegio == null )
+            this.setArpeggio(new ArpeggioDefault());
+        int arpDuration = arpegio.getLength();
 
-	public void setArpeggio(@NonNull Arpeggio a) {
-		Objects.requireNonNull(a);
+        if ( length != 0 && length > arpDuration ) {
+            aNodes = arpegio.clone();
+            int newArpDuration = arpDuration;
 
-		arpegio = a.clone();
-		arpegio.setChord( this );
-	}
+            while ( length > newArpDuration ) {
+                int currentLoop = newArpDuration;
+                for (Arpeggio.Node n : arpegio.getNodes()) {
+                    aNodes.add( currentLoop + n.time, n.note, n.length );
+                }
+                newArpDuration += arpDuration;
+            }
+        } else
+            aNodes = arpegio;
 
-	@SuppressWarnings("WeakerAccess")
-	public boolean containsPitch(@NonNull Object o) {
-		if (!(o instanceof NoteMidi))
-			return false;
+        for (Arpeggio.Node node : aNodes.getNodes()) {
+            if ( length != 0 && node.time > length || node.note < 0 )
+                continue;
 
-		NoteMidi nIn = (NoteMidi) o;
-		int nInCode = nIn.pitch.getMidiCode();
-		for (N note : this)
-			if (note.pitch.getMidiCode() == nInCode)
-				return true;
+            ChromaticMidi n = get( node.note ).clone();
 
-		return false;
-	}
+            if ( length != 0 )
+                n.setLength( Math.min( node.time + node.length, length ) - node.time );
+            else
+                n.setLength( node.length );
+            es.add( node.time, n );
+        }
+        return es;
+    }
 
-	@SuppressWarnings("WeakerAccess")
-	public boolean containsPitchAll(@NonNull Collection<N> c) {
-		for (N note : c)
-			if (!containsPitch(note))
-				return false;
+    private int getMaxNoteLength() {
+        int max = length;
+        for ( ChromaticMidi n : this )
+            max = Math.max( max, n.getLength() );
 
-		return true;
-	}
+        return max;
+    }
 
-	@Override
-	public abstract ChordMidi<N, I, P> clone();
+    public @Nullable Arpeggio getArpeggio() {
+        return arpegio;
+    }
 
-	@Override
-	public boolean add(@NonNull N n) throws AddedException {
-		if (!containsPitch(n)) {
-			super.add(n);
-			sortByPitch();
-		} else
-			throw new AddedException(n, this);
+    public void setArpeggio(@NonNull Arpeggio a) {
+        Objects.requireNonNull(a);
 
-		return true;
-	}
+        arpegio = a.clone();
+        arpegio.setChord( this );
+    }
 
-	@Override
-	public boolean addAll(@NonNull Collection<? extends N> collection) {
-		boolean ret = super.addAll(collection);
-		sortByPitch();
-		return ret;
-	}
+    @SuppressWarnings("WeakerAccess")
+    public boolean containsPitch(@NonNull Object o) {
+        if (!(o instanceof NoteMidi))
+            return false;
 
-	@Override
-    public boolean addAll(int index, @NonNull Collection<? extends N> collection) {
+        NoteMidi nIn = (NoteMidi) o;
+        int nInCode = nIn.pitch.getMidiCode();
+        for (ChromaticMidi note : this)
+            if (note.pitch.getMidiCode() == nInCode)
+                return true;
+
+        return false;
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public boolean containsPitchAll(@NonNull Collection<ChromaticMidi> c) {
+        for (ChromaticMidi note : c)
+            if (!containsPitch(note))
+                return false;
+
+        return true;
+    }
+
+    @Override
+    public boolean add(@NonNull ChromaticMidi n) throws AddedException {
+        n = Objects.requireNonNull(n);
+        if (!containsPitch(n)) {
+            super.add(n);
+            sortByPitch();
+        } else
+            throw new AddedException(n, this);
+
+        return true;
+    }
+
+    @Override
+    public boolean addAll(@NonNull Collection<? extends ChromaticMidi> collection) {
+        boolean ret = super.addAll(collection);
+        sortByPitch();
+        return ret;
+    }
+
+    @Override
+    public boolean addAll(int index, @NonNull Collection<? extends ChromaticMidi> collection) {
         boolean ret = super.addAll(index, collection);
         sortByPitch();
         return ret;
     }
 
     @Override
-    public void add(int n, @NonNull N chromaticMidi) throws AddedException {
-		super.add(n, chromaticMidi);
-		sortByPitch();
-	}
+    public void add(int n, @NonNull ChromaticMidi chromaticMidi) throws AddedException {
+        super.add(n, Objects.requireNonNull(chromaticMidi));
+        sortByPitch();
+    }
 
-	@SuppressWarnings("unchecked")
-	private void sortByPitch() {
-		this.sort(
-				Comparator.comparing(NoteMidi::getPitch)
-		);
-	}
+    @SuppressWarnings("unchecked")
+    private void sortByPitch() {
+        this.sort(
+                Comparator.comparing(NoteMidi::getPitch)
+        );
+    }
 
-	@Override
-	public void setVelocity(int v) {
-        for (N n : this) {
+    @Override
+    public void setVelocity(int v) {
+        for (ChromaticMidi n : this) {
             int vel = (int) Math.round(n.getVelocity() * v / 100.0);
 
             if (vel < 0)
@@ -172,84 +212,72 @@ public abstract class ChordMidi<N extends NoteMidi<P>, I extends Interval, P ext
 
             n.setVelocity(vel);
         }
-	}
+    }
 
-	@Override
-	public int getVelocity() {
-		return getMaxNoteVelocity();
-	}
+    @Override
+    public int getVelocity() {
+        return getMaxNoteVelocity();
+    }
 
-	private int getMaxNoteVelocity() {
-		int max = -1;
-		for (N n : this)
-			max = Math.max(max, n.getVelocity());
+    private int getMaxNoteVelocity() {
+        int max = -1;
+        for (ChromaticMidi n : this)
+            max = Math.max(max, n.getVelocity());
 
-		return max;
-	}
+        return max;
+    }
 
-	@Override
-	public void setLength(int d) {
-		length = d;
-	}
+    @Override
+    public void setLength(int d) {
+        length = d;
+    }
 
-	@Override
-	public int getLength() {
-		if (arpegio == null)
-			return getMaxNoteLength();
-		else
-			return arpegio.getLength();
-	}
+    @Override
+    public int getLength() {
+        if (arpegio == null)
+            return getMaxNoteLength();
+        else
+            return arpegio.getLength();
+    }
 
-	@Override
-	public void shiftOctave(int octaveShift) throws PitchMidiException {
-		for (N n : this) {
-			n.getPitch().shiftOctave(octaveShift);
-		}
-	}
+    @Override
+    public void shiftOctave(int octaveShift) throws PitchMidiException {
+        for (ChromaticMidi n : this) {
+            n.getPitch().shiftOctave(octaveShift);
+        }
+    }
 
-	@Override
-	public void setOctave(int newOctave) throws PitchMidiException {
-		int diff = newOctave - getOctave();
-		shiftOctave( diff );
-	}
+    @Override
+    public void setOctave(int newOctave) throws PitchMidiException {
+        int diff = newOctave - getOctave();
+        shiftOctave( diff );
+    }
 
-	@Override
-	public int getOctave() {
-		return get(0).getPitch().getOctave();
-	}
+    @Override
+    public int getOctave() {
+        return get(0).getPitch().getOctave();
+    }
 
-	void setArpeggioIfNull() {
-		if (arpegio == null)
-			setArpeggio(new ArpeggioDefault());
-	}
+    void setArpeggioIfNull() {
+        if (arpegio == null)
+            setArpeggio(new ArpeggioDefault());
+    }
 
-	@SuppressWarnings("unchecked")
-	ChordMidi<N, I, P> commonClone(ChordMidi<N, I, P> chordMidi) {
-		for (N n : this)
-			chordMidi.add((N) n.clone());
+    @Override
+    public boolean equals(Object o) {
+        if ( !( o instanceof ChordMidi ) )
+            return false;
 
-		if (arpegio != null)
-			chordMidi.arpegio = arpegio.clone();
-		chordMidi.length = length;
+        ChordMidi cm = (ChordMidi) o;
 
-		return chordMidi;
-	}
+        if ( arpegio == null && cm.arpegio != null || cm.arpegio == null && arpegio != null )
+            return false;
 
-	@Override
-	public boolean equals(Object o) {
-		if ( !( o instanceof ChordMidi ) )
-			return false;
+        return super.equals(cm) && (arpegio == null || arpegio.equals(cm.arpegio)) && length == cm.length;
+    }
 
-		ChordMidi cm = (ChordMidi) o;
-
-		if ( arpegio == null && cm.arpegio != null || cm.arpegio == null && arpegio != null )
-			return false;
-
-		return super.equals(cm) && (arpegio == null || arpegio.equals(cm.arpegio)) && length == cm.length;
-	}
-
-	@Override
-	public int hashCode() {
+    @Override
+    public int hashCode() {
         return super.hashCode() + HashingUtils.from(arpegio, length);
-	}
+    }
 }

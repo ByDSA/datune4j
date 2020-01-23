@@ -4,7 +4,7 @@ import es.danisales.datune.eventsequences.Instrument;
 import es.danisales.datune.eventsequences.Melody;
 import es.danisales.datune.eventsequences.Track;
 import es.danisales.datune.function.DiatonicFunction;
-import es.danisales.datune.midi.DiatonicChordMidi;
+import es.danisales.datune.midi.ChordMidi;
 import es.danisales.datune.midi.Progressions.Progression;
 import es.danisales.datune.midi.Settings;
 import es.danisales.datune.midi.binaries.Song;
@@ -50,11 +50,11 @@ public class TestProgression extends Song {
 		return m;
 	}
 	
-	public DiatonicChordMidi add(DiatonicFunction f, int o) {
+	public ChordMidi add(DiatonicFunction f, int o) {
 		return progression.add(f, o);
 	}
 	
-	public DiatonicChordMidi add(DiatonicFunction f) {
+	public ChordMidi add(DiatonicFunction f) {
 		return progression.add(f);
 	}
 }

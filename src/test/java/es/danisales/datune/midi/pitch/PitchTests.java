@@ -39,9 +39,9 @@ public class PitchTests {
 		assertEquals( PitchChromaticMidi.GG5, PitchChromaticMidi.from( Chromatic.GG, 5 ) );
 		assertEquals( 5, PitchChromaticMidi.GG5.getOctave() );
 		assertEquals( PitchChromaticMidi.GG5, PitchChromaticMidi.from( Chromatic.GG, PitchChromaticMidi.GG5.getOctave() ) );
-		assertEquals(Chromatic.GG, PitchChromaticMidi.GG5.getChromatic());
-		assertEquals(PitchChromaticMidi.GG5, PitchChromaticMidi.from(PitchChromaticMidi.GG5.getChromatic(), 5));
-		assertEquals(PitchChromaticMidi.GG5, PitchChromaticMidi.from(PitchChromaticMidi.GG5.getChromatic(), PitchChromaticMidi.GG5.getOctave()));
+		assertEquals(Chromatic.GG, PitchChromaticMidi.GG5.getNote());
+		assertEquals(PitchChromaticMidi.GG5, PitchChromaticMidi.from(PitchChromaticMidi.GG5.getNote(), 5));
+		assertEquals(PitchChromaticMidi.GG5, PitchChromaticMidi.from(PitchChromaticMidi.GG5.getNote(), PitchChromaticMidi.GG5.getOctave()));
         assertEquals(PitchChromaticMidi.GG5.getMidiCode(), PitchChromaticMidi.GG5.getMidiCode());
 	}
 }

@@ -1,6 +1,5 @@
 package es.danisales.datune.midi.pitch;
 
-import es.danisales.datune.degrees.CyclicDegree;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.degrees.scale.ScaleDegree;
@@ -28,8 +27,8 @@ public class PitchDiatonicMidi implements PitchOctaveMidiEditable, PitchMidiInte
 		}
 	}
 
-	public static @NonNull PitchDiatonicMidi from(@NonNull ScaleDegree diatonicDegree, @NonNull Tonality tonality, int octave) throws PitchMidiException {
-		return PitchDiatonicMidiAdapter.from(diatonicDegree, tonality, octave);
+	public static @NonNull PitchDiatonicMidi from(@NonNull ScaleDegree scaleDegree, @NonNull Tonality tonality, int octave) throws PitchMidiException {
+		return PitchDiatonicMidiAdapter.from(scaleDegree, tonality, octave);
 	}
 
 	public static @NonNull PitchDiatonicMidi from(@NonNull PitchChromaticMidi pitchChromaticMidi, @NonNull Tonality tonality) throws TonalityException {
