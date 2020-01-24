@@ -7,7 +7,7 @@ import es.danisales.datune.midi.DurationMidi;
 import es.danisales.datune.midi.binaries.Midi;
 import es.danisales.datune.midi.binaries.Song;
 import es.danisales.datune.midi.binaries.events.Volume;
-import es.danisales.datune.chords.ChromaticChord;
+import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.pitch.ProgressionChromaticChordMidi;
 import es.danisales.datune.tonality.Tonality;
 

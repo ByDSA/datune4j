@@ -1,5 +1,6 @@
-package es.danisales.datune.chords;
+package es.danisales.datune.chords.chromatic;
 
+import es.danisales.datune.chords.Chord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
@@ -58,7 +59,7 @@ public class ChromaticChordRetrieval {
         return null;
     }
 
-    public static boolean hasSameNotes(ChromaticChord chromaticChord, PitchChromaticChord<Chromatic> chord) {
+    public static boolean hasSameNotes(ChromaticChord chromaticChord, Chord<Chromatic> chord) {
         EnumSet<Chromatic> e = EnumSet.noneOf( Chromatic.class );
         e.addAll(chromaticChord);
 

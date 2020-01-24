@@ -7,10 +7,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class ChromaticMidiBuilderTest {
+public class NoteMidiBuilderTest {
     @Test
     public void fromChromaticAndOctave() throws PitchMidiException {
-        ChromaticMidi n = ChromaticMidi.builder()
+        NoteMidi n = NoteMidi.builder()
                 .pitch(Chromatic.C, 5)
                 .build();
 
@@ -19,20 +19,20 @@ public class ChromaticMidiBuilderTest {
 
     @Test
     public void pitchChromaticOctave() throws PitchMidiException {
-        ChromaticMidi n = ChromaticMidi.builder()
+        NoteMidi n = NoteMidi.builder()
                 .pitch(Chromatic.C, 5)
                 .build();
 
         assertEquals(PitchChromaticMidi.C5, n.getPitch());
 
-        n = ChromaticMidi.builder()
+        n = NoteMidi.builder()
                 .pitch(Chromatic.C.getNext(5), 5)
                 .build();
 
         assertEquals(PitchChromaticMidi.from(60 + 5), n.getPitch());
         assertEquals(5, n.getPitch().getOctave());
 
-        n = ChromaticMidi.builder()
+        n = NoteMidi.builder()
                 .pitch(Chromatic.C.getNext(12), 5)
                 .build();
 
@@ -41,7 +41,7 @@ public class ChromaticMidiBuilderTest {
 
     @Test
     public void all() {
-        ChromaticMidi chromaticMidi = ChromaticMidi.builder()
+        NoteMidi chromaticMidi = NoteMidi.builder()
                 .pitch(PitchChromaticMidi.C5)
                 .length(DurationMidi.L1)
                 .velocity(64)
@@ -54,7 +54,7 @@ public class ChromaticMidiBuilderTest {
 
     @Test
     public void pitch() {
-        ChromaticMidi chromaticMidi = ChromaticMidi.builder()
+        NoteMidi chromaticMidi = NoteMidi.builder()
                 .pitch(PitchChromaticMidi.C5)
                 .build();
 
@@ -65,7 +65,7 @@ public class ChromaticMidiBuilderTest {
 
     @Test
     public void withoutParams() {
-        ChromaticMidi chromaticMidi = ChromaticMidi.builder()
+        NoteMidi chromaticMidi = NoteMidi.builder()
                 .build();
 
         assertEquals(Settings.DefaultValues.PITCH_CHROMATIC_MIDI, chromaticMidi.getPitch());

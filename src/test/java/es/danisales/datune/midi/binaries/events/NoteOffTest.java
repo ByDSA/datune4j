@@ -1,7 +1,7 @@
 package es.danisales.datune.midi.binaries.events;
 
-import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.DurationMidi;
+import es.danisales.datune.midi.NoteMidi;
 import es.danisales.datune.midi.Settings;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.io.binary.BinData;
@@ -16,7 +16,7 @@ import static org.junit.Assert.assertNotEquals;
 public class NoteOffTest {
     @Test
     public void binaryEncoding() throws BuildingException {
-        ChromaticMidi chromaticMidi = ChromaticMidi.builder()
+        NoteMidi chromaticMidi = NoteMidi.builder()
                 .pitch(PitchChromaticMidi.C5)
                 .velocity(100)
                 .length(DurationMidi.L4)

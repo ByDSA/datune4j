@@ -1,11 +1,10 @@
 package es.danisales.datune.midi;
 
-import es.danisales.datune.chords.ChromaticChord;
+import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.chords.TonalChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
-import es.danisales.datune.tuning.DiatonicTemperament;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
@@ -15,7 +14,7 @@ import java.util.List;
 
 public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Builder<ChromaticChordMidiBuilder, ChordMidi> {
     private List<Chromatic> fromChromatic;
-    private List<ChromaticMidi> fromChromaticMidi;
+    private List<NoteMidi> fromChromaticMidi;
     private int octave = Settings.DefaultValues.OCTAVE;
     private int length = Settings.DefaultValues.LENGTH_CHORD;
     private int velocity = Settings.DefaultValues.VELOCITY;
@@ -36,13 +35,13 @@ public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Build
         // todo
     }
 
-    public ChromaticChordMidiBuilder fromChromaticMidi(@NonNull ChromaticMidi... cs) {
+    public ChromaticChordMidiBuilder fromChromaticMidi(@NonNull NoteMidi... cs) {
         return fromChromaticMidi(Arrays.asList(cs));
     }
 
-    public ChromaticChordMidiBuilder fromChromaticMidi(@NonNull Iterable<ChromaticMidi> cs) {
+    public ChromaticChordMidiBuilder fromChromaticMidi(@NonNull Iterable<NoteMidi> cs) {
         fromChromaticMidi = new ArrayList<>();
-        for (ChromaticMidi c : cs)
+        for (NoteMidi c : cs)
             fromChromaticMidi.add(c);
 
         return self();
@@ -89,7 +88,7 @@ public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Build
                     //throw new BuildingException(e);
                     throw new RuntimeException();
                 }
-                ChromaticMidi chromaticMidi = ChromaticMidi.builder()
+                NoteMidi chromaticMidi = NoteMidi.builder()
                         .pitch(pitchChromaticMidi)
                         .build();
                 chromaticChordMidi.add(chromaticMidi);
@@ -106,14 +105,14 @@ public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Build
             fromChromaticMidi = new ArrayList<>();
     }
 
-    public @NonNull ChromaticChordMidiBuilder add(@NonNull ChromaticMidi chromaticMidi) {
+    public @NonNull ChromaticChordMidiBuilder add(@NonNull NoteMidi chromaticMidi) {
         createFromChromaticMidiArrayIfNull();
         fromChromaticMidi.add(chromaticMidi);
 
         return self();
     }
 
-    public @NonNull ChromaticChordMidiBuilder addAll(@NonNull Collection<ChromaticMidi> chromaticMidiCollection) {
+    public @NonNull ChromaticChordMidiBuilder addAll(@NonNull Collection<NoteMidi> chromaticMidiCollection) {
         createFromChromaticMidiArrayIfNull();
         fromChromaticMidi.addAll(chromaticMidiCollection);
 
@@ -121,7 +120,7 @@ public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Build
     }
 
     public @NonNull ChromaticChordMidiBuilder add(@NonNull PitchChromaticMidi pitchChromaticMidi) {
-        ChromaticMidi chromaticMidi = ChromaticMidi.builder()
+        NoteMidi chromaticMidi = NoteMidi.builder()
                 .pitch(pitchChromaticMidi)
                 .build();
         return add(chromaticMidi);

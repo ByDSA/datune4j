@@ -13,7 +13,7 @@ import static org.junit.Assert.assertNull;
 public class ChromaticMidiTest {
 	@Test
 	public void builder() {
-		ChromaticMidi chromaticMidi = ChromaticMidi.builder()
+		NoteMidi chromaticMidi = NoteMidi.builder()
 				.pitch(Settings.DefaultValues.PITCH_CHROMATIC_MIDI)
 				.build();
 
@@ -23,23 +23,8 @@ public class ChromaticMidiTest {
 	}
 
 	@Test
-	public void fromDiatonicMidi() throws PitchMidiException {
-		DiatonicMidi diatonicMidi = DiatonicMidi.builder()
-				.pitch(PitchDiatonicMidi.from(DiatonicDegree.I, Tonality.C, 5))
-				.length(DurationMidi.L16)
-				.velocity(32)
-				.build();
-
-		ChromaticMidi chromaticMidi = ChromaticMidi.from(diatonicMidi);
-
-		assertEquals(PitchChromaticMidi.C5, chromaticMidi.getPitch());
-		assertEquals(DurationMidi.L16, chromaticMidi.getLength());
-		assertEquals(32, chromaticMidi.getVelocity());
-	}
-
-	@Test
 	public void privateConstructor() {
-		ChromaticMidi chromaticMidi = new ChromaticMidi();
+		NoteMidi chromaticMidi = new NoteMidi();
 		assertNull(chromaticMidi.pitch);
 		assertEquals(0, chromaticMidi.velocity);
 		assertEquals(0, chromaticMidi.length);
@@ -47,21 +32,21 @@ public class ChromaticMidiTest {
 
 	@Test
 	public void cloneTest() {
-		ChromaticMidi chromaticMidi = ChromaticMidi.builder()
+		NoteMidi chromaticMidi = NoteMidi.builder()
 				.pitch(PitchChromaticMidi.C5)
 				.build();
-		ChromaticMidi clonedChromaticMidi1 = chromaticMidi.clone();
+		NoteMidi clonedChromaticMidi1 = chromaticMidi.clone();
 
 		assertEquals(chromaticMidi, clonedChromaticMidi1);
 	}
 
 	@Test
 	public void equals() {
-		ChromaticMidi builtChromaticMidi = ChromaticMidi.builder()
+		NoteMidi builtChromaticMidi = NoteMidi.builder()
 				.pitch(PitchChromaticMidi.C5)
 				.build();
 
-		ChromaticMidi builtChromaticMidi2 = ChromaticMidi.builder()
+		NoteMidi builtChromaticMidi2 = NoteMidi.builder()
 				.pitch(PitchChromaticMidi.C5)
 				.build();
 
@@ -70,7 +55,7 @@ public class ChromaticMidiTest {
 
 	@Test
 	public void toStringTest() throws PitchMidiException {
-		ChromaticMidi chromaticMidi = ChromaticMidi.builder()
+		NoteMidi chromaticMidi = NoteMidi.builder()
 				.pitch(60)
 				.build();
 
@@ -79,10 +64,10 @@ public class ChromaticMidiTest {
 
 	@Test
 	public void hashCodeTest() throws PitchMidiException {
-		ChromaticMidi chromaticMidi = ChromaticMidi.builder()
+		NoteMidi chromaticMidi = NoteMidi.builder()
 				.pitch(60)
 				.build();
-		ChromaticMidi clonedChromaticMidi = chromaticMidi.clone();
+		NoteMidi clonedChromaticMidi = chromaticMidi.clone();
 
 		assertEquals(chromaticMidi, clonedChromaticMidi);
 		assertEquals(chromaticMidi.hashCode(), clonedChromaticMidi.hashCode());

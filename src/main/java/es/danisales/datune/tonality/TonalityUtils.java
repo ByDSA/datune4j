@@ -4,8 +4,7 @@ import es.danisales.arrays.ArrayUtils;
 import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.interval.IntervalChromatic;
-import es.danisales.datune.chords.ChromaticChord;
-import es.danisales.utils.building.BuildingException;
+import es.danisales.datune.chords.chromatic.ChromaticChord;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Objects;

@@ -15,25 +15,6 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class ChordMidiTransformationsTest {
-    @Test
-    public void getAllInversionsFrom() {
-        fail();
-    }
-
-    @Test
-    public void getAllDispositionsSub() {
-        fail();
-    }
-
-    @Test
-    public void shiftOctaveList() {
-        fail();
-    }
-
-    @Test
-    public void dist() {
-        fail();
-    }
 /*
     @Test
     public void getAllDispositionsWithInv() throws PitchMidiException {
@@ -80,8 +61,4 @@ public class ChordMidiTransformationsTest {
         assertEquals(PitchChromaticMidi.B5.getMidiCode(), diatonicChordMidiEditing.get(2).getPitch().getMidiCode());
     }
 */
-    @Test
-    public void dist1() {
-        fail();
-    }
 }

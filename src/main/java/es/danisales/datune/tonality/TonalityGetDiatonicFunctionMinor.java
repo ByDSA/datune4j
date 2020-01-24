@@ -3,7 +3,7 @@ package es.danisales.datune.tonality;
 import es.danisales.datune.chords.DiatonicDegreePattern;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.function.DiatonicFunction;
-import es.danisales.datune.chords.ChromaticChord;
+import es.danisales.datune.chords.chromatic.ChromaticChord;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.Arrays;

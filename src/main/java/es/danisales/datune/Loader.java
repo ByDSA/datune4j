@@ -3,7 +3,8 @@ package es.danisales.datune;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import es.danisales.arrays.ArrayUtils;
-import es.danisales.datune.chords.*;
+import es.danisales.datune.chords.chromatic.ChromaticChord;
+import es.danisales.datune.chords.chromatic.ChromaticChordBuilder;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.eventsequences.EventSequence;
@@ -11,7 +12,6 @@ import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.midi.ChordMidi;
-import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.NoteMidi;
 import es.danisales.datune.midi.binaries.events.NoteOff;
 import es.danisales.datune.midi.binaries.events.NoteOn;
@@ -287,7 +287,7 @@ class Loader {
 
     private static <T extends NoteMidi<?>> void play(ChordMidi diatonicChordMidi) {
         EventSequence es = new EventSequence();
-        for (ChromaticMidi diatonicMidi : diatonicChordMidi) {
+        for (NoteMidi diatonicMidi : diatonicChordMidi) {
             NoteOn noteOn;
             try {
                 noteOn = NoteOn.builder()
@@ -303,7 +303,7 @@ class Loader {
 
     private static <T extends NoteMidi<?>> void stop(ChordMidi diatonicChordMidi) {
         EventSequence es = new EventSequence();
-        for (ChromaticMidi diatonicMidi : diatonicChordMidi) {
+        for (NoteMidi diatonicMidi : diatonicChordMidi) {
             NoteOff noteOff = null;
             try {
                 noteOff = NoteOff.builder()

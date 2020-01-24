@@ -1,14 +1,11 @@
 package es.danisales.datune.function;
 
-import es.danisales.arrays.ArrayUtils;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
-import es.danisales.datune.chords.ChromaticChord;
+import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-
-import java.util.List;
 
 /**
  * Functiones diatónicas

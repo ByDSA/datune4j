@@ -1,9 +1,9 @@
 package es.danisales.datune.eventsequences;
 
 import es.danisales.datune.midi.ChordMidi;
-import es.danisales.datune.midi.ChromaticMidi;
 import es.danisales.datune.midi.Durable;
 import es.danisales.datune.midi.DurationMidi;
+import es.danisales.datune.midi.NoteMidi;
 import es.danisales.datune.midi.binaries.Midi;
 import es.danisales.datune.midi.binaries.events.*;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
@@ -156,8 +156,8 @@ public class EventSequence implements Durable, EventComplex {
 			if ( t > time )
 				return false;
 
-			if ( ev instanceof ChromaticMidi) {
-				ChromaticMidi nc = (ChromaticMidi) ev;
+			if ( ev instanceof NoteMidi) {
+				NoteMidi nc = (NoteMidi) ev;
 
 				if ( t <= time && t + nc.getLength() > time ) {
 					notes.add( nc );
@@ -210,7 +210,7 @@ public class EventSequence implements Durable, EventComplex {
                     }
 					NoteOn evOn = evOnQueue.poll();
 					Long onTime = onTimeQueue.poll();
-					ChromaticMidi n = ChromaticMidi.builder()
+					NoteMidi n = NoteMidi.builder()
                             .pitch(pitchChromaticMidi)
 							.length( (int) ( time - onTime ) )
 							.velocity(evOn.getVelocity())

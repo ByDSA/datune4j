@@ -1,7 +1,7 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.chords.ChromaticChord;
-import es.danisales.datune.chords.ChromaticChordPattern;
+import es.danisales.datune.chords.chromatic.ChromaticChord;
+import es.danisales.datune.chords.chromatic.ChromaticChordPattern;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;

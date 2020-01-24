@@ -9,20 +9,21 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class Pattern extends ListProxy<Integer> implements PatternInterface, Cloneable {
-    Pattern(@NonNull Integer... pattern) {
-        this(Arrays.asList(pattern));
-    }
-
-    Pattern(@NonNull List<Integer> patternList) {
-        super(ImmutableList.copyOf(patternList));
-    }
-
-    Pattern() {
+public class Pattern
+        extends ListProxy<Integer>
+        implements PatternInterface, Cloneable {
+    protected Pattern() {
         super(new ArrayList<>());
     }
 
-    @SuppressWarnings("WeakerAccess")
+    protected Pattern(@NonNull Integer[] pattern) {
+        this(Arrays.asList(pattern));
+    }
+
+    protected Pattern(@NonNull List<Integer> patternList) {
+        super(ImmutableList.copyOf(patternList));
+    }
+
     public boolean isImmutable() {
         return listAdapter instanceof ImmutableList;
     }

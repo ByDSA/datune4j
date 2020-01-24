@@ -14,13 +14,13 @@ class ChromaticChordMidiAdapter {
         ChordMidi self = new ChordMidi();
 
         for (N n : iterable) {
-            ChromaticMidiBuilder builder = ChromaticMidi.builder();
+            NoteMidiBuilder builder = NoteMidi.builder();
 
             Chromatic chromaticN = null;
             if (n instanceof Chromatic)
                 chromaticN = (Chromatic) n;
-            else if (n instanceof ChromaticMidi)
-                chromaticN = ((ChromaticMidi) n).getPitch().getNote();
+            else if (n instanceof NoteMidi)
+                chromaticN = ((NoteMidi) n).getPitch().getNote();
 
             if (n instanceof PitchOctave)
                 builder.pitch(chromaticN, (((PitchOctave) n).getOctave()));
@@ -35,12 +35,12 @@ class ChromaticChordMidiAdapter {
                 builder.velocity(((Velocitiable) n).getVelocity());
             }
 
-            ChromaticMidi chromaticMidi = builder
+            NoteMidi chromaticMidi = builder
                     .build();
 
             if (self.size() > 0) {
                 Chromatic chromaticCm = chromaticMidi.getPitch().getNote();
-                ChromaticMidi previous = self.get(self.size() - 1);
+                NoteMidi previous = self.get(self.size() - 1);
                 Chromatic prevChromatic = previous.getPitch().getNote();
                 chromaticMidi.getPitch().setOctave(previous.getPitch().getOctave());
                 if (!(n instanceof PitchOctave) && self.size() > 0 && chromaticCm.ordinal() <= prevChromatic.ordinal()) {

@@ -2,7 +2,7 @@ package es.danisales.datune.tonality;
 
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.DiatonicFunction;
-import es.danisales.datune.chords.ChromaticChord;
+import es.danisales.datune.chords.chromatic.ChromaticChord;
 
 import java.util.ArrayList;
 import java.util.List;

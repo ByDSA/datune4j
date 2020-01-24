@@ -2,7 +2,7 @@ package es.danisales.datune;
 
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.chords.DiatonicAlt;
-import es.danisales.datune.chords.transformations.EnharmonicsRetrieval;
+import es.danisales.datune.chords.transformations.DiatonicAltEnharmonicsRetrieval;
 import es.danisales.datune.tonality.ScaleDistance;
 import org.junit.Test;
 
@@ -126,7 +126,7 @@ public class ChromaticTest {
 	
 	@Test
 	public void getEnharmonics() {
-		Set<DiatonicAlt> cs = EnharmonicsRetrieval.getFromChromatic(Chromatic.C, 3);
+		Set<DiatonicAlt> cs = DiatonicAltEnharmonicsRetrieval.getFromChromatic(Chromatic.C, 3);
 		assertEquals(4, cs.size());
 	}
 	

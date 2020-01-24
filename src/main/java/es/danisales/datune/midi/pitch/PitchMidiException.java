@@ -1,6 +1,7 @@
 package es.danisales.datune.midi.pitch;
 
 import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.pitch.PitchException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -27,7 +28,7 @@ public class PitchMidiException extends PitchException {
 			throw new PitchMidiException( code );
 	}
 
-	public static void check(@NonNull PitchDiatonicMidi pitchDiatonicMidi) throws PitchMidiException {
+	public static <C extends CyclicDegree> void check(@NonNull PitchDiatonicMidi<C> pitchDiatonicMidi) throws PitchMidiException {
 		try {
 			PitchChromaticMidi.from(pitchDiatonicMidi);
 		} catch (RuntimeException e) {

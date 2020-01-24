@@ -5,9 +5,8 @@ import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
-import es.danisales.datune.chords.ChromaticChord;
-import es.danisales.datune.chords.ChromaticChordPattern;
-import es.danisales.datune.chords.DiatonicAlt;
+import es.danisales.datune.chords.chromatic.ChromaticChord;
+import es.danisales.datune.chords.chromatic.ChromaticChordPattern;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 

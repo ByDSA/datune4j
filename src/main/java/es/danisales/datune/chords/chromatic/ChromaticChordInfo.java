@@ -1,5 +1,6 @@
-package es.danisales.datune.chords;
+package es.danisales.datune.chords.chromatic;
 
+import es.danisales.datune.chords.Quality;
 import es.danisales.datune.lang.ChordNotation;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -8,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public final class ChromaticChordInfo implements Cloneable {
+final class ChromaticChordInfo implements Cloneable {
 	private static final Map<ChromaticChordPattern, ChromaticChordInfo> metaMap = new HashMap<>();
 
 	static final ChromaticChordInfo POWER_CHORD = new ChromaticChordInfo(Quality.INDETERMINATED, ChordNotation.POWER_CHORD, ChromaticChordPattern.POWER_CHORD);
@@ -193,7 +194,7 @@ public final class ChromaticChordInfo implements Cloneable {
 	private final String str;
 	private final ChromaticChordPattern pattern;
 
-	private ChromaticChordInfo(Quality q, String str, ChromaticChordPattern pattern) {
+	private ChromaticChordInfo(@NonNull Quality q, @NonNull String str, @NonNull ChromaticChordPattern pattern) {
 		quality = q;
 		this.str = str;
 		this.pattern = ChromaticChordPattern.immutableOf(pattern);
@@ -203,7 +204,7 @@ public final class ChromaticChordInfo implements Cloneable {
 		ChromaticChord chromaticChordTmp;
 		if (chromaticChord.getRootIndex() > 0) {
 			chromaticChordTmp = chromaticChord.clone();
-			chromaticChordTmp.inv(chromaticChordTmp.getRootIndex());
+			chromaticChordTmp.toFundamental();
 		} else
 			chromaticChordTmp = chromaticChord;
 
@@ -230,11 +231,5 @@ public final class ChromaticChordInfo implements Cloneable {
 	@SuppressWarnings("WeakerAccess")
 	public String getSuffix() {
 		return str;
-	}
-
-	@SuppressWarnings("MethodDoesntCallSuperMethod")
-	@Override
-	public ChromaticChordInfo clone() {
-		return new ChromaticChordInfo(quality, str, pattern);
 	}
 }

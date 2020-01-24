@@ -1,5 +1,9 @@
-package es.danisales.datune.chords;
+package es.danisales.datune.chords.chromatic;
 
+import es.danisales.datune.chords.ChordTransformations;
+import es.danisales.datune.chords.DiatonicDegreePattern;
+import es.danisales.datune.chords.TonalChord;
+import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.ChromaticFunction;

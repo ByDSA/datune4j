@@ -1,6 +1,7 @@
 package es.danisales.datune.midi.pitch;
 
 import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.chords.DiatonicAlt;
@@ -47,7 +48,7 @@ public class PitchDiatonicMidiTest {
 
     @Test
     public void from5() throws TonalityException {
-        Tonality tonality = Tonality.from(DiatonicAlt.Cb, Scale.MAJOR);
+        Tonality<DiatonicAlt> tonality = Tonality.from(DiatonicAlt.Cb, Scale.MAJOR);
         PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(PitchChromaticMidi.FF6, tonality);
         assertEquals(DiatonicDegree.V, pitchDiatonicMidi.getDegree());
         assertEquals(tonality, pitchDiatonicMidi.getTonality());
@@ -267,8 +268,8 @@ public class PitchDiatonicMidiTest {
     }
 
     private void _shift(int code, IntervalDiatonic intervalDiatonic) throws PitchMidiException {
-        Tonality tonality = Tonality.from(Chromatic.FF, Scale.MIXOLYDIAN);
-        PitchDiatonicMidi diatonicMidi = PitchDiatonicMidi.from(DiatonicDegree.I, tonality, 3);
+        Tonality<Chromatic> tonality = Tonality.from(Chromatic.FF, Scale.MIXOLYDIAN);
+        PitchDiatonicMidi<Chromatic> diatonicMidi = PitchDiatonicMidi.from(DiatonicDegree.I, tonality, 3);
         assertNotNull(diatonicMidi);
         diatonicMidi.shift(intervalDiatonic);
         assertEquals(code, diatonicMidi.getMidiCode());

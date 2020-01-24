@@ -2,7 +2,7 @@ package es.danisales.datune.chords;
 
 import es.danisales.datune.pitch.SymbolicPitch;
 
-public class ChordNamer {
+class ChordNamer {
     private ChordNamer() {
     }
 

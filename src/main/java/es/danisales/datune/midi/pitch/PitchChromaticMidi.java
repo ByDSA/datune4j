@@ -2,6 +2,7 @@ package es.danisales.datune.midi.pitch;
 
 import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.degrees.scale.ScaleDegree;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.chords.DiatonicAlt;
@@ -295,8 +296,8 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
         return pitchChromaticMidi;
     }
 
-    public static @NonNull PitchChromaticMidi from(@NonNull PitchDiatonicMidi pitchDiatonicMidi) {
-        Tonality tonality = pitchDiatonicMidi.tonality;
+    public static <C extends CyclicDegree> @NonNull PitchChromaticMidi from(@NonNull PitchDiatonicMidi<C> pitchDiatonicMidi) {
+        Tonality<C> tonality = pitchDiatonicMidi.tonality;
         ScaleDegree degree = pitchDiatonicMidi.degree;
 
         CyclicDegree diatonicAlt;
@@ -317,7 +318,7 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
         }
     }
 
-    private static @NonNull CyclicDegree tonalityGetNoteSecure(@NonNull Tonality tonality, @NonNull ScaleDegree degree) {
+    private static <C extends CyclicDegree> @NonNull C tonalityGetNoteSecure(@NonNull Tonality<C> tonality, @NonNull ScaleDegree degree) {
         try {
             return tonality.getNote(degree);
         } catch (ScaleRelativeDegreeException e) {
@@ -325,17 +326,19 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
         }
     }
 
-    private static int octaveCorrector(@NonNull Tonality tonality, @NonNull ScaleDegree degree) {
+    private static <C extends CyclicDegree> int octaveCorrector(@NonNull Tonality<C> tonality, @NonNull ScaleDegree degree) {
         int octave = 0;
 
-        octave += octaveCorrectorAltRoot(tonality);
+        if (tonality.getRoot() instanceof DiatonicAlt)
+            //noinspection unchecked
+            octave += octaveCorrectorAltRoot((Tonality<DiatonicAlt>)tonality);
+
         octave += octaveCorrectorDegree(tonality, degree);
 
         return octave;
     }
 
-    private static int octaveCorrectorAltRoot(@NonNull Tonality tonality) {
-        checkState(tonality.getRoot() instanceof DiatonicAlt);
+    private static int octaveCorrectorAltRoot(@NonNull Tonality<DiatonicAlt> tonality) {
         int octave = 0;
 
         DiatonicAlt diatonicAlt = (DiatonicAlt)tonality.getRoot();
@@ -353,11 +356,11 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
         return octave;
     }
 
-    private static int octaveCorrectorDegree(@NonNull Tonality tonality, @NonNull ScaleDegree degree) {
+    private static <C extends CyclicDegree> int octaveCorrectorDegree(@NonNull Tonality<C> tonality, @NonNull ScaleDegree degree) {
         int octave = 0;
 
-        DiatonicAlt degreeDiatonicAlt = (DiatonicAlt)tonalityGetNoteSecure(tonality, degree);
-        DiatonicAlt root = (DiatonicAlt)tonality.getRoot();
+        C degreeDiatonicAlt = tonalityGetNoteSecure(tonality, degree);
+        C root = tonality.getRoot();
         Chromatic rootChromatic = Chromatic.from(root);
         Chromatic degreeChromatic = Chromatic.from(degreeDiatonicAlt);
         if (degreeChromatic.ordinal() < rootChromatic.ordinal())
@@ -426,7 +429,7 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
     }
 
     @Override
-    public Chromatic getNote() {
+    public @NonNull Chromatic getNote() {
         return immutable.getChromatic();
     }
 

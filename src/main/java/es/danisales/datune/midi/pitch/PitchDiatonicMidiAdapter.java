@@ -1,6 +1,7 @@
 package es.danisales.datune.midi.pitch;
 
 import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.degrees.scale.ScaleDegree;
 import es.danisales.datune.chords.DiatonicAlt;
@@ -20,39 +21,52 @@ class PitchDiatonicMidiAdapter {
      * FROM PitchChromaticMidi, Tonality
      */
 
-    public static @NonNull PitchDiatonicMidi from(@NonNull PitchChromaticMidi pitchChromaticMidi, @NonNull Tonality tonality) throws TonalityException {
+    public static <C extends CyclicDegree> @NonNull PitchDiatonicMidi from(@NonNull PitchChromaticMidi pitchChromaticMidi, @NonNull Tonality<C> tonality) throws TonalityException {
         Objects.requireNonNull(pitchChromaticMidi);
         Objects.requireNonNull(tonality);
-        ScaleDegree relativeDegree = getDegreeFromChromaticMidi(pitchChromaticMidi, tonality);
+        ScaleDegree scaleDegree = getDegreeFromPitchChromaticMidi(pitchChromaticMidi, tonality);
 
-        int octave = getRootOctaveFromChromaticMidi(pitchChromaticMidi, relativeDegree, tonality);
+        int octave = getRootOctaveFromChromaticMidi(pitchChromaticMidi, scaleDegree, tonality);
 
-        return fromUncheck(relativeDegree, tonality, octave);
+        return fromUncheck(scaleDegree, tonality, octave);
     }
 
-    private static @NonNull ScaleDegree getDegreeFromChromaticMidi(PitchChromaticMidi pitchChromaticMidi, Tonality tonality) throws TonalityException {
-        Chromatic chromatic = pitchChromaticMidi.getNote();
-        return tonality.getDegreeFrom(chromatic);
+    private static <C extends CyclicDegree> @NonNull ScaleDegree getDegreeFromPitchChromaticMidi(@NonNull PitchChromaticMidi pitchChromaticMidi, @NonNull Tonality<C> tonality) throws TonalityException {
+        C c;
+        if (tonality.getRoot() instanceof Chromatic)
+            //noinspection unchecked
+            c = (C)pitchChromaticMidi.getNote();
+        else if (tonality.getRoot() instanceof DiatonicAlt)
+            //noinspection unchecked
+            c = (C)DiatonicAlt.from(pitchChromaticMidi.getNote(), (Tonality<DiatonicAlt>)tonality);
+        else
+            throw NeverHappensException.make("");
+
+        return tonality.getDegreeFrom(c);
     }
 
-    private static int getRootOctaveFromChromaticMidi(PitchChromaticMidi pitchChromaticMidi, ScaleDegree relativeDegree, Tonality tonality) {
-        int octave = getRootOctaveWithoutAlts(pitchChromaticMidi, tonality);
-        octave += octaveCorrector(pitchChromaticMidi, relativeDegree, tonality);
+    private static <C extends CyclicDegree> int getRootOctaveFromChromaticMidi(PitchChromaticMidi pitchChromaticMidi, @NonNull ScaleDegree scaleDegree, @NonNull Tonality<C> tonality) {
+        int octave = octaveCorrector(pitchChromaticMidi, scaleDegree, tonality);
+        if (tonality.getRoot() instanceof DiatonicAlt)
+            //noinspection unchecked
+            octave += getRootOctaveWithoutAlts(pitchChromaticMidi, (Tonality<DiatonicAlt>)tonality);
         return octave;
     }
 
-    private static int octaveCorrector(PitchChromaticMidi pitchChromaticMidi, ScaleDegree relativeDegree, Tonality tonality) {
+    private static <C extends CyclicDegree> int octaveCorrector(PitchChromaticMidi pitchChromaticMidi, @NonNull ScaleDegree scaleDegree, @NonNull Tonality<C> tonality) {
         int octave = 0;
 
-        octave += octaveCorrectionRootAlt(tonality);
-        octave += octaveCorrectionDegree(relativeDegree, tonality);
+        if (tonality.getRoot() instanceof DiatonicAlt)
+            //noinspection unchecked
+            octave += octaveCorrectionRootAlt((Tonality<DiatonicAlt>)tonality);
+        octave += octaveCorrectionDegree(scaleDegree, tonality);
 
         return octave;
     }
 
-    private static DiatonicAlt getNoteSecure(Tonality<DiatonicAlt> tonality, ScaleDegree degree) {
+    private static <C extends CyclicDegree> @NonNull C getNoteSecure(@NonNull Tonality<C> tonality, @NonNull ScaleDegree scaleDegree) {
         try {
-            return tonality.getNote(degree);
+            return tonality.getNote(scaleDegree);
         } catch (ScaleRelativeDegreeException e) {
             throw NeverHappensException.make("Siempre pertenece a Tonality");
         }
@@ -60,11 +74,11 @@ class PitchDiatonicMidiAdapter {
 
     // todo: hacer test con ScaleDegree que no sea el por defecto de su cantidad de notas (ej: DiatonicDegree en Pentatonic)
     // todo: coger cosas comunes para octaveCorrector entre covnersores. Es lo mismo pero cambiado de signo
-    private static int octaveCorrectionDegree(ScaleDegree degree1, Tonality<DiatonicAlt> tonality) {
+    private static <C extends CyclicDegree> int octaveCorrectionDegree(@NonNull ScaleDegree scaleDegree, @NonNull Tonality<C> tonality) {
         int octave = 0;
 
-        DiatonicAlt degreeDiatonicAlt = getNoteSecure(tonality, degree1);
-        DiatonicAlt root = tonality.getRoot();
+        C degreeDiatonicAlt = getNoteSecure(tonality, scaleDegree);
+        C root = tonality.getRoot();
         Chromatic rootChromatic = Chromatic.from(root);
         Chromatic degreeChromatic = Chromatic.from(degreeDiatonicAlt);
         if (degreeChromatic.ordinal() < rootChromatic.ordinal())
@@ -104,7 +118,7 @@ class PitchDiatonicMidiAdapter {
         return pitchChromaticMidiRootWithoutAlts.getOctave();
     }
 
-    static @NonNull PitchDiatonicMidi fromUncheck(@NonNull ScaleDegree diatonicDegree, @NonNull Tonality tonality, int octave) {
+    static <C extends CyclicDegree> @NonNull PitchDiatonicMidi<C> fromUncheck(@NonNull ScaleDegree diatonicDegree, @NonNull Tonality<C> tonality, int octave) {
         PitchDiatonicMidi ret = new PitchDiatonicMidi();
         ret.degree = diatonicDegree;
         ret.tonality = tonality;
@@ -117,10 +131,10 @@ class PitchDiatonicMidiAdapter {
      * FROM DiatonicDegree, Tonality, Octave
      */
 
-    public static @NonNull PitchDiatonicMidi from(@NonNull ScaleDegree scaleDegree, @NonNull Tonality tonality, int octave) throws PitchMidiException {
+    public static <C extends CyclicDegree> @NonNull PitchDiatonicMidi<C> from(@NonNull ScaleDegree scaleDegree, @NonNull Tonality<C> tonality, int octave) throws PitchMidiException {
         Objects.requireNonNull(scaleDegree);
         Objects.requireNonNull(tonality);
-        PitchDiatonicMidi ret = PitchDiatonicMidiAdapter.fromUncheck(scaleDegree, tonality, octave);
+        PitchDiatonicMidi<C> ret = PitchDiatonicMidiAdapter.fromUncheck(scaleDegree, tonality, octave);
 
         PitchMidiException.check(ret);
         return ret;

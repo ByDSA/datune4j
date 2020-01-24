@@ -1,9 +1,7 @@
 package es.danisales.datune.degrees.octave;
 
-import es.danisales.datune.degrees.scale.ScaleDegree;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
-import es.danisales.datune.midi.ChromaticMidi;
-import es.danisales.datune.midi.DiatonicMidi;
+import es.danisales.datune.midi.NoteMidi;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.chords.DiatonicAlt;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
@@ -59,7 +57,7 @@ class DiatonicAdapter {
         }
     }
 
-    public Diatonic from(ChromaticMidi chromaticMidi, Tonality tonality) throws TonalityException {
+    public Diatonic from(NoteMidi chromaticMidi, Tonality tonality) throws TonalityException {
         Chromatic chromatic = chromaticMidi.getPitch().getNote();
         DiatonicDegree degree = (DiatonicDegree)tonality.getDegreeFrom( chromatic );
         return Diatonic.from( degree );
@@ -70,13 +68,5 @@ class DiatonicAdapter {
         DiatonicDegree diatonicDegree = (DiatonicDegree)tonality.getDegreeFrom(chromatic);
         Chromatic diatonicAlt = tonality.getNote(diatonicDegree);
         return Diatonic.from(diatonicAlt);
-    }
-
-    public Diatonic from(DiatonicMidi diatonicMidi) {
-        ScaleDegree relativeDegree = diatonicMidi.getPitch().getDegree();
-        if (relativeDegree instanceof DiatonicDegree)
-            return Diatonic.from((DiatonicDegree) relativeDegree);
-        else
-            return null;
     }
 }

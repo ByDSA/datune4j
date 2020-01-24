@@ -4,15 +4,17 @@ import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.midi.binaries.events.EventComplex;
 import es.danisales.datune.midi.binaries.events.NoteOff;
 import es.danisales.datune.midi.binaries.events.NoteOn;
+import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.midi.pitch.PitchMidiInterface;
 import es.danisales.datune.pitch.SymbolicPitch;
 import es.danisales.utils.NeverHappensException;
 import es.danisales.utils.building.BuildingException;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
-public abstract class NoteMidi<P extends PitchMidiInterface> implements SymbolicPitch, EventComplex, Durable, Velocitiable {
+public class NoteMidi<P extends PitchMidiInterface> implements SymbolicPitch, EventComplex, Durable, Velocitiable {
     protected int velocity;
     protected int length;
-    protected P pitch;
+    protected PitchChromaticMidi pitch;
 
     @Override
     public final int getLength() {
@@ -34,11 +36,9 @@ public abstract class NoteMidi<P extends PitchMidiInterface> implements Symbolic
         velocity = v;
     }
 
-    public final P getPitch() {
+    public final PitchChromaticMidi getPitch() {
         return pitch;
     }
-
-    public abstract NoteMidi<P> clone();
 
     @Override
     public final EventSequence getEvents() {
@@ -61,5 +61,37 @@ public abstract class NoteMidi<P extends PitchMidiInterface> implements Symbolic
         }
 
         return es;
+    }
+
+    public static NoteMidiBuilder builder() {
+        return new NoteMidiBuilder();
+    }
+
+    public @NonNull NoteMidi clone() {
+        return NoteMidi.builder()
+                .pitch(pitch.clone())
+                .velocity(velocity)
+                .length(length)
+                .build();
+    }
+
+    @Override
+    public String toString() {
+        return pitch + " (vel=" + velocity + ", length=" + length + ")";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if ( !(o instanceof NoteMidi) )
+            return false;
+
+        NoteMidi chromaticMidi = (NoteMidi) o;
+
+        return pitch.equals( chromaticMidi.pitch) && velocity == chromaticMidi.velocity && length == chromaticMidi.length;
+    }
+
+    @Override
+    public int hashCode() {
+        return pitch.hashCode() + 31 * ( Integer.hashCode(velocity) + 37 * Integer.hashCode(length) );
     }
 }

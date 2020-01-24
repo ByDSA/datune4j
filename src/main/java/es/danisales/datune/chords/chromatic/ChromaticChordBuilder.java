@@ -1,5 +1,8 @@
-package es.danisales.datune.chords;
+package es.danisales.datune.chords.chromatic;
 
+import es.danisales.datune.chords.DiatonicAlt;
+import es.danisales.datune.chords.DiatonicAltChord;
+import es.danisales.datune.chords.DiatonicDegreePattern;
 import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
@@ -7,7 +10,7 @@ import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.interval.IntervalDiatonic;
-import es.danisales.datune.midi.ChromaticMidi;
+import es.danisales.datune.midi.NoteMidi;
 import es.danisales.datune.tonality.ChordRetrievalFromTonality;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;
@@ -187,10 +190,10 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
         return self();
     }
 
-    public ChromaticChordBuilder fromChromaticMidi(Collection<ChromaticMidi> chromaticChordMidi) {
+    public ChromaticChordBuilder fromChromaticMidi(Collection<NoteMidi> chromaticChordMidi) {
         List<Chromatic> list = new ArrayList<>();
 
-        for (ChromaticMidi chromaticMidi : chromaticChordMidi)
+        for (NoteMidi chromaticMidi : chromaticChordMidi)
             list.add(chromaticMidi.getPitch().getNote());
 
         return addAll(list);

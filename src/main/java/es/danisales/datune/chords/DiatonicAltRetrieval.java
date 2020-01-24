@@ -5,14 +5,13 @@ import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.degrees.scale.ScaleDegree;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
-import es.danisales.datune.chords.transformations.EnharmonicsRetrieval;
+import es.danisales.datune.chords.transformations.DiatonicAltEnharmonicsRetrieval;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.ScaleDistance;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -78,7 +77,7 @@ public class DiatonicAltRetrieval {
             ScaleDistance step = scale.getCode().get(i);
             newDiatonicAlt = newDiatonicAlt.add(step);
             if (newDiatonicAlt.getUnsignedAlterations() >= 1)
-                newDiatonicAlt = EnharmonicsRetrieval.getMinAlts(newDiatonicAlt);
+                newDiatonicAlt = DiatonicAltEnharmonicsRetrieval.getMinimizedAlts(newDiatonicAlt);
 
             retNotes.add(newDiatonicAlt);
         }
@@ -139,6 +138,6 @@ public class DiatonicAltRetrieval {
     }
 
     public static Set<DiatonicAlt> getEnharmonicsFrom(DiatonicAlt diatonicAlt, int maxAlterations) {
-        return EnharmonicsRetrieval.getFromDiatonicAlt(diatonicAlt, maxAlterations);
+        return DiatonicAltEnharmonicsRetrieval.getFromDiatonicAlt(diatonicAlt, maxAlterations);
     }
 }

@@ -1,7 +1,10 @@
-package es.danisales.datune.chords;
+package es.danisales.datune.chords.chromatic;
 
 import com.google.common.collect.ImmutableSet;
 import es.danisales.datastructures.SetUtils;
+import es.danisales.datune.chords.Chord;
+import es.danisales.datune.chords.IntervalShifter;
+import es.danisales.datune.chords.TonalChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.interval.IntervalChromatic;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -12,7 +15,7 @@ import java.util.Set;
 @SuppressWarnings("WeakerAccess")
 public final class ChromaticChord
         extends Chord<Chromatic>
-        implements PitchChromaticChord<Chromatic>, IntervalShifter<IntervalChromatic> {
+        implements IntervalShifter<IntervalChromatic> {
     // Quintas
     public static final ChromaticChord C5 = new ChromaticChord(ChromaticChordEnum.C5);
     public static final ChromaticChord CC5 = new ChromaticChord(ChromaticChordEnum.CC5);
@@ -2445,11 +2448,6 @@ public final class ChromaticChord
 
     private ChromaticChord(ChromaticChordEnum chromaticChordInterface) {
         super(chromaticChordInterface);
-    }
-
-    @Override
-    public @NonNull ChromaticChordInfo getInfo() {
-        return info;
     }
 
     @Override

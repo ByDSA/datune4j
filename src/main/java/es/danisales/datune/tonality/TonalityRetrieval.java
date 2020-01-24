@@ -1,13 +1,13 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.chords.ChromaticChord;
 import es.danisales.datune.chords.DiatonicAlt;
 import es.danisales.datune.chords.DiatonicAltRetrieval;
-import es.danisales.datune.chords.PitchChromaticChord;
+import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.DiatonicFunction;
+import es.danisales.datune.midi.ChordMidi;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -15,8 +15,6 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static com.google.common.base.Preconditions.checkArgument;
 
 public class TonalityRetrieval {
     public static class ET12 {
@@ -746,7 +744,7 @@ public class TonalityRetrieval {
         return Collections.unmodifiableSet(ret);
     }
 
-    public static Tonality searchInModeSameRoot(Tonality tonality, PitchChromaticChord c) {
+    public static Tonality searchInModeSameRoot(Tonality tonality, ChordMidi c) {
         List<Tonality> ts;
         if ( tonality.getScale().isDiatonic() ) {
             ts = new ArrayList<>();

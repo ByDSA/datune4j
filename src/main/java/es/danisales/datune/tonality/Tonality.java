@@ -7,15 +7,13 @@ import es.danisales.datune.degrees.scale.ScaleDegree;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
-import es.danisales.datune.chords.ChromaticChord;
+import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.chords.DiatonicAlt;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -121,13 +119,15 @@ public class Tonality<C extends CyclicDegree> implements Iterable<C> {
         return getScale().size();
     }
 
-    public @NonNull C getNote(@NonNull ScaleDegree degree) throws ScaleRelativeDegreeException {
+    public @NonNull C getNote(@NonNull ScaleDegree scaleDegree) throws ScaleRelativeDegreeException {
         List<ScaleDegree> mainDegrees = ScaleDegree.getDefaultDegreesFromScaleSize(getScale().size());
         ScaleDegree firstMainDegree = mainDegrees.get(0);
-        if (degree.getClass().equals(firstMainDegree.getClass()))
-            return getNotes().get(degree.ordinal());
+        Class<? extends ScaleDegree> degreeClass = scaleDegree.getClass();
+        Class<? extends ScaleDegree> firstMainDegreeClass = firstMainDegree.getClass();
+        if (degreeClass.equals(firstMainDegreeClass))
+            return getNotes().get(scaleDegree.ordinal());
 
-        int indexInteger = getScale().getIndexByDegree(degree);
+        int indexInteger = getScale().getIndexByDegree(scaleDegree);
         return getNotes().get(indexInteger);
     }
 
@@ -179,12 +179,12 @@ public class Tonality<C extends CyclicDegree> implements Iterable<C> {
             throw new RuntimeException();
     }
 
-    public @Nullable ScaleDegree getDegreeFrom(@NonNull C diatonicAlt) {
-        Objects.requireNonNull(diatonicAlt, "No se ha especificado nota");
+    public @Nullable ScaleDegree getDegreeFrom(@NonNull C c) {
+        Objects.requireNonNull(c, "No se ha especificado nota");
 
         for (ScaleDegree degree : getScaleMainDegrees()) {
-            C diatonicAlt1 = getNoteSecure(degree);
-            if (diatonicAlt1.equals(diatonicAlt))
+            C c1 = getNoteSecure(degree);
+            if (c1.equals(c))
                 return degree;
         }
 

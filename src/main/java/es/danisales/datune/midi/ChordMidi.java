@@ -7,7 +7,6 @@ import es.danisales.datune.midi.arpegios.Arpeggio;
 import es.danisales.datune.midi.arpegios.ArpeggioDefault;
 import es.danisales.datune.midi.binaries.events.EventComplex;
 import es.danisales.datune.midi.pitch.PitchMidiException;
-import es.danisales.datune.chords.transformations.DistanceCalculator;
 import es.danisales.datune.midi.pitch.PitchOctaveMidiEditable;
 import es.danisales.datune.pitch.PitchOctave;
 import es.danisales.utils.HashingUtils;
@@ -18,10 +17,10 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import java.util.*;
 
 public class ChordMidi
-        extends ListProxy<ChromaticMidi>
+        extends ListProxy<NoteMidi>
         implements Durable, Velocitiable, PitchOctaveMidiEditable, PitchOctave, EventComplex {
 
-    public ChordMidi(List<ChromaticMidi> listAdapter) {
+    public ChordMidi(List<NoteMidi> listAdapter) {
         super(listAdapter);
     }
 
@@ -51,8 +50,8 @@ public class ChordMidi
     @Override
     public @NonNull ChordMidi clone() {
         ChordMidi chromaticChordMidi = new ChordMidi();
-        for (ChromaticMidi n : this)
-            chromaticChordMidi.add((ChromaticMidi) n.clone());
+        for (NoteMidi n : this)
+            chromaticChordMidi.add((NoteMidi) n.clone());
 
         if (arpegio != null)
             chromaticChordMidi.arpegio = arpegio.clone();
@@ -63,7 +62,7 @@ public class ChordMidi
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        for (ChromaticMidi chromaticMidi : this)
+        for (NoteMidi chromaticMidi : this)
             stringBuilder.append(chromaticMidi.toString()).append("\n");
 
         return stringBuilder.toString();
@@ -108,7 +107,7 @@ public class ChordMidi
             if ( length != 0 && node.time > length || node.note < 0 )
                 continue;
 
-            ChromaticMidi n = get( node.note ).clone();
+            NoteMidi n = get( node.note ).clone();
 
             if ( length != 0 )
                 n.setLength( Math.min( node.time + node.length, length ) - node.time );
@@ -121,7 +120,7 @@ public class ChordMidi
 
     private int getMaxNoteLength() {
         int max = length;
-        for ( ChromaticMidi n : this )
+        for ( NoteMidi n : this )
             max = Math.max( max, n.getLength() );
 
         return max;
@@ -145,7 +144,7 @@ public class ChordMidi
 
         NoteMidi nIn = (NoteMidi) o;
         int nInCode = nIn.pitch.getMidiCode();
-        for (ChromaticMidi note : this)
+        for (NoteMidi note : this)
             if (note.pitch.getMidiCode() == nInCode)
                 return true;
 
@@ -153,8 +152,8 @@ public class ChordMidi
     }
 
     @SuppressWarnings("WeakerAccess")
-    public boolean containsPitchAll(@NonNull Collection<ChromaticMidi> c) {
-        for (ChromaticMidi note : c)
+    public boolean containsPitchAll(@NonNull Collection<NoteMidi> c) {
+        for (NoteMidi note : c)
             if (!containsPitch(note))
                 return false;
 
@@ -162,7 +161,7 @@ public class ChordMidi
     }
 
     @Override
-    public boolean add(@NonNull ChromaticMidi n) throws AddedException {
+    public boolean add(@NonNull NoteMidi n) throws AddedException {
         n = Objects.requireNonNull(n);
         if (!containsPitch(n)) {
             super.add(n);
@@ -174,21 +173,21 @@ public class ChordMidi
     }
 
     @Override
-    public boolean addAll(@NonNull Collection<? extends ChromaticMidi> collection) {
+    public boolean addAll(@NonNull Collection<? extends NoteMidi> collection) {
         boolean ret = super.addAll(collection);
         sortByPitch();
         return ret;
     }
 
     @Override
-    public boolean addAll(int index, @NonNull Collection<? extends ChromaticMidi> collection) {
+    public boolean addAll(int index, @NonNull Collection<? extends NoteMidi> collection) {
         boolean ret = super.addAll(index, collection);
         sortByPitch();
         return ret;
     }
 
     @Override
-    public void add(int n, @NonNull ChromaticMidi chromaticMidi) throws AddedException {
+    public void add(int n, @NonNull NoteMidi chromaticMidi) throws AddedException {
         super.add(n, Objects.requireNonNull(chromaticMidi));
         sortByPitch();
     }
@@ -202,7 +201,7 @@ public class ChordMidi
 
     @Override
     public void setVelocity(int v) {
-        for (ChromaticMidi n : this) {
+        for (NoteMidi n : this) {
             int vel = (int) Math.round(n.getVelocity() * v / 100.0);
 
             if (vel < 0)
@@ -221,7 +220,7 @@ public class ChordMidi
 
     private int getMaxNoteVelocity() {
         int max = -1;
-        for (ChromaticMidi n : this)
+        for (NoteMidi n : this)
             max = Math.max(max, n.getVelocity());
 
         return max;
@@ -242,7 +241,7 @@ public class ChordMidi
 
     @Override
     public void shiftOctave(int octaveShift) throws PitchMidiException {
-        for (ChromaticMidi n : this) {
+        for (NoteMidi n : this) {
             n.getPitch().shiftOctave(octaveShift);
         }
     }

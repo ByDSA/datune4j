@@ -1,11 +1,12 @@
 package es.danisales.datune.midi.pitch;
 
-import es.danisales.datune.degrees.octave.Chromatic;
-import es.danisales.datune.degrees.octave.Diatonic;
-import es.danisales.datune.degrees.scale.ScaleDegree;
-import es.danisales.datune.degrees.scale.DiatonicDegree;
-import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.chords.DiatonicAlt;
+import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.degrees.octave.CyclicDegree;
+import es.danisales.datune.degrees.octave.Diatonic;
+import es.danisales.datune.degrees.scale.DiatonicDegree;
+import es.danisales.datune.degrees.scale.ScaleDegree;
+import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
@@ -14,12 +15,12 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Objects;
 
-public class PitchDiatonicMidi implements PitchOctaveMidiEditable, PitchMidiInterface<IntervalDiatonic> {
+public class PitchDiatonicMidi<C extends CyclicDegree> implements PitchOctaveMidiEditable, PitchMidiInterface<IntervalDiatonic> {
 	protected ScaleDegree degree;
 	protected int octave;
-	protected Tonality tonality;
+	protected Tonality<C> tonality;
 
-	public static PitchDiatonicMidi from(@NonNull PitchDiatonicMidi pitchDiatonicMidi) {
+	public static <C extends CyclicDegree> PitchDiatonicMidi<C> from(@NonNull PitchDiatonicMidi<C> pitchDiatonicMidi) {
 		try {
 			return from(pitchDiatonicMidi.degree, pitchDiatonicMidi.tonality, pitchDiatonicMidi.octave);
 		} catch (PitchMidiException e) {
@@ -27,11 +28,11 @@ public class PitchDiatonicMidi implements PitchOctaveMidiEditable, PitchMidiInte
 		}
 	}
 
-	public static @NonNull PitchDiatonicMidi from(@NonNull ScaleDegree scaleDegree, @NonNull Tonality tonality, int octave) throws PitchMidiException {
+	public static <C extends CyclicDegree> @NonNull PitchDiatonicMidi<C> from(@NonNull ScaleDegree scaleDegree, @NonNull Tonality<C> tonality, int octave) throws PitchMidiException {
 		return PitchDiatonicMidiAdapter.from(scaleDegree, tonality, octave);
 	}
 
-	public static @NonNull PitchDiatonicMidi from(@NonNull PitchChromaticMidi pitchChromaticMidi, @NonNull Tonality tonality) throws TonalityException {
+	public static <C extends CyclicDegree> @NonNull PitchDiatonicMidi<C> from(@NonNull PitchChromaticMidi pitchChromaticMidi, @NonNull Tonality<C> tonality) throws TonalityException {
 		return PitchDiatonicMidiAdapter.from(pitchChromaticMidi, tonality);
 	}
 
@@ -51,7 +52,7 @@ public class PitchDiatonicMidi implements PitchOctaveMidiEditable, PitchMidiInte
 	@SuppressWarnings("MethodDoesntCallSuperMethod")
 	@NonNull
 	@Override
-	public PitchDiatonicMidi clone() {
+	public PitchDiatonicMidi<C> clone() {
 		return PitchDiatonicMidiAdapter.fromUncheck(degree, tonality, octave);
 	}
 
@@ -133,12 +134,12 @@ public class PitchDiatonicMidi implements PitchOctaveMidiEditable, PitchMidiInte
 		degree = diatonicDegree;
 	}
 
-	public void setTonality(@NonNull Tonality tonality) {
+	public void setTonality(@NonNull Tonality<C> tonality) {
 		Objects.requireNonNull(tonality);
 		this.tonality = tonality;
 	}
 
-	public Tonality getTonality() {
+	public Tonality<C> getTonality() {
 		return tonality;
 	}
 

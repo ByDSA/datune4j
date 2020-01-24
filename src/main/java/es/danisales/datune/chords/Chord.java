@@ -4,7 +4,6 @@ import es.danisales.datastructures.ListProxy;
 import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.lang.ChordNotation;
 import es.danisales.utils.MathUtils;
-import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -17,13 +16,21 @@ public class Chord<C extends CyclicDegree>
         extends ListProxy<C>
         implements ChordCommon<C> {
     private int rootIndex = 0;
+    private final boolean immutable;
 
-    public int getRootIndex() {
-        return rootIndex;
+    protected Chord() {
+        super( new ArrayList<>() );
+        immutable = false;
     }
 
-    public @Nullable C getRoot() {
-        return get(rootIndex);
+    protected Chord(ChordCommon<C> chordCommon) {
+        super( new ArrayList<>(chordCommon) );
+        rootIndex = chordCommon.getRootIndex();
+        immutable = true;
+    }
+
+    protected Chord<C> create() {
+        return new Chord<>();
     }
 
     public @NonNull C getCyclic(int noteNumber) {
@@ -32,12 +39,14 @@ public class Chord<C extends CyclicDegree>
         return get(noteNumber);
     }
 
-    public int getInversionNumber() {
-        int rootPos = getRootIndex();
-        if (rootPos > 0)
-            return size() - rootPos;
-        else
-            return 0;
+    /* Root */
+
+    public int getRootIndex() {
+        return rootIndex;
+    }
+
+    public @Nullable C getRoot() {
+        return get(rootIndex);
     }
 
     public void resetRoot() {
@@ -55,22 +64,7 @@ public class Chord<C extends CyclicDegree>
         rootIndex = pos;
     }
 
-    public void toFundamental() {
-        excepIfImmutable();
-        inv( getRootIndex() );
-        checkState(getRootIndex() == 0, getRootIndex());
-    }
-
-    public void over(@NonNull C cyclicDegree) throws InvalidChordException {
-        excepIfImmutable();
-        for (int i = 0; i < size(); i++) {
-            if ( get(0).equals(cyclicDegree) )
-                return;
-            inv();
-        }
-
-        throw new InvalidChordException();
-    }
+    /* Inversion*/
 
     public void inv() {
         inv( 1 );
@@ -85,34 +79,44 @@ public class Chord<C extends CyclicDegree>
         setRootIndex(rootIndex);
     }
 
-    private static final NeverHappensException NEVER_HAPPENS_EXCEPTION
-            = NeverHappensException.make("Los ChordProxy son siempre de Chromatic o Diatonic y no tienen problemas de octava mínima o máxima");
-
-    private boolean immutable;
-
-    Chord() {
-        super( new ArrayList<>() );
-        immutable = false;
+    public int getInversionNumber() {
+        int rootPos = getRootIndex();
+        if (rootPos > 0)
+            return size() - rootPos;
+        else
+            return 0;
     }
 
-    Chord(ChordCommon<C> chordCommon) {
-        super( new ArrayList<>(chordCommon) );
-        rootIndex = chordCommon.getRootIndex();
-        immutable = true;
+    public void over(@NonNull C cyclicDegree) throws InvalidChordException {
+        excepIfImmutable();
+        for (int i = 0; i < size(); i++) {
+            if ( get(0).equals(cyclicDegree) )
+                return;
+            inv();
+        }
+
+        throw new InvalidChordException();
     }
+
+    public void toFundamental() {
+        excepIfImmutable();
+        inv( getRootIndex() );
+        checkState(getRootIndex() == 0, getRootIndex());
+    }
+
+    /* Immutable */
 
     private void excepIfImmutable() {
         if (isImmutable())
             throw new UnsupportedOperationException();
     }
 
+    @SuppressWarnings("WeakerAccess")
     public boolean isImmutable() {
         return immutable;
     }
 
-    protected Chord<C> create() {
-        return new Chord<>();
-    }
+    /* Object */
 
     @Override
     public String toString() {
@@ -127,6 +131,7 @@ public class Chord<C extends CyclicDegree>
         return ChordNamer.from(this);
     }
 
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
     public Chord<C> clone() {
         if ( isEmpty() )
             return create();

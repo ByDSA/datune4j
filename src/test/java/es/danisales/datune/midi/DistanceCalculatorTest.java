@@ -1,6 +1,7 @@
-package es.danisales.datune.chords.transformations;
+package es.danisales.datune.midi;
 
-import es.danisales.datune.midi.ChromaticMidi;
+import es.danisales.datune.midi.DistanceCalculator;
+import es.danisales.datune.midi.NoteMidi;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import org.junit.Test;
 
@@ -9,10 +10,10 @@ import static org.junit.Assert.assertEquals;
 public class DistanceCalculatorTest {
     @Test
     public void calculateDistanceInSemitonesChromaticMidi() {
-        ChromaticMidi chromaticMidi = ChromaticMidi.builder()
+        NoteMidi chromaticMidi = NoteMidi.builder()
                 .pitch(PitchChromaticMidi.C5)
                 .build();
-        ChromaticMidi chromaticMidi2 = ChromaticMidi.builder()
+        NoteMidi chromaticMidi2 = NoteMidi.builder()
                 .pitch(PitchChromaticMidi.C6)
                 .build();
 
@@ -22,10 +23,10 @@ public class DistanceCalculatorTest {
 
     @Test
     public void calculateDistanceInSemitonesChromaticMidiToItself() {
-        ChromaticMidi chromaticMidi = ChromaticMidi.builder()
+        NoteMidi chromaticMidi = NoteMidi.builder()
                 .pitch(PitchChromaticMidi.C5)
                 .build();
-        ChromaticMidi chromaticMidi2 = chromaticMidi.clone();
+        NoteMidi chromaticMidi2 = chromaticMidi.clone();
 
         assertEquals(0, DistanceCalculator.calculateDistanceInSemitones(chromaticMidi, chromaticMidi2));
         assertEquals(0, DistanceCalculator.calculateDistanceInSemitones(chromaticMidi2, chromaticMidi));

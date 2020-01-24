@@ -8,17 +8,11 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import java.util.List;
 
 // Para las cosas comunes de los chord mutables y los chord inmutables
-interface ChordCommon<N extends SymbolicPitch> extends List<N> {
+public interface ChordCommon<N extends SymbolicPitch>
+		extends List<N> {
 	int getRootIndex();
 
 	@Nullable N getRoot();
-
-	default @NonNull N getCyclic(int noteNumber) throws PitchMidiException {
-		while (noteNumber < 0)
-			noteNumber += size();
-
-		return get(noteNumber % size());
-	}
 
 	default int getInversionNumber() {
 		int rootPos = getRootIndex();

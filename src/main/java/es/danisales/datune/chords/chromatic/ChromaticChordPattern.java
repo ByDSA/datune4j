@@ -1,9 +1,8 @@
-package es.danisales.datune.chords;
+package es.danisales.datune.chords.chromatic;
 
 import com.google.common.collect.ImmutableMap;
+import es.danisales.datune.chords.Pattern;
 import es.danisales.datune.degrees.octave.Chromatic;
-import es.danisales.datune.midi.ChordMidi;
-import es.danisales.datune.midi.NoteMidi;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Arrays;
@@ -266,21 +265,6 @@ public final class ChromaticChordPattern extends Pattern {
         }
 
         return from((List<Chromatic>) chromaticChordBase);
-    }
-
-    public static <N extends NoteMidi<?>> @NonNull ChromaticChordPattern from(@NonNull ChordMidi chordMidi) {
-        checkArgument(!chordMidi.isEmpty());
-
-        Integer[] integerPitchMidiArray = new Integer[chordMidi.size()];
-        integerPitchMidiArray[0] = 0;
-        int firstCode = chordMidi.get(0).getPitch().getMidiCode();
-        for (int i = 0; i < chordMidi.size(); i++) {
-
-            int code = chordMidi.get(i).getPitch().getMidiCode();
-            integerPitchMidiArray[i] = code - firstCode;
-        }
-
-        return immutableFromIntegers(integerPitchMidiArray);
     }
 
     /* Object */

@@ -1,5 +1,6 @@
-package es.danisales.datune.chords;
+package es.danisales.datune.chords.chromatic;
 
+import es.danisales.datune.chords.ChordCommon;
 import es.danisales.datune.degrees.octave.Chromatic;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -7,7 +8,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import javax.annotation.Nonnull;
 import java.util.*;
 
-enum ChromaticChordEnum implements PitchChromaticChord<Chromatic>, ChordCommon<Chromatic> {
+enum ChromaticChordEnum implements ChordCommon<Chromatic> {
 	// Quintas
 	C5(ChromaticChordInfo.POWER_CHORD, Chromatic.C),
 	CC5(ChromaticChordInfo.POWER_CHORD, Chromatic.CC),
@@ -1368,10 +1369,5 @@ Cm13omit11(ChromaticChordInfo.THIRTEENTH_MINOR_OMIT11, Chromatic.C),
 	@Override
 	public String toString() {
 		return getRoot() + info.getSuffix();
-	}
-
-	@Override
-	public @NonNull ChromaticChordInfo getInfo() {
-		return info;
 	}
 }

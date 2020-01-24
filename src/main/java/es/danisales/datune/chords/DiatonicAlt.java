@@ -4,7 +4,7 @@ import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.lang.Namer;
-import es.danisales.datune.midi.ChromaticMidi;
+import es.danisales.datune.midi.NoteMidi;
 import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.tonality.ScaleDistance;
 import es.danisales.datune.tonality.Tonality;
@@ -132,7 +132,17 @@ public class DiatonicAlt implements CyclicDegree {
 		return DiatonicAltAdapter.from(chromatic);
 	}
 
-	public static @NonNull DiatonicAlt from(@NonNull ChromaticMidi chromaticMidi) {
+	public static @Nullable DiatonicAlt from(@NonNull Chromatic chromatic, Tonality<DiatonicAlt> tonality) {
+		for (DiatonicAlt diatonicAlt : tonality) {
+			Chromatic chromatic1 = Chromatic.from(diatonicAlt);
+			if (chromatic.equals(chromatic1))
+				return diatonicAlt;
+		}
+
+		return null;
+	}
+
+	public static @NonNull DiatonicAlt from(@NonNull NoteMidi chromaticMidi) {
 		return DiatonicAltAdapter.from(chromaticMidi);
 	}
 

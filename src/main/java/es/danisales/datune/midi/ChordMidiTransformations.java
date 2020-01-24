@@ -143,10 +143,10 @@ public class ChordMidiTransformations {
     protected static int dist(@NonNull ChordMidi n1, @NonNull ChordMidi n, boolean bidirectional) {
         int d = 0;
 
-        for (ChromaticMidi i : n1) {
+        for (NoteMidi i : n1) {
             int localMin = 9999;
             assert n.size() > 0;
-            for (ChromaticMidi j : n) {
+            for (NoteMidi j : n) {
                 int m = Math.abs(j.pitch.getMidiCode() - i.pitch.getMidiCode());
                 if (m < localMin)
                     localMin = m;

@@ -47,6 +47,7 @@ public class DurationMidi {
 	 */
 
 	public final static int L2_3 = triplet(L2);
+	@SuppressWarnings("unused")
 	public final static int L4_3 = triplet(L4);
 	@SuppressWarnings("unused")
 	public final static int L8_3 = triplet(L8);

@@ -1,6 +1,6 @@
 package es.danisales.datune.midi.Progressions;
 
-import es.danisales.datune.chords.ChromaticChord;
+import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.chords.TonalChord;
 import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.function.DiatonicFunction;
@@ -13,7 +13,6 @@ import es.danisales.datune.midi.binaries.events.EventComplex;
 import es.danisales.datune.midi.binaries.events.KeySignatureEvent;
 import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.tonality.Tonality;
-import es.danisales.utils.building.BuildingException;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,4 @@
-package es.danisales.datune.chords.transformations;
-
-import es.danisales.datune.midi.NoteMidi;
+package es.danisales.datune.midi;
 
 public class DistanceCalculator {
     private DistanceCalculator() {
