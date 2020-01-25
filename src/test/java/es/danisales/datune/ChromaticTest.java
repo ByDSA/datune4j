@@ -1,8 +1,8 @@
 package es.danisales.datune;
 
 import es.danisales.datune.degrees.octave.Chromatic;
-import es.danisales.datune.chords.DiatonicAlt;
-import es.danisales.datune.chords.transformations.DiatonicAltEnharmonicsRetrieval;
+import es.danisales.datune.degrees.octave.Diatonic;
+import es.danisales.datune.degrees.octave.DiatonicAlt;
 import es.danisales.datune.tonality.ScaleDistance;
 import org.junit.Test;
 
@@ -29,16 +29,6 @@ public class ChromaticTest {
 	@Test
 	public void fromDiatonicAlt3() {
 		fromDiatonicAltTargetSource(Chromatic.D, DiatonicAlt.CCC);
-	}
-
-	@Test
-	public void fromDiatonicAlt4() {
-		fromDiatonicAltTargetSource(Chromatic.DD, DiatonicAlt.CCCC);
-	}
-
-	@Test
-	public void fromDiatonicAlt5() {
-		fromDiatonicAltTargetSource(Chromatic.E, DiatonicAlt.CCCCC);
 	}
 
 	@Test
@@ -108,7 +98,6 @@ public class ChromaticTest {
 		assertNotEquals(DiatonicAlt.Eb, DiatonicAlt.DD);
 		assertNotEquals(DiatonicAlt.C, DiatonicAlt.BB);
 		assertNotEquals(DiatonicAlt.CCC, DiatonicAlt.D);
-		assertNotEquals(DiatonicAlt.CCCC, DiatonicAlt.DD);
 
 
 		assertEquals(DiatonicAlt.C, DiatonicAlt.C);
@@ -121,13 +110,19 @@ public class ChromaticTest {
 		assertSame(Chromatic.from(DiatonicAlt.Eb), Chromatic.DD);
 		assertSame(Chromatic.from(DiatonicAlt.BB), Chromatic.C);
 		assertSame(Chromatic.from(DiatonicAlt.CCC), Chromatic.D);
-		assertSame(Chromatic.from(DiatonicAlt.CCCC), Chromatic.DD);
 	}
 	
 	@Test
 	public void getEnharmonics() {
-		Set<DiatonicAlt> cs = DiatonicAltEnharmonicsRetrieval.getFromChromatic(Chromatic.C, 3);
+		Chromatic chromatic = Chromatic.C;
+		Set<DiatonicAlt> cs = DiatonicAlt.EnharmonicRetrieval.getFromChromatic(chromatic, 3);
+		for (DiatonicAlt diatonicAlt : cs)
+			assertEquals(chromatic, Chromatic.from(diatonicAlt));
 		assertEquals(4, cs.size());
+		assertTrue(cs.contains(DiatonicAlt.C));
+		assertTrue(cs.contains(DiatonicAlt.BB));
+		assertTrue(cs.contains(DiatonicAlt.Dbb));
+		assertTrue(cs.contains(DiatonicAlt.from(Diatonic.A, 3)));
 	}
 	
 	@Test

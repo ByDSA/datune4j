@@ -15,7 +15,7 @@ import es.danisales.datune.midi.ChordMidi;
 import es.danisales.datune.midi.NoteMidi;
 import es.danisales.datune.midi.binaries.events.NoteOff;
 import es.danisales.datune.midi.binaries.events.NoteOn;
-import es.danisales.datune.chords.TonalChord;
+import es.danisales.datune.chords.tonal.TonalChord;
 import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
@@ -125,13 +125,13 @@ class Loader {
         for (int i = 0; i < panels.length; i++) {
             panelF[i] = new JPanel();
             DiatonicDegree diatonicDegree = DiatonicDegree.values()[i];
-            Chromatic diatonicAlt;
+            Chromatic chromatic;
             try {
-                diatonicAlt = tonality.getNote(diatonicDegree);
+                chromatic = tonality.getNote(diatonicDegree);
             } catch (ScaleRelativeDegreeException e) {
                 continue;
             }
-            panelF[i].add(new JLabel(diatonicAlt.toString()));
+            panelF[i].add(new JLabel(chromatic.toString()));
             panelF[i].setLayout(new GridLayout(1, 5));
             for (int j = 0; j < panels[i].length; j++) {
                 panels[i][j] = new JPanel();
@@ -267,7 +267,7 @@ class Loader {
                     pressed = model.isPressed();
                     if (pressed) {
                         if (lastPlayed.get() != null) {
-                            //ChordMidiTransformations.minimizeDistanceTo(chordMidi, lastPlayed.get());
+                            //ChordMidiTransformations.minimizeDistanceTo(chordMidi, lastPlayed.fromInt());
                         }
 
                         lastPlayed.set(chordMidi);
@@ -285,13 +285,13 @@ class Loader {
         return jButton;
     }
 
-    private static <T extends NoteMidi<?>> void play(ChordMidi diatonicChordMidi) {
+    private static void play(ChordMidi chordMidi) {
         EventSequence es = new EventSequence();
-        for (NoteMidi diatonicMidi : diatonicChordMidi) {
+        for (NoteMidi noteMidi : chordMidi) {
             NoteOn noteOn;
             try {
                 noteOn = NoteOn.builder()
-                        .from(diatonicMidi)
+                        .from(noteMidi)
                         .build();
             } catch (BuildingException e) {
                 throw NeverHappensException.make("");
@@ -301,13 +301,13 @@ class Loader {
         es.play();
     }
 
-    private static <T extends NoteMidi<?>> void stop(ChordMidi diatonicChordMidi) {
+    private static void stop(ChordMidi chordMidi) {
         EventSequence es = new EventSequence();
-        for (NoteMidi diatonicMidi : diatonicChordMidi) {
-            NoteOff noteOff = null;
+        for (NoteMidi noteMidi : chordMidi) {
+            NoteOff noteOff;
             try {
                 noteOff = NoteOff.builder()
-                        .from(diatonicMidi)
+                        .from(noteMidi)
                         .build();
             } catch (BuildingException e) {
                 throw NeverHappensException.make("");

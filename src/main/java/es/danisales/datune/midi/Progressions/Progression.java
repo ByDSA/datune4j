@@ -1,7 +1,7 @@
 package es.danisales.datune.midi.Progressions;
 
 import es.danisales.datune.chords.chromatic.ChromaticChord;
-import es.danisales.datune.chords.TonalChord;
+import es.danisales.datune.chords.tonal.TonalChord;
 import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;

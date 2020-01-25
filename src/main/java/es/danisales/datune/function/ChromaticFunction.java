@@ -9,9 +9,6 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.Collection;
 
-/**
- * Funciones cromáticas
- */
 public enum ChromaticFunction implements HarmonicFunction {
 	/** Mayores */
 	I, II, III,	IV,	V, VI, VII,
@@ -22,9 +19,7 @@ public enum ChromaticFunction implements HarmonicFunction {
 	/** Diminished */
 	I0, II0, III0, IV0, V0, VI0, VII0,
 
-	/**
-	 * Power ChordProxy.
-	 */
+	/** Power Chord */
 	I5, II5, III5, IV5, V5, VI5, VII5,
 
     /**
@@ -79,6 +74,7 @@ public enum ChromaticFunction implements HarmonicFunction {
 			bVII
 	};
 
+	@SuppressWarnings("unused")
 	public static final ChromaticFunction[] POWER_CHORDS = new ChromaticFunction[] {
 			I5,
 			II5,

@@ -2,7 +2,6 @@ package es.danisales.datune.midi;
 
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.midi.pitch.PitchMidiException;
-import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.pitch.PitchOctave;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -10,7 +9,7 @@ class ChromaticChordMidiAdapter {
     private ChromaticChordMidiAdapter() {
     }
 
-    public static <N extends PitchChromaticSingle> @NonNull ChordMidi from(@NonNull Iterable<N> iterable) throws PitchMidiException {
+    public static <N extends Cloneable> @NonNull ChordMidi from(@NonNull Iterable<N> iterable) throws PitchMidiException {
         ChordMidi self = new ChordMidi();
 
         for (N n : iterable) {

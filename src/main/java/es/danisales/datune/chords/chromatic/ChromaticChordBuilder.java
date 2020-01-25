@@ -1,7 +1,7 @@
 package es.danisales.datune.chords.chromatic;
 
-import es.danisales.datune.chords.DiatonicAlt;
-import es.danisales.datune.chords.DiatonicAltChord;
+import es.danisales.datune.degrees.octave.DiatonicAlt;
+import es.danisales.datune.chords.diatonicalt.DiatonicAltChord;
 import es.danisales.datune.chords.DiatonicDegreePattern;
 import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.degrees.octave.Chromatic;
@@ -25,7 +25,7 @@ import java.util.*;
 public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<ChromaticChordBuilder, ChromaticChord> implements BuilderOfWays<ChromaticChord> {
     private ChromaticChord chromaticChord;
     private Chromatic chromaticBase;
-    private Tonality tonality;
+    private Tonality<Chromatic> tonality;
     private IntervalDiatonic intervalDiatonic;
     private DiatonicDegree diatonicDegree = DiatonicDegree.I;
     private DiatonicDegreePattern diatonicDegreePattern;
@@ -221,7 +221,7 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
         return self();
     }
 
-    public @NonNull ChromaticChordBuilder tonality(@NonNull Tonality tonality) {
+    public @NonNull ChromaticChordBuilder tonality(@NonNull Tonality<Chromatic> tonality) {
         this.tonality = Objects.requireNonNull(tonality);
 
         return self();

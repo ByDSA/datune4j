@@ -3,11 +3,10 @@ package es.danisales.datune.midi.pitch;
 import es.danisales.datune.degrees.OrderedDegree;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.interval.IntervalChromatic;
-import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.pitch.PitchOctave;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-enum PitchChromaticMidiImmutable implements PitchChromaticSingle, PitchOctave, OrderedDegree {
+enum PitchChromaticMidiImmutable implements PitchOctave, OrderedDegree, Cloneable {
     C0, CC0, D0, DD0, E0, F0, FF0, G0, GG0, A0, AA0, B0,
     C1, CC1, D1, DD1, E1, F1, FF1, G1, GG1, A1, AA1, B1,
     C2, CC2, D2, DD2, E2, F2, FF2, G2, GG2, A2, AA2, B2,

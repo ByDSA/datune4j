@@ -4,7 +4,8 @@ import es.danisales.datune.interval.Interval;
 import es.danisales.datune.pitch.PitchOctave;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public interface PitchMidiInterface<I extends Interval> extends PitchOctave, Cloneable, Comparable<PitchMidiInterface<?>> {
+public interface PitchMidiInterface<I extends Interval>
+        extends PitchOctave, Cloneable, Comparable<PitchMidiInterface<?>> {
     PitchMidiInterface<I> clone();
 
     int getMidiCode();

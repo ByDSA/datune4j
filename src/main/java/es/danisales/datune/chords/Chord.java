@@ -1,5 +1,6 @@
 package es.danisales.datune.chords;
 
+import com.google.common.collect.ImmutableList;
 import es.danisales.datastructures.ListProxy;
 import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.lang.ChordNotation;
@@ -24,7 +25,7 @@ public class Chord<C extends CyclicDegree>
     }
 
     protected Chord(ChordCommon<C> chordCommon) {
-        super( new ArrayList<>(chordCommon) );
+        super( ImmutableList.copyOf(chordCommon) );
         rootIndex = chordCommon.getRootIndex();
         immutable = true;
     }
@@ -50,7 +51,7 @@ public class Chord<C extends CyclicDegree>
     }
 
     public void resetRoot() {
-        excepIfImmutable();
+        exceptionIfImmutable();
         if ( isEmpty() )
             return;
 
@@ -58,7 +59,7 @@ public class Chord<C extends CyclicDegree>
     }
 
     public void setRootIndex(int pos) {
-        excepIfImmutable();
+        exceptionIfImmutable();
         if (pos < 0 || pos >= size())
             throw new ArrayIndexOutOfBoundsException(pos);
         rootIndex = pos;
@@ -71,7 +72,7 @@ public class Chord<C extends CyclicDegree>
     }
 
     public void inv(int n) {
-        excepIfImmutable();
+        exceptionIfImmutable();
         if ( n == 0 )
             return;
         Collections.rotate(this, -n);
@@ -88,7 +89,7 @@ public class Chord<C extends CyclicDegree>
     }
 
     public void over(@NonNull C cyclicDegree) throws InvalidChordException {
-        excepIfImmutable();
+        exceptionIfImmutable();
         for (int i = 0; i < size(); i++) {
             if ( get(0).equals(cyclicDegree) )
                 return;
@@ -99,21 +100,20 @@ public class Chord<C extends CyclicDegree>
     }
 
     public void toFundamental() {
-        excepIfImmutable();
+        exceptionIfImmutable();
         inv( getRootIndex() );
         checkState(getRootIndex() == 0, getRootIndex());
     }
 
     /* Immutable */
 
-    private void excepIfImmutable() {
-        if (isImmutable())
-            throw new UnsupportedOperationException();
-    }
-
-    @SuppressWarnings("WeakerAccess")
     public boolean isImmutable() {
         return immutable;
+    }
+
+    private void exceptionIfImmutable() {
+        if (isImmutable())
+            throw new UnsupportedOperationException();
     }
 
     /* Object */
@@ -128,7 +128,27 @@ public class Chord<C extends CyclicDegree>
             normalChordCommon.toFundamental();
             return normalChordCommon.toString() + "/" + get(0).toString();
         }
-        return ChordNamer.from(this);
+        return autoname(this);
+    }
+
+    static <N extends CyclicDegree> String autoname(Chord<N> chord) {
+        StringBuilder sb = new StringBuilder();
+        boolean first = true;
+        for (N n : chord) {
+            if (first) {
+                first = false;
+            } else
+                sb.append(", ");
+            sb.append(n);
+        }
+
+        sb.append(" | root = ");
+        sb.append(chord.getRoot());
+        sb.append("(");
+        sb.append(chord.getRootIndex());
+        sb.append(")");
+
+        return sb.toString();
     }
 
     @SuppressWarnings("MethodDoesntCallSuperMethod")

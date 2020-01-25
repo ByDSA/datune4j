@@ -1,7 +1,6 @@
 package es.danisales.datune.chords.chromatic;
 
-import es.danisales.datune.chords.TonalChord;
-import es.danisales.datune.chords.chromatic.ChromaticChord;
+import es.danisales.datune.chords.tonal.TonalChord;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.lang.Language;
@@ -14,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 @SuppressWarnings("unused")
 public class ChromaticChordNamesTest {
     static {
-        Language.current = Language.ENG;
+        Language.current = Language.EN;
     }
 
     public static class FromParametricChord {
@@ -120,7 +119,7 @@ public class ChromaticChordNamesTest {
     public static class Fixed {
         @Test
         public void F5() {
-            Language.current = Language.ENG;
+            Language.current = Language.EN;
 
             assertEquals("F5", ChromaticChord.F5.toString());
         }

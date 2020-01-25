@@ -315,16 +315,15 @@ public enum Instrument {
 
 	private final int value;
 
-    Instrument(
-            int v) {
+    Instrument(int v) {
 		value = v;
 	}
 
-	public int val() {
+	public int value() {
 		return value;
 	}
 
-	public static Instrument get(int ins) {
+	public static Instrument fromInt(int ins) {
 		switch ( ins ) {
 			case 0:
 			default:

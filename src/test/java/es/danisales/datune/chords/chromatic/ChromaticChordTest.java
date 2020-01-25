@@ -2,8 +2,7 @@ package es.danisales.datune.chords.chromatic;
 
 import es.danisales.datune.chords.ChordTransformations;
 import es.danisales.datune.chords.DiatonicDegreePattern;
-import es.danisales.datune.chords.TonalChord;
-import es.danisales.datune.chords.chromatic.ChromaticChord;
+import es.danisales.datune.chords.tonal.TonalChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.ChromaticFunction;
@@ -22,149 +21,7 @@ import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.*;
 
 public class ChromaticChordTest {
-    @Test
-    public void fromChromaticDiatonicChordTonality() {
-        ChromaticChord chromaticChord = ChromaticChord.builder()
-                .diatonicDegreePattern(DiatonicDegreePattern.VII9)
-                .tonality(Tonality.C)
-                .build();
-        assertEquals( Arrays.asList(
-                Chromatic.B, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C),
-                chromaticChord
-        );
-    }
-
-    @Test
-    public void inv() {
-        ChromaticChord chromaticChord = ChromaticChord.Gsus4.clone();
-        chromaticChord.inv();
-        assertEquals(Arrays.asList(
-                Chromatic.C,
-                Chromatic.D,
-                Chromatic.G
-                ),
-                chromaticChord
-        );
-        assertEquals(2, chromaticChord.getRootIndex());
-        chromaticChord.inv(2);
-        assertEquals(Arrays.asList(
-                Chromatic.G,
-                Chromatic.C,
-                Chromatic.D
-                ),
-                chromaticChord
-        );
-        assertEquals(0, chromaticChord.getRootIndex());
-    }
-
-    @Test
-    public void size() {
-        for (ChromaticChord c : ChromaticChord.CHORDS_FIFTH)
-            Assert.assertEquals(2, c.size());
-
-        for (ChromaticChord c : ChromaticChord.TRIAD_CHORDS)
-            Assert.assertEquals(3, c.size());
-
-        for (ChromaticChord c : ChromaticChord.SEVENTH_CHORDS)
-            if (ChromaticChord.CHORDS_7add11.contains( c ) || ChromaticChord.CHORDS_7add13.contains( c ))
-                Assert.assertEquals(c.toString(), 5, c.size());
-            else
-                Assert.assertEquals(c.toString(), 4, c.size());
-
-        for (ChromaticChord c : ChromaticChord.NINTH_CHORDS)
-            if (ChromaticChord.CHORDS_9add6.contains( c ) || ChromaticChord.CHORDS_9a11.contains( c ) || ChromaticChord.CHORDS_Maj9a11.contains( c ))
-                Assert.assertEquals(c.toString(), 6, c.size());
-            else
-                Assert.assertEquals(c.toString(), 5, c.size());
-
-        for (ChromaticChord c : ChromaticChord.ELEVENTH_CHORDS)
-            Assert.assertEquals(c.toString(), 6, c.size());
-
-        for (ChromaticChord c : ChromaticChord.THIRTEENTH_CHORDS)
-            Assert.assertTrue(c.toString(), c.size() == 6 || c.size() == 7);
-    }
-
-    @Test
-    public void namesFixed() {
-        Language.current = Language.ENG;
-        assertEquals( "C", ChromaticChord.C.toString() );
-        assertEquals( "Cm", ChromaticChord.Cm.toString() );
-        assertEquals( "C7", ChromaticChord.C7.toString() );
-        assertEquals( "F5", ChromaticChord.F5.toString() );
-        assertEquals( "Gsus4", ChromaticChord.Gsus4.toString() );
-        assertEquals( "C13#5#9", ChromaticChord.C13a5a9.toString() );
-        assertEquals( "C#13#5b9 (omit11)", ChromaticChord.CC13a5b9omit11.toString() );
-
-        Language.current = Language.ESP;
-        assertEquals("Do", ChromaticChord.C.toString());
-        assertEquals("Dom", ChromaticChord.Cm.toString());
-        assertEquals("Do7", ChromaticChord.C7.toString());
-        assertEquals("Fa5", ChromaticChord.F5.toString());
-        assertEquals("Solsus4", ChromaticChord.Gsus4.toString());
-        assertEquals("Do13#5#9", ChromaticChord.C13a5a9.toString());
-        assertEquals("Do#13#5b9 (omit11)", ChromaticChord.CC13a5b9omit11.toString());
-    }
-
-    @Test
-    public void namesFrom() {
-        ChromaticChord cc = ChromaticChord.builder().addAll(
-                Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G)
-        ).build();
-
-        Language.current = Language.ENG;
-        assertEquals( "C", cc.toString() );
-        Language.current = Language.ESP;
-        assertEquals("Do", cc.toString());
-
-        cc = ChromaticChord.builder().addAll(
-                Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.AA)
-        ).build();
-        Language.current = Language.ENG;
-        assertEquals( "C7", cc.toString() );
-        Language.current = Language.ESP;
-        assertEquals("Do7", cc.toString());
-    }
-
-    @Test
-    public void namesInv_ENG() {
-        Language.current = Language.ENG;
-        ChromaticChord chromaticChord = ChromaticChord.C.clone();
-        chromaticChord.inv();
-        assertEquals("C/E", chromaticChord.toString());
-        chromaticChord.inv();
-        assertEquals("C/G", chromaticChord.toString());
-        chromaticChord.inv();
-        assertEquals("C", chromaticChord.toString());
-
-        chromaticChord = ChromaticChord.F5.clone();
-        chromaticChord.inv();
-        assertEquals( "F5/C", chromaticChord.toString() );
-
-        chromaticChord = ChromaticChord.Gsus4.clone();
-        chromaticChord.inv();
-        assertEquals( "Gsus4/C", chromaticChord.toString() );
-    }
-
-    @Test
-    public void namesInv_ESP() {
-        Language.current = Language.ESP;
-        ChromaticChord chromaticChord = ChromaticChord.C.clone();
-        chromaticChord.inv();
-        assertEquals("Do/Mi", chromaticChord.toString());
-        chromaticChord.inv();
-        assertEquals("Do/Sol", chromaticChord.toString());
-        chromaticChord.inv();
-        assertEquals("Do", chromaticChord.toString());
-
-        chromaticChord = ChromaticChord.F5.clone();
-        chromaticChord.inv();
-        assertEquals("Fa5/Do", chromaticChord.toString());
-
-        chromaticChord = ChromaticChord.Gsus4.clone();
-        chromaticChord.inv();
-        assertEquals("Solsus4/Do", chromaticChord.toString());
-    }
-
+    /* Building */
     @Test
     public void from() {
         ChromaticChord chromaticChord = ChromaticChord.builder().addAll(Arrays.asList(Chromatic.C, Chromatic.D, Chromatic.E)).build();
@@ -178,94 +35,136 @@ public class ChromaticChordTest {
     }
 
     @Test
-    public void getAllInversions() {
-        List<ChromaticChord> listChromaticChords = ChordTransformations.getAllInversionsFrom(ChromaticChord.C);
-
-        ChromaticChord original = ChromaticChord.builder().addAll(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G)).build();
-        ChromaticChord inv1 = ChromaticChord.builder().addAll(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.C)).build();
-        inv1.setRootIndex(2);
-        ChromaticChord inv2 = ChromaticChord.builder().addAll(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E)).build();
-        inv2.setRootIndex(1);
-
-        assertEquals(3, listChromaticChords.size());
-        assertEquals( original, listChromaticChords.get(0) );
-        assertEquals( inv1, listChromaticChords.get(1) );
-        assertEquals( inv2, listChromaticChords.get(2) );
+    public void fromChromaticDiatonicChordTonality() {
+        ChromaticChord chromaticChord = ChromaticChord.builder()
+                .diatonicDegreePattern(DiatonicDegreePattern.VII9)
+                .tonality(Tonality.ET12.C)
+                .build();
+        assertEquals( Arrays.asList(
+                Chromatic.B, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C),
+                chromaticChord
+        );
     }
 
-    @Test
-    public void cloneCustom() {
-        ChromaticChord chromaticChord = ChromaticChord.builder().addAll(Arrays.asList(Chromatic.C, Chromatic.D, Chromatic.E)).build();
-        ChromaticChord duplicatedChromaticChord = chromaticChord.clone();
+    public static class BuilderTest {
+        @Test
+        public void fromFunction() {
+            ChromaticChord chromaticChord = ChromaticChord.builder()
+                    .diatonicFunction(DiatonicFunction.I)
+                    .tonality(Tonality.ET12.C)
+                    .build();
 
-        assertEquals(chromaticChord, duplicatedChromaticChord);
-
-        chromaticChord.set(2, Chromatic.G);
-
-        assertNotEquals(chromaticChord, duplicatedChromaticChord);
-    }
-
-    @Test
-    public void duplicateCustomInv() {
-        ChromaticChord chromaticChord = ChromaticChord.builder().addAll(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.D)).build();
-        chromaticChord.inv();
-        ChromaticChord duplicatedChromaticChord = chromaticChord.clone();
-
-        assertEquals(chromaticChord, duplicatedChromaticChord);
-    }
-
-    @Test
-    public void duplicateEnum() {
-        ChromaticChord chromaticChord = ChromaticChord.C.clone();
-        assertEquals(ChromaticChord.C, chromaticChord);
-
-
-        chromaticChord.set(1, Chromatic.DD);
-
-        assertNotEquals(ChromaticChord.C, chromaticChord);
-    }
-
-    @Test
-    public void cloneTest() {
-        ChromaticChord chromaticChord = ChromaticChord.C.clone();
-        assertEquals(ChromaticChord.C, chromaticChord);
-        assertNotSame(ChromaticChord.C, chromaticChord);
-    }
-
-    @Test
-    public void equals_self() {
-        assertEquals(ChromaticChord.C, ChromaticChord.C);
-        assertSame(ChromaticChord.C, ChromaticChord.C);
-    }
-
-    @Test
-    public void equals_sameNotesDifferentRoot() {
-        TonalChord parametricChord1 = TonalChord.from(Tonality.C, DiatonicFunction.I7);
-        TonalChord parametricChord2 = TonalChord.from(Tonality.C, DiatonicFunction.III6);
-        ChromaticChord chromaticChord1 = ChromaticChord.from(parametricChord1);
-        ChromaticChord chromaticChord2 = ChromaticChord.from(parametricChord2);
-
-        assertNotEquals(chromaticChord1, chromaticChord2);
-        assertNotEquals(chromaticChord2, chromaticChord1);
-    }
-
-    @Test
-    public void rootPosInitialIsZero() {
-        for (DiatonicFunction diatonicFunction : DiatonicFunction.values()) {
-            TonalChord parametricChord1 = TonalChord.from(Tonality.C, diatonicFunction);
-            ChromaticChord chromaticChord1 = ChromaticChord.from(parametricChord1);
-            assertEquals(0, chromaticChord1.getInversionNumber());
+            assertEquals(ChromaticChord.C, chromaticChord);
         }
-    }
 
-    @Test
-    public void set() {
-        ChromaticChord chromaticChord = ChromaticChord.C.clone();
-        assertEquals(ChromaticChord.C, chromaticChord);
+        @Test
+        public void fromFunction_bVII() {
+            ChromaticChord chromaticChord = ChromaticChord.builder()
+                    .chromaticFunction(ChromaticFunction.bVII)
+                    .tonality(Tonality.ET12.C)
+                    .build();
 
-        chromaticChord.set(1, Chromatic.DD);
+            ChromaticChord chromaticChordReference = ChromaticChord.AA;
 
-        assertEquals(Chromatic.DD, chromaticChord.get(1));
+            assertEquals(chromaticChordReference, chromaticChord);
+        }
+
+        @Test
+        public void fromFunction_bVI() {
+            ChromaticChord chromaticChord = ChromaticChord.builder()
+                    .chromaticFunction(ChromaticFunction.bVI)
+                    .tonality(Tonality.ET12.C)
+                    .build();
+
+            ChromaticChord chromaticChordReference = ChromaticChord.GG;
+
+            assertEquals(chromaticChordReference, chromaticChord);
+        }
+
+        @Test
+        public void fromInterval_C_I_Third() {
+            ChromaticChord chromaticChord = ChromaticChord.builder()
+                    .intervalDiatonic(IntervalDiatonic.THIRD)
+                    .tonality(Tonality.ET12.C)
+                    .build();
+
+            assertEquals(2, chromaticChord.size());
+            assertEquals(Chromatic.C, chromaticChord.get(0));
+            assertEquals(Chromatic.E, chromaticChord.get(1));
+        }
+
+        @Test
+        public void fromInterval_C_VII_Second() {
+            ChromaticChord chromaticChord = ChromaticChord.builder()
+                    .intervalDiatonic(DiatonicDegree.VII, IntervalDiatonic.SECOND)
+                    .tonality(Tonality.ET12.C)
+                    .build();
+
+            assertEquals(2, chromaticChord.size());
+            assertEquals(Chromatic.B, chromaticChord.get(0));
+            assertEquals(Chromatic.C, chromaticChord.get(1));
+        }
+
+        @Test
+        public void fromInterval_Cm_I_Third() {
+            ChromaticChord chromaticChord = ChromaticChord.builder()
+                    .intervalDiatonic(IntervalDiatonic.THIRD)
+                    .tonality(Tonality.ET12.Cm)
+                    .build();
+
+            assertEquals(2, chromaticChord.size());
+            assertEquals(Chromatic.C, chromaticChord.get(0));
+            assertEquals(Chromatic.DD, chromaticChord.get(1));
+        }
+
+        static void assertPitchInChord(Chromatic chromatic, ChromaticChord chromaticChord, int pos) {
+            assertEquals(chromatic, chromaticChord.get(pos));
+        }
+
+        @Test
+        public void fromDiatonicFunction3() {
+            ChromaticChord diatonicChordMidi = ChromaticChord.builder()
+                    .intervalDiatonic(IntervalDiatonic.THIRD)
+                    .tonality(Tonality.ET12.Gm)
+                    .build();
+            Assert.assertEquals(2, diatonicChordMidi.size());
+            assertPitchInChord(Chromatic.G, diatonicChordMidi, 0);
+            assertPitchInChord(Chromatic.AA, diatonicChordMidi, 1);
+        }
+
+        @Test
+        public void fromDiatonicFunction4() {
+            ChromaticChord diatonicChordMidi = ChromaticChord.builder()
+                    .intervalDiatonic(DiatonicDegree.II, IntervalDiatonic.THIRD)
+                    .tonality(Tonality.ET12.Gm)
+                    .build();
+            Assert.assertEquals(2, diatonicChordMidi.size());
+            assertPitchInChord(Chromatic.A, diatonicChordMidi, 0);
+            assertPitchInChord(Chromatic.C, diatonicChordMidi, 1);
+        }
+
+        @Test
+        public void fromDiatonicFunction5() {
+            ChromaticChord chromaticChord = ChromaticChord.builder()
+                    .intervalDiatonic(DiatonicDegree.VI, IntervalDiatonic.THIRD)
+                    .tonality(Tonality.ET12.Gm)
+                    .build();
+            Assert.assertEquals(2, chromaticChord.size());
+            assertPitchInChord(Chromatic.DD, chromaticChord, 0);
+            assertPitchInChord(Chromatic.G, chromaticChord, 1);
+        }
+
+        @Test
+        public void fromChromaticFunction_ISUS4() {
+            ChromaticChord chromaticChord = ChromaticChord.builder()
+                    .chromaticFunction(ChromaticFunction.ISUS4)
+                    .tonality(Tonality.ET12.C)
+                    .build();
+            Assert.assertEquals(3, chromaticChord.size());
+            assertPitchInChord(Chromatic.C, chromaticChord, 0);
+            assertPitchInChord(Chromatic.F, chromaticChord, 1);
+            assertPitchInChord(Chromatic.G, chromaticChord, 2);
+        }
     }
 
     // Fuente: https://es.wikipedia.org/wiki/Anexo:Especies_de_acordes
@@ -920,124 +819,327 @@ public class ChromaticChordTest {
 
     }
 
-    public static class BuilderTest {
-        @Test
-        public void fromFunction() {
-            ChromaticChord chromaticChord = ChromaticChord.builder()
-                    .diatonicFunction(DiatonicFunction.I)
-                    .tonality(Tonality.C)
-                    .build();
+    @Test
+    public void getCyclic_above() {
+        ChromaticChord chromaticChord = ChromaticChord.C;
+        assertEquals(Chromatic.C, chromaticChord.getCyclic(3));
+    }
 
+    @Test
+    public void getCyclic_below() {
+        ChromaticChord chromaticChord = ChromaticChord.C;
+        assertEquals(Chromatic.G, chromaticChord.getCyclic(-1));
+    }
+
+    public static class InheritChord {
+        /* Root */
+        @Test
+        public void getRootIndex_initialIsZero() {
+            for (DiatonicFunction diatonicFunction : DiatonicFunction.values()) {
+                TonalChord parametricChord1 = TonalChord.from(Tonality.C, diatonicFunction);
+                ChromaticChord chromaticChord1 = ChromaticChord.from(parametricChord1);
+                assertEquals(0, chromaticChord1.getRootIndex());
+            }
+        }
+
+        @Test
+        public void getRoot_fromPrecalculated() {
+            assertEquals(Chromatic.C, ChromaticChord.C.getRoot());
+        }
+
+        @Test
+        public void getRoot_fromInv() {
+            ChromaticChord chromaticChord = ChromaticChord.C.clone();
+            chromaticChord.inv();
+            assertEquals(1, chromaticChord.getInversionNumber());
+        }
+
+        @Test
+        public void getRootIndex_fromInv() {
+            ChromaticChord chromaticChord = ChromaticChord.C.clone();
+            chromaticChord.inv();
+            assertEquals(2, chromaticChord.getRootIndex());
+        }
+
+        @Test(expected = UnsupportedOperationException.class)
+        public void resetRoot_immutable() {
+            ChromaticChord.C.resetRoot();
+        }
+
+        @Test(expected = UnsupportedOperationException.class)
+        public void resetRoot_mutable() {
+            ChromaticChord.C.resetRoot();
+        }
+
+        /* Inversion */
+        @Test
+        public void getInversionNumber_initialIsZero() {
+            for (DiatonicFunction diatonicFunction : DiatonicFunction.values()) {
+                TonalChord parametricChord1 = TonalChord.from(Tonality.C, diatonicFunction);
+                ChromaticChord chromaticChord1 = ChromaticChord.from(parametricChord1);
+                assertEquals(0, chromaticChord1.getInversionNumber());
+            }
+        }
+
+        @Test
+        public void inv() {
+            ChromaticChord chromaticChord = ChromaticChord.Gsus4.clone();
+            chromaticChord.inv();
+            assertEquals(Arrays.asList(
+                    Chromatic.C,
+                    Chromatic.D,
+                    Chromatic.G
+                    ),
+                    chromaticChord
+            );
+            assertEquals(2, chromaticChord.getRootIndex());
+            chromaticChord.inv(2);
+            assertEquals(Arrays.asList(
+                    Chromatic.G,
+                    Chromatic.C,
+                    Chromatic.D
+                    ),
+                    chromaticChord
+            );
+            assertEquals(0, chromaticChord.getRootIndex());
+        }
+
+        @Test
+        public void over() {
+            ChromaticChord chromaticChord = ChromaticChord.C.clone();
+            chromaticChord.over(Chromatic.G);
+
+            assertEquals(Chromatic.G, chromaticChord.get(0));
+            assertEquals(2, chromaticChord.getInversionNumber());
+        }
+
+        @Test
+        public void toFundamental() {
+            ChromaticChord chromaticChord = ChromaticChord.C.clone();
+            chromaticChord.inv();
+            assertNotEquals(ChromaticChord.C, chromaticChord);
+
+            chromaticChord.toFundamental();
             assertEquals(ChromaticChord.C, chromaticChord);
         }
 
         @Test
-        public void fromFunction_bVII() {
-            ChromaticChord chromaticChord = ChromaticChord.builder()
-                    .chromaticFunction(ChromaticFunction.bVII)
-                    .tonality(Tonality.C)
-                    .build();
+        public void getAllInversions() {
+            List<ChromaticChord> listChromaticChords = ChordTransformations.getAllInversionsFrom(ChromaticChord.C);
 
-            ChromaticChord chromaticChordReference = ChromaticChord.AA;
+            ChromaticChord original = ChromaticChord.builder().addAll(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G)).build();
+            ChromaticChord inv1 = ChromaticChord.builder().addAll(Arrays.asList(Chromatic.E, Chromatic.G, Chromatic.C)).build();
+            inv1.setRootIndex(2);
+            ChromaticChord inv2 = ChromaticChord.builder().addAll(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.E)).build();
+            inv2.setRootIndex(1);
 
-            assertEquals(chromaticChordReference, chromaticChord);
+            assertEquals(
+                    Arrays.asList(original, inv1, inv2),
+                    listChromaticChords
+            );
+        }
+
+        /* Immutable */
+        @Test
+        public void isImmutable_precalculatedChord() {
+            assertTrue(ChromaticChord.C.isImmutable());
         }
 
         @Test
-        public void fromFunction_bVI() {
-            ChromaticChord chromaticChord = ChromaticChord.builder()
-                    .chromaticFunction(ChromaticFunction.bVI)
-                    .tonality(Tonality.C)
-                    .build();
-
-            ChromaticChord chromaticChordReference = ChromaticChord.GG;
-
-            assertEquals(chromaticChordReference, chromaticChord);
+        public void isImmutable_clonedImmutable() {
+            ChromaticChord chromaticChord = ChromaticChord.C.clone();
+            assertFalse(chromaticChord.isImmutable());
         }
+    }
 
+    public static class InheritListProxy {
         @Test
-        public void fromInterval_C_I_Third() {
-            ChromaticChord chromaticChord = ChromaticChord.builder()
-                    .intervalDiatonic(IntervalDiatonic.THIRD)
-                    .tonality(Tonality.C)
-                    .build();
+        public void set() {
+            ChromaticChord chromaticChord = ChromaticChord.C.clone();
+            chromaticChord.set(1, Chromatic.DD);
 
-            assertEquals(2, chromaticChord.size());
-            assertEquals(Chromatic.C, chromaticChord.get(0));
-            assertEquals(Chromatic.E, chromaticChord.get(1));
-        }
-
-        @Test
-        public void fromInterval_C_VII_Second() {
-            ChromaticChord chromaticChord = ChromaticChord.builder()
-                    .intervalDiatonic(DiatonicDegree.VII, IntervalDiatonic.SECOND)
-                    .tonality(Tonality.C)
-                    .build();
-
-            assertEquals(2, chromaticChord.size());
-            assertEquals(Chromatic.B, chromaticChord.get(0));
-            assertEquals(Chromatic.C, chromaticChord.get(1));
-        }
-
-        @Test
-        public void fromInterval_Cm_I_Third() {
-            ChromaticChord chromaticChord = ChromaticChord.builder()
-                    .intervalDiatonic(IntervalDiatonic.THIRD)
-                    .tonality(Tonality.Cm)
-                    .build();
-
-            assertEquals(2, chromaticChord.size());
-            assertEquals(Chromatic.C, chromaticChord.get(0));
             assertEquals(Chromatic.DD, chromaticChord.get(1));
         }
 
-        public static void assertPitchInChord(Chromatic chromatic, ChromaticChord chromaticChord, int pos) {
-            assertEquals(chromatic, chromaticChord.get(pos));
+        /* Precalculated Chords */
+        @Test
+        public void size_precalculated() {
+            for (ChromaticChord c : ChromaticChord.CHORDS_FIFTH)
+                Assert.assertEquals(2, c.size());
+
+            for (ChromaticChord c : ChromaticChord.TRIAD_CHORDS)
+                Assert.assertEquals(3, c.size());
+
+            for (ChromaticChord c : ChromaticChord.SEVENTH_CHORDS)
+                if (ChromaticChord.CHORDS_7add11.contains(c) || ChromaticChord.CHORDS_7add13.contains(c))
+                    Assert.assertEquals(c.toString(), 5, c.size());
+                else
+                    Assert.assertEquals(c.toString(), 4, c.size());
+
+            for (ChromaticChord c : ChromaticChord.NINTH_CHORDS)
+                if (ChromaticChord.CHORDS_9add6.contains(c) || ChromaticChord.CHORDS_9a11.contains(c) || ChromaticChord.CHORDS_Maj9a11.contains(c))
+                    Assert.assertEquals(c.toString(), 6, c.size());
+                else
+                    Assert.assertEquals(c.toString(), 5, c.size());
+
+            for (ChromaticChord c : ChromaticChord.ELEVENTH_CHORDS)
+                Assert.assertEquals(c.toString(), 6, c.size());
+
+            for (ChromaticChord c : ChromaticChord.THIRTEENTH_CHORDS)
+                Assert.assertTrue(c.toString(), c.size() == 6 || c.size() == 7);
+        }
+
+        @Test(expected = UnsupportedOperationException.class)
+        public void set_precalculated() {
+            ChromaticChord chromaticChord = ChromaticChord.C;
+            chromaticChord.set(1, Chromatic.DD);
+        }
+
+    }
+
+    public static class InheritObject {
+        /* Clone Mutable */
+        @Test
+        public void clone_mutable() {
+            ChromaticChord chromaticChord = ChromaticChord.builder().addAll(Arrays.asList(Chromatic.C, Chromatic.D, Chromatic.E)).build();
+            ChromaticChord duplicatedChromaticChord = chromaticChord.clone();
+
+            assertEquals(chromaticChord, duplicatedChromaticChord);
+
+            chromaticChord.set(2, Chromatic.G);
+
+            assertNotEquals(chromaticChord, duplicatedChromaticChord);
         }
 
         @Test
-        public void fromDiatonicFunction3() {
-            ChromaticChord diatonicChordMidi = ChromaticChord.builder()
-                    .intervalDiatonic(IntervalDiatonic.THIRD)
-                    .tonality(Tonality.Gm)
-                    .build();
-            Assert.assertEquals(2, diatonicChordMidi.size());
-            assertPitchInChord(Chromatic.G, diatonicChordMidi, 0);
-            assertPitchInChord(Chromatic.AA, diatonicChordMidi, 1);
+        public void inv_clonedMutable() {
+            ChromaticChord chromaticChord = ChromaticChord.builder().addAll(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.D)).build();
+            chromaticChord.inv();
+            ChromaticChord duplicatedChromaticChord = chromaticChord.clone();
+
+            assertEquals(chromaticChord, duplicatedChromaticChord);
+        }
+
+        /* Clone Immutable */
+        @Test
+        public void cloneAndSet_immutable() {
+            ChromaticChord chromaticChord = ChromaticChord.C.clone();
+
+            chromaticChord.set(1, Chromatic.DD);
+
+            assertNotEquals(ChromaticChord.C, chromaticChord);
         }
 
         @Test
-        public void fromDiatonicFunction4() {
-            ChromaticChord diatonicChordMidi = ChromaticChord.builder()
-                    .intervalDiatonic(DiatonicDegree.II, IntervalDiatonic.THIRD)
-                    .tonality(Tonality.Gm)
-                    .build();
-            Assert.assertEquals(2, diatonicChordMidi.size());
-            assertPitchInChord(Chromatic.A, diatonicChordMidi, 0);
-            assertPitchInChord(Chromatic.C, diatonicChordMidi, 1);
+        public void clone_immutable() {
+            ChromaticChord chromaticChord = ChromaticChord.C.clone();
+            assertEquals(ChromaticChord.C, chromaticChord);
+            assertNotSame(ChromaticChord.C, chromaticChord);
+        }
+
+        /* Equals */
+        @Test
+        public void equals_self() {
+            assertEquals(ChromaticChord.C, ChromaticChord.C);
+            assertSame(ChromaticChord.C, ChromaticChord.C);
         }
 
         @Test
-        public void fromDiatonicFunction5() {
-            ChromaticChord chromaticChord = ChromaticChord.builder()
-                    .intervalDiatonic(DiatonicDegree.VI, IntervalDiatonic.THIRD)
-                    .tonality(Tonality.Gm)
-                    .build();
-            Assert.assertEquals(2, chromaticChord.size());
-            assertPitchInChord(Chromatic.DD, chromaticChord, 0);
-            assertPitchInChord(Chromatic.G, chromaticChord, 1);
+        public void equals_sameNotesDifferentRoot() {
+            TonalChord parametricChord1 = TonalChord.from(Tonality.C, DiatonicFunction.I7);
+            TonalChord parametricChord2 = TonalChord.from(Tonality.C, DiatonicFunction.III6);
+            ChromaticChord chromaticChord1 = ChromaticChord.from(parametricChord1);
+            ChromaticChord chromaticChord2 = ChromaticChord.from(parametricChord2);
+
+            assertNotEquals(chromaticChord1, chromaticChord2);
+            assertNotEquals(chromaticChord2, chromaticChord1);
+        }
+
+        /* toString: Precalculated Chords */
+
+        @Test
+        public void names_ES() {
+            Language.current = Language.ES;
+            assertEquals("Do", ChromaticChord.C.toString());
+            assertEquals("Dom", ChromaticChord.Cm.toString());
+            assertEquals("Do7", ChromaticChord.C7.toString());
+            assertEquals("Fa5", ChromaticChord.F5.toString());
+            assertEquals("Solsus4", ChromaticChord.Gsus4.toString());
+            assertEquals("Do13#5#9", ChromaticChord.C13a5a9.toString());
+            assertEquals("Do#13#5b9 (omit11)", ChromaticChord.CC13a5b9omit11.toString());
         }
 
         @Test
-        public void fromChromaticFunction_ISUS4() {
-            ChromaticChord chromaticChord = ChromaticChord.builder()
-                    .chromaticFunction(ChromaticFunction.ISUS4)
-                    .tonality(Tonality.ET12.C)
-                    .build();
-            Assert.assertEquals(3, chromaticChord.size());
-            assertPitchInChord(Chromatic.C, chromaticChord, 0);
-            assertPitchInChord(Chromatic.F, chromaticChord, 1);
-            assertPitchInChord(Chromatic.G, chromaticChord, 2);
+        public void names_EN() {
+            Language.current = Language.EN;
+            assertEquals("C", ChromaticChord.C.toString());
+            assertEquals("Cm", ChromaticChord.Cm.toString());
+            assertEquals("C7", ChromaticChord.C7.toString());
+            assertEquals("F5", ChromaticChord.F5.toString());
+            assertEquals("Gsus4", ChromaticChord.Gsus4.toString());
+            assertEquals("C13#5#9", ChromaticChord.C13a5a9.toString());
+            assertEquals("C#13#5b9 (omit11)", ChromaticChord.CC13a5b9omit11.toString());
+        }
+
+        /* toString: autoname */
+        @Test
+        public void namesFrom() {
+            ChromaticChord cc = ChromaticChord.builder().addAll(
+                    Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G)
+            ).build();
+
+            Language.current = Language.EN;
+            assertEquals("C", cc.toString());
+            Language.current = Language.ES;
+            assertEquals("Do", cc.toString());
+
+            cc = ChromaticChord.builder().addAll(
+                    Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.AA)
+            ).build();
+            Language.current = Language.EN;
+            assertEquals("C7", cc.toString());
+            Language.current = Language.ES;
+            assertEquals("Do7", cc.toString());
+        }
+
+        @Test
+        public void namesInv_EN() {
+            Language.current = Language.EN;
+            ChromaticChord chromaticChord = ChromaticChord.C.clone();
+            chromaticChord.inv();
+            assertEquals("C/E", chromaticChord.toString());
+            chromaticChord.inv();
+            assertEquals("C/G", chromaticChord.toString());
+            chromaticChord.inv();
+            assertEquals("C", chromaticChord.toString());
+
+            chromaticChord = ChromaticChord.F5.clone();
+            chromaticChord.inv();
+            assertEquals("F5/C", chromaticChord.toString());
+
+            chromaticChord = ChromaticChord.Gsus4.clone();
+            chromaticChord.inv();
+            assertEquals("Gsus4/C", chromaticChord.toString());
+        }
+
+        @Test
+        public void namesInv_ES() {
+            Language.current = Language.ES;
+            ChromaticChord chromaticChord = ChromaticChord.C.clone();
+            chromaticChord.inv();
+            assertEquals("Do/Mi", chromaticChord.toString());
+            chromaticChord.inv();
+            assertEquals("Do/Sol", chromaticChord.toString());
+            chromaticChord.inv();
+            assertEquals("Do", chromaticChord.toString());
+
+            chromaticChord = ChromaticChord.F5.clone();
+            chromaticChord.inv();
+            assertEquals("Fa5/Do", chromaticChord.toString());
+
+            chromaticChord = ChromaticChord.Gsus4.clone();
+            chromaticChord.inv();
+            assertEquals("Solsus4/Do", chromaticChord.toString());
         }
     }
 }

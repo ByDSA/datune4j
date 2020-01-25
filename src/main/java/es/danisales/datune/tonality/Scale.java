@@ -2,7 +2,7 @@ package es.danisales.datune.tonality;
 
 import com.google.common.collect.ImmutableList;
 import es.danisales.datune.degrees.scale.ScaleDegree;
-import es.danisales.datune.chords.DiatonicAlt;
+import es.danisales.datune.degrees.octave.DiatonicAlt;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 

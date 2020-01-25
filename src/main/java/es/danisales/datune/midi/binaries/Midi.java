@@ -36,6 +36,6 @@ public class Midi {
 	}
 	
 	public static void setInstrument(Instrument i) {
-	    mChannels[0].programChange(i.val());
+	    mChannels[0].programChange(i.value());
 	}	
 }

@@ -1,7 +1,8 @@
 package es.danisales.datune.tonality;
 
 import es.danisales.datune.chords.chromatic.ChromaticChord;
-import es.danisales.datune.chords.DiatonicAlt;
+import es.danisales.datune.degrees.octave.Diatonic;
+import es.danisales.datune.degrees.octave.DiatonicAlt;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.ChromaticDegree;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
@@ -488,7 +489,7 @@ public class TonalityTest {
     @Test
     public void minimizeAlterationsBB() {
         Tonality<DiatonicAlt> tonality = Tonality.from(DiatonicAlt.BB, Scale.MAJOR);
-        Tonality<DiatonicAlt> minimizedTonality = TonalityRetrieval.getEnharmonicMinimalAltsFrom(tonality).iterator().next();
+        Tonality<DiatonicAlt> minimizedTonality = TonalityRetrieval.getEnharmonicMinimalNoteAltsFrom(tonality).iterator().next();
 
         assertEquals(Tonality.C, minimizedTonality);
     }
@@ -496,14 +497,14 @@ public class TonalityTest {
     @Test
     public void minimizeAlterationsSize1() {
         Tonality tonality = Tonality.from(DiatonicAlt.BB, Scale.MAJOR);
-        Set<Tonality> minimizedTonalityList = TonalityRetrieval.getEnharmonicMinimalAltsFrom(tonality);
+        Set<Tonality> minimizedTonalityList = TonalityRetrieval.getEnharmonicMinimalNoteAltsFrom(tonality);
 
         assertEquals(1, minimizedTonalityList.size());
     }
 
     @Test
     public void minimizeAlterationsSizeNot1() {
-        Set<Tonality<DiatonicAlt>> tonalityList = TonalityRetrieval.getEnharmonicMinimalAltsFrom(Tonality.Gb);
+        Set<Tonality<DiatonicAlt>> tonalityList = TonalityRetrieval.getEnharmonicMinimalNoteAltsFrom(Tonality.Gb);
 
         assertEquals(2, tonalityList.size());
     }
@@ -518,8 +519,8 @@ public class TonalityTest {
 
     @Test
     public void minimizeAlterationsBidirectional1() {
-        Set<Tonality<DiatonicAlt>> minTonalityListGG = TonalityRetrieval.getEnharmonicMinimalAltsFrom(Tonality.from(DiatonicAlt.GG, Scale.MAJOR));
-        Set<Tonality<DiatonicAlt>> minTonalityListFb = TonalityRetrieval.getEnharmonicMinimalAltsFrom(Tonality.from(DiatonicAlt.Ab, Scale.MAJOR));
+        Set<Tonality<DiatonicAlt>> minTonalityListGG = TonalityRetrieval.getEnharmonicMinimalNoteAltsFrom(Tonality.from(DiatonicAlt.GG, Scale.MAJOR));
+        Set<Tonality<DiatonicAlt>> minTonalityListFb = TonalityRetrieval.getEnharmonicMinimalNoteAltsFrom(Tonality.from(DiatonicAlt.Ab, Scale.MAJOR));
 
         assertEquals(minTonalityListFb.hashCode(), minTonalityListGG.hashCode());
         assertEquals(minTonalityListFb, minTonalityListGG);
@@ -528,11 +529,11 @@ public class TonalityTest {
     @Test
     public void minimizeAlterationsBidirectionalAll() {
         for (Tonality<DiatonicAlt> tonality : TonalityRetrieval.allUsualKeysDiatonicAlt()) {
-            Set<Tonality<DiatonicAlt>> minTonalityListReference = TonalityRetrieval.getEnharmonicMinimalAltsFrom(tonality);
+            Set<Tonality<DiatonicAlt>> minTonalityListReference = TonalityRetrieval.getEnharmonicMinimalNoteAltsFrom(tonality);
 
             if (minTonalityListReference.size() > 1)
                 for (Tonality minTonality : minTonalityListReference) {
-                    Set<Tonality> minTonalityListParticular = TonalityRetrieval.getEnharmonicMinimalAltsFrom(minTonality);
+                    Set<Tonality> minTonalityListParticular = TonalityRetrieval.getEnharmonicMinimalNoteAltsFrom(minTonality);
 
                     assertEquals(minTonalityListReference, minTonalityListParticular);
                 }
@@ -682,7 +683,7 @@ public class TonalityTest {
         assertEquals(DiatonicDegree.II, ton.getDegreeFrom(PitchChromaticMidi.D5.getNote()));
         assertEquals(DiatonicDegree.III, ton.getDegreeFrom(PitchChromaticMidi.E6.getNote()));
         assertEquals(DiatonicDegree.IV, ton.getDegreeFrom(Chromatic.F));
-        assertEquals(DiatonicDegree.V, ton.getDegreeFrom(Chromatic.from(DiatonicAlt.EEEE)));
+        assertEquals(DiatonicDegree.V, ton.getDegreeFrom(Chromatic.from(DiatonicAlt.from(Diatonic.E, 3))));
     }
 
     @Test

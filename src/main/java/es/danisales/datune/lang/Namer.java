@@ -5,7 +5,7 @@ import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.interval.IntervalDiatonic;
-import es.danisales.datune.chords.DiatonicAlt;
+import es.danisales.datune.degrees.octave.DiatonicAlt;
 import es.danisales.datune.chords.Quality;
 import es.danisales.datune.midi.NoteMidi;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
@@ -131,7 +131,7 @@ public class Namer {
                 return "m";
             case PERFECT:
                 return "P";
-            case INDETERMINATED:
+            case UNDEFINED:
                 return "undef";
         }
 
@@ -150,7 +150,7 @@ public class Namer {
                 return "menor";
             case PERFECT:
                 return "perfecta";
-            case INDETERMINATED:
+            case UNDEFINED:
                 return "indeterminada";
         }
 

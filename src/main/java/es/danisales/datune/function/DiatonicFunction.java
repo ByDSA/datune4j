@@ -1,16 +1,12 @@
 package es.danisales.datune.function;
 
-import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
+import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-/**
- * Functiones diatónicas
- *
- */
 public enum DiatonicFunction implements HarmonicFunction {
 	I, II, III, IV, V, VI, VII,
 	I6, II6, III6, IV6, V6, VI6, VII6,
@@ -19,7 +15,7 @@ public enum DiatonicFunction implements HarmonicFunction {
 	I11, II11, III11, IV11, V11, VI11, VII11,
 	I13, II13, III13, IV13, V13, VI13, VII13;
 
-	/** Triadas básicas */
+	/** Main Triads */
 	public static final DiatonicFunction[] TRIADS = new DiatonicFunction[] {
 			I,
 			II,
@@ -30,7 +26,7 @@ public enum DiatonicFunction implements HarmonicFunction {
 			VII
 	};
 
-	/** Triadas con sexta */
+	/** Triads + 6th */
 	public static final DiatonicFunction[] SIXTH = new DiatonicFunction[] {
 			I6,
 			II6,
@@ -41,7 +37,7 @@ public enum DiatonicFunction implements HarmonicFunction {
 			VII6,
 	};
 
-	/** Con séptima */
+	/** 7th */
 	public static final DiatonicFunction[] SEVENTH = new DiatonicFunction[] {
 			I7,
 			II7,
@@ -52,7 +48,7 @@ public enum DiatonicFunction implements HarmonicFunction {
 			VII7
 	};
 
-	/** Con novena */
+	/** 9th */
 	public static final DiatonicFunction[] NINTH = new DiatonicFunction[] {
 			I9,
 			II9,
@@ -64,8 +60,9 @@ public enum DiatonicFunction implements HarmonicFunction {
 	};
 
 	/**
-	 * Con undécima
+	 * 11th
 	 */
+	@SuppressWarnings("unused")
 	public static final DiatonicFunction[] ELEVENTH = new DiatonicFunction[] {
 			I11,
 			II11,
@@ -76,6 +73,7 @@ public enum DiatonicFunction implements HarmonicFunction {
 			VII11,
 	};
 
+	@SuppressWarnings("unused")
 	public static final DiatonicFunction[] THIRTEENTH = new DiatonicFunction[] {
 			I13,
 			II13,
@@ -85,27 +83,6 @@ public enum DiatonicFunction implements HarmonicFunction {
 			VI13,
 			VII13,
 	};
-
-	@SuppressWarnings("Duplicates")
-	public static @NonNull DiatonicFunction from(@NonNull DiatonicDegree diatonicDegree) {
-		switch (diatonicDegree) {
-			case I:
-				return I;
-			case II:
-				return II;
-			case III:
-				return III;
-			case IV:
-				return IV;
-			case V:
-				return V;
-			case VI:
-				return VI;
-			case VII:
-				return VII;
-		}
-		throw NeverHappensException.switchOf(diatonicDegree);
-	}
 
 	public static @Nullable DiatonicFunction from(@NonNull ChromaticFunction chromaticFunction) {
 		switch (chromaticFunction) {
@@ -250,7 +227,7 @@ public enum DiatonicFunction implements HarmonicFunction {
 		throw NeverHappensException.switchOf(this);
 	}
 
-	public static @Nullable DiatonicFunction from(@NonNull ChromaticChord chromaticChord, @NonNull Tonality tonality) {
+	public static @Nullable DiatonicFunction from(@NonNull ChromaticChord chromaticChord, @NonNull Tonality<Chromatic> tonality) {
 		HarmonicFunction harmonicFunction = tonality.getFunctionFrom(chromaticChord);
 		if (harmonicFunction instanceof DiatonicFunction)
 			return (DiatonicFunction) harmonicFunction;

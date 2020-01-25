@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import es.danisales.datune.pitch.Pitch;
-
 public class Octave<KEY> {
 	List<Double> notes = new ArrayList<>();
 	Map<KEY, Double> map = new HashMap<>();

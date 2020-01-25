@@ -12,12 +12,12 @@ import java.util.Objects;
 final class ChromaticChordInfo implements Cloneable {
 	private static final Map<ChromaticChordPattern, ChromaticChordInfo> metaMap = new HashMap<>();
 
-	static final ChromaticChordInfo POWER_CHORD = new ChromaticChordInfo(Quality.INDETERMINATED, ChordNotation.POWER_CHORD, ChromaticChordPattern.POWER_CHORD);
+	static final ChromaticChordInfo POWER_CHORD = new ChromaticChordInfo(Quality.UNDEFINED, ChordNotation.POWER_CHORD, ChromaticChordPattern.POWER_CHORD);
 	static final ChromaticChordInfo TRIAD_MAJOR = new ChromaticChordInfo(Quality.MAJOR, ChordNotation.MAJOR, ChromaticChordPattern.TRIAD_MAJOR);
 	static final ChromaticChordInfo TRIAD_MINOR = new ChromaticChordInfo(Quality.MINOR, ChordNotation.MINOR, ChromaticChordPattern.TRIAD_MINOR);
 	static final ChromaticChordInfo TRIAD_DIMINISHED = new ChromaticChordInfo(Quality.DIMINISHED, ChordNotation.DIMINISHED, ChromaticChordPattern.TRIAD_DIMINISHED);
 	static final ChromaticChordInfo TRIAD_AUGMENTED = new ChromaticChordInfo(Quality.AUGMENTED, ChordNotation.AUGMENTED, ChromaticChordPattern.TRIAD_AUGMENTED);
-	static final ChromaticChordInfo SUS4 = new ChromaticChordInfo(Quality.INDETERMINATED, ChordNotation.SUS4, ChromaticChordPattern.SUS4);
+	static final ChromaticChordInfo SUS4 = new ChromaticChordInfo(Quality.UNDEFINED, ChordNotation.SUS4, ChromaticChordPattern.SUS4);
 	static final ChromaticChordInfo SEVENTH = new ChromaticChordInfo(Quality.MAJOR, ChordNotation.SEVENTH, ChromaticChordPattern.SEVENTH);
 	static final ChromaticChordInfo SEVENTH_MAJ7 = new ChromaticChordInfo(Quality.MAJOR, ChordNotation.MAJOR2 + ChordNotation.SEVENTH, ChromaticChordPattern.SEVENTH_MAJ7);
 	static final ChromaticChordInfo SEVENTH_MINOR = new ChromaticChordInfo(Quality.MINOR, ChordNotation.MINOR2 + ChordNotation.SEVENTH, ChromaticChordPattern.SEVENTH_MINOR);
@@ -25,13 +25,13 @@ final class ChromaticChordInfo implements Cloneable {
 	static final ChromaticChordInfo SEVENTH_MINOR_MAJ7 = new ChromaticChordInfo(Quality.MINOR, ChordNotation.MINOR2 + ChordNotation.MAJOR2 + ChordNotation.SEVENTH, ChromaticChordPattern.SEVENTH_MINOR_MAJ7);
 	static final ChromaticChordInfo SEVENTH_a5 = new ChromaticChordInfo(Quality.MAJOR, ChordNotation.SEVENTH + ChordNotation.a5, ChromaticChordPattern.SEVENTH_a5);
 	static final ChromaticChordInfo SEVENTH_MINOR_a5 = new ChromaticChordInfo(Quality.MINOR, ChordNotation.MINOR2 + ChordNotation.SEVENTH + ChordNotation.a5, ChromaticChordPattern.SEVENTH_MINOR_a5);
-	static final ChromaticChordInfo SEVENTH_SUS4 = new ChromaticChordInfo(Quality.INDETERMINATED, ChordNotation.SEVENTH + ChordNotation.SUS4, ChromaticChordPattern.SEVENTH_SUS4);
+	static final ChromaticChordInfo SEVENTH_SUS4 = new ChromaticChordInfo(Quality.UNDEFINED, ChordNotation.SEVENTH + ChordNotation.SUS4, ChromaticChordPattern.SEVENTH_SUS4);
 	static final ChromaticChordInfo SEVENTH_MINOR_b5 = new ChromaticChordInfo(Quality.MINOR, ChordNotation.MINOR2 + ChordNotation.SEVENTH + ChordNotation.b5, ChromaticChordPattern.SEVENTH_MINOR_b5);
 	static final ChromaticChordInfo SEVENTH_ADD11 = new ChromaticChordInfo(Quality.MAJOR, ChordNotation.SEVENTH + ChordNotation.ADD_ELEVENTH, ChromaticChordPattern.SEVENTH_ADD11);
 	static final ChromaticChordInfo SEVENTH_ADD13 = new ChromaticChordInfo(Quality.MAJOR, ChordNotation.SEVENTH + ChordNotation.ADD_THIRTEEN, ChromaticChordPattern.SEVENTH_ADD13);
-	static final ChromaticChordInfo SUS4a4 = new ChromaticChordInfo(Quality.INDETERMINATED, ChordNotation.SUSa4, ChromaticChordPattern.SUS4a4);
-	static final ChromaticChordInfo SUS2b2 = new ChromaticChordInfo(Quality.INDETERMINATED, ChordNotation.SUSb2, ChromaticChordPattern.SUS2b2);
-	static final ChromaticChordInfo SUS2b2b5 = new ChromaticChordInfo(Quality.INDETERMINATED, ChordNotation.SUSb2b5, ChromaticChordPattern.SUS2b2b5);
+	static final ChromaticChordInfo SUS4a4 = new ChromaticChordInfo(Quality.UNDEFINED, ChordNotation.SUSa4, ChromaticChordPattern.SUS4a4);
+	static final ChromaticChordInfo SUS2b2 = new ChromaticChordInfo(Quality.UNDEFINED, ChordNotation.SUSb2, ChromaticChordPattern.SUS2b2);
+	static final ChromaticChordInfo SUS2b2b5 = new ChromaticChordInfo(Quality.UNDEFINED, ChordNotation.SUSb2b5, ChromaticChordPattern.SUS2b2b5);
 	static final ChromaticChordInfo SEVENTH_b9 = new ChromaticChordInfo(Quality.MAJOR, ChordNotation.SEVENTH + ChordNotation.b9, ChromaticChordPattern.SEVENTH_b9);
 	static final ChromaticChordInfo SEVENTH_a9 = new ChromaticChordInfo(Quality.MAJOR, ChordNotation.SEVENTH + ChordNotation.a9, ChromaticChordPattern.SEVENTH_a9);
 	static final ChromaticChordInfo SEVENTH_MINOR_b9 = new ChromaticChordInfo(Quality.MINOR, ChordNotation.MINOR2 + ChordNotation.SEVENTH + ChordNotation.b9, ChromaticChordPattern.SEVENTH_MINOR_b9);
@@ -39,7 +39,7 @@ final class ChromaticChordInfo implements Cloneable {
 	static final ChromaticChordInfo NINTH_MINOR = new ChromaticChordInfo(Quality.MINOR, ChordNotation.MINOR2 + ChordNotation.NINTH, ChromaticChordPattern.NINTH_MINOR);
 	static final ChromaticChordInfo NINTH_b5 = new ChromaticChordInfo(Quality.MAJOR, ChordNotation.NINTH + ChordNotation.b5, ChromaticChordPattern.NINTH_b5);
 	static final ChromaticChordInfo NINTH_a5 = new ChromaticChordInfo(Quality.MAJOR, ChordNotation.NINTH + ChordNotation.a5, ChromaticChordPattern.NINTH_a5);
-	static final ChromaticChordInfo NINTH_SUS4 = new ChromaticChordInfo(Quality.INDETERMINATED, ChordNotation.NINTH + ChordNotation.SUS4, ChromaticChordPattern.NINTH_SUS4);
+	static final ChromaticChordInfo NINTH_SUS4 = new ChromaticChordInfo(Quality.UNDEFINED, ChordNotation.NINTH + ChordNotation.SUS4, ChromaticChordPattern.NINTH_SUS4);
 	static final ChromaticChordInfo NINTH_MAJ9 = new ChromaticChordInfo(Quality.MAJOR, ChordNotation.MAJOR2 + ChordNotation.NINTH, ChromaticChordPattern.NINTH_MAJ9);
 	static final ChromaticChordInfo NINTH_MINOR_MAJ9 = new ChromaticChordInfo(Quality.MINOR, ChordNotation.MINOR2 + ChordNotation.MAJOR2 + ChordNotation.NINTH, ChromaticChordPattern.NINTH_MINOR_MAJ9);
 	static final ChromaticChordInfo NINTH_ADD6 = new ChromaticChordInfo(Quality.MAJOR, ChordNotation.NINTH + ChordNotation.ADD_SIXTH, ChromaticChordPattern.NINTH_ADD6);
@@ -47,7 +47,7 @@ final class ChromaticChordInfo implements Cloneable {
 	static final ChromaticChordInfo NINTH_MAJ9_a11 = new ChromaticChordInfo(Quality.MAJOR, ChordNotation.MAJOR2 + ChordNotation.NINTH + ChordNotation.a11, ChromaticChordPattern.NINTH_MAJ9_a11);
 	static final ChromaticChordInfo SIXTH = new ChromaticChordInfo(Quality.MAJOR, ChordNotation.SIXTH, ChromaticChordPattern.SIXTH);
 	static final ChromaticChordInfo SIXTH_MINOR = new ChromaticChordInfo(Quality.MINOR, ChordNotation.MINOR2 + ChordNotation.SIXTH, ChromaticChordPattern.SIXTH_MINOR);
-	static final ChromaticChordInfo SIXTH_SUS4 = new ChromaticChordInfo(Quality.INDETERMINATED, ChordNotation.SIXTH + ChordNotation.SUS4, ChromaticChordPattern.SIXTH_SUS4);
+	static final ChromaticChordInfo SIXTH_SUS4 = new ChromaticChordInfo(Quality.UNDEFINED, ChordNotation.SIXTH + ChordNotation.SUS4, ChromaticChordPattern.SIXTH_SUS4);
 	static final ChromaticChordInfo SIXTH_ADD9 = new ChromaticChordInfo(Quality.MAJOR, ChordNotation.SIXTH + ChordNotation.ADD_NINTH, ChromaticChordPattern.SIXTH_ADD9);
 	static final ChromaticChordInfo SIXTH_MINOR_ADD9 = new ChromaticChordInfo(Quality.MINOR, ChordNotation.MINOR2 + ChordNotation.SIXTH + ChordNotation.ADD_NINTH, ChromaticChordPattern.SIXTH_MINOR_ADD9);
 	static final ChromaticChordInfo ELEVENTH = new ChromaticChordInfo(Quality.MAJOR, ChordNotation.ELEVENTH, ChromaticChordPattern.ELEVENTH);
@@ -57,7 +57,7 @@ final class ChromaticChordInfo implements Cloneable {
 	static final ChromaticChordInfo ELEVENTH_MAJ11 = new ChromaticChordInfo(Quality.MAJOR, ChordNotation.MAJOR2 + ChordNotation.ELEVENTH, ChromaticChordPattern.ELEVENTH_MAJ11);
 	static final ChromaticChordInfo ELEVENTH_MINOR_MAJ11 = new ChromaticChordInfo(Quality.MINOR, ChordNotation.MINOR2 + ChordNotation.MAJOR2 + ChordNotation.ELEVENTH, ChromaticChordPattern.ELEVENTH_MINOR_MAJ11);
 	static final ChromaticChordInfo THIRTEENTH_MINOR = new ChromaticChordInfo(Quality.MINOR, ChordNotation.MINOR2 + ChordNotation.THIRTEEN, ChromaticChordPattern.THIRTEENTH_MINOR);
-	static final ChromaticChordInfo THIRTEENTH_SUS4 = new ChromaticChordInfo(Quality.INDETERMINATED, ChordNotation.THIRTEEN + ChordNotation.SUS4, ChromaticChordPattern.THIRTEENTH_SUS4);
+	static final ChromaticChordInfo THIRTEENTH_SUS4 = new ChromaticChordInfo(Quality.UNDEFINED, ChordNotation.THIRTEEN + ChordNotation.SUS4, ChromaticChordPattern.THIRTEENTH_SUS4);
 	static final ChromaticChordInfo THIRTEENTH_b5 = new ChromaticChordInfo(Quality.MAJOR, ChordNotation.THIRTEEN + ChordNotation.b5, ChromaticChordPattern.THIRTEENTH_b5);
 	static final ChromaticChordInfo THIRTEENTH_a5 = new ChromaticChordInfo(Quality.MAJOR, ChordNotation.THIRTEEN + ChordNotation.a5, ChromaticChordPattern.THIRTEENTH_a5);
 	static final ChromaticChordInfo THIRTEENTH_b9 = new ChromaticChordInfo(Quality.MAJOR, ChordNotation.THIRTEEN + ChordNotation.b9, ChromaticChordPattern.THIRTEENTH_b9);
@@ -79,7 +79,7 @@ final class ChromaticChordInfo implements Cloneable {
 	static final ChromaticChordInfo THIRTEENTH_MAJ13_a5a9 = new ChromaticChordInfo(Quality.MAJOR, ChordNotation.MAJOR2 + ChordNotation.THIRTEEN + ChordNotation.a5 + ChordNotation.a9, ChromaticChordPattern.THIRTEENTH_MAJ13_a5a9);
 
 	static final ChromaticChordInfo THIRTEENTH_MINOR_OMIT11 = new ChromaticChordInfo(Quality.MINOR, ChordNotation.MINOR2 + ChordNotation.THIRTEEN + ChordNotation.OMIT11, ChromaticChordPattern.THIRTEENTH_MINOR_OMIT11);
-	static final ChromaticChordInfo THIRTEENTH_SUS4_OMIT11 = new ChromaticChordInfo(Quality.INDETERMINATED, ChordNotation.THIRTEEN + ChordNotation.SUS4 + ChordNotation.OMIT11, ChromaticChordPattern.THIRTEENTH_SUS4_OMIT11);
+	static final ChromaticChordInfo THIRTEENTH_SUS4_OMIT11 = new ChromaticChordInfo(Quality.UNDEFINED, ChordNotation.THIRTEEN + ChordNotation.SUS4 + ChordNotation.OMIT11, ChromaticChordPattern.THIRTEENTH_SUS4_OMIT11);
 	static final ChromaticChordInfo THIRTEENTH_b5_OMIT11 = new ChromaticChordInfo(Quality.MAJOR, ChordNotation.THIRTEEN + ChordNotation.b5 + ChordNotation.OMIT11, ChromaticChordPattern.THIRTEENTH_b5_OMIT11);
 	static final ChromaticChordInfo THIRTEENTH_a5_OMIT11 = new ChromaticChordInfo(Quality.MAJOR, ChordNotation.THIRTEEN + ChordNotation.a5 + ChordNotation.OMIT11, ChromaticChordPattern.THIRTEENTH_a5_OMIT11);
 	static final ChromaticChordInfo THIRTEENTH_b9_OMIT11 = new ChromaticChordInfo(Quality.MAJOR, ChordNotation.THIRTEEN + ChordNotation.b9 + ChordNotation.OMIT11, ChromaticChordPattern.THIRTEENTH_b9_OMIT11);
@@ -186,8 +186,8 @@ final class ChromaticChordInfo implements Cloneable {
 		putMap(THIRTEENTH_MAJ13_a5a9_OMIT11);
 	}
 
-	private static void putMap(ChromaticChordInfo chromaticChordMeta) {
-		metaMap.put(chromaticChordMeta.pattern, chromaticChordMeta);
+	private static void putMap(ChromaticChordInfo chromaticChordInfo) {
+		metaMap.put(chromaticChordInfo.pattern, chromaticChordInfo);
 	}
 
 	private final Quality quality;

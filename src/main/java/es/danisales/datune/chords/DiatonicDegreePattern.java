@@ -1,19 +1,18 @@
 package es.danisales.datune.chords;
 
 import com.google.common.collect.ImmutableList;
-import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.utils.NeverHappensException;
-import jdk.nashorn.internal.ir.annotations.Immutable;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkState;
 
+@SuppressWarnings("WeakerAccess")
 public class DiatonicDegreePattern implements Iterable<DiatonicDegree> {
     // Intervals
     public static final DiatonicDegreePattern I_SECOND = new DiatonicDegreePattern(DiatonicDegree.I, DiatonicDegree.II);
@@ -125,6 +124,7 @@ public class DiatonicDegreePattern implements Iterable<DiatonicDegree> {
     public static final DiatonicDegreePattern V13 = new DiatonicDegreePattern(DiatonicDegree.V, DiatonicDegree.VII, DiatonicDegree.II, DiatonicDegree.IV, DiatonicDegree.VI, DiatonicDegree.I, DiatonicDegree.III);
     public static final DiatonicDegreePattern VI13 = new DiatonicDegreePattern(DiatonicDegree.VI, DiatonicDegree.I, DiatonicDegree.III, DiatonicDegree.V, DiatonicDegree.VII, DiatonicDegree.II, DiatonicDegree.IV);
     public static final DiatonicDegreePattern VII13 = new DiatonicDegreePattern(DiatonicDegree.VII, DiatonicDegree.II, DiatonicDegree.IV, DiatonicDegree.VI, DiatonicDegree.I, DiatonicDegree.III, DiatonicDegree.V);
+
     private static final DiatonicDegreePattern I_NOTE = new DiatonicDegreePattern(DiatonicDegree.I);
     private static final DiatonicDegreePattern II_NOTE = new DiatonicDegreePattern(DiatonicDegree.II);
     private static final DiatonicDegreePattern III_NOTE = new DiatonicDegreePattern(DiatonicDegree.III);
@@ -133,7 +133,109 @@ public class DiatonicDegreePattern implements Iterable<DiatonicDegree> {
     private static final DiatonicDegreePattern VI_NOTE = new DiatonicDegreePattern(DiatonicDegree.VI);
     private static final DiatonicDegreePattern VII_NOTE = new DiatonicDegreePattern(DiatonicDegree.VII);
 
-    final List<DiatonicDegree> degrees;
+    private static final Map<List<DiatonicDegree>, DiatonicDegreePattern> precalculatedDiatonicDegreePatterns = new HashMap<>();
+    static {
+        precalculatedDiatonicDegreePatterns.put(I_SECOND.degrees, I_SECOND);
+        precalculatedDiatonicDegreePatterns.put(II_SECOND.degrees, II_SECOND);
+        precalculatedDiatonicDegreePatterns.put(III_SECOND.degrees, III_SECOND);
+        precalculatedDiatonicDegreePatterns.put(IV_SECOND.degrees, IV_SECOND);
+        precalculatedDiatonicDegreePatterns.put(V_SECOND.degrees, V_SECOND);
+        precalculatedDiatonicDegreePatterns.put(VI_SECOND.degrees, VI_SECOND);
+        precalculatedDiatonicDegreePatterns.put(VII_SECOND.degrees, VII_SECOND);
+        precalculatedDiatonicDegreePatterns.put(I_THIRD.degrees, I_THIRD);
+        precalculatedDiatonicDegreePatterns.put(II_THIRD.degrees, II_THIRD);
+        precalculatedDiatonicDegreePatterns.put(III_THIRD.degrees, III_THIRD);
+        precalculatedDiatonicDegreePatterns.put(IV_THIRD.degrees, IV_THIRD);
+        precalculatedDiatonicDegreePatterns.put(V_THIRD.degrees, V_THIRD);
+        precalculatedDiatonicDegreePatterns.put(VI_THIRD.degrees, VI_THIRD);
+        precalculatedDiatonicDegreePatterns.put(VII_THIRD.degrees, VII_THIRD);
+        precalculatedDiatonicDegreePatterns.put(I_FOURTH.degrees, I_FOURTH);
+        precalculatedDiatonicDegreePatterns.put(II_FOURTH.degrees, II_FOURTH);
+        precalculatedDiatonicDegreePatterns.put(III_FOURTH.degrees, III_FOURTH);
+        precalculatedDiatonicDegreePatterns.put(IV_FOURTH.degrees, IV_FOURTH);
+        precalculatedDiatonicDegreePatterns.put(V_FOURTH.degrees, V_FOURTH);
+        precalculatedDiatonicDegreePatterns.put(VI_FOURTH.degrees, VI_FOURTH);
+        precalculatedDiatonicDegreePatterns.put(VII_FOURTH.degrees, VII_FOURTH);
+        precalculatedDiatonicDegreePatterns.put(I_FIFTH.degrees, I_FIFTH);
+        precalculatedDiatonicDegreePatterns.put(II_FIFTH.degrees, II_FIFTH);
+        precalculatedDiatonicDegreePatterns.put(III_FIFTH.degrees, III_FIFTH);
+        precalculatedDiatonicDegreePatterns.put(IV_FIFTH.degrees, IV_FIFTH);
+        precalculatedDiatonicDegreePatterns.put(V_FIFTH.degrees, V_FIFTH);
+        precalculatedDiatonicDegreePatterns.put(VI_FIFTH.degrees, VI_FIFTH);
+        precalculatedDiatonicDegreePatterns.put(VII_FIFTH.degrees, VII_FIFTH);
+        precalculatedDiatonicDegreePatterns.put(I_SIXTH.degrees, I_SIXTH);
+        precalculatedDiatonicDegreePatterns.put(II_SIXTH.degrees, II_SIXTH);
+        precalculatedDiatonicDegreePatterns.put(III_SIXTH.degrees, III_SIXTH);
+        precalculatedDiatonicDegreePatterns.put(IV_SIXTH.degrees, IV_SIXTH);
+        precalculatedDiatonicDegreePatterns.put(V_SIXTH.degrees, V_SIXTH);
+        precalculatedDiatonicDegreePatterns.put(VI_SIXTH.degrees, VI_SIXTH);
+        precalculatedDiatonicDegreePatterns.put(VII_SIXTH.degrees, VII_SIXTH);
+        precalculatedDiatonicDegreePatterns.put(I_SEVENTH.degrees, I_SEVENTH);
+        precalculatedDiatonicDegreePatterns.put(II_SEVENTH.degrees, II_SEVENTH);
+        precalculatedDiatonicDegreePatterns.put(III_SEVENTH.degrees, III_SEVENTH);
+        precalculatedDiatonicDegreePatterns.put(IV_SEVENTH.degrees, IV_SEVENTH);
+        precalculatedDiatonicDegreePatterns.put(V_SEVENTH.degrees, V_SEVENTH);
+        precalculatedDiatonicDegreePatterns.put(VI_SEVENTH.degrees, VI_SEVENTH);
+        precalculatedDiatonicDegreePatterns.put(VII_SEVENTH.degrees, VII_SEVENTH);
+        precalculatedDiatonicDegreePatterns.put(I_OCTAVE.degrees, I_OCTAVE);
+        precalculatedDiatonicDegreePatterns.put( II_OCTAVE.degrees, II_OCTAVE);
+        precalculatedDiatonicDegreePatterns.put( III_OCTAVE.degrees, III_OCTAVE);
+        precalculatedDiatonicDegreePatterns.put( IV_OCTAVE.degrees, IV_OCTAVE);
+        precalculatedDiatonicDegreePatterns.put( V_OCTAVE.degrees, V_OCTAVE);
+        precalculatedDiatonicDegreePatterns.put( VI_OCTAVE.degrees, VI_OCTAVE);
+        precalculatedDiatonicDegreePatterns.put( VII_OCTAVE.degrees, VII_OCTAVE);
+        precalculatedDiatonicDegreePatterns.put(I.degrees, I);
+        precalculatedDiatonicDegreePatterns.put( II.degrees, II);
+        precalculatedDiatonicDegreePatterns.put( III.degrees, III);
+        precalculatedDiatonicDegreePatterns.put( IV.degrees, IV);
+        precalculatedDiatonicDegreePatterns.put( V.degrees, V);
+        precalculatedDiatonicDegreePatterns.put( VI.degrees, VI);
+        precalculatedDiatonicDegreePatterns.put( VII.degrees, VII);
+
+        precalculatedDiatonicDegreePatterns.put(I6.degrees, I6);
+        precalculatedDiatonicDegreePatterns.put( II6.degrees, II6);
+        precalculatedDiatonicDegreePatterns.put( III6.degrees, III6);
+        precalculatedDiatonicDegreePatterns.put( IV6.degrees, IV6);
+        precalculatedDiatonicDegreePatterns.put( V6.degrees, V6);
+        precalculatedDiatonicDegreePatterns.put( VI6.degrees, VI6);
+        precalculatedDiatonicDegreePatterns.put( VII6.degrees, VII6);
+
+        precalculatedDiatonicDegreePatterns.put(I7.degrees, I7);
+        precalculatedDiatonicDegreePatterns.put( II7.degrees, II7);
+        precalculatedDiatonicDegreePatterns.put( III7.degrees, III7);
+        precalculatedDiatonicDegreePatterns.put( IV7.degrees, IV7);
+        precalculatedDiatonicDegreePatterns.put( V7.degrees, V7);
+        precalculatedDiatonicDegreePatterns.put( VI7.degrees, VI7);
+        precalculatedDiatonicDegreePatterns.put( VII7.degrees, VII7);
+
+        precalculatedDiatonicDegreePatterns.put(I9.degrees, I9);
+        precalculatedDiatonicDegreePatterns.put( II9.degrees, II9);
+        precalculatedDiatonicDegreePatterns.put( III9.degrees, III9);
+        precalculatedDiatonicDegreePatterns.put( IV9.degrees, IV9);
+        precalculatedDiatonicDegreePatterns.put( V9.degrees, V9);
+        precalculatedDiatonicDegreePatterns.put( VI9.degrees, VI9);
+        precalculatedDiatonicDegreePatterns.put( VII9.degrees, VII9);
+
+        precalculatedDiatonicDegreePatterns.put(I11.degrees, I11);
+        precalculatedDiatonicDegreePatterns.put(II11.degrees, II11);
+        precalculatedDiatonicDegreePatterns.put(III11.degrees, III11);
+        precalculatedDiatonicDegreePatterns.put(IV11.degrees, IV11);
+        precalculatedDiatonicDegreePatterns.put(V11.degrees, V11);
+        precalculatedDiatonicDegreePatterns.put(VI11.degrees, VI11);
+        precalculatedDiatonicDegreePatterns.put(VII11.degrees, VII11);
+
+        precalculatedDiatonicDegreePatterns.put(I13.degrees, I13);
+        precalculatedDiatonicDegreePatterns.put(II13.degrees, II13);
+        precalculatedDiatonicDegreePatterns.put(III13.degrees, III13);
+        precalculatedDiatonicDegreePatterns.put(IV13.degrees, IV13);
+        precalculatedDiatonicDegreePatterns.put(V13.degrees, V13);
+        precalculatedDiatonicDegreePatterns.put(VI13.degrees, VI13);
+        precalculatedDiatonicDegreePatterns.put(VII13.degrees, VII13);
+    }
+
+    private static final NeverHappensException NO_COMPOUND_INTERVAL = NeverHappensException.make("No compound interval");
+
+    private final List<DiatonicDegree> degrees;
 
     private DiatonicDegreePattern(DiatonicDegree... diatonicDegrees) {
         checkArgument(diatonicDegrees.length > 0);
@@ -145,7 +247,9 @@ public class DiatonicDegreePattern implements Iterable<DiatonicDegree> {
         degrees = ImmutableList.copyOf(diatonicDegrees);
     }
 
-    private static final NeverHappensException NO_COMPOUND_INTERVAL = NeverHappensException.make("No compound interval");
+    private static @Nullable DiatonicDegreePattern getPrecalculated(List<DiatonicDegree> diatonicDegrees) {
+        return precalculatedDiatonicDegreePatterns.get(diatonicDegrees);
+    }
 
     public static @NonNull DiatonicDegreePattern from(DiatonicDegree diatonicDegree, IntervalDiatonic intervalDiatonic) {
         checkArgument(!intervalDiatonic.isCompound());
@@ -303,10 +407,6 @@ public class DiatonicDegreePattern implements Iterable<DiatonicDegree> {
         throw NeverHappensException.switchOf(diatonicDegree);
     }
 
-    public @NonNull DiatonicDegree getFirstDiatonicDegree() {
-        return degrees.get(0);
-    }
-
     public static @NonNull DiatonicDegreePattern from(@NonNull DiatonicFunction diatonicFunction) {
         switch (diatonicFunction) {
             case I: return I;
@@ -356,35 +456,39 @@ public class DiatonicDegreePattern implements Iterable<DiatonicDegree> {
         throw NeverHappensException.switchOf(diatonicFunction);
     }
 
-    public DiatonicDegreePattern getWithOmitted(Integer... diatonicValues) {
-        checkOmittedValues(diatonicValues);
+    public DiatonicDegreePattern getWithOmitted(DiatonicDegree... diatonicValues) {
+        List<DiatonicDegree> diatonicDegrees = new ArrayList<>(degrees);
 
-        List<DiatonicDegree> newDiatonicDegrees = new ArrayList<>();
+        diatonicDegrees.removeAll(Arrays.asList(diatonicValues));
 
-        int checkedNotes = 0;
-        int i = 0;
-        for (DiatonicDegree diatonicDegree = degrees.get(0); checkedNotes < diatonicValues.length; diatonicDegree = diatonicDegree.getNext()) {
-
-            if (diatonicDegree.equals(degrees.get(checkedNotes))) {
-                checkedNotes++;
-
-                if (i != diatonicDegree.ordinal()-1)
-                    newDiatonicDegrees.add(diatonicDegree);
-            }
-            i++;
+        DiatonicDegreePattern diatonicDegreePattern = getPrecalculated(diatonicDegrees);
+        if (diatonicDegreePattern == null) {
+            diatonicDegreePattern = new DiatonicDegreePattern(diatonicDegrees);
+            precalculatedDiatonicDegreePatterns.put(diatonicDegreePattern.degrees, diatonicDegreePattern);
         }
-
-        return new DiatonicDegreePattern(newDiatonicDegrees);
+        return diatonicDegreePattern;
     }
 
-    private void checkOmittedValues(Integer... diatonicValues) {
-        for (Integer integer : diatonicValues)
-            if (integer <= 1 || integer >= 11)
-                throw new RuntimeException();
-    }
-
+    @NonNull
     @Override
     public Iterator<DiatonicDegree> iterator() {
         return degrees.iterator();
+    }
+
+    /* Object */
+
+    @Override
+    public boolean equals(Object o) {
+        if ( !(o instanceof DiatonicDegreePattern))
+            return false;
+
+        DiatonicDegreePattern diatonicDegreePattern = (DiatonicDegreePattern)o;
+
+        return degrees.equals(diatonicDegreePattern.degrees);
+    }
+
+    @Override
+    public String toString() {
+        return degrees.toString();
     }
 }

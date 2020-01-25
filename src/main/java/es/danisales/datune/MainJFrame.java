@@ -1,5 +1,6 @@
 package es.danisales.datune;
 
+import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.eventsequences.Instrument;
 import es.danisales.datune.midi.binaries.Midi;
 import es.danisales.datune.tonality.Tonality;
@@ -13,11 +14,12 @@ import java.util.Objects;
 public class MainJFrame extends JFrame {
     private JPanel panel;
 
-    private JComboBox<Tonality> tonalitiesComboBox;
+    private JComboBox<Tonality<Chromatic>> tonalitiesComboBox;
     private JComboBox<Instrument> instrumentJComboBox;
 
-    private @NonNull Tonality getSelectedTonality() {
-        return Objects.requireNonNull((Tonality) tonalitiesComboBox.getSelectedItem());
+    private @NonNull Tonality<Chromatic> getSelectedTonality() {
+        //noinspection unchecked
+        return Objects.requireNonNull((Tonality<Chromatic>) tonalitiesComboBox.getSelectedItem());
     }
 
     private @NonNull Instrument getSelectedInstrument() {
@@ -26,11 +28,11 @@ public class MainJFrame extends JFrame {
 
     private void initializeTonalitiesJComboBox() {
         tonalitiesComboBox = new JComboBox<>();
-        for (Tonality t : TonalityRetrieval.ET12.ALL_MAJOR_MINOR)
+        for (Tonality<Chromatic> t : TonalityRetrieval.ET12.ALL_MAJOR_MINOR)
             tonalitiesComboBox.addItem(t);
 
         tonalitiesComboBox.addActionListener(e -> {
-            Tonality tonality = getSelectedTonality();
+            Tonality<Chromatic> tonality = getSelectedTonality();
             new Loader(tonality, panel).load();
         });
     }
@@ -56,7 +58,7 @@ public class MainJFrame extends JFrame {
 
         getContentPane().add(panel, BorderLayout.CENTER);
 
-        Tonality initialTonality = Tonality.C;
+        Tonality<Chromatic> initialTonality = Tonality.ET12.C;
         tonalitiesComboBox.setSelectedItem(initialTonality);
         new Loader(initialTonality, panel).load();
 

@@ -1,19 +1,5 @@
 package es.danisales.datune.midi;
 
-import es.danisales.datune.chords.TonalChord;
-import es.danisales.datune.function.DiatonicFunction;
-import es.danisales.datune.midi.pitch.PitchChromaticMidi;
-import es.danisales.datune.midi.pitch.PitchMidiException;
-import es.danisales.datune.tonality.Tonality;
-import es.danisales.datune.tonality.TonalityException;
-import es.danisales.utils.building.BuildingException;
-import org.junit.Test;
-
-import java.util.Arrays;
-import java.util.List;
-
-import static org.junit.Assert.*;
-
 public class ChordMidiTransformationsTest {
 /*
     @Test
@@ -36,9 +22,9 @@ public class ChordMidiTransformationsTest {
                 )
         );
         ChordMidiTransformations.minimize(diatonicChordMidi);
-        assertEquals(PitchChromaticMidi.C5.getMidiCode(), diatonicChordMidi.get(0).getPitch().getMidiCode());
-        assertEquals(PitchChromaticMidi.E5.getMidiCode(), diatonicChordMidi.get(1).getPitch().getMidiCode());
-        assertEquals(PitchChromaticMidi.G5.getMidiCode(), diatonicChordMidi.get(2).getPitch().getMidiCode());
+        assertEquals(PitchChromaticMidi.C5.getMidiCode(), diatonicChordMidi.fromInt(0).getPitch().getMidiCode());
+        assertEquals(PitchChromaticMidi.E5.getMidiCode(), diatonicChordMidi.fromInt(1).getPitch().getMidiCode());
+        assertEquals(PitchChromaticMidi.G5.getMidiCode(), diatonicChordMidi.fromInt(2).getPitch().getMidiCode());
     }
 
     @Test
@@ -56,9 +42,9 @@ public class ChordMidiTransformationsTest {
 
         assertNotEquals(diatonicChordMidiSource, diatonicChordMidiEditing);
 
-        assertEquals(PitchChromaticMidi.D5.getMidiCode(), diatonicChordMidiEditing.get(0).getPitch().getMidiCode());
-        assertEquals(PitchChromaticMidi.F5.getMidiCode(), diatonicChordMidiEditing.get(1).getPitch().getMidiCode());
-        assertEquals(PitchChromaticMidi.B5.getMidiCode(), diatonicChordMidiEditing.get(2).getPitch().getMidiCode());
+        assertEquals(PitchChromaticMidi.D5.getMidiCode(), diatonicChordMidiEditing.fromInt(0).getPitch().getMidiCode());
+        assertEquals(PitchChromaticMidi.F5.getMidiCode(), diatonicChordMidiEditing.fromInt(1).getPitch().getMidiCode());
+        assertEquals(PitchChromaticMidi.B5.getMidiCode(), diatonicChordMidiEditing.fromInt(2).getPitch().getMidiCode());
     }
 */
 }

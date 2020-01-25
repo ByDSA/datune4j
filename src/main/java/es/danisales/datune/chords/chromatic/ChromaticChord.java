@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import es.danisales.datastructures.SetUtils;
 import es.danisales.datune.chords.Chord;
 import es.danisales.datune.chords.IntervalShifter;
-import es.danisales.datune.chords.TonalChord;
+import es.danisales.datune.chords.tonal.TonalChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.interval.IntervalChromatic;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -2429,13 +2429,12 @@ public final class ChromaticChord
      * END CONSTANT CHORDS
      *****************************************************************************************************************/
 
-    ChromaticChordInfo info;
-
     public static ChromaticChordBuilder builder() {
         return new ChromaticChordBuilder();
     }
 
     public static ChromaticChord from(@NonNull TonalChord parametricChord) {
+        // todo: transformar a tonality<Chromatic> si no lo es
         return builder()
                 .harmonicFunction(parametricChord.getHarmonicFunction())
                 .tonality(parametricChord.getTonality())

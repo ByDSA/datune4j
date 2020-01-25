@@ -1,6 +1,6 @@
 package es.danisales.datune.midi.binaries;
 
-import es.danisales.datune.chords.TonalChord;
+import es.danisales.datune.chords.tonal.TonalChord;
 import es.danisales.datune.eventsequences.Track;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.midi.ChordMidi;
@@ -8,7 +8,6 @@ import es.danisales.datune.midi.DurationMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityRetrieval;
-import es.danisales.utils.building.BuildingException;
 import org.junit.Test;
 
 import java.nio.file.Path;

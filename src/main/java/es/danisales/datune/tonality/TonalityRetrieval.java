@@ -1,12 +1,13 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.chords.DiatonicAlt;
-import es.danisales.datune.chords.DiatonicAltRetrieval;
+import es.danisales.datune.degrees.octave.DiatonicAlt;
+import es.danisales.datune.chords.diatonicalt.DiatonicAltRetrieval;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.DiatonicFunction;
+import es.danisales.datune.interval.Interval;
 import es.danisales.datune.midi.ChordMidi;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -624,8 +625,8 @@ public class TonalityRetrieval {
     public static @NonNull List<Tonality<Chromatic>> allUsualKeys() {
         List<Tonality<Chromatic>> ret = new ArrayList<>();
         for (Scale mode : Scale.allUsualScales())
-            for ( Chromatic diatonicAlt : Chromatic.values() ) {
-                Tonality<Chromatic> tonality = Tonality.from( diatonicAlt, mode );
+            for ( Chromatic chromatic : Chromatic.values() ) {
+                Tonality<Chromatic> tonality = Tonality.from( chromatic, mode );
                 ret.add(tonality);
             }
 
@@ -725,19 +726,59 @@ public class TonalityRetrieval {
         return Collections.unmodifiableSet(ret);
     }
 
-    public static @NonNull Set<Tonality<DiatonicAlt>> getEnharmonicMinimalAltsFrom(@NonNull Tonality<DiatonicAlt> tonalityBase) {
+    public static @NonNull Set<Tonality<DiatonicAlt>> getEnharmonicMinimalTonalityAltsFrom(@NonNull Tonality<DiatonicAlt> tonalityBase) {
         Set<Tonality<DiatonicAlt>> ret = new HashSet<>();
 
         Set<Tonality<DiatonicAlt>> enharmonicTonalities = getEnharmonicFrom(tonalityBase, 3);
 
         int minAlts = Integer.MAX_VALUE;
-        for (Tonality currentTonality : enharmonicTonalities) {
+        for (Tonality<DiatonicAlt> currentTonality : enharmonicTonalities) {
             int currentAlts = currentTonality.getDiatonicAlterationsNumber();
             if (currentAlts < minAlts) {
                 ret.clear();
                 minAlts = currentAlts;
                 ret.add(currentTonality);
-            } else if (currentAlts == minAlts)
+            } else if (currentAlts == minAlts )
+                ret.add(currentTonality);
+        }
+
+        return Collections.unmodifiableSet(ret);
+    }
+
+    public static @NonNull Set<Tonality<DiatonicAlt>> getEnharmonicMinimalTonalityNoteAltsFrom(@NonNull Tonality<DiatonicAlt> tonalityBase) {
+        Set<Tonality<DiatonicAlt>> ret = new HashSet<>();
+
+        Set<Tonality<DiatonicAlt>> enharmonicTonalities = getEnharmonicFrom(tonalityBase, 3);
+
+        int minAlts = Integer.MAX_VALUE;
+        int maxAltsNote = Integer.MAX_VALUE;
+        for (Tonality<DiatonicAlt> currentTonality : enharmonicTonalities) {
+            int currentAlts = currentTonality.getDiatonicAlterationsNumber();
+            if (currentAlts < minAlts || currentAlts == minAlts && currentTonality.getMaxAltsNote() < maxAltsNote) {
+                ret.clear();
+                minAlts = currentAlts;
+                maxAltsNote = currentTonality.getMaxAltsNote();
+                ret.add(currentTonality);
+            } else if (currentAlts == minAlts && currentTonality.getMaxAltsNote() == maxAltsNote )
+                ret.add(currentTonality);
+        }
+
+        return Collections.unmodifiableSet(ret);
+    }
+
+    public static @NonNull Set<Tonality<DiatonicAlt>> getEnharmonicMinimalNoteAltsFrom(@NonNull Tonality<DiatonicAlt> tonalityBase) {
+        Set<Tonality<DiatonicAlt>> ret = new HashSet<>();
+
+        Set<Tonality<DiatonicAlt>> enharmonicTonalities = getEnharmonicFrom(tonalityBase, 3);
+
+        int maxAltsNote = Integer.MAX_VALUE;
+        for (Tonality<DiatonicAlt> currentTonality : enharmonicTonalities) {
+            int currentMaxAltsNote = currentTonality.getMaxAltsNote();
+            if (currentMaxAltsNote < maxAltsNote) {
+                ret.clear();
+                maxAltsNote = currentMaxAltsNote;
+                ret.add(currentTonality);
+            } else if (currentMaxAltsNote == maxAltsNote )
                 ret.add(currentTonality);
         }
 

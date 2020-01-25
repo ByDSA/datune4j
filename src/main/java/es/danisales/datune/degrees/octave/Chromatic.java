@@ -1,11 +1,9 @@
 package es.danisales.datune.degrees.octave;
 
-import es.danisales.datune.chords.DiatonicAlt;
 import es.danisales.datune.degrees.OrderedDegree;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.lang.Namer;
 import es.danisales.datune.midi.pitch.PitchDiatonicMidi;
-import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.utils.MathUtils;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -17,44 +15,31 @@ import java.util.function.Function;
 
 import static com.google.common.base.Preconditions.checkState;
 
-public enum Chromatic implements PitchChromaticSingle, CyclicDegree, OrderedDegree {
+public enum Chromatic implements CyclicDegree, OrderedDegree, Cloneable {
 	C, CC, D, DD, E, F, FF, G, GG, A, AA, B;
 
 	public static final int NUMBER = values().length;
 
 	private static final Map<DiatonicAlt, Chromatic> diatonicAltChromaticMap = new HashMap<>();
 	static {
-		diatonicAltChromaticMap.put(DiatonicAlt.AAAA, Chromatic.C);
 		diatonicAltChromaticMap.put(DiatonicAlt.BB, Chromatic.C);
 		diatonicAltChromaticMap.put(DiatonicAlt.C, Chromatic.C);
-		diatonicAltChromaticMap.put(DiatonicAlt.AAAAA, Chromatic.CC);
 		diatonicAltChromaticMap.put(DiatonicAlt.BBB, Chromatic.CC);
 		diatonicAltChromaticMap.put(DiatonicAlt.CC, Chromatic.CC);
-		diatonicAltChromaticMap.put(DiatonicAlt.BBBB, Chromatic.D);
 		diatonicAltChromaticMap.put(DiatonicAlt.CCC, Chromatic.D);
 		diatonicAltChromaticMap.put(DiatonicAlt.D, Chromatic.D);
-		diatonicAltChromaticMap.put(DiatonicAlt.BBBBB, Chromatic.DD);
-		diatonicAltChromaticMap.put(DiatonicAlt.CCCC, Chromatic.DD);
 		diatonicAltChromaticMap.put(DiatonicAlt.DD, Chromatic.DD);
-		diatonicAltChromaticMap.put(DiatonicAlt.CCCCC, Chromatic.E);
 		diatonicAltChromaticMap.put(DiatonicAlt.DDD, Chromatic.E);
 		diatonicAltChromaticMap.put(DiatonicAlt.E, Chromatic.E);
 		diatonicAltChromaticMap.put(DiatonicAlt.EE, Chromatic.F);
-		diatonicAltChromaticMap.put(DiatonicAlt.DDDD, Chromatic.F);
 		diatonicAltChromaticMap.put(DiatonicAlt.F, Chromatic.F);
 		diatonicAltChromaticMap.put(DiatonicAlt.EEE, Chromatic.FF);
-		diatonicAltChromaticMap.put(DiatonicAlt.DDDDD, Chromatic.FF);
 		diatonicAltChromaticMap.put(DiatonicAlt.FF, Chromatic.FF);
-		diatonicAltChromaticMap.put(DiatonicAlt.EEEE, Chromatic.G);
 		diatonicAltChromaticMap.put(DiatonicAlt.FFF, Chromatic.G);
 		diatonicAltChromaticMap.put(DiatonicAlt.G, Chromatic.G);
-		diatonicAltChromaticMap.put(DiatonicAlt.EEEEE, Chromatic.GG);
-		diatonicAltChromaticMap.put(DiatonicAlt.FFFF, Chromatic.GG);
 		diatonicAltChromaticMap.put(DiatonicAlt.GG, Chromatic.GG);
-		diatonicAltChromaticMap.put(DiatonicAlt.FFFFF, Chromatic.A);
 		diatonicAltChromaticMap.put(DiatonicAlt.GGG, Chromatic.A);
 		diatonicAltChromaticMap.put(DiatonicAlt.A, Chromatic.A);
-		diatonicAltChromaticMap.put(DiatonicAlt.GGGG, Chromatic.AA);
 		diatonicAltChromaticMap.put(DiatonicAlt.AA, Chromatic.AA);
 		diatonicAltChromaticMap.put(DiatonicAlt.AAA, Chromatic.B);
 		diatonicAltChromaticMap.put(DiatonicAlt.B, Chromatic.B);
@@ -74,14 +59,6 @@ public enum Chromatic implements PitchChromaticSingle, CyclicDegree, OrderedDegr
 		diatonicAltChromaticMap.put(DiatonicAlt.Abb, Chromatic.G);
 		diatonicAltChromaticMap.put(DiatonicAlt.Bbb, Chromatic.A);
 		diatonicAltChromaticMap.put(DiatonicAlt.Cbb, Chromatic.AA);
-
-		diatonicAltChromaticMap.put(DiatonicAlt.Dbbb, Chromatic.B);
-		diatonicAltChromaticMap.put(DiatonicAlt.Ebbb, Chromatic.CC);
-		diatonicAltChromaticMap.put(DiatonicAlt.Fbbb, Chromatic.D);
-		diatonicAltChromaticMap.put(DiatonicAlt.Gbbb, Chromatic.E);
-		diatonicAltChromaticMap.put(DiatonicAlt.Abbb, Chromatic.FF);
-		diatonicAltChromaticMap.put(DiatonicAlt.Bbbb, Chromatic.GG);
-		diatonicAltChromaticMap.put(DiatonicAlt.Cbbb, Chromatic.A);
 	}
 
 	private static Map<Class<? extends CyclicDegree>, Function<CyclicDegree, Chromatic>> conversionMap = new HashMap<>();

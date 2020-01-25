@@ -1,5 +1,7 @@
 package es.danisales.datune.chords;
 
+import es.danisales.datune.degrees.octave.DiatonicAlt;
+import es.danisales.datune.chords.diatonicalt.DiatonicAltRetrieval;
 import es.danisales.datune.degrees.scale.ScaleDegree;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
@@ -36,7 +38,7 @@ public class DiatonicAltRetrievalTest {
     public void getNoteAbsoluteDegree3() throws ScaleRelativeDegreeException {
         Scale scale = Scale.fromIntegers(Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
         ScaleDegree relativeDegree = ScaleDegree.getDefaultDegreesFromScaleSize(scale.size()).get(0);
-        Tonality tonality = Tonality.from(DiatonicAlt.C, scale);
+        Tonality<DiatonicAlt> tonality = Tonality.from(DiatonicAlt.C, scale);
         System.out.println(tonality.getNotes());
         assertEquals(DiatonicAlt.C,
                 tonality.getNote(relativeDegree));
@@ -69,7 +71,7 @@ System.out.println(diatonicAltList);
         assertSame(DiatonicAlt.C, diatonicAltList.get(0));
         assertEquals(DiatonicAlt.C.add(ScaleDistance.QUARTER), diatonicAltList.get(1));
         assertEquals(DiatonicAlt.CC, diatonicAltList.get(2));
-        assertEquals(DiatonicAlt.D.sub(ScaleDistance.QUARTER), diatonicAltList.get(3));
+        assertEquals(DiatonicAlt.CC.add(ScaleDistance.QUARTER), diatonicAltList.get(3));
         assertSame(DiatonicAlt.D, diatonicAltList.get(4));
         assertEquals(DiatonicAlt.D.add(ScaleDistance.QUARTER), diatonicAltList.get(5));
         assertSame(DiatonicAlt.DD, diatonicAltList.get(6));

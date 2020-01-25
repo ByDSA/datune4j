@@ -24,7 +24,7 @@ public class PathProgression extends Path<NodeProgression> {
 		nodes = new ArrayList<>();
 
 		for (int i = 1; i < array.size()-1; i++) { // todo
-			List<ChordMidi> cs = null;//ChordMidiTransformations.getAllAbsoluteVoicesWithInv(array.get(i));
+			List<ChordMidi> cs = null;//ChordMidiTransformations.getAllAbsoluteVoicesWithInv(array.fromInt(i));
 			List<NodeProgression> ns = new ArrayList<>();
 			for (ChordMidi c : cs) {
 				ns.add( new NodeProgression(c) );

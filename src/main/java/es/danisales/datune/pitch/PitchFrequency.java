@@ -1,5 +1,5 @@
 package es.danisales.datune.pitch;
 
-public interface Pitch {	
+public interface PitchFrequency {
 	double getFrequency();
 }

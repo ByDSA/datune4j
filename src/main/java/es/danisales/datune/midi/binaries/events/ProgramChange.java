@@ -30,7 +30,7 @@ public final class ProgramChange extends ChannelEvent {
 
 	@Override
 	public byte[] generateData() {
-		return new byte[]{(byte) (instrument.val() & 0x7F)};
+		return new byte[]{(byte) (instrument.value() & 0x7F)};
 	}
 
 	@Override

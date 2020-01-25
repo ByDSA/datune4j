@@ -1,6 +1,6 @@
 package es.danisales.datune.midi;
 
-import es.danisales.datune.chords.DiatonicAlt;
+import es.danisales.datune.degrees.octave.DiatonicAlt;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.midi.pitch.PitchMidi;

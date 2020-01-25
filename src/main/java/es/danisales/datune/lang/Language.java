@@ -1,7 +1,7 @@
 package es.danisales.datune.lang;
 
 public enum Language {
-    ESP, ENG;
+    ES, EN;
 
-    public static Language current = ENG;
+    public static Language current = EN;
 }

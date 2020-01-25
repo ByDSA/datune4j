@@ -1,4 +1,4 @@
-package es.danisales.datune.chords;
+package es.danisales.datune.chords.tonal;
 
 import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.tonality.Tonality;

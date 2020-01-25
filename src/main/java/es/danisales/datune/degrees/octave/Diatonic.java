@@ -4,7 +4,6 @@ import es.danisales.datune.degrees.OrderedDegree;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.lang.Language;
-import es.danisales.datune.pitch.PitchDiatonicSingle;
 import es.danisales.utils.MathUtils;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -13,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-public enum Diatonic implements PitchDiatonicSingle, CyclicDegree, OrderedDegree {
+public enum Diatonic implements CyclicDegree, OrderedDegree, Cloneable {
 	C, D, E, F, G, A, B;
 
 	public static final int NUMBER = 7;
@@ -131,9 +130,9 @@ public enum Diatonic implements PitchDiatonicSingle, CyclicDegree, OrderedDegree
 	public String toString() {
 		switch (Language.current) {
 			default:
-			case ENG:
+			case EN:
 				return name();
-			case ESP:
+			case ES:
 				switch (this) {
 					case C:
 						return "Do";

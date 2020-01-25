@@ -1,6 +1,7 @@
-package es.danisales.datune.chords;
+package es.danisales.datune.chords.diatonicalt;
 
 import es.danisales.datune.degrees.octave.Diatonic;
+import es.danisales.datune.degrees.octave.DiatonicAlt;
 
 import java.util.ArrayList;
 import java.util.Arrays;

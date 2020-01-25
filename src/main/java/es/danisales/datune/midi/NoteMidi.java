@@ -1,17 +1,19 @@
 package es.danisales.datune.midi;
 
+import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.midi.binaries.events.EventComplex;
 import es.danisales.datune.midi.binaries.events.NoteOff;
 import es.danisales.datune.midi.binaries.events.NoteOn;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.midi.pitch.PitchMidiInterface;
-import es.danisales.datune.pitch.SymbolicPitch;
+import es.danisales.datune.voicing.AbsoluteVoicing;
 import es.danisales.utils.NeverHappensException;
 import es.danisales.utils.building.BuildingException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public class NoteMidi<P extends PitchMidiInterface> implements SymbolicPitch, EventComplex, Durable, Velocitiable {
+public class NoteMidi
+        implements EventComplex, Durable, Velocitiable, Cloneable {
     protected int velocity;
     protected int length;
     protected PitchChromaticMidi pitch;

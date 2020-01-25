@@ -8,7 +8,7 @@ import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.lang.Language;
 import es.danisales.datune.midi.pitch.PitchDiatonicMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
-import es.danisales.datune.chords.DiatonicAlt;
+import es.danisales.datune.degrees.octave.DiatonicAlt;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
 import org.junit.Test;
@@ -47,7 +47,6 @@ public class ChromaticTest {
         assertSame(Chromatic.C, Chromatic.from(DiatonicAlt.C));
         assertSame(Chromatic.C, Chromatic.from(DiatonicAlt.BB));
         assertSame(Chromatic.G, Chromatic.from(DiatonicAlt.FFF));
-        assertSame(Chromatic.GG, Chromatic.from(DiatonicAlt.FFFF));
     }
 
     @Test
@@ -134,7 +133,7 @@ public class ChromaticTest {
 
     @Test
     public void toStringTest_ENG() {
-        Language.current = Language.ENG;
+        Language.current = Language.EN;
         assertSame("C", Chromatic.C.toString());
         assertEquals("C#", Chromatic.CC.toString());
         assertSame("D", Chromatic.D.toString());
@@ -151,7 +150,7 @@ public class ChromaticTest {
 
     @Test
     public void toStringTest_ESP() {
-        Language.current = Language.ESP;
+        Language.current = Language.ES;
         assertSame("Do", Chromatic.C.toString());
         assertEquals("Do#", Chromatic.CC.toString());
         assertSame("Re", Chromatic.D.toString());

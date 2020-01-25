@@ -1,4 +1,4 @@
-package es.danisales.datune.chords;
+package es.danisales.datune.chords.diatonicalt;
 
 import es.danisales.datune.lang.Namer;
 

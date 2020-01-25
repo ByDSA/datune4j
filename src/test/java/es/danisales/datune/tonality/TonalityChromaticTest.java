@@ -174,7 +174,7 @@ public class TonalityChromaticTest {
     public void allSize() {
         List<Tonality<Chromatic>> tonalities = TonalityRetrieval.allUsualKeys();
 
-        Assert.assertEquals(1029, tonalities.size());
+        Assert.assertEquals(Scale.allUsualScales().size() * Chromatic.NUMBER, tonalities.size());
     }
 
     private void allContains(Tonality tonality) {

@@ -16,4 +16,12 @@ public class Utils { // todo: to datils
 
         return i;
     }
+
+    public static float rotativeTrim(float n, float limit) {
+        n %= limit;
+        if (n < 0)
+            n += limit;
+
+        return n;
+    }
 }

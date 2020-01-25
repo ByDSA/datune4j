@@ -299,7 +299,7 @@ public class Sequence extends BinFile {
 						t.add(time, noteOff);
 					} else if (sm.getCommand() == 0xC0) { // Program Change
 						int ins = sm.getData1();
-						t.setInstrument(Instrument.get(ins));
+						t.setInstrument(Instrument.fromInt(ins));
 					} else if (sm.getCommand() == 0xB0) { // Pan, volume...
 						int type = sm.getData1();
 						int data = sm.getData2();

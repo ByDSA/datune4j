@@ -1,6 +1,5 @@
 package es.danisales.datune.degrees.octave;
 
-import es.danisales.datune.chords.DiatonicAlt;
 import es.danisales.datune.degrees.scale.PentatonicDegree;
 import es.danisales.utils.MathUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;

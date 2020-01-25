@@ -1,5 +1,7 @@
 package es.danisales.datune.chords;
 
+import es.danisales.datune.degrees.octave.DiatonicAlt;
+import es.danisales.datune.chords.diatonicalt.DiatonicAltPattern;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

@@ -1,8 +1,8 @@
 package es.danisales.datune.tonality;
 
 import es.danisales.datune.chords.chromatic.ChromaticChord;
-import es.danisales.datune.chords.DiatonicAlt;
-import es.danisales.datune.chords.DiatonicAltChord;
+import es.danisales.datune.degrees.octave.DiatonicAlt;
+import es.danisales.datune.chords.diatonicalt.DiatonicAltChord;
 import es.danisales.datune.chords.DiatonicDegreePattern;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;

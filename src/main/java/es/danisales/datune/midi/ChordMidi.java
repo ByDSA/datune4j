@@ -1,14 +1,17 @@
 package es.danisales.datune.midi;
 
 import es.danisales.datastructures.ListProxy;
+import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.midi.arpegios.Arpeggio;
 import es.danisales.datune.midi.arpegios.ArpeggioDefault;
 import es.danisales.datune.midi.binaries.events.EventComplex;
+import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.midi.pitch.PitchOctaveMidiEditable;
 import es.danisales.datune.pitch.PitchOctave;
+import es.danisales.datune.voicing.AbsoluteVoicing;
 import es.danisales.utils.HashingUtils;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;

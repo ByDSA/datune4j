@@ -1,5 +1,6 @@
 package es.danisales.datune.chords;
 
+import es.danisales.datune.chords.tonal.TonalChord;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.tonality.Tonality;

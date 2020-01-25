@@ -1,10 +1,8 @@
 package es.danisales.datune.midi.pitch;
 
-import es.danisales.datune.pitch.PitchChromaticSingle;
-
 import static com.google.common.base.Preconditions.checkArgument;
 
-public final class PitchMidi implements PitchChromaticSingle, Cloneable {
+public final class PitchMidi implements Cloneable {
     private int cents;
     private PitchChromaticMidi pitchChromaticMidi;
 

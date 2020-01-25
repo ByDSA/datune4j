@@ -10,8 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Pattern
-        extends ListProxy<Integer>
-        implements PatternInterface, Cloneable {
+        extends ListProxy<Integer> {
     protected Pattern() {
         super(new ArrayList<>());
     }
@@ -36,7 +35,6 @@ public class Pattern
         return pattern;
     }
 
-    @Override
     public final @NonNull List<Integer> getList() {
         return Collections.unmodifiableList(listAdapter);
     }

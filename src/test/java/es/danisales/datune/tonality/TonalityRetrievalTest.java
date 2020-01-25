@@ -2,7 +2,7 @@ package es.danisales.datune.tonality;
 
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
-import es.danisales.datune.chords.DiatonicAlt;
+import es.danisales.datune.degrees.octave.DiatonicAlt;
 import junit.framework.TestCase;
 import org.junit.Test;
 
@@ -109,7 +109,7 @@ public class TonalityRetrievalTest {
         Tonality target = Tonality.from(DiatonicAlt.Eb, Scale.PENTATONIC_MINOR);
         Tonality target2 = Tonality.from(DiatonicAlt.DD, Scale.PENTATONIC_MINOR);
         Tonality source = Tonality.from(DiatonicAlt.Fbb, Scale.PENTATONIC_MINOR);
-        Set<Tonality> result = TonalityRetrieval.getEnharmonicMinimalAltsFrom(source);
+        Set<Tonality> result = TonalityRetrieval.getEnharmonicMinimalNoteAltsFrom(source);
 
         assertEquals(2, result.size());
         assertTrue(result.contains(target));
@@ -121,7 +121,7 @@ public class TonalityRetrievalTest {
         Tonality target1 = Tonality.FF;
         Tonality target2 = Tonality.Gb;
         Tonality tonality = Tonality.from(DiatonicAlt.EEE, Scale.MAJOR);
-        Set<Tonality> result = TonalityRetrieval.getEnharmonicMinimalAltsFrom(tonality);
+        Set<Tonality> result = TonalityRetrieval.getEnharmonicMinimalNoteAltsFrom(tonality);
 
         assertEquals(2, result.size());
         assertTrue(result.contains(target1));

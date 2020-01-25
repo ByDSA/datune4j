@@ -42,7 +42,7 @@ class Main {
 		}
 
 		Song p = new Song( "azsxdc", 120, Tonality.FFm );
-		Track strings = new Track( 0, Instrument.get( 48 ) );
+		Track strings = new Track( 0, Instrument.fromInt( 48 ) );
 		int l2 = 0;
 		for ( int i = 0; i < pcm.size(); i++ ) {
 			ChordMidi c = pcm.get( i );

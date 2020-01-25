@@ -1,7 +1,7 @@
 package es.danisales.datune.midi;
 
 import es.danisales.datune.chords.chromatic.ChromaticChord;
-import es.danisales.datune.chords.TonalChord;
+import es.danisales.datune.chords.tonal.TonalChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;

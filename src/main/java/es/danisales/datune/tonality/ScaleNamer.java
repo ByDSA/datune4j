@@ -136,7 +136,7 @@ class ScaleNamer {
 
     public static String from(ScaleDistance scaleDistance) {
         switch (Language.current) {
-            case ESP:
+            case ES:
                 switch (scaleDistance) {
                     case QUARTER:
                         return "1/4";
@@ -154,7 +154,7 @@ class ScaleNamer {
                         throw NeverHappensException.switchOf(scaleDistance);
                 }
             default:
-            case ENG:
+            case EN:
                 switch (scaleDistance) {
                     case QUARTER:
                         return "1/4";

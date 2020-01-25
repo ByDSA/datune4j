@@ -2,7 +2,7 @@ package es.danisales.datune.tuning;
 
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.chords.AlterationException;
-import es.danisales.datune.chords.DiatonicAlt;
+import es.danisales.datune.degrees.octave.DiatonicAlt;
 
 public abstract class DiatonicTemperament extends Temperament<DiatonicAlt> {
 	public abstract double semi();

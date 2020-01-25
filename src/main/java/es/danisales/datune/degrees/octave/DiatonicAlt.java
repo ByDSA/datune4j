@@ -1,11 +1,7 @@
-package es.danisales.datune.chords;
+package es.danisales.datune.degrees.octave;
 
-import es.danisales.datune.degrees.octave.CyclicDegree;
-import es.danisales.datune.degrees.octave.Chromatic;
-import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.lang.Namer;
 import es.danisales.datune.midi.NoteMidi;
-import es.danisales.datune.pitch.PitchChromaticSingle;
 import es.danisales.datune.tonality.ScaleDistance;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
@@ -13,9 +9,12 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 @SuppressWarnings("WeakerAccess")
 public class DiatonicAlt implements CyclicDegree {
@@ -43,22 +42,6 @@ public class DiatonicAlt implements CyclicDegree {
 	public static final DiatonicAlt AAA = new DiatonicAlt(Diatonic.A,2);
 	public static final DiatonicAlt BBB = new DiatonicAlt(Diatonic.B,2);
 
-	public static final DiatonicAlt CCCC = new DiatonicAlt(Diatonic.C, 3);
-	public static final DiatonicAlt DDDD = new DiatonicAlt(Diatonic.D, 3);
-	public static final DiatonicAlt EEEE = new DiatonicAlt(Diatonic.E, 3);
-	public static final DiatonicAlt FFFF = new DiatonicAlt(Diatonic.F, 3);
-	public static final DiatonicAlt GGGG = new DiatonicAlt(Diatonic.G, 3);
-	public static final DiatonicAlt AAAA = new DiatonicAlt(Diatonic.A, 3);
-	public static final DiatonicAlt BBBB = new DiatonicAlt(Diatonic.B, 3);
-
-	public static final DiatonicAlt CCCCC = new DiatonicAlt(Diatonic.C, 4);
-	public static final DiatonicAlt DDDDD = new DiatonicAlt(Diatonic.D, 4);
-	public static final DiatonicAlt EEEEE = new DiatonicAlt(Diatonic.E, 4);
-	public static final DiatonicAlt FFFFF = new DiatonicAlt(Diatonic.F, 4);
-	public static final DiatonicAlt GGGGG = new DiatonicAlt(Diatonic.G, 4);
-	public static final DiatonicAlt AAAAA = new DiatonicAlt(Diatonic.A, 4);
-	public static final DiatonicAlt BBBBB = new DiatonicAlt(Diatonic.B, 4);
-
 	public static final DiatonicAlt Cb = new DiatonicAlt(Diatonic.C, -1);
 	public static final DiatonicAlt Db = new DiatonicAlt(Diatonic.D, -1);
 	public static final DiatonicAlt Eb = new DiatonicAlt(Diatonic.E, -1);
@@ -74,24 +57,13 @@ public class DiatonicAlt implements CyclicDegree {
 	public static final DiatonicAlt Abb = new DiatonicAlt(Diatonic.A, -2);
 	public static final DiatonicAlt Bbb = new DiatonicAlt(Diatonic.B, -2);
 
-	public static final DiatonicAlt Cbbb = new DiatonicAlt(Diatonic.C, -3);
-	public static final DiatonicAlt Dbbb = new DiatonicAlt(Diatonic.D, -3);
-	public static final DiatonicAlt Ebbb = new DiatonicAlt(Diatonic.E, -3);
-	public static final DiatonicAlt Fbbb = new DiatonicAlt(Diatonic.F, -3);
-	public static final DiatonicAlt Gbbb = new DiatonicAlt(Diatonic.G, -3);
-	public static final DiatonicAlt Abbb = new DiatonicAlt(Diatonic.A, -3);
-	public static final DiatonicAlt Bbbb = new DiatonicAlt(Diatonic.B, -3);
-
-	private static final Set<DiatonicAlt> ALL_PRECALC = Collections.unmodifiableSet( new HashSet<>(Arrays.asList(
+	private static final Set<DiatonicAlt> precalculatedDiatonicAlt = new HashSet<>(Arrays.asList(
 			C, D, E, F, G, A, B,
 			CC, DD, EE, FF, GG, AA, BB,
 			CCC, DDD, EEE, FFF, GGG, AAA, BBB,
-			CCCC, DDDD, EEEE, FFFF, GGGG, AAAA, BBBB,
-			CCCCC, DDDDD, EEEEE, FFFFF, GGGGG, AAAAA, BBBBB,
 			Cb, Db, Eb, Fb, Gb, Ab, Bb,
-			Cbb, Dbb, Ebb, Fbb, Gbb, Abb, Bbb,
-			Cbbb, Dbbb, Ebbb, Fbbb, Gbbb, Abbb, Bbbb
-	)));
+			Cbb, Dbb, Ebb, Fbb, Gbb, Abb, Bbb
+	));
 
 	private static final float TOLERANCE = 0.01f;
 
@@ -108,24 +80,26 @@ public class DiatonicAlt implements CyclicDegree {
 		this.microtonalAdded = Math.abs(diff) < TOLERANCE ? 0 : diff;
 	}
 
-	public static @NonNull DiatonicAlt from(@NonNull PitchChromaticSingle chromatic, @NonNull Diatonic diatonic) {
+	public static @NonNull DiatonicAlt from(@NonNull Chromatic chromatic, @NonNull Diatonic diatonic) {
 		return DiatonicAltAdapter.from(chromatic, diatonic);
 	}
 
 	public static @NonNull DiatonicAlt from(@NonNull Diatonic diatonic, float alt) {
-		DiatonicAlt ret = getPrecalc(diatonic, alt);
+		DiatonicAlt ret = getPrecalculated(diatonic, alt);
 		if (ret != null)
 			return ret;
 
-		return new DiatonicAlt(diatonic, alt);
+		DiatonicAlt diatonicAlt = new DiatonicAlt(diatonic, alt);
+		precalculatedDiatonicAlt.add(diatonicAlt);
+		return diatonicAlt;
 	}
 
-	private static @Nullable DiatonicAlt getPrecalc(Diatonic diatonic, float alt) {
-		for (DiatonicAlt d : ALL_PRECALC)
+	private static @Nullable DiatonicAlt getPrecalculated(Diatonic diatonic, float alt) {
+		for (DiatonicAlt d : precalculatedDiatonicAlt) // todo: usar hashmap
 			if (d.getDiatonic().equals(diatonic) && d.getSemitonesAdded() + d.getMicrotonalPartAdded() == alt)
 				return d;
 
-			return null;
+		return null;
 	}
 
 	public static @NonNull DiatonicAlt from(@NonNull Chromatic chromatic) {
@@ -154,11 +128,11 @@ public class DiatonicAlt implements CyclicDegree {
 		throw new TonalityException(diatonic, tonality);
 	}
 
-    public static DiatonicAlt from(@NonNull Chromatic chromatic, float microPart, @NonNull CyclicDegree absoluteDegree) {
+	public static DiatonicAlt from(@NonNull Chromatic chromatic, float microPart, @NonNull CyclicDegree absoluteDegree) {
 		return DiatonicAltAdapter.from(chromatic, microPart, absoluteDegree);
 	}
 
-    public static DiatonicAlt from(float semis, @NonNull CyclicDegree absoluteDegree) {
+	public static DiatonicAlt from(float semis, @NonNull CyclicDegree absoluteDegree) {
 		return DiatonicAltAdapter.from(semis, absoluteDegree);
 	}
 
@@ -238,5 +212,76 @@ public class DiatonicAlt implements CyclicDegree {
 	@Override
 	public int ordinal() {
 		return diatonicBase.ordinal();
+	}
+
+	public static class EnharmonicRetrieval {
+		private EnharmonicRetrieval() {
+		}
+
+		public static @NonNull Set<DiatonicAlt> getFromDiatonicAlt(@NonNull DiatonicAlt diatonicAlt, int maxAlterations) {
+			checkArgument(maxAlterations >= 0);
+
+			Chromatic chromatic = Chromatic.from(diatonicAlt);
+			float microtonal = diatonicAlt.getMicrotonalPartAdded();
+			if (microtonal != 0)
+				return getFromChromaticMicro(chromatic, microtonal, maxAlterations);
+			else
+				return getFromChromatic(chromatic, maxAlterations);
+		}
+
+		public static @NonNull Set<DiatonicAlt> getFromChromatic(@NonNull Chromatic chromatic, int maxAlt) {
+			checkArgument(maxAlt >= 0);
+
+			Set<DiatonicAlt> ret = new HashSet<>();
+
+			for (int alt = -maxAlt; alt <= maxAlt; alt++)
+				for (Diatonic diatonic : Diatonic.values()) {
+					DiatonicAlt diatonicAlt = DiatonicAlt.from(diatonic, (float) alt);
+					Chromatic diatonicAltChromatic = Chromatic.from(diatonicAlt);
+					if (diatonicAltChromatic == chromatic && Math.floor(diatonicAlt.getUnsignedAlterations()) <= maxAlt)
+						ret.add(diatonicAlt);
+				}
+
+			return ret;
+		}
+
+		public static @NonNull Set<DiatonicAlt> getFromChromaticMicro(@NonNull Chromatic chromatic, float micro, int maxAlterations) {
+			checkArgument(maxAlterations >= 0);
+
+			Set<DiatonicAlt> ret = new HashSet<>();
+
+			for (int alt = -maxAlterations; alt <= maxAlterations; alt++)
+				for (Diatonic diatonic : Diatonic.values()) {
+					int chromaticAlt = chromatic.ordinal() - Chromatic.from(diatonic).ordinal();
+					float semis = chromaticAlt + alt + micro;
+					DiatonicAlt diatonicAlt = DiatonicAlt.from(diatonic, semis);
+					if (Math.abs(semis - getChromaticSemitones(diatonicAlt)) < 0.1f && Math.floor(diatonicAlt.getUnsignedAlterations()) <= maxAlterations)
+						ret.add(diatonicAlt);
+				}
+
+			return ret;
+		}
+
+		public static float getChromaticSemitones(DiatonicAlt diatonicAlt) {
+			Diatonic diatonic = diatonicAlt.getDiatonic();
+			Chromatic chromatic = Chromatic.from(diatonic);
+
+			return chromatic.ordinal() + diatonicAlt.getAlterations();
+		}
+
+		public static @NonNull DiatonicAlt getMinimizedAlts(@NonNull DiatonicAlt diatonicAlt) {
+			Set<DiatonicAlt> set = EnharmonicRetrieval.getFromDiatonicAlt(diatonicAlt, 1);
+			Iterator<DiatonicAlt> iterator = set.iterator();
+			final AtomicReference<DiatonicAlt> ret = new AtomicReference<>( diatonicAlt );
+			iterator.forEachRemaining((DiatonicAlt d) -> {
+				float retuAlts = ret.get().getUnsignedAlterations();
+				float duAlts = d.getUnsignedAlterations();
+				if (duAlts < retuAlts
+						|| duAlts < diatonicAlt.getUnsignedAlterations() && duAlts == retuAlts && d.getAlterations() > ret.get().getAlterations())
+					ret.set(d);
+			});
+
+			return ret.get();
+		}
 	}
 }

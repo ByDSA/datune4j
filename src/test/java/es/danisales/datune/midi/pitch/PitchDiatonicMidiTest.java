@@ -4,7 +4,7 @@ import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.interval.IntervalDiatonic;
-import es.danisales.datune.chords.DiatonicAlt;
+import es.danisales.datune.degrees.octave.DiatonicAlt;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
@@ -143,7 +143,7 @@ public class PitchDiatonicMidiTest {
     public void fromPitchChromaticMidi4() throws PitchMidiException, TonalityException {
         PitchChromaticMidi pitchChromaticMidi = PitchChromaticMidi.A4;
 
-        Tonality tonality = Tonality.from(DiatonicAlt.Cbbb, Scale.MINOR);
+        Tonality tonality = Tonality.from(DiatonicAlt.from(Diatonic.C, -3), Scale.MINOR);
 
         PitchDiatonicMidi pitchDiatonicMidiExpected = PitchDiatonicMidi.from(DiatonicDegree.I, tonality, 5);
         PitchDiatonicMidi pitchDiatonicMidiActual = PitchDiatonicMidi.from(pitchChromaticMidi, tonality);
@@ -153,7 +153,7 @@ public class PitchDiatonicMidiTest {
 
     @Test
     public void fromPitchChromaticMidiBidirectional4() throws PitchMidiException {
-        Tonality tonality = Tonality.from(DiatonicAlt.Cbbb, Scale.MINOR);
+        Tonality tonality = Tonality.from(DiatonicAlt.from(Diatonic.C, -3), Scale.MINOR);
 
         PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(DiatonicDegree.I, tonality, 5);
 

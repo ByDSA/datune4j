@@ -131,15 +131,17 @@ public class TonalityGetChromaticFunction {
 
 	@SuppressWarnings("ConstantConditions") // DiatonicFunction.patternFrom nunca devuelve null en este contexto
 	private static <C extends CyclicDegree> @Nullable Tonality getT(@NonNull Tonality<C> tonality, @NonNull ChromaticFunction chromaticFunction) {
+		if ( !(tonality.getRoot() instanceof Chromatic) )
+			return null;
 		DiatonicFunction diatonicFunction = DiatonicFunction.from(chromaticFunction);
 		ChromaticChord chromaticChord = ChromaticChord.builder()
 				.diatonicFunction(diatonicFunction)
-				.tonality(tonality)
+				.tonality((Tonality<Chromatic>)tonality)
 				.build();
 
 		ChromaticChord chromaticChord2 = ChromaticChord.builder()
 				.chromaticFunction(chromaticFunction)
-				.tonality(tonality)
+				.tonality((Tonality<Chromatic>)tonality)
 				.build();
 
 		if ( !chromaticChord.equals(chromaticChord2) ) {
@@ -149,7 +151,7 @@ public class TonalityGetChromaticFunction {
 
 				ChromaticChord chromaticChord3 = ChromaticChord.builder()
 						.chromaticFunction(chromaticFunction)
-						.tonality(tonality)
+						.tonality((Tonality<Chromatic>)tonality)
 						.build();
 				if (chromaticChord.equals(chromaticChord3))
 					return mode;

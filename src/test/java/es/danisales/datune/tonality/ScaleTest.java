@@ -4,7 +4,7 @@ import es.danisales.datune.degrees.scale.ChromaticDegree;
 import es.danisales.datune.degrees.scale.ScaleDegree;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.degrees.scale.PentatonicDegree;
-import es.danisales.datune.chords.DiatonicAlt;
+import es.danisales.datune.degrees.octave.DiatonicAlt;
 import org.junit.Test;
 
 import java.util.*;

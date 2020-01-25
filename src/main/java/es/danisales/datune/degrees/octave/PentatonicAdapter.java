@@ -1,7 +1,6 @@
 package es.danisales.datune.degrees.octave;
 
 import es.danisales.datune.degrees.scale.PentatonicDegree;
-import es.danisales.datune.chords.DiatonicAlt;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
 
@@ -40,7 +39,7 @@ class PentatonicAdapter {
         return n;
     }
 
-    public static Pentatonic from(DiatonicAlt diatonicAlt, Tonality ton) throws TonalityException {
+    public static Pentatonic from(DiatonicAlt diatonicAlt, Tonality<DiatonicAlt> ton) throws TonalityException {
         PentatonicDegree pos = (PentatonicDegree)ton.getDegreeFrom(diatonicAlt);
         if (pos == null)
             throw new TonalityException(diatonicAlt, ton);

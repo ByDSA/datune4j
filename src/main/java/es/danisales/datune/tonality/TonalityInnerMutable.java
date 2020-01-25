@@ -1,6 +1,6 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.chords.DiatonicAltRetrieval;
+import es.danisales.datune.chords.diatonicalt.DiatonicAltRetrieval;
 import es.danisales.datune.degrees.octave.CyclicDegree;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
