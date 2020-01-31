@@ -7,7 +7,6 @@ import org.junit.Test;
 import static junit.framework.TestCase.*;
 
 public class SequentialTimeEventsTest {
-
     @Test
     public void createEmpty() {
         SequentialTimeEvents<Chromatic> sequentialTimeEvents = SequentialTimeEvents.createEmpty(Chromatic.class);

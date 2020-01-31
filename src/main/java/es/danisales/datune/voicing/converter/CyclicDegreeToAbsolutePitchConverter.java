@@ -1,4 +1,4 @@
-package es.danisales.datune.voicing.conversor;
+package es.danisales.datune.voicing.converter;
 
 import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.voicing.AbsoluteOctavePitch;

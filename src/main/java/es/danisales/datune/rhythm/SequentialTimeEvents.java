@@ -9,7 +9,7 @@ import java.util.List;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-public class SequentialTimeEvents<C> {
+public class SequentialTimeEvents<C> implements TimeLayer<C> {
     private List<Pair<C, Long>> content;
 
     private double durationCache;
