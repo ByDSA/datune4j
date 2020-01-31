@@ -27,21 +27,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Sequence extends BinFile {
-	public final static int MILLISECONDS = 0;
-	public final static int MIDI = 1;
-
-	protected int tempo;
-	protected List<Track> tracks;
-	protected Track firstChannel;
+	private int tempo;
+	private List<Track> tracks;
+	Track firstChannel;
 
 	protected EventSequence events;
 
-	MidiChannel[] mChannels;
-	javax.sound.midi.Instrument[] instr;
+	private MidiChannel[] mChannels;
+	private javax.sound.midi.Instrument[] instr;
 
-	Synthesizer midiSynth;
+	private Synthesizer midiSynth;
 
-	public Sequence(@NonNull Path path, int tempo) {
+	Sequence(@NonNull Path path, int tempo) {
 		super(path);
 		this.tempo = tempo;
 		tracks = new ArrayList<>();
@@ -65,18 +62,11 @@ public class Sequence extends BinFile {
 		mChannels = midiSynth.getChannels();
 
 	}
-
-	public Track chanel(int i) {
-		return tracks.get(i);
-	}
-
-	public Sequence add(Track c) {
+	public void add(Track c) {
 		tracks.add(c);
-
-		return this;
 	}
 
-	public Track createTrack(int mc, Instrument i) {
+	protected Track createTrack(int mc, Instrument i) {
 		Track t = new Track(mc, i);
 		add(t);
 
@@ -201,7 +191,7 @@ public class Sequence extends BinFile {
 	}
 
 	private Header generateHeader() {
-		return new Header(Header.MULTIPLE_TRACK, tracks.size(), Header.TICKS_DEFAULT);
+		return new Header(Header.Type.MULTIPLE_TRACK, tracks.size(), Header.TICKS_DEFAULT);
 	}
 
 	public int getTempo() {

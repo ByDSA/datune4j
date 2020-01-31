@@ -1,48 +1,41 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.degrees.octave.DiatonicAlt;
-import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.octave.Diatonic;
-import es.danisales.datune.degrees.scale.ScaleDegree;
-import es.danisales.datune.function.HarmonicFunction;
+import es.danisales.datune.degrees.octave.DiatonicAlt;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class TonalityException extends Exception {
-	public TonalityException(@NonNull DiatonicAlt diatonicAlt, @NonNull Tonality tonality) {
+	private TonalityException(@NonNull DiatonicAlt diatonicAlt, @NonNull Tonality<DiatonicAlt> tonality) {
 		super(
 			"La nota " + diatonicAlt + " no pertenece a la tonalidad " + tonality + ": "
 					+ TonalityNamer.notesFrom(tonality) + "."
 				);
 	}
 
-	public TonalityException(@NonNull Diatonic diatonic, @NonNull Tonality tonality) {
+	private TonalityException(@NonNull Diatonic diatonic, @NonNull Tonality<DiatonicAlt> tonality) {
 		super(
-				"El grado " + diatonic + " no pertenece a la tonalidad " + tonality + ": "
+				"El grado " + diatonic + " no está en la tonalidad " + tonality + ": "
 						+ TonalityNamer.notesFrom(tonality) + "."
 		);
 	}
 
-	public TonalityException(@NonNull Chromatic chromatic, @NonNull Tonality tonality) {
+	private TonalityException(@NonNull Chromatic chromatic, @NonNull Tonality<Chromatic> tonality) {
 		super(
 			"La nota " + chromatic + " no pertenece a la tonalidad " + tonality + ": "
 					+ TonalityNamer.notesFrom(tonality) + "."
 				);
 	}
 
-	public TonalityException(@NonNull ChromaticChord chromaticChord, @NonNull Tonality tonality) {
-		super(
-				"El acorde a añadir " + chromaticChord + " de notas " + chromaticChord
-			+ " no pertenece a la escala " + tonality + ": "
-			+ TonalityNamer.notesFrom(tonality) + "."
-				);
+	public static TonalityException from(@NonNull Chromatic chromatic, @NonNull Tonality<Chromatic> tonality) {
+		return new TonalityException(chromatic, tonality);
 	}
 
-	public TonalityException(@NonNull ScaleDegree relativeDegree, @NonNull Tonality tonality, int octave) {
-		super(relativeDegree + " " + tonality + " " + octave);
+	public static TonalityException from(DiatonicAlt diatonicAlt, Tonality<DiatonicAlt> tonality) {
+		return new TonalityException(diatonicAlt, tonality);
 	}
 
-    public TonalityException(Tonality tonality, HarmonicFunction harmonicFunction) {
-		super("Tonality " + tonality + " containsAll not harmonic function " + harmonicFunction);
-    }
+	public static TonalityException from(Diatonic diatonic, Tonality<DiatonicAlt> tonality) {
+		return new TonalityException(diatonic, tonality);
+	}
 }

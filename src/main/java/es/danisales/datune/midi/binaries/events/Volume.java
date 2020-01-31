@@ -2,6 +2,7 @@ package es.danisales.datune.midi.binaries.events;
 
 public class Volume extends ControlChangeEvent {
 	public static final int MAX = 127;
+	@SuppressWarnings("unused")
 	public static final int MIN = 0;
 
 	public Volume(int delta, int channel, int value) {

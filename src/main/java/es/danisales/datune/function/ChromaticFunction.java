@@ -27,9 +27,6 @@ public enum ChromaticFunction implements HarmonicFunction {
      **/
     ISUS4, IISUS4, bIIISUS4, IVSUS4, VSUS4, VISUS4, bVIISUS4,
 
-	/** sexta napolitana. */
-	N6, //bII
-
 	/** Quinto de... */
 	V_II, V_III, V_IV, V_V, V_VI,
 
@@ -43,6 +40,7 @@ public enum ChromaticFunction implements HarmonicFunction {
 	V7ALT,
 
 	/* altered */
+	N6, //bII
 	bIII,
 	bVII,
 	bVI;

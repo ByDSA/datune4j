@@ -5,10 +5,13 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class Pan extends ControlChangeEvent {
 	static final byte STATUS = (byte) 0xB0;
-	static final byte CONTROLLER_NUMBER = (byte) 0x0A;
+	private static final byte CONTROLLER_NUMBER = (byte) 0x0A;
 
+	@SuppressWarnings("WeakerAccess")
 	public static final int RIGHT = 127;
+	@SuppressWarnings("WeakerAccess")
 	public static final int MID = 63;
+	@SuppressWarnings("WeakerAccess")
     public static final int LEFT = 0;
 
 	private Pan(int delta, int value, int channel) {

@@ -79,15 +79,15 @@ public class Track extends EventSequence {
 	public void add(int n, Progression progression) {
 		super.add(n, progression);
 
-		setScale(progression.getTonality());
+		setTonality(progression.getTonality());
 	}
 
 	public void add(EventComplex eventComplex) {
 		add(0, eventComplex);
 	}
 
-	public void setScale(Tonality tonality) {
-		add(0, new KeySignatureEvent(tonality));
+	public void setTonality(Tonality tonality) {
+		add(0, KeySignatureEvent.from(tonality));
 	}
 
 	public void setPan(int p) {
@@ -101,10 +101,6 @@ public class Track extends EventSequence {
 
 	public void setVolume(int p) {
 		add(0, new Volume(0, p, channel));
-	}
-
-	public void setScale(int t, Tonality s) {
-		add(t, new KeySignatureEvent(s));
 	}
 
 	public void firstOfSequence(Sequence s) {

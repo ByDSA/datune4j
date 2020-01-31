@@ -1,10 +1,10 @@
 package es.danisales.datune.midi.pitch;
 
-import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.degrees.octave.CyclicDegree;
+import es.danisales.datune.degrees.octave.DiatonicAlt;
 import es.danisales.datune.degrees.scale.ScaleDegree;
 import es.danisales.datune.interval.IntervalChromatic;
-import es.danisales.datune.degrees.octave.DiatonicAlt;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.voicing.AbsoluteOctavePitch;
@@ -12,10 +12,8 @@ import es.danisales.utils.NeverHappensException;
 import es.danisales.utils.Utils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-import static com.google.common.base.Preconditions.checkState;
-
 public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInterface<IntervalChromatic>, AbsoluteOctavePitch<Chromatic> {
-    @SuppressWarnings({"unused"})
+    @SuppressWarnings({"WeakerAccess"})
     public static final PitchChromaticMidi C0 = new PitchChromaticMidi(PitchChromaticMidiImmutable.C0);
     @SuppressWarnings("unused")
     public static final PitchChromaticMidi CC0 = new PitchChromaticMidi(PitchChromaticMidiImmutable.CC0);
@@ -111,7 +109,7 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
     public static final PitchChromaticMidi AA3 = new PitchChromaticMidi(PitchChromaticMidiImmutable.AA3);
     @SuppressWarnings("unused")
     public static final PitchChromaticMidi B3 = new PitchChromaticMidi(PitchChromaticMidiImmutable.B3);
-    @SuppressWarnings({"unused"})
+    @SuppressWarnings({"WeakerAccess"})
     public static final PitchChromaticMidi C4 = new PitchChromaticMidi(PitchChromaticMidiImmutable.C4);
     @SuppressWarnings("unused")
     public static final PitchChromaticMidi CC4 = new PitchChromaticMidi(PitchChromaticMidiImmutable.CC4);
@@ -129,15 +127,15 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
     public static final PitchChromaticMidi G4 = new PitchChromaticMidi(PitchChromaticMidiImmutable.G4);
     @SuppressWarnings("unused")
     public static final PitchChromaticMidi GG4 = new PitchChromaticMidi(PitchChromaticMidiImmutable.GG4);
-    @SuppressWarnings({"unused"})
+    @SuppressWarnings({"WeakerAccess"})
     public static final PitchChromaticMidi A4 = new PitchChromaticMidi(PitchChromaticMidiImmutable.A4);
-    @SuppressWarnings("unused")
-    public static final PitchChromaticMidi AA4 = new PitchChromaticMidi(PitchChromaticMidiImmutable.AA4);
     @SuppressWarnings({"unused"})
+    public static final PitchChromaticMidi AA4 = new PitchChromaticMidi(PitchChromaticMidiImmutable.AA4);
+    @SuppressWarnings({"unused", "WeakerAccess"})
     public static final PitchChromaticMidi B4 = new PitchChromaticMidi(PitchChromaticMidiImmutable.B4);
     @SuppressWarnings("unused")
     public static final PitchChromaticMidi C5 = new PitchChromaticMidi(PitchChromaticMidiImmutable.C5);
-    @SuppressWarnings({"unused"})
+    @SuppressWarnings({"unused", "WeakerAccess"})
     public static final PitchChromaticMidi CC5 = new PitchChromaticMidi(PitchChromaticMidiImmutable.CC5);
     @SuppressWarnings("unused")
     public static final PitchChromaticMidi D5 = new PitchChromaticMidi(PitchChromaticMidiImmutable.D5);
@@ -205,7 +203,7 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
     public static final PitchChromaticMidi A7 = new PitchChromaticMidi(PitchChromaticMidiImmutable.A7);
     @SuppressWarnings("unused")
     public static final PitchChromaticMidi AA7 = new PitchChromaticMidi(PitchChromaticMidiImmutable.AA8);
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "WeakerAccess"})
     public static final PitchChromaticMidi B7 = new PitchChromaticMidi(PitchChromaticMidiImmutable.B8);
     @SuppressWarnings("unused")
     public static final PitchChromaticMidi C8 = new PitchChromaticMidi(PitchChromaticMidiImmutable.C8);
@@ -255,7 +253,7 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
     public static final PitchChromaticMidi AA9 = new PitchChromaticMidi(PitchChromaticMidiImmutable.AA9);
     @SuppressWarnings("unused")
     public static final PitchChromaticMidi B9 = new PitchChromaticMidi(PitchChromaticMidiImmutable.B9);
-    @SuppressWarnings({"unused"})
+    @SuppressWarnings({"unused", "WeakerAccess"})
     public static final PitchChromaticMidi C10 = new PitchChromaticMidi(PitchChromaticMidiImmutable.C10);
     @SuppressWarnings("unused")
     public static final PitchChromaticMidi CC10 = new PitchChromaticMidi(PitchChromaticMidiImmutable.CC10);
@@ -269,12 +267,13 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
     public static final PitchChromaticMidi F10 = new PitchChromaticMidi(PitchChromaticMidiImmutable.F10);
     @SuppressWarnings("unused")
     public static final PitchChromaticMidi FF10 = new PitchChromaticMidi(PitchChromaticMidiImmutable.FF10);
-    @SuppressWarnings({"unused"})
+    @SuppressWarnings({"unused", "WeakerAccess"})
     public static final PitchChromaticMidi G10 = new PitchChromaticMidi(PitchChromaticMidiImmutable.G10);
 
     public static final PitchChromaticMidi MIN = C0;
     public static final PitchChromaticMidi MAX = G10;
     public static final int MIN_OCTAVE = 0;
+    @SuppressWarnings("WeakerAccess")
     public static final int MAX_OCTAVE = 10;
 
     /**
@@ -295,15 +294,15 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
         return pitchChromaticMidi;
     }
 
-    public static <C extends CyclicDegree> @NonNull PitchChromaticMidi from(@NonNull PitchDiatonicMidi<C> pitchDiatonicMidi) {
-        Tonality<C> tonality = pitchDiatonicMidi.tonality;
+    public static @NonNull PitchChromaticMidi from(@NonNull PitchTonalMidi pitchDiatonicMidi) {
+        Tonality<Chromatic> tonality = pitchDiatonicMidi.tonality;
         ScaleDegree degree = pitchDiatonicMidi.degree;
 
         CyclicDegree diatonicAlt;
         try {
             diatonicAlt = tonality.getNote(degree);
         } catch (ScaleRelativeDegreeException e) {
-            throw NeverHappensException.make("Si PitchDiatonicMidi es consistente, es imposible que no exista el ScaleDegree en la Tonality");
+            throw NeverHappensException.make("Si PitchTonalMidi es consistente, es imposible que no exista el ScaleDegree en la Tonality");
         }
         Chromatic chromatic = Chromatic.from(diatonicAlt);
 
@@ -313,7 +312,7 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
         try {
             return from(chromatic, octave);
         } catch (PitchMidiException e) {
-            throw NeverHappensException.make("Si PitchDiatonicMidi es consistente, se puede convertir a PitchChromaticMidi siempre");
+            throw NeverHappensException.make("Si PitchTonalMidi es consistente, se puede convertir a PitchChromaticMidi siempre");
         }
     }
 
@@ -325,7 +324,7 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
         }
     }
 
-    private static <C extends CyclicDegree> int octaveCorrector(@NonNull Tonality<C> tonality, @NonNull ScaleDegree degree) {
+    public static <C extends CyclicDegree> int octaveCorrector(@NonNull Tonality<C> tonality, @NonNull ScaleDegree degree) {
         int octave = 0;
 
         if (tonality.getRoot() instanceof DiatonicAlt)
@@ -337,10 +336,10 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
         return octave;
     }
 
-    private static int octaveCorrectorAltRoot(@NonNull Tonality<DiatonicAlt> tonality) {
+    public static int octaveCorrectorAltRoot(@NonNull Tonality<DiatonicAlt> tonality) {
         int octave = 0;
 
-        DiatonicAlt diatonicAlt = (DiatonicAlt)tonality.getRoot();
+        DiatonicAlt diatonicAlt = tonality.getRoot();
         Chromatic chromaticWithoutAlts = Chromatic.from(diatonicAlt.getDiatonic());
         float semis = chromaticWithoutAlts.ordinal() + diatonicAlt.getAlterations();
         while (semis < 0) {
@@ -391,10 +390,6 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
 
     public static int boundCode(int key) {
         return Utils.bound(key, PitchChromaticMidi.MIN.getMidiCode(), PitchChromaticMidi.MAX.getMidiCode());
-    }
-
-    public static int getCodeFrom(Chromatic chromatic, int octave) {
-        return octave * Chromatic.NUMBER + chromatic.ordinal();
     }
 
     @SuppressWarnings("MethodDoesntCallSuperMethod")

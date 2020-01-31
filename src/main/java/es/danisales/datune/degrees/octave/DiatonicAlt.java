@@ -125,7 +125,7 @@ public class DiatonicAlt implements CyclicDegree {
 			if (diatonicAlt.getDiatonic().equals(diatonic))
 				return diatonicAlt;
 
-		throw new TonalityException(diatonic, tonality);
+		throw TonalityException.from(diatonic, tonality);
 	}
 
 	public static DiatonicAlt from(@NonNull Chromatic chromatic, float microPart, @NonNull CyclicDegree absoluteDegree) {

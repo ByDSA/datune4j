@@ -50,10 +50,10 @@ abstract class Chunk implements Event {
     }
 
 	protected byte[] type;
-    protected List<Object> data;
+    private List<Object> data;
 	protected int length;
 
-    public Chunk(byte[] type) {
+    Chunk(byte[] type) {
         this.type = type;
 		data = new ArrayList<>();
 	}
@@ -62,7 +62,7 @@ abstract class Chunk implements Event {
         data.add(b);
 	}
 
-	public int dataSizeBytes() {
+	private int dataSizeBytes() {
 		int s = 0;
         for (Object b : data)
             s += BinSize.getBinarySizeOf(b);
@@ -72,8 +72,4 @@ abstract class Chunk implements Event {
 
     @Override
     public abstract Chunk clone();
-
-    public byte[] getType() {
-        return type.clone();
-    }
 }

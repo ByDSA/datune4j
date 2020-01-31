@@ -2,7 +2,6 @@ package es.danisales.datune.midi.binaries.events;
 
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.eventsequences.Track;
-import es.danisales.datune.degrees.octave.DiatonicAlt;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.io.binary.BinEncoder;
@@ -42,33 +41,36 @@ public class KeySignatureEvent extends MetaEvent {
 	private static final byte[] B_BEMOL_MINOR = new byte[]{-5, 1};
 	private static final byte[] B_MINOR = new byte[]{2, 1};
 
-	static final byte STATUS = (byte) 0x59;
+	private static final byte STATUS = (byte) 0x59;
 
 	public Track channel;
-	private Tonality<DiatonicAlt> tonality;
+	private Tonality<Chromatic> tonality;
 
-	public KeySignatureEvent(int delta, Tonality tonality) {
+	private KeySignatureEvent(int delta, Tonality<Chromatic> tonality) {
 		super(delta, STATUS);
 		this.tonality = tonality;
 	}
 	
-	public KeySignatureEvent(Tonality s) {
-		this(0, s);
+	private KeySignatureEvent(Tonality<Chromatic> tonality) {
+		this(0, tonality);
+	}
+
+	public static @NonNull KeySignatureEvent from(Tonality<Chromatic> tonality) {
+		return new KeySignatureEvent(tonality);
 	}
 
 	@Override
 	protected byte[] generateData() {
 		Scale scale = tonality.getScale();
-		DiatonicAlt diatonicAlt = tonality.getRoot();
-		Chromatic note = Chromatic.from( diatonicAlt );
+		Chromatic root = tonality.getRoot();
 		byte[] bytes;
 
 		if (scale.equals(Scale.MAJOR)) {
-			bytes = major(note);
+			bytes = majorTonalityFrom(root);
 		} else if (scale.equals(Scale.MINOR)) {
-			bytes = minor(note);
+			bytes = minorTonalityFrom(root);
 		} else
-			bytes = minor(note); // TODO
+			bytes = majorTonalityFrom(root);
 
 		return bytes;
 	}
@@ -82,7 +84,8 @@ public class KeySignatureEvent extends MetaEvent {
 		return tonality;
 	}
 
-	protected byte[] major(@NonNull Chromatic chromatic) {
+	@SuppressWarnings("Duplicates")
+	private static byte[] majorTonalityFrom(@NonNull Chromatic chromatic) {
 		switch (chromatic) {
 		case C: return C_MAJOR;
 		case CC: return C_SHARP_MAJOR;
@@ -100,9 +103,10 @@ public class KeySignatureEvent extends MetaEvent {
 
 		throw NeverHappensException.switchOf(chromatic);
 	}
-	
-	protected byte[] minor(Chromatic note) {
-		switch(note) {
+
+	@SuppressWarnings("Duplicates")
+	private static byte[] minorTonalityFrom(Chromatic chromatic) {
+		switch(chromatic) {
 		case C: return C_MINOR;
 		case CC: return C_SHARP_MINOR;
 		case D: return D_MINOR;
@@ -121,18 +125,6 @@ public class KeySignatureEvent extends MetaEvent {
 	}
 	
 	public String toString() {
-		Scale scale = tonality.getScale();
-		DiatonicAlt note = tonality.getRoot();
-		StringBuilder sb = new StringBuilder();
-
-        sb.append("KeySignature: " + note);
-
-		if (scale.equals(Scale.MAJOR)) {
-			sb.append(" Mayor");
-		} else if (scale.equals(Scale.MINOR)) {
-			sb.append(" Menor");
-		}
-		
-		return sb.toString();
+		return "KeySignature: " + tonality;
 	}
 }

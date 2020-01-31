@@ -1,18 +1,19 @@
 package es.danisales.datune.midi.binaries;
 
 import es.danisales.datune.eventsequences.Instrument;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import javax.sound.midi.*;
 import java.io.*;
 
 public class Midi {
 
-	public static void play(String path) throws MidiUnavailableException, IOException, InvalidMidiDataException {
+	public static void play(@NonNull File file) throws MidiUnavailableException, IOException, InvalidMidiDataException {
 		Sequencer sequencer = MidiSystem.getSequencer();
 
 		sequencer.open();
 
-		InputStream is = new BufferedInputStream(new FileInputStream(new File(path)));
+		InputStream is = new BufferedInputStream(new FileInputStream(file));
 
 		sequencer.setSequence(is);
 

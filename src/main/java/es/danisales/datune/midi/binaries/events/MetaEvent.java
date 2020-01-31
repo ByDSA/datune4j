@@ -5,7 +5,7 @@ import es.danisales.io.binary.BinEncoder;
 import java.io.IOException;
 
 public abstract class MetaEvent extends ChunkData {
-	static final byte STATUS = (byte) 0xFF;
+	private static final byte STATUS = (byte) 0xFF;
 	byte type;
 
 	protected MetaEvent(int delta, byte type) {
@@ -14,7 +14,7 @@ public abstract class MetaEvent extends ChunkData {
 		this.type = type;
 	}
 
-	protected static void getMetaBytes(MetaEvent self, BinEncoder.EncoderSettings settings) {
+	static void getMetaBytes(MetaEvent self, BinEncoder.EncoderSettings settings) {
 		byte[] ret = new byte[4 + self.getData().length];
 		ret[0] = (byte) self.getDelta();
 		ret[1] = self.getStatus();

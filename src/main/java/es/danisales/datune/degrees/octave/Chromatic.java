@@ -3,7 +3,7 @@ package es.danisales.datune.degrees.octave;
 import es.danisales.datune.degrees.OrderedDegree;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.lang.Namer;
-import es.danisales.datune.midi.pitch.PitchDiatonicMidi;
+import es.danisales.datune.midi.pitch.PitchTonalMidi;
 import es.danisales.utils.MathUtils;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -108,9 +108,8 @@ public enum Chromatic implements CyclicDegree, OrderedDegree, Cloneable {
         throw NeverHappensException.switchOf(diatonic);
 	}
 
-	public static @NonNull Chromatic from(@NonNull PitchDiatonicMidi pitchDiatonicMidi) {
-		DiatonicAlt diatonicAlt = pitchDiatonicMidi.getDiatonicAlt();
-		return Chromatic.from(diatonicAlt);
+	public static @NonNull Chromatic from(@NonNull PitchTonalMidi pitchDiatonicMidi) {
+		return pitchDiatonicMidi.getDiatonicAlt();
 	}
 
     public Chromatic getNext(int n) {

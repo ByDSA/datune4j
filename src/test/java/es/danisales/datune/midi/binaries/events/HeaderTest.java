@@ -12,7 +12,7 @@ import static org.junit.Assert.fail;
 public class HeaderTest {
     @Test
     public void binaryEncoding_singleTrack() {
-        Header header = new Header(Header.SINGLE_TRACK, 1, Header.TICKS_DEFAULT);
+        Header header = new Header(Header.Type.SINGLE_TRACK, 1, Header.TICKS_DEFAULT);
 
         byte[] encoded = BinData.encoder()
                 .from(header)
@@ -34,7 +34,7 @@ public class HeaderTest {
 
         // data
         assertEquals((byte) 0x00, byteBuffer.get());
-        assertEquals(Header.SINGLE_TRACK, byteBuffer.get());
+        assertEquals(Header.Type.SINGLE_TRACK.getByte(), byteBuffer.get());
         assertEquals((byte) 0x00, byteBuffer.get());
         assertEquals((byte) 1, byteBuffer.get());
         assertEquals(Header.TICKS_DEFAULT[0], byteBuffer.get());

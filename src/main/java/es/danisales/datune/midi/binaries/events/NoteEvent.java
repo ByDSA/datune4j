@@ -59,7 +59,7 @@ abstract class NoteEvent extends ChannelEvent {
         }
     }
 
-    static int boundVelocity(int velocity) {
+    private static int boundVelocity(int velocity) {
         return es.danisales.utils.Utils.bound(velocity, 0, 127);
     }
 

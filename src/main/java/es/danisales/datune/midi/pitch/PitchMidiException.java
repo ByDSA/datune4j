@@ -1,7 +1,6 @@
 package es.danisales.datune.midi.pitch;
 
 import es.danisales.datune.degrees.octave.Chromatic;
-import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.pitch.PitchException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -15,7 +14,7 @@ public class PitchMidiException extends PitchException {
         super("PitchMidi of " + n + " is out of range: " + n.getCode());
 	}
 
-	public PitchMidiException(@NonNull PitchDiatonicMidi n) {
+	public PitchMidiException(@NonNull PitchTonalMidi n) {
         super("PitchMidi out of range: ScaleDegree=" + n.degree + " Tonality=" + n.tonality + " Octave=" + n.octave);
 	}
 
@@ -28,7 +27,7 @@ public class PitchMidiException extends PitchException {
 			throw new PitchMidiException( code );
 	}
 
-	public static <C extends CyclicDegree> void check(@NonNull PitchDiatonicMidi<C> pitchDiatonicMidi) throws PitchMidiException {
+	public static void check(@NonNull PitchTonalMidi pitchDiatonicMidi) throws PitchMidiException {
 		try {
 			PitchChromaticMidi.from(pitchDiatonicMidi);
 		} catch (RuntimeException e) {

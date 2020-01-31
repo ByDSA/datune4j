@@ -125,7 +125,7 @@ public class Progression<This extends Progression> implements EventComplex {
 		int duration = 0;
 		for(ChordMidi node : nodes) {
 			if (duration % DurationMidi.L1 == 0)
-				es.add(duration, new KeySignatureEvent(tonality));
+				es.add(duration, KeySignatureEvent.from(tonality));
 
 			es.add(duration, node);
 			duration += node.getLength();

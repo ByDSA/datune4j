@@ -16,32 +16,32 @@ import static org.junit.Assert.assertEquals;
 public class PitchDiatonicMidiTest {
     @Test
     public void from() throws PitchMidiException {
-        PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(DiatonicDegree.I, Tonality.C, 5);
+        PitchTonalMidi pitchDiatonicMidi = PitchTonalMidi.from(DiatonicDegree.I, Tonality.C, 5);
         assertNotNull(pitchDiatonicMidi);
         assertEquals(DiatonicDegree.I, pitchDiatonicMidi.getDegree());
-        assertEquals(Tonality.C, pitchDiatonicMidi.getTonality());
+        assertEquals(Tonality.ET12.C, pitchDiatonicMidi.getTonality());
         assertEquals(5, pitchDiatonicMidi.getOctave());
     }
 
     @Test
     public void from2() throws PitchMidiException {
-        PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(DiatonicDegree.III, Tonality.Am, 5);
+        PitchTonalMidi pitchDiatonicMidi = PitchTonalMidi.from(DiatonicDegree.III, Tonality.Am, 5);
         assertNotNull(pitchDiatonicMidi);
         assertEquals(DiatonicDegree.III, pitchDiatonicMidi.getDegree());
-        assertEquals(Tonality.Am, pitchDiatonicMidi.getTonality());
+        assertEquals(Tonality.ET12.Am, pitchDiatonicMidi.getTonality());
         assertEquals(5, pitchDiatonicMidi.getOctave());
     }
 
     @Test
     public void from3() throws PitchMidiException {
-        PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(DiatonicDegree.I, Tonality.C, 10);
+        PitchTonalMidi pitchDiatonicMidi = PitchTonalMidi.from(DiatonicDegree.I, Tonality.C, 10);
         assertNotNull(pitchDiatonicMidi);
         assertEquals(PitchChromaticMidi.C10.getMidiCode(), pitchDiatonicMidi.getMidiCode());
     }
 
     @Test
     public void from4() throws PitchMidiException {
-        PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(DiatonicDegree.III, Tonality.Am, -1);
+        PitchTonalMidi pitchDiatonicMidi = PitchTonalMidi.from(DiatonicDegree.III, Tonality.Am, -1);
         assertNotNull(pitchDiatonicMidi);
         assertEquals(PitchChromaticMidi.C0.getMidiCode(), pitchDiatonicMidi.getMidiCode());
     }
@@ -49,16 +49,16 @@ public class PitchDiatonicMidiTest {
     @Test
     public void from5() throws TonalityException {
         Tonality<DiatonicAlt> tonality = Tonality.from(DiatonicAlt.Cb, Scale.MAJOR);
-        PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(PitchChromaticMidi.FF6, tonality);
+        PitchTonalMidi pitchDiatonicMidi = PitchTonalMidi.from(PitchChromaticMidi.FF6, tonality);
         assertEquals(DiatonicDegree.V, pitchDiatonicMidi.getDegree());
-        assertEquals(tonality, pitchDiatonicMidi.getTonality());
-        assertEquals(6, pitchDiatonicMidi.getOctave());
+        assertEquals(Tonality.ET12.B, pitchDiatonicMidi.getTonality());
+        assertEquals(5, pitchDiatonicMidi.getOctave());
     }
 
     @Test
     public void from5Bidirectional() throws TonalityException {
-        Tonality tonality = Tonality.from(DiatonicAlt.Cb, Scale.MAJOR);
-        PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(PitchChromaticMidi.FF6, tonality);
+        Tonality<DiatonicAlt> tonality = Tonality.from(DiatonicAlt.Cb, Scale.MAJOR);
+        PitchTonalMidi pitchDiatonicMidi = PitchTonalMidi.from(PitchChromaticMidi.FF6, tonality);
 
         PitchChromaticMidi pitchChromaticMidi = PitchChromaticMidi.from(pitchDiatonicMidi);
         assertEquals(PitchChromaticMidi.FF6, pitchChromaticMidi);
@@ -66,27 +66,27 @@ public class PitchDiatonicMidiTest {
 
     @Test(expected = PitchMidiException.class)
     public void fromTonalityOctaveInvalid() throws PitchMidiException {
-        PitchDiatonicMidi.from(DiatonicDegree.VI, Tonality.C, 10);
+        PitchTonalMidi.from(DiatonicDegree.VI, Tonality.C, 10);
     }
 
     @Test(expected = PitchMidiException.class)
     public void fromTonalityOctaveInvalid2() throws PitchMidiException {
-        PitchDiatonicMidi.from(DiatonicDegree.VI, Tonality.C, -1);
+        PitchTonalMidi.from(DiatonicDegree.VI, Tonality.C, -1);
     }
 
     @Test
     public void fromPitchChromaticMidi() throws PitchMidiException, TonalityException {
         PitchChromaticMidi pitchChromaticMidi = PitchChromaticMidi.C5;
 
-        PitchDiatonicMidi pitchDiatonicMidiExpected = PitchDiatonicMidi.from(DiatonicDegree.I, Tonality.C, 5);
-        PitchDiatonicMidi pitchDiatonicMidiActual = PitchDiatonicMidi.from(pitchChromaticMidi, Tonality.C);
+        PitchTonalMidi pitchDiatonicMidiExpected = PitchTonalMidi.from(DiatonicDegree.I, Tonality.C, 5);
+        PitchTonalMidi pitchDiatonicMidiActual = PitchTonalMidi.from(pitchChromaticMidi, Tonality.C);
 
         assertEquals(pitchDiatonicMidiExpected, pitchDiatonicMidiActual);
     }
 
     @Test
     public void fromPitchChromaticMidiBidirectional() throws PitchMidiException {
-        PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(DiatonicDegree.I, Tonality.C, 5);
+        PitchTonalMidi pitchDiatonicMidi = PitchTonalMidi.from(DiatonicDegree.I, Tonality.C, 5);
 
         PitchChromaticMidi pitchChromaticMidiExpected = PitchChromaticMidi.C5;
         PitchChromaticMidi pitchChromaticMidiActual = PitchChromaticMidi.from(pitchDiatonicMidi);
@@ -98,15 +98,15 @@ public class PitchDiatonicMidiTest {
     public void fromPitchChromaticMidi2() throws PitchMidiException, TonalityException {
         PitchChromaticMidi pitchChromaticMidi = PitchChromaticMidi.C5;
 
-        PitchDiatonicMidi pitchDiatonicMidiExpected = PitchDiatonicMidi.from(DiatonicDegree.III, Tonality.Am, 4);
-        PitchDiatonicMidi pitchDiatonicMidiActual = PitchDiatonicMidi.from(pitchChromaticMidi, Tonality.Am);
+        PitchTonalMidi pitchDiatonicMidiExpected = PitchTonalMidi.from(DiatonicDegree.III, Tonality.Am, 4);
+        PitchTonalMidi pitchDiatonicMidiActual = PitchTonalMidi.from(pitchChromaticMidi, Tonality.Am);
 
         assertEquals(pitchDiatonicMidiExpected, pitchDiatonicMidiActual);
     }
 
     @Test
     public void fromPitchChromaticMidiBidirectional2() throws PitchMidiException {
-        PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(DiatonicDegree.III, Tonality.Am, 4);
+        PitchTonalMidi pitchDiatonicMidi = PitchTonalMidi.from(DiatonicDegree.III, Tonality.Am, 4);
 
         PitchChromaticMidi pitchChromaticMidiExpected = PitchChromaticMidi.C5;
         PitchChromaticMidi pitchChromaticMidiActual = PitchChromaticMidi.from(pitchDiatonicMidi);
@@ -118,19 +118,19 @@ public class PitchDiatonicMidiTest {
     public void fromPitchChromaticMidi3() throws PitchMidiException, TonalityException {
         PitchChromaticMidi pitchChromaticMidi = PitchChromaticMidi.C5;
 
-        Tonality tonality = Tonality.from(DiatonicAlt.BB, Scale.MAJOR);
+        Tonality<DiatonicAlt> tonality = Tonality.from(DiatonicAlt.BB, Scale.MAJOR);
 
-        PitchDiatonicMidi pitchDiatonicMidiExpected = PitchDiatonicMidi.from(DiatonicDegree.I, tonality, 4);
-        PitchDiatonicMidi pitchDiatonicMidiActual = PitchDiatonicMidi.from(pitchChromaticMidi, tonality);
+        PitchTonalMidi pitchDiatonicMidiExpected = PitchTonalMidi.from(DiatonicDegree.I, tonality, 4);
+        PitchTonalMidi pitchDiatonicMidiActual = PitchTonalMidi.from(pitchChromaticMidi, tonality);
 
         assertEquals(pitchDiatonicMidiExpected, pitchDiatonicMidiActual);
     }
 
     @Test
     public void fromPitchChromaticMidiBidirectional3() throws PitchMidiException {
-        Tonality tonality = Tonality.from(DiatonicAlt.BB, Scale.MAJOR);
+        Tonality<DiatonicAlt> tonality = Tonality.from(DiatonicAlt.BB, Scale.MAJOR);
 
-        PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(DiatonicDegree.I, tonality, 4);
+        PitchTonalMidi pitchDiatonicMidi = PitchTonalMidi.from(DiatonicDegree.I, tonality, 4);
 
         PitchChromaticMidi pitchChromaticMidiExpected = PitchChromaticMidi.C5;
         PitchChromaticMidi pitchChromaticMidiActual = PitchChromaticMidi.from(pitchDiatonicMidi);
@@ -143,19 +143,19 @@ public class PitchDiatonicMidiTest {
     public void fromPitchChromaticMidi4() throws PitchMidiException, TonalityException {
         PitchChromaticMidi pitchChromaticMidi = PitchChromaticMidi.A4;
 
-        Tonality tonality = Tonality.from(DiatonicAlt.from(Diatonic.C, -3), Scale.MINOR);
+        Tonality<DiatonicAlt> tonality = Tonality.from(DiatonicAlt.from(Diatonic.C, -3), Scale.MINOR);
 
-        PitchDiatonicMidi pitchDiatonicMidiExpected = PitchDiatonicMidi.from(DiatonicDegree.I, tonality, 5);
-        PitchDiatonicMidi pitchDiatonicMidiActual = PitchDiatonicMidi.from(pitchChromaticMidi, tonality);
+        PitchTonalMidi pitchDiatonicMidiExpected = PitchTonalMidi.from(DiatonicDegree.I, tonality, 5);
+        PitchTonalMidi pitchDiatonicMidiActual = PitchTonalMidi.from(pitchChromaticMidi, tonality);
 
         assertEquals(pitchDiatonicMidiExpected, pitchDiatonicMidiActual);
     }
 
     @Test
     public void fromPitchChromaticMidiBidirectional4() throws PitchMidiException {
-        Tonality tonality = Tonality.from(DiatonicAlt.from(Diatonic.C, -3), Scale.MINOR);
+        Tonality<DiatonicAlt> tonality = Tonality.from(DiatonicAlt.from(Diatonic.C, -3), Scale.MINOR);
 
-        PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(DiatonicDegree.I, tonality, 5);
+        PitchTonalMidi pitchDiatonicMidi = PitchTonalMidi.from(DiatonicDegree.I, tonality, 5);
 
         PitchChromaticMidi pitchChromaticMidiExpected = PitchChromaticMidi.A4;
         PitchChromaticMidi pitchChromaticMidiActual = PitchChromaticMidi.from(pitchDiatonicMidi);
@@ -167,15 +167,15 @@ public class PitchDiatonicMidiTest {
     public void fromPitchChromaticMidi5() throws PitchMidiException, TonalityException {
         PitchChromaticMidi pitchChromaticMidi = PitchChromaticMidi.B4;
 
-        PitchDiatonicMidi pitchDiatonicMidiExpected = PitchDiatonicMidi.from(DiatonicDegree.II, Tonality.Am, 4);
-        PitchDiatonicMidi pitchDiatonicMidiActual = PitchDiatonicMidi.from(pitchChromaticMidi, Tonality.Am);
+        PitchTonalMidi pitchDiatonicMidiExpected = PitchTonalMidi.from(DiatonicDegree.II, Tonality.Am, 4);
+        PitchTonalMidi pitchDiatonicMidiActual = PitchTonalMidi.from(pitchChromaticMidi, Tonality.Am);
 
         assertEquals(pitchDiatonicMidiExpected, pitchDiatonicMidiActual);
     }
 
     @Test
     public void fromPitchChromaticMidiBidirectional5() throws PitchMidiException {
-        PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(DiatonicDegree.II, Tonality.Am, 4);
+        PitchTonalMidi pitchDiatonicMidi = PitchTonalMidi.from(DiatonicDegree.II, Tonality.Am, 4);
 
         PitchChromaticMidi pitchChromaticMidiExpected = PitchChromaticMidi.B4;
         PitchChromaticMidi pitchChromaticMidiActual = PitchChromaticMidi.from(pitchDiatonicMidi);
@@ -187,15 +187,15 @@ public class PitchDiatonicMidiTest {
     public void fromPitchChromaticMidi6() throws PitchMidiException, TonalityException {
         PitchChromaticMidi pitchChromaticMidi = PitchChromaticMidi.D5;
 
-        PitchDiatonicMidi pitchDiatonicMidiExpected = PitchDiatonicMidi.from(DiatonicDegree.IV, Tonality.Am, 4);
-        PitchDiatonicMidi pitchDiatonicMidiActual = PitchDiatonicMidi.from(pitchChromaticMidi, Tonality.Am);
+        PitchTonalMidi pitchDiatonicMidiExpected = PitchTonalMidi.from(DiatonicDegree.IV, Tonality.Am, 4);
+        PitchTonalMidi pitchDiatonicMidiActual = PitchTonalMidi.from(pitchChromaticMidi, Tonality.Am);
 
         assertEquals(pitchDiatonicMidiExpected, pitchDiatonicMidiActual);
     }
 
     @Test
     public void fromPitchChromaticMidiBidirectional6() throws PitchMidiException {
-        PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(DiatonicDegree.IV, Tonality.Am, 4);
+        PitchTonalMidi pitchDiatonicMidi = PitchTonalMidi.from(DiatonicDegree.IV, Tonality.Am, 4);
 
         PitchChromaticMidi pitchChromaticMidiExpected = PitchChromaticMidi.D5;
         PitchChromaticMidi pitchChromaticMidiActual = PitchChromaticMidi.from(pitchDiatonicMidi);
@@ -205,7 +205,7 @@ public class PitchDiatonicMidiTest {
 
 
     private void _shiftNegative(PitchChromaticMidi pirchChromaticMidi, IntervalDiatonic intervalDiatonic) throws PitchMidiException {
-        PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(DiatonicDegree.V, Tonality.E, 6);
+        PitchTonalMidi pitchDiatonicMidi = PitchTonalMidi.from(DiatonicDegree.V, Tonality.E, 6);
         assertNotNull(pitchDiatonicMidi);
         pitchDiatonicMidi.shiftNegative(intervalDiatonic);
         PitchChromaticMidi pitchChromaticMidi = PitchChromaticMidi.from(pitchDiatonicMidi);
@@ -269,7 +269,7 @@ public class PitchDiatonicMidiTest {
 
     private void _shift(int code, IntervalDiatonic intervalDiatonic) throws PitchMidiException {
         Tonality<Chromatic> tonality = Tonality.from(Chromatic.FF, Scale.MIXOLYDIAN);
-        PitchDiatonicMidi<Chromatic> diatonicMidi = PitchDiatonicMidi.from(DiatonicDegree.I, tonality, 3);
+        PitchTonalMidi diatonicMidi = PitchTonalMidi.from(DiatonicDegree.I, tonality, 3);
         assertNotNull(diatonicMidi);
         diatonicMidi.shift(intervalDiatonic);
         assertEquals(code, diatonicMidi.getMidiCode());
@@ -297,7 +297,7 @@ public class PitchDiatonicMidiTest {
 
     @Test
     public void shiftPos() throws PitchMidiException {
-        PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(DiatonicDegree.VI, Tonality.Gm, 5);
+        PitchTonalMidi pitchDiatonicMidi = PitchTonalMidi.from(DiatonicDegree.VI, Tonality.Gm, 5);
         assertNotNull(pitchDiatonicMidi);
 
         pitchDiatonicMidi.shift(2);
@@ -307,14 +307,14 @@ public class PitchDiatonicMidiTest {
 
     @Test
     public void getMidiCode() throws PitchMidiException {
-        PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(DiatonicDegree.I, Tonality.C, 5);
+        PitchTonalMidi pitchDiatonicMidi = PitchTonalMidi.from(DiatonicDegree.I, Tonality.C, 5);
         assertNotNull(pitchDiatonicMidi);
         assertEquals(60, pitchDiatonicMidi.getMidiCode());
     }
 
     @Test
     public void getMidiCode2() throws PitchMidiException {
-        PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(DiatonicDegree.VI, Tonality.Gm, 5);
+        PitchTonalMidi pitchDiatonicMidi = PitchTonalMidi.from(DiatonicDegree.VI, Tonality.Gm, 5);
         assertNotNull(pitchDiatonicMidi);
         assertEquals(75, pitchDiatonicMidi.getMidiCode());
     }

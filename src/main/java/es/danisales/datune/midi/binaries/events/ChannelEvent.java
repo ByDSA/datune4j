@@ -1,8 +1,10 @@
 package es.danisales.datune.midi.binaries.events;
 
 public abstract class ChannelEvent extends ChunkData {
+    @SuppressWarnings("WeakerAccess")
     public static final int MIN_CHANNEL = 0;
     public static final int DRUMS_CHANNEL = 10;
+    @SuppressWarnings("WeakerAccess")
     public static final int MAX_CHANNEL = 15;
 
 	private int channel;

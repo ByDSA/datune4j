@@ -378,10 +378,6 @@ enum PitchChromaticMidiImmutable implements PitchOctave, OrderedDegree, Cloneabl
         return getShifted(intervalChromatic.getSemitones());
     }
 
-    public @NonNull PitchChromaticMidiImmutable getShiftedNegative(IntervalChromatic intervalChromatic) throws PitchMidiException {
-        return getShifted(-intervalChromatic.getSemitones());
-    }
-
     @Override
     public PitchChromaticMidiImmutable getShifted(int i) throws PitchMidiException {
         int index = ordinal() + i;

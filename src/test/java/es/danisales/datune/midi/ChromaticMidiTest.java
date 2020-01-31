@@ -1,10 +1,7 @@
 package es.danisales.datune.midi;
 
-import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
-import es.danisales.datune.midi.pitch.PitchDiatonicMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
-import es.danisales.datune.tonality.Tonality;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

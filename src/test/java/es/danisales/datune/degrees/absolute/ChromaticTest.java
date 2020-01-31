@@ -6,7 +6,7 @@ import es.danisales.datune.degrees.scale.ChromaticDegree;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.lang.Language;
-import es.danisales.datune.midi.pitch.PitchDiatonicMidi;
+import es.danisales.datune.midi.pitch.PitchTonalMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.degrees.octave.DiatonicAlt;
 import es.danisales.datune.tonality.Scale;
@@ -52,7 +52,7 @@ public class ChromaticTest {
     @Test
     public void from_pitchDiatonicMidi() throws PitchMidiException {
         Tonality<DiatonicAlt> tonality = Tonality.from(DiatonicAlt.Cb, Scale.MINOR);
-        PitchDiatonicMidi pitchDiatonicMidi = PitchDiatonicMidi.from(DiatonicDegree.I, tonality, 5);
+        PitchTonalMidi pitchDiatonicMidi = PitchTonalMidi.from(DiatonicDegree.I, tonality, 5);
         assertSame(Chromatic.B, Chromatic.from(pitchDiatonicMidi));
     }
 

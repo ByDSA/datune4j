@@ -84,14 +84,6 @@ public abstract class ChunkData implements Event {
 		return status;
 	}
 
-	protected void assign(ChunkData cd) {
-		cd.delta = delta;
-		cd.status = status;
-		int len = data.length;
-		cd.data = new byte[len];
-		System.arraycopy(data, 0, cd.data, 0, len);
-	}
-
 	public abstract ChunkData clone();
 
 	@Override

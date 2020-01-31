@@ -13,6 +13,7 @@ import es.danisales.datune.tonality.Tonality;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -64,8 +65,9 @@ class Main {
 		if ( p != null ) {
 			p.save();
 
+			File file = new File(p.getName());
 			try {
-				Midi.play( p.getName() );
+				Midi.play(file);
 			} catch ( MidiUnavailableException | IOException | InvalidMidiDataException e ) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

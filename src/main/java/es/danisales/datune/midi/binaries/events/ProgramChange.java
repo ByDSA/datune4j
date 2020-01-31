@@ -9,23 +9,19 @@ public final class ProgramChange extends ChannelEvent {
     static {
         BinEncoder.register(ProgramChange.class, (BiConsumer<ProgramChange, BinEncoder.EncoderSettings>) ChunkData::encoder);
     }
-	static final byte STATUS = (byte) 0xC0;
+	private static final byte STATUS = (byte) 0xC0;
 	private Instrument instrument;
 
 	private ProgramChange(int delta, int channel, Instrument instrument) {
 		super(delta, STATUS, channel);
 
-		setInstrument(instrument);
+		this.instrument = instrument;
+
+		updateData();
 	}
 
 	public ProgramChange(int channel, Instrument v) {
 		this(0, channel, v);
-	}
-
-	public void setInstrument(Instrument v) {
-		instrument = v;
-
-		updateData();
 	}
 
 	@Override

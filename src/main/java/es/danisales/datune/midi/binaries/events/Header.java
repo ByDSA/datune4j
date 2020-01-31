@@ -14,22 +14,32 @@ public class Header extends Chunk {
 	//  headers
 	// Note that because we're only writing one track, we
 	//  can for simplicity combine the file and track headers
-	public final static byte SINGLE_TRACK = 0x00;
-	public final static byte MULTIPLE_TRACK = 0x01;
-	public final static byte MULTIPLE_SONG = 0x02;
+	public enum Type {
+		SINGLE_TRACK((byte)0x00), MULTIPLE_TRACK((byte)0x01), MULTIPLE_SONG((byte)0x02);
+
+		private byte byteValue;
+
+		Type(byte b) {
+			byteValue = b;
+		}
+
+		public byte getByte() {
+			return byteValue;
+		}
+	}
 
 	private int tracks;
 	private byte[] ticks;
-	private byte type;
+	private Type type;
 
-	public Header(byte type, int tracks, byte[] ticks) {
+	public Header(Type type, int tracks, byte[] ticks) {
 		super(new byte[]{'M', 'T', 'h', 'd'}); // 0x4d, 0x54, 0x68, 0x64
 
 		this.type = type;
 		this.tracks = tracks;
 		this.ticks = ticks;
 
-        addData(new byte[]{0x00, type, // single-track format
+        addData(new byte[]{0x00, type.getByte(), // track format
 				0x00, (byte)tracks, // tracks
 				ticks[0], ticks[1], // 16 ticks per quarter
 		});
