@@ -6,7 +6,10 @@ import es.danisales.datune.chords.Chord;
 import es.danisales.datune.chords.IntervalShifter;
 import es.danisales.datune.chords.tonal.TonalChord;
 import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.interval.IntervalChromatic;
+import es.danisales.datune.midi.pitch.PitchTonalMidi;
+import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Arrays;
@@ -16,7 +19,7 @@ import java.util.Set;
 public final class ChromaticChord
         extends Chord<Chromatic>
         implements IntervalShifter<IntervalChromatic> {
-    // Quintas
+    // Fifths
     public static final ChromaticChord C5 = new ChromaticChord(ChromaticChordEnum.C5);
     public static final ChromaticChord CC5 = new ChromaticChord(ChromaticChordEnum.CC5);
     public static final ChromaticChord D5 = new ChromaticChord(ChromaticChordEnum.D5);
@@ -30,7 +33,7 @@ public final class ChromaticChord
     public static final ChromaticChord AA5 = new ChromaticChord(ChromaticChordEnum.AA5);
     public static final ChromaticChord B5 = new ChromaticChord(ChromaticChordEnum.B5);
 
-    // Mayores
+    // Majors
     public static final ChromaticChord C = new ChromaticChord(ChromaticChordEnum.C);
     public static final ChromaticChord CC = new ChromaticChord(ChromaticChordEnum.CC);
     public static final ChromaticChord D = new ChromaticChord(ChromaticChordEnum.D);
@@ -44,7 +47,7 @@ public final class ChromaticChord
     public static final ChromaticChord AA = new ChromaticChord(ChromaticChordEnum.AA);
     public static final ChromaticChord B = new ChromaticChord(ChromaticChordEnum.B);
 
-    // Menores
+    // Minors
     public static final ChromaticChord Cm = new ChromaticChord(ChromaticChordEnum.Cm);
     public static final ChromaticChord CCm = new ChromaticChord(ChromaticChordEnum.CCm);
     public static final ChromaticChord Dm = new ChromaticChord(ChromaticChordEnum.Dm);
@@ -58,7 +61,7 @@ public final class ChromaticChord
     public static final ChromaticChord AAm = new ChromaticChord(ChromaticChordEnum.AAm);
     public static final ChromaticChord Bm = new ChromaticChord(ChromaticChordEnum.Bm);
 
-    // Aumentados
+    // Augmented
     public static final ChromaticChord Caug = new ChromaticChord(ChromaticChordEnum.Caug);
     public static final ChromaticChord CCaug = new ChromaticChord(ChromaticChordEnum.CCaug);
     public static final ChromaticChord Daug = new ChromaticChord(ChromaticChordEnum.Daug);
@@ -72,7 +75,7 @@ public final class ChromaticChord
     public static final ChromaticChord AAaug = new ChromaticChord(ChromaticChordEnum.AAaug);
     public static final ChromaticChord Baug = new ChromaticChord(ChromaticChordEnum.Baug);
 
-    // Diminuidos
+    // Diminished
     public static final ChromaticChord Cdim = new ChromaticChord(ChromaticChordEnum.Cdim);
     public static final ChromaticChord CCdim = new ChromaticChord(ChromaticChordEnum.CCdim);
     public static final ChromaticChord Ddim = new ChromaticChord(ChromaticChordEnum.Ddim);
@@ -86,7 +89,7 @@ public final class ChromaticChord
     public static final ChromaticChord AAdim = new ChromaticChord(ChromaticChordEnum.AAdim);
     public static final ChromaticChord Bdim = new ChromaticChord(ChromaticChordEnum.Bdim);
 
-    // Cuarta suspendida
+    // sus4
     public static final ChromaticChord Csus4 = new ChromaticChord(ChromaticChordEnum.Csus4);
     public static final ChromaticChord CCsus4 = new ChromaticChord(ChromaticChordEnum.CCsus4);
     public static final ChromaticChord Dsus4 = new ChromaticChord(ChromaticChordEnum.Dsus4);
@@ -100,7 +103,7 @@ public final class ChromaticChord
     public static final ChromaticChord AAsus4 = new ChromaticChord(ChromaticChordEnum.AAsus4);
     public static final ChromaticChord Bsus4 = new ChromaticChord(ChromaticChordEnum.Bsus4);
 
-    // Séptima (de dominante)
+    // Dominant 7th
     public static final ChromaticChord C7 = new ChromaticChord(ChromaticChordEnum.C7);
     public static final ChromaticChord CC7 = new ChromaticChord(ChromaticChordEnum.CC7);
     public static final ChromaticChord D7 = new ChromaticChord(ChromaticChordEnum.D7);
@@ -114,7 +117,7 @@ public final class ChromaticChord
     public static final ChromaticChord AA7 = new ChromaticChord(ChromaticChordEnum.AA7);
     public static final ChromaticChord B7 = new ChromaticChord(ChromaticChordEnum.B7);
 
-    // Séptima con quinta bemol
+    // 7b5
     public static final ChromaticChord C7b5 = new ChromaticChord(ChromaticChordEnum.C7b5);
     public static final ChromaticChord CC7b5 = new ChromaticChord(ChromaticChordEnum.CC7b5);
     public static final ChromaticChord D7b5 = new ChromaticChord(ChromaticChordEnum.D7b5);
@@ -128,7 +131,7 @@ public final class ChromaticChord
     public static final ChromaticChord AA7b5 = new ChromaticChord(ChromaticChordEnum.AA7b5);
     public static final ChromaticChord B7b5 = new ChromaticChord(ChromaticChordEnum.B7b5);
 
-    // Séptima con quinta aumentada
+    // 7#5
     public static final ChromaticChord C7a5 = new ChromaticChord(ChromaticChordEnum.C7a5);
     public static final ChromaticChord CC7a5 = new ChromaticChord(ChromaticChordEnum.CC7a5);
     public static final ChromaticChord D7a5 = new ChromaticChord(ChromaticChordEnum.D7a5);
@@ -142,7 +145,7 @@ public final class ChromaticChord
     public static final ChromaticChord AA7a5 = new ChromaticChord(ChromaticChordEnum.AA7a5);
     public static final ChromaticChord B7a5 = new ChromaticChord(ChromaticChordEnum.B7a5);
 
-    // Séptima con cuarta suspendida
+    // 7sus4
     public static final ChromaticChord C7sus4 = new ChromaticChord(ChromaticChordEnum.C7sus4);
     public static final ChromaticChord CC7sus4 = new ChromaticChord(ChromaticChordEnum.CC7sus4);
     public static final ChromaticChord D7sus4 = new ChromaticChord(ChromaticChordEnum.D7sus4);
@@ -156,7 +159,7 @@ public final class ChromaticChord
     public static final ChromaticChord AA7sus4 = new ChromaticChord(ChromaticChordEnum.AA7sus4);
     public static final ChromaticChord B7sus4 = new ChromaticChord(ChromaticChordEnum.B7sus4);
 
-    // Menor séptima
+    // 7th minor
     public static final ChromaticChord Cm7 = new ChromaticChord(ChromaticChordEnum.Cm7);
     public static final ChromaticChord CCm7 = new ChromaticChord(ChromaticChordEnum.CCm7);
     public static final ChromaticChord Dm7 = new ChromaticChord(ChromaticChordEnum.Dm7);
@@ -170,7 +173,7 @@ public final class ChromaticChord
     public static final ChromaticChord AAm7 = new ChromaticChord(ChromaticChordEnum.AAm7);
     public static final ChromaticChord Bm7 = new ChromaticChord(ChromaticChordEnum.Bm7);
 
-    // Menor sÉptima con quinta bemol
+    // 7th minor b5
     public static final ChromaticChord Cm7b5 = new ChromaticChord(ChromaticChordEnum.Cm7b5);
     public static final ChromaticChord CCm7b5 = new ChromaticChord(ChromaticChordEnum.CCm7b5);
     public static final ChromaticChord Dm7b5 = new ChromaticChord(ChromaticChordEnum.Dm7b5);
@@ -184,7 +187,7 @@ public final class ChromaticChord
     public static final ChromaticChord AAm7b5 = new ChromaticChord(ChromaticChordEnum.AAm7b5);
     public static final ChromaticChord Bm7b5 = new ChromaticChord(ChromaticChordEnum.Bm7b5);
 
-    // Menor sÉptima con quinta aumentada
+    // 7th minor #5
     public static final ChromaticChord Cm7a5 = new ChromaticChord(ChromaticChordEnum.Cm7a5);
     public static final ChromaticChord CCm7a5 = new ChromaticChord(ChromaticChordEnum.CCm7a5);
     public static final ChromaticChord Dm7a5 = new ChromaticChord(ChromaticChordEnum.Dm7a5);
@@ -198,7 +201,7 @@ public final class ChromaticChord
     public static final ChromaticChord AAm7a5 = new ChromaticChord(ChromaticChordEnum.AAm7a5);
     public static final ChromaticChord Bm7a5 = new ChromaticChord(ChromaticChordEnum.Bm7a5);
 
-    // Sexta
+    // 6th
     public static final ChromaticChord C6 = new ChromaticChord(ChromaticChordEnum.C6);
     public static final ChromaticChord CC6 = new ChromaticChord(ChromaticChordEnum.CC6);
     public static final ChromaticChord D6 = new ChromaticChord(ChromaticChordEnum.D6);
@@ -212,7 +215,7 @@ public final class ChromaticChord
     public static final ChromaticChord AA6 = new ChromaticChord(ChromaticChordEnum.AA6);
     public static final ChromaticChord B6 = new ChromaticChord(ChromaticChordEnum.B6);
 
-    // Menor sexta
+    // 6th minor
     public static final ChromaticChord Cm6 = new ChromaticChord(ChromaticChordEnum.Cm6);
     public static final ChromaticChord CCm6 = new ChromaticChord(ChromaticChordEnum.CCm6);
     public static final ChromaticChord Dm6 = new ChromaticChord(ChromaticChordEnum.Dm6);
@@ -226,7 +229,7 @@ public final class ChromaticChord
     public static final ChromaticChord AAm6 = new ChromaticChord(ChromaticChordEnum.AAm6);
     public static final ChromaticChord Bm6 = new ChromaticChord(ChromaticChordEnum.Bm6);
 
-    // Sexta con cuarta suspendida
+    // 6th sus4
     public static final ChromaticChord C6sus4 = new ChromaticChord(ChromaticChordEnum.C6sus4);
     public static final ChromaticChord CC6sus4 = new ChromaticChord(ChromaticChordEnum.CC6sus4);
     public static final ChromaticChord D6sus4 = new ChromaticChord(ChromaticChordEnum.D6sus4);
@@ -240,7 +243,7 @@ public final class ChromaticChord
     public static final ChromaticChord AA6sus4 = new ChromaticChord(ChromaticChordEnum.AA6sus4);
     public static final ChromaticChord B6sus4 = new ChromaticChord(ChromaticChordEnum.B6sus4);
 
-    // Séptima mayor
+    // Maj7
     public static final ChromaticChord CMaj7 = new ChromaticChord(ChromaticChordEnum.CMaj7);
     public static final ChromaticChord CCMaj7 = new ChromaticChord(ChromaticChordEnum.CCMaj7);
     public static final ChromaticChord DMaj7 = new ChromaticChord(ChromaticChordEnum.DMaj7);
@@ -254,7 +257,7 @@ public final class ChromaticChord
     public static final ChromaticChord AAMaj7 = new ChromaticChord(ChromaticChordEnum.AAMaj7);
     public static final ChromaticChord BMaj7 = new ChromaticChord(ChromaticChordEnum.BMaj7);
 
-    // Menor séptima mayor
+    // Maj7 minor
     public static final ChromaticChord CmMaj7 = new ChromaticChord(ChromaticChordEnum.CmMaj7);
     public static final ChromaticChord CCmMaj7 = new ChromaticChord(ChromaticChordEnum.CCmMaj7);
     public static final ChromaticChord DmMaj7 = new ChromaticChord(ChromaticChordEnum.DmMaj7);
@@ -268,7 +271,7 @@ public final class ChromaticChord
     public static final ChromaticChord AAmMaj7 = new ChromaticChord(ChromaticChordEnum.AAmMaj7);
     public static final ChromaticChord BmMaj7 = new ChromaticChord(ChromaticChordEnum.BmMaj7);
 
-    // Sexta con novena añadida
+    // 6th add9
     public static final ChromaticChord C6add9 = new ChromaticChord(ChromaticChordEnum.C6add9);
     public static final ChromaticChord CC6add9 = new ChromaticChord(ChromaticChordEnum.CC6add9);
     public static final ChromaticChord D6add9 = new ChromaticChord(ChromaticChordEnum.D6add9);
@@ -282,7 +285,7 @@ public final class ChromaticChord
     public static final ChromaticChord AA6add9 = new ChromaticChord(ChromaticChordEnum.AA6add9);
     public static final ChromaticChord B6add9 = new ChromaticChord(ChromaticChordEnum.B6add9);
 
-    // Sexta con novena añadida
+    // 6th minor add9
     public static final ChromaticChord Cm6add9 = new ChromaticChord(ChromaticChordEnum.Cm6add9);
     public static final ChromaticChord CCm6add9 = new ChromaticChord(ChromaticChordEnum.CCm6add9);
     public static final ChromaticChord Dm6add9 = new ChromaticChord(ChromaticChordEnum.Dm6add9);
@@ -296,7 +299,7 @@ public final class ChromaticChord
     public static final ChromaticChord AAm6add9 = new ChromaticChord(ChromaticChordEnum.AAm6add9);
     public static final ChromaticChord Bm6add9 = new ChromaticChord(ChromaticChordEnum.Bm6add9);
 
-    // Séptima con novena bemol (añadida)
+    // 7th add b9
     public static final ChromaticChord C7b9 = new ChromaticChord(ChromaticChordEnum.C7b9);
     public static final ChromaticChord CC7b9 = new ChromaticChord(ChromaticChordEnum.CC7b9);
     public static final ChromaticChord D7b9 = new ChromaticChord(ChromaticChordEnum.D7b9);
@@ -310,7 +313,7 @@ public final class ChromaticChord
     public static final ChromaticChord AA7b9 = new ChromaticChord(ChromaticChordEnum.AA7b9);
     public static final ChromaticChord B7b9 = new ChromaticChord(ChromaticChordEnum.B7b9);
 
-    // Séptima con novena aumentada (añadida)
+    // 7th add #9
     public static final ChromaticChord C7a9 = new ChromaticChord(ChromaticChordEnum.C7a9);
     public static final ChromaticChord CC7a9 = new ChromaticChord(ChromaticChordEnum.CC7a9);
     public static final ChromaticChord D7a9 = new ChromaticChord(ChromaticChordEnum.D7a9);
@@ -324,7 +327,7 @@ public final class ChromaticChord
     public static final ChromaticChord AA7a9 = new ChromaticChord(ChromaticChordEnum.AA7a9);
     public static final ChromaticChord B7a9 = new ChromaticChord(ChromaticChordEnum.B7a9);
 
-    // Menor séptima con novena bemol (añadida)
+    // 7th minor add b9
     public static final ChromaticChord Cm7b9 = new ChromaticChord(ChromaticChordEnum.Cm7b9);
     public static final ChromaticChord CCm7b9 = new ChromaticChord(ChromaticChordEnum.CCm7b9);
     public static final ChromaticChord Dm7b9 = new ChromaticChord(ChromaticChordEnum.Dm7b9);
@@ -338,7 +341,7 @@ public final class ChromaticChord
     public static final ChromaticChord AAm7b9 = new ChromaticChord(ChromaticChordEnum.AAm7b9);
     public static final ChromaticChord Bm7b9 = new ChromaticChord(ChromaticChordEnum.Bm7b9);
 
-    // Séptima con oncena (añadida)
+    // 7th add 11
     public static final ChromaticChord C7add11 = new ChromaticChord(ChromaticChordEnum.C7add11);
     public static final ChromaticChord CC7add11 = new ChromaticChord(ChromaticChordEnum.CC7add11);
     public static final ChromaticChord D7add11 = new ChromaticChord(ChromaticChordEnum.D7add11);
@@ -352,7 +355,7 @@ public final class ChromaticChord
     public static final ChromaticChord AA7add11 = new ChromaticChord(ChromaticChordEnum.AA7add11);
     public static final ChromaticChord B7add11 = new ChromaticChord(ChromaticChordEnum.B7add11);
 
-    // Séptima con treceava (añadida)
+    // 7th add 13
     public static final ChromaticChord C7add13 = new ChromaticChord(ChromaticChordEnum.C7add13);
     public static final ChromaticChord CC7add13 = new ChromaticChord(ChromaticChordEnum.CC7add13);
     public static final ChromaticChord D7add13 = new ChromaticChord(ChromaticChordEnum.D7add13);
@@ -366,7 +369,7 @@ public final class ChromaticChord
     public static final ChromaticChord AA7add13 = new ChromaticChord(ChromaticChordEnum.AA7add13);
     public static final ChromaticChord B7add13 = new ChromaticChord(ChromaticChordEnum.B7add13);
 
-    // Novena
+    // 9th
     public static final ChromaticChord C9 = new ChromaticChord(ChromaticChordEnum.C9);
     public static final ChromaticChord CC9 = new ChromaticChord(ChromaticChordEnum.CC9);
     public static final ChromaticChord D9 = new ChromaticChord(ChromaticChordEnum.D9);
@@ -380,7 +383,7 @@ public final class ChromaticChord
     public static final ChromaticChord AA9 = new ChromaticChord(ChromaticChordEnum.AA9);
     public static final ChromaticChord B9 = new ChromaticChord(ChromaticChordEnum.B9);
 
-    // Menor novena
+    // 9th minor
     public static final ChromaticChord Cm9 = new ChromaticChord(ChromaticChordEnum.Cm9);
     public static final ChromaticChord CCm9 = new ChromaticChord(ChromaticChordEnum.CCm9);
     public static final ChromaticChord Dm9 = new ChromaticChord(ChromaticChordEnum.Dm9);
@@ -394,7 +397,7 @@ public final class ChromaticChord
     public static final ChromaticChord AAm9 = new ChromaticChord(ChromaticChordEnum.AAm9);
     public static final ChromaticChord Bm9 = new ChromaticChord(ChromaticChordEnum.Bm9);
 
-    // Novena con quinta bemol
+    // 9th b5
     public static final ChromaticChord C9b5 = new ChromaticChord(ChromaticChordEnum.C9b5);
     public static final ChromaticChord CC9b5 = new ChromaticChord(ChromaticChordEnum.CC9b5);
     public static final ChromaticChord D9b5 = new ChromaticChord(ChromaticChordEnum.D9b5);
@@ -408,7 +411,7 @@ public final class ChromaticChord
     public static final ChromaticChord AA9b5 = new ChromaticChord(ChromaticChordEnum.AA9b5);
     public static final ChromaticChord B9b5 = new ChromaticChord(ChromaticChordEnum.B9b5);
 
-    // Novena con quinta aumentada
+    // 9th #9
     public static final ChromaticChord C9a5 = new ChromaticChord(ChromaticChordEnum.C9a5);
     public static final ChromaticChord CC9a5 = new ChromaticChord(ChromaticChordEnum.CC9a5);
     public static final ChromaticChord D9a5 = new ChromaticChord(ChromaticChordEnum.D9a5);
@@ -422,7 +425,7 @@ public final class ChromaticChord
     public static final ChromaticChord AA9a5 = new ChromaticChord(ChromaticChordEnum.AA9a5);
     public static final ChromaticChord B9a5 = new ChromaticChord(ChromaticChordEnum.B9a5);
 
-    // Novena con cuarta suspendida
+    // 9th sus4
     public static final ChromaticChord C9sus4 = new ChromaticChord(ChromaticChordEnum.C9sus4);
     public static final ChromaticChord CC9sus4 = new ChromaticChord(ChromaticChordEnum.CC9sus4);
     public static final ChromaticChord D9sus4 = new ChromaticChord(ChromaticChordEnum.D9sus4);
@@ -436,7 +439,7 @@ public final class ChromaticChord
     public static final ChromaticChord AA9sus4 = new ChromaticChord(ChromaticChordEnum.AA9sus4);
     public static final ChromaticChord B9sus4 = new ChromaticChord(ChromaticChordEnum.B9sus4);
 
-    // Novena mayor
+    // Maj9
     public static final ChromaticChord CMaj9 = new ChromaticChord(ChromaticChordEnum.CMaj9);
     public static final ChromaticChord CCMaj9 = new ChromaticChord(ChromaticChordEnum.CCMaj9);
     public static final ChromaticChord DMaj9 = new ChromaticChord(ChromaticChordEnum.DMaj9);
@@ -450,7 +453,7 @@ public final class ChromaticChord
     public static final ChromaticChord AAMaj9 = new ChromaticChord(ChromaticChordEnum.AAMaj9);
     public static final ChromaticChord BMaj9 = new ChromaticChord(ChromaticChordEnum.BMaj9);
 
-    // Menor novena mayor
+    // Maj9 minor
     public static final ChromaticChord CmMaj9 = new ChromaticChord(ChromaticChordEnum.CmMaj9);
     public static final ChromaticChord CCmMaj9 = new ChromaticChord(ChromaticChordEnum.CCmMaj9);
     public static final ChromaticChord DmMaj9 = new ChromaticChord(ChromaticChordEnum.DmMaj9);
@@ -2433,11 +2436,11 @@ public final class ChromaticChord
         return new ChromaticChordBuilder();
     }
 
-    public static ChromaticChord from(@NonNull TonalChord parametricChord) {
-        // todo: transformar a tonality<Chromatic> si no lo es
+    public static <C extends CyclicDegree> ChromaticChord from(@NonNull TonalChord<C> parametricChord) {
+        Tonality<Chromatic> tonality = PitchTonalMidi.turnToTonalityChromatic(parametricChord.getTonality());
         return builder()
                 .harmonicFunction(parametricChord.getHarmonicFunction())
-                .tonality(parametricChord.getTonality())
+                .tonality(tonality)
                 .build();
     }
 

@@ -22,8 +22,7 @@ public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Build
     ChromaticChordMidiBuilder() {
     }
 
-    public ChromaticChordMidiBuilder fromChromaticChord(@NonNull Iterable<Chromatic> cs) throws PitchMidiException {
-        checkValidMidi();
+    public ChromaticChordMidiBuilder fromChromaticChord(@NonNull Iterable<Chromatic> cs) {
         fromChromatic = new ArrayList<>();
         for (Chromatic c : cs)
             fromChromatic.add(c);
@@ -31,15 +30,13 @@ public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Build
         return self();
     }
 
-    private void checkValidMidi() throws PitchMidiException {
-        // todo
+    @SuppressWarnings("WeakerAccess")
+    public ChromaticChordMidiBuilder fromNoteMidi(@NonNull NoteMidi... cs) {
+        return fromNoteMidi(Arrays.asList(cs));
     }
 
-    public ChromaticChordMidiBuilder fromChromaticMidi(@NonNull NoteMidi... cs) {
-        return fromChromaticMidi(Arrays.asList(cs));
-    }
-
-    public ChromaticChordMidiBuilder fromChromaticMidi(@NonNull Iterable<NoteMidi> cs) {
+    @SuppressWarnings("WeakerAccess")
+    public ChromaticChordMidiBuilder fromNoteMidi(@NonNull Iterable<NoteMidi> cs) {
         fromChromaticMidi = new ArrayList<>();
         for (NoteMidi c : cs)
             fromChromaticMidi.add(c);
@@ -47,9 +44,7 @@ public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Build
         return self();
     }
 
-    @SuppressWarnings("WeakerAccess")
-    public ChromaticChordMidiBuilder octaveBase(int octave) throws PitchMidiException {
-        checkValidMidi();
+    public ChromaticChordMidiBuilder octaveBase(int octave) {
         this.octave = octave;
 
         return self();
@@ -90,6 +85,8 @@ public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Build
                 }
                 NoteMidi chromaticMidi = NoteMidi.builder()
                         .pitch(pitchChromaticMidi)
+                        .length(length)
+                        .velocity(velocity)
                         .build();
                 chromaticChordMidi.add(chromaticMidi);
             }
@@ -126,7 +123,7 @@ public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Build
         return add(chromaticMidi);
     }
 
-    public ChromaticChordMidiBuilder from(TonalChord from) throws PitchMidiException {
+    public ChromaticChordMidiBuilder from(TonalChord from) {
         return fromChromaticChord(ChromaticChord.from(from));
     }
 

@@ -208,7 +208,7 @@ class Loader {
                         .fromChromaticChord(ChromaticChord.from(parametricChord))
                         .build();
                 // check(diatonicChordMidi, parametricChord, ton);
-            } catch (RuntimeException | PitchMidiException e) {
+            } catch (RuntimeException e) {
                 System.out.println(parametricChord);
                 e.printStackTrace();
                 continue;

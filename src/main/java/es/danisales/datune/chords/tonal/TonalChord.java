@@ -1,11 +1,12 @@
 package es.danisales.datune.chords.tonal;
 
+import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public class TonalChord {
-    private Tonality tonality;
+public class TonalChord<C extends CyclicDegree> {
+    private Tonality<C> tonality;
     private HarmonicFunction harmonicFunction;
 
     private TonalChord() {
@@ -22,11 +23,11 @@ public class TonalChord {
         return new TonalChordRetrievalChromatic();
     }
 
-    public Tonality getTonality() {
+    public Tonality<C> getTonality() {
         return tonality;
     }
 
-    public void setTonality(@NonNull Tonality tonality) {
+    public void setTonality(@NonNull Tonality<C> tonality) {
         this.tonality = tonality;
     }
 

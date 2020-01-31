@@ -1,21 +1,14 @@
 package es.danisales.datune.midi;
 
 import es.danisales.datastructures.ListProxy;
-import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.interval.IntervalChromatic;
-import es.danisales.datune.midi.arpegios.Arpeggio;
-import es.danisales.datune.midi.arpegios.ArpeggioDefault;
 import es.danisales.datune.midi.binaries.events.EventComplex;
-import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.midi.pitch.PitchOctaveMidiEditable;
 import es.danisales.datune.pitch.PitchOctave;
-import es.danisales.datune.voicing.AbsoluteVoicing;
-import es.danisales.utils.HashingUtils;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.*;
 
@@ -54,10 +47,8 @@ public class ChordMidi
     public @NonNull ChordMidi clone() {
         ChordMidi chromaticChordMidi = new ChordMidi();
         for (NoteMidi n : this)
-            chromaticChordMidi.add((NoteMidi) n.clone());
+            chromaticChordMidi.add(n.clone());
 
-        if (arpegio != null)
-            chromaticChordMidi.arpegio = arpegio.clone();
         chromaticChordMidi.length = length;
         return chromaticChordMidi;
     }
@@ -71,14 +62,12 @@ public class ChordMidi
         return stringBuilder.toString();
     }
 
-    protected Arpeggio arpegio;
     protected int		length;
 
     void assign(@NonNull ChordMidi c) {
         Objects.requireNonNull(c);
         clear();
         this.addAll(c);
-        arpegio = c.arpegio;
         length = c.length;
     }
 
@@ -87,37 +76,8 @@ public class ChordMidi
     public EventSequence getEvents() {
         EventSequence es = new EventSequence();
 
-        Arpeggio aNodes;
-        if ( arpegio == null )
-            this.setArpeggio(new ArpeggioDefault());
-        int arpDuration = arpegio.getLength();
-
-        if ( length != 0 && length > arpDuration ) {
-            aNodes = arpegio.clone();
-            int newArpDuration = arpDuration;
-
-            while ( length > newArpDuration ) {
-                int currentLoop = newArpDuration;
-                for (Arpeggio.Node n : arpegio.getNodes()) {
-                    aNodes.add( currentLoop + n.time, n.note, n.length );
-                }
-                newArpDuration += arpDuration;
-            }
-        } else
-            aNodes = arpegio;
-
-        for (Arpeggio.Node node : aNodes.getNodes()) {
-            if ( length != 0 && node.time > length || node.note < 0 )
-                continue;
-
-            NoteMidi n = get( node.note ).clone();
-
-            if ( length != 0 )
-                n.setLength( Math.min( node.time + node.length, length ) - node.time );
-            else
-                n.setLength( node.length );
-            es.add( node.time, n );
-        }
+        for (NoteMidi noteMidi : this)
+            es.add(0, noteMidi);
         return es;
     }
 
@@ -127,17 +87,6 @@ public class ChordMidi
             max = Math.max( max, n.getLength() );
 
         return max;
-    }
-
-    public @Nullable Arpeggio getArpeggio() {
-        return arpegio;
-    }
-
-    public void setArpeggio(@NonNull Arpeggio a) {
-        Objects.requireNonNull(a);
-
-        arpegio = a.clone();
-        arpegio.setChord( this );
     }
 
     @SuppressWarnings("WeakerAccess")
@@ -236,10 +185,7 @@ public class ChordMidi
 
     @Override
     public int getLength() {
-        if (arpegio == null)
-            return getMaxNoteLength();
-        else
-            return arpegio.getLength();
+        return getMaxNoteLength();
     }
 
     @Override
@@ -260,11 +206,6 @@ public class ChordMidi
         return get(0).getPitch().getOctave();
     }
 
-    void setArpeggioIfNull() {
-        if (arpegio == null)
-            setArpeggio(new ArpeggioDefault());
-    }
-
     @Override
     public boolean equals(Object o) {
         if ( !( o instanceof ChordMidi ) )
@@ -272,14 +213,12 @@ public class ChordMidi
 
         ChordMidi cm = (ChordMidi) o;
 
-        if ( arpegio == null && cm.arpegio != null || cm.arpegio == null && arpegio != null )
-            return false;
 
-        return super.equals(cm) && (arpegio == null || arpegio.equals(cm.arpegio)) && length == cm.length;
+        return super.equals(cm) && length == cm.length;
     }
 
     @Override
     public int hashCode() {
-        return super.hashCode() + HashingUtils.from(arpegio, length);
+        return super.hashCode() + Integer.hashCode(length);
     }
 }

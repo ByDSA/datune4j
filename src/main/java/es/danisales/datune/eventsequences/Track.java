@@ -1,6 +1,5 @@
 package es.danisales.datune.eventsequences;
 
-import es.danisales.datune.midi.Progressions.Progression;
 import es.danisales.datune.midi.binaries.Sequence;
 import es.danisales.datune.midi.binaries.events.*;
 import es.danisales.datune.tonality.Tonality;
@@ -74,12 +73,6 @@ public class Track extends EventSequence {
 
 	public boolean isDrums() {
 		return channel == 10-1;
-	}
-
-	public void add(int n, Progression progression) {
-		super.add(n, progression);
-
-		setTonality(progression.getTonality());
 	}
 
 	public void add(EventComplex eventComplex) {

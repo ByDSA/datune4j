@@ -33,9 +33,6 @@ public class Sequence extends BinFile {
 
 	protected EventSequence events;
 
-	private MidiChannel[] mChannels;
-	private javax.sound.midi.Instrument[] instr;
-
 	private Synthesizer midiSynth;
 
 	Sequence(@NonNull Path path, int tempo) {
@@ -58,8 +55,8 @@ public class Sequence extends BinFile {
 		}
 
 		//getAllFrom and load default instrument and channel lists
-		instr = midiSynth.getDefaultSoundbank().getInstruments();
-		mChannels = midiSynth.getChannels();
+		javax.sound.midi.Instrument[] instr = midiSynth.getDefaultSoundbank().getInstruments();
+		MidiChannel[] mChannels = midiSynth.getChannels();
 
 	}
 	public void add(Track c) {

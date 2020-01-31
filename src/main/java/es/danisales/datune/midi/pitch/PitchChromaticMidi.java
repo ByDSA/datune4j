@@ -135,7 +135,7 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
     public static final PitchChromaticMidi B4 = new PitchChromaticMidi(PitchChromaticMidiImmutable.B4);
     @SuppressWarnings("unused")
     public static final PitchChromaticMidi C5 = new PitchChromaticMidi(PitchChromaticMidiImmutable.C5);
-    @SuppressWarnings({"unused", "WeakerAccess"})
+    @SuppressWarnings({"unused"})
     public static final PitchChromaticMidi CC5 = new PitchChromaticMidi(PitchChromaticMidiImmutable.CC5);
     @SuppressWarnings("unused")
     public static final PitchChromaticMidi D5 = new PitchChromaticMidi(PitchChromaticMidiImmutable.D5);
@@ -324,7 +324,7 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
         }
     }
 
-    public static <C extends CyclicDegree> int octaveCorrector(@NonNull Tonality<C> tonality, @NonNull ScaleDegree degree) {
+    private static <C extends CyclicDegree> int octaveCorrector(@NonNull Tonality<C> tonality, @NonNull ScaleDegree degree) {
         int octave = 0;
 
         if (tonality.getRoot() instanceof DiatonicAlt)
@@ -336,7 +336,7 @@ public class PitchChromaticMidi implements PitchOctaveMidiEditable, PitchMidiInt
         return octave;
     }
 
-    public static int octaveCorrectorAltRoot(@NonNull Tonality<DiatonicAlt> tonality) {
+    static int octaveCorrectorAltRoot(@NonNull Tonality<DiatonicAlt> tonality) {
         int octave = 0;
 
         DiatonicAlt diatonicAlt = tonality.getRoot();

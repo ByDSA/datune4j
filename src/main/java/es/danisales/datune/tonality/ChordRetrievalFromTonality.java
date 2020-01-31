@@ -14,7 +14,7 @@ public class ChordRetrievalFromTonality {
     private ChordRetrievalFromTonality() {
     }
 
-    public static @NonNull ChromaticChord getFromDiatonicFunction(@NonNull Tonality tonality, @NonNull DiatonicFunction diatonicFunction) throws ScaleRelativeDegreeException {
+    public static @NonNull ChromaticChord getFromDiatonicFunction(@NonNull Tonality<Chromatic> tonality, @NonNull DiatonicFunction diatonicFunction) throws ScaleRelativeDegreeException {
         Objects.requireNonNull(diatonicFunction);
 
         ChromaticChord chromaticChord = TonalityGetDiatonicFunctionMajor.get(tonality, diatonicFunction);
@@ -105,7 +105,7 @@ public class ChordRetrievalFromTonality {
                         .diatonicFunction(diatonicFunction)
                         .build();
             case bVII: {
-                Tonality parallelMinor;
+                Tonality<Chromatic> parallelMinor;
                 if (tonality.getScale().equals(Scale.MINOR))
                     parallelMinor = tonality;
                 else
@@ -117,7 +117,7 @@ public class ChordRetrievalFromTonality {
                         .build();
             }
             case bVI: {
-                Tonality parallelMinor;
+                Tonality<Chromatic> parallelMinor;
                 if (tonality.getScale().equals(Scale.MINOR))
                     parallelMinor = tonality;
                 else
@@ -129,7 +129,7 @@ public class ChordRetrievalFromTonality {
                         .build();
             }
             case bIII: {
-                Tonality parallelMinor;
+                Tonality<Chromatic> parallelMinor;
                 if (tonality.getScale().equals(Scale.MINOR))
                     parallelMinor = tonality;
                 else

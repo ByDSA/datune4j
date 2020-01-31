@@ -31,7 +31,8 @@ public class PitchTonalMidi implements PitchOctaveMidiEditable, PitchMidiInterfa
 	public static <C extends CyclicDegree> @NonNull PitchTonalMidi from(@NonNull ScaleDegree scaleDegree, @NonNull Tonality<C> tonality, int octave) throws PitchMidiException {
 		Tonality<Chromatic> tonality2 = turnToTonalityChromatic(tonality);
 		if (tonality.getRoot() instanceof DiatonicAlt)
-		octave += PitchChromaticMidi.octaveCorrectorAltRoot((Tonality<DiatonicAlt>)tonality);
+			//noinspection unchecked
+			octave += PitchChromaticMidi.octaveCorrectorAltRoot((Tonality<DiatonicAlt>)tonality);
 		return PitchTonalMidiAdapter.from(scaleDegree, tonality2, octave);
 	}
 
@@ -133,15 +134,15 @@ public class PitchTonalMidi implements PitchOctaveMidiEditable, PitchMidiInterfa
 
 	@Override
 	public void shiftOctave(int octaveShift) throws PitchMidiException {
-        PitchMidiException.check(getMidiCode() + Chromatic.NUMBER * octaveShift);
+		PitchMidiException.check(getMidiCode() + Chromatic.NUMBER * octaveShift);
 		setOctave(octave + octaveShift);
 	}
 
 	@Override
 	public void setOctave(int octave) throws PitchMidiException {
-        PitchTonalMidi cloned = clone();
-        cloned.octave = octave;
-        PitchMidiException.check(cloned);
+		PitchTonalMidi cloned = clone();
+		cloned.octave = octave;
+		PitchMidiException.check(cloned);
 
 		this.octave = octave;
 	}

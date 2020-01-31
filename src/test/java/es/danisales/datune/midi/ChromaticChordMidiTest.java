@@ -77,12 +77,12 @@ public class ChromaticChordMidiTest {
 
     @Test
     public void dist3() throws PitchMidiException {
-        ChordMidi ccm = ChordMidi.builder().fromChromaticMidi(
+        ChordMidi ccm = ChordMidi.builder().fromNoteMidi(
                 NoteMidi.builder().pitch(67).build(),
                 NoteMidi.builder().pitch(69).build(),
                 NoteMidi.builder().pitch(74).build()
         ).build();
-        ChordMidi ccm2 = ChordMidi.builder().fromChromaticMidi(
+        ChordMidi ccm2 = ChordMidi.builder().fromNoteMidi(
                 NoteMidi.builder().pitch(4).build(),
                 NoteMidi.builder().pitch(69).build(),
                 NoteMidi.builder().pitch(74).build()
@@ -118,7 +118,7 @@ public class ChromaticChordMidiTest {
 
     @Test
     public void noteSorting() throws PitchMidiException {
-        ChordMidi notes = ChordMidi.builder().fromChromaticMidi(
+        ChordMidi notes = ChordMidi.builder().fromNoteMidi(
                 NoteMidi.builder().pitch(Chromatic.A).build(),
                 NoteMidi.builder().pitch(Chromatic.E).build(),
                 NoteMidi.builder().pitch(Chromatic.F).build(),
@@ -137,7 +137,7 @@ public class ChromaticChordMidiTest {
 
     @Test
     public void whatIsIt3() {
-        ChordMidi cu = ChordMidi.builder().fromChromaticMidi(
+        ChordMidi cu = ChordMidi.builder().fromNoteMidi(
                 NoteMidi.builder().pitch(Chromatic.C).build(),
                 NoteMidi.builder().pitch(Chromatic.E).build(),
                 NoteMidi.builder().pitch(Chromatic.G).build()
@@ -404,7 +404,7 @@ public class ChromaticChordMidiTest {
         NoteMidi chromaticMidi = NoteMidi.builder().pitch(60).build();
         NoteMidi chromaticMidi2 = NoteMidi.builder().pitch(64).build();
         NoteMidi chromaticMidi3 = NoteMidi.builder().pitch(67).build();
-        ChordMidi chromaticChordMidi2 = ChordMidi.builder().fromChromaticMidi(
+        ChordMidi chromaticChordMidi2 = ChordMidi.builder().fromNoteMidi(
                 Arrays.asList(
                         chromaticMidi,
                         chromaticMidi2,
@@ -435,9 +435,9 @@ public class ChromaticChordMidiTest {
         NoteMidi chromaticMidi2 = NoteMidi.builder().pitch(64).build();
         NoteMidi chromaticMidi3 = NoteMidi.builder().pitch(67).build();
 
-        assertEquals(chromaticMidi, chromaticChordMidi.get(0));
-        assertEquals(chromaticMidi2, chromaticChordMidi.get(1));
-        assertEquals(chromaticMidi3, chromaticChordMidi.get(2));
+        assertEquals(chromaticMidi.pitch, chromaticChordMidi.get(0).pitch);
+        assertEquals(chromaticMidi2.pitch, chromaticChordMidi.get(1).pitch);
+        assertEquals(chromaticMidi3.pitch, chromaticChordMidi.get(2).pitch);
     }
 
     @Test

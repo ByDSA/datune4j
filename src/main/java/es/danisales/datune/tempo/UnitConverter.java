@@ -6,17 +6,17 @@ import java.util.Map;
 import java.util.function.Function;
 
 
-public abstract class UnitConversor<IN, OUT> implements Function<IN, OUT> {
-	Map<IN, OUT> map;
+public abstract class UnitConverter<IN, OUT> implements Function<IN, OUT> {
+	private Map<IN, OUT> map;
 	
-	public final void initialize() {
+	final void initialize() {
 		map = _init();
 	}
 	
-	public abstract void init(Map<SymbolicDuration, Double> map);
+	abstract void init(Map<IN, OUT> map);
 	
-	private final Map _init() {
-		Map<SymbolicDuration, Double> map = new HashMap();
+	private Map<IN, OUT> _init() {
+		Map<IN, OUT> map = new HashMap<>();
 		
 		init(map);
 

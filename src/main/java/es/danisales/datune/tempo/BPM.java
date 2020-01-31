@@ -4,8 +4,8 @@ import java.util.Map;
 
 
 public class BPM extends Tempo {
-	int bpm;
-	Duration base;
+	private int bpm;
+	private Duration base;
 	
 	private BPM() { }
 	
@@ -22,14 +22,15 @@ public class BPM extends Tempo {
 		return bpm;
 	}
 
-	public void init(Map<SymbolicDuration, Double> map) {
+	@Override
+	public void init(Map<Double, SymbolicDuration> map) {
 		final double msPerMin = 1000 * 60;
 		final double baseDuration = msPerMin/bpm;
 		final double wholeDuration = baseDuration / base.val;
-		map.put( base, baseDuration );
+		map.put( baseDuration, base );
 		
 		for (Duration d : Duration.values())
 			if (d != base)
-			map.put( d, wholeDuration * d.val);
+			map.put( wholeDuration * d.val, d);
 	}
 }

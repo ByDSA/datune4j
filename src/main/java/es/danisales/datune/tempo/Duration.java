@@ -8,4 +8,8 @@ public enum Duration implements SymbolicDuration {
     Duration(double n) {
 		val = n;
 	}
+
+	public double getValue() {
+    	return val;
+	}
 }

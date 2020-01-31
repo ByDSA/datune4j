@@ -321,7 +321,7 @@ public class EventSequence implements Durable, EventComplex {
                 if (diff > 0)
                     try {
                         Thread.sleep(diff);
-                    } catch (InterruptedException e) {
+                    } catch (InterruptedException ignored) {
                     }
                 lastTime.set(time);
                 if (ev instanceof NoteOn) {

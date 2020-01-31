@@ -128,19 +128,12 @@ public class ChordMidiTransformations {
         return ret;
     }
 
-    public static List<ChordMidi> shiftOctaveList(List<ChordMidi> a, int o) throws PitchMidiException {
-        for (ChordMidi c : a)
-            c.shiftOctave(o);
-
-        return a;
-    }
-
 
     public static int dist(@NonNull ChordMidi n1, @NonNull ChordMidi n) {
         return dist(n1, n, true);
     }
 
-    protected static int dist(@NonNull ChordMidi n1, @NonNull ChordMidi n, boolean bidirectional) {
+    private static int dist(@NonNull ChordMidi n1, @NonNull ChordMidi n, boolean bidirectional) {
         int d = 0;
 
         for (NoteMidi i : n1) {

@@ -131,7 +131,7 @@ public class Chord<C extends CyclicDegree>
         return autoname(this);
     }
 
-    static <N extends CyclicDegree> String autoname(Chord<N> chord) {
+    private static <N extends CyclicDegree> String autoname(Chord<N> chord) {
         StringBuilder sb = new StringBuilder();
         boolean first = true;
         for (N n : chord) {

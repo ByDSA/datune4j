@@ -20,16 +20,13 @@ public class Midi {
 		sequencer.start();
 	}
 
-	private static Synthesizer midiSynth;
-
-	private static javax.sound.midi.Instrument[] instr;
 	public static MidiChannel[] mChannels;
 
 	static {
 		try{
-			midiSynth = MidiSystem.getSynthesizer();
+			Synthesizer midiSynth = MidiSystem.getSynthesizer();
 			midiSynth.open();
-			instr = midiSynth.getDefaultSoundbank().getInstruments();
+			javax.sound.midi.Instrument[] instr = midiSynth.getDefaultSoundbank().getInstruments();
 			mChannels = midiSynth.getChannels();
 			midiSynth.loadInstrument(instr[0]);
 		} catch (MidiUnavailableException ignored) {
