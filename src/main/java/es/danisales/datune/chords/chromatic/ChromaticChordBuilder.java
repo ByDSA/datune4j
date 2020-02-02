@@ -165,13 +165,8 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
 
     @NonNull
     @Override
-    public ChromaticChord build() {
-        try {
-            return BuilderOfWays.super.build();
-        } catch (BuildingException e) {
-            e.getInnerException().printStackTrace();
-            throw NeverHappensException.make("Se supone que se han comprobado la consistencia de los parámetros conforme se añadían");
-        }
+    public ChromaticChord build() throws BuildingException {
+        return BuilderOfWays.super.build();
     }
 
     @NonNull
@@ -190,7 +185,7 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
         return self();
     }
 
-    public ChromaticChordBuilder fromChromaticMidi(Collection<NoteMidi> chromaticChordMidi) {
+    public ChromaticChordBuilder fromChordMidi(Collection<NoteMidi> chromaticChordMidi) {
         List<Chromatic> list = new ArrayList<>();
 
         for (NoteMidi chromaticMidi : chromaticChordMidi)

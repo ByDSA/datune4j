@@ -221,7 +221,12 @@ class Loader {
                 chromaticChordBuilder.chromaticFunction((ChromaticFunction) parametricChord.getHarmonicFunction());
 
             chromaticChordBuilder.tonality(parametricChord.getTonality());
-            ChromaticChord chromaticChord = chromaticChordBuilder.build();
+            ChromaticChord chromaticChord;
+            try {
+                chromaticChord = chromaticChordBuilder.build();
+            } catch (BuildingException e) {
+                continue;
+            }
             if (addedChords.contains(chromaticChord))
                 continue;
             addedChords.add(chromaticChord);

@@ -3,6 +3,7 @@ package es.danisales.datune.tonality;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
+import es.danisales.utils.building.BuildingException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,12 @@ public class TonalityChordRetrieval {
                 case VII:
                     f = DiatonicFunction.VII;
             }
-            ChromaticChord chromaticChord = ChromaticChord.builder().tonality(tonality).diatonicFunction(f).build();
+            ChromaticChord chromaticChord;
+            try {
+                chromaticChord = ChromaticChord.builder().tonality(tonality).diatonicFunction(f).build();
+            } catch (BuildingException e) {
+                continue;
+            }
             ret.add(chromaticChord);
         }
 
@@ -72,7 +78,12 @@ public class TonalityChordRetrieval {
                 case VII:
                     f = DiatonicFunction.VII7;
             }
-            ChromaticChord chromaticChord = ChromaticChord.builder().tonality(tonality).diatonicFunction(f).build();
+            ChromaticChord chromaticChord;
+            try {
+                chromaticChord = ChromaticChord.builder().tonality(tonality).diatonicFunction(f).build();
+            } catch (BuildingException e) {
+                continue;
+            }
             ret.add(chromaticChord);
         }
 

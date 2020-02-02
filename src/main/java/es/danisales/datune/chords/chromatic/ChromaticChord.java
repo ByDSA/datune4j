@@ -9,7 +9,10 @@ import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.midi.pitch.PitchTonalMidi;
+import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.utils.NeverHappensException;
+import es.danisales.utils.building.BuildingException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Arrays;
@@ -2428,6 +2431,10 @@ public final class ChromaticChord
     }
 
 
+    public static Set<ChromaticChord> all_triads() {
+        return TRIAD_CHORDS;
+    }
+
     /*
      * END CONSTANT CHORDS
      *****************************************************************************************************************/
@@ -2438,10 +2445,20 @@ public final class ChromaticChord
 
     public static <C extends CyclicDegree> ChromaticChord from(@NonNull TonalChord<C> parametricChord) {
         Tonality<Chromatic> tonality = PitchTonalMidi.turnToTonalityChromatic(parametricChord.getTonality());
-        return builder()
-                .harmonicFunction(parametricChord.getHarmonicFunction())
-                .tonality(tonality)
-                .build();
+        try {
+            return builder()
+                    .harmonicFunction(parametricChord.getHarmonicFunction())
+                    .tonality(tonality)
+                    .build();
+        } catch (BuildingException e) {
+            if (e.getInnerException() instanceof ScaleRelativeDegreeException)
+                return null;
+            else {
+                e.getInnerException().printStackTrace();
+                throw NeverHappensException.make("");
+            }
+
+        }
     }
 
     ChromaticChord() {

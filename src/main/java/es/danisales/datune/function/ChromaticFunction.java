@@ -4,6 +4,7 @@ import es.danisales.arrays.ArrayUtils;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.utils.building.BuildingException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -140,10 +141,15 @@ public enum ChromaticFunction implements HarmonicFunction {
 	 * @return the chromatic function
 	 */
     public static @Nullable ChromaticFunction from(@NonNull Collection<Chromatic> pitchChromaticChord, @NonNull Tonality tonality) {
-        ChromaticChord chromaticChord = ChromaticChord.builder()
-                .addAll(pitchChromaticChord)
-                .build();
-        HarmonicFunction hf = tonality.getFunctionFrom(chromaticChord);
+		ChromaticChord chromaticChord = null;
+		try {
+			chromaticChord = ChromaticChord.builder()
+					.addAll(pitchChromaticChord)
+					.build();
+		} catch (BuildingException e) {
+			e.printStackTrace();
+		}
+		HarmonicFunction hf = tonality.getFunctionFrom(chromaticChord);
 		if ( hf instanceof ChromaticFunction )
 			return (ChromaticFunction) hf;
 

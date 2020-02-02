@@ -11,6 +11,7 @@ import es.danisales.datune.degrees.scale.ScaleDegree;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
+import es.danisales.utils.building.BuildingException;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -541,7 +542,7 @@ public class TonalityTest {
     }
 
     @Test
-    public void getChordFunction() {
+    public void getChordFunction() throws BuildingException {
         Tonality ton = Tonality.E;
         ChromaticChord cc = ChromaticChord.builder()
                 .tonality(ton)
@@ -687,7 +688,7 @@ public class TonalityTest {
     }
 
     @Test
-    public void get() {
+    public void get() throws BuildingException {
         Tonality<Chromatic> ton = Tonality.ET12.C;
         assertEquals(ChromaticChord.C, ChromaticChord.builder()
                 .tonality(ton)
@@ -927,7 +928,7 @@ public class TonalityTest {
     }
 
     @Test
-    public void getDiatonicFunction() {
+    public void getDiatonicFunction() throws BuildingException {
         Tonality t = Tonality.C;
         for (DiatonicFunction df : DiatonicFunction.values()) {
             assertNotNull(ChromaticChord.builder()

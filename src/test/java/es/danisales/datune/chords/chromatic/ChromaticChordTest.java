@@ -10,6 +10,7 @@ import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.lang.Language;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.utils.building.BuildingException;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -23,7 +24,7 @@ import static org.junit.Assert.*;
 public class ChromaticChordTest {
     /* Building */
     @Test
-    public void from() {
+    public void from() throws BuildingException {
         ChromaticChord chromaticChord = ChromaticChord.builder().addAll(Arrays.asList(Chromatic.C, Chromatic.D, Chromatic.E)).build();
         assertNotNull(chromaticChord);
 
@@ -35,7 +36,7 @@ public class ChromaticChordTest {
     }
 
     @Test
-    public void fromChromaticDiatonicChordTonality() {
+    public void fromChromaticDiatonicChordTonality() throws BuildingException {
         ChromaticChord chromaticChord = ChromaticChord.builder()
                 .diatonicDegreePattern(DiatonicDegreePattern.VII9)
                 .tonality(Tonality.ET12.C)
@@ -48,7 +49,7 @@ public class ChromaticChordTest {
 
     public static class BuilderTest {
         @Test
-        public void fromFunction() {
+        public void fromFunction() throws BuildingException {
             ChromaticChord chromaticChord = ChromaticChord.builder()
                     .diatonicFunction(DiatonicFunction.I)
                     .tonality(Tonality.ET12.C)
@@ -58,7 +59,7 @@ public class ChromaticChordTest {
         }
 
         @Test
-        public void fromFunction_bVII() {
+        public void fromFunction_bVII() throws BuildingException {
             ChromaticChord chromaticChord = ChromaticChord.builder()
                     .chromaticFunction(ChromaticFunction.bVII)
                     .tonality(Tonality.ET12.C)
@@ -70,7 +71,7 @@ public class ChromaticChordTest {
         }
 
         @Test
-        public void fromFunction_bVI() {
+        public void fromFunction_bVI() throws BuildingException {
             ChromaticChord chromaticChord = ChromaticChord.builder()
                     .chromaticFunction(ChromaticFunction.bVI)
                     .tonality(Tonality.ET12.C)
@@ -82,7 +83,7 @@ public class ChromaticChordTest {
         }
 
         @Test
-        public void fromInterval_C_I_Third() {
+        public void fromInterval_C_I_Third() throws BuildingException {
             ChromaticChord chromaticChord = ChromaticChord.builder()
                     .intervalDiatonic(IntervalDiatonic.THIRD)
                     .tonality(Tonality.ET12.C)
@@ -94,7 +95,7 @@ public class ChromaticChordTest {
         }
 
         @Test
-        public void fromInterval_C_VII_Second() {
+        public void fromInterval_C_VII_Second() throws BuildingException {
             ChromaticChord chromaticChord = ChromaticChord.builder()
                     .intervalDiatonic(DiatonicDegree.VII, IntervalDiatonic.SECOND)
                     .tonality(Tonality.ET12.C)
@@ -106,7 +107,7 @@ public class ChromaticChordTest {
         }
 
         @Test
-        public void fromInterval_Cm_I_Third() {
+        public void fromInterval_Cm_I_Third() throws BuildingException {
             ChromaticChord chromaticChord = ChromaticChord.builder()
                     .intervalDiatonic(IntervalDiatonic.THIRD)
                     .tonality(Tonality.ET12.Cm)
@@ -122,7 +123,7 @@ public class ChromaticChordTest {
         }
 
         @Test
-        public void fromDiatonicFunction3() {
+        public void fromDiatonicFunction3() throws BuildingException {
             ChromaticChord diatonicChordMidi = ChromaticChord.builder()
                     .intervalDiatonic(IntervalDiatonic.THIRD)
                     .tonality(Tonality.ET12.Gm)
@@ -133,7 +134,7 @@ public class ChromaticChordTest {
         }
 
         @Test
-        public void fromDiatonicFunction4() {
+        public void fromDiatonicFunction4() throws BuildingException {
             ChromaticChord diatonicChordMidi = ChromaticChord.builder()
                     .intervalDiatonic(DiatonicDegree.II, IntervalDiatonic.THIRD)
                     .tonality(Tonality.ET12.Gm)
@@ -144,7 +145,7 @@ public class ChromaticChordTest {
         }
 
         @Test
-        public void fromDiatonicFunction5() {
+        public void fromDiatonicFunction5() throws BuildingException {
             ChromaticChord chromaticChord = ChromaticChord.builder()
                     .intervalDiatonic(DiatonicDegree.VI, IntervalDiatonic.THIRD)
                     .tonality(Tonality.ET12.Gm)
@@ -155,7 +156,7 @@ public class ChromaticChordTest {
         }
 
         @Test
-        public void fromChromaticFunction_ISUS4() {
+        public void fromChromaticFunction_ISUS4() throws BuildingException {
             ChromaticChord chromaticChord = ChromaticChord.builder()
                     .chromaticFunction(ChromaticFunction.ISUS4)
                     .tonality(Tonality.ET12.C)
@@ -924,7 +925,7 @@ public class ChromaticChordTest {
         }
 
         @Test
-        public void getAllInversions() {
+        public void getAllInversions() throws BuildingException {
             List<ChromaticChord> listChromaticChords = ChordTransformations.getAllInversionsFrom(ChromaticChord.C);
 
             ChromaticChord original = ChromaticChord.builder().addAll(Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G)).build();
@@ -1000,7 +1001,7 @@ public class ChromaticChordTest {
     public static class InheritObject {
         /* Clone Mutable */
         @Test
-        public void clone_mutable() {
+        public void clone_mutable() throws BuildingException {
             ChromaticChord chromaticChord = ChromaticChord.builder().addAll(Arrays.asList(Chromatic.C, Chromatic.D, Chromatic.E)).build();
             ChromaticChord duplicatedChromaticChord = chromaticChord.clone();
 
@@ -1012,7 +1013,7 @@ public class ChromaticChordTest {
         }
 
         @Test
-        public void inv_clonedMutable() {
+        public void inv_clonedMutable() throws BuildingException {
             ChromaticChord chromaticChord = ChromaticChord.builder().addAll(Arrays.asList(Chromatic.G, Chromatic.C, Chromatic.D)).build();
             chromaticChord.inv();
             ChromaticChord duplicatedChromaticChord = chromaticChord.clone();
@@ -1083,7 +1084,7 @@ public class ChromaticChordTest {
 
         /* toString: autoname */
         @Test
-        public void namesFrom() {
+        public void namesFrom() throws BuildingException {
             ChromaticChord cc = ChromaticChord.builder().addAll(
                     Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G)
             ).build();

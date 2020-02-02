@@ -6,6 +6,7 @@ import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
+import es.danisales.utils.building.BuildingException;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -13,7 +14,7 @@ import static org.junit.Assert.assertNotNull;
 
 public class ChromaticFunctionTest {
 	@Test
-	public void degree() throws TonalityException {
+	public void degree() throws BuildingException {
 		Tonality<Chromatic> tonality = Tonality.ET12.C;
 		ChromaticChord chromaticChord = ChromaticChord.builder()
 				.tonality(tonality)

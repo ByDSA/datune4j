@@ -12,25 +12,25 @@ import java.util.Collection;
 
 public class ChromaticFunctionProgression
         extends ListProxy<ChromaticFunction> {
-    public static final ChromaticFunctionProgression I_V_vi_iv = ChromaticFunctionProgression.copyOf(
+    public static final ChromaticFunctionProgression I_V_vi_IV = ChromaticFunctionProgression.copyOf(
             Arrays.asList(
                     ChromaticFunction.I,
                     ChromaticFunction.V,
                     ChromaticFunction.vi,
-                    ChromaticFunction.iv
+                    ChromaticFunction.IV
             )
     );
 
-    public static final ChromaticFunctionProgression I_iv_vi_V = ChromaticFunctionProgression.copyOf(
+    public static final ChromaticFunctionProgression I_IV_vi_V = ChromaticFunctionProgression.copyOf(
             Arrays.asList(
                     ChromaticFunction.I,
-                    ChromaticFunction.iv,
+                    ChromaticFunction.IV,
                     ChromaticFunction.vi,
                     ChromaticFunction.V
             )
     );
 
-    public static final ChromaticFunctionProgression i_vi_III_VII = ChromaticFunctionProgressionTransformations.shift(ChromaticFunctionProgressionTransformations.rotate(I_V_vi_iv, 2), 2);
+    public static final ChromaticFunctionProgression i_vi_III_VII = ChromaticFunctionProgressionTransformations.shift(ChromaticFunctionProgressionTransformations.rotate(I_V_vi_IV, 2), 2);
 
     private ChromaticFunctionProgression() {
         super(new ArrayList<>());

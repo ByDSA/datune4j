@@ -1,11 +1,17 @@
 package es.danisales.datune.tonality;
 
+import es.danisales.arrays.ArrayUtils;
+import es.danisales.datune.chords.ChordProgression;
+import es.danisales.datune.chords.chromatic.ChromaticChordPattern;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.DiatonicAlt;
+import es.danisales.datune.function.DiatonicFunction;
+import es.danisales.utils.building.BuildingException;
 import junit.framework.TestCase;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -126,5 +132,34 @@ public class TonalityRetrievalTest {
         assertEquals(2, result.size());
         assertTrue(result.contains(target1));
         assertTrue(result.contains(target2));
+    }
+
+
+
+    @Test
+    public void C_iv() throws BuildingException {
+        ChromaticChord chromaticChord = ChromaticChord.builder()
+                .diatonicFunction(DiatonicFunction.IV)
+                .tonality(Tonality.ET12.C)
+                .build();
+
+        assertEquals(ChromaticChord.F, chromaticChord);
+    }
+
+    @Test
+    public void bb() {
+        ChordProgression<Chromatic> chromaticChordProgression = ChordProgression.create();
+        chromaticChordProgression.add(ChromaticChord.C);
+        chromaticChordProgression.add(ChromaticChord.G);
+        chromaticChordProgression.add(ChromaticChord.Am);
+        chromaticChordProgression.add(ChromaticChord.F);
+
+        List<Tonality<Chromatic>> t = new ArrayList<>();
+        t.addAll(TonalityRetrieval.ET12.ALL_MAJOR_MODES);
+        t.addAll(TonalityRetrieval.ET12.ALL_HARMONIC_MINOR_MODES);
+        t.addAll(TonalityRetrieval.ET12.ALL_MELODIC_MINOR_MODES);
+
+        List<Tonality<Chromatic>> tonalities = TonalityRetrieval.fromChordProgression(chromaticChordProgression, t);
+        System.out.println(tonalities);
     }
 }

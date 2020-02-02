@@ -1,15 +1,19 @@
 package es.danisales.datune.tonality;
 
+import es.danisales.datune.chords.Chord;
+import es.danisales.datune.chords.ChordProgression;
 import es.danisales.datune.degrees.octave.DiatonicAlt;
 import es.danisales.datune.chords.diatonicalt.DiatonicAltRetrieval;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
+import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
-import es.danisales.datune.interval.Interval;
+import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.midi.ChordMidi;
 import es.danisales.utils.NeverHappensException;
+import es.danisales.utils.building.BuildingException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -18,6 +22,30 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class TonalityRetrieval {
+    public static List<Tonality<Chromatic>> fromChordProgression(ChordProgression<Chromatic> chromaticChordProgression, List<Tonality<Chromatic>> tonalities) {
+        tonalities = new ArrayList<>(tonalities);
+        for (Chord<Chromatic> chromaticChord : chromaticChordProgression) {
+            tonalities = getFromChord((ChromaticChord)chromaticChord, tonalities);
+        }
+        return tonalities;
+    }
+
+    private static List<Tonality<Chromatic>> getFromChord(ChromaticChord chromaticChord, List<Tonality<Chromatic>> tonalities) {
+        List<Tonality<Chromatic>> ret = new ArrayList<>();
+        List<HarmonicFunction> harmonicFunctionList = new ArrayList<>();
+        harmonicFunctionList.addAll(Arrays.asList(DiatonicFunction.values()));
+        harmonicFunctionList.addAll(Arrays.asList(ChromaticFunction.TENSIONS));
+
+        for (Tonality<Chromatic> tonality : tonalities) {
+            HarmonicFunction harmonicFunction = tonality.getFunctionFrom(chromaticChord);
+            if (harmonicFunctionList.contains(harmonicFunction)) {
+                ret.add(tonality);
+            }
+        }
+
+        return ret;
+    }
+
     public static class ET12 {
         public static final Set<Tonality<Chromatic>> ALL_MAJOR = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
                 Tonality.ET12.C,
@@ -802,7 +830,12 @@ public class TonalityRetrieval {
         for ( Tonality t : ts ) {
             if ( t.equals( tonality ) )
                 continue;
-            ChromaticChord chromaticChord = ChromaticChord.builder().fromChromaticMidi(c).build();
+            ChromaticChord chromaticChord = null;
+            try {
+                chromaticChord = ChromaticChord.builder().fromChordMidi(c).build();
+            } catch (BuildingException e) {
+                throw NeverHappensException.make("");
+            }
             DiatonicFunction diatonicFunction = DiatonicFunction.from(chromaticChord, t);
             if (diatonicFunction != null)
                 return t;

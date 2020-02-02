@@ -5,6 +5,7 @@ import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
+import es.danisales.utils.building.BuildingException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Objects;
@@ -42,10 +43,14 @@ public class TonalityUtils {
             }
 
             ChromaticChord c2;
-            c2 = ChromaticChord.builder()
-                    .chromaticFunction(f)
-                    .tonality(tonality)
-                    .build();
+            try {
+                c2 = ChromaticChord.builder()
+                        .chromaticFunction(f)
+                        .tonality(tonality)
+                        .build();
+            } catch (BuildingException e) {
+                continue;
+            }
             if (chromaticChord.equals(c2))
                 return true;
         }
@@ -55,10 +60,15 @@ public class TonalityUtils {
 
 
     public static boolean hasAsDiatonicFunction(@NonNull Tonality tonality, @NonNull ChromaticFunction chromaticFunction) {
-        ChromaticChord chromaticChord2 = ChromaticChord.builder()
-                .chromaticFunction(chromaticFunction)
-                .tonality(tonality)
-                .build();
+        ChromaticChord chromaticChord2 = null;
+        try {
+            chromaticChord2 = ChromaticChord.builder()
+                    .chromaticFunction(chromaticFunction)
+                    .tonality(tonality)
+                    .build();
+        } catch (BuildingException e) {
+            return false;
+        }
         return tonality.containsAll(chromaticChord2);
     }
 
