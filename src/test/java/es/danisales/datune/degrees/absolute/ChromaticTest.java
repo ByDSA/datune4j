@@ -1,5 +1,6 @@
 package es.danisales.datune.degrees.absolute;
 
+import es.danisales.datune.GlobalSettings;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.degrees.scale.ChromaticDegree;
@@ -133,7 +134,7 @@ public class ChromaticTest {
 
     @Test
     public void toStringTest_ENG() {
-        Language.current = Language.EN;
+        GlobalSettings.sigleton().setLanguage(Language.EN);
         assertSame("C", Chromatic.C.toString());
         assertEquals("C#", Chromatic.CC.toString());
         assertSame("D", Chromatic.D.toString());
@@ -150,7 +151,7 @@ public class ChromaticTest {
 
     @Test
     public void toStringTest_ESP() {
-        Language.current = Language.ES;
+        GlobalSettings.sigleton().setLanguage(Language.ES);
         assertSame("Do", Chromatic.C.toString());
         assertEquals("Do#", Chromatic.CC.toString());
         assertSame("Re", Chromatic.D.toString());

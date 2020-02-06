@@ -13,8 +13,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 
-import static com.google.common.base.Preconditions.checkState;
-
 public enum Chromatic implements CyclicDegree, OrderedDegree, Cloneable {
 	C, CC, D, DD, E, F, FF, G, GG, A, AA, B;
 
@@ -131,11 +129,13 @@ public enum Chromatic implements CyclicDegree, OrderedDegree, Cloneable {
 	}
 
 	public int distSemitonesTo(@NonNull Chromatic chromatic) {
-		int d = chromatic.compareTo(this);
-		if (d < 0)
-			d += IntervalChromatic.PERFECT_OCTAVE.getSemitones();
+		return MathUtils.rotativeTrim( chromatic.compareTo(this), Chromatic.NUMBER );
+	}
 
-		checkState(d >= 0 && d < Chromatic.NUMBER);
+	public int minDistSemitonesTo(@NonNull Chromatic chromatic) {
+		int d = distSemitonesTo(chromatic);
+		if (d > 6)
+			d = Chromatic.NUMBER - d;
 
 		return d;
 	}

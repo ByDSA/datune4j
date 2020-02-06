@@ -16,24 +16,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
 public class DiatonicAltRetrievalTest {
-
-    @Test
-    public void listFromAlterations() { // todo
-    }
-
-    @Test
-    public void listFrom() { // todo
-    }
-
-    @Test
-    public void areEnharmonic() { // todo
-    }
-
-    @Test
-    public void getEnharmonicsFrom() {
-        // todo
-    }
-
     @Test
     public void getNoteAbsoluteDegree3() throws ScaleRelativeDegreeException {
         Scale scale = Scale.fromIntegers(Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));

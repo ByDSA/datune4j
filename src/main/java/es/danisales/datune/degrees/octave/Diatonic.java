@@ -1,5 +1,6 @@
 package es.danisales.datune.degrees.octave;
 
+import es.danisales.datune.GlobalSettings;
 import es.danisales.datune.degrees.OrderedDegree;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.interval.IntervalDiatonic;
@@ -128,7 +129,7 @@ public enum Diatonic implements CyclicDegree, OrderedDegree, Cloneable {
 
 	@Override
 	public String toString() {
-		switch (Language.current) {
+		switch (GlobalSettings.sigleton().getLanguage()) {
 			default:
 			case EN:
 				return name();

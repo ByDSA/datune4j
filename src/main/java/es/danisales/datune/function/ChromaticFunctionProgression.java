@@ -30,7 +30,7 @@ public class ChromaticFunctionProgression
             )
     );
 
-    public static final ChromaticFunctionProgression i_vi_III_VII = ChromaticFunctionProgressionTransformations.shift(ChromaticFunctionProgressionTransformations.rotate(I_V_vi_IV, 2), 2);
+    public static final ChromaticFunctionProgression i_VI_III_VII = ChromaticFunctionProgressionTransformations.shift(ChromaticFunctionProgressionTransformations.rotate(I_V_vi_IV, 2), 2);
 
     private ChromaticFunctionProgression() {
         super(new ArrayList<>());

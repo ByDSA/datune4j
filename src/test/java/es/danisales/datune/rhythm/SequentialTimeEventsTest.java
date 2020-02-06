@@ -1,7 +1,7 @@
 package es.danisales.datune.rhythm;
 
 import es.danisales.datune.degrees.octave.Chromatic;
-import es.danisales.datune.tempo.Duration;
+import es.danisales.datune.tempo.MusicalTime;
 import org.junit.Test;
 
 import static junit.framework.TestCase.*;
@@ -9,102 +9,87 @@ import static junit.framework.TestCase.*;
 public class SequentialTimeEventsTest {
     @Test
     public void createEmpty() {
-        SequentialTimeEvents<Chromatic> sequentialTimeEvents = SequentialTimeEvents.createEmpty(Chromatic.class);
+        SequentialTimeEvents<Chromatic, DurableEvent<Chromatic, MusicalTime>, MusicalTime> sequentialTimeEvents = SequentialTimeEvents.create();
 
         assertNotNull(sequentialTimeEvents);
     }
 
     @Test
     public void add() {
-        SequentialTimeEvents<Chromatic> sequentialTimeEvents = SequentialTimeEvents.createEmpty(Chromatic.class);
-        sequentialTimeEvents.add(Chromatic.C, Duration.QUARTER);
-        sequentialTimeEvents.add(Chromatic.D, Duration.QUARTER);
-        sequentialTimeEvents.add(Chromatic.E, Duration.QUARTER);
-        sequentialTimeEvents.add(Chromatic.F, Duration.QUARTER);
+        SequentialTimeEvents<Chromatic, DurableEvent<Chromatic, MusicalTime>, MusicalTime> sequentialTimeEvents = SequentialTimeEvents.create();
+        sequentialTimeEvents.add(DurableEvent.from(MusicalTime.ZERO, Chromatic.C, MusicalTime.QUARTER));
+        sequentialTimeEvents.add(DurableEvent.from(MusicalTime.QUARTER, Chromatic.D, MusicalTime.QUARTER));
+        sequentialTimeEvents.add(DurableEvent.from(MusicalTime.HALF, Chromatic.E, MusicalTime.QUARTER));
     }
 
     @Test
     public void get() {
-        SequentialTimeEvents<Chromatic> sequentialTimeEvents = SequentialTimeEvents.createEmpty(Chromatic.class);
-        sequentialTimeEvents.add(Chromatic.C, Duration.QUARTER);
-        sequentialTimeEvents.add(Chromatic.D, Duration.QUARTER);
-        sequentialTimeEvents.add(Chromatic.E, Duration.QUARTER);
-        sequentialTimeEvents.add(Chromatic.F, Duration.QUARTER);
+        SequentialTimeEvents<Chromatic, DurableEvent<Chromatic, MusicalTime>, MusicalTime> sequentialTimeEvents = SequentialTimeEvents.create();
+        sequentialTimeEvents.add(DurableEvent.from(MusicalTime.ZERO, Chromatic.C, MusicalTime.QUARTER));
+        sequentialTimeEvents.add(DurableEvent.from(MusicalTime.QUARTER, Chromatic.D, MusicalTime.QUARTER));
+        sequentialTimeEvents.add(DurableEvent.from(MusicalTime.HALF, Chromatic.E, MusicalTime.QUARTER));
 
-        assertEquals(Chromatic.C, sequentialTimeEvents.get(0));
-        assertEquals(Chromatic.E, sequentialTimeEvents.get(Duration.HALF.getValue()));
-        assertNull(sequentialTimeEvents.get(Duration.LONGA.getValue()));
+        assertEquals(Chromatic.C, sequentialTimeEvents.get(MusicalTime.ZERO));
+        assertEquals(Chromatic.E, sequentialTimeEvents.get(MusicalTime.HALF));
+        assertNull(sequentialTimeEvents.get(MusicalTime.LONGA));
     }
 
     @Test
-    public void get_accuracy() {
-        SequentialTimeEvents<Chromatic> sequentialTimeEvents = SequentialTimeEvents.createEmpty(Chromatic.class);
-        sequentialTimeEvents.add(Chromatic.C, Duration.QUARTER);
-        sequentialTimeEvents.add(Chromatic.D, Duration.QUARTER);
-        sequentialTimeEvents.add(Chromatic.E, Duration.QUARTER);
-        sequentialTimeEvents.add(Chromatic.F, Duration.QUARTER);
+    public void removeAndShift() {
+        SequentialTimeEvents<Chromatic, DurableEvent<Chromatic, MusicalTime>, MusicalTime> sequentialTimeEvents = SequentialTimeEvents.create();
+        sequentialTimeEvents.add(DurableEvent.from(MusicalTime.ZERO, Chromatic.C, MusicalTime.QUARTER));
+        sequentialTimeEvents.add(DurableEvent.from(MusicalTime.QUARTER, Chromatic.D, MusicalTime.QUARTER));
+        sequentialTimeEvents.add(DurableEvent.from(MusicalTime.HALF, Chromatic.E, MusicalTime.QUARTER));
 
-        assertEquals(Chromatic.E, sequentialTimeEvents.get(Duration.HALF.getValue()-0.001d));
-        assertEquals(Chromatic.D, sequentialTimeEvents.get(Duration.HALF.getValue()-0.01d));
+        sequentialTimeEvents.removeAndShift(MusicalTime.ZERO);
+        assertEquals(Chromatic.D, sequentialTimeEvents.get(MusicalTime.ZERO));
     }
 
     @Test
     public void remove() {
-        SequentialTimeEvents<Chromatic> sequentialTimeEvents = SequentialTimeEvents.createEmpty(Chromatic.class);
-        sequentialTimeEvents.add(Chromatic.C, Duration.QUARTER);
-        sequentialTimeEvents.add(Chromatic.D, Duration.QUARTER);
-        sequentialTimeEvents.add(Chromatic.E, Duration.QUARTER);
-        sequentialTimeEvents.add(Chromatic.F, Duration.QUARTER);
+        SequentialTimeEvents<Chromatic, DurableEvent<Chromatic, MusicalTime>, MusicalTime> sequentialTimeEvents = SequentialTimeEvents.create();
+        sequentialTimeEvents.add(DurableEvent.from(MusicalTime.ZERO, Chromatic.C, MusicalTime.QUARTER));
+        sequentialTimeEvents.add(DurableEvent.from(MusicalTime.QUARTER, Chromatic.D, MusicalTime.QUARTER));
+        sequentialTimeEvents.add(DurableEvent.from(MusicalTime.HALF, Chromatic.E, MusicalTime.QUARTER));
+        sequentialTimeEvents.add(DurableEvent.from(MusicalTime.ZERO, Chromatic.F, MusicalTime.QUARTER));
 
-        sequentialTimeEvents.remove(0);
-        assertEquals(Chromatic.D, sequentialTimeEvents.get(0));
-    }
-
-    @Test
-    public void removeKeepDuration() {
-        SequentialTimeEvents<Chromatic> sequentialTimeEvents = SequentialTimeEvents.createEmpty(Chromatic.class);
-        sequentialTimeEvents.add(Chromatic.C, Duration.QUARTER);
-        sequentialTimeEvents.add(Chromatic.D, Duration.QUARTER);
-        sequentialTimeEvents.add(Chromatic.E, Duration.QUARTER);
-        sequentialTimeEvents.add(Chromatic.F, Duration.QUARTER);
-
-        sequentialTimeEvents.removeKeepDuration(0);
-        assertNull(sequentialTimeEvents.get(0));
-        assertEquals(Chromatic.D, sequentialTimeEvents.get(Duration.QUARTER.getValue()));
+        sequentialTimeEvents.remove(MusicalTime.ZERO);
+        assertNull(sequentialTimeEvents.get(MusicalTime.ZERO));
+        assertEquals(Chromatic.D, sequentialTimeEvents.get(MusicalTime.QUARTER));
     }
 
     @Test
     public void getLength() {
-        SequentialTimeEvents<Chromatic> sequentialTimeEvents = SequentialTimeEvents.createEmpty(Chromatic.class);
-        sequentialTimeEvents.add(Chromatic.C, Duration.QUARTER);
-        sequentialTimeEvents.add(Chromatic.D, Duration.QUARTER);
-        sequentialTimeEvents.add(Chromatic.E, Duration.QUARTER);
-        sequentialTimeEvents.add(Chromatic.F, Duration.QUARTER);
+        SequentialTimeEvents<Chromatic, DurableEvent<Chromatic, MusicalTime>, MusicalTime> sequentialTimeEvents = SequentialTimeEvents.create();
+        sequentialTimeEvents.add(DurableEvent.from(MusicalTime.ZERO, Chromatic.C, MusicalTime.QUARTER));
+        sequentialTimeEvents.add(DurableEvent.from(MusicalTime.QUARTER, Chromatic.D, MusicalTime.QUARTER));
+        sequentialTimeEvents.add(DurableEvent.from(MusicalTime.HALF, Chromatic.E, MusicalTime.QUARTER));
+        sequentialTimeEvents.add(DurableEvent.from(MusicalTime.HALF.clone().dotted(), Chromatic.E, MusicalTime.QUARTER));
 
-        assertEquals(Duration.WHOLE.getValue(), sequentialTimeEvents.getLength());
+        assertEquals(MusicalTime.WHOLE, sequentialTimeEvents.getLength());
+    }
+
+    @Test
+    public void getLength_afterRemoveShift() {
+        SequentialTimeEvents<Chromatic, DurableEvent<Chromatic, MusicalTime>, MusicalTime> sequentialTimeEvents = SequentialTimeEvents.create();
+        sequentialTimeEvents.add(DurableEvent.from(MusicalTime.ZERO, Chromatic.C, MusicalTime.QUARTER));
+        sequentialTimeEvents.add(DurableEvent.from(MusicalTime.QUARTER, Chromatic.D, MusicalTime.QUARTER));
+        sequentialTimeEvents.add(DurableEvent.from(MusicalTime.HALF, Chromatic.E, MusicalTime.QUARTER));
+        sequentialTimeEvents.add(DurableEvent.from(MusicalTime.HALF.clone().dotted(), Chromatic.F, MusicalTime.QUARTER));
+        sequentialTimeEvents.removeAndShift(MusicalTime.HALF);
+
+        assertEquals(MusicalTime.QUARTER.clone().mult(3), sequentialTimeEvents.getLength());
     }
 
     @Test
     public void getLength_afterRemove() {
-        SequentialTimeEvents<Chromatic> sequentialTimeEvents = SequentialTimeEvents.createEmpty(Chromatic.class);
-        sequentialTimeEvents.add(Chromatic.C, Duration.QUARTER);
-        sequentialTimeEvents.add(Chromatic.D, Duration.QUARTER);
-        sequentialTimeEvents.add(Chromatic.E, Duration.QUARTER);
-        sequentialTimeEvents.add(Chromatic.F, Duration.QUARTER);
-        sequentialTimeEvents.remove(Duration.HALF.getValue());
+        SequentialTimeEvents<Chromatic, DurableEvent<Chromatic, MusicalTime>, MusicalTime> sequentialTimeEvents = SequentialTimeEvents.create();
+        sequentialTimeEvents.add(DurableEvent.from(MusicalTime.ZERO, Chromatic.C, MusicalTime.QUARTER));
+        sequentialTimeEvents.add(DurableEvent.from(MusicalTime.QUARTER, Chromatic.D, MusicalTime.QUARTER));
+        sequentialTimeEvents.add(DurableEvent.from(MusicalTime.HALF, Chromatic.E, MusicalTime.QUARTER));
+        sequentialTimeEvents.add(DurableEvent.from(MusicalTime.HALF.clone().dotted(), Chromatic.F, MusicalTime.QUARTER));
+        sequentialTimeEvents.remove(MusicalTime.HALF);
 
-        assertEquals(Duration.QUARTER.getValue() * 3, sequentialTimeEvents.getLength());
-    }
-
-    @Test
-    public void getLength_afterRemoveKeepDuration() {
-        SequentialTimeEvents<Chromatic> sequentialTimeEvents = SequentialTimeEvents.createEmpty(Chromatic.class);
-        sequentialTimeEvents.add(Chromatic.C, Duration.QUARTER);
-        sequentialTimeEvents.add(Chromatic.D, Duration.QUARTER);
-        sequentialTimeEvents.add(Chromatic.E, Duration.QUARTER);
-        sequentialTimeEvents.add(Chromatic.F, Duration.QUARTER);
-        sequentialTimeEvents.removeKeepDuration(Duration.HALF.getValue());
-
-        assertEquals(Duration.WHOLE.getValue(), sequentialTimeEvents.getLength());
+        assertEquals(MusicalTime.WHOLE, sequentialTimeEvents.getLength());
     }
 }

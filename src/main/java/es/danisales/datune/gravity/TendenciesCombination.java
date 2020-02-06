@@ -15,8 +15,8 @@ public class TendenciesCombination {
     private TendenciesCombination() {
     }
 
-    private static void combinationUtil(List<Pair<Chromatic, Chromatic>> arr, Pair<Chromatic, Chromatic>[] data, int start,
-                                        int end, int index, int r, Set<Pair<Chromatic, Chromatic>[]> ret) {
+    private static void combinationUtil(List<NoteTendency> arr, NoteTendency[] data, int start,
+                                        int end, int index, int r, Set<NoteTendency[]> ret) {
         if (index == r)  {
             if (checkValid(data))
                 ret.add(Arrays.copyOf(data, data.length));
@@ -30,11 +30,11 @@ public class TendenciesCombination {
         }
     }
 
-    private static boolean checkValid(Pair<Chromatic, Chromatic>[] data) {
+    private static boolean checkValid(NoteTendency[] data) {
         for (int j = 0; j < data.length; j++) {
-            Chromatic indexKey = data[j].getKey();
+            Chromatic indexKey = data[j].getFrom();
             for (int i = 0; i < j; i++) {
-                if (data[i].getKey().equals(indexKey))
+                if (data[i].getFrom().equals(indexKey))
                     return false;
             }
         }
@@ -42,12 +42,12 @@ public class TendenciesCombination {
         return true;
     }
 
-    public static Set<Pair<Chromatic,Chromatic>[]> getCombinations(List<Pair<Chromatic,Chromatic>> base) {
+    public static Set<NoteTendency[]> getCombinations(List<NoteTendency> base) {
         int n = base.size();
-        Set<Pair<Chromatic, Chromatic>[]> ret = new HashSet<>();
+        Set<NoteTendency[]> ret = new HashSet<>();
         for (int i = 1; i <= n; i++) {
             @SuppressWarnings("unchecked")
-            Pair<Chromatic, Chromatic>[] data = new Pair[i];
+            NoteTendency[] data = new NoteTendency[i];
 
             combinationUtil(base, data, 0, base.size() - 1, 0, i, ret);
         }

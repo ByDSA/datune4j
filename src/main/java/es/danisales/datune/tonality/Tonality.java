@@ -1,7 +1,7 @@
 package es.danisales.datune.tonality;
 
 import es.danisales.datune.chords.Chord;
-import es.danisales.datune.chords.ChordProgression;
+import es.danisales.datune.chords.ChordTransformations;
 import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
@@ -11,8 +11,10 @@ import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.DiatonicAlt;
+import es.danisales.datune.function.MainTonalFunction;
 import es.danisales.utils.NeverHappensException;
 import es.danisales.utils.building.BuildingException;
+import javafx.util.Pair;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -273,6 +275,110 @@ public class Tonality<C extends CyclicDegree> implements Iterable<C> {
 
     public @NonNull List<C> getNotes() {
         return innerTonality.getNotes();
+    }
+
+    public MainTonalFunction getMainFunctionFrom(Chord<C> chord) {
+        Chord<C> chromaticChord = getRootChord();
+        int minDistanceRoot = getMinDistances(chord, chromaticChord, 0);
+        int minDistanceThird = getMinDistances(chord, chromaticChord, 1);
+        int minDistanceFifth = getMinDistances(chord, chromaticChord, 2);
+
+        List<Integer> set = ChordTransformations.getMinIntraIntervals((ChromaticChord)chord);
+        for (int dist : set) {
+            if (dist == 1 || dist == 2 || dist == 6)
+                return MainTonalFunction.DOMINANT;
+        }
+
+        if (minDistanceRoot == 1 && minDistanceThird > 0) {
+            return MainTonalFunction.DOMINANT;
+        }
+
+        if (minDistanceThird == 1 || minDistanceThird == 2 || minDistanceFifth == 1)
+            return MainTonalFunction.SUBDOMINANT;
+
+        return MainTonalFunction.TONIC;
+/*
+        MainTonalFunction mainFunction = MainTonalFunction.TONIC;
+        for (int j : minDists) {
+            if (j == 2)
+                mainFunction = MainTonalFunction.SUBDOMINANT;
+            else if (j == 1) {
+                mainFunction = MainTonalFunction.DOMINANT;
+                break;
+            }
+        }
+
+        return mainFunction;*/
+    }
+
+    private Chord<C> getRootChord() {
+        C root = getRoot();
+        C note2 = null;
+        C note3 = null;
+        C note4 = null;
+        try {
+            note2 = getNote(DiatonicDegree.III);
+            note3 = getNote(DiatonicDegree.V);
+            note4 = getNote(DiatonicDegree.VII);
+        } catch (ScaleRelativeDegreeException e) {
+            e.printStackTrace();
+        }
+
+        Chord<C> chord = null;
+        if (root instanceof Chromatic) {
+            try {
+                chord = (Chord<C>) ChromaticChord.builder()
+                        .build();
+
+                chord.add(root);
+                chord.add(note2);
+                chord.add(note3);
+                //chord.add(note4);
+            } catch (BuildingException ignored) {
+            }
+        } else if (root instanceof DiatonicAlt) {
+            return null;
+        }
+
+        return chord;
+    }
+
+    private int getMinDistances(Chord<C> from, Chord<C> to, int pos) {
+        int minDistance = Integer.MAX_VALUE;
+        C noteTo = to.get(pos);
+        Chromatic chromaticTo = Chromatic.from(noteTo);
+        for(C noteFrom : from) {
+            Chromatic chromaticFrom = Chromatic.from(noteFrom);
+            int dist = getMinDistChromatic(chromaticTo, chromaticFrom);
+            if (dist < minDistance)
+                minDistance = dist;
+        }
+
+        return minDistance;
+    }
+
+    private int getMinDistChromatic(Chromatic chromatic1, Chromatic chromatic2) {
+        int dist = chromatic1.distSemitonesTo(chromatic2);
+        if (dist > 6)
+            return Chromatic.NUMBER - dist;
+        return dist;
+    }
+
+    private List<Integer> getMinDistances(Chord<C> from, Chord<C> to) {
+        List<Integer> ret = new ArrayList<>();
+        for(C noteFrom : from) {
+            Chromatic chromaticFrom = Chromatic.from(noteFrom);
+            int minDistance = Integer.MAX_VALUE;
+            for (C noteTo : to) {
+                Chromatic chromaticTo = Chromatic.from(noteTo);
+                int dist = getMinDistChromatic(chromaticTo, chromaticFrom);
+                if (dist < minDistance)
+                    minDistance = dist;
+            }
+            ret.add(minDistance);
+        }
+
+        return ret;
     }
 
     /** Functions **/

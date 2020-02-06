@@ -7,6 +7,9 @@ import es.danisales.datune.chords.IntervalShifter;
 import es.danisales.datune.chords.tonal.TonalChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.octave.CyclicDegree;
+import es.danisales.datune.degrees.scale.DiatonicDegree;
+import es.danisales.datune.degrees.scale.ScaleDegree;
+import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.midi.pitch.PitchTonalMidi;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
@@ -2467,6 +2470,17 @@ public final class ChromaticChord
 
     private ChromaticChord(ChromaticChordEnum chromaticChordInterface) {
         super(chromaticChordInterface);
+    }
+
+    public static ChromaticChord from(Tonality<Chromatic> tonality, HarmonicFunction harmonicFunction) {
+        try {
+            return ChromaticChord.builder()
+                    .tonality((Tonality<Chromatic>)tonality)
+                    .harmonicFunction(harmonicFunction)
+                    .build();
+        } catch (BuildingException e) {
+            return null;
+        }
     }
 
     @Override

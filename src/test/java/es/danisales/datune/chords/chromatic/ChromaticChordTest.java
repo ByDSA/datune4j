@@ -1,5 +1,6 @@
 package es.danisales.datune.chords.chromatic;
 
+import es.danisales.datune.GlobalSettings;
 import es.danisales.datune.chords.ChordTransformations;
 import es.danisales.datune.chords.DiatonicDegreePattern;
 import es.danisales.datune.chords.tonal.TonalChord;
@@ -1060,7 +1061,7 @@ public class ChromaticChordTest {
 
         @Test
         public void names_ES() {
-            Language.current = Language.ES;
+            GlobalSettings.sigleton().setLanguage(Language.ES);
             assertEquals("Do", ChromaticChord.C.toString());
             assertEquals("Dom", ChromaticChord.Cm.toString());
             assertEquals("Do7", ChromaticChord.C7.toString());
@@ -1072,7 +1073,7 @@ public class ChromaticChordTest {
 
         @Test
         public void names_EN() {
-            Language.current = Language.EN;
+            GlobalSettings.sigleton().setLanguage(Language.EN);
             assertEquals("C", ChromaticChord.C.toString());
             assertEquals("Cm", ChromaticChord.Cm.toString());
             assertEquals("C7", ChromaticChord.C7.toString());
@@ -1089,23 +1090,23 @@ public class ChromaticChordTest {
                     Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G)
             ).build();
 
-            Language.current = Language.EN;
+            GlobalSettings.sigleton().setLanguage(Language.EN);
             assertEquals("C", cc.toString());
-            Language.current = Language.ES;
+            GlobalSettings.sigleton().setLanguage(Language.ES);
             assertEquals("Do", cc.toString());
 
             cc = ChromaticChord.builder().addAll(
                     Arrays.asList(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.AA)
             ).build();
-            Language.current = Language.EN;
+            GlobalSettings.sigleton().setLanguage(Language.EN);
             assertEquals("C7", cc.toString());
-            Language.current = Language.ES;
+            GlobalSettings.sigleton().setLanguage(Language.ES);
             assertEquals("Do7", cc.toString());
         }
 
         @Test
         public void namesInv_EN() {
-            Language.current = Language.EN;
+            GlobalSettings.sigleton().setLanguage(Language.EN);
             ChromaticChord chromaticChord = ChromaticChord.C.clone();
             chromaticChord.inv();
             assertEquals("C/E", chromaticChord.toString());
@@ -1125,7 +1126,7 @@ public class ChromaticChordTest {
 
         @Test
         public void namesInv_ES() {
-            Language.current = Language.ES;
+            GlobalSettings.sigleton().setLanguage(Language.ES);
             ChromaticChord chromaticChord = ChromaticChord.C.clone();
             chromaticChord.inv();
             assertEquals("Do/Mi", chromaticChord.toString());

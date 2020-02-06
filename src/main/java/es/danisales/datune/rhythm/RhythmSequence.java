@@ -1,6 +1,6 @@
 package es.danisales.datune.rhythm;
 
-import es.danisales.datune.tempo.Duration;
+import es.danisales.datune.tempo.MusicalTime;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
@@ -9,14 +9,14 @@ import java.util.List;
 
 public class RhythmSequence implements Iterable<TimeLayer> {
     private RhythmPattern rhythmPattern;
-    private Duration beat;
+    private MusicalTime beat;
     private List<TimeLayer> timeLayerList;
 
     private RhythmSequence() {
         timeLayerList = new ArrayList<>();
     }
 
-    public static RhythmSequence create(RhythmPattern rhythmPattern, Duration beat) {
+    public static RhythmSequence create(RhythmPattern rhythmPattern, MusicalTime beat) {
         RhythmSequence rhythmSequence = new RhythmSequence();
         rhythmSequence.rhythmPattern = rhythmPattern;
         rhythmSequence.beat = beat;

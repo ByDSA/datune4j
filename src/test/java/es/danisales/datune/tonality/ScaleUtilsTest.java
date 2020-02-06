@@ -1,5 +1,6 @@
 package es.danisales.datune.tonality;
 
+import es.danisales.datune.GlobalSettings;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.lang.Language;
@@ -13,21 +14,21 @@ public class ScaleUtilsTest {
 
     @Test
     public void getStringDistancesFrom_Eng() {
-        Language.current = Language.EN;
+        GlobalSettings.sigleton().setLanguage(Language.EN);
         String str = ScaleUtils.getStringDistancesFrom(Scale.MAJOR);
         assertEquals("W-W-H-W-W-W-H", str);
     }
 
     @Test
     public void getStringDistancesFrom_Eng2() {
-        Language.current = Language.EN;
+        GlobalSettings.sigleton().setLanguage(Language.EN);
         String str = ScaleUtils.getStringDistancesFrom(Scale.PENTATONIC);
         assertEquals("W-W-WH-W-WH", str);
     }
 
     @Test
     public void getStringDistancesFrom_EngAllNotNull() {
-        Language.current = Language.EN;
+        GlobalSettings.sigleton().setLanguage(Language.EN);
         for (Scale scale : Scale.allUsualScales()) {
             String str = ScaleUtils.getStringDistancesFrom(scale);
             assertNotNull(str);
@@ -36,21 +37,21 @@ public class ScaleUtilsTest {
 
     @Test
     public void getStringDistancesFrom_Esp() {
-        Language.current = Language.ES;
+        GlobalSettings.sigleton().setLanguage(Language.ES);
         String str = ScaleUtils.getStringDistancesFrom(Scale.MAJOR);
         assertEquals("T-T-ST-T-T-T-ST", str);
     }
 
     @Test
     public void getStringDistancesFrom_Esp2() {
-        Language.current = Language.ES;
+        GlobalSettings.sigleton().setLanguage(Language.ES);
         String str = ScaleUtils.getStringDistancesFrom(Scale.PENTATONIC);
         assertEquals("T-T-TS-T-TS", str);
     }
 
     @Test
     public void getStringDistancesFrom_EspAllNotNull() {
-        Language.current = Language.ES;
+        GlobalSettings.sigleton().setLanguage(Language.ES);
         for (Scale scale : Scale.allUsualScales()) {
             String str = ScaleUtils.getStringDistancesFrom(scale);
             assertNotNull(str);
@@ -155,7 +156,7 @@ public class ScaleUtilsTest {
 
     @Test
     public void getMajorScaleAlterationsFrom_AllNotNull() {
-        Language.current = Language.EN;
+        GlobalSettings.sigleton().setLanguage(Language.EN);
         for (Scale scale : Scale.allUsualScales()) {
             String str = ScaleUtils.getMajorScaleAlterationsFrom(scale);
             assertNotNull(str);

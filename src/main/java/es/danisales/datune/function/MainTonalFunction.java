@@ -1,5 +1,5 @@
 package es.danisales.datune.function;
 
-public enum MainFunction {
+public enum MainTonalFunction {
     TONIC, DOMINANT, SUBDOMINANT
 }

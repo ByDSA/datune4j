@@ -1,105 +1,94 @@
 package es.danisales.datune.rhythm;
 
-import es.danisales.datune.tempo.Duration;
-import javafx.util.Pair;
+import es.danisales.datune.tempo.Time;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import static com.google.common.base.Preconditions.checkArgument;
+public class SequentialTimeEvents<O, C extends DurableEvent<O, T>, T extends Time<T>>
+        implements TimeLayer<O, T>, Iterable<Map.Entry<T,C>> {
+    private TreeMap<T, C> content;
 
-public class SequentialTimeEvents<C> implements TimeLayer<C> {
-    private List<Pair<C, Long>> content;
-
-    private double durationCache;
-
-    private SequentialTimeEvents() {
-        content = new ArrayList<>();
+    SequentialTimeEvents() {
+        content = new TreeMap<>();
     }
 
-    @SuppressWarnings("WeakerAccess")
-    public static <C> SequentialTimeEvents<C> createEmpty(@SuppressWarnings("unused") Class<C> tClass) {
+    public static <O, C extends DurableEvent<O, T>, T extends Time<T>> SequentialTimeEvents<O, C, T> create() {
         return new SequentialTimeEvents<>();
     }
 
-    public void add(C item, double duration) {
-        long durationLong = doubleDuration2longDuration(duration);
-        Pair<C, Long> pair = new Pair<>(item, durationLong);
-        content.add(pair);
-
-        clearDurationCache();
+    public void add(C durableEvent) {
+        content.put(durableEvent.getIni(), durableEvent);
     }
 
-    private long doubleDuration2longDuration(double duration) {
-        return Math.round(duration / Duration.SIXTYFOURTH.getValue());
-    }
-
-    private double longDuration2doubleDuration(long duration) {
-        return duration * Duration.SIXTYFOURTH.getValue();
-    }
-
-    public void add(@Nullable C item, Duration duration) {
-        add(item, duration.getValue());
-    }
-
-    public @Nullable C get(double time) {
-        checkArgument(time >= 0);
-
-        Pair<C, Long> pair = getPair(time);
-        if (pair == null)
+    @Override
+    @Nullable
+    public O get(T time) {
+        T length = getLength();
+        if (length == null)
             return null;
-        else
-            return pair.getKey();
-    }
 
-    private @Nullable Pair<C, Long> getPair(double time) {
-        long timeLong = doubleDuration2longDuration(time);
-        return getPair(timeLong);
-    }
+        if (time.compareTo(length) >= 0)
+            return null;
 
-    private @Nullable Pair<C, Long> getPair(long time) {
-        long t = 0;
+        Map.Entry<T, C> entry = content.floorEntry(time);
+        if (entry == null)
+            return null;
 
-        for (Pair<C, Long> c : content) {
-            t += c.getValue();
-            if (t > time)
-                return c;
-        }
-
+        C durableEvent = entry.getValue();
+        if (time.isBetween(durableEvent.getIni(), durableEvent.getEnd()))
+            return durableEvent.getNote();
         return null;
     }
 
-    public boolean remove(double time) {
-        Pair<C, Long> item = getPair(time);
-        return content.remove(item);
+    @SuppressWarnings("unused")
+    @Nullable
+    public C getEvent(T time) {
+        return content.floorEntry(time).getValue();
     }
 
-    public boolean removeKeepDuration(double time) {
-        Pair<C, Long> item = getPair(time);
-        if (item != null) {
-            content.set(content.indexOf(item), new Pair<>(null, item.getValue()));
-            return true;
-        } else
-            return false;
+    @Override
+    @Nullable
+    public T getLength() {
+        if (content.size() == 0)
+            return null;
+        return content.lastEntry().getValue().getEnd();
     }
 
-    private void clearDurationCache() {
-        durationCache = -1;
+    @Override
+    public void remove(T time) {
+        content.remove(content.floorKey(time));
     }
 
-    private void updateCache() {
-        long longDuration = 0;
-        for (Pair<C, Long> element : content)
-            longDuration += element.getValue();
+    @SuppressWarnings("WeakerAccess")
+    public void removeAndShift(T time) {
+        T floorKey = content.floorKey(time);
+        T nextKey = content.higherKey(floorKey);
+        content.remove(floorKey);
 
-        durationCache = longDuration2doubleDuration(longDuration);
+        T difference = nextKey.clone().sub(floorKey);
+
+        while (nextKey != null) {
+            C nextKeyContent = content.get(nextKey);
+            nextKeyContent.getIni().sub(difference); // Misma referencia que la key, se cambia automáticamente la key
+            nextKeyContent.getEnd().sub(difference);
+
+            nextKey = content.higherKey(nextKey);
+        }
     }
 
-    public double getLength() {
-        if (durationCache < 0)
-            updateCache();
+    public List<O> toList() {
+        List<O> ret = new ArrayList<>();
+        for (Map.Entry<T, C> entry : content.entrySet())
+            ret.add(entry.getValue().getNote());
 
-        return durationCache;
+        return ret;
+    }
+
+    @Override
+    @NonNull
+    public Iterator<Map.Entry<T, C>> iterator() {
+        return content.entrySet().iterator();
     }
 }

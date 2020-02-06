@@ -1,5 +1,6 @@
 package es.danisales.datune.chords;
 
+import es.danisales.datune.GlobalSettings;
 import es.danisales.datune.degrees.octave.DiatonicAlt;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.octave.Diatonic;
@@ -151,7 +152,7 @@ public class DiatonicAltTest {
 
     @Test
     public void toStringTest_ENG() {
-        Language.current = Language.EN;
+        GlobalSettings.sigleton().setLanguage(Language.EN);
         assertEquals("C#(+1q)",
                 DiatonicAlt.CC.add(ScaleDistance.QUARTER).toString()
         );
@@ -159,7 +160,7 @@ public class DiatonicAltTest {
 
     @Test
     public void toStringTest2_ENG() {
-        Language.current = Language.EN;
+        GlobalSettings.sigleton().setLanguage(Language.EN);
         assertEquals("Eb(-1q)",
                 DiatonicAlt.Eb.sub(ScaleDistance.QUARTER).toString()
         );
@@ -167,7 +168,7 @@ public class DiatonicAltTest {
 
     @Test
     public void toStringTest_ESP() {
-        Language.current = Language.ES;
+        GlobalSettings.sigleton().setLanguage(Language.ES);
         assertEquals("Do#(+1q)",
                 DiatonicAlt.CC.add(ScaleDistance.QUARTER).toString()
         );
@@ -175,7 +176,7 @@ public class DiatonicAltTest {
 
     @Test
     public void toStringTest2_ESP() {
-        Language.current = Language.ES;
+        GlobalSettings.sigleton().setLanguage(Language.ES);
         assertEquals("Mib(-1q)",
                 DiatonicAlt.Eb.sub(ScaleDistance.QUARTER).toString()
         );

@@ -55,6 +55,39 @@ public enum IntervalChromatic implements Interval {
         return quality;
     }
 
+    public static IntervalChromatic from(int semitones) {
+        switch (semitones) {
+            case 0: return PERFECT_UNISON;
+            case 1: return MINOR_SECOND;
+            case 2: return MAJOR_SECOND;
+            case 3: return MINOR_THIRD;
+            case 4: return MAJOR_THIRD;
+            case 5: return PERFECT_FOURTH;
+            case 6: return DIMINISHED_FIFTH;
+            case 7: return PERFECT_FIFTH;
+            case 8: return MINOR_SIXTH;
+            case 9: return MAJOR_SIXTH;
+            case 10: return MINOR_SEVENTH;
+            case 11: return MAJOR_SEVENTH;
+            case 12: return PERFECT_OCTAVE;
+            case 13: return MINOR_NINTH;
+            case 14: return MAJOR_NINTH;
+            case 15: return MINOR_TENTH;
+            case 16: return MAJOR_TENTH;
+            case 17: return PERFECT_ELEVENTH;
+            case 18: return DIMINISHED_TWELFTH;
+            case 19: return PERFECT_TWELFTH;
+            case 20: return MINOR_THIRTEENTH;
+            case 21: return MAJOR_THIRTEENTH;
+            case 22: return MINOR_FOURTEENTH;
+            case 23: return MAJOR_FOURTEENTH;
+            case 24: return PERFECT_FIFTEENTH;
+            case 25: return AUGMENTED_FIFTEENTH;
+        }
+
+        throw NeverHappensException.make("");
+    }
+
     public boolean isCompound() {
         return (getSemitones() > Chromatic.NUMBER || this == DIMINISHED_NINTH);
     }

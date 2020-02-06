@@ -33,10 +33,10 @@ public class ChromaticFunctionProgressionTest {
 
     @Test
     public void i_vi_III_VII() {
-        ChromaticFunctionProgression chromaticFunctionProgression = ChromaticFunctionProgression.i_vi_III_VII;
+        ChromaticFunctionProgression chromaticFunctionProgression = ChromaticFunctionProgression.i_VI_III_VII;
 
         assertEquals(ChromaticFunction.i, chromaticFunctionProgression.get(0));
-        assertEquals(ChromaticFunction.vi, chromaticFunctionProgression.get(1));
+        assertEquals(ChromaticFunction.VI, chromaticFunctionProgression.get(1));
         assertEquals(ChromaticFunction.III, chromaticFunctionProgression.get(2));
         assertEquals(ChromaticFunction.VII, chromaticFunctionProgression.get(3));
     }
@@ -54,7 +54,7 @@ public class ChromaticFunctionProgressionTest {
 
     @Test
     public void getChordsFrom_i_vi_III_VII() {
-        ChromaticFunctionProgression chromaticFunctionProgression = ChromaticFunctionProgression.i_vi_III_VII;
+        ChromaticFunctionProgression chromaticFunctionProgression = ChromaticFunctionProgression.i_VI_III_VII;
 
         ChordProgression<Chromatic> chromaticChordProgression = chromaticFunctionProgression.getChordsFrom(Tonality.ET12.Am);
         assertEquals(ChromaticChord.Am, chromaticChordProgression.get(0));

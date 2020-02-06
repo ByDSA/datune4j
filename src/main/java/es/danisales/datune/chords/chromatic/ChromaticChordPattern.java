@@ -283,4 +283,19 @@ public final class ChromaticChordPattern extends Pattern {
     public ChromaticChordPattern clone() {
         return (ChromaticChordPattern) super.clone();
     }
+
+    @Override
+    public String toString() {
+        if (this.equals(TRIAD_MAJOR)) {
+            return "MAJOR";
+        } else if (this.equals(TRIAD_MINOR)) {
+            return "MINOR";
+        } else if (this.equals(TRIAD_DIMINISHED)) {
+            return "DIMINISHED";
+        } else if (this.equals(TRIAD_AUGMENTED)) {
+            return "AUGMENTED";
+        }
+
+        return super.toString();
+    }
 }

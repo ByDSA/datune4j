@@ -2,100 +2,84 @@ package es.danisales.datune.gravity;
 
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
-import javafx.util.Pair;
+import es.danisales.datune.tonality.Tonality;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class GravityChromaticChords {
     private GravityChromaticChords() {
     }
 
-    private ChromaticChord from, to;
-    private List<Pair<Integer, Integer>> results;
+    private ChromaticChord from;
+    private Iterable<ChromaticChord> listChords = ChromaticChord.all_triads();
+    private Iterable<Tonality<Chromatic>> tonalities;
 
-    public static GravityChromaticChords from(ChromaticChord from, ChromaticChord to) {
-        GravityChromaticChords gravityChords = new GravityChromaticChords();
-
-        gravityChords.from = from.clone();
-        gravityChords.to = to.clone();
-
-        gravityChords.from.toFundamental();
-        gravityChords.to.toFundamental();
-
-        return gravityChords;
+    public static GravityChromaticChords getter() {
+        return new GravityChromaticChords();
     }
 
-    private static List<Pair<Chromatic, Chromatic>> getAllChordIntervals(ChromaticChord chromaticChord) {
-        List<Pair<Chromatic, Chromatic>> ret = new ArrayList<>();
-        for (int i = 0; i < chromaticChord.size(); i++) {
-            for (int j = 0; j < chromaticChord.size(); j++) {
-                if (i == j)
-                    continue;
+    public GravityChromaticChords from(@NonNull ChromaticChord chromaticChord) {
+        from = chromaticChord;
 
-                Pair<Chromatic, Chromatic> pair = new Pair<>(chromaticChord.get(i), chromaticChord.get(j));
-                ret.add(pair);
-            }
-        }
-
-        return ret;
+        return this;
     }
 
-    public static Set<Pair<Chromatic, Chromatic>> getTendencies(ChromaticChord chromaticChord) {
-        Set<Pair<Chromatic, Chromatic>> tendencies = new HashSet<>();
+    public GravityChromaticChords listChords(@NonNull Iterable<ChromaticChord> chromaticChords) {
+        listChords = chromaticChords;
 
-        List<Pair<Chromatic, Chromatic>> list = getAllChordIntervals(chromaticChord);
-        for (Pair<Chromatic, Chromatic> pair : list) {
-            int semis = pair.getKey().distSemitonesTo(pair.getValue());
-            if (semis == 5) {
-                Pair<Chromatic, Chromatic> tendence = new Pair<>(pair.getValue(), pair.getValue().getPrevious());
-                tendencies.add(tendence);
-            } else if (semis == 6) {
-                Pair<Chromatic, Chromatic> tendence1 = new Pair<>(pair.getKey(), pair.getKey().getNext());
-                Pair<Chromatic, Chromatic> tendence2 = new Pair<>(pair.getValue(), pair.getValue().getNext(2));
-                tendencies.add(tendence1);
-                tendencies.add(tendence2);
-            } else if (semis == 7) {
-                Pair<Chromatic, Chromatic> tendence = new Pair<>(pair.getKey(), pair.getKey().getPrevious());
-                tendencies.add(tendence);
-            }
-        }
-
-        return tendencies;
+        return this;
     }
 
-    private static Set<Pair<Chromatic, Chromatic>[]> getTendenciesCombinations(Set<Pair<Chromatic, Chromatic>> tendencies) {
-        return TendenciesCombination.getCombinations(new ArrayList<>(tendencies));
+    public GravityChromaticChords anyTonalities(@NonNull Iterable<Tonality<Chromatic>> tonalities) {
+        this.tonalities = tonalities;
+
+        return this;
     }
 
-    public static Set<ChromaticChord> getChordsTendencies(ChromaticChord chromaticChord) {
+    private static Set<NoteTendency[]> getTendenciesCombinations(Set<NoteTendency> tendencies) {
+        return TendenciesCombination.getCombinations( new ArrayList<>(tendencies) );
+    }
+
+    public Set<ChromaticChord> get() {
         Set<ChromaticChord> ret = new HashSet<>();
 
-        Set<Pair<Chromatic, Chromatic>> tendencies = getTendencies(chromaticChord);
-        Set<Pair<Chromatic, Chromatic>[]> tendenciesCombinations = getTendenciesCombinations(tendencies);
-        for (Pair<Chromatic, Chromatic>[] combination : tendenciesCombinations) {
-            for (ChromaticChord chromaticChord1 : ChromaticChord.immutableValues())
-                if (hasAllTendencyChromatic(combination, chromaticChord1))
+        Set<NoteTendency> tendencies = null;/*HarmonicGravitationalTendency.getter()
+                .from(from)
+                .get();*/
+        Set<NoteTendency[]> tendenciesCombinations = getTendenciesCombinations(tendencies);
+        for (NoteTendency[] combination : tendenciesCombinations) {
+            Set<Chromatic> toNotes = getToNotes(combination);
+            if (tonalities != null)
+                listChords = filterAnyTonalities(listChords, tonalities);
+            for (ChromaticChord chromaticChord1 : listChords)
+                if ( chromaticChord1.containsAll(toNotes))
                     ret.add(chromaticChord1);
         }
         return ret;
     }
 
-    private static boolean hasAllTendencyChromatic(Pair<Chromatic, Chromatic>[] combination, ChromaticChord chromaticChord) {
-        for (Pair<Chromatic, Chromatic> pair : combination)
-            if (!chromaticChord.contains(pair.getValue()))
-                return false;
+    private static Iterable<ChromaticChord> filterAnyTonalities(Iterable<ChromaticChord> chromaticChords, Iterable<Tonality<Chromatic>> tonalities) {
+        List<ChromaticChord> ret = new ArrayList<>();
+        for (ChromaticChord chromaticChord : chromaticChords)
+            for (Tonality<Chromatic> tonality : tonalities) {
+                if (tonality.containsAll(chromaticChord)) {
+                    ret.add(chromaticChord);
+                    break;
+                }
+            }
 
-        return true;
+        return ret;
     }
 
-        /*
+    private static Set<Chromatic> getToNotes(@NonNull NoteTendency[] combination) {
+        Set<Chromatic> ret = new HashSet<>();
+        for (NoteTendency noteTendency : combination)
+            ret.add(noteTendency.getTo());
 
-Tendencia interválica (vertical)
-    SUS4 -> Mayor (IV -> III) [0-5 -> 0-4] / [0-7 -> -1-7]
-    DIM -> Mayor (VII -> I, II -> III, IV -> V) [0-6 -> 1-8]
-    DIM -> Minor (VII -> I, II -> IIIm, IV -> V) [0-6 -> 1-8]
-
-    Tendencia tonal (horizontal)
-
-     */
+        return ret;
+    }
 }

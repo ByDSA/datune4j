@@ -10,6 +10,7 @@ import es.danisales.datune.degrees.scale.PentatonicDegree;
 import es.danisales.datune.degrees.scale.ScaleDegree;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
+import es.danisales.datune.function.MainTonalFunction;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.utils.building.BuildingException;
 import org.junit.Assert;
@@ -953,5 +954,23 @@ public class TonalityTest {
 
         assertEquals(DiatonicAlt.C, tonality.getNote(DiatonicDegree.I));
         assertEquals(DiatonicAlt.D, tonality.getNote(DiatonicDegree.II));
+    }
+
+    @Test
+    public void getMainFunctionFrom() {
+        assertEquals(MainTonalFunction.TONIC, Tonality.ET12.C.getMainFunctionFrom(ChromaticChord.C));
+        assertEquals(MainTonalFunction.SUBDOMINANT, Tonality.ET12.C.getMainFunctionFrom(ChromaticChord.Dm));
+        assertEquals(MainTonalFunction.TONIC, Tonality.ET12.C.getMainFunctionFrom(ChromaticChord.Em));
+        assertEquals(MainTonalFunction.SUBDOMINANT, Tonality.ET12.C.getMainFunctionFrom(ChromaticChord.F));
+        assertEquals(MainTonalFunction.DOMINANT, Tonality.ET12.C.getMainFunctionFrom(ChromaticChord.G));
+        assertEquals(MainTonalFunction.TONIC, Tonality.ET12.C.getMainFunctionFrom(ChromaticChord.Am));
+        assertEquals(MainTonalFunction.DOMINANT, Tonality.ET12.C.getMainFunctionFrom(ChromaticChord.Bdim));
+        assertEquals(MainTonalFunction.DOMINANT, Tonality.ET12.C.getMainFunctionFrom(ChromaticChord.Gsus4)); // dominant o subdominant??
+        assertEquals(MainTonalFunction.DOMINANT, Tonality.ET12.C.getMainFunctionFrom(ChromaticChord.Csus4));
+
+        assertEquals(MainTonalFunction.TONIC, Tonality.ET12.Am.getMainFunctionFrom(ChromaticChord.Am));
+        assertEquals(MainTonalFunction.SUBDOMINANT, Tonality.ET12.Am.getMainFunctionFrom(ChromaticChord.F));
+        assertEquals(MainTonalFunction.TONIC, Tonality.ET12.Am.getMainFunctionFrom(ChromaticChord.C));
+        assertEquals(MainTonalFunction.SUBDOMINANT, Tonality.ET12.Am.getMainFunctionFrom(ChromaticChord.G)); // bVII es subdominante según internet
     }
 }

@@ -1,5 +1,6 @@
 package es.danisales.datune.tonality;
 
+import es.danisales.datune.GlobalSettings;
 import es.danisales.datune.lang.Language;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -135,7 +136,7 @@ class ScaleNamer {
     }
 
     public static String from(ScaleDistance scaleDistance) {
-        switch (Language.current) {
+        switch (GlobalSettings.sigleton().getLanguage()) {
             case ES:
                 switch (scaleDistance) {
                     case QUARTER:
