@@ -1,5 +1,6 @@
 package es.danisales.datune.tonality;
 
+import es.danisales.datune.chords.ChordTransformations;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.degrees.octave.DiatonicAlt;
@@ -965,12 +966,38 @@ public class TonalityTest {
         assertEquals(MainTonalFunction.DOMINANT, Tonality.ET12.C.getMainFunctionFrom(ChromaticChord.G));
         assertEquals(MainTonalFunction.TONIC, Tonality.ET12.C.getMainFunctionFrom(ChromaticChord.Am));
         assertEquals(MainTonalFunction.DOMINANT, Tonality.ET12.C.getMainFunctionFrom(ChromaticChord.Bdim));
-        assertEquals(MainTonalFunction.DOMINANT, Tonality.ET12.C.getMainFunctionFrom(ChromaticChord.Gsus4)); // dominant o subdominant??
-        assertEquals(MainTonalFunction.DOMINANT, Tonality.ET12.C.getMainFunctionFrom(ChromaticChord.Csus4));
+
+        assertEquals(MainTonalFunction.SUBDOMINANT, Tonality.ET12.C.getMainFunctionFrom(ChromaticChord.Gsus4)); // dominant o subdominant??
+        assertEquals(MainTonalFunction.SUBDOMINANT, Tonality.ET12.C.getMainFunctionFrom(ChromaticChord.Csus4)); // dominant o subdominant??
 
         assertEquals(MainTonalFunction.TONIC, Tonality.ET12.Am.getMainFunctionFrom(ChromaticChord.Am));
-        assertEquals(MainTonalFunction.SUBDOMINANT, Tonality.ET12.Am.getMainFunctionFrom(ChromaticChord.F));
+        assertEquals(MainTonalFunction.DOMINANT, Tonality.ET12.Am.getMainFunctionFrom(ChromaticChord.Bdim));
         assertEquals(MainTonalFunction.TONIC, Tonality.ET12.Am.getMainFunctionFrom(ChromaticChord.C));
+        assertEquals(MainTonalFunction.SUBDOMINANT, Tonality.ET12.Am.getMainFunctionFrom(ChromaticChord.Dm));
+        assertEquals(MainTonalFunction.SUBDOMINANT, Tonality.ET12.Am.getMainFunctionFrom(ChromaticChord.Em));
+        assertEquals(MainTonalFunction.TONIC, Tonality.ET12.Am.getMainFunctionFrom(ChromaticChord.F));
+        assertEquals(MainTonalFunction.SUBDOMINANT, Tonality.ET12.Am.getMainFunctionFrom(ChromaticChord.G));
+
         assertEquals(MainTonalFunction.SUBDOMINANT, Tonality.ET12.Am.getMainFunctionFrom(ChromaticChord.G)); // bVII es subdominante según internet
+    }
+
+    @Test
+    public void modalExchange() {
+        assertEquals(MainTonalFunction.DOMINANT, Tonality.ET12.Cm.getMainFunctionFrom(ChromaticChord.G)); // V en menor
+        assertEquals(MainTonalFunction.DOMINANT, Tonality.ET12.Cm.getMainFunctionFrom(ChromaticChord.Bdim)); // VII en menor
+
+        assertEquals(MainTonalFunction.SUBDOMINANT, Tonality.ET12.C.getMainFunctionFrom(ChromaticChord.GG)); // bVI en mayor
+        assertEquals(MainTonalFunction.DOMINANT, Tonality.ET12.C.getMainFunctionFrom(ChromaticChord.AA)); // bVII en mayor
+    }
+
+    @Test
+    public void getMainFunctionFrom_seventh() {
+        assertEquals(MainTonalFunction.TONIC, Tonality.ET12.C.getMainFunctionFrom(ChromaticChord.CMaj7));
+        assertEquals(MainTonalFunction.SUBDOMINANT, Tonality.ET12.C.getMainFunctionFrom(ChromaticChord.Dm7));
+        assertEquals(MainTonalFunction.TONIC, Tonality.ET12.C.getMainFunctionFrom(ChromaticChord.Em7));
+        assertEquals(MainTonalFunction.SUBDOMINANT, Tonality.ET12.C.getMainFunctionFrom(ChromaticChord.FMaj7));
+        assertEquals(MainTonalFunction.DOMINANT, Tonality.ET12.C.getMainFunctionFrom(ChromaticChord.G7));
+        assertEquals(MainTonalFunction.TONIC, Tonality.ET12.C.getMainFunctionFrom(ChromaticChord.Am7));
+        assertEquals(MainTonalFunction.DOMINANT, Tonality.ET12.C.getMainFunctionFrom(ChromaticChord.B7b5));
     }
 }

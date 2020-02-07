@@ -1,5 +1,7 @@
 package es.danisales.datune.rhythm;
 
+import es.danisales.datune.chords.chromatic.ChromaticChord;
+import es.danisales.datune.tempo.MusicalTime;
 import es.danisales.datune.tempo.Time;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -90,5 +92,28 @@ public class SequentialTimeEvents<O, C extends DurableEvent<O, T>, T extends Tim
     @NonNull
     public Iterator<Map.Entry<T, C>> iterator() {
         return content.entrySet().iterator();
+    }
+
+    @NonNull
+    public Iterator<Map.Entry<T, C>> iterator(T time) {
+        Iterator<Map.Entry<T, C>> iterator = iterator();
+
+        Map.Entry<T, C> entry;
+        while (iterator.hasNext()) {
+            entry = iterator.next();
+            if (entry.getKey().compareTo(time) >= 0)
+                break;
+        }
+
+        return iterator;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        content.forEach((T key, C value) -> stringBuilder.append(value).append("\n"));
+
+        return stringBuilder.toString();
     }
 }

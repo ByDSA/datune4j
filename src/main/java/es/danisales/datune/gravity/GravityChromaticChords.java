@@ -49,7 +49,7 @@ public class GravityChromaticChords {
 
         Set<NoteTendency> tendencies = null;/*HarmonicGravitationalTendency.getter()
                 .from(from)
-                .get();*/
+                .generate();*/
         Set<NoteTendency[]> tendenciesCombinations = getTendenciesCombinations(tendencies);
         for (NoteTendency[] combination : tendenciesCombinations) {
             Set<Chromatic> toNotes = getToNotes(combination);

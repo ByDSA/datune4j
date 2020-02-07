@@ -6,7 +6,9 @@ import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.interval.IntervalChromatic;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ChordTransformations {
     private ChordTransformations() {
@@ -43,6 +45,21 @@ public class ChordTransformations {
         return ret;
     }
 
+    public static List<Integer> getMinDistances(ChromaticChord chromaticChordFrom, ChromaticChord chromaticChordTo) {
+        List<Integer> ret = new ArrayList<>();
+        for (Chromatic chromaticFrom : chromaticChordFrom){
+            int min = Integer.MAX_VALUE;
+            for (Chromatic chromaticTo : chromaticChordTo) {
+                int semis = chromaticFrom.minDistSemitonesTo(chromaticTo);
+                if (semis < min)
+                    min = semis;
+            }
+            ret.add(min);
+        }
+
+        return ret;
+    }
+
     public static List<IntervalChromatic> getIntraIntervals(ChromaticChord chromaticChord) {
         List<IntervalChromatic> ret = new ArrayList<>();
         for (int i = 0; i < chromaticChord.size(); i++){
@@ -54,6 +71,31 @@ public class ChordTransformations {
                 IntervalChromatic intervalChromatic = IntervalChromatic.from(semis);
                 ret.add(intervalChromatic);
             }
+        }
+
+        return ret;
+    }
+
+    public static Set<Integer> getAllIntervals(ChromaticChord chromaticChordFrom, ChromaticChord chromaticChordTo) {
+        Set<Integer> ret = new HashSet<>();
+        for (int i = 0; i < chromaticChordFrom.size(); i++){
+            for (int j = i+1; j < chromaticChordTo.size(); j++) {
+                Chromatic chromaticFrom = chromaticChordFrom.get(i);
+                Chromatic chromaticTo = chromaticChordTo.get(j);
+
+                int semis = chromaticFrom.distSemitonesTo(chromaticTo);
+                ret.add(semis);
+            }
+        }
+
+        return ret;
+    }
+
+    public static List<Integer> getAllIntervalsWithNote(ChromaticChord chromaticChordFrom, Chromatic chromaticTo) {
+        List<Integer> ret = new ArrayList<>();
+        for (Chromatic chromaticFrom : chromaticChordFrom) {
+            int semis = chromaticFrom.distSemitonesTo(chromaticTo);
+            ret.add(semis);
         }
 
         return ret;

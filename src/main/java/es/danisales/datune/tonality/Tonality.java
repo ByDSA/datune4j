@@ -12,6 +12,7 @@ import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.DiatonicAlt;
 import es.danisales.datune.function.MainTonalFunction;
+import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.utils.NeverHappensException;
 import es.danisales.utils.building.BuildingException;
 import javafx.util.Pair;
@@ -278,25 +279,73 @@ public class Tonality<C extends CyclicDegree> implements Iterable<C> {
     }
 
     public MainTonalFunction getMainFunctionFrom(Chord<C> chord) {
-        Chord<C> chromaticChord = getRootChord();
-        int minDistanceRoot = getMinDistances(chord, chromaticChord, 0);
-        int minDistanceThird = getMinDistances(chord, chromaticChord, 1);
-        int minDistanceFifth = getMinDistances(chord, chromaticChord, 2);
+        Chord<C> rootChord = getRootChord();
 
-        List<Integer> set = ChordTransformations.getMinIntraIntervals((ChromaticChord)chord);
-        for (int dist : set) {
-            if (dist == 1 || dist == 2 || dist == 6)
+        Chromatic chromaticIII = (Chromatic)rootChord.get(1);
+        Chromatic chromaticIV = (Chromatic)getRoot().getShifted(5);
+        Chromatic chromaticV = (Chromatic)getRoot().getShifted(7);
+
+        boolean hasIV = chord.contains(chromaticIV);
+        boolean hasV = chord.contains(chromaticV);
+        boolean hasI = chord.contains(getRoot());
+        boolean hasIII = chord.contains(chromaticIII);
+
+        List<Integer> allIntervalsTransitionIII = ChordTransformations.getAllIntervalsWithNote((ChromaticChord)chord, chromaticIII);
+        List<Integer> allIntervalsTransitionI = ChordTransformations.getAllIntervalsWithNote((ChromaticChord)chord, (Chromatic)getRoot());
+
+        if (!chord.contains(getRoot()) && !chord.contains(chromaticIII)) {
+            for (int dist : allIntervalsTransitionIII) {
+                if (dist == 6)
+                    return MainTonalFunction.DOMINANT;
+            }
+
+            for (int dist : allIntervalsTransitionI) {
+                if (dist == 1 || dist == 6)
+                    return MainTonalFunction.DOMINANT;
+            }
+        }
+
+        for (IntervalChromatic dist : ChordTransformations.getIntraIntervals((ChromaticChord)chord)) {
+            if (dist.getSemitones() == 6)
                 return MainTonalFunction.DOMINANT;
         }
 
-        if (minDistanceRoot == 1 && minDistanceThird > 0) {
+        for (int dist : allIntervalsTransitionIII) {
+            if (dist == 1)
+                return MainTonalFunction.SUBDOMINANT;
+        }
+
+        for (IntervalChromatic dist : ChordTransformations.getIntraIntervals((ChromaticChord)chord)) {
+            if (dist.getSemitones() == 2)
+                return MainTonalFunction.SUBDOMINANT;
+        }
+
+        if (hasV && !hasI && !hasIII)
+            return MainTonalFunction.DOMINANT;
+        else if (hasIV)
+            return MainTonalFunction.SUBDOMINANT;
+        else
+            return MainTonalFunction.TONIC;
+/*
+        List<Integer> set = ChordTransformations.getMinDistances((ChromaticChord)chord, (ChromaticChord)rootChord);
+        int minDistanceRoot = set.get(0);
+        int minDistanceThird = set.get(1);
+        int minDistanceFifth = set.get(2);
+        int minDistanceSeventh = chord.size() > 3 ? set.get(3) : 0;
+
+        for (IntervalChromatic dist : ChordTransformations.getIntraIntervals((ChromaticChord)chord)) {
+            if ((dist.getSemitones() == 1 || dist.getSemitones() == 2) && minDistanceSeventh > 0 || dist.getSemitones() == 6)
+                return MainTonalFunction.DOMINANT;
+        }
+
+        if (minDistanceRoot == 1 && minDistanceFifth > 0) {
             return MainTonalFunction.DOMINANT;
         }
 
         if (minDistanceThird == 1 || minDistanceThird == 2 || minDistanceFifth == 1)
             return MainTonalFunction.SUBDOMINANT;
 
-        return MainTonalFunction.TONIC;
+        return MainTonalFunction.TONIC;*/
 /*
         MainTonalFunction mainFunction = MainTonalFunction.TONIC;
         for (int j : minDists) {
@@ -333,7 +382,7 @@ public class Tonality<C extends CyclicDegree> implements Iterable<C> {
                 chord.add(root);
                 chord.add(note2);
                 chord.add(note3);
-                //chord.add(note4);
+                chord.add(note4);
             } catch (BuildingException ignored) {
             }
         } else if (root instanceof DiatonicAlt) {
@@ -349,7 +398,7 @@ public class Tonality<C extends CyclicDegree> implements Iterable<C> {
         Chromatic chromaticTo = Chromatic.from(noteTo);
         for(C noteFrom : from) {
             Chromatic chromaticFrom = Chromatic.from(noteFrom);
-            int dist = getMinDistChromatic(chromaticTo, chromaticFrom);
+            int dist = getMinDistChromatic(chromaticFrom, chromaticTo);
             if (dist < minDistance)
                 minDistance = dist;
         }

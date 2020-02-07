@@ -35,4 +35,9 @@ public class DurableEvent<O, T extends Time> {
     public void setNote(O note) {
         this.note = note;
     }
+
+    @Override
+    public String toString() {
+        return "[" + ini + ", " + end + "]: " + note;
+    }
 }
