@@ -1,14 +1,14 @@
 package es.danisales.datune.function;
 
-import es.danisales.datune.chords.ChordProgression;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
-import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.tonality.Tonality;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class ChromaticFunctionProgressionTest {
     @Test
@@ -45,7 +45,7 @@ public class ChromaticFunctionProgressionTest {
     public void getChordsFrom_I_V_vi_iv() {
         ChromaticFunctionProgression chromaticFunctionProgression = ChromaticFunctionProgression.I_V_vi_IV;
 
-        ChordProgression<Chromatic> chromaticChordProgression = chromaticFunctionProgression.getChordsFrom(Tonality.ET12.C);
+        List<ChromaticChord> chromaticChordProgression = chromaticFunctionProgression.getChordsFrom(Tonality.ET12.C);
         assertEquals(ChromaticChord.C, chromaticChordProgression.get(0));
         assertEquals(ChromaticChord.G, chromaticChordProgression.get(1));
         assertEquals(ChromaticChord.Am, chromaticChordProgression.get(2));
@@ -56,7 +56,7 @@ public class ChromaticFunctionProgressionTest {
     public void getChordsFrom_i_vi_III_VII() {
         ChromaticFunctionProgression chromaticFunctionProgression = ChromaticFunctionProgression.i_VI_III_VII;
 
-        ChordProgression<Chromatic> chromaticChordProgression = chromaticFunctionProgression.getChordsFrom(Tonality.ET12.Am);
+        List<ChromaticChord> chromaticChordProgression = chromaticFunctionProgression.getChordsFrom(Tonality.ET12.Am);
         assertEquals(ChromaticChord.Am, chromaticChordProgression.get(0));
         assertEquals(ChromaticChord.F, chromaticChordProgression.get(1));
         assertEquals(ChromaticChord.C, chromaticChordProgression.get(2));

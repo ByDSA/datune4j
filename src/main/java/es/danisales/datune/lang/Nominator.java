@@ -15,8 +15,8 @@ import es.danisales.datune.tonality.TonalityException;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public class Namer {
-    private Namer() {
+public class Nominator {
+    private Nominator() {
     }
 
     public static String alt(int alt) {
@@ -162,7 +162,7 @@ public class Namer {
 
     public static @NonNull String shortFrom(IntervalChromatic intervalChromatic) {
         StringBuilder sb = new StringBuilder();
-        sb.append( Namer.shortFrom(intervalChromatic.getQuality()) );
+        sb.append( Nominator.shortFrom(intervalChromatic.getQuality()) );
 
         IntervalDiatonic intervalDiatonic = IntervalDiatonic.from(intervalChromatic);
         sb.append( intervalDiatonic.ordinal() + 1 );
@@ -174,9 +174,9 @@ public class Namer {
         StringBuilder sb = new StringBuilder();
 
         IntervalDiatonic intervalDiatonic = IntervalDiatonic.from(intervalChromatic);
-        sb.append( Namer.from(intervalDiatonic) );
+        sb.append( Nominator.from(intervalDiatonic) );
         sb.append(" ");
-        sb.append( Namer.longFrom(intervalChromatic.getQuality()) );
+        sb.append( Nominator.longFrom(intervalChromatic.getQuality()) );
 
         return sb.toString();
     }

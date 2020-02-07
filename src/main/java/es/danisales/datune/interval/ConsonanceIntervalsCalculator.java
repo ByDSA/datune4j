@@ -15,6 +15,7 @@ public class ConsonanceIntervalsCalculator {
             GlobalSettings.sigleton().getCultural().getIntervalConsonance(o1),
             GlobalSettings.sigleton().getCultural().getIntervalConsonance(o2));
 
+    @SuppressWarnings("WeakerAccess")
     public static int differenceOfConsonanceInterval(IntervalChromatic from, IntervalChromatic to) {
         return -GlobalSettings.sigleton().getCultural().getIntervalConsonance(to) + GlobalSettings.sigleton().getCultural().getIntervalConsonance(from);
     }

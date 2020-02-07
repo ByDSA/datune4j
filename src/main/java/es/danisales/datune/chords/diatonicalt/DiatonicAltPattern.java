@@ -96,10 +96,6 @@ public class DiatonicAltPattern extends ArrayList<DiatonicAltRelative> {
         this.addAll(list);
     }
 
-    private DiatonicAltPattern(DiatonicAlt... diatonicAlts) {
-        this(diatonicAlt2List(diatonicAlts));
-    }
-
     public static DiatonicAltPattern from(DiatonicAlt... diatonicAlts) {
         return new DiatonicAltPattern(diatonicAlt2List(diatonicAlts));
     }

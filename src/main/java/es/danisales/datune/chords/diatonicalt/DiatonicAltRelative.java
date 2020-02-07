@@ -1,17 +1,14 @@
 package es.danisales.datune.chords.diatonicalt;
 
-import es.danisales.datune.lang.Namer;
+import es.danisales.datune.lang.Nominator;
 
 public class DiatonicAltRelative {
     private final int diatonicNumber;
     private final int alts;
 
+    @SuppressWarnings("WeakerAccess")
     public int getDiatonicNumber() {
         return diatonicNumber;
-    }
-
-    public int getAlts() {
-        return alts;
     }
 
     private DiatonicAltRelative(int diatonicNumber, int alts) {
@@ -29,6 +26,6 @@ public class DiatonicAltRelative {
 
     @Override
     public String toString() {
-        return Namer.alt(alts) + diatonicNumber;
+        return Nominator.alt(alts) + diatonicNumber;
     }
 }

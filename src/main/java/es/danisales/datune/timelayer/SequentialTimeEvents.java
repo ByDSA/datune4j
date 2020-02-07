@@ -1,7 +1,5 @@
-package es.danisales.datune.rhythm;
+package es.danisales.datune.timelayer;
 
-import es.danisales.datune.chords.chromatic.ChromaticChord;
-import es.danisales.datune.tempo.MusicalTime;
 import es.danisales.datune.tempo.Time;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -12,7 +10,7 @@ public class SequentialTimeEvents<O, C extends DurableEvent<O, T>, T extends Tim
         implements TimeLayer<O, T>, Iterable<Map.Entry<T,C>> {
     private TreeMap<T, C> content;
 
-    SequentialTimeEvents() {
+    protected SequentialTimeEvents() {
         content = new TreeMap<>();
     }
 
@@ -44,7 +42,7 @@ public class SequentialTimeEvents<O, C extends DurableEvent<O, T>, T extends Tim
         return null;
     }
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings("WeakerAccess")
     @Nullable
     public C getEvent(T time) {
         return content.floorEntry(time).getValue();
@@ -63,7 +61,6 @@ public class SequentialTimeEvents<O, C extends DurableEvent<O, T>, T extends Tim
         content.remove(content.floorKey(time));
     }
 
-    @SuppressWarnings("WeakerAccess")
     public void removeAndShift(T time) {
         T floorKey = content.floorKey(time);
         T nextKey = content.higherKey(floorKey);
@@ -80,6 +77,7 @@ public class SequentialTimeEvents<O, C extends DurableEvent<O, T>, T extends Tim
         }
     }
 
+    @SuppressWarnings("WeakerAccess")
     public List<O> toList() {
         List<O> ret = new ArrayList<>();
         for (Map.Entry<T, C> entry : content.entrySet())

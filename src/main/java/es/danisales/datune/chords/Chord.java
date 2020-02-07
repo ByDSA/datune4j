@@ -88,7 +88,7 @@ public class Chord<C extends CyclicDegree>
             return 0;
     }
 
-    public void over(@NonNull C cyclicDegree) throws InvalidChordException {
+    public void over(@NonNull C cyclicDegree) throws ChordCreationException {
         exceptionIfImmutable();
         for (int i = 0; i < size(); i++) {
             if ( get(0).equals(cyclicDegree) )
@@ -96,7 +96,7 @@ public class Chord<C extends CyclicDegree>
             inv();
         }
 
-        throw new InvalidChordException();
+        throw new ChordCreationException();
     }
 
     public void toFundamental() {

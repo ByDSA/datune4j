@@ -23,6 +23,8 @@ public class TonalChord<C extends CyclicDegree> {
         return new TonalChordRetrievalChromatic();
     }
 
+    /* Getters and setters */
+
     public Tonality<C> getTonality() {
         return tonality;
     }
@@ -38,6 +40,8 @@ public class TonalChord<C extends CyclicDegree> {
     public void setHarmonicFunction(@NonNull HarmonicFunction harmonicFunction) {
         this.harmonicFunction = harmonicFunction;
     }
+
+    /* Object */
 
     @Override
     public String toString() {

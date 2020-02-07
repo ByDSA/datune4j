@@ -5,6 +5,7 @@ import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.tempo.MusicalTime;
+import es.danisales.datune.timelayer.*;
 import es.danisales.datune.tonality.Tonality;
 import javafx.util.Pair;
 import org.junit.Test;

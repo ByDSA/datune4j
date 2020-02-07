@@ -1,12 +1,12 @@
 package es.danisales.datune.function;
 
-import java.util.Collection;
 import java.util.Collections;
 
 public class ChromaticFunctionProgressionTransformations {
     private ChromaticFunctionProgressionTransformations() {
     }
 
+    @SuppressWarnings("WeakerAccess")
     public static ChromaticFunctionProgression rotate(ChromaticFunctionProgression chromaticFunctionProgression, int n) {
         ChromaticFunctionProgression chromaticFunctionProgression1 = chromaticFunctionProgression.clone();
         Collections.rotate(chromaticFunctionProgression1, n);

@@ -1,10 +1,11 @@
 package es.danisales.datune.rhythm;
 
 import es.danisales.datune.chords.chromatic.ChromaticChord;
-import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.tempo.MusicalTime;
+import es.danisales.datune.timelayer.ChordsLayer;
+import es.danisales.datune.timelayer.DurableEvent;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.random.RandomMode;
 import es.danisales.random.target.RandomPicker;

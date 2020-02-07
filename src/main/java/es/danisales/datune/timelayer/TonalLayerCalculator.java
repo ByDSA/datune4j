@@ -1,6 +1,5 @@
-package es.danisales.datune.rhythm;
+package es.danisales.datune.timelayer;
 
-import es.danisales.datune.chords.ChordProgression;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.function.DiatonicFunction;
@@ -37,7 +36,7 @@ public class TonalLayerCalculator {
     private DurableEvent<ChromaticChord, MusicalTime> eventCursor;
     private MusicalTime firstCompassTime;
     private Iterator<Map.Entry<MusicalTime, DurableEvent<ChromaticChord, MusicalTime>>> iterator;
-    private ChordProgression<Chromatic> chromaticChordProgression;
+    private List<ChromaticChord> chromaticChordProgression;
     private List<DurableEvent<ChromaticChord, MusicalTime>> entryList;
     private List<Tonality<Chromatic>> possibleTonalities;
 
@@ -48,7 +47,7 @@ public class TonalLayerCalculator {
 
     private void generateChordProgression() {
         entryList = new ArrayList<>();
-        chromaticChordProgression = ChordProgression.create();
+        chromaticChordProgression = new ArrayList<>();
         MusicalTime nextCompassTime = rhythmLayer.getNextCompassTime(rhythmLayer.getFirstCompassTime());
         System.out.println("Next Compass Time: " + nextCompassTime);
         for (MusicalTime iTime = firstCompassTime.clone(); iTime.compareTo(nextCompassTime) < 0; iTime = eventCursor.getIni()) {

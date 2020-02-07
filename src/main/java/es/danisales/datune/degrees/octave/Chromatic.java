@@ -2,7 +2,7 @@ package es.danisales.datune.degrees.octave;
 
 import es.danisales.datune.degrees.OrderedDegree;
 import es.danisales.datune.interval.IntervalChromatic;
-import es.danisales.datune.lang.Namer;
+import es.danisales.datune.lang.Nominator;
 import es.danisales.datune.midi.pitch.PitchTonalMidi;
 import es.danisales.utils.MathUtils;
 import es.danisales.utils.NeverHappensException;
@@ -125,7 +125,7 @@ public enum Chromatic implements CyclicDegree, OrderedDegree, Cloneable {
 	}
 
 	public String toString() {
-		return Namer.from(this);
+		return Nominator.from(this);
 	}
 
 	public int distSemitonesTo(@NonNull Chromatic chromatic) {

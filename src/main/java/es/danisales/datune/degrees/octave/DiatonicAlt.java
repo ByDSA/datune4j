@@ -1,6 +1,6 @@
 package es.danisales.datune.degrees.octave;
 
-import es.danisales.datune.lang.Namer;
+import es.danisales.datune.lang.Nominator;
 import es.danisales.datune.midi.NoteMidi;
 import es.danisales.datune.tonality.ScaleDistance;
 import es.danisales.datune.tonality.Tonality;
@@ -174,7 +174,7 @@ public class DiatonicAlt implements CyclicDegree {
 
 	@Override
 	public String toString() {
-		return Namer.from(this);
+		return Nominator.from(this);
 	}
 
 	@Override

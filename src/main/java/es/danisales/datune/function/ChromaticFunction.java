@@ -4,6 +4,7 @@ import es.danisales.arrays.ArrayUtils;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.utils.NeverHappensException;
 import es.danisales.utils.building.BuildingException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -23,21 +24,19 @@ public enum ChromaticFunction implements HarmonicFunction {
 	/** Power Chord */
 	I5, II5, III5, IV5, V5, VI5, VII5,
 
-    /**
-     * SUS
-     **/
-    ISUS4, IISUS4, bIIISUS4, IVSUS4, VSUS4, VISUS4, bVIISUS4,
+	/** SUS4 */
+	ISUS4, IISUS4, bIIISUS4, IVSUS4, VSUS4, VISUS4, bVIISUS4,
 
-	/** Quinto de... */
+	/** Dominantes secundarios */
 	V_II, V_III, V_IV, V_V, V_VI,
 
-	/** V7 de... */
+	/** Dominantes secundarios con séptima */
 	V7_II, V7_III, V7_IV, V7_V, V7_VI,
 
 	/** SUBV7 */
 	SUBV7, SUBV7_II, SUBV7_III, SUBV7_IV, SUBV7_V, SUBV7_VI,
 
-	/** The v7alt. */
+	/** v7alt */
 	V7ALT,
 
 	/* altered */
@@ -67,9 +66,9 @@ public enum ChromaticFunction implements HarmonicFunction {
 			IV0,
 			V0,
 			VI0,
-            VII0,
-            bIII,
-            bVI,
+			VII0,
+			bIII,
+			bVI,
 			bVII
 	};
 
@@ -109,7 +108,7 @@ public enum ChromaticFunction implements HarmonicFunction {
 			SUBV7_IV,
 			SUBV7_V,
 			SUBV7_VI,
-    };
+	};
 
 	/** Otras funciones */
 	public static final ChromaticFunction[] OTHER_TENSIONS = new ChromaticFunction[] {
@@ -136,22 +135,23 @@ public enum ChromaticFunction implements HarmonicFunction {
 	/**
 	 * Gets the chromatic function fromIndex a chromatic chord and a tonality
 	 *
-     * @param pitchChromaticChord chromatic chord
+	 * @param pitchChromaticChord chromatic chord
 	 * @param tonality tonality
 	 * @return the chromatic function
 	 */
-    public static @Nullable ChromaticFunction from(@NonNull Collection<Chromatic> pitchChromaticChord, @NonNull Tonality tonality) {
-		ChromaticChord chromaticChord = null;
+	public static @Nullable ChromaticFunction from(@NonNull Collection<Chromatic> pitchChromaticChord, @NonNull Tonality tonality) {
+		ChromaticChord chromaticChord;
 		try {
 			chromaticChord = ChromaticChord.builder()
 					.addAll(pitchChromaticChord)
 					.build();
+
+			HarmonicFunction hf = tonality.getFunctionFrom(chromaticChord);
+			if ( hf instanceof ChromaticFunction )
+				return (ChromaticFunction) hf;
 		} catch (BuildingException e) {
 			e.printStackTrace();
 		}
-		HarmonicFunction hf = tonality.getFunctionFrom(chromaticChord);
-		if ( hf instanceof ChromaticFunction )
-			return (ChromaticFunction) hf;
 
 		return null;
 	}
@@ -177,20 +177,20 @@ public enum ChromaticFunction implements HarmonicFunction {
 			case V_V:
 				return "V/V";
 			case V_VI:
-                return "V/VI";
-            case ISUS4:
-                return "ISUS4";
-            case IISUS4:
-                return "IISUS4";
-            case bIIISUS4:
-                return "bIIISUS4";
-            case IVSUS4:
-                return "IVSUS4";
-            case VSUS4:
-                return "VSUS4";
-            case VISUS4:
-                return "VISUS4";
-            case bVIISUS4:
+				return "V/VI";
+			case ISUS4:
+				return "ISUS4";
+			case IISUS4:
+				return "IISUS4";
+			case bIIISUS4:
+				return "bIIISUS4";
+			case IVSUS4:
+				return "IVSUS4";
+			case VSUS4:
+				return "VSUS4";
+			case VISUS4:
+				return "VISUS4";
+			case bVIISUS4:
 				return "bVIISUS4";
 			case N6:
 				return "N6";
@@ -251,21 +251,21 @@ public enum ChromaticFunction implements HarmonicFunction {
 				return "vi";
 			case vii:
 				return "vii";
-            case I0:
+			case I0:
 				return "Iº";
-            case II0:
+			case II0:
 				return "IIº";
-            case III0:
+			case III0:
 				return "IIIº";
-            case IV0:
+			case IV0:
 				return "IVº";
-            case V0:
+			case V0:
 				return "Vº";
-            case VI0:
+			case VI0:
 				return "VIº";
-            case VII0:
-                return "VIIº";
-            case bIII:
+			case VII0:
+				return "VIIº";
+			case bIII:
 				return "bIII";
 			case bVII:
 				return "bVII";
@@ -273,6 +273,6 @@ public enum ChromaticFunction implements HarmonicFunction {
 				return "bVI";
 		}
 
-		throw new RuntimeException();
+		throw NeverHappensException.switchOf(this);
 	}
 }

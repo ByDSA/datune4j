@@ -6,9 +6,7 @@ import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.interval.IntervalChromatic;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ChordTransformations {
     private ChordTransformations() {
@@ -30,22 +28,7 @@ public class ChordTransformations {
         return ret;
     }
 
-    public static List<Integer> getMinIntraIntervals(ChromaticChord chromaticChord) {
-        List<Integer> ret = new ArrayList<>();
-        for (int i = 0; i < chromaticChord.size(); i++){
-            for (int j = 0; j < i; j++) {
-                Chromatic chromaticFrom = chromaticChord.get(i);
-                Chromatic chromaticTo = chromaticChord.get(j);
-
-                int semis = chromaticFrom.minDistSemitonesTo(chromaticTo);
-                ret.add(semis);
-            }
-        }
-
-        return ret;
-    }
-
-    public static List<Integer> getMinDistances(ChromaticChord chromaticChordFrom, ChromaticChord chromaticChordTo) {
+    static List<Integer> getMinDistances(ChromaticChord chromaticChordFrom, ChromaticChord chromaticChordTo) {
         List<Integer> ret = new ArrayList<>();
         for (Chromatic chromaticFrom : chromaticChordFrom){
             int min = Integer.MAX_VALUE;
@@ -70,21 +53,6 @@ public class ChordTransformations {
                 int semis = chromaticFrom.distSemitonesTo(chromaticTo);
                 IntervalChromatic intervalChromatic = IntervalChromatic.from(semis);
                 ret.add(intervalChromatic);
-            }
-        }
-
-        return ret;
-    }
-
-    public static Set<Integer> getAllIntervals(ChromaticChord chromaticChordFrom, ChromaticChord chromaticChordTo) {
-        Set<Integer> ret = new HashSet<>();
-        for (int i = 0; i < chromaticChordFrom.size(); i++){
-            for (int j = i+1; j < chromaticChordTo.size(); j++) {
-                Chromatic chromaticFrom = chromaticChordFrom.get(i);
-                Chromatic chromaticTo = chromaticChordTo.get(j);
-
-                int semis = chromaticFrom.distSemitonesTo(chromaticTo);
-                ret.add(semis);
             }
         }
 

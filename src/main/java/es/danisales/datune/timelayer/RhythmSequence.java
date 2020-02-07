@@ -1,5 +1,6 @@
-package es.danisales.datune.rhythm;
+package es.danisales.datune.timelayer;
 
+import es.danisales.datune.rhythm.RhythmPattern;
 import es.danisales.datune.tempo.MusicalTime;
 import org.checkerframework.checker.nullness.qual.NonNull;
 

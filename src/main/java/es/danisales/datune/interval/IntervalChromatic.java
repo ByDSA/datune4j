@@ -1,7 +1,7 @@
 package es.danisales.datune.interval;
 
 import es.danisales.datune.degrees.octave.Chromatic;
-import es.danisales.datune.lang.Namer;
+import es.danisales.datune.lang.Nominator;
 import es.danisales.datune.chords.Quality;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -358,6 +358,6 @@ public enum IntervalChromatic implements Interval {
 
     @Override
     public String toString() {
-        return Namer.longFrom(this);
+        return Nominator.longFrom(this);
     }
 }

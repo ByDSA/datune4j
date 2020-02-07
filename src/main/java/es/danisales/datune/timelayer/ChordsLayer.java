@@ -1,4 +1,4 @@
-package es.danisales.datune.rhythm;
+package es.danisales.datune.timelayer;
 
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.chords.chromatic.ChromaticChordPattern;

@@ -62,6 +62,12 @@ public class DiatonicAltPatternTest {
     }
 
     @Test
+    public void fromDiatonicAlt_m7b5() {
+        DiatonicAltPattern diatonicAltPattern = DiatonicAltPattern.m7b5_SEVENTH;
+        assertEquals("[1, b3, b5, b7]", diatonicAltPattern.toString());
+    }
+
+    @Test
     public void fromDiatonicAlt_dominant_a5_Seventh() {
         DiatonicAltPattern diatonicAltPattern = DiatonicAltPattern.DOMINANT_a5_SEVENTH;
         assertEquals("[1, 3, #5, b7]", diatonicAltPattern.toString());

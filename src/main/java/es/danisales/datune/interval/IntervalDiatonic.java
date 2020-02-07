@@ -2,7 +2,7 @@ package es.danisales.datune.interval;
 
 import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
-import es.danisales.datune.lang.Namer;
+import es.danisales.datune.lang.Nominator;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -119,7 +119,7 @@ public enum IntervalDiatonic implements Interval {
     }
 
     public String toString() {
-        return "Intervalo de " + Namer.from(this);
+        return "Intervalo de " + Nominator.from(this);
     }
 
     @Override

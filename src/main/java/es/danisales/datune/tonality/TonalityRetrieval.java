@@ -1,7 +1,6 @@
 package es.danisales.datune.tonality;
 
 import es.danisales.datune.chords.Chord;
-import es.danisales.datune.chords.ChordProgression;
 import es.danisales.datune.degrees.octave.DiatonicAlt;
 import es.danisales.datune.chords.diatonicalt.DiatonicAltRetrieval;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
@@ -22,7 +21,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class TonalityRetrieval {
-    public static List<Tonality<Chromatic>> fromChordProgression(ChordProgression<Chromatic> chromaticChordProgression, List<Tonality<Chromatic>> tonalities) {
+    public static List<Tonality<Chromatic>> fromChordProgression(List<ChromaticChord> chromaticChordProgression, List<Tonality<Chromatic>> tonalities) {
         tonalities = new ArrayList<>(tonalities);
         for (Chord<Chromatic> chromaticChord : chromaticChordProgression) {
             tonalities = getFromChord((ChromaticChord)chromaticChord, tonalities);

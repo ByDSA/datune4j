@@ -2,6 +2,8 @@ package es.danisales.datune.rhythm;
 
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.tempo.MusicalTime;
+import es.danisales.datune.timelayer.DurableEvent;
+import es.danisales.datune.timelayer.MusicalSequence;
 import org.junit.Test;
 
 import java.util.Arrays;

@@ -4,8 +4,6 @@ import es.danisales.datune.GlobalSettings;
 import es.danisales.datune.degrees.OrderedDegree;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.interval.IntervalDiatonic;
-import es.danisales.datune.lang.Language;
-import es.danisales.utils.MathUtils;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -119,13 +117,6 @@ public enum Diatonic implements CyclicDegree, OrderedDegree, Cloneable {
 	}
 
 	/** Calculator **/
-
-	public IntervalDiatonic dist(Diatonic n2) {
-		int d = n2.ordinal() - ordinal();
-		d = MathUtils.rotativeTrim(d, Diatonic.NUMBER);
-
-		return IntervalDiatonic.values()[d];
-	}
 
 	@Override
 	public String toString() {

@@ -1,17 +1,18 @@
 package es.danisales.datune.function;
 
 import es.danisales.datastructures.ListProxy;
-import es.danisales.datune.chords.Chord;
-import es.danisales.datune.chords.ChordProgression;
+import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.tonality.Tonality;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 public class ChromaticFunctionProgression
         extends ListProxy<ChromaticFunction> {
+    @SuppressWarnings("WeakerAccess")
     public static final ChromaticFunctionProgression I_V_vi_IV = ChromaticFunctionProgression.copyOf(
             Arrays.asList(
                     ChromaticFunction.I,
@@ -21,6 +22,7 @@ public class ChromaticFunctionProgression
             )
     );
 
+    @SuppressWarnings("WeakerAccess")
     public static final ChromaticFunctionProgression I_IV_vi_V = ChromaticFunctionProgression.copyOf(
             Arrays.asList(
                     ChromaticFunction.I,
@@ -30,6 +32,7 @@ public class ChromaticFunctionProgression
             )
     );
 
+    @SuppressWarnings("WeakerAccess")
     public static final ChromaticFunctionProgression i_VI_III_VII = ChromaticFunctionProgressionTransformations.shift(ChromaticFunctionProgressionTransformations.rotate(I_V_vi_IV, 2), 2);
 
     private ChromaticFunctionProgression() {
@@ -48,10 +51,10 @@ public class ChromaticFunctionProgression
     }
 
     @SuppressWarnings("WeakerAccess")
-    public ChordProgression<Chromatic> getChordsFrom(Tonality<Chromatic> tonality) {
-        ChordProgression<Chromatic> chromaticChordProgression = ChordProgression.create();
+    public List<ChromaticChord> getChordsFrom(Tonality<Chromatic> tonality) {
+        List<ChromaticChord> chromaticChordProgression = new ArrayList<>();
         for (ChromaticFunction chromaticFunction : this) {
-            Chord<Chromatic> chromaticChord = tonality.getChordFromHarmonicFunction(chromaticFunction);
+            ChromaticChord chromaticChord = (ChromaticChord)tonality.getChordFromHarmonicFunction(chromaticFunction);
             chromaticChordProgression.add(chromaticChord);
         }
 

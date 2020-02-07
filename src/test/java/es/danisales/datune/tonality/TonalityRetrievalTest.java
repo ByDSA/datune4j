@@ -1,10 +1,7 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.arrays.ArrayUtils;
-import es.danisales.datune.chords.ChordProgression;
-import es.danisales.datune.chords.chromatic.ChromaticChordPattern;
-import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
+import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.octave.DiatonicAlt;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.utils.building.BuildingException;
@@ -148,7 +145,7 @@ public class TonalityRetrievalTest {
 
     @Test
     public void bb() {
-        ChordProgression<Chromatic> chromaticChordProgression = ChordProgression.create();
+        List<ChromaticChord> chromaticChordProgression = new ArrayList<>();
         chromaticChordProgression.add(ChromaticChord.C);
         chromaticChordProgression.add(ChromaticChord.G);
         chromaticChordProgression.add(ChromaticChord.Am);

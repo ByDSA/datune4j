@@ -1,4 +1,4 @@
-package es.danisales.datune.rhythm;
+package es.danisales.datune.timelayer;
 
 import es.danisales.datastructures.Pair;
 import es.danisales.datune.degrees.octave.Chromatic;
@@ -10,7 +10,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.List;
 
 public class TonalLayer extends SequentialTimeEvents<List<TonalLayer.Node>, DurableEvent<List<TonalLayer.Node>, MusicalTime>, MusicalTime> {
-    static class Node extends Pair<Tonality<Chromatic>, HarmonicFunction> {
+    public static class Node extends Pair<Tonality<Chromatic>, HarmonicFunction> {
         private Node(Tonality<Chromatic> key, HarmonicFunction value) {
             super(key, value);
         }

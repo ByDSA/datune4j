@@ -2,6 +2,8 @@ package es.danisales.datune.rhythm;
 
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.tempo.MusicalTime;
+import es.danisales.datune.timelayer.DurableEvent;
+import es.danisales.datune.timelayer.SequentialTimeEvents;
 import org.junit.Test;
 
 import static junit.framework.TestCase.*;
