@@ -1000,4 +1000,30 @@ public class TonalityTest {
         assertEquals(MainTonalFunction.TONIC, Tonality.ET12.C.getMainFunctionFrom(ChromaticChord.Am7));
         assertEquals(MainTonalFunction.DOMINANT, Tonality.ET12.C.getMainFunctionFrom(ChromaticChord.B7b5));
     }
+
+    @Test
+    public void secondaryDominants() {
+        assertEquals(MainTonalFunction.TONIC, Tonality.ET12.C.getMainFunctionFrom(ChromaticFunction.V_IV));
+        assertEquals(MainTonalFunction.TONIC, Tonality.ET12.C.getMainFunctionFrom(ChromaticFunction.V7_IV));
+        assertEquals(MainTonalFunction.SUBDOMINANT, Tonality.ET12.C.getMainFunctionFrom(ChromaticFunction.V_V));
+        assertEquals(MainTonalFunction.SUBDOMINANT, Tonality.ET12.C.getMainFunctionFrom(ChromaticFunction.V7_V));
+        assertEquals(MainTonalFunction.TONIC, Tonality.ET12.C.getMainFunctionFrom(ChromaticFunction.V_II));
+        assertEquals(MainTonalFunction.TONIC, Tonality.ET12.C.getMainFunctionFrom(ChromaticFunction.V7_II));
+        assertEquals(MainTonalFunction.DOMINANT, Tonality.ET12.C.getMainFunctionFrom(ChromaticFunction.V_III));
+        assertEquals(MainTonalFunction.DOMINANT, Tonality.ET12.C.getMainFunctionFrom(ChromaticFunction.V7_III));
+        assertEquals(MainTonalFunction.TONIC, Tonality.ET12.C.getMainFunctionFrom(ChromaticFunction.V_VI));
+        assertEquals(MainTonalFunction.TONIC, Tonality.ET12.C.getMainFunctionFrom(ChromaticFunction.V7_VI));
+    }
+
+    @Test
+    public void otherChromaticFunctions() {
+        assertEquals(MainTonalFunction.SUBDOMINANT, Tonality.ET12.C.getMainFunctionFrom(ChromaticFunction.N6)); // ?
+        assertEquals(MainTonalFunction.SUBDOMINANT, Tonality.ET12.C.getMainFunctionFrom(Tonality.ET12.Cm.getChordFromHarmonicFunction(DiatonicFunction.I)));
+        assertEquals(MainTonalFunction.DOMINANT, Tonality.ET12.C.getMainFunctionFrom(Tonality.ET12.Cm.getChordFromHarmonicFunction(DiatonicFunction.II)));
+        assertEquals(MainTonalFunction.DOMINANT, Tonality.ET12.C.getMainFunctionFrom(Tonality.ET12.Cm.getChordFromHarmonicFunction(DiatonicFunction.III)));
+        assertEquals(MainTonalFunction.SUBDOMINANT, Tonality.ET12.C.getMainFunctionFrom(Tonality.ET12.Cm.getChordFromHarmonicFunction(DiatonicFunction.IV)));
+        assertEquals(MainTonalFunction.DOMINANT, Tonality.ET12.C.getMainFunctionFrom(Tonality.ET12.Cm.getChordFromHarmonicFunction(DiatonicFunction.V)));
+        assertEquals(MainTonalFunction.SUBDOMINANT, Tonality.ET12.C.getMainFunctionFrom(Tonality.ET12.Cm.getChordFromHarmonicFunction(DiatonicFunction.VI)));
+        assertEquals(MainTonalFunction.DOMINANT, Tonality.ET12.C.getMainFunctionFrom(Tonality.ET12.Cm.getChordFromHarmonicFunction(DiatonicFunction.VII)));
+    }
 }

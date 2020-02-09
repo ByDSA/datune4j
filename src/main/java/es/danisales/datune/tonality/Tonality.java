@@ -56,6 +56,7 @@ public class Tonality<C extends CyclicDegree> implements Iterable<C> {
     public static final Tonality<DiatonicAlt> Bbm = new Tonality<>(TonalityInnerImmutable.Bbm);
     public static final Tonality<DiatonicAlt> Bm = new Tonality<>(TonalityInnerImmutable.Bm);
 
+
     public static class ET12 {
         private ET12() {
         }
@@ -300,18 +301,23 @@ public class Tonality<C extends CyclicDegree> implements Iterable<C> {
             }
 
             for (int dist : allIntervalsTransitionI) {
-                if (dist == 1 || dist == 6)
+                if (dist == 1)
+                    return MainTonalFunction.DOMINANT;
+            }
+
+            for (IntervalChromatic dist : ChordTransformations.getIntraIntervals((ChromaticChord)chord)) {
+                if (dist.getSemitones() == 6)
                     return MainTonalFunction.DOMINANT;
             }
         }
 
-        for (IntervalChromatic dist : ChordTransformations.getIntraIntervals((ChromaticChord)chord)) {
-            if (dist.getSemitones() == 6)
-                return MainTonalFunction.DOMINANT;
-        }
-
         for (int dist : allIntervalsTransitionIII) {
             if (dist == 1)
+                return MainTonalFunction.SUBDOMINANT;
+        }
+
+        for (int dist : allIntervalsTransitionI) {
+            if (dist == 6)
                 return MainTonalFunction.SUBDOMINANT;
         }
 
@@ -359,6 +365,12 @@ public class Tonality<C extends CyclicDegree> implements Iterable<C> {
 
         return mainFunction;*/
     }
+
+    public MainTonalFunction getMainFunctionFrom(HarmonicFunction harmonicFunction) {
+        Chord<C> chord = getChordFromHarmonicFunction(harmonicFunction);
+        return getMainFunctionFrom(chord);
+    }
+
 
     private Chord<C> getRootChord() {
         C root = getRoot();
