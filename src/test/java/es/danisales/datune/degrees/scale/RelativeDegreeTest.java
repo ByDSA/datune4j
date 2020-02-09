@@ -28,17 +28,17 @@ public class RelativeDegreeTest {
         List<ScaleDegree> diatonicDegrees = ScaleDegree.getDefaultDegreesFromScaleSize(Chromatic.NUMBER);
         assertEquals(12, diatonicDegrees.size());
         assertSame(ChromaticDegree.I, diatonicDegrees.get(0));
-        assertSame(ChromaticDegree.II, diatonicDegrees.get(1));
-        assertSame(ChromaticDegree.III, diatonicDegrees.get(2));
-        assertSame(ChromaticDegree.IV, diatonicDegrees.get(3));
-        assertSame(ChromaticDegree.V, diatonicDegrees.get(4));
-        assertSame(ChromaticDegree.VI, diatonicDegrees.get(5));
-        assertSame(ChromaticDegree.VII, diatonicDegrees.get(6));
-        assertSame(ChromaticDegree.VIII, diatonicDegrees.get(7));
-        assertSame(ChromaticDegree.IX, diatonicDegrees.get(8));
-        assertSame(ChromaticDegree.X, diatonicDegrees.get(9));
-        assertSame(ChromaticDegree.XI, diatonicDegrees.get(10));
-        assertSame(ChromaticDegree.XII, diatonicDegrees.get(11));
+        assertSame(ChromaticDegree.bII, diatonicDegrees.get(1));
+        assertSame(ChromaticDegree.II, diatonicDegrees.get(2));
+        assertSame(ChromaticDegree.bIII, diatonicDegrees.get(3));
+        assertSame(ChromaticDegree.III, diatonicDegrees.get(4));
+        assertSame(ChromaticDegree.IV, diatonicDegrees.get(5));
+        assertSame(ChromaticDegree.bV, diatonicDegrees.get(6));
+        assertSame(ChromaticDegree.V, diatonicDegrees.get(7));
+        assertSame(ChromaticDegree.bVI, diatonicDegrees.get(8));
+        assertSame(ChromaticDegree.VI, diatonicDegrees.get(9));
+        assertSame(ChromaticDegree.bVII, diatonicDegrees.get(10));
+        assertSame(ChromaticDegree.VII, diatonicDegrees.get(11));
     }
 
     @Test

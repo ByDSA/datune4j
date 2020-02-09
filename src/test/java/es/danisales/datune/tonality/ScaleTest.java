@@ -392,7 +392,7 @@ public class ScaleTest {
     @Test
     public void getDistance_ChromaticScale() throws ScaleRelativeDegreeException {
         for (ChromaticDegree chromaticDegree = ChromaticDegree.I;
-             chromaticDegree.getPrevious() != ChromaticDegree.XII;
+             chromaticDegree.getPrevious() != ChromaticDegree.VII;
              chromaticDegree = chromaticDegree.getNext())
             if (chromaticDegree == ChromaticDegree.I)
                 assertEquals(ScaleDistance.NONE, Scale.CHROMATIC.getDistance(chromaticDegree));
@@ -495,7 +495,7 @@ public class ScaleTest {
                 .get();
         assertEquals(2, degreeSet.size());
         assertTrue(degreeSet.contains(DiatonicDegree.V));
-        assertTrue(degreeSet.contains(ChromaticDegree.VIII));
+        assertTrue(degreeSet.contains(ChromaticDegree.V));
     }
 
     /* degreeGetter Diatonic */

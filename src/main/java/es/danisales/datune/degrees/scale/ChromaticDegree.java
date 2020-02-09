@@ -5,7 +5,7 @@ import es.danisales.utils.Utils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public enum ChromaticDegree implements ScaleDegree {
-    I, II, III, IV, V, VI, VII, VIII, IX, X, XI, XII;
+    I, bII, II, bIII, III, IV, bV, V, bVI, VI, bVII, VII;
 
     @NonNull
     @Override

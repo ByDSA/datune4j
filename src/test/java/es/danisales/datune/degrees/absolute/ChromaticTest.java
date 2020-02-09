@@ -113,17 +113,17 @@ public class ChromaticTest {
     @Test
     public void absoluteRelativeOrdinal() {
         assertSame(ChromaticDegree.I.ordinal(), Chromatic.C.ordinal());
-        assertSame(ChromaticDegree.II.ordinal(), Chromatic.CC.ordinal());
-        assertSame(ChromaticDegree.III.ordinal(), Chromatic.D.ordinal());
-        assertSame(ChromaticDegree.IV.ordinal(), Chromatic.DD.ordinal());
-        assertSame(ChromaticDegree.V.ordinal(), Chromatic.E.ordinal());
-        assertSame(ChromaticDegree.VI.ordinal(), Chromatic.F.ordinal());
-        assertSame(ChromaticDegree.VII.ordinal(), Chromatic.FF.ordinal());
-        assertSame(ChromaticDegree.VIII.ordinal(), Chromatic.G.ordinal());
-        assertSame(ChromaticDegree.IX.ordinal(), Chromatic.GG.ordinal());
-        assertSame(ChromaticDegree.X.ordinal(), Chromatic.A.ordinal());
-        assertSame(ChromaticDegree.XI.ordinal(), Chromatic.AA.ordinal());
-        assertSame(ChromaticDegree.XII.ordinal(), Chromatic.B.ordinal());
+        assertSame(ChromaticDegree.bII.ordinal(), Chromatic.CC.ordinal());
+        assertSame(ChromaticDegree.II.ordinal(), Chromatic.D.ordinal());
+        assertSame(ChromaticDegree.bIII.ordinal(), Chromatic.DD.ordinal());
+        assertSame(ChromaticDegree.III.ordinal(), Chromatic.E.ordinal());
+        assertSame(ChromaticDegree.IV.ordinal(), Chromatic.F.ordinal());
+        assertSame(ChromaticDegree.bV.ordinal(), Chromatic.FF.ordinal());
+        assertSame(ChromaticDegree.V.ordinal(), Chromatic.G.ordinal());
+        assertSame(ChromaticDegree.bVI.ordinal(), Chromatic.GG.ordinal());
+        assertSame(ChromaticDegree.VI.ordinal(), Chromatic.A.ordinal());
+        assertSame(ChromaticDegree.bVII.ordinal(), Chromatic.AA.ordinal());
+        assertSame(ChromaticDegree.VII.ordinal(), Chromatic.B.ordinal());
     }
 
     @Test

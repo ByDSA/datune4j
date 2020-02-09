@@ -151,7 +151,7 @@ public enum DiatonicFunction implements HarmonicFunction {
 			case II11:
 				return "II11";
 			case II:
-				return "II";
+				return "bII";
 
 			case III6:
 				return "III6";
@@ -162,7 +162,7 @@ public enum DiatonicFunction implements HarmonicFunction {
 			case III11:
 				return "III11";
 			case III:
-				return "III";
+				return "II";
 
 			case IV6:
 				return "IV6";
@@ -173,7 +173,7 @@ public enum DiatonicFunction implements HarmonicFunction {
 			case IV11:
 				return "IV11";
 			case IV:
-				return "IV";
+				return "bIII";
 
 			case V6:
 				return "V6";
@@ -182,7 +182,7 @@ public enum DiatonicFunction implements HarmonicFunction {
 			case V11:
 				return "V11";
 			case V:
-				return "V";
+				return "III";
 
 			case V7:
 				return "V7";
@@ -196,7 +196,7 @@ public enum DiatonicFunction implements HarmonicFunction {
 			case VI11:
 				return "VI11";
 			case VI:
-				return "VI";
+				return "IV";
 
 			case VII6:
 				return "VII6";
@@ -207,7 +207,7 @@ public enum DiatonicFunction implements HarmonicFunction {
 			case VII11:
 				return "VII11";
 			case VII:
-				return "VII";
+				return "bV";
 			case I13:
 				return "I13";
 			case II13:

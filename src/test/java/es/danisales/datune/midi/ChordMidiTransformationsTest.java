@@ -30,7 +30,7 @@ public class ChordMidiTransformationsTest {
     @Test
     public void minimizeDistanceTo() throws BuildingException {
         ChordMidi diatonicChordMidiEditing = ChordMidi.builder()
-                .from(TonalChord.from(Tonality.C, DiatonicFunction.VII))
+                .from(TonalChord.from(Tonality.C, DiatonicFunction.bV))
                 .build();
 
         ChordMidi diatonicChordMidiSource = diatonicChordMidiEditing.clone();

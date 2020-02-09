@@ -1,7 +1,6 @@
 package es.danisales.datune.function;
 
 import es.danisales.arrays.ArrayUtils;
-import es.danisales.datune.chords.Chord;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.tonality.Tonality;
@@ -84,7 +83,7 @@ public enum ChromaticFunction implements HarmonicFunction {
 			VII5,
 	};
 
-	/** Funciones V de... */
+	/** Funciones III de... */
 	public static final ChromaticFunction[] V_FUNCTIONS = new ChromaticFunction[] {
 			V_II,
 			V_III,
@@ -160,25 +159,25 @@ public enum ChromaticFunction implements HarmonicFunction {
 	public @NonNull String toString() {
 		switch ( this ) {
 			case V7_II:
-				return "V7/II";
+				return "V7/bII";
 			case V7_III:
-				return "V7/III";
+				return "V7/II";
 			case V7_IV:
-				return "V7/IV";
+				return "V7/bIII";
 			case V7_V:
-				return "V7/V";
+				return "V7/III";
 			case V7_VI:
-				return "V7/VI";
+				return "V7/IV";
 			case V_II:
-				return "V/II";
+				return "III/bII";
 			case V_III:
-				return "V/III";
+				return "III/II";
 			case V_IV:
-				return "V/IV";
+				return "III/bIII";
 			case V_V:
-				return "V/V";
+				return "III/III";
 			case V_VI:
-				return "V/VI";
+				return "III/IV";
 			case ISUS4:
 				return "ISUS4";
 			case IISUS4:
@@ -198,15 +197,15 @@ public enum ChromaticFunction implements HarmonicFunction {
 			case SUBV7:
 				return "subV7";
 			case SUBV7_II:
-				return "subV7/II";
+				return "subV7/bII";
 			case SUBV7_III:
-				return "subV7/III";
+				return "subV7/II";
 			case SUBV7_IV:
-				return "subV7/IV";
+				return "subV7/bIII";
 			case SUBV7_V:
-				return "subV7/V";
+				return "subV7/III";
 			case SUBV7_VI:
-				return "subV7/VI";
+				return "subV7/IV";
 
 			case V7ALT:
 				return "V7Alt";
@@ -227,17 +226,17 @@ public enum ChromaticFunction implements HarmonicFunction {
 			case I:
 				return "I";
 			case II:
-				return "II";
+				return "bII";
 			case III:
-				return "III";
+				return "II";
 			case IV:
-				return "IV";
+				return "bIII";
 			case V:
-				return "V";
+				return "III";
 			case VI:
-				return "VI";
+				return "IV";
 			case VII:
-				return "VII";
+				return "bV";
 			case i:
 				return "i";
 			case ii:

@@ -1,6 +1,5 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.datune.chords.ChordTransformations;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.degrees.octave.DiatonicAlt;
@@ -301,7 +300,7 @@ public class TonalityTest {
 
     @Test
     public void getChromaticDegree2() throws ScaleRelativeDegreeException {
-        ScaleDegree relativeDegree = ChromaticDegree.V;
+        ScaleDegree relativeDegree = ChromaticDegree.III;
         Scale scale = Scale.CHROMATIC;
         Tonality tonality = Tonality.from(DiatonicAlt.C, scale);
 
@@ -311,7 +310,7 @@ public class TonalityTest {
 
     @Test
     public void getChromaticDegree3() throws ScaleRelativeDegreeException {
-        ScaleDegree relativeDegree = ChromaticDegree.VIII;
+        ScaleDegree relativeDegree = ChromaticDegree.V;
         Scale scale = Scale.CHROMATIC;
         Tonality tonality = Tonality.from(DiatonicAlt.C, scale);
 
@@ -983,8 +982,8 @@ public class TonalityTest {
 
     @Test
     public void modalExchange() {
-        assertEquals(MainTonalFunction.DOMINANT, Tonality.ET12.Cm.getMainFunctionFrom(ChromaticChord.G)); // V en menor
-        assertEquals(MainTonalFunction.DOMINANT, Tonality.ET12.Cm.getMainFunctionFrom(ChromaticChord.Bdim)); // VII en menor
+        assertEquals(MainTonalFunction.DOMINANT, Tonality.ET12.Cm.getMainFunctionFrom(ChromaticChord.G)); // III en menor
+        assertEquals(MainTonalFunction.DOMINANT, Tonality.ET12.Cm.getMainFunctionFrom(ChromaticChord.Bdim)); // bV en menor
 
         assertEquals(MainTonalFunction.SUBDOMINANT, Tonality.ET12.C.getMainFunctionFrom(ChromaticChord.GG)); // bVI en mayor
         assertEquals(MainTonalFunction.DOMINANT, Tonality.ET12.C.getMainFunctionFrom(ChromaticChord.AA)); // bVII en mayor
