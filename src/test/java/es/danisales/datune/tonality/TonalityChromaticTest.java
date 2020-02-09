@@ -3,6 +3,7 @@ package es.danisales.datune.tonality;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
+import es.danisales.datune.function.ChromaticDegreeFunction;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.utils.building.BuildingException;
@@ -80,13 +81,13 @@ public class TonalityChromaticTest {
         Assert.assertEquals(DiatonicFunction.VI, ton.getFunctionFrom(ChromaticChord.Am));
         Assert.assertEquals(DiatonicFunction.VII, ton.getFunctionFrom(ChromaticChord.Bdim));
 
-        ton.getChordFromHarmonicFunction(ChromaticFunction.ISUS4);
+        ton.getChordFromHarmonicFunction(ChromaticDegreeFunction.ISUS4);
 
-        Assert.assertEquals(ChromaticFunction.ISUS4, ton.getFunctionFrom(ChromaticChord.Csus4));
-        Assert.assertEquals(ChromaticFunction.IISUS4, ton.getFunctionFrom(ChromaticChord.Dsus4));
-        Assert.assertEquals(ChromaticFunction.bIIISUS4, ton.getFunctionFrom(ChromaticChord.DDsus4));
-        Assert.assertEquals(ChromaticFunction.VSUS4, ton.getFunctionFrom(ChromaticChord.Gsus4));
-        Assert.assertEquals(ChromaticFunction.VISUS4, ton.getFunctionFrom(ChromaticChord.Asus4));
+        Assert.assertEquals(ChromaticDegreeFunction.ISUS4, ton.getFunctionFrom(ChromaticChord.Csus4));
+        Assert.assertEquals(ChromaticDegreeFunction.IISUS4, ton.getFunctionFrom(ChromaticChord.Dsus4));
+        Assert.assertEquals(ChromaticDegreeFunction.bIIISUS4, ton.getFunctionFrom(ChromaticChord.DDsus4));
+        Assert.assertEquals(ChromaticDegreeFunction.VSUS4, ton.getFunctionFrom(ChromaticChord.Gsus4));
+        Assert.assertEquals(ChromaticDegreeFunction.VISUS4, ton.getFunctionFrom(ChromaticChord.Asus4));
 
         Assert.assertEquals(DiatonicFunction.I6, ton.getFunctionFrom(ChromaticChord.C6));
         Assert.assertEquals(DiatonicFunction.II6, ton.getFunctionFrom(ChromaticChord.Dm6));

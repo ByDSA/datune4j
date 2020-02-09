@@ -8,6 +8,7 @@ import es.danisales.datune.degrees.scale.ChromaticDegree;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.degrees.scale.PentatonicDegree;
 import es.danisales.datune.degrees.scale.ScaleDegree;
+import es.danisales.datune.function.ChromaticDegreeFunction;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.MainTonalFunction;
@@ -728,27 +729,27 @@ public class TonalityTest {
 
         assertEquals(ChromaticChord.Csus4, ChromaticChord.builder()
                 .tonality(ton)
-                .harmonicFunction(ChromaticFunction.ISUS4)
+                .harmonicFunction(ChromaticDegreeFunction.ISUS4)
                 .build()
         );
         assertEquals(ChromaticChord.Dsus4, ChromaticChord.builder()
                 .tonality(ton)
-                .harmonicFunction(ChromaticFunction.IISUS4)
+                .harmonicFunction(ChromaticDegreeFunction.IISUS4)
                 .build()
         );
         assertEquals(ChromaticChord.DDsus4, ChromaticChord.builder()
                 .tonality(ton)
-                .harmonicFunction(ChromaticFunction.bIIISUS4)
+                .harmonicFunction(ChromaticDegreeFunction.bIIISUS4)
                 .build()
         );
         assertEquals(ChromaticChord.Gsus4, ChromaticChord.builder()
                 .tonality(ton)
-                .harmonicFunction(ChromaticFunction.VSUS4)
+                .harmonicFunction(ChromaticDegreeFunction.VSUS4)
                 .build()
         );
         assertEquals(ChromaticChord.Asus4, ChromaticChord.builder()
                 .tonality(ton)
-                .harmonicFunction(ChromaticFunction.VISUS4)
+                .harmonicFunction(ChromaticDegreeFunction.VISUS4)
                 .build()
         );
 
@@ -801,31 +802,31 @@ public class TonalityTest {
 
         assertEquals(ChromaticChord.C5, ChromaticChord.builder()
                 .tonality(ton)
-                .chromaticFunction(ChromaticFunction.I5)
+                .harmonicFunction(ChromaticDegreeFunction.I5)
                 .build());
         assertEquals(ChromaticChord.D5, ChromaticChord.builder()
                 .tonality(ton)
-                .chromaticFunction(ChromaticFunction.II5)
+                .harmonicFunction(ChromaticDegreeFunction.II5)
                 .build());
         assertEquals(ChromaticChord.E5, ChromaticChord.builder()
                 .tonality(ton)
-                .chromaticFunction(ChromaticFunction.III5)
+                .harmonicFunction(ChromaticDegreeFunction.III5)
                 .build());
         assertEquals(ChromaticChord.F5, ChromaticChord.builder()
                 .tonality(ton)
-                .chromaticFunction(ChromaticFunction.IV5)
+                .harmonicFunction(ChromaticDegreeFunction.IV5)
                 .build());
         assertEquals(ChromaticChord.G5, ChromaticChord.builder()
                 .tonality(ton)
-                .chromaticFunction(ChromaticFunction.V5)
+                .harmonicFunction(ChromaticDegreeFunction.V5)
                 .build());
         assertEquals(ChromaticChord.A5, ChromaticChord.builder()
                 .tonality(ton)
-                .chromaticFunction(ChromaticFunction.VI5)
+                .harmonicFunction(ChromaticDegreeFunction.VI5)
                 .build());
         assertEquals(ChromaticChord.B5, ChromaticChord.builder()
                 .tonality(ton)
-                .chromaticFunction(ChromaticFunction.VII5)
+                .harmonicFunction(ChromaticDegreeFunction.VII5)
                 .build());
 
         assertEquals(ChromaticChord.A, ChromaticChord.builder()
@@ -904,12 +905,11 @@ public class TonalityTest {
                 .chromaticFunction(ChromaticFunction.SUBV7_VI).build(), ChromaticChord.AA7);
 
         ChromaticChord c = ChromaticChord.CC.clone();
-        c.inv();
 
         assertEquals(
                 c, ChromaticChord.builder()
                         .tonality(ton)
-                        .chromaticFunction(ChromaticFunction.N6)
+                        .harmonicFunction(ChromaticDegreeFunction.N6)
                         .build()
         );
 
@@ -1016,7 +1016,7 @@ public class TonalityTest {
 
     @Test
     public void otherChromaticFunctions() {
-        assertEquals(MainTonalFunction.SUBDOMINANT, Tonality.ET12.C.getMainFunctionFrom(ChromaticFunction.N6)); // ?
+        assertEquals(MainTonalFunction.SUBDOMINANT, Tonality.ET12.C.getMainFunctionFrom(ChromaticDegreeFunction.N6)); // ?
         assertEquals(MainTonalFunction.SUBDOMINANT, Tonality.ET12.C.getMainFunctionFrom(Tonality.ET12.Cm.getChordFromHarmonicFunction(DiatonicFunction.I)));
         assertEquals(MainTonalFunction.DOMINANT, Tonality.ET12.C.getMainFunctionFrom(Tonality.ET12.Cm.getChordFromHarmonicFunction(DiatonicFunction.II)));
         assertEquals(MainTonalFunction.DOMINANT, Tonality.ET12.C.getMainFunctionFrom(Tonality.ET12.Cm.getChordFromHarmonicFunction(DiatonicFunction.III)));

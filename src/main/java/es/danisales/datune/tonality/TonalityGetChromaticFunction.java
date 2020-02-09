@@ -3,107 +3,18 @@ package es.danisales.datune.tonality;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.chords.chromatic.ChromaticChordPattern;
 import es.danisales.datune.degrees.octave.Chromatic;
-import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
+import es.danisales.datune.function.ChromaticDegreeFunction;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.utils.NeverHappensException;
 import es.danisales.utils.building.BuildingException;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class TonalityGetChromaticFunction {
-	static @Nullable ChromaticChordPattern getChromaticChordPatternFromChromaticFunction(@NonNull ChromaticFunction chromaticFunction) {
-		switch (chromaticFunction) {
-			case I:
-			case II:
-			case III:
-			case IV:
-			case V:
-			case VI:
-			case VII:
-				return ChromaticChordPattern.TRIAD_MAJOR;
-			case i:
-			case ii:
-			case iii:
-			case iv:
-			case v:
-			case vi:
-			case vii:
-				return ChromaticChordPattern.TRIAD_MINOR;
-			case I0:
-			case II0:
-			case III0:
-			case IV0:
-			case V0:
-			case VI0:
-			case VII0:
-				return ChromaticChordPattern.TRIAD_DIMINISHED;
-			case I5:
-			case II5:
-			case III5:
-			case IV5:
-			case V5:
-			case VI5:
-			case VII5:
-				return ChromaticChordPattern.POWER_CHORD;
-			case ISUS4:
-			case IISUS4:
-			case bIIISUS4:
-			case IVSUS4:
-			case VSUS4:
-			case VISUS4:
-			case bVIISUS4:
-				return ChromaticChordPattern.SUS4;
-			case N6:
-				return ChromaticChordPattern.N6;
-			case V_II:
-				break;
-			case V_III:
-				break;
-			case V_IV:
-				break;
-			case V_V:
-				break;
-			case V_VI:
-				break;
-			case V7_II:
-				break;
-			case V7_III:
-				break;
-			case V7_IV:
-				break;
-			case V7_V:
-				break;
-			case V7_VI:
-				break;
-			case SUBV7:
-				break;
-			case SUBV7_II:
-				break;
-			case SUBV7_III:
-				break;
-			case SUBV7_IV:
-				break;
-			case SUBV7_V:
-				break;
-			case SUBV7_VI:
-				break;
-			case V7ALT:
-				break;
-			case bVII:
-				return ChromaticChordPattern.TRIAD_MAJOR;
-			case bVI:
-				return ChromaticChordPattern.TRIAD_MAJOR;
-		}
-
-		return null;
-	}
-
 	static @NonNull DiatonicFunction getDiatonicFunctionFromChromaticFunction(@NonNull ChromaticFunction chromaticFunction) {
 		switch (chromaticFunction) {
 			case V_II:
@@ -132,7 +43,7 @@ public class TonalityGetChromaticFunction {
 	}
 
 	@SuppressWarnings("ConstantConditions") // DiatonicFunction.patternFrom nunca devuelve null en este contexto
-	private static <C extends CyclicDegree> @Nullable Tonality getT(@NonNull Tonality<C> tonality, @NonNull ChromaticFunction chromaticFunction) throws BuildingException {
+	/*private static <C extends CyclicDegree> @Nullable Tonality getT(@NonNull Tonality<C> tonality, @NonNull ChromaticFunction chromaticFunction) throws BuildingException {
 		if ( !(tonality.getRoot() instanceof Chromatic) )
 			return null;
 		DiatonicFunction diatonicFunction = DiatonicFunction.from(chromaticFunction);
@@ -161,7 +72,7 @@ public class TonalityGetChromaticFunction {
 		}
 
 		return null;
-	}
+	}*/
 
 	private static ScaleRelativeDegreeException buildingException2ScaleRelativeDegreeException(BuildingException e) {
 		if (e.getInnerException() instanceof ScaleRelativeDegreeException) {
@@ -170,107 +81,74 @@ public class TonalityGetChromaticFunction {
 			throw NeverHappensException.make("");
 	}
 
+	public static @NonNull Tonality<Chromatic> getTonalityFromChromaticFunction(@NonNull Tonality<Chromatic> tonality, @NonNull ChromaticDegreeFunction chromaticDegreeFunction) {
+		if (chromaticDegreeFunction.getChromaticChordPattern().equals(ChromaticChordPattern.TRIAD_MINOR)
+				|| chromaticDegreeFunction.getChromaticChordPattern().equals(ChromaticChordPattern.TRIAD_MAJOR)
+				|| chromaticDegreeFunction.getChromaticChordPattern().equals(ChromaticChordPattern.TRIAD_DIMINISHED)
+				|| chromaticDegreeFunction.getChromaticChordPattern().equals(ChromaticChordPattern.TRIAD_AUGMENTED)) {
+			if (TonalityUtils.hasAsDiatonicFunction(tonality, chromaticDegreeFunction))
+				return tonality;
+
+			ChromaticChord chromaticChord4 = null;
+			try {
+				chromaticChord4 = ChromaticChord.builder()
+						.harmonicFunction(chromaticDegreeFunction)
+						.tonality(tonality)
+						.build();
+			} catch (BuildingException e) {
+				buildingException2ScaleRelativeDegreeException(e);
+			}
+
+			List<Tonality<Chromatic>> modesSameRoot;
+			if (tonality.getScale().equals(Scale.MAJOR)
+					|| tonality.getScale().equals(Scale.MINOR)
+					|| tonality.getScale().equals(Scale.DORIAN)
+					|| tonality.getScale().equals(Scale.MIXOLYDIAN)
+					|| tonality.getScale().equals(Scale.PHRYGIAN)
+					|| tonality.getScale().equals(Scale.LYDIAN)
+					|| tonality.getScale().equals(Scale.LOCRIAN)
+			)
+				modesSameRoot = Arrays.asList(
+						Tonality.from(tonality.getRoot(), Scale.MAJOR),
+						Tonality.from(tonality.getRoot(), Scale.MINOR),
+						Tonality.from(tonality.getRoot(), Scale.MIXOLYDIAN),
+						Tonality.from(tonality.getRoot(), Scale.DORIAN),
+						Tonality.from(tonality.getRoot(), Scale.PHRYGIAN),
+						Tonality.from(tonality.getRoot(), Scale.LYDIAN),
+						Tonality.from(tonality.getRoot(), Scale.LOCRIAN)
+				);
+			else
+				modesSameRoot = tonality.getModesSameRoot();
+
+			for (Tonality<Chromatic> mode : modesSameRoot)
+				if (TonalityUtils.hasAsDiatonicFunction(mode, chromaticDegreeFunction))
+					return mode;
+
+			return TonalityRetrieval.listFromChordFirst(chromaticChord4);
+		} else  if (chromaticDegreeFunction.getChromaticChordPattern().equals(ChromaticChordPattern.SUS4)){
+			switch (chromaticDegreeFunction.getChromaticDegree()) {
+				case I:
+				case bII:
+				case II:
+				case bV:
+				case V:
+				case bVI:
+				case VI:
+					return Tonality.from(tonality.getRoot(), Scale.MAJOR);
+				case bIII:
+				case III:
+				case IV:
+				case bVII:
+				case VII:
+					return Tonality.from(tonality.getRoot(), Scale.MINOR);
+			}
+		}
+
+		return null;
+	}
+
 	public static @NonNull Tonality<Chromatic> getTonalityFromChromaticFunction(@NonNull Tonality<Chromatic> tonality, @NonNull ChromaticFunction chromaticFunction) throws ScaleRelativeDegreeException {
 		switch (chromaticFunction) {
-			case I:
-			case II:
-			case III:
-			case IV:
-			case V:
-			case VI:
-			case VII:
-			case i:
-			case ii:
-			case iii:
-			case iv:
-			case v:
-			case vi:
-			case vii:
-			case I0:
-			case II0:
-			case III0:
-			case IV0:
-			case V0:
-			case VI0:
-			case VII0:
-			case I5:
-			case II5:
-			case III5:
-			case IV5:
-			case V5:
-			case VI5:
-			case VII5:
-			case bVII:
-			case bVI:
-			case bIII:
-				if (TonalityUtils.hasAsDiatonicFunction(tonality, chromaticFunction))
-					return tonality;
-
-				ChromaticChord chromaticChord4 = null;
-				try {
-					chromaticChord4 = ChromaticChord.builder()
-							.chromaticFunction(chromaticFunction)
-							.tonality(tonality)
-							.build();
-				} catch (BuildingException e) {
-					buildingException2ScaleRelativeDegreeException(e);
-				}
-
-				List<Tonality<Chromatic>> modesSameRoot;
-				if (tonality.getScale().equals(Scale.MAJOR)
-						|| tonality.getScale().equals(Scale.MINOR)
-						|| tonality.getScale().equals(Scale.DORIAN)
-						|| tonality.getScale().equals(Scale.MIXOLYDIAN)
-						|| tonality.getScale().equals(Scale.PHRYGIAN)
-						|| tonality.getScale().equals(Scale.LYDIAN)
-						|| tonality.getScale().equals(Scale.LOCRIAN)
-				)
-					modesSameRoot = Arrays.asList(
-							Tonality.from(tonality.getRoot(), Scale.MAJOR),
-							Tonality.from(tonality.getRoot(), Scale.MINOR),
-							Tonality.from(tonality.getRoot(), Scale.MIXOLYDIAN),
-							Tonality.from(tonality.getRoot(), Scale.DORIAN),
-							Tonality.from(tonality.getRoot(), Scale.PHRYGIAN),
-							Tonality.from(tonality.getRoot(), Scale.LYDIAN),
-							Tonality.from(tonality.getRoot(), Scale.LOCRIAN)
-					);
-				else
-					modesSameRoot = tonality.getModesSameRoot();
-
-				for (Tonality mode : modesSameRoot) {
-					DiatonicFunction diatonicFunction = DiatonicFunction.from(chromaticFunction);
-
-					Objects.requireNonNull(diatonicFunction, chromaticFunction.toString());
-
-					ChromaticChord chromaticChord2 = null;
-					try {
-						chromaticChord2 = ChromaticChord.builder()
-								.diatonicFunction(diatonicFunction)
-								.tonality(mode)
-								.build();
-					} catch (BuildingException e) {
-						continue;
-					}
-
-					if (chromaticChord2.equals(chromaticChord4))
-						return mode;
-				}
-				return TonalityRetrieval.listFromChordFirst(chromaticChord4);
-			case ISUS4:
-			case IISUS4:
-			case VSUS4:
-			case VISUS4:
-				return Tonality.from(tonality.getRoot(), Scale.MAJOR);
-			case IVSUS4:
-				return Tonality.from(tonality.getRoot(), Scale.MINOR);
-
-			case bIIISUS4:
-			case bVIISUS4:
-				return Tonality.from(tonality.getRoot(), Scale.MINOR);
-			case N6:
-				//DiatonicAlt diatonicAlt = tonality.getRoot().getAddSemi(1);
-				Chromatic diatonicAlt = Chromatic.from(tonality.getRoot().ordinal()+1);
-				return Tonality.from(diatonicAlt, Scale.MAJOR);
 			case V_II:
 			case V7_II:
 				Chromatic newRoot = tonality.getNote(DiatonicDegree.II);
@@ -359,65 +237,7 @@ public class TonalityGetChromaticFunction {
 		}
 	}
 
-	static @NonNull Chromatic getNoteBaseFromChromaticFunctionAndTonality(Tonality<Chromatic> tonality, @NonNull ChromaticFunction chromaticFunction) throws ScaleRelativeDegreeException {
-		switch (chromaticFunction) {
-			case I:
-			case i:
-			case I0:
-			case I5:
-				return tonality.getNote(DiatonicDegree.I);
-			case ISUS4:
-				return Tonality.from(tonality.getRoot(), Scale.MAJOR).getNote(DiatonicDegree.I);
-			case II:
-			case ii:
-			case II0:
-			case II5:
-				return tonality.getNote(DiatonicDegree.II);
-			case IISUS4:
-				return Tonality.from(tonality.getRoot(), Scale.MAJOR).getNote(DiatonicDegree.II);
-			case III:
-			case iii:
-			case III0:
-			case III5:
-				return tonality.getNote(DiatonicDegree.III);
-			case bIIISUS4:
-			case bIII:
-				return Tonality.from(tonality.getRoot(), Scale.MINOR).getNote(DiatonicDegree.III);
-			case IV:
-			case iv:
-			case IV0:
-			case IV5:
-				return tonality.getNote(DiatonicDegree.IV);
-			case IVSUS4:
-				return Tonality.from(tonality.getRoot(), Scale.MAJOR).getNote(DiatonicDegree.IV);
-			case V:
-			case v:
-			case V0:
-			case V5:
-				return tonality.getNote(DiatonicDegree.V);
-			case VSUS4:
-				return Tonality.from(tonality.getRoot(), Scale.MAJOR).getNote(DiatonicDegree.V);
-			case VI:
-			case vi:
-			case VI0:
-			case VI5:
-				return tonality.getNote(DiatonicDegree.VI);
-			case VISUS4:
-				return Tonality.from(tonality.getRoot(), Scale.MAJOR).getNote(DiatonicDegree.VI);
-			case bVI:
-				return Tonality.from(tonality.getRoot(), Scale.MINOR).getNote(DiatonicDegree.VI);
-			case VII:
-			case vii:
-			case VII0:
-			case VII5:
-				return tonality.getNote(DiatonicDegree.VII);
-			case bVII:
-			case bVIISUS4:
-				return Tonality.from(tonality.getRoot(), Scale.MINOR).getNote(DiatonicDegree.VII);
-			case N6:
-				return tonality.getNote(DiatonicDegree.I);
-		}
-
-		throw new RuntimeException(tonality + " " + chromaticFunction);
+	static @NonNull Chromatic getNoteBaseFromChromaticFunctionAndTonality(Tonality<Chromatic> tonality, @NonNull ChromaticDegreeFunction chromaticDegreeFunction) throws ScaleRelativeDegreeException {
+		return tonality.getRoot().getShifted(chromaticDegreeFunction.getChromaticDegree().ordinal());
 	}
 }

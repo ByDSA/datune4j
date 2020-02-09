@@ -1,11 +1,12 @@
 package es.danisales.datune.chords.chromatic;
 
-import es.danisales.datune.degrees.octave.DiatonicAlt;
-import es.danisales.datune.chords.diatonicalt.DiatonicAltChord;
 import es.danisales.datune.chords.DiatonicDegreePattern;
-import es.danisales.datune.degrees.octave.CyclicDegree;
+import es.danisales.datune.chords.diatonicalt.DiatonicAltChord;
 import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.degrees.octave.CyclicDegree;
+import es.danisales.datune.degrees.octave.DiatonicAlt;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
+import es.danisales.datune.function.ChromaticDegreeFunction;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
@@ -32,6 +33,7 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
     private ChromaticChordPattern chromaticChordPattern;
     private DiatonicFunction diatonicFunction;
     private ChromaticFunction chromaticFunction;
+    private ChromaticDegreeFunction chromaticDegreeFunction;
     private boolean dirty;
 
     class ChromaticChordWay implements BuildingWay<ChromaticChord> {
@@ -132,6 +134,23 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
         }
     }
 
+    class ChromaticDegreeFunctionAndTonalityWay implements BuildingWay<ChromaticChord> {
+        @Override
+        public boolean isReadyToBuild() {
+            return tonality != null && chromaticDegreeFunction != null;
+        }
+
+        @NonNull
+        @Override
+        public ChromaticChord build() throws BuildingException {
+            try {
+                return ChordRetrievalFromTonality.getFromChromaticFunction(tonality, chromaticDegreeFunction);
+            } catch (ScaleRelativeDegreeException e) {
+                throw new BuildingException(e);
+            }
+        }
+    }
+
     class EmptyWay implements BuildingWay<ChromaticChord> {
         @Override
         public boolean isReadyToBuild() {
@@ -151,7 +170,8 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
             ChromaticBaseAndChromaticChordPatternWay.class,
             DiatonicChordPatternAndTonalityWay.class,
             DiatonicFunctionAndTonalityWay.class,
-            ChromaticFunctionAndTonalityWay.class
+            ChromaticFunctionAndTonalityWay.class,
+            ChromaticDegreeFunctionAndTonalityWay.class
     );
 
     @Override
@@ -233,12 +253,20 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
             return diatonicFunction((DiatonicFunction) harmonicFunction);
         else if (harmonicFunction instanceof ChromaticFunction)
             return chromaticFunction((ChromaticFunction) harmonicFunction);
+        else if (harmonicFunction instanceof ChromaticDegreeFunction)
+            return chromaticDegreeFunction((ChromaticDegreeFunction)harmonicFunction);
 
         throw NeverHappensException.make("HarmonicFunction must be DiatonicFunction or ChromaticFunction");
     }
 
     public @NonNull ChromaticChordBuilder chromaticFunction(@NonNull ChromaticFunction chromaticFunction) {
         this.chromaticFunction = Objects.requireNonNull(chromaticFunction);
+
+        return self();
+    }
+
+    public @NonNull ChromaticChordBuilder chromaticDegreeFunction(@NonNull ChromaticDegreeFunction chromaticDegreeFunction) {
+        this.chromaticDegreeFunction = Objects.requireNonNull(chromaticDegreeFunction);
 
         return self();
     }

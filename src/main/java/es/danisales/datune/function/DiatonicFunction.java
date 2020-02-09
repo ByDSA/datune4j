@@ -84,51 +84,6 @@ public enum DiatonicFunction implements HarmonicFunction {
 			VII13,
 	};
 
-	public static @Nullable DiatonicFunction from(@NonNull ChromaticFunction chromaticFunction) {
-		switch (chromaticFunction) {
-			case I:
-			case i:
-			case I0:
-			case I5:
-				return DiatonicFunction.I;
-			case II:
-			case ii:
-			case II0:
-			case II5:
-				return DiatonicFunction.II;
-			case III:
-			case iii:
-			case III0:
-			case III5:
-			case bIII:
-				return DiatonicFunction.III;
-			case IV:
-			case iv:
-			case IV0:
-			case IV5:
-				return DiatonicFunction.IV;
-			case V:
-			case v:
-			case V0:
-			case V5:
-				return DiatonicFunction.V;
-			case VI:
-			case vi:
-			case VI0:
-			case VI5:
-			case bVI:
-				return DiatonicFunction.VI;
-			case VII:
-			case vii:
-			case VII0:
-			case VII5:
-			case bVII:
-				return DiatonicFunction.VII;
-		}
-
-		return null;
-	}
-
 	public String toString() {
 		switch ( this ) {
 			case I6:

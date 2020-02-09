@@ -120,52 +120,6 @@ public enum DiatonicDegree implements ScaleDegree {
 
 	public static @NonNull DiatonicDegree from(@NonNull ChromaticFunction chromaticFunction) {
 		switch ( chromaticFunction ) {
-			case I:
-			case I5:
-			case i:
-			case I0:
-			case ISUS4:
-				return DiatonicDegree.I;
-			case II:
-			case II5:
-			case ii:
-			case II0:
-			case N6:
-			case IISUS4:
-				return DiatonicDegree.II;
-			case III:
-			case III5:
-			case iii:
-			case III0:
-			case bIII:
-			case bIIISUS4:
-				return DiatonicDegree.III;
-			case IV:
-			case IV5:
-			case iv:
-			case IV0:
-			case IVSUS4:
-				return DiatonicDegree.IV;
-			case V:
-			case V5:
-			case v:
-			case V0:
-			case VSUS4:
-				return DiatonicDegree.V;
-			case VI:
-			case VI5:
-			case vi:
-			case VI0:
-			case bVI:
-			case VISUS4:
-				return DiatonicDegree.VI;
-			case VII:
-			case VII5:
-			case vii:
-			case VII0:
-			case bVII:
-			case bVIISUS4:
-				return DiatonicDegree.VII;
 			case SUBV7:
 			case V7ALT:
 				return DiatonicDegree.I;

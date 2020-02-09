@@ -3,6 +3,7 @@ package es.danisales.datune.tonality;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.chords.chromatic.ChromaticChordPattern;
 import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.function.ChromaticDegreeFunction;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.utils.NeverHappensException;
@@ -20,7 +21,7 @@ public class ChordRetrievalFromTonality {
 
         ChromaticChord chromaticChord = null;
         if (tonality.getScale().equals(Scale.MAJOR))
-        chromaticChord = TonalityGetDiatonicFunctionMajor.get(tonality, diatonicFunction);
+            chromaticChord = TonalityGetDiatonicFunctionMajor.get(tonality, diatonicFunction);
         else if (tonality.getScale().equals(Scale.MINOR))
             chromaticChord = TonalityGetDiatonicFunctionMinor.get(tonality, diatonicFunction);
 
@@ -30,65 +31,32 @@ public class ChordRetrievalFromTonality {
         return chromaticChord;
     }
 
+    public static @NonNull ChromaticChord getFromChromaticFunction(@NonNull Tonality<Chromatic> tonality, @NonNull ChromaticDegreeFunction chromaticDegreeFunction) throws ScaleRelativeDegreeException {
+        Objects.requireNonNull(tonality);
+        Objects.requireNonNull(chromaticDegreeFunction);
+
+        ChromaticChordPattern chromaticChordPattern = chromaticDegreeFunction.getChromaticChordPattern();
+        Objects.requireNonNull(chromaticChordPattern, chromaticDegreeFunction.toString());
+        Chromatic noteBase = TonalityGetChromaticFunction.getNoteBaseFromChromaticFunctionAndTonality(tonality, chromaticDegreeFunction);
+
+        ChromaticChord ret;
+        try {
+            ret = ChromaticChord.builder()
+                    .chromaticBase(noteBase)
+                    .chromaticChordPattern(chromaticChordPattern)
+                    .build();
+        } catch (BuildingException e) {
+            throw NeverHappensException.make("");
+        }
+
+        return ret;
+    }
+
     public static @NonNull ChromaticChord getFromChromaticFunction(@NonNull Tonality<Chromatic> tonality, @NonNull ChromaticFunction chromaticFunction) throws ScaleRelativeDegreeException {
         Objects.requireNonNull(tonality);
         Objects.requireNonNull(chromaticFunction);
 
         switch (chromaticFunction) {
-            case ISUS4:
-            case IISUS4:
-            case bIIISUS4:
-            case IVSUS4:
-            case VSUS4:
-            case VISUS4:
-            case bVIISUS4:
-            case I:
-            case II:
-            case III:
-            case IV:
-            case V:
-            case VI:
-            case VII:
-            case i:
-            case ii:
-            case iii:
-            case iv:
-            case v:
-            case vi:
-            case vii:
-            case I0:
-            case II0:
-            case III0:
-            case IV0:
-            case V0:
-            case VI0:
-            case VII0:
-            case I5:
-            case II5:
-            case III5:
-            case IV5:
-            case V5:
-            case VI5:
-            case VII5:
-            case N6:
-                ChromaticChordPattern chromaticChordPattern = TonalityGetChromaticFunction.getChromaticChordPatternFromChromaticFunction(chromaticFunction);
-                Objects.requireNonNull(chromaticChordPattern, chromaticFunction.toString());
-                Chromatic noteBase = TonalityGetChromaticFunction.getNoteBaseFromChromaticFunctionAndTonality(tonality, chromaticFunction);
-
-                ChromaticChord ret;
-                try {
-                    ret = ChromaticChord.builder()
-                            .chromaticBase(noteBase)
-                            .chromaticChordPattern(chromaticChordPattern)
-                            .build();
-                } catch (BuildingException e) {
-                    throw NeverHappensException.make("");
-                }
-
-                if (chromaticFunction == ChromaticFunction.N6)
-                    ret.setRootIndex(2);
-
-                return ret;
             case V_II:
             case V_III:
             case V_IV:
@@ -120,63 +88,6 @@ public class ChordRetrievalFromTonality {
                     } else
                         throw NeverHappensException.make("");
                 }
-            case bVII: {
-                Tonality<Chromatic> parallelMinor;
-                if (tonality.getScale().equals(Scale.MINOR))
-                    parallelMinor = tonality;
-                else
-                    parallelMinor = Tonality.from(tonality.getRoot(), Scale.MINOR);
-
-                try {
-                    return ChromaticChord.builder()
-                            .diatonicFunction(DiatonicFunction.VII)
-                            .tonality(parallelMinor)
-                            .build();
-                } catch (BuildingException e) {
-                    if (e.getInnerException() instanceof ScaleRelativeDegreeException) {
-                        throw (ScaleRelativeDegreeException)e.getInnerException();
-                    } else
-                        throw NeverHappensException.make("");
-                }
-            }
-            case bVI: {
-                Tonality<Chromatic> parallelMinor;
-                if (tonality.getScale().equals(Scale.MINOR))
-                    parallelMinor = tonality;
-                else
-                    parallelMinor = Tonality.from(tonality.getRoot(), Scale.MINOR);
-
-                try {
-                    return ChromaticChord.builder()
-                            .diatonicFunction(DiatonicFunction.VI)
-                            .tonality(parallelMinor)
-                            .build();
-                } catch (BuildingException e) {
-                    if (e.getInnerException() instanceof ScaleRelativeDegreeException) {
-                        throw (ScaleRelativeDegreeException)e.getInnerException();
-                    } else
-                        throw NeverHappensException.make("");
-                }
-            }
-            case bIII: {
-                Tonality<Chromatic> parallelMinor;
-                if (tonality.getScale().equals(Scale.MINOR))
-                    parallelMinor = tonality;
-                else
-                    parallelMinor = Tonality.from(tonality.getRoot(), Scale.MINOR);
-
-                try {
-                    return ChromaticChord.builder()
-                            .diatonicFunction(DiatonicFunction.III)
-                            .tonality(parallelMinor)
-                            .build();
-                } catch (BuildingException e) {
-                    if (e.getInnerException() instanceof ScaleRelativeDegreeException) {
-                        throw (ScaleRelativeDegreeException)e.getInnerException();
-                    } else
-                        throw NeverHappensException.make("");
-                }
-            }
         }
 
         throw NeverHappensException.switchOf(chromaticFunction);

@@ -11,29 +11,31 @@ import java.util.Collection;
 import java.util.List;
 
 public class ChromaticFunctionProgression
-        extends ListProxy<ChromaticFunction> {
+        extends ListProxy<HarmonicFunction> {
     @SuppressWarnings("WeakerAccess")
     public static final ChromaticFunctionProgression I_V_vi_IV = ChromaticFunctionProgression.copyOf(
             Arrays.asList(
-                    ChromaticFunction.I,
-                    ChromaticFunction.V,
-                    ChromaticFunction.vi,
-                    ChromaticFunction.IV
+                    ChromaticDegreeFunction.I,
+                    ChromaticDegreeFunction.V,
+                    ChromaticDegreeFunction.vi,
+                    ChromaticDegreeFunction.IV
             )
     );
 
     @SuppressWarnings("WeakerAccess")
     public static final ChromaticFunctionProgression I_IV_vi_V = ChromaticFunctionProgression.copyOf(
             Arrays.asList(
-                    ChromaticFunction.I,
-                    ChromaticFunction.IV,
-                    ChromaticFunction.vi,
-                    ChromaticFunction.V
+                    ChromaticDegreeFunction.I,
+                    ChromaticDegreeFunction.IV,
+                    ChromaticDegreeFunction.vi,
+                    ChromaticDegreeFunction.V
             )
     );
 
     @SuppressWarnings("WeakerAccess")
-    public static final ChromaticFunctionProgression i_VI_III_VII = ChromaticFunctionProgressionTransformations.shift(ChromaticFunctionProgressionTransformations.rotate(I_V_vi_IV, 2), 2);
+    public static final ChromaticFunctionProgression i_bVI_bIII_bVII = ChromaticFunctionProgressionTransformations.shift(
+            ChromaticFunctionProgressionTransformations.rotate(I_V_vi_IV, 2),
+            3);
 
     private ChromaticFunctionProgression() {
         super(new ArrayList<>());
@@ -43,7 +45,7 @@ public class ChromaticFunctionProgression
         return new ChromaticFunctionProgression();
     }
 
-    public static ChromaticFunctionProgression copyOf(Collection<ChromaticFunction> chromaticFunctions) {
+    public static ChromaticFunctionProgression copyOf(Collection<ChromaticDegreeFunction> chromaticFunctions) {
         ChromaticFunctionProgression chromaticFunctionProgression = new ChromaticFunctionProgression();
         chromaticFunctionProgression.addAll(chromaticFunctions);
 
@@ -53,8 +55,8 @@ public class ChromaticFunctionProgression
     @SuppressWarnings("WeakerAccess")
     public List<ChromaticChord> getChordsFrom(Tonality<Chromatic> tonality) {
         List<ChromaticChord> chromaticChordProgression = new ArrayList<>();
-        for (ChromaticFunction chromaticFunction : this) {
-            ChromaticChord chromaticChord = (ChromaticChord)tonality.getChordFromHarmonicFunction(chromaticFunction);
+        for (HarmonicFunction harmonicFunction : this) {
+            ChromaticChord chromaticChord = (ChromaticChord)tonality.getChordFromHarmonicFunction(harmonicFunction);
             chromaticChordProgression.add(chromaticChord);
         }
 

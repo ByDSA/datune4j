@@ -2,6 +2,8 @@ package es.danisales.datune.chords.chromatic;
 
 import es.danisales.datune.GlobalSettings;
 import es.danisales.datune.chords.tonal.TonalChord;
+import es.danisales.datune.degrees.scale.ChromaticDegree;
+import es.danisales.datune.function.ChromaticDegreeFunction;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.lang.Language;
@@ -70,7 +72,7 @@ public class ChromaticChordNamesTest {
 
         @Test
         public void C_IV5() {
-            parametricChord = TonalChord.from(Tonality.ET12.C, ChromaticFunction.IV5);
+            parametricChord = TonalChord.from(Tonality.ET12.C, ChromaticDegreeFunction.IV5);
             updateChromaticChord();
 
             assertEquals("F5", chromaticChord.toString());
@@ -78,7 +80,7 @@ public class ChromaticChordNamesTest {
 
         @Test
         public void C_IV5_inv() {
-            parametricChord = TonalChord.from(Tonality.ET12.C, ChromaticFunction.IV5);
+            parametricChord = TonalChord.from(Tonality.ET12.C, ChromaticDegreeFunction.IV5);
             updateChromaticChord();
             chromaticChord.inv();
 
@@ -87,7 +89,7 @@ public class ChromaticChordNamesTest {
 
         @Test
         public void C_VSUS4() {
-            parametricChord = TonalChord.from(Tonality.ET12.C, ChromaticFunction.VSUS4);
+            parametricChord = TonalChord.from(Tonality.ET12.C, ChromaticDegreeFunction.VSUS4);
             updateChromaticChord();
 
             assertEquals("Gsus4", chromaticChord.toString());
@@ -95,7 +97,7 @@ public class ChromaticChordNamesTest {
 
         @Test
         public void C_VSUS4_inv() {
-            parametricChord = TonalChord.from(Tonality.ET12.C, ChromaticFunction.VSUS4);
+            parametricChord = TonalChord.from(Tonality.ET12.C, ChromaticDegreeFunction.VSUS4);
             updateChromaticChord();
             chromaticChord.inv();
 

@@ -4,14 +4,12 @@ import es.danisales.datune.chords.Chord;
 import es.danisales.datune.chords.ChordTransformations;
 import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.degrees.scale.ChromaticDegree;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.degrees.scale.ScaleDegree;
-import es.danisales.datune.function.ChromaticFunction;
-import es.danisales.datune.function.DiatonicFunction;
-import es.danisales.datune.function.HarmonicFunction;
+import es.danisales.datune.function.*;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.DiatonicAlt;
-import es.danisales.datune.function.MainTonalFunction;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.utils.NeverHappensException;
 import es.danisales.utils.building.BuildingException;
@@ -97,6 +95,7 @@ public class Tonality<C extends CyclicDegree> implements Iterable<C> {
     private final boolean fixed;
 
     private Map<ChromaticChord, List<ChromaticFunction>> cacheChromaticMap;
+    private Map<ChromaticChord, List<ChromaticDegreeFunction>> cacheChromaticDegreeMap;
     private Map<ChromaticChord, List<DiatonicFunction>> cacheDiatonicMap;
 
     /**
@@ -455,6 +454,10 @@ public class Tonality<C extends CyclicDegree> implements Iterable<C> {
         if (!chromaticFunctions.isEmpty())
             return chromaticFunctions.get(0);
 
+        List<ChromaticDegreeFunction> chromaticDegreeFunctions = getChromaticDegreeFunctionFrom(chromaticChordTmp);
+        if (!chromaticDegreeFunctions.isEmpty())
+            return chromaticDegreeFunctions.get(0);
+
         return null;
     }
 
@@ -466,6 +469,9 @@ public class Tonality<C extends CyclicDegree> implements Iterable<C> {
 
         List<ChromaticFunction> chromaticFunctions = getChromaticFunctionFrom(chromaticChordTmp);
         ret.addAll(chromaticFunctions);
+
+        List<ChromaticDegreeFunction> chromaticDegreeFunctions = getChromaticDegreeFunctionFrom(chromaticChordTmp);
+        ret.addAll(chromaticDegreeFunctions);
 
         return ret;
     }
@@ -485,6 +491,16 @@ public class Tonality<C extends CyclicDegree> implements Iterable<C> {
 
         chromaticChord = removeInversionAsClonedChordIfNeeded(chromaticChord);
         List<ChromaticFunction> chromaticFunctionList = cacheChromaticMap.getOrDefault(chromaticChord, new ArrayList<>());
+
+        return Collections.unmodifiableList( chromaticFunctionList);
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public @NonNull List<ChromaticDegreeFunction> getChromaticDegreeFunctionFrom(ChromaticChord chromaticChord) {
+        createCacheIfNeeded();
+
+        chromaticChord = removeInversionAsClonedChordIfNeeded(chromaticChord);
+        List<ChromaticDegreeFunction> chromaticFunctionList = cacheChromaticDegreeMap.getOrDefault(chromaticChord, new ArrayList<>());
 
         return Collections.unmodifiableList( chromaticFunctionList);
     }
@@ -533,6 +549,22 @@ public class Tonality<C extends CyclicDegree> implements Iterable<C> {
             List<ChromaticFunction> list = cacheChromaticMap.getOrDefault(chromaticChord, new ArrayList<>());
             list.add(chromaticFunction);
             cacheChromaticMap.putIfAbsent(chromaticChord, list);
+        }
+
+        cacheChromaticDegreeMap = new HashMap<>();
+        for (ChromaticDegreeFunction chromaticDegreeFunction : ChromaticDegreeFunction.values()) {
+            ChromaticChord chromaticChord;
+            try {
+                chromaticChord = ChromaticChord.builder()
+                        .tonality((Tonality<Chromatic>)this)
+                        .chromaticDegreeFunction(chromaticDegreeFunction)
+                        .build();
+            } catch (BuildingException e) {
+                continue;
+            }
+            List<ChromaticDegreeFunction> list = cacheChromaticDegreeMap.getOrDefault(chromaticChord, new ArrayList<>());
+            list.add(chromaticDegreeFunction);
+            cacheChromaticDegreeMap.putIfAbsent(chromaticChord, list);
         }
     }
 

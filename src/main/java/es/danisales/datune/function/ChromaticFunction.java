@@ -12,21 +12,6 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import java.util.Collection;
 
 public enum ChromaticFunction implements HarmonicFunction {
-	/** Mayores */
-	I, II, III,	IV,	V, VI, VII,
-
-	/** Menores */
-	i, ii, iii, iv, v, vi, vii,
-
-	/** Diminished */
-	I0, II0, III0, IV0, V0, VI0, VII0,
-
-	/** Power Chord */
-	I5, II5, III5, IV5, V5, VI5, VII5,
-
-	/** SUS4 */
-	ISUS4, IISUS4, bIIISUS4, IVSUS4, VSUS4, VISUS4, bVIISUS4,
-
 	/** Dominantes secundarios */
 	V_II, V_III, V_IV, V_V, V_VI,
 
@@ -37,53 +22,9 @@ public enum ChromaticFunction implements HarmonicFunction {
 	SUBV7, SUBV7_II, SUBV7_III, SUBV7_IV, SUBV7_V, SUBV7_VI,
 
 	/** v7alt */
-	V7ALT,
+	V7ALT;
 
-	/* altered */
-	N6, //bII
-	bIII,
-	bVII,
-	bVI;
-
-	public static final ChromaticFunction[] TRIAD_FUNCTIONS = new ChromaticFunction[] {
-			I,
-			II,
-			III,
-			IV,
-			V,
-			VI,
-			VII,
-			i,
-			ii,
-			iii,
-			iv,
-			v,
-			vi,
-			vii,
-			I0,
-			II0,
-			III0,
-			IV0,
-			V0,
-			VI0,
-			VII0,
-			bIII,
-			bVI,
-			bVII
-	};
-
-	@SuppressWarnings("unused")
-	public static final ChromaticFunction[] POWER_CHORDS = new ChromaticFunction[] {
-			I5,
-			II5,
-			III5,
-			IV5,
-			V5,
-			VI5,
-			VII5,
-	};
-
-	/** Funciones III de... */
+	/** Dominantes secundarios triada */
 	public static final ChromaticFunction[] V_FUNCTIONS = new ChromaticFunction[] {
 			V_II,
 			V_III,
@@ -92,7 +33,7 @@ public enum ChromaticFunction implements HarmonicFunction {
 			V_VI,
 	};
 
-	/** Funciones V7 de... */
+	/** Dominantes secundarios cuatriada */
 	public static final ChromaticFunction[] V7_FUNCTIONS = new ChromaticFunction[] {
 			V7_II,
 			V7_III,
@@ -118,15 +59,6 @@ public enum ChromaticFunction implements HarmonicFunction {
 	/** The Constant TENSIONS. */
 	public static final ChromaticFunction[] TENSIONS = ArrayUtils
 			.concat( V_FUNCTIONS, V7_FUNCTIONS, SUBV7_FUNCTIONS, OTHER_TENSIONS);
-	public static final ChromaticFunction[] SUS4 = new ChromaticFunction[] {
-			ISUS4,
-			IISUS4,
-			bIIISUS4,
-			IVSUS4,
-			VSUS4,
-			VISUS4,
-			bVIISUS4,
-	};
 
 	/*
 	 * FIN CONSTANTES
@@ -178,22 +110,6 @@ public enum ChromaticFunction implements HarmonicFunction {
 				return "III/III";
 			case V_VI:
 				return "III/IV";
-			case ISUS4:
-				return "ISUS4";
-			case IISUS4:
-				return "IISUS4";
-			case bIIISUS4:
-				return "bIIISUS4";
-			case IVSUS4:
-				return "IVSUS4";
-			case VSUS4:
-				return "VSUS4";
-			case VISUS4:
-				return "VISUS4";
-			case bVIISUS4:
-				return "bVIISUS4";
-			case N6:
-				return "N6";
 			case SUBV7:
 				return "subV7";
 			case SUBV7_II:
@@ -206,71 +122,8 @@ public enum ChromaticFunction implements HarmonicFunction {
 				return "subV7/III";
 			case SUBV7_VI:
 				return "subV7/IV";
-
 			case V7ALT:
 				return "V7Alt";
-			case III5:
-				return "III5";
-			case II5:
-				return "II5";
-			case IV5:
-				return "IV5";
-			case I5:
-				return "I5";
-			case VII5:
-				return "VII5";
-			case VI5:
-				return "VI5";
-			case V5:
-				return "V5";
-			case I:
-				return "I";
-			case II:
-				return "bII";
-			case III:
-				return "II";
-			case IV:
-				return "bIII";
-			case V:
-				return "III";
-			case VI:
-				return "IV";
-			case VII:
-				return "bV";
-			case i:
-				return "i";
-			case ii:
-				return "ii";
-			case iii:
-				return "iii";
-			case iv:
-				return "iv";
-			case v:
-				return "v";
-			case vi:
-				return "vi";
-			case vii:
-				return "vii";
-			case I0:
-				return "Iº";
-			case II0:
-				return "IIº";
-			case III0:
-				return "IIIº";
-			case IV0:
-				return "IVº";
-			case V0:
-				return "Vº";
-			case VI0:
-				return "VIº";
-			case VII0:
-				return "VIIº";
-			case bIII:
-				return "bIII";
-			case bVII:
-				return "bVII";
-			case bVI:
-				return "bVI";
 		}
 
 		throw NeverHappensException.switchOf(this);

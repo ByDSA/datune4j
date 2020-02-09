@@ -5,9 +5,11 @@ import com.google.common.collect.HashBiMap;
 import es.danisales.arrays.ArrayUtils;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.chords.chromatic.ChromaticChordBuilder;
+import es.danisales.datune.chords.tonal.TonalChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.eventsequences.EventSequence;
+import es.danisales.datune.function.ChromaticDegreeFunction;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
@@ -15,8 +17,6 @@ import es.danisales.datune.midi.ChordMidi;
 import es.danisales.datune.midi.NoteMidi;
 import es.danisales.datune.midi.binaries.events.NoteOff;
 import es.danisales.datune.midi.binaries.events.NoteOn;
-import es.danisales.datune.chords.tonal.TonalChord;
-import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;
@@ -55,20 +55,18 @@ class Loader {
 
     private void addChromaticFunctions(List<TonalChord> chromaticChordSet) {
         for (ChromaticFunction chromaticFunction : ChromaticFunction.values()) {
-            if (ArrayUtils.contains(chromaticFunction, ChromaticFunction.TRIAD_FUNCTIONS))
-                continue;
             TonalChord parametricChord = TonalChord.from(tonality, chromaticFunction);
 
-            if (!ArrayUtils.contains(chromaticFunction, ChromaticFunction.SUS4)) {
+            chromaticChordSet.add(parametricChord);
+            System.out.println("Added chord: " + chromaticFunction + " from " + tonality);
+        }
+
+        for (ChromaticDegreeFunction chromaticFunction : ChromaticDegreeFunction.SUS4) {
+            TonalChord parametricChord = TonalChord.from(tonality, chromaticFunction);
+            ChromaticChord chromaticChord = ChromaticChord.from(parametricChord);
+            if ( tonality.containsAll(chromaticChord) ) {
                 chromaticChordSet.add(parametricChord);
                 System.out.println("Added chord: " + chromaticFunction + " from " + tonality);
-            } else {
-                ChromaticChord chromaticChord = ChromaticChord.from(parametricChord);
-
-                if ( tonality.containsAll(chromaticChord) ) {
-                    chromaticChordSet.add(parametricChord);
-                    System.out.println("Added chord: " + chromaticFunction + " from " + tonality);
-                }
             }
         }
     }
@@ -154,7 +152,7 @@ class Loader {
         mapKey.put(KeyEvent.VK_5, DiatonicFunction.V);
         mapKey.put(KeyEvent.VK_6, DiatonicFunction.VI);
         mapKey.put(KeyEvent.VK_7, DiatonicFunction.VII);
-        mapKey.put(KeyEvent.VK_U, ChromaticFunction.VII0);
+        mapKey.put(KeyEvent.VK_U, ChromaticDegreeFunction.VII0);
     }
 
     private static final Map<HarmonicFunction, JButton> mapButton = new HashMap<>();

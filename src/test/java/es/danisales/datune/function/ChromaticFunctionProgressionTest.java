@@ -15,34 +15,44 @@ public class ChromaticFunctionProgressionTest {
     public void I_V_vi_iv() {
         ChromaticFunctionProgression chromaticFunctionProgression = ChromaticFunctionProgression.I_V_vi_IV;
 
-        assertEquals(ChromaticFunction.I, chromaticFunctionProgression.get(0));
-        assertEquals(ChromaticFunction.V, chromaticFunctionProgression.get(1));
-        assertEquals(ChromaticFunction.vi, chromaticFunctionProgression.get(2));
-        assertEquals(ChromaticFunction.IV, chromaticFunctionProgression.get(3));
+        assertEquals(ChromaticDegreeFunction.I, chromaticFunctionProgression.get(0));
+        assertEquals(ChromaticDegreeFunction.V, chromaticFunctionProgression.get(1));
+        assertEquals(ChromaticDegreeFunction.vi, chromaticFunctionProgression.get(2));
+        assertEquals(ChromaticDegreeFunction.IV, chromaticFunctionProgression.get(3));
     }
 
     @Test
     public void I_iv_vi_V() {
         ChromaticFunctionProgression chromaticFunctionProgression = ChromaticFunctionProgression.I_IV_vi_V;
 
-        assertEquals(ChromaticFunction.I, chromaticFunctionProgression.get(0));
-        assertEquals(ChromaticFunction.IV, chromaticFunctionProgression.get(1));
-        assertEquals(ChromaticFunction.vi, chromaticFunctionProgression.get(2));
-        assertEquals(ChromaticFunction.V, chromaticFunctionProgression.get(3));
+        assertEquals(ChromaticDegreeFunction.I, chromaticFunctionProgression.get(0));
+        assertEquals(ChromaticDegreeFunction.IV, chromaticFunctionProgression.get(1));
+        assertEquals(ChromaticDegreeFunction.vi, chromaticFunctionProgression.get(2));
+        assertEquals(ChromaticDegreeFunction.V, chromaticFunctionProgression.get(3));
     }
 
     @Test
-    public void i_vi_III_VII() {
-        ChromaticFunctionProgression chromaticFunctionProgression = ChromaticFunctionProgression.i_VI_III_VII;
+    public void cloneTest() {
+        ChromaticFunctionProgression chromaticFunctionProgression = ChromaticFunctionProgression.I_IV_vi_V.clone();
 
-        assertEquals(ChromaticFunction.i, chromaticFunctionProgression.get(0));
-        assertEquals(ChromaticFunction.VI, chromaticFunctionProgression.get(1));
-        assertEquals(ChromaticFunction.III, chromaticFunctionProgression.get(2));
-        assertEquals(ChromaticFunction.VII, chromaticFunctionProgression.get(3));
+        assertEquals(ChromaticDegreeFunction.I, chromaticFunctionProgression.get(0));
+        assertEquals(ChromaticDegreeFunction.IV, chromaticFunctionProgression.get(1));
+        assertEquals(ChromaticDegreeFunction.vi, chromaticFunctionProgression.get(2));
+        assertEquals(ChromaticDegreeFunction.V, chromaticFunctionProgression.get(3));
     }
 
     @Test
-    public void getChordsFrom_I_V_vi_iv() {
+    public void i_VI_III_VII() {
+        ChromaticFunctionProgression chromaticFunctionProgression = ChromaticFunctionProgression.i_bVI_bIII_bVII;
+
+        assertEquals(ChromaticDegreeFunction.i, chromaticFunctionProgression.get(0));
+        assertEquals(ChromaticDegreeFunction.bVI, chromaticFunctionProgression.get(1));
+        assertEquals(ChromaticDegreeFunction.bIII, chromaticFunctionProgression.get(2));
+        assertEquals(ChromaticDegreeFunction.bVII, chromaticFunctionProgression.get(3));
+    }
+
+    @Test
+    public void getChordsFrom_I_V_vi_IV() {
         ChromaticFunctionProgression chromaticFunctionProgression = ChromaticFunctionProgression.I_V_vi_IV;
 
         List<ChromaticChord> chromaticChordProgression = chromaticFunctionProgression.getChordsFrom(Tonality.ET12.C);
@@ -53,8 +63,8 @@ public class ChromaticFunctionProgressionTest {
     }
 
     @Test
-    public void getChordsFrom_i_vi_III_VII() {
-        ChromaticFunctionProgression chromaticFunctionProgression = ChromaticFunctionProgression.i_VI_III_VII;
+    public void getChordsFrom_i_VI_III_VII() {
+        ChromaticFunctionProgression chromaticFunctionProgression = ChromaticFunctionProgression.i_bVI_bIII_bVII;
 
         List<ChromaticChord> chromaticChordProgression = chromaticFunctionProgression.getChordsFrom(Tonality.ET12.Am);
         assertEquals(ChromaticChord.Am, chromaticChordProgression.get(0));
@@ -73,16 +83,16 @@ public class ChromaticFunctionProgressionTest {
     public void copyOf() {
         ChromaticFunctionProgression chromaticFunctionProgression = ChromaticFunctionProgression.copyOf(
                 Arrays.asList(
-                        ChromaticFunction.I,
-                        ChromaticFunction.V,
-                        ChromaticFunction.vi,
-                        ChromaticFunction.IV
+                        ChromaticDegreeFunction.I,
+                        ChromaticDegreeFunction.V,
+                        ChromaticDegreeFunction.vi,
+                        ChromaticDegreeFunction.IV
                 )
         );
 
-        assertEquals(ChromaticFunction.I, chromaticFunctionProgression.get(0));
-        assertEquals(ChromaticFunction.V, chromaticFunctionProgression.get(1));
-        assertEquals(ChromaticFunction.vi, chromaticFunctionProgression.get(2));
-        assertEquals(ChromaticFunction.IV, chromaticFunctionProgression.get(3));
+        assertEquals(ChromaticDegreeFunction.I, chromaticFunctionProgression.get(0));
+        assertEquals(ChromaticDegreeFunction.V, chromaticFunctionProgression.get(1));
+        assertEquals(ChromaticDegreeFunction.vi, chromaticFunctionProgression.get(2));
+        assertEquals(ChromaticDegreeFunction.IV, chromaticFunctionProgression.get(3));
     }
 }

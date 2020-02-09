@@ -1,7 +1,7 @@
 package es.danisales.datune.chords;
 
 import es.danisales.datune.chords.tonal.TonalChord;
-import es.danisales.datune.function.ChromaticFunction;
+import es.danisales.datune.function.ChromaticDegreeFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.tonality.Tonality;
 import org.junit.Test;
@@ -27,8 +27,8 @@ public class TonalChordTest {
     @Test
     public void setHarmonicFunction() {
         TonalChord parametricChord = TonalChord.from(Tonality.C, DiatonicFunction.I);
-        parametricChord.setHarmonicFunction(ChromaticFunction.II);
-        assertEquals(ChromaticFunction.II, parametricChord.getHarmonicFunction());
+        parametricChord.setHarmonicFunction(ChromaticDegreeFunction.II);
+        assertEquals(ChromaticDegreeFunction.II, parametricChord.getHarmonicFunction());
     }
 
     @Test

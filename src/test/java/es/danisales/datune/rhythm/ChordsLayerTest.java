@@ -1,7 +1,7 @@
 package es.danisales.datune.rhythm;
 
 import es.danisales.datune.chords.chromatic.ChromaticChord;
-import es.danisales.datune.function.ChromaticFunction;
+import es.danisales.datune.function.ChromaticDegreeFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.tempo.MusicalTime;
 import es.danisales.datune.timelayer.ChordsLayer;
@@ -48,9 +48,9 @@ public class ChordsLayerTest {
 
         ChromaticChord chromaticChord = ChromaticChord.from(Tonality.ET12.C, DiatonicFunction.I);
         chordsLayer.add(DurableEvent.from(MusicalTime.ZERO, chromaticChord, MusicalTime.WHOLE));
-        chromaticChord = ChromaticChord.from(Tonality.ET12.C, ChromaticFunction.bVI);
+        chromaticChord = ChromaticChord.from(Tonality.ET12.C, ChromaticDegreeFunction.bVI);
         chordsLayer.add(DurableEvent.from(MusicalTime.WHOLE, chromaticChord, MusicalTime.WHOLE));
-        chromaticChord = ChromaticChord.from(Tonality.ET12.C, ChromaticFunction.bVII);
+        chromaticChord = ChromaticChord.from(Tonality.ET12.C, ChromaticDegreeFunction.bVII);
         chordsLayer.add(DurableEvent.from(MusicalTime.WHOLE.clone().mult(2), chromaticChord, MusicalTime.WHOLE));
         chromaticChord = ChromaticChord.from(Tonality.ET12.C, DiatonicFunction.I);
         chordsLayer.add(DurableEvent.from(MusicalTime.WHOLE.clone().mult(3), chromaticChord, MusicalTime.WHOLE));

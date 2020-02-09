@@ -6,7 +6,7 @@ import es.danisales.datune.chords.DiatonicDegreePattern;
 import es.danisales.datune.chords.tonal.TonalChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
-import es.danisales.datune.function.ChromaticFunction;
+import es.danisales.datune.function.ChromaticDegreeFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.lang.Language;
@@ -62,7 +62,7 @@ public class ChromaticChordTest {
         @Test
         public void fromFunction_bVII() throws BuildingException {
             ChromaticChord chromaticChord = ChromaticChord.builder()
-                    .chromaticFunction(ChromaticFunction.bVII)
+                    .harmonicFunction(ChromaticDegreeFunction.bVII)
                     .tonality(Tonality.ET12.C)
                     .build();
 
@@ -74,7 +74,7 @@ public class ChromaticChordTest {
         @Test
         public void fromFunction_bVI() throws BuildingException {
             ChromaticChord chromaticChord = ChromaticChord.builder()
-                    .chromaticFunction(ChromaticFunction.bVI)
+                    .harmonicFunction(ChromaticDegreeFunction.bVI)
                     .tonality(Tonality.ET12.C)
                     .build();
 
@@ -159,7 +159,7 @@ public class ChromaticChordTest {
         @Test
         public void fromChromaticFunction_ISUS4() throws BuildingException {
             ChromaticChord chromaticChord = ChromaticChord.builder()
-                    .chromaticFunction(ChromaticFunction.ISUS4)
+                    .harmonicFunction(ChromaticDegreeFunction.ISUS4)
                     .tonality(Tonality.ET12.C)
                     .build();
             Assert.assertEquals(3, chromaticChord.size());

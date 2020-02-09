@@ -16,7 +16,8 @@ public class ChromaticFunctionProgressionTransformations {
     public static ChromaticFunctionProgression shift(ChromaticFunctionProgression chromaticFunctionProgression, int n) {
         ChromaticFunctionProgression chromaticFunctionProgression1 = chromaticFunctionProgression.clone();
         for (int i = 0; i < chromaticFunctionProgression1.size(); i++) {
-            chromaticFunctionProgression1.set(i, ChromaticFunctionTransformations.shift(chromaticFunctionProgression.get(i), n));
+            if (chromaticFunctionProgression1.get(i) instanceof ChromaticDegreeFunction)
+                chromaticFunctionProgression1.set(i, ChromaticFunctionTransformations.shift((ChromaticDegreeFunction)chromaticFunctionProgression.get(i), n));
         }
         return chromaticFunctionProgression1;
     }

@@ -17,7 +17,7 @@ public enum ChromaticDegree implements ScaleDegree {
 
     @Override
     public ChromaticDegree getShifted(int i) {
-        i = MathUtils.rotativeTrim(i, values().length);
+        i = MathUtils.rotativeTrim(ordinal() + i, values().length);
         return values()[i];
     }
 

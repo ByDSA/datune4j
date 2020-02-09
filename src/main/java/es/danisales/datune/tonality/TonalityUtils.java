@@ -3,6 +3,7 @@ package es.danisales.datune.tonality;
 import es.danisales.arrays.ArrayUtils;
 import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.function.ChromaticFunction;
+import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.utils.building.BuildingException;
@@ -59,11 +60,11 @@ public class TonalityUtils {
     }
 
 
-    public static boolean hasAsDiatonicFunction(@NonNull Tonality tonality, @NonNull ChromaticFunction chromaticFunction) {
+    public static boolean hasAsDiatonicFunction(@NonNull Tonality tonality, @NonNull HarmonicFunction chromaticFunction) {
         ChromaticChord chromaticChord2 = null;
         try {
             chromaticChord2 = ChromaticChord.builder()
-                    .chromaticFunction(chromaticFunction)
+                    .harmonicFunction(chromaticFunction)
                     .tonality(tonality)
                     .build();
         } catch (BuildingException e) {
