@@ -136,7 +136,7 @@ public class TonalityRetrievalTest {
     @Test
     public void C_iv() throws BuildingException {
         ChromaticChord chromaticChord = ChromaticChord.builder()
-                .diatonicFunction(DiatonicFunction.IV)
+                .function(DiatonicFunction.IV)
                 .tonality(Tonality.ET12.C)
                 .build();
 

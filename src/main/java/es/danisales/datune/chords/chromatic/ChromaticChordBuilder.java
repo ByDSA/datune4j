@@ -6,16 +6,11 @@ import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.degrees.octave.DiatonicAlt;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
-import es.danisales.datune.function.ChromaticDegreeFunction;
 import es.danisales.datune.function.ChromaticFunction;
-import es.danisales.datune.function.DiatonicFunction;
-import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.midi.NoteMidi;
-import es.danisales.datune.tonality.ChordRetrievalFromTonality;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;
-import es.danisales.utils.NeverHappensException;
 import es.danisales.utils.building.BuilderOfWays;
 import es.danisales.utils.building.BuildingException;
 import es.danisales.utils.building.BuildingWay;
@@ -31,9 +26,7 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
     private DiatonicDegree diatonicDegree = DiatonicDegree.I;
     private DiatonicDegreePattern diatonicDegreePattern;
     private ChromaticChordPattern chromaticChordPattern;
-    private DiatonicFunction diatonicFunction;
     private ChromaticFunction chromaticFunction;
-    private ChromaticDegreeFunction chromaticDegreeFunction;
     private boolean dirty;
 
     class ChromaticChordWay implements BuildingWay<ChromaticChord> {
@@ -100,23 +93,6 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
         }
     }
 
-    class DiatonicFunctionAndTonalityWay implements BuildingWay<ChromaticChord> {
-        @Override
-        public boolean isReadyToBuild() {
-            return tonality != null && diatonicFunction != null;
-        }
-
-        @NonNull
-        @Override
-        public ChromaticChord build() throws BuildingException {
-            try {
-                return ChordRetrievalFromTonality.getFromDiatonicFunction(tonality, diatonicFunction);
-            } catch (ScaleRelativeDegreeException e) {
-                throw new BuildingException(e);
-            }
-        }
-    }
-
     class ChromaticFunctionAndTonalityWay implements BuildingWay<ChromaticChord> {
         @Override
         public boolean isReadyToBuild() {
@@ -127,24 +103,7 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
         @Override
         public ChromaticChord build() throws BuildingException {
             try {
-                return ChordRetrievalFromTonality.getFromChromaticFunction(tonality, chromaticFunction);
-            } catch (ScaleRelativeDegreeException e) {
-                throw new BuildingException(e);
-            }
-        }
-    }
-
-    class ChromaticDegreeFunctionAndTonalityWay implements BuildingWay<ChromaticChord> {
-        @Override
-        public boolean isReadyToBuild() {
-            return tonality != null && chromaticDegreeFunction != null;
-        }
-
-        @NonNull
-        @Override
-        public ChromaticChord build() throws BuildingException {
-            try {
-                return ChordRetrievalFromTonality.getFromChromaticFunction(tonality, chromaticDegreeFunction);
+                return chromaticFunction.getChromaticChordFromTonality(tonality);
             } catch (ScaleRelativeDegreeException e) {
                 throw new BuildingException(e);
             }
@@ -169,9 +128,7 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
             ChromaticChordWay.class,
             ChromaticBaseAndChromaticChordPatternWay.class,
             DiatonicChordPatternAndTonalityWay.class,
-            DiatonicFunctionAndTonalityWay.class,
-            ChromaticFunctionAndTonalityWay.class,
-            ChromaticDegreeFunctionAndTonalityWay.class
+            ChromaticFunctionAndTonalityWay.class
     );
 
     @Override
@@ -242,31 +199,8 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
         return self();
     }
 
-    public @NonNull ChromaticChordBuilder diatonicFunction(@NonNull DiatonicFunction diatonicFunction) {
-        this.diatonicFunction = Objects.requireNonNull(diatonicFunction);
-
-        return self();
-    }
-
-    public @NonNull ChromaticChordBuilder harmonicFunction(@NonNull HarmonicFunction harmonicFunction) {
-        if (harmonicFunction instanceof DiatonicFunction)
-            return diatonicFunction((DiatonicFunction) harmonicFunction);
-        else if (harmonicFunction instanceof ChromaticFunction)
-            return chromaticFunction((ChromaticFunction) harmonicFunction);
-        else if (harmonicFunction instanceof ChromaticDegreeFunction)
-            return chromaticDegreeFunction((ChromaticDegreeFunction)harmonicFunction);
-
-        throw NeverHappensException.make("HarmonicFunction must be DiatonicFunction or ChromaticFunction");
-    }
-
-    public @NonNull ChromaticChordBuilder chromaticFunction(@NonNull ChromaticFunction chromaticFunction) {
-        this.chromaticFunction = Objects.requireNonNull(chromaticFunction);
-
-        return self();
-    }
-
-    public @NonNull ChromaticChordBuilder chromaticDegreeFunction(@NonNull ChromaticDegreeFunction chromaticDegreeFunction) {
-        this.chromaticDegreeFunction = Objects.requireNonNull(chromaticDegreeFunction);
+    public @NonNull ChromaticChordBuilder function(@NonNull ChromaticFunction chromaticFunction) {
+        this.chromaticFunction = chromaticFunction;
 
         return self();
     }

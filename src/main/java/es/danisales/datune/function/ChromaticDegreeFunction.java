@@ -2,14 +2,21 @@ package es.danisales.datune.function;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.chords.chromatic.ChromaticChordPattern;
+import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.ChromaticDegree;
+import es.danisales.datune.tonality.ScaleRelativeDegreeException;
+import es.danisales.datune.tonality.Tonality;
+import es.danisales.utils.NeverHappensException;
+import es.danisales.utils.building.BuildingException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
-public final class ChromaticDegreeFunction implements HarmonicFunction {
+public final class ChromaticDegreeFunction implements ChromaticFunction {
     public static final ChromaticDegreeFunction I = new ChromaticDegreeFunction(ChromaticDegree.I, ChromaticChordPattern.TRIAD_MAJOR);
     public static final ChromaticDegreeFunction bII = new ChromaticDegreeFunction(ChromaticDegree.bII, ChromaticChordPattern.TRIAD_MAJOR);
     public static final ChromaticDegreeFunction N6 = bII;
@@ -267,5 +274,27 @@ public final class ChromaticDegreeFunction implements HarmonicFunction {
         ChromaticDegreeFunction chromaticDegreeFunction = (ChromaticDegreeFunction)o;
 
         return chromaticDegreeFunction.chromaticChordPattern.equals(chromaticChordPattern) && chromaticDegree.equals(chromaticDegreeFunction.chromaticDegree);
+    }
+
+    @Override
+    @NonNull
+    public ChromaticChord getChromaticChordFromTonality(Tonality<Chromatic> tonality) throws ScaleRelativeDegreeException {
+        Objects.requireNonNull(tonality);
+
+        ChromaticChordPattern chromaticChordPattern = getChromaticChordPattern();
+        Objects.requireNonNull(chromaticChordPattern, toString());
+        Chromatic noteBase = TonalityGetChromaticFunction.getNoteBaseFromChromaticFunctionAndTonality(tonality, this);
+
+        ChromaticChord ret;
+        try {
+            ret = ChromaticChord.builder()
+                    .chromaticBase(noteBase)
+                    .chromaticChordPattern(chromaticChordPattern)
+                    .build();
+        } catch (BuildingException e) {
+            throw NeverHappensException.make("");
+        }
+
+        return ret;
     }
 }

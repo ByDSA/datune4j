@@ -4,7 +4,7 @@ import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.ChromaticDegreeFunction;
-import es.danisales.datune.function.ChromaticFunction;
+import es.danisales.datune.function.SecondaryDominant;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.utils.building.BuildingException;
 import org.junit.Assert;
@@ -109,7 +109,7 @@ public class TonalityChromaticTest {
             for (DiatonicFunction df : DiatonicFunction.values()) {
                 ChromaticChord chromaticChord = ChromaticChord.builder()
                         .tonality(t)
-                        .diatonicFunction(df)
+                        .function(df)
                         .build();
                 Assert.assertTrue(t.toString() + " " + df.toString() + " " + chromaticChord.toString(), t.containsAll(chromaticChord));
             }
@@ -119,10 +119,10 @@ public class TonalityChromaticTest {
     @Test
     public void getChromaticFunction() throws BuildingException {
         Tonality<Chromatic> t = Tonality.ET12.C;
-        for (ChromaticFunction cf : ChromaticFunction.values()) {
+        for (SecondaryDominant cf : SecondaryDominant.values()) {
             assertNotNull(ChromaticChord.builder()
                     .tonality(t)
-                    .chromaticFunction(cf)
+                    .function(cf)
                     .build());
         }
     }

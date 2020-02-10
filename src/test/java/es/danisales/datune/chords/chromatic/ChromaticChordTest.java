@@ -52,7 +52,7 @@ public class ChromaticChordTest {
         @Test
         public void fromFunction() throws BuildingException {
             ChromaticChord chromaticChord = ChromaticChord.builder()
-                    .diatonicFunction(DiatonicFunction.I)
+                    .function(DiatonicFunction.I)
                     .tonality(Tonality.ET12.C)
                     .build();
 
@@ -62,7 +62,7 @@ public class ChromaticChordTest {
         @Test
         public void fromFunction_bVII() throws BuildingException {
             ChromaticChord chromaticChord = ChromaticChord.builder()
-                    .harmonicFunction(ChromaticDegreeFunction.bVII)
+                    .function(ChromaticDegreeFunction.bVII)
                     .tonality(Tonality.ET12.C)
                     .build();
 
@@ -74,7 +74,7 @@ public class ChromaticChordTest {
         @Test
         public void fromFunction_bVI() throws BuildingException {
             ChromaticChord chromaticChord = ChromaticChord.builder()
-                    .harmonicFunction(ChromaticDegreeFunction.bVI)
+                    .function(ChromaticDegreeFunction.bVI)
                     .tonality(Tonality.ET12.C)
                     .build();
 
@@ -159,7 +159,7 @@ public class ChromaticChordTest {
         @Test
         public void fromChromaticFunction_ISUS4() throws BuildingException {
             ChromaticChord chromaticChord = ChromaticChord.builder()
-                    .harmonicFunction(ChromaticDegreeFunction.ISUS4)
+                    .function(ChromaticDegreeFunction.ISUS4)
                     .tonality(Tonality.ET12.C)
                     .build();
             Assert.assertEquals(3, chromaticChord.size());
@@ -837,8 +837,8 @@ public class ChromaticChordTest {
         /* Root */
         @Test
         public void getRootIndex_initialIsZero() {
-            for (DiatonicFunction diatonicFunction : DiatonicFunction.values()) {
-                TonalChord parametricChord1 = TonalChord.from(Tonality.C, diatonicFunction);
+            for (DiatonicFunction function : DiatonicFunction.values()) {
+                TonalChord parametricChord1 = TonalChord.from(Tonality.C, function);
                 ChromaticChord chromaticChord1 = ChromaticChord.from(parametricChord1);
                 assertEquals(0, chromaticChord1.getRootIndex());
             }
@@ -876,8 +876,8 @@ public class ChromaticChordTest {
         /* Inversion */
         @Test
         public void getInversionNumber_initialIsZero() {
-            for (DiatonicFunction diatonicFunction : DiatonicFunction.values()) {
-                TonalChord parametricChord1 = TonalChord.from(Tonality.C, diatonicFunction);
+            for (DiatonicFunction function : DiatonicFunction.values()) {
+                TonalChord parametricChord1 = TonalChord.from(Tonality.C, function);
                 ChromaticChord chromaticChord1 = ChromaticChord.from(parametricChord1);
                 assertEquals(0, chromaticChord1.getInversionNumber());
             }

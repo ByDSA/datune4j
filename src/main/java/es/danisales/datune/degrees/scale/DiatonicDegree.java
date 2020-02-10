@@ -1,7 +1,7 @@
 package es.danisales.datune.degrees.scale;
 
 import es.danisales.datune.degrees.octave.Diatonic;
-import es.danisales.datune.function.ChromaticFunction;
+import es.danisales.datune.function.SecondaryDominant;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.interval.IntervalDiatonic;
@@ -54,13 +54,6 @@ public enum DiatonicDegree implements ScaleDegree {
 		if ( n < 0 )
 			n += Diatonic.NUMBER;
 		return n;
-	}
-
-	public static @NonNull DiatonicDegree from(@NonNull HarmonicFunction harmonicFunction) {
-		if (harmonicFunction instanceof DiatonicFunction)
-			return from((DiatonicFunction)harmonicFunction);
-		else
-			return from((ChromaticFunction)harmonicFunction);
 	}
 
 	public static @NonNull DiatonicDegree from(@NonNull DiatonicFunction diatonicFunction) {
@@ -118,10 +111,9 @@ public enum DiatonicDegree implements ScaleDegree {
 		throw NeverHappensException.switchOf(diatonicFunction);
 	}
 
-	public static @NonNull DiatonicDegree from(@NonNull ChromaticFunction chromaticFunction) {
+	public static @NonNull DiatonicDegree from(@NonNull SecondaryDominant chromaticFunction) {
 		switch ( chromaticFunction ) {
 			case SUBV7:
-			case V7ALT:
 				return DiatonicDegree.I;
 			case SUBV7_II:
 			case V7_II:

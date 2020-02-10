@@ -1,7 +1,7 @@
 package es.danisales.datune;
 
 import es.danisales.datune.degrees.scale.DiatonicDegree;
-import es.danisales.datune.function.ChromaticFunction;
+import es.danisales.datune.function.SecondaryDominant;
 import es.danisales.datune.interval.IntervalDiatonic;
 import org.junit.Test;
 
@@ -58,7 +58,7 @@ public class DegreeTest {
 	
 	@Test
 	public void _toStringNotNull() {
-		for (ChromaticFunction cf : ChromaticFunction.values()) {
+		for (SecondaryDominant cf : SecondaryDominant.values()) {
 			assertNotNull( cf.toString() );
 		}
 	}

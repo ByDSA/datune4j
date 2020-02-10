@@ -7,7 +7,7 @@ import es.danisales.datune.chords.IntervalShifter;
 import es.danisales.datune.chords.tonal.TonalChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.octave.CyclicDegree;
-import es.danisales.datune.function.HarmonicFunction;
+import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.midi.pitch.PitchTonalMidi;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
@@ -2448,7 +2448,7 @@ public final class ChromaticChord
         Tonality<Chromatic> tonality = PitchTonalMidi.turnToTonalityChromatic(parametricChord.getTonality());
         try {
             return builder()
-                    .harmonicFunction(parametricChord.getHarmonicFunction())
+                    .function((ChromaticFunction)parametricChord.getHarmonicFunction())
                     .tonality(tonality)
                     .build();
         } catch (BuildingException e) {
@@ -2470,13 +2470,10 @@ public final class ChromaticChord
         super(chromaticChordInterface);
     }
 
-    public static ChromaticChord from(Tonality<Chromatic> tonality, HarmonicFunction harmonicFunction) {
+    public static ChromaticChord from(Tonality<Chromatic> tonality, ChromaticFunction chromaticFunction) {
         try {
-            return ChromaticChord.builder()
-                    .tonality(tonality)
-                    .harmonicFunction(harmonicFunction)
-                    .build();
-        } catch (BuildingException e) {
+            return chromaticFunction.getChromaticChordFromTonality(tonality);
+        } catch (ScaleRelativeDegreeException e) {
             return null;
         }
     }

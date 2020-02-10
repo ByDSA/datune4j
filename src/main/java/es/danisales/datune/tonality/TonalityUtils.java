@@ -1,11 +1,12 @@
 package es.danisales.datune.tonality;
 
-import es.danisales.arrays.ArrayUtils;
+import es.danisales.datune.chords.chromatic.ChromaticChord;
+import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.HarmonicFunction;
+import es.danisales.datune.function.SecondaryDominant;
 import es.danisales.datune.interval.IntervalChromatic;
-import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.utils.building.BuildingException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -30,15 +31,15 @@ public class TonalityUtils {
     }
 
 
-    public static boolean hasAsChromaticFunction(@NonNull Tonality tonality, @NonNull ChromaticChord chromaticChord) {
+    public static boolean hasAsChromaticFunction(@NonNull Tonality<Chromatic> tonality, @NonNull ChromaticChord chromaticChord) {
         Objects.requireNonNull(chromaticChord);
 
-        for (ChromaticFunction f : ChromaticFunction.values()) {
-            if (tonality.size() != Diatonic.NUMBER && ArrayUtils.contains(f, ChromaticFunction.TENSIONS))
+        for (SecondaryDominant secondaryDominant : SecondaryDominant.values()) {
+            if (tonality.size() != Diatonic.NUMBER && SecondaryDominant.ALL.contains(secondaryDominant))
                 continue;
 
             try {
-                ChromaticChord c = ChordRetrievalFromTonality.getFromChromaticFunction(tonality, f);
+                secondaryDominant.getChromaticChordFromTonality(tonality);
             } catch (ScaleRelativeDegreeException e) {
                 continue;
             }
@@ -46,7 +47,7 @@ public class TonalityUtils {
             ChromaticChord c2;
             try {
                 c2 = ChromaticChord.builder()
-                        .chromaticFunction(f)
+                        .function(secondaryDominant)
                         .tonality(tonality)
                         .build();
             } catch (BuildingException e) {
@@ -60,11 +61,11 @@ public class TonalityUtils {
     }
 
 
-    public static boolean hasAsDiatonicFunction(@NonNull Tonality tonality, @NonNull HarmonicFunction chromaticFunction) {
+    public static boolean hasAsDiatonicFunction(@NonNull Tonality<Chromatic> tonality, @NonNull ChromaticFunction chromaticFunction) {
         ChromaticChord chromaticChord2 = null;
         try {
             chromaticChord2 = ChromaticChord.builder()
-                    .harmonicFunction(chromaticFunction)
+                    .function(chromaticFunction)
                     .tonality(tonality)
                     .build();
         } catch (BuildingException e) {

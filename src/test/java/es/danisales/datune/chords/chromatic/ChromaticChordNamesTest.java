@@ -2,9 +2,7 @@ package es.danisales.datune.chords.chromatic;
 
 import es.danisales.datune.GlobalSettings;
 import es.danisales.datune.chords.tonal.TonalChord;
-import es.danisales.datune.degrees.scale.ChromaticDegree;
 import es.danisales.datune.function.ChromaticDegreeFunction;
-import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.lang.Language;
 import es.danisales.datune.tonality.Tonality;

@@ -2,17 +2,13 @@ package es.danisales.datune;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import es.danisales.arrays.ArrayUtils;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.chords.chromatic.ChromaticChordBuilder;
 import es.danisales.datune.chords.tonal.TonalChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.eventsequences.EventSequence;
-import es.danisales.datune.function.ChromaticDegreeFunction;
-import es.danisales.datune.function.ChromaticFunction;
-import es.danisales.datune.function.DiatonicFunction;
-import es.danisales.datune.function.HarmonicFunction;
+import es.danisales.datune.function.*;
 import es.danisales.datune.midi.ChordMidi;
 import es.danisales.datune.midi.NoteMidi;
 import es.danisales.datune.midi.binaries.events.NoteOff;
@@ -54,7 +50,7 @@ class Loader {
     }
 
     private void addChromaticFunctions(List<TonalChord> chromaticChordSet) {
-        for (ChromaticFunction chromaticFunction : ChromaticFunction.values()) {
+        for (SecondaryDominant chromaticFunction : SecondaryDominant.values()) {
             TonalChord parametricChord = TonalChord.from(tonality, chromaticFunction);
 
             chromaticChordSet.add(parametricChord);
@@ -106,7 +102,7 @@ class Loader {
         if (harmonicFunction instanceof DiatonicFunction)
             degree = DiatonicDegree.from((DiatonicFunction) harmonicFunction);
         else
-            degree = DiatonicDegree.from((ChromaticFunction) harmonicFunction);
+            degree = DiatonicDegree.from((SecondaryDominant) harmonicFunction);
 
         return degree;
     }
@@ -213,10 +209,8 @@ class Loader {
             }
 
             ChromaticChordBuilder chromaticChordBuilder = ChromaticChord.builder();
-            if (parametricChord.getHarmonicFunction() instanceof DiatonicFunction)
-                chromaticChordBuilder.diatonicFunction((DiatonicFunction) parametricChord.getHarmonicFunction());
-            else
-                chromaticChordBuilder.chromaticFunction((ChromaticFunction) parametricChord.getHarmonicFunction());
+            if (parametricChord.getHarmonicFunction() instanceof ChromaticFunction)
+                chromaticChordBuilder.function((ChromaticFunction) parametricChord.getHarmonicFunction());
 
             chromaticChordBuilder.tonality(parametricChord.getTonality());
             ChromaticChord chromaticChord;
@@ -249,7 +243,7 @@ class Loader {
         panels[degreeOrdinal][chromaticChord.size() - 2].add(jButton);
 
         if (!tonality.containsAll(chromaticChord)) {
-            if (ArrayUtils.contains(harmonicFunction, ChromaticFunction.TENSIONS))
+            if (harmonicFunction instanceof SecondaryDominant && SecondaryDominant.ALL.contains(harmonicFunction))
                 jButton.setForeground(Color.BLUE);
             else {
                 jButton.setForeground(Color.RED);

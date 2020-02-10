@@ -1,12 +1,10 @@
-package es.danisales.datune.tonality;
+package es.danisales.datune.function;
 
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.chords.chromatic.ChromaticChordPattern;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
-import es.danisales.datune.function.ChromaticDegreeFunction;
-import es.danisales.datune.function.ChromaticFunction;
-import es.danisales.datune.function.DiatonicFunction;
+import es.danisales.datune.tonality.*;
 import es.danisales.utils.NeverHappensException;
 import es.danisales.utils.building.BuildingException;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -15,7 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TonalityGetChromaticFunction {
-	static @NonNull DiatonicFunction getDiatonicFunctionFromChromaticFunction(@NonNull ChromaticFunction chromaticFunction) {
+	static @NonNull DiatonicFunction getDiatonicFunctionFromChromaticFunction(@NonNull SecondaryDominant chromaticFunction) {
 		switch (chromaticFunction) {
 			case V_II:
 			case V_III:
@@ -35,7 +33,6 @@ public class TonalityGetChromaticFunction {
 			case SUBV7_IV:
 			case SUBV7_V:
 			case SUBV7_VI:
-			case V7ALT:
 				return DiatonicFunction.I7;
 			default:
 				throw new RuntimeException();
@@ -43,17 +40,17 @@ public class TonalityGetChromaticFunction {
 	}
 
 	@SuppressWarnings("ConstantConditions") // DiatonicFunction.patternFrom nunca devuelve null en este contexto
-	/*private static <C extends CyclicDegree> @Nullable Tonality getT(@NonNull Tonality<C> tonality, @NonNull ChromaticFunction chromaticFunction) throws BuildingException {
+	/*private static <C extends CyclicDegree> @Nullable Tonality getT(@NonNull Tonality<C> tonality, @NonNull SecondaryDominant function) throws BuildingException {
 		if ( !(tonality.getRoot() instanceof Chromatic) )
 			return null;
-		DiatonicFunction diatonicFunction = DiatonicFunction.from(chromaticFunction);
+		DiatonicFunction diatonicFunction = DiatonicFunction.from(function);
 		ChromaticChord chromaticChord = ChromaticChord.builder()
 				.diatonicFunction(diatonicFunction)
 				.tonality((Tonality<Chromatic>)tonality)
 				.build();
 
 		ChromaticChord chromaticChord2 = ChromaticChord.builder()
-				.chromaticFunction(chromaticFunction)
+				.function(function)
 				.tonality((Tonality<Chromatic>)tonality)
 				.build();
 
@@ -63,7 +60,7 @@ public class TonalityGetChromaticFunction {
 					continue;
 
 				ChromaticChord chromaticChord3 = ChromaticChord.builder()
-						.chromaticFunction(chromaticFunction)
+						.function(function)
 						.tonality((Tonality<Chromatic>)tonality)
 						.build();
 				if (chromaticChord.equals(chromaticChord3))
@@ -92,7 +89,7 @@ public class TonalityGetChromaticFunction {
 			ChromaticChord chromaticChord4 = null;
 			try {
 				chromaticChord4 = ChromaticChord.builder()
-						.harmonicFunction(chromaticDegreeFunction)
+						.function(chromaticDegreeFunction)
 						.tonality(tonality)
 						.build();
 			} catch (BuildingException e) {
@@ -147,7 +144,7 @@ public class TonalityGetChromaticFunction {
 		return null;
 	}
 
-	public static @NonNull Tonality<Chromatic> getTonalityFromChromaticFunction(@NonNull Tonality<Chromatic> tonality, @NonNull ChromaticFunction chromaticFunction) throws ScaleRelativeDegreeException {
+	public static @NonNull Tonality<Chromatic> getTonalityFromChromaticFunction(@NonNull Tonality<Chromatic> tonality, @NonNull SecondaryDominant chromaticFunction) throws ScaleRelativeDegreeException {
 		switch (chromaticFunction) {
 			case V_II:
 			case V7_II:
@@ -178,7 +175,7 @@ public class TonalityGetChromaticFunction {
 				try {
 					chromaticChord = ChromaticChord.builder()
 							.tonality(tonality)
-							.chromaticFunction(ChromaticFunction.V7_II)
+							.function(SecondaryDominant.V7_II)
 							.build();
 				} catch (BuildingException e) {
 					throw buildingException2ScaleRelativeDegreeException(e);
@@ -189,7 +186,7 @@ public class TonalityGetChromaticFunction {
 				try {
 					chromaticChord = ChromaticChord.builder()
 							.tonality(tonality)
-							.chromaticFunction(ChromaticFunction.V7_III)
+							.function(SecondaryDominant.V7_III)
 							.build();
 				} catch (BuildingException e) {
 					throw buildingException2ScaleRelativeDegreeException(e);
@@ -200,7 +197,7 @@ public class TonalityGetChromaticFunction {
 				try {
 					chromaticChord = ChromaticChord.builder()
 							.tonality(tonality)
-							.chromaticFunction(ChromaticFunction.V7_IV)
+							.function(SecondaryDominant.V7_IV)
 							.build();
 				} catch (BuildingException e) {
 					throw buildingException2ScaleRelativeDegreeException(e);
@@ -211,7 +208,7 @@ public class TonalityGetChromaticFunction {
 				try {
 					chromaticChord = ChromaticChord.builder()
 							.tonality(tonality)
-							.chromaticFunction(ChromaticFunction.V7_V)
+							.function(SecondaryDominant.V7_V)
 							.build();
 				} catch (BuildingException e) {
 					throw buildingException2ScaleRelativeDegreeException(e);
@@ -222,16 +219,13 @@ public class TonalityGetChromaticFunction {
 				try {
 					chromaticChord = ChromaticChord.builder()
 							.tonality(tonality)
-							.chromaticFunction(ChromaticFunction.V7_VI)
+							.function(SecondaryDominant.V7_VI)
 							.build();
 				} catch (BuildingException e) {
 					throw buildingException2ScaleRelativeDegreeException(e);
 				}
 				newRootChromatic = chromaticChord.get(0).getNext(6);
 				return Tonality.from(newRootChromatic, Scale.LYDIAN_b7);
-			case V7ALT:
-				newRoot = tonality.getNote(DiatonicDegree.V);
-				return Tonality.from(newRoot, Scale.SUPERLOCRIAN);
 			default:
 				return tonality;
 		}

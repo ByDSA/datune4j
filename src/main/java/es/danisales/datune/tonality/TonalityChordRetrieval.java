@@ -41,7 +41,7 @@ public class TonalityChordRetrieval {
             }
             ChromaticChord chromaticChord;
             try {
-                chromaticChord = ChromaticChord.builder().tonality(tonality).diatonicFunction(f).build();
+                chromaticChord = ChromaticChord.builder().tonality(tonality).function(f).build();
             } catch (BuildingException e) {
                 continue;
             }
@@ -80,7 +80,7 @@ public class TonalityChordRetrieval {
             }
             ChromaticChord chromaticChord;
             try {
-                chromaticChord = ChromaticChord.builder().tonality(tonality).diatonicFunction(f).build();
+                chromaticChord = ChromaticChord.builder().tonality(tonality).function(f).build();
             } catch (BuildingException e) {
                 continue;
             }

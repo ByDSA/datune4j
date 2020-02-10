@@ -2,12 +2,15 @@ package es.danisales.datune.function;
 
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
-import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.*;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-public enum DiatonicFunction implements HarmonicFunction {
+import java.util.Objects;
+
+public enum DiatonicFunction
+		implements ChromaticFunction {
 	I, II, III, IV, V, VI, VII,
 	I6, II6, III6, IV6, V6, VI6, VII6,
 	I7, II7, III7, IV7, V7, VI7, VII7,
@@ -188,5 +191,22 @@ public enum DiatonicFunction implements HarmonicFunction {
 			return (DiatonicFunction) harmonicFunction;
 
 		return null;
+	}
+
+	@Override
+	@NonNull
+	public ChromaticChord getChromaticChordFromTonality(@NonNull Tonality<Chromatic> tonality) throws ScaleRelativeDegreeException {
+		Objects.requireNonNull(tonality);
+
+		ChromaticChord chromaticChord = null;
+		if (tonality.getScale().equals(Scale.MAJOR))
+			chromaticChord = TonalityGetDiatonicFunctionMajor.get(tonality, this);
+		else if (tonality.getScale().equals(Scale.MINOR))
+			chromaticChord = TonalityGetDiatonicFunctionMinor.get(tonality, this);
+
+		if (chromaticChord == null)
+			chromaticChord = TonalityGetDiatonicFunctionDefault.get(tonality, this);
+
+		return chromaticChord;
 	}
 }

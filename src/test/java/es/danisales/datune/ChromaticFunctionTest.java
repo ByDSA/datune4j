@@ -4,7 +4,7 @@ import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.ChromaticDegreeFunction;
-import es.danisales.datune.function.ChromaticFunction;
+import es.danisales.datune.function.SecondaryDominant;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.utils.building.BuildingException;
 import org.junit.Test;
@@ -18,51 +18,51 @@ public class ChromaticFunctionTest {
 		Tonality<Chromatic> tonality = Tonality.ET12.C;
 		ChromaticChord chromaticChord = ChromaticChord.builder()
 				.tonality(tonality)
-				.harmonicFunction(ChromaticDegreeFunction.I)
+				.function(ChromaticDegreeFunction.I)
 				.build();
 		assertEquals( DiatonicDegree.I, tonality.getDegreeFrom( chromaticChord.get( 0 ) ) );
 		chromaticChord = ChromaticChord.builder()
 				.tonality(tonality)
-				.harmonicFunction(ChromaticDegreeFunction.II)
+				.function(ChromaticDegreeFunction.II)
 				.build();
 		assertEquals( DiatonicDegree.II, tonality.getDegreeFrom( chromaticChord.get( 0 ) ) );
 		chromaticChord = ChromaticChord.builder()
 				.tonality(tonality)
-				.harmonicFunction(ChromaticDegreeFunction.III)
+				.function(ChromaticDegreeFunction.III)
 				.build();
 		assertEquals( DiatonicDegree.III, tonality.getDegreeFrom( chromaticChord.get( 0 ) ) );
 		chromaticChord = ChromaticChord.builder()
 				.tonality(tonality)
-				.harmonicFunction(ChromaticDegreeFunction.IV)
+				.function(ChromaticDegreeFunction.IV)
 				.build();
 		assertEquals( DiatonicDegree.IV, tonality.getDegreeFrom( chromaticChord.get( 0 ) ) );
 		chromaticChord = ChromaticChord.builder()
 				.tonality(tonality)
-				.harmonicFunction(ChromaticDegreeFunction.V)
+				.function(ChromaticDegreeFunction.V)
 				.build();
 		assertEquals( DiatonicDegree.V, tonality.getDegreeFrom( chromaticChord.get( 0 ) ) );
 		chromaticChord = ChromaticChord.builder()
 				.tonality(tonality)
-				.harmonicFunction(ChromaticDegreeFunction.VI)
+				.function(ChromaticDegreeFunction.VI)
 				.build();
 		assertEquals( DiatonicDegree.VI, tonality.getDegreeFrom( chromaticChord.get( 0 ) ) );
 		chromaticChord = ChromaticChord.builder()
 				.tonality(tonality)
-				.harmonicFunction(ChromaticDegreeFunction.VII)
+				.function(ChromaticDegreeFunction.VII)
 				.build();
 		assertEquals( DiatonicDegree.VII, tonality.getDegreeFrom( chromaticChord.get( 0 ) ) );
 	}
 
 	@Test
 	public void _toStringNotNull() {
-		for (ChromaticFunction cf : ChromaticFunction.values()) {
+		for (SecondaryDominant cf : SecondaryDominant.values()) {
 			assertNotNull( cf.toString() );
 		}
 	}
 
 	@Test
 	public void getDregreeNotNull() {
-		for (ChromaticFunction cf : ChromaticFunction.values()) {
+		for (SecondaryDominant cf : SecondaryDominant.values()) {
 			assertNotNull( DiatonicDegree.from(cf) );
 		}
 	}

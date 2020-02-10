@@ -2,6 +2,7 @@ package es.danisales.datune.timelayer;
 
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.function.MainTonalFunction;
@@ -81,7 +82,7 @@ public class TonalLayerCalculator {
     }
 
     private void discardTonalitiesFromFirstChord() {
-        HarmonicFunction rootFunction = DiatonicFunction.I7;
+        ChromaticFunction rootFunction = DiatonicFunction.I7;
 
         for (int i = 0; i < possibleTonalities.size(); i++) {
             Tonality<Chromatic> tonality = possibleTonalities.get(i);

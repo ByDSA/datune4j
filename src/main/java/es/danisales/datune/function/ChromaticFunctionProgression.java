@@ -3,6 +3,7 @@ package es.danisales.datune.function;
 import es.danisales.datastructures.ListProxy;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;
 
 import java.util.ArrayList;
@@ -56,7 +57,17 @@ public class ChromaticFunctionProgression
     public List<ChromaticChord> getChordsFrom(Tonality<Chromatic> tonality) {
         List<ChromaticChord> chromaticChordProgression = new ArrayList<>();
         for (HarmonicFunction harmonicFunction : this) {
-            ChromaticChord chromaticChord = (ChromaticChord)tonality.getChordFromHarmonicFunction(harmonicFunction);
+            ChromaticChord chromaticChord;
+            if (harmonicFunction instanceof ChromaticFunction) {
+                try {
+                    chromaticChord = ((ChromaticFunction) harmonicFunction).getChromaticChordFromTonality(tonality);
+                } catch (ScaleRelativeDegreeException e) {
+                    e.printStackTrace();
+                    continue;
+                }
+            }
+            else
+                continue;
             chromaticChordProgression.add(chromaticChord);
         }
 

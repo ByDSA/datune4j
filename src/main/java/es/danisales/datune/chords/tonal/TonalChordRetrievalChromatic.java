@@ -3,6 +3,7 @@ package es.danisales.datune.chords.tonal;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.function.ChromaticFunction;
+import es.danisales.datune.function.SecondaryDominant;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.tonality.Tonality;
@@ -16,7 +17,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class TonalChordRetrievalChromatic {
     private Collection<ChromaticChord> chromaticChords;
     private Collection<Tonality<Chromatic>> tonalityList;
-    private Collection<HarmonicFunction> harmonicFunctionList;
+    private Collection<ChromaticFunction> harmonicFunctionList;
     private Collection<Chromatic> chromatics;
 
     TonalChordRetrievalChromatic() {
@@ -77,14 +78,14 @@ public class TonalChordRetrievalChromatic {
         return melodicMinorModesET12();
     }
 
-    public TonalChordRetrievalChromatic harmonicFunctions(@NonNull Collection<HarmonicFunction> harmonicFunctionList) {
-        this.harmonicFunctionList = Objects.requireNonNull(harmonicFunctionList);
+    public TonalChordRetrievalChromatic harmonicFunctions(@NonNull Collection<ChromaticFunction> chromaticFunctions) {
+        this.harmonicFunctionList = Objects.requireNonNull(chromaticFunctions);
 
         return this;
     }
 
-    public TonalChordRetrievalChromatic harmonicFunctions(@NonNull HarmonicFunction... harmonicFunctionList) {
-        this.harmonicFunctionList = Arrays.asList( Objects.requireNonNull(harmonicFunctionList) );
+    public TonalChordRetrievalChromatic harmonicFunctions(@NonNull ChromaticFunction... chromaticFunctions) {
+        this.harmonicFunctionList = Arrays.asList( Objects.requireNonNull(chromaticFunctions) );
 
         return this;
     }
@@ -94,9 +95,9 @@ public class TonalChordRetrievalChromatic {
     }
 
     public TonalChordRetrievalChromatic tonalityFunctionsAndTensionFunctions() {
-        List<HarmonicFunction> harmonicFunctionList = new ArrayList<>();
+        List<ChromaticFunction> harmonicFunctionList = new ArrayList<>();
         harmonicFunctionList.addAll( Arrays.asList(DiatonicFunction.values() ) );
-        harmonicFunctionList.addAll( Arrays.asList(ChromaticFunction.TENSIONS) );
+        harmonicFunctionList.addAll( SecondaryDominant.ALL );
         return harmonicFunctions( harmonicFunctionList );
     }
 
@@ -114,7 +115,7 @@ public class TonalChordRetrievalChromatic {
 
         tonalityList.parallelStream().forEach((Tonality<Chromatic> tonality) -> {
             if (chromatics == null || chromatics.contains(tonality.getRoot()))
-                harmonicFunctionList.parallelStream().forEach((HarmonicFunction harmonicFunction) -> {
+                harmonicFunctionList.parallelStream().forEach((ChromaticFunction harmonicFunction) -> {
                     if (chromaticChords == null) {
                         parametricChordList.add(TonalChord.from(tonality, harmonicFunction));
                         return;
@@ -125,7 +126,7 @@ public class TonalChordRetrievalChromatic {
                         try {
                             forEachChromaticChord = ChromaticChord.builder()
                                     .tonality(tonality)
-                                    .harmonicFunction(harmonicFunction)
+                                    .function(harmonicFunction)
                                     .build();
                         } catch (BuildingException e) {
                             return;
