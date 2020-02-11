@@ -2,6 +2,7 @@ package es.danisales.datune.function;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.chords.chromatic.ChromaticChordPattern;
 import es.danisales.datune.degrees.octave.Chromatic;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+@SuppressWarnings("WeakerAccess")
 public final class ChromaticDegreeFunction implements ChromaticFunction {
     public static final ChromaticDegreeFunction I = new ChromaticDegreeFunction(ChromaticDegree.I, ChromaticChordPattern.TRIAD_MAJOR);
     public static final ChromaticDegreeFunction bII = new ChromaticDegreeFunction(ChromaticDegree.bII, ChromaticChordPattern.TRIAD_MAJOR);
@@ -150,25 +152,37 @@ public final class ChromaticDegreeFunction implements ChromaticFunction {
             .add(VIIaug)
             .build();
 
-    public static final List<ChromaticDegreeFunction> POWER_CHORDS = new ImmutableList.Builder<ChromaticDegreeFunction>()
+    public static final List<ChromaticDegreeFunction> POWER_CHORD_FUNCTIONS = new ImmutableList.Builder<ChromaticDegreeFunction>()
             .add(I5)
+            .add(bII5)
             .add(II5)
+            .add(bIII5)
             .add(III5)
             .add(IV5)
+            .add(bV5)
             .add(V5)
+            .add(bVI5)
             .add(VI5)
+            .add(bVII5)
             .add(VII5)
             .build();
 
-    public static final List<ChromaticDegreeFunction> SUS4 = new ImmutableList.Builder<ChromaticDegreeFunction>()
+    public static final List<ChromaticDegreeFunction> SUS4_FUNCTIONS = new ImmutableList.Builder<ChromaticDegreeFunction>()
             .add(ISUS4)
+            .add(bIISUS4)
             .add(IISUS4)
             .add(bIIISUS4)
+            .add(IIISUS4)
             .add(IVSUS4)
+            .add(bVSUS4)
             .add(VSUS4)
+            .add(bVISUS4)
             .add(VISUS4)
             .add(bVIISUS4)
+            .add(VIISUS4)
             .build();
+
+    /********* END CONSTANTS ***********/
 
     private final ChromaticDegree chromaticDegree;
     private final ChromaticChordPattern chromaticChordPattern;
@@ -178,14 +192,73 @@ public final class ChromaticDegreeFunction implements ChromaticFunction {
         this.chromaticChordPattern = chromaticChordPattern;
     }
 
+    private static final Map<Integer, ChromaticDegreeFunction> immutableMap = Maps.newHashMap(ImmutableMap.<Integer, ChromaticDegreeFunction>builder()
+            .put(I.hashCode(), I)
+            .put(bII.hashCode(), bII)
+            .put(II.hashCode(), II)
+            .put(bIII.hashCode(), bIII)
+            .put(III.hashCode(), III)
+            .put(IV.hashCode(), IV)
+            .put(bV.hashCode(), bV)
+            .put(V.hashCode(), V)
+            .put(bVI.hashCode(), bVI)
+            .put(VI.hashCode(), VI)
+            .put(bVII.hashCode(), bVII)
+            .put(VII.hashCode(), VII)
+
+            .put(i.hashCode(), i)
+            .put(bii.hashCode(), bii)
+            .put(ii.hashCode(), ii)
+            .put(biii.hashCode(), biii)
+            .put(iii.hashCode(), iii)
+            .put(iv.hashCode(), iv)
+            .put(bv.hashCode(), bv)
+            .put(v.hashCode(), v)
+            .put(bvi.hashCode(), bvi)
+            .put(vi.hashCode(), vi)
+            .put(bvii.hashCode(), bvii)
+            .put(vii.hashCode(), vii)
+
+            .put(I0.hashCode(), I0)
+            .put(bII0.hashCode(), bII0)
+            .put(II0.hashCode(), II0)
+            .put(bIII0.hashCode(), bIII0)
+            .put(III0.hashCode(), III0)
+            .put(IV0.hashCode(), IV0)
+            .put(bV0.hashCode(), bV0)
+            .put(V0.hashCode(), V0)
+            .put(bVI0.hashCode(), bVI0)
+            .put(VI0.hashCode(), VI0)
+            .put(bVII0.hashCode(), bVII0)
+            .put(VII0.hashCode(), VII0)
+
+            .put(Iaug.hashCode(), Iaug)
+            .put(bIIaug.hashCode(), bIIaug)
+            .put(IIaug.hashCode(), IIaug)
+            .put(bIIIaug.hashCode(), bIIIaug)
+            .put(IIIaug.hashCode(), IIIaug)
+            .put(IVaug.hashCode(), IVaug)
+            .put(bVaug.hashCode(), bVaug)
+            .put(Vaug.hashCode(), Vaug)
+            .put(bVIaug.hashCode(), bVIaug)
+            .put(VIaug.hashCode(), VIaug)
+            .put(bVIIaug.hashCode(), bVIIaug)
+            .put(VIIaug.hashCode(), VIIaug)
+
+            .build()
+    );
+
     public static @NonNull ChromaticDegreeFunction from(ChromaticDegree chromaticDegree, ChromaticChordPattern chromaticChordPattern) {
+        ChromaticDegreeFunction immutable = immutableMap.get(chromaticDegree.hashCode() + chromaticChordPattern.hashCode());
+        if (immutable != null)
+            return immutable;
         return new ChromaticDegreeFunction(chromaticDegree, chromaticChordPattern);
     }
 
     private static final List<ChromaticDegreeFunction> immutableValues = new ImmutableList.Builder<ChromaticDegreeFunction>()
             .addAll(TRIAD_FUNCTIONS)
-            .addAll(POWER_CHORDS)
-            .addAll(SUS4)
+            .addAll(POWER_CHORD_FUNCTIONS)
+            .addAll(SUS4_FUNCTIONS)
             .build();
 
     public static List<ChromaticDegreeFunction> values() {
@@ -198,6 +271,28 @@ public final class ChromaticDegreeFunction implements ChromaticFunction {
 
     public ChromaticChordPattern getChromaticChordPattern() {
         return chromaticChordPattern;
+    }
+
+    @Override
+    @NonNull
+    public ChromaticChord getChromaticChordFromTonality(Tonality<Chromatic> tonality) throws ScaleRelativeDegreeException {
+        Objects.requireNonNull(tonality);
+
+        ChromaticChordPattern chromaticChordPattern = getChromaticChordPattern();
+        Objects.requireNonNull(chromaticChordPattern, toString());
+        Chromatic noteBase = TonalityGetChromaticFunction.getNoteBaseFromChromaticFunctionAndTonality(tonality, this);
+
+        ChromaticChord ret;
+        try {
+            ret = ChromaticChord.builder()
+                    .chromaticBase(noteBase)
+                    .chromaticChordPattern(chromaticChordPattern)
+                    .build();
+        } catch (BuildingException e) {
+            throw NeverHappensException.make("");
+        }
+
+        return ret;
     }
 
     /* Object */
@@ -277,24 +372,7 @@ public final class ChromaticDegreeFunction implements ChromaticFunction {
     }
 
     @Override
-    @NonNull
-    public ChromaticChord getChromaticChordFromTonality(Tonality<Chromatic> tonality) throws ScaleRelativeDegreeException {
-        Objects.requireNonNull(tonality);
-
-        ChromaticChordPattern chromaticChordPattern = getChromaticChordPattern();
-        Objects.requireNonNull(chromaticChordPattern, toString());
-        Chromatic noteBase = TonalityGetChromaticFunction.getNoteBaseFromChromaticFunctionAndTonality(tonality, this);
-
-        ChromaticChord ret;
-        try {
-            ret = ChromaticChord.builder()
-                    .chromaticBase(noteBase)
-                    .chromaticChordPattern(chromaticChordPattern)
-                    .build();
-        } catch (BuildingException e) {
-            throw NeverHappensException.make("");
-        }
-
-        return ret;
+    public int hashCode() {
+        return chromaticDegree.hashCode() + chromaticChordPattern.hashCode();
     }
 }

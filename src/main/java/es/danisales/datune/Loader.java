@@ -57,7 +57,7 @@ class Loader {
             System.out.println("Added chord: " + chromaticFunction + " from " + tonality);
         }
 
-        for (ChromaticDegreeFunction chromaticFunction : ChromaticDegreeFunction.SUS4) {
+        for (ChromaticDegreeFunction chromaticFunction : ChromaticDegreeFunction.SUS4_FUNCTIONS) {
             TonalChord parametricChord = TonalChord.from(tonality, chromaticFunction);
             ChromaticChord chromaticChord = ChromaticChord.from(parametricChord);
             if ( tonality.containsAll(chromaticChord) ) {
