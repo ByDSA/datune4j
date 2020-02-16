@@ -8,4 +8,5 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 public interface ChromaticFunction extends HarmonicFunction {
     @NonNull ChromaticChord getChromaticChordFromTonality(Tonality<Chromatic> tonality) throws ScaleRelativeDegreeException;
+    @NonNull ChromaticFunction getShifted(int i);
 }

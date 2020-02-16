@@ -1,6 +1,7 @@
 package es.danisales.datune.function;
 
 import es.danisales.datune.chords.chromatic.ChromaticChord;
+import es.danisales.datune.function.progression.HarmonicFunctionProgression;
 import es.danisales.datune.tonality.Tonality;
 import org.junit.Test;
 
@@ -13,7 +14,7 @@ import static org.junit.Assert.assertNotNull;
 public class ChromaticFunctionProgressionTest {
     @Test
     public void I_V_vi_iv() {
-        ChromaticFunctionProgression chromaticFunctionProgression = ChromaticFunctionProgression.I_V_vi_IV;
+        HarmonicFunctionProgression chromaticFunctionProgression = HarmonicFunctionProgression.I_V_vi_IV;
 
         assertEquals(ChromaticDegreeFunction.I, chromaticFunctionProgression.get(0));
         assertEquals(ChromaticDegreeFunction.V, chromaticFunctionProgression.get(1));
@@ -23,7 +24,7 @@ public class ChromaticFunctionProgressionTest {
 
     @Test
     public void I_iv_vi_V() {
-        ChromaticFunctionProgression chromaticFunctionProgression = ChromaticFunctionProgression.I_IV_vi_V;
+        HarmonicFunctionProgression chromaticFunctionProgression = HarmonicFunctionProgression.I_IV_vi_V;
 
         assertEquals(ChromaticDegreeFunction.I, chromaticFunctionProgression.get(0));
         assertEquals(ChromaticDegreeFunction.IV, chromaticFunctionProgression.get(1));
@@ -33,7 +34,7 @@ public class ChromaticFunctionProgressionTest {
 
     @Test
     public void cloneTest() {
-        ChromaticFunctionProgression chromaticFunctionProgression = ChromaticFunctionProgression.I_IV_vi_V.clone();
+        HarmonicFunctionProgression chromaticFunctionProgression = HarmonicFunctionProgression.I_IV_vi_V.clone();
 
         assertEquals(ChromaticDegreeFunction.I, chromaticFunctionProgression.get(0));
         assertEquals(ChromaticDegreeFunction.IV, chromaticFunctionProgression.get(1));
@@ -43,7 +44,7 @@ public class ChromaticFunctionProgressionTest {
 
     @Test
     public void i_VI_III_VII() {
-        ChromaticFunctionProgression chromaticFunctionProgression = ChromaticFunctionProgression.i_bVI_bIII_bVII;
+        HarmonicFunctionProgression chromaticFunctionProgression = HarmonicFunctionProgression.i_bVI_bIII_bVII;
 
         assertEquals(ChromaticDegreeFunction.i, chromaticFunctionProgression.get(0));
         assertEquals(ChromaticDegreeFunction.bVI, chromaticFunctionProgression.get(1));
@@ -53,7 +54,7 @@ public class ChromaticFunctionProgressionTest {
 
     @Test
     public void getChordsFrom_I_V_vi_IV() {
-        ChromaticFunctionProgression chromaticFunctionProgression = ChromaticFunctionProgression.I_V_vi_IV;
+        HarmonicFunctionProgression chromaticFunctionProgression = HarmonicFunctionProgression.I_V_vi_IV;
 
         List<ChromaticChord> chromaticChordProgression = chromaticFunctionProgression.getChordsFrom(Tonality.ET12.C);
         assertEquals(ChromaticChord.C, chromaticChordProgression.get(0));
@@ -64,7 +65,7 @@ public class ChromaticFunctionProgressionTest {
 
     @Test
     public void getChordsFrom_i_VI_III_VII() {
-        ChromaticFunctionProgression chromaticFunctionProgression = ChromaticFunctionProgression.i_bVI_bIII_bVII;
+        HarmonicFunctionProgression chromaticFunctionProgression = HarmonicFunctionProgression.i_bVI_bIII_bVII;
 
         List<ChromaticChord> chromaticChordProgression = chromaticFunctionProgression.getChordsFrom(Tonality.ET12.Am);
         assertEquals(ChromaticChord.Am, chromaticChordProgression.get(0));
@@ -75,13 +76,13 @@ public class ChromaticFunctionProgressionTest {
 
     @Test
     public void create() {
-        ChromaticFunctionProgression chromaticFunctionProgression = ChromaticFunctionProgression.create();
+        HarmonicFunctionProgression chromaticFunctionProgression = HarmonicFunctionProgression.create();
         assertNotNull(chromaticFunctionProgression);
     }
 
     @Test
     public void copyOf() {
-        ChromaticFunctionProgression chromaticFunctionProgression = ChromaticFunctionProgression.copyOf(
+        HarmonicFunctionProgression chromaticFunctionProgression = HarmonicFunctionProgression.copyOf(
                 Arrays.asList(
                         ChromaticDegreeFunction.I,
                         ChromaticDegreeFunction.V,

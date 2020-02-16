@@ -3,7 +3,9 @@ package es.danisales.datune.function;
 import com.google.common.collect.ImmutableList;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.tonality.*;
+import es.danisales.utils.MathUtils;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -13,12 +15,16 @@ import java.util.Objects;
 
 public enum DiatonicFunction
 		implements ChromaticFunction {
-	I, II, III, IV, V, VI, VII,
-	I6, II6, III6, IV6, V6, VI6, VII6,
-	I7, II7, III7, IV7, V7, VI7, VII7,
-	I9, II9, III9, IV9, V9, VI9, VII9,
-	I11, II11, III11, IV11, V11, VI11, VII11,
-	I13, II13, III13, IV13, V13, VI13, VII13;
+	I(Type.TRIAD), II(Type.TRIAD), III(Type.TRIAD), IV(Type.TRIAD), V(Type.TRIAD), VI(Type.TRIAD), VII(Type.TRIAD),
+	I6(Type.SIXTH), II6(Type.SIXTH), III6(Type.SIXTH), IV6(Type.SIXTH), V6(Type.SIXTH), VI6(Type.SIXTH), VII6(Type.SIXTH),
+	I7(Type.SEVENTH), II7(Type.SEVENTH), III7(Type.SEVENTH), IV7(Type.SEVENTH), V7(Type.SEVENTH), VI7(Type.SEVENTH), VII7(Type.SEVENTH),
+	I9(Type.NINTH), II9(Type.NINTH), III9(Type.NINTH), IV9(Type.NINTH), V9(Type.NINTH), VI9(Type.NINTH), VII9(Type.NINTH),
+	I11(Type.ELEVENTH), II11(Type.ELEVENTH), III11(Type.ELEVENTH), IV11(Type.ELEVENTH), V11(Type.ELEVENTH), VI11(Type.ELEVENTH), VII11(Type.ELEVENTH),
+	I13(Type.THIRTEENTH), II13(Type.THIRTEENTH), III13(Type.THIRTEENTH), IV13(Type.THIRTEENTH), V13(Type.THIRTEENTH), VI13(Type.THIRTEENTH), VII13(Type.THIRTEENTH);
+
+	private enum Type {
+		TRIAD, SIXTH, SEVENTH, NINTH, ELEVENTH, THIRTEENTH
+	}
 
 	/** Main Triads */
 	public static final List<DiatonicFunction> TRIADS = new ImmutableList.Builder<DiatonicFunction>()
@@ -88,6 +94,12 @@ public enum DiatonicFunction
 			.add(VI13)
 			.add(VII13)
 			.build();
+
+	private final DiatonicFunction.Type type;
+
+	DiatonicFunction(DiatonicFunction.Type type) {
+		this.type = type;
+	}
 
 	public String toString() {
 		switch ( this ) {
@@ -210,5 +222,26 @@ public enum DiatonicFunction
 			chromaticChord = TonalityGetDiatonicFunctionDefault.get(tonality, this);
 
 		return chromaticChord;
+	}
+
+	private List<? extends ChromaticFunction> getListByType() {
+		switch (type) {
+			case TRIAD: return TRIADS;
+			case SIXTH: return SIXTH;
+			case SEVENTH: return SEVENTH;
+			case NINTH: return NINTH;
+			case ELEVENTH: return ELEVENTH;
+			case THIRTEENTH: return THIRTEENTH;
+		}
+
+		throw NeverHappensException.switchOf(type);
+	}
+
+	@Override
+	public @NonNull ChromaticFunction getShifted(int i) {
+		List<? extends ChromaticFunction> list = getListByType();
+		int index = list.indexOf(this);
+		index = MathUtils.rotativeTrim(index + i, Diatonic.NUMBER);
+		return list.get(index);
 	}
 }

@@ -1,6 +1,7 @@
 package es.danisales.datune.function;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.chords.chromatic.ChromaticChordPattern;
 import es.danisales.datune.degrees.octave.Chromatic;
@@ -13,42 +14,59 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public enum SecondaryDominant implements ChromaticFunction {
 	/** Dominantes secundarios */
-	V_II(Type.V, DiatonicDegree.II),
-	V_III(Type.V, DiatonicDegree.III),
-	V_IV(Type.V, DiatonicDegree.IV),
-	V_V(Type.V, DiatonicDegree.V),
-	V_VI(Type.V, DiatonicDegree.VI),
+	V_II(Type.V, ChromaticDegreeFunction.VI),
+	V_III(Type.V, ChromaticDegreeFunction.VII),
+	V_IV(Type.V, ChromaticDegreeFunction.I),
+	V_V(Type.V, ChromaticDegreeFunction.II),
+	V_VI(Type.V, ChromaticDegreeFunction.III),
 
 	/** Dominantes secundarios con séptima */
-	V7_II(Type.V7, DiatonicDegree.II),
-	V7_III(Type.V7, DiatonicDegree.III),
-	V7_IV(Type.V7, DiatonicDegree.IV),
-	V7_V(Type.V7, DiatonicDegree.V),
-	V7_VI(Type.V7, DiatonicDegree.VI),
-
+	V7_II(Type.V7, ChromaticDegreeFunction.VI7),
+	V7_III(Type.V7, ChromaticDegreeFunction.VII7),
+	V7_IV(Type.V7, ChromaticDegreeFunction.I7),
+	V7_V(Type.V7, ChromaticDegreeFunction.II7),
+	V7_VI(Type.V7, ChromaticDegreeFunction.III7),
 
 	/** SUBV7 */
-	SUBV7(Type.SUBV7, DiatonicDegree.I),
-	SUBV7_II(Type.SUBV7, DiatonicDegree.II),
-	SUBV7_III(Type.SUBV7, DiatonicDegree.III),
-	SUBV7_IV(Type.SUBV7, DiatonicDegree.IV),
-	SUBV7_V(Type.SUBV7, DiatonicDegree.V),
-	SUBV7_VI(Type.SUBV7, DiatonicDegree.VI);
+	SUBV7(Type.SUBV7, ChromaticDegreeFunction.bII7),
+	SUBV7_II(Type.SUBV7, ChromaticDegreeFunction.bIII7),
+	SUBV7_III(Type.SUBV7, ChromaticDegreeFunction.IV7),
+	SUBV7_IV(Type.SUBV7, ChromaticDegreeFunction.bV7),
+	SUBV7_V(Type.SUBV7, ChromaticDegreeFunction.bVI7),
+	SUBV7_VI(Type.SUBV7, ChromaticDegreeFunction.bVII7);
+
+		/* https://guitarmonia.es/dominantes-secundarios/
+
+	I: V7/IV
+	bII: SubV7
+	II: V7/V
+	bIII: SubV7/II
+	III: V7/VI
+	IV: SubV7/III
+	bV: SubV7/IV
+	V: V7/I
+	bVI, Ab7, SubV7/V
+	VI: V7/II
+	bVII: SubV7/VI
+	VII: V7/III
+
+	 */
 
 	public enum Type {
 		V, V7, SUBV7
 	}
 
 	private final Type type;
-	private final DiatonicDegree diatonicDegree;
+	private final ChromaticDegreeFunction chromaticDegreeFunction;
 
-	SecondaryDominant(Type type, DiatonicDegree diatonicDegree) {
+	SecondaryDominant(Type type, ChromaticDegreeFunction chromaticDegreeFunction) {
 		this.type = type;
-		this.diatonicDegree = diatonicDegree;
+		this.chromaticDegreeFunction = chromaticDegreeFunction;
 	}
 
 	/** Dominantes secundarios triada */
@@ -127,6 +145,25 @@ public enum SecondaryDominant implements ChromaticFunction {
 		return null;
 	}
 
+	private final static Map<ChromaticDegreeFunction, SecondaryDominant> map = new ImmutableMap.Builder<ChromaticDegreeFunction, SecondaryDominant>()
+			.put(ChromaticDegreeFunction.I, V_IV)
+			.put(ChromaticDegreeFunction.II, V_V)
+			.put(ChromaticDegreeFunction.III, V_VI)
+			.put(ChromaticDegreeFunction.VI, V_II)
+			.put(ChromaticDegreeFunction.VII, V_III)
+			.put(ChromaticDegreeFunction.I7, V7_IV)
+			.put(ChromaticDegreeFunction.II7, V7_V)
+			.put(ChromaticDegreeFunction.III7, V7_VI)
+			.put(ChromaticDegreeFunction.VI7, V7_II)
+			.put(ChromaticDegreeFunction.VII7, V7_III)
+			.put(ChromaticDegreeFunction.bII7, SUBV7)
+			.put(ChromaticDegreeFunction.bIII7, SUBV7_II)
+			.put(ChromaticDegreeFunction.IV7, SUBV7_III)
+			.put(ChromaticDegreeFunction.bV7, SUBV7_IV)
+			.put(ChromaticDegreeFunction.bVI7, SUBV7_V)
+			.put(ChromaticDegreeFunction.bVII7, SUBV7_VI)
+			.build();
+
 	public @NonNull String toString() {
 		StringBuilder stringBuilder = new StringBuilder();
 		switch (type) {
@@ -142,7 +179,7 @@ public enum SecondaryDominant implements ChromaticFunction {
 		}
 
 		stringBuilder.append("/")
-				.append(diatonicDegree);
+				.append(chromaticDegreeFunction);
 		return stringBuilder.toString();
 	}
 
@@ -163,6 +200,26 @@ public enum SecondaryDominant implements ChromaticFunction {
 		}
 
 		throw NeverHappensException.switchOf(this);
+	}
+
+	@Override
+	public @NonNull ChromaticFunction getShifted(int i) {
+		ChromaticFunction secondaryDominant = from(chromaticDegreeFunction.getShifted(i));
+		if (secondaryDominant == null) {
+			switch (type) {
+				case V:
+					return ChromaticDegreeFunction.V;
+				case V7:
+				case SUBV7:
+					return ChromaticDegreeFunction.V7;
+			}
+		}
+
+		return secondaryDominant;
+	}
+
+	private @Nullable ChromaticFunction from(ChromaticDegreeFunction chromaticDegreeFunction) {
+		return map.get(chromaticDegreeFunction);
 	}
 
 	private static @NonNull ChromaticChord secondaryDominantTriad(Chromatic target) {
@@ -195,9 +252,9 @@ public enum SecondaryDominant implements ChromaticFunction {
 		return target.getShifted(-5);
 	}
 
-	private static @NonNull ChromaticChord subv7(Tonality<Chromatic> tonality, SecondaryDominant chromaticFunction) throws ScaleRelativeDegreeException {
-		ChromaticChordPattern chromaticChordPattern = getPattern(chromaticFunction);
-		Chromatic chromatic = getTargetChromatic(tonality, chromaticFunction);
+	private static @NonNull ChromaticChord subv7(Tonality<Chromatic> tonality, SecondaryDominant secondaryDominant) throws ScaleRelativeDegreeException {
+		ChromaticChordPattern chromaticChordPattern = getPattern(secondaryDominant);
+		Chromatic chromatic = getTargetChromatic(tonality, secondaryDominant);
 		chromatic = chromatic.getNext();
 		try {
 			return ChromaticChord.builder()
@@ -251,7 +308,6 @@ public enum SecondaryDominant implements ChromaticFunction {
 			case V7_IV:
 			case V7_V:
 			case V7_VI:
-				return ChromaticChordPattern.SEVENTH;
 			case SUBV7:
 			case SUBV7_II:
 			case SUBV7_III:

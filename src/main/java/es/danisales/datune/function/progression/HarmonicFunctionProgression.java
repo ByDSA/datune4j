@@ -1,20 +1,20 @@
-package es.danisales.datune.function;
+package es.danisales.datune.function.progression;
 
 import es.danisales.datastructures.ListProxy;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.function.ChromaticDegreeFunction;
+import es.danisales.datune.function.ChromaticFunction;
+import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
-public class ChromaticFunctionProgression
+public class HarmonicFunctionProgression
         extends ListProxy<HarmonicFunction> {
     @SuppressWarnings("WeakerAccess")
-    public static final ChromaticFunctionProgression I_V_vi_IV = ChromaticFunctionProgression.copyOf(
+    public static final HarmonicFunctionProgression I_V_vi_IV = HarmonicFunctionProgression.copyOf(
             Arrays.asList(
                     ChromaticDegreeFunction.I,
                     ChromaticDegreeFunction.V,
@@ -24,7 +24,7 @@ public class ChromaticFunctionProgression
     );
 
     @SuppressWarnings("WeakerAccess")
-    public static final ChromaticFunctionProgression I_IV_vi_V = ChromaticFunctionProgression.copyOf(
+    public static final HarmonicFunctionProgression I_IV_vi_V = HarmonicFunctionProgression.copyOf(
             Arrays.asList(
                     ChromaticDegreeFunction.I,
                     ChromaticDegreeFunction.IV,
@@ -34,26 +34,29 @@ public class ChromaticFunctionProgression
     );
 
     @SuppressWarnings("WeakerAccess")
-    public static final ChromaticFunctionProgression i_bVI_bIII_bVII = ChromaticFunctionProgressionTransformations.shift(
-            ChromaticFunctionProgressionTransformations.rotate(I_V_vi_IV, 2),
+    public static final HarmonicFunctionProgression i_bVI_bIII_bVII = ChromaticFunctionProgressionTransformations.shift(
+            I_V_vi_IV.clone().rotate(2),
             3);
 
-    private ChromaticFunctionProgression() {
+    private final boolean fixed;
+
+    private HarmonicFunctionProgression() {
         super(new ArrayList<>());
+
+        fixed = false;
     }
 
-    public static ChromaticFunctionProgression create() {
-        return new ChromaticFunctionProgression();
+    public static HarmonicFunctionProgression create() {
+        return new HarmonicFunctionProgression();
     }
 
-    public static ChromaticFunctionProgression copyOf(Collection<ChromaticDegreeFunction> chromaticFunctions) {
-        ChromaticFunctionProgression chromaticFunctionProgression = new ChromaticFunctionProgression();
+    public static HarmonicFunctionProgression copyOf(Collection<ChromaticDegreeFunction> chromaticFunctions) {
+        HarmonicFunctionProgression chromaticFunctionProgression = new HarmonicFunctionProgression();
         chromaticFunctionProgression.addAll(chromaticFunctions);
 
         return chromaticFunctionProgression;
     }
 
-    @SuppressWarnings("WeakerAccess")
     public List<ChromaticChord> getChordsFrom(Tonality<Chromatic> tonality) {
         List<ChromaticChord> chromaticChordProgression = new ArrayList<>();
         for (HarmonicFunction harmonicFunction : this) {
@@ -74,10 +77,28 @@ public class ChromaticFunctionProgression
         return chromaticChordProgression;
     }
 
+    public boolean isImmutable() {
+        return fixed;
+    }
+
+    private void exceptionIfImmutable() {
+        if (isImmutable())
+            throw new UnsupportedOperationException();
+    }
+
+    public HarmonicFunctionProgression rotate(int n) {
+        exceptionIfImmutable();
+        Collections.rotate(this, n);
+
+        return this;
+    }
+
+    /* Object*/
+
     @SuppressWarnings("MethodDoesntCallSuperMethod")
     @Override
-    public ChromaticFunctionProgression clone() {
-        ChromaticFunctionProgression chromaticFunctionProgression = new ChromaticFunctionProgression();
+    public HarmonicFunctionProgression clone() {
+        HarmonicFunctionProgression chromaticFunctionProgression = new HarmonicFunctionProgression();
         chromaticFunctionProgression.addAll(this);
         return chromaticFunctionProgression;
     }

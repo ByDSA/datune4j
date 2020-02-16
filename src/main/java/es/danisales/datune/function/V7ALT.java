@@ -32,4 +32,9 @@ public enum V7ALT implements ChromaticFunction {
                 throw NeverHappensException.make("");
         }
     }
+
+    @Override
+    public @NonNull ChromaticFunction getShifted(int i) { // todo
+        return null;
+    }
 }

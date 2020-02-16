@@ -85,6 +85,7 @@ public final class ChromaticDegreeFunction implements ChromaticFunction {
     public static final ChromaticDegreeFunction bVII0 = new ChromaticDegreeFunction(ChromaticDegree.bVII, ChromaticChordPattern.TRIAD_DIMINISHED);
     public static final ChromaticDegreeFunction VII0 = new ChromaticDegreeFunction(ChromaticDegree.VII, ChromaticChordPattern.TRIAD_DIMINISHED);
 
+
     public static final ChromaticDegreeFunction Iaug = new ChromaticDegreeFunction(ChromaticDegree.I, ChromaticChordPattern.TRIAD_AUGMENTED);
     public static final ChromaticDegreeFunction bIIaug = new ChromaticDegreeFunction(ChromaticDegree.bII, ChromaticChordPattern.TRIAD_AUGMENTED);
     public static final ChromaticDegreeFunction IIaug = new ChromaticDegreeFunction(ChromaticDegree.II, ChromaticChordPattern.TRIAD_AUGMENTED);
@@ -97,6 +98,19 @@ public final class ChromaticDegreeFunction implements ChromaticFunction {
     public static final ChromaticDegreeFunction VIaug = new ChromaticDegreeFunction(ChromaticDegree.VI, ChromaticChordPattern.TRIAD_AUGMENTED);
     public static final ChromaticDegreeFunction bVIIaug = new ChromaticDegreeFunction(ChromaticDegree.bVII, ChromaticChordPattern.TRIAD_AUGMENTED);
     public static final ChromaticDegreeFunction VIIaug = new ChromaticDegreeFunction(ChromaticDegree.VII, ChromaticChordPattern.TRIAD_AUGMENTED);
+
+    public static final ChromaticDegreeFunction I7 = new ChromaticDegreeFunction(ChromaticDegree.I, ChromaticChordPattern.SEVENTH);
+    public static final ChromaticDegreeFunction bII7 = new ChromaticDegreeFunction(ChromaticDegree.bII, ChromaticChordPattern.SEVENTH);
+    public static final ChromaticDegreeFunction II7 = new ChromaticDegreeFunction(ChromaticDegree.II, ChromaticChordPattern.SEVENTH);
+    public static final ChromaticDegreeFunction bIII7 = new ChromaticDegreeFunction(ChromaticDegree.bIII, ChromaticChordPattern.SEVENTH);
+    public static final ChromaticDegreeFunction III7 = new ChromaticDegreeFunction(ChromaticDegree.III, ChromaticChordPattern.SEVENTH);
+    public static final ChromaticDegreeFunction IV7 = new ChromaticDegreeFunction(ChromaticDegree.IV, ChromaticChordPattern.SEVENTH);
+    public static final ChromaticDegreeFunction bV7 = new ChromaticDegreeFunction(ChromaticDegree.bV, ChromaticChordPattern.SEVENTH);
+    public static final ChromaticDegreeFunction V7 = new ChromaticDegreeFunction(ChromaticDegree.V, ChromaticChordPattern.SEVENTH);
+    public static final ChromaticDegreeFunction bVI7 = new ChromaticDegreeFunction(ChromaticDegree.bVI, ChromaticChordPattern.SEVENTH);
+    public static final ChromaticDegreeFunction VI7 = new ChromaticDegreeFunction(ChromaticDegree.VI, ChromaticChordPattern.SEVENTH);
+    public static final ChromaticDegreeFunction bVII7 = new ChromaticDegreeFunction(ChromaticDegree.bVII, ChromaticChordPattern.SEVENTH);
+    public static final ChromaticDegreeFunction VII7 = new ChromaticDegreeFunction(ChromaticDegree.VII, ChromaticChordPattern.SEVENTH);
 
     public static final List<ChromaticDegreeFunction> TRIAD_FUNCTIONS = new ImmutableList.Builder<ChromaticDegreeFunction>()
             .add(I)
@@ -271,6 +285,13 @@ public final class ChromaticDegreeFunction implements ChromaticFunction {
 
     public ChromaticChordPattern getChromaticChordPattern() {
         return chromaticChordPattern;
+    }
+
+    @Override
+    public ChromaticDegreeFunction getShifted(int i) {
+        ChromaticDegree chromaticDegree = getChromaticDegree().getShifted(i);
+
+        return ChromaticDegreeFunction.from(chromaticDegree, getChromaticChordPattern());
     }
 
     @Override
