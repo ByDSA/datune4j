@@ -101,6 +101,8 @@ class Loader {
         DiatonicDegree degree;
         if (harmonicFunction instanceof DiatonicFunction)
             degree = DiatonicDegree.from((DiatonicFunction) harmonicFunction);
+        else if (harmonicFunction instanceof ChromaticDegreeFunction)
+            return DiatonicDegree.I;
         else
             degree = DiatonicDegree.from((SecondaryDominant) harmonicFunction);
 

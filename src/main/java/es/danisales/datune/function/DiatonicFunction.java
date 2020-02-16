@@ -1,5 +1,6 @@
 package es.danisales.datune.function;
 
+import com.google.common.collect.ImmutableList;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.tonality.*;
@@ -7,6 +8,7 @@ import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
+import java.util.List;
 import java.util.Objects;
 
 public enum DiatonicFunction
@@ -19,73 +21,73 @@ public enum DiatonicFunction
 	I13, II13, III13, IV13, V13, VI13, VII13;
 
 	/** Main Triads */
-	public static final DiatonicFunction[] TRIADS = new DiatonicFunction[] {
-			I,
-			II,
-			III,
-			IV,
-			V,
-			VI,
-			VII
-	};
+	public static final List<DiatonicFunction> TRIADS = new ImmutableList.Builder<DiatonicFunction>()
+			.add(I)
+			.add(II)
+			.add(III)
+			.add(IV)
+			.add(V)
+			.add(VI)
+			.add(VII)
+			.build();
 
 	/** Triads + 6th */
-	public static final DiatonicFunction[] SIXTH = new DiatonicFunction[] {
-			I6,
-			II6,
-			III6,
-			IV6,
-			V6,
-			VI6,
-			VII6,
-	};
+	public static final List<DiatonicFunction> SIXTH = new ImmutableList.Builder<DiatonicFunction>()
+			.add(I6)
+			.add(II6)
+			.add(III6)
+			.add(IV6)
+			.add(V6)
+			.add(VI6)
+			.add(VII6)
+			.build();
 
 	/** 7th */
-	public static final DiatonicFunction[] SEVENTH = new DiatonicFunction[] {
-			I7,
-			II7,
-			III7,
-			IV7,
-			V7,
-			VI7,
-			VII7
-	};
+	public static final List<DiatonicFunction> SEVENTH = new ImmutableList.Builder<DiatonicFunction>()
+			.add(I7)
+			.add(II7)
+			.add(III7)
+			.add(IV7)
+			.add(V7)
+			.add(VI7)
+			.add(VII7)
+			.build();
 
 	/** 9th */
-	public static final DiatonicFunction[] NINTH = new DiatonicFunction[] {
-			I9,
-			II9,
-			III9,
-			IV9,
-			V9,
-			VI9,
-			VII9,
-	};
+	public static final List<DiatonicFunction> NINTH = new ImmutableList.Builder<DiatonicFunction>()
+			.add(I9)
+			.add(II9)
+			.add(III9)
+			.add(IV9)
+			.add(V9)
+			.add(VI9)
+			.add(VII9)
+			.build();
 
 	/**
 	 * 11th
 	 */
 	@SuppressWarnings("unused")
-	public static final DiatonicFunction[] ELEVENTH = new DiatonicFunction[] {
-			I11,
-			II11,
-			III11,
-			IV11,
-			V11,
-			VI11,
-			VII11,
-	};
+	public static final List<DiatonicFunction> ELEVENTH = new ImmutableList.Builder<DiatonicFunction>()
+			.add(I11)
+			.add(II11)
+			.add(III11)
+			.add(IV11)
+			.add(V11)
+			.add(VI11)
+			.add(VII11)
+			.build();
 
 	@SuppressWarnings("unused")
-	public static final DiatonicFunction[] THIRTEENTH = new DiatonicFunction[] {
-			I13,
-			II13,
-			III13,
-			IV13,
-			V13,
-			VI13,
-			VII13,
-	};
+	public static final List<DiatonicFunction> THIRTEENTH = new ImmutableList.Builder<DiatonicFunction>()
+			.add(I13)
+			.add(II13)
+			.add(III13)
+			.add(IV13)
+			.add(V13)
+			.add(VI13)
+			.add(VII13)
+			.build();
 
 	public String toString() {
 		switch ( this ) {

@@ -3,9 +3,8 @@ package es.danisales.datune.chords.tonal;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.function.ChromaticFunction;
-import es.danisales.datune.function.SecondaryDominant;
 import es.danisales.datune.function.DiatonicFunction;
-import es.danisales.datune.function.HarmonicFunction;
+import es.danisales.datune.function.SecondaryDominant;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityRetrieval;
 import es.danisales.utils.building.BuildingException;
@@ -17,7 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class TonalChordRetrievalChromatic {
     private Collection<ChromaticChord> chromaticChords;
     private Collection<Tonality<Chromatic>> tonalityList;
-    private Collection<ChromaticFunction> harmonicFunctionList;
+    private Collection<? extends ChromaticFunction> harmonicFunctionList;
     private Collection<Chromatic> chromatics;
 
     TonalChordRetrievalChromatic() {
@@ -78,7 +77,7 @@ public class TonalChordRetrievalChromatic {
         return melodicMinorModesET12();
     }
 
-    public TonalChordRetrievalChromatic harmonicFunctions(@NonNull Collection<ChromaticFunction> chromaticFunctions) {
+    public TonalChordRetrievalChromatic harmonicFunctions(@NonNull Collection<? extends ChromaticFunction> chromaticFunctions) {
         this.harmonicFunctionList = Objects.requireNonNull(chromaticFunctions);
 
         return this;
