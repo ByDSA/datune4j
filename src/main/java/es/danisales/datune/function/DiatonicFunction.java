@@ -111,7 +111,7 @@ public enum DiatonicFunction
 			case II11:
 				return "II11";
 			case II:
-				return "bII";
+				return "II";
 
 			case III6:
 				return "III6";
@@ -122,7 +122,7 @@ public enum DiatonicFunction
 			case III11:
 				return "III11";
 			case III:
-				return "II";
+				return "III";
 
 			case IV6:
 				return "IV6";
@@ -133,7 +133,7 @@ public enum DiatonicFunction
 			case IV11:
 				return "IV11";
 			case IV:
-				return "bIII";
+				return "IV";
 
 			case V6:
 				return "V6";
@@ -142,8 +142,7 @@ public enum DiatonicFunction
 			case V11:
 				return "V11";
 			case V:
-				return "III";
-
+				return "V";
 			case V7:
 				return "V7";
 
@@ -156,7 +155,7 @@ public enum DiatonicFunction
 			case VI11:
 				return "VI11";
 			case VI:
-				return "IV";
+				return "VI";
 
 			case VII6:
 				return "VII6";
@@ -167,7 +166,8 @@ public enum DiatonicFunction
 			case VII11:
 				return "VII11";
 			case VII:
-				return "bV";
+				return "VII";
+
 			case I13:
 				return "I13";
 			case II13:
