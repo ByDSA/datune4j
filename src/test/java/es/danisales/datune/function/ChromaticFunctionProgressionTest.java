@@ -5,7 +5,6 @@ import es.danisales.datune.function.progression.HarmonicFunctionProgression;
 import es.danisales.datune.tonality.Tonality;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -75,21 +74,20 @@ public class ChromaticFunctionProgressionTest {
     }
 
     @Test
-    public void create() {
-        HarmonicFunctionProgression chromaticFunctionProgression = HarmonicFunctionProgression.create();
+    public void build_empty() {
+        HarmonicFunctionProgression chromaticFunctionProgression = HarmonicFunctionProgression.builder().build();
         assertNotNull(chromaticFunctionProgression);
     }
 
     @Test
     public void copyOf() {
-        HarmonicFunctionProgression chromaticFunctionProgression = HarmonicFunctionProgression.copyOf(
-                Arrays.asList(
+        HarmonicFunctionProgression chromaticFunctionProgression = HarmonicFunctionProgression.builder()
+                .add(
                         ChromaticDegreeFunction.I,
                         ChromaticDegreeFunction.V,
                         ChromaticDegreeFunction.vi,
                         ChromaticDegreeFunction.IV
-                )
-        );
+                ).build();
 
         assertEquals(ChromaticDegreeFunction.I, chromaticFunctionProgression.get(0));
         assertEquals(ChromaticDegreeFunction.V, chromaticFunctionProgression.get(1));
