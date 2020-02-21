@@ -7,7 +7,6 @@ import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.function.ChromaticDegreeFunction;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.HarmonicFunction;
-import es.danisales.datune.function.SecondaryDominant;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -48,7 +47,7 @@ public class HarmonicFunctionProgression
                     ChromaticDegreeFunction.ii,
                     ChromaticDegreeFunction.V, // todo
                     //SecondaryDominant.,
-                    SecondaryDominant.V_II,
+                    ChromaticDegreeFunction.from(ChromaticDegreeFunction.II, ChromaticDegreeFunction.V),
                     ChromaticDegreeFunction.ii,
                     ChromaticDegreeFunction.V
                     ).build();

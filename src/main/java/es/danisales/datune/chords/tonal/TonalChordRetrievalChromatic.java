@@ -2,9 +2,9 @@ package es.danisales.datune.chords.tonal;
 
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.function.ChromaticDegreeFunction;
 import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
-import es.danisales.datune.function.SecondaryDominant;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityRetrieval;
 import es.danisales.utils.building.BuildingException;
@@ -96,7 +96,7 @@ public class TonalChordRetrievalChromatic {
     public TonalChordRetrievalChromatic tonalityFunctionsAndTensionFunctions() {
         List<ChromaticFunction> harmonicFunctionList = new ArrayList<>();
         harmonicFunctionList.addAll( Arrays.asList(DiatonicFunction.values() ) );
-        harmonicFunctionList.addAll( SecondaryDominant.ALL );
+        harmonicFunctionList.addAll( ChromaticDegreeFunction.SECONDARY_DOMINANT_FUNCTIONS );
         return harmonicFunctions( harmonicFunctionList );
     }
 

@@ -100,14 +100,6 @@ public class DiatonicDegreeTest {
     }
 
     @Test
-    public void fromChromaticFunctionNoneImpossible() {
-        for (SecondaryDominant diatonicFunction : SecondaryDominant.values()) {
-            DiatonicDegree diatonicDegree = DiatonicDegree.from(diatonicFunction);
-            assertNotNull(diatonicDegree);
-        }
-    }
-
-    @Test
     public void getNext() {
         assertSame(DiatonicDegree.I, DiatonicDegree.VII.getNext());
     }

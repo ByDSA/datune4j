@@ -3,9 +3,8 @@ package es.danisales.datune.tonality;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.octave.Diatonic;
+import es.danisales.datune.function.ChromaticDegreeFunction;
 import es.danisales.datune.function.ChromaticFunction;
-import es.danisales.datune.function.HarmonicFunction;
-import es.danisales.datune.function.SecondaryDominant;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.utils.building.BuildingException;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -34,10 +33,10 @@ public class TonalityUtils {
     public static boolean hasAsChromaticFunction(@NonNull Tonality<Chromatic> tonality, @NonNull ChromaticChord chromaticChord) {
         Objects.requireNonNull(chromaticChord);
 
-        for (SecondaryDominant secondaryDominant : SecondaryDominant.values()) {
-            if (tonality.size() != Diatonic.NUMBER && SecondaryDominant.ALL.contains(secondaryDominant))
-                continue;
+        if (tonality.size() != Diatonic.NUMBER)
+            return false;
 
+        for (ChromaticDegreeFunction secondaryDominant : ChromaticDegreeFunction.SECONDARY_DOMINANT_FUNCTIONS) {
             try {
                 secondaryDominant.getChromaticChordFromTonality(tonality);
             } catch (ScaleRelativeDegreeException e) {

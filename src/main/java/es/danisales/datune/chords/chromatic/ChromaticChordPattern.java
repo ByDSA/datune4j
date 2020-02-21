@@ -286,16 +286,38 @@ public final class ChromaticChordPattern extends Pattern {
 
     @Override
     public String toString() {
-        if (this.equals(TRIAD_MAJOR)) {
-            return "MAJOR";
-        } else if (this.equals(TRIAD_MINOR)) {
-            return "MINOR";
-        } else if (this.equals(TRIAD_DIMINISHED)) {
-            return "DIMINISHED";
-        } else if (this.equals(TRIAD_AUGMENTED)) {
-            return "AUGMENTED";
-        }
+        String str = stringMap.get(this);
 
-        return super.toString();
+        if (str == null)
+            return super.toString();
+
+        return str;
     }
+
+    private static final Map<ChromaticChordPattern, String> stringMap = new ImmutableMap.Builder<ChromaticChordPattern, String>()
+            .put(ChromaticChordPattern.TRIAD_MAJOR, "MAJOR")
+            .put(ChromaticChordPattern.TRIAD_MINOR, "MINOR")
+            .put(ChromaticChordPattern.TRIAD_DIMINISHED, "DIMINISHED")
+            .put(ChromaticChordPattern.TRIAD_AUGMENTED, "AUGMENTED")
+            .put(ChromaticChordPattern.SUS4, "SUS4")
+            .put(ChromaticChordPattern.POWER_CHORD, "POWER CHORD")
+            .put(ChromaticChordPattern.SEVENTH, "SEVENTH")
+            .build();
+
+    public @NonNull String symbol() {
+        String str = symbolMap.get(this);
+
+        if (str == null)
+            return super.toString();
+
+        return str;
+    }
+
+    private static final Map<ChromaticChordPattern, String> symbolMap = new ImmutableMap.Builder<ChromaticChordPattern, String>()
+            .put(ChromaticChordPattern.TRIAD_DIMINISHED, "º")
+            .put(ChromaticChordPattern.TRIAD_AUGMENTED, "+")
+            .put(ChromaticChordPattern.SUS4, "SUS4")
+            .put(ChromaticChordPattern.POWER_CHORD, "5")
+            .put(ChromaticChordPattern.SEVENTH, "7")
+            .build();
 }

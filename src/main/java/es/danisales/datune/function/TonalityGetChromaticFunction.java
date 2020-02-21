@@ -13,32 +13,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TonalityGetChromaticFunction {
-	static @NonNull DiatonicFunction getDiatonicFunctionFromChromaticFunction(@NonNull SecondaryDominant chromaticFunction) {
-		switch (chromaticFunction) {
-			case V_II:
-			case V_III:
-			case V_IV:
-			case V_V:
-			case V_VI:
-				return DiatonicFunction.V;
-			case V7_II:
-			case V7_III:
-			case V7_IV:
-			case V7_V:
-			case V7_VI:
-				return DiatonicFunction.V7;
-			case SUBV7:
-			case SUBV7_II:
-			case SUBV7_III:
-			case SUBV7_IV:
-			case SUBV7_V:
-			case SUBV7_VI:
-				return DiatonicFunction.I7;
-			default:
-				throw new RuntimeException();
-		}
-	}
-
 	@SuppressWarnings("ConstantConditions") // DiatonicFunction.patternFrom nunca devuelve null en este contexto
 	/*private static <C extends CyclicDegree> @Nullable Tonality getT(@NonNull Tonality<C> tonality, @NonNull SecondaryDominant function) throws BuildingException {
 		if ( !(tonality.getRoot() instanceof Chromatic) )
@@ -142,93 +116,6 @@ public class TonalityGetChromaticFunction {
 		}
 
 		return null;
-	}
-
-	public static @NonNull Tonality<Chromatic> getTonalityFromChromaticFunction(@NonNull Tonality<Chromatic> tonality, @NonNull SecondaryDominant chromaticFunction) throws ScaleRelativeDegreeException {
-		switch (chromaticFunction) {
-			case V_II:
-			case V7_II:
-				Chromatic newRoot = tonality.getNote(DiatonicDegree.II);
-				return Tonality.from(newRoot, tonality.getScale());
-			case V_III:
-			case V7_III:
-				newRoot = tonality.getNote(DiatonicDegree.III);
-				return Tonality.from(newRoot, tonality.getScale());
-			case V_IV:
-			case V7_IV:
-				newRoot = tonality.getNote(DiatonicDegree.IV);
-				return Tonality.from(newRoot, tonality.getScale());
-			case V_V:
-			case V7_V:
-				newRoot = tonality.getNote(DiatonicDegree.V);
-				return Tonality.from(newRoot, tonality.getScale());
-			case V_VI:
-			case V7_VI:
-				newRoot = tonality.getNote(DiatonicDegree.VI);
-				return Tonality.from(newRoot, tonality.getScale());
-			case SUBV7:
-				newRoot = tonality.getNote(DiatonicDegree.V);
-				Chromatic newRootChromatic = Chromatic.from(newRoot).getNext(6);
-				return Tonality.from(newRootChromatic, Scale.LYDIAN_b7);
-			case SUBV7_II:
-				ChromaticChord chromaticChord = null;
-				try {
-					chromaticChord = ChromaticChord.builder()
-							.tonality(tonality)
-							.function(SecondaryDominant.V7_II)
-							.build();
-				} catch (BuildingException e) {
-					throw buildingException2ScaleRelativeDegreeException(e);
-				}
-				newRootChromatic = chromaticChord.get(0).getNext(6);
-				return Tonality.from(newRootChromatic, Scale.LYDIAN_b7);
-			case SUBV7_III:
-				try {
-					chromaticChord = ChromaticChord.builder()
-							.tonality(tonality)
-							.function(SecondaryDominant.V7_III)
-							.build();
-				} catch (BuildingException e) {
-					throw buildingException2ScaleRelativeDegreeException(e);
-				}
-				newRootChromatic = chromaticChord.get(0).getNext(6);
-				return Tonality.from(newRootChromatic, Scale.LYDIAN_b7);
-			case SUBV7_IV:
-				try {
-					chromaticChord = ChromaticChord.builder()
-							.tonality(tonality)
-							.function(SecondaryDominant.V7_IV)
-							.build();
-				} catch (BuildingException e) {
-					throw buildingException2ScaleRelativeDegreeException(e);
-				}
-				newRootChromatic = chromaticChord.get(0).getNext(6);
-				return Tonality.from(newRootChromatic, Scale.LYDIAN_b7);
-			case SUBV7_V:
-				try {
-					chromaticChord = ChromaticChord.builder()
-							.tonality(tonality)
-							.function(SecondaryDominant.V7_V)
-							.build();
-				} catch (BuildingException e) {
-					throw buildingException2ScaleRelativeDegreeException(e);
-				}
-				newRootChromatic = chromaticChord.get(0).getNext(6);
-				return Tonality.from(newRootChromatic, Scale.LYDIAN_b7);
-			case SUBV7_VI:
-				try {
-					chromaticChord = ChromaticChord.builder()
-							.tonality(tonality)
-							.function(SecondaryDominant.V7_VI)
-							.build();
-				} catch (BuildingException e) {
-					throw buildingException2ScaleRelativeDegreeException(e);
-				}
-				newRootChromatic = chromaticChord.get(0).getNext(6);
-				return Tonality.from(newRootChromatic, Scale.LYDIAN_b7);
-			default:
-				return tonality;
-		}
 	}
 
 	static @NonNull Chromatic getNoteBaseFromChromaticFunctionAndTonality(Tonality<Chromatic> tonality, @NonNull ChromaticDegreeFunction chromaticDegreeFunction) throws ScaleRelativeDegreeException {

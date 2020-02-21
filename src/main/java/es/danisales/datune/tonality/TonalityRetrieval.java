@@ -7,7 +7,7 @@ import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
-import es.danisales.datune.function.SecondaryDominant;
+import es.danisales.datune.function.ChromaticDegreeFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.midi.ChordMidi;
@@ -33,7 +33,7 @@ public class TonalityRetrieval {
         List<Tonality<Chromatic>> ret = new ArrayList<>();
         List<HarmonicFunction> harmonicFunctionList = new ArrayList<>();
         harmonicFunctionList.addAll(Arrays.asList(DiatonicFunction.values()));
-        harmonicFunctionList.addAll(SecondaryDominant.ALL);
+        harmonicFunctionList.addAll(ChromaticDegreeFunction.SECONDARY_DOMINANT_FUNCTIONS);
 
         for (Tonality<Chromatic> tonality : tonalities) {
             HarmonicFunction harmonicFunction = tonality.getFunctionFrom(chromaticChord);

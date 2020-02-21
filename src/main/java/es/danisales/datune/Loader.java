@@ -26,6 +26,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.text.BreakIterator;
 import java.util.List;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -50,7 +51,7 @@ class Loader {
     }
 
     private void addChromaticFunctions(List<TonalChord> chromaticChordSet) {
-        for (SecondaryDominant chromaticFunction : SecondaryDominant.values()) {
+       for (ChromaticDegreeFunction chromaticFunction : ChromaticDegreeFunction.SECONDARY_DOMINANT_FUNCTIONS) {
             TonalChord parametricChord = TonalChord.from(tonality, chromaticFunction);
 
             chromaticChordSet.add(parametricChord);
@@ -98,13 +99,40 @@ class Loader {
     }
 
     private DiatonicDegree getDegree(@NonNull HarmonicFunction harmonicFunction) {
-        DiatonicDegree degree;
+        DiatonicDegree degree = null;
         if (harmonicFunction instanceof DiatonicFunction)
             degree = DiatonicDegree.from((DiatonicFunction) harmonicFunction);
-        else if (harmonicFunction instanceof ChromaticDegreeFunction)
-            return DiatonicDegree.I;
-        else
-            degree = DiatonicDegree.from((SecondaryDominant) harmonicFunction);
+        else if (harmonicFunction instanceof ChromaticDegreeFunction) {
+            int n = ((ChromaticDegreeFunction) harmonicFunction).getChromaticDegree().ordinal();
+            switch (n) {
+                case 0:
+                case 1:
+                    degree = DiatonicDegree.I;
+                    break;
+                case 2:
+                    degree = DiatonicDegree.II;
+                    break;
+                case 3:
+                case 4:
+                    degree = DiatonicDegree.III;
+                    break;
+                case 5:
+                case 6:
+                    degree = DiatonicDegree.IV;
+                    break;
+                case 7:
+                case 8:
+                    degree = DiatonicDegree.V;
+                    break;
+                case 9:
+                    degree = DiatonicDegree.VI;
+                    break;
+                case 10:
+                case 11:
+                    degree = DiatonicDegree.VII;
+                    break;
+            }
+        }
 
         return degree;
     }
@@ -245,11 +273,11 @@ class Loader {
         panels[degreeOrdinal][chromaticChord.size() - 2].add(jButton);
 
         if (!tonality.containsAll(chromaticChord)) {
-            if (harmonicFunction instanceof SecondaryDominant && SecondaryDominant.ALL.contains(harmonicFunction))
+            if (TonalityUtils.hasAsChromaticFunction(tonality, chromaticChord))
                 jButton.setForeground(Color.BLUE);
             else {
                 jButton.setForeground(Color.RED);
-                jButton.setText(harmonicFunction.toString());
+                jButton.setText(harmonicFunction.toString() + " (" + parametricChord.getTonality() + ")");
             }
             jButton.setOpaque(true);
         }
