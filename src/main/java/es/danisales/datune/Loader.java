@@ -8,7 +8,10 @@ import es.danisales.datune.chords.tonal.TonalChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.eventsequences.EventSequence;
-import es.danisales.datune.function.*;
+import es.danisales.datune.function.ChromaticDegreeFunction;
+import es.danisales.datune.function.DiatonicFunction;
+import es.danisales.datune.function.HarmonicFunction;
+import es.danisales.datune.function.SecondaryDominant;
 import es.danisales.datune.midi.ChordMidi;
 import es.danisales.datune.midi.NoteMidi;
 import es.danisales.datune.midi.binaries.events.NoteOff;
@@ -26,7 +29,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.text.BreakIterator;
 import java.util.List;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -44,14 +46,14 @@ class Loader {
     }
 
     private void addDiatonicChords(List<TonalChord> chromaticChordSet) {
-        for (DiatonicFunction diatonicFunction : DiatonicFunction.values()) {
+        for (DiatonicFunction diatonicFunction : DiatonicFunction.immutableValues()) {
             TonalChord parametricChord = TonalChord.from(tonality, diatonicFunction);
             chromaticChordSet.add(parametricChord);
         }
     }
 
     private void addChromaticFunctions(List<TonalChord> chromaticChordSet) {
-       for (ChromaticDegreeFunction chromaticFunction : ChromaticDegreeFunction.SECONDARY_DOMINANT_FUNCTIONS) {
+       for (ChromaticDegreeFunction chromaticFunction : SecondaryDominant.values()) {
             TonalChord parametricChord = TonalChord.from(tonality, chromaticFunction);
 
             chromaticChordSet.add(parametricChord);
@@ -101,7 +103,7 @@ class Loader {
     private DiatonicDegree getDegree(@NonNull HarmonicFunction harmonicFunction) {
         DiatonicDegree degree = null;
         if (harmonicFunction instanceof DiatonicFunction)
-            degree = DiatonicDegree.from((DiatonicFunction) harmonicFunction);
+            degree = ((DiatonicFunction) harmonicFunction).getDiatonicDegree();
         else if (harmonicFunction instanceof ChromaticDegreeFunction) {
             int n = ((ChromaticDegreeFunction) harmonicFunction).getChromaticDegree().ordinal();
             switch (n) {
@@ -239,14 +241,16 @@ class Loader {
             }
 
             ChromaticChordBuilder chromaticChordBuilder = ChromaticChord.builder();
-            if (parametricChord.getHarmonicFunction() instanceof ChromaticFunction)
-                chromaticChordBuilder.function((ChromaticFunction) parametricChord.getHarmonicFunction());
+            if (parametricChord.getHarmonicFunction() != null)
+                chromaticChordBuilder.function(parametricChord.getHarmonicFunction());
 
             chromaticChordBuilder.tonality(parametricChord.getTonality());
             ChromaticChord chromaticChord;
             try {
                 chromaticChord = chromaticChordBuilder.build();
-            } catch (BuildingException e) {
+                if (chromaticChord == null)
+                    throw new RuntimeException();
+            } catch (Exception e) {
                 continue;
             }
             if (addedChords.contains(chromaticChord))
@@ -263,6 +267,15 @@ class Loader {
         System.out.println("Tonalidad cambiada a " + tonality);
     }
 
+    private static boolean isChromaticDegreeFunction(Tonality tonality, ChromaticChord chromaticChord) {
+        for(Object harmonicFunction : tonality.getFunctionsFrom(chromaticChord)) {
+            if (harmonicFunction instanceof ChromaticDegreeFunction)
+                return true;
+        }
+
+        return false;
+    }
+
     private JButton addButton(ChordMidi chordMidi, ChromaticChord chromaticChord, TonalChord parametricChord, Tonality<Chromatic> tonality) {
         final HarmonicFunction harmonicFunction = parametricChord.getHarmonicFunction();
         DiatonicDegree degree = getDegree(harmonicFunction);
@@ -273,7 +286,7 @@ class Loader {
         panels[degreeOrdinal][chromaticChord.size() - 2].add(jButton);
 
         if (!tonality.containsAll(chromaticChord)) {
-            if (TonalityUtils.hasAsChromaticFunction(tonality, chromaticChord))
+            if (isChromaticDegreeFunction(tonality, chromaticChord))
                 jButton.setForeground(Color.BLUE);
             else {
                 jButton.setForeground(Color.RED);

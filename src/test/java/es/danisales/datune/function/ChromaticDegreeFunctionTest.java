@@ -26,34 +26,34 @@ public class ChromaticDegreeFunctionTest {
 
     @Test
     public void SECONDARY_DOMINANT_V_toString() {
-        assertEquals("V/II" , ChromaticDegreeFunction.V_II.toString());
-        assertEquals("V/III" , ChromaticDegreeFunction.V_III.toString());
-        assertEquals("V/IV" , ChromaticDegreeFunction.V_IV.toString());
-        assertEquals("V/V" , ChromaticDegreeFunction.V_V.toString());
-        assertEquals("V/VI" , ChromaticDegreeFunction.V_VI.toString());
+        assertEquals("V/II" , SecondaryDominant.V_II.toString());
+        assertEquals("V/III" , SecondaryDominant.V_III.toString());
+        assertEquals("V/IV" , SecondaryDominant.V_IV.toString());
+        assertEquals("V/V" , SecondaryDominant.V_V.toString());
+        assertEquals("V/VI" , SecondaryDominant.V_VI.toString());
     }
 
     @Test
     public void SECONDARY_DOMINANT_V7_toString() {
-        assertEquals("V7/II" , ChromaticDegreeFunction.V7_II.toString());
-        assertEquals("V7/III" , ChromaticDegreeFunction.V7_III.toString());
-        assertEquals("V7/IV" , ChromaticDegreeFunction.V7_IV.toString());
-        assertEquals("V7/V" , ChromaticDegreeFunction.V7_V.toString());
-        assertEquals("V7/VI" , ChromaticDegreeFunction.V7_VI.toString());
+        assertEquals("V7/II" , SecondaryDominant.V7_II.toString());
+        assertEquals("V7/III" , SecondaryDominant.V7_III.toString());
+        assertEquals("V7/IV" , SecondaryDominant.V7_IV.toString());
+        assertEquals("V7/V" , SecondaryDominant.V7_V.toString());
+        assertEquals("V7/VI" , SecondaryDominant.V7_VI.toString());
     }
 
     @Test
     public void SECONDARY_DOMINANT_SUBV7_toString() {
-        assertEquals("SUBV7/II" , ChromaticDegreeFunction.SUBV7_II.toString());
-        assertEquals("SUBV7/III" , ChromaticDegreeFunction.SUBV7_III.toString());
-        assertEquals("SUBV7/IV" , ChromaticDegreeFunction.SUBV7_IV.toString());
-        assertEquals("SUBV7/V" , ChromaticDegreeFunction.SUBV7_V.toString());
-        assertEquals("SUBV7/VI" , ChromaticDegreeFunction.SUBV7_VI.toString());
+        assertEquals("SUBV7/II" , SecondaryDominant.SUBV7_II.toString());
+        assertEquals("SUBV7/III" , SecondaryDominant.SUBV7_III.toString());
+        assertEquals("SUBV7/IV" , SecondaryDominant.SUBV7_IV.toString());
+        assertEquals("SUBV7/V" , SecondaryDominant.SUBV7_V.toString());
+        assertEquals("SUBV7/VI" , SecondaryDominant.SUBV7_VI.toString());
     }
 
     @Test
     public void normal_ii() throws ScaleRelativeDegreeException {
-        ChromaticDegreeFunction chromaticDegreeFunction = ChromaticDegreeFunction.from(ChromaticDegreeFunction.ii);
+        ChromaticDegreeFunction chromaticDegreeFunction = CompoundFunction.from(ChromaticDegreeFunction.ii);
 
         ChromaticChord chromaticChord = chromaticDegreeFunction.getChromaticChordFromTonality(Tonality.ET12.C);
 
@@ -62,7 +62,7 @@ public class ChromaticDegreeFunctionTest {
 
     @Test
     public void secondaryDominant__V_V() throws ScaleRelativeDegreeException {
-        ChromaticDegreeFunction chromaticDegreeFunction = ChromaticDegreeFunction.from(ChromaticDegreeFunction.V, ChromaticDegreeFunction.V);
+        ChromaticDegreeFunction chromaticDegreeFunction = CompoundFunction.from(ChromaticDegreeFunction.V, ChromaticDegreeFunction.V);
 
         ChromaticChord chromaticChord = chromaticDegreeFunction.getChromaticChordFromTonality(Tonality.ET12.C);
 
@@ -71,7 +71,7 @@ public class ChromaticDegreeFunctionTest {
 
     @Test
     public void secondaryDominant__v_V() throws ScaleRelativeDegreeException {
-        ChromaticDegreeFunction chromaticDegreeFunction = ChromaticDegreeFunction.from(ChromaticDegreeFunction.V, ChromaticDegreeFunction.v);
+        ChromaticDegreeFunction chromaticDegreeFunction = CompoundFunction.from(ChromaticDegreeFunction.V, ChromaticDegreeFunction.v);
 
         ChromaticChord chromaticChord = chromaticDegreeFunction.getChromaticChordFromTonality(Tonality.ET12.C);
 
@@ -80,7 +80,7 @@ public class ChromaticDegreeFunctionTest {
 
     @Test
     public void normal__V_Eb() throws ScaleRelativeDegreeException {
-        ChromaticDegreeFunction chromaticDegreeFunction = ChromaticDegreeFunction.from(ChromaticDegreeFunction.V7);
+        ChromaticDegreeFunction chromaticDegreeFunction = CompoundFunction.from(ChromaticDegreeFunction.V7);
 
         ChromaticChord chromaticChord = chromaticDegreeFunction.getChromaticChordFromTonality(Tonality.ET12.DD);
 
@@ -89,7 +89,7 @@ public class ChromaticDegreeFunctionTest {
 
     @Test
     public void secondaryDominant__v_V_Eb() throws ScaleRelativeDegreeException {
-        ChromaticDegreeFunction chromaticDegreeFunction = ChromaticDegreeFunction.from(ChromaticDegreeFunction.V, ChromaticDegreeFunction.v);
+        ChromaticDegreeFunction chromaticDegreeFunction = CompoundFunction.from(ChromaticDegreeFunction.V, ChromaticDegreeFunction.v);
 
         ChromaticChord chromaticChord = chromaticDegreeFunction.getChromaticChordFromTonality(Tonality.ET12.DD);
 
@@ -98,7 +98,7 @@ public class ChromaticDegreeFunctionTest {
 
     @Test
     public void secondaryDominant__ii_Eb() throws ScaleRelativeDegreeException {
-        ChromaticDegreeFunction chromaticDegreeFunction = ChromaticDegreeFunction.from(ChromaticDegreeFunction.ii);
+        ChromaticDegreeFunction chromaticDegreeFunction = CompoundFunction.from(ChromaticDegreeFunction.ii);
 
         ChromaticChord chromaticChord = chromaticDegreeFunction.getChromaticChordFromTonality(Tonality.ET12.DD);
 
@@ -107,7 +107,7 @@ public class ChromaticDegreeFunctionTest {
 
     @Test
     public void secondaryDominant__V7_ii_Eb() throws ScaleRelativeDegreeException {
-        ChromaticDegreeFunction chromaticDegreeFunction = ChromaticDegreeFunction.from(ChromaticDegreeFunction.ii, ChromaticDegreeFunction.V7);
+        ChromaticDegreeFunction chromaticDegreeFunction = CompoundFunction.from(ChromaticDegreeFunction.ii, ChromaticDegreeFunction.V7);
 
         ChromaticChord chromaticChord = chromaticDegreeFunction.getChromaticChordFromTonality(Tonality.ET12.DD);
 
@@ -116,7 +116,7 @@ public class ChromaticDegreeFunctionTest {
 
     @Test
     public void secondaryDominant__ii_ii_Eb() throws ScaleRelativeDegreeException {
-        ChromaticDegreeFunction chromaticDegreeFunction = ChromaticDegreeFunction.from(ChromaticDegreeFunction.ii, ChromaticDegreeFunction.ii);
+        ChromaticDegreeFunction chromaticDegreeFunction = CompoundFunction.from(ChromaticDegreeFunction.ii, ChromaticDegreeFunction.ii);
 
         ChromaticChord chromaticChord = chromaticDegreeFunction.getChromaticChordFromTonality(Tonality.ET12.DD);
 

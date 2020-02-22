@@ -10,6 +10,6 @@ public class Tests {
 
 	@Test
 	public void chordFunction() {
-		assertEquals(0, DiatonicDegree.from(DiatonicFunction.I).ordinal());
+		assertEquals(0, DiatonicFunction.I.getDiatonicDegree().ordinal());
 	}
 }

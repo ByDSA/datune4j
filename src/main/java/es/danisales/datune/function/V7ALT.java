@@ -10,7 +10,7 @@ import es.danisales.utils.NeverHappensException;
 import es.danisales.utils.building.BuildingException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public enum V7ALT implements ChromaticFunction {
+public enum V7ALT implements HarmonicFunction {
     b5;
 
     @Override
@@ -25,16 +25,13 @@ public enum V7ALT implements ChromaticFunction {
                     .tonality(tonality)
                     .function(diatonicFunction)
                     .build();
-        } catch (BuildingException e) {
-            if (e.getInnerException() instanceof ScaleRelativeDegreeException) {
-                throw (ScaleRelativeDegreeException)e.getInnerException();
-            } else
+        } catch (Exception e) {
                 throw NeverHappensException.make("");
         }
     }
 
     @Override
-    public @NonNull ChromaticFunction getShifted(int i) { // todo
+    public @NonNull HarmonicFunction getShifted(int i) { // todo
         return null;
     }
 }

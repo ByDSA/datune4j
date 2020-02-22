@@ -93,8 +93,8 @@ public class DiatonicDegreeTest {
 
     @Test
     public void fromDiatonicFunctionNoneImpossible() {
-        for (DiatonicFunction diatonicFunction : DiatonicFunction.values()) {
-            DiatonicDegree diatonicDegree = DiatonicDegree.from(diatonicFunction);
+        for (DiatonicFunction diatonicFunction : DiatonicFunction.immutableValues()) {
+            DiatonicDegree diatonicDegree = diatonicFunction.getDiatonicDegree();
             assertNotNull(diatonicDegree);
         }
     }

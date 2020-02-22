@@ -1,11 +1,14 @@
 package es.danisales.datune.function;
 
+import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Table;
+import es.danisales.datune.chords.DiatonicDegreePattern;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
-import es.danisales.datune.degrees.octave.Diatonic;
-import es.danisales.datune.tonality.*;
-import es.danisales.utils.MathUtils;
+import es.danisales.datune.degrees.scale.DiatonicDegree;
+import es.danisales.datune.tonality.ScaleRelativeDegreeException;
+import es.danisales.datune.tonality.Tonality;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -13,18 +16,57 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import java.util.List;
 import java.util.Objects;
 
-public enum DiatonicFunction
-		implements ChromaticFunction {
-	I(Type.TRIAD), II(Type.TRIAD), III(Type.TRIAD), IV(Type.TRIAD), V(Type.TRIAD), VI(Type.TRIAD), VII(Type.TRIAD),
-	I6(Type.SIXTH), II6(Type.SIXTH), III6(Type.SIXTH), IV6(Type.SIXTH), V6(Type.SIXTH), VI6(Type.SIXTH), VII6(Type.SIXTH),
-	I7(Type.SEVENTH), II7(Type.SEVENTH), III7(Type.SEVENTH), IV7(Type.SEVENTH), V7(Type.SEVENTH), VI7(Type.SEVENTH), VII7(Type.SEVENTH),
-	I9(Type.NINTH), II9(Type.NINTH), III9(Type.NINTH), IV9(Type.NINTH), V9(Type.NINTH), VI9(Type.NINTH), VII9(Type.NINTH),
-	I11(Type.ELEVENTH), II11(Type.ELEVENTH), III11(Type.ELEVENTH), IV11(Type.ELEVENTH), V11(Type.ELEVENTH), VI11(Type.ELEVENTH), VII11(Type.ELEVENTH),
-	I13(Type.THIRTEENTH), II13(Type.THIRTEENTH), III13(Type.THIRTEENTH), IV13(Type.THIRTEENTH), V13(Type.THIRTEENTH), VI13(Type.THIRTEENTH), VII13(Type.THIRTEENTH);
+public final class DiatonicFunction
+		implements HarmonicFunction {
+	private static final Table<DiatonicDegreePattern, DiatonicDegree, DiatonicFunction> table = HashBasedTable.create();
 
-	private enum Type {
-		TRIAD, SIXTH, SEVENTH, NINTH, ELEVENTH, THIRTEENTH
-	}
+	public static final DiatonicFunction I = from(DiatonicDegree.I, DiatonicDegreePattern.I);
+	public static final DiatonicFunction II = from(DiatonicDegree.II, DiatonicDegreePattern.II);
+	public static final DiatonicFunction III = from(DiatonicDegree.III, DiatonicDegreePattern.III);
+	public static final DiatonicFunction IV = from(DiatonicDegree.IV, DiatonicDegreePattern.IV);
+	public static final DiatonicFunction V = from(DiatonicDegree.V, DiatonicDegreePattern.V);
+	public static final DiatonicFunction VI = from(DiatonicDegree.VI, DiatonicDegreePattern.VI);
+	public static final DiatonicFunction VII = from(DiatonicDegree.VII, DiatonicDegreePattern.VII);
+
+	public static final DiatonicFunction I6 = from(DiatonicDegree.I, DiatonicDegreePattern.I6);
+	public static final DiatonicFunction II6 = from(DiatonicDegree.II, DiatonicDegreePattern.II6);
+	public static final DiatonicFunction III6 = from(DiatonicDegree.III, DiatonicDegreePattern.III6);
+	public static final DiatonicFunction IV6 = from(DiatonicDegree.IV, DiatonicDegreePattern.IV6);
+	public static final DiatonicFunction V6 = from(DiatonicDegree.V, DiatonicDegreePattern.V6);
+	public static final DiatonicFunction VI6 = from(DiatonicDegree.VI, DiatonicDegreePattern.VI6);
+	public static final DiatonicFunction VII6 = from(DiatonicDegree.VII, DiatonicDegreePattern.VII6);
+
+	public static final DiatonicFunction I7 = from(DiatonicDegree.I, DiatonicDegreePattern.I7);
+	public static final DiatonicFunction II7 = from(DiatonicDegree.II, DiatonicDegreePattern.II7);
+	public static final DiatonicFunction III7 = from(DiatonicDegree.III, DiatonicDegreePattern.III7);
+	public static final DiatonicFunction IV7 = from(DiatonicDegree.IV, DiatonicDegreePattern.IV7);
+	public static final DiatonicFunction V7 = from(DiatonicDegree.V, DiatonicDegreePattern.V7);
+	public static final DiatonicFunction VI7 = from(DiatonicDegree.VI, DiatonicDegreePattern.VI7);
+	public static final DiatonicFunction VII7 = from(DiatonicDegree.VII, DiatonicDegreePattern.VII7);
+
+	public static final DiatonicFunction I9 = from(DiatonicDegree.I, DiatonicDegreePattern.I9);
+	public static final DiatonicFunction II9 = from(DiatonicDegree.II, DiatonicDegreePattern.II9);
+	public static final DiatonicFunction III9 = from(DiatonicDegree.III, DiatonicDegreePattern.III9);
+	public static final DiatonicFunction IV9 = from(DiatonicDegree.IV, DiatonicDegreePattern.IV9);
+	public static final DiatonicFunction V9 = from(DiatonicDegree.V, DiatonicDegreePattern.V9);
+	public static final DiatonicFunction VI9 = from(DiatonicDegree.VI, DiatonicDegreePattern.VI9);
+	public static final DiatonicFunction VII9 = from(DiatonicDegree.VII, DiatonicDegreePattern.VII9);
+
+	public static final DiatonicFunction I11 = from(DiatonicDegree.I, DiatonicDegreePattern.I11);
+	public static final DiatonicFunction II11 = from(DiatonicDegree.II, DiatonicDegreePattern.II11);
+	public static final DiatonicFunction III11 = from(DiatonicDegree.III, DiatonicDegreePattern.III11);
+	public static final DiatonicFunction IV11 = from(DiatonicDegree.IV, DiatonicDegreePattern.IV11);
+	public static final DiatonicFunction V11 = from(DiatonicDegree.V, DiatonicDegreePattern.V11);
+	public static final DiatonicFunction VI11 = from(DiatonicDegree.VI, DiatonicDegreePattern.VI11);
+	public static final DiatonicFunction VII11 = from(DiatonicDegree.VII, DiatonicDegreePattern.VII11);
+
+	public static final DiatonicFunction I13 = from(DiatonicDegree.I, DiatonicDegreePattern.I13);
+	public static final DiatonicFunction II13 = from(DiatonicDegree.II, DiatonicDegreePattern.II13);
+	public static final DiatonicFunction III13 = from(DiatonicDegree.III, DiatonicDegreePattern.III13);
+	public static final DiatonicFunction IV13 = from(DiatonicDegree.IV, DiatonicDegreePattern.IV13);
+	public static final DiatonicFunction V13 = from(DiatonicDegree.V, DiatonicDegreePattern.V13);
+	public static final DiatonicFunction VI13 = from(DiatonicDegree.VI, DiatonicDegreePattern.VI13);
+	public static final DiatonicFunction VII13 = from(DiatonicDegree.VII, DiatonicDegreePattern.VII13);
 
 	/** Main Triads */
 	public static final List<DiatonicFunction> TRIADS = new ImmutableList.Builder<DiatonicFunction>()
@@ -48,7 +90,6 @@ public enum DiatonicFunction
 			.add(VII6)
 			.build();
 
-	/** 7th */
 	public static final List<DiatonicFunction> SEVENTH = new ImmutableList.Builder<DiatonicFunction>()
 			.add(I7)
 			.add(II7)
@@ -59,7 +100,6 @@ public enum DiatonicFunction
 			.add(VII7)
 			.build();
 
-	/** 9th */
 	public static final List<DiatonicFunction> NINTH = new ImmutableList.Builder<DiatonicFunction>()
 			.add(I9)
 			.add(II9)
@@ -70,9 +110,6 @@ public enum DiatonicFunction
 			.add(VII9)
 			.build();
 
-	/**
-	 * 11th
-	 */
 	@SuppressWarnings("unused")
 	public static final List<DiatonicFunction> ELEVENTH = new ImmutableList.Builder<DiatonicFunction>()
 			.add(I11)
@@ -95,116 +132,45 @@ public enum DiatonicFunction
 			.add(VII13)
 			.build();
 
-	private final DiatonicFunction.Type type;
+	private static final List<DiatonicFunction> immutableValues = new ImmutableList.Builder<DiatonicFunction>()
+			.addAll(TRIADS)
+			.addAll(SIXTH)
+			.addAll(SEVENTH)
+			.addAll(NINTH)
+			.addAll(ELEVENTH)
+			.addAll(THIRTEENTH)
+			.build();
 
-	DiatonicFunction(DiatonicFunction.Type type) {
-		this.type = type;
+	public static List<DiatonicFunction> immutableValues() {
+		return immutableValues;
 	}
 
-	public String toString() {
-		switch ( this ) {
-			case I6:
-				return "I6";
-			case I7:
-				return "I7";
-			case I9:
-				return "I9";
-			case I11:
-				return "I11";
-			case I:
-				return "I";
+	/*********************** END CONSTANTS *********/
 
-			case II6:
-				return "II6";
-			case II7:
-				return "II7";
-			case II9:
-				return "II9";
-			case II11:
-				return "II11";
-			case II:
-				return "II";
+	private final DiatonicDegreePattern diatonicDegreePattern;
+	private final DiatonicDegree diatonicDegree;
 
-			case III6:
-				return "III6";
-			case III7:
-				return "III7";
-			case III9:
-				return "III9";
-			case III11:
-				return "III11";
-			case III:
-				return "III";
+	private DiatonicFunction(DiatonicDegree diatonicDegree, DiatonicDegreePattern diatonicDegreePattern) {
+		this.diatonicDegreePattern = diatonicDegreePattern;
+		this.diatonicDegree = diatonicDegree;
+	}
 
-			case IV6:
-				return "IV6";
-			case IV7:
-				return "IV7";
-			case IV9:
-				return "IV9";
-			case IV11:
-				return "IV11";
-			case IV:
-				return "IV";
-
-			case V6:
-				return "V6";
-			case V9:
-				return "V9";
-			case V11:
-				return "V11";
-			case V:
-				return "V";
-			case V7:
-				return "V7";
-
-			case VI6:
-				return "VI6";
-			case VI7:
-				return "VI7";
-			case VI9:
-				return "VI9";
-			case VI11:
-				return "VI11";
-			case VI:
-				return "VI";
-
-			case VII6:
-				return "VII6";
-			case VII7:
-				return "VII7";
-			case VII9:
-				return "VII9";
-			case VII11:
-				return "VII11";
-			case VII:
-				return "VII";
-
-			case I13:
-				return "I13";
-			case II13:
-				return "II13";
-			case III13:
-				return "III13";
-			case IV13:
-				return "IV13";
-			case V13:
-				return "V13";
-			case VI13:
-				return "VI13";
-			case VII13:
-				return "VII13";
+	public static DiatonicFunction from(DiatonicDegree diatonicDegree, DiatonicDegreePattern diatonicDegreePattern) {
+		DiatonicFunction cached = table.get(diatonicDegreePattern, diatonicDegree);
+		if (cached == null) {
+			cached = new DiatonicFunction(diatonicDegree, diatonicDegreePattern);
+			table.put(diatonicDegreePattern, diatonicDegree, cached);
 		}
 
-		throw NeverHappensException.switchOf(this);
+		return cached;
 	}
 
-	public static @Nullable DiatonicFunction from(@NonNull ChromaticChord chromaticChord, @NonNull Tonality<Chromatic> tonality) {
-		HarmonicFunction harmonicFunction = tonality.getFunctionFrom(chromaticChord);
-		if (harmonicFunction instanceof DiatonicFunction)
-			return (DiatonicFunction) harmonicFunction;
+	public DiatonicDegree getDiatonicDegree() {
+		return diatonicDegree;
+	}
 
-		return null;
+	public DiatonicDegreePattern getDiatonicDegreePattern() {
+		return diatonicDegreePattern;
 	}
 
 	@Override
@@ -212,36 +178,88 @@ public enum DiatonicFunction
 	public ChromaticChord getChromaticChordFromTonality(@NonNull Tonality<Chromatic> tonality) throws ScaleRelativeDegreeException {
 		Objects.requireNonNull(tonality);
 
-		ChromaticChord chromaticChord = null;
-		if (tonality.getScale().equals(Scale.MAJOR))
-			chromaticChord = TonalityGetDiatonicFunctionMajor.get(tonality, this);
-		else if (tonality.getScale().equals(Scale.MINOR))
-			chromaticChord = TonalityGetDiatonicFunctionMinor.get(tonality, this);
-
-		if (chromaticChord == null)
-			chromaticChord = TonalityGetDiatonicFunctionDefault.get(tonality, this);
-
-		return chromaticChord;
-	}
-
-	private List<? extends ChromaticFunction> getListByType() {
-		switch (type) {
-			case TRIAD: return TRIADS;
-			case SIXTH: return SIXTH;
-			case SEVENTH: return SEVENTH;
-			case NINTH: return NINTH;
-			case ELEVENTH: return ELEVENTH;
-			case THIRTEENTH: return THIRTEENTH;
-		}
-
-		throw NeverHappensException.switchOf(type);
+		return TonalityGetDiatonicFunctionDefault.get(tonality, this);
 	}
 
 	@Override
-	public @NonNull ChromaticFunction getShifted(int i) {
-		List<? extends ChromaticFunction> list = getListByType();
-		int index = list.indexOf(this);
-		index = MathUtils.rotativeTrim(index + i, Diatonic.NUMBER);
-		return list.get(index);
+	public @NonNull HarmonicFunction getShifted(int i) {
+		return from(diatonicDegree.getShifted(i), diatonicDegreePattern);
+	}
+
+	public String toString() {
+		return symbolDegree() + symbolPattern();
+	}
+
+	private String symbolDegree() {
+		switch (diatonicDegree) {
+			case I: return "I";
+			case II: return "II";
+			case III: return "III";
+			case IV: return "IV";
+			case V: return "V";
+			case VI: return "VI";
+			case VII: return "VII";
+		}
+
+		throw NeverHappensException.switchOf(diatonicDegree);
+	}
+
+	private String symbolPattern() {
+		if (diatonicDegreePattern.equals(DiatonicDegreePattern.I)
+		|| diatonicDegreePattern.equals(DiatonicDegreePattern.II)
+		|| diatonicDegreePattern.equals(DiatonicDegreePattern.III)
+		|| diatonicDegreePattern.equals(DiatonicDegreePattern.IV)
+		|| diatonicDegreePattern.equals(DiatonicDegreePattern.V)
+		|| diatonicDegreePattern.equals(DiatonicDegreePattern.VI)
+		|| diatonicDegreePattern.equals(DiatonicDegreePattern.VII)
+		)
+			return "";
+		else if (diatonicDegreePattern.equals(DiatonicDegreePattern.I6)
+				|| diatonicDegreePattern.equals(DiatonicDegreePattern.II6)
+				|| diatonicDegreePattern.equals(DiatonicDegreePattern.III6)
+				|| diatonicDegreePattern.equals(DiatonicDegreePattern.IV6)
+				|| diatonicDegreePattern.equals(DiatonicDegreePattern.V6)
+				|| diatonicDegreePattern.equals(DiatonicDegreePattern.VI6)
+				|| diatonicDegreePattern.equals(DiatonicDegreePattern.VII6)
+		)
+			return "6";
+		else if (diatonicDegreePattern.equals(DiatonicDegreePattern.I7)
+				|| diatonicDegreePattern.equals(DiatonicDegreePattern.II7)
+				|| diatonicDegreePattern.equals(DiatonicDegreePattern.III7)
+				|| diatonicDegreePattern.equals(DiatonicDegreePattern.IV7)
+				|| diatonicDegreePattern.equals(DiatonicDegreePattern.V7)
+				|| diatonicDegreePattern.equals(DiatonicDegreePattern.VI7)
+				|| diatonicDegreePattern.equals(DiatonicDegreePattern.VII7)
+		)
+			return "7";
+		else if (diatonicDegreePattern.equals(DiatonicDegreePattern.I9)
+				|| diatonicDegreePattern.equals(DiatonicDegreePattern.II9)
+				|| diatonicDegreePattern.equals(DiatonicDegreePattern.III9)
+				|| diatonicDegreePattern.equals(DiatonicDegreePattern.IV9)
+				|| diatonicDegreePattern.equals(DiatonicDegreePattern.V9)
+				|| diatonicDegreePattern.equals(DiatonicDegreePattern.VI9)
+				|| diatonicDegreePattern.equals(DiatonicDegreePattern.VII9)
+		)
+			return "9";
+		else if (diatonicDegreePattern.equals(DiatonicDegreePattern.I11)
+				|| diatonicDegreePattern.equals(DiatonicDegreePattern.II11)
+				|| diatonicDegreePattern.equals(DiatonicDegreePattern.III11)
+				|| diatonicDegreePattern.equals(DiatonicDegreePattern.IV11)
+				|| diatonicDegreePattern.equals(DiatonicDegreePattern.V11)
+				|| diatonicDegreePattern.equals(DiatonicDegreePattern.VI11)
+				|| diatonicDegreePattern.equals(DiatonicDegreePattern.VII11)
+		)
+			return "11";
+		else if (diatonicDegreePattern.equals(DiatonicDegreePattern.I13)
+				|| diatonicDegreePattern.equals(DiatonicDegreePattern.II13)
+				|| diatonicDegreePattern.equals(DiatonicDegreePattern.III13)
+				|| diatonicDegreePattern.equals(DiatonicDegreePattern.IV13)
+				|| diatonicDegreePattern.equals(DiatonicDegreePattern.V13)
+				|| diatonicDegreePattern.equals(DiatonicDegreePattern.VI13)
+				|| diatonicDegreePattern.equals(DiatonicDegreePattern.VII13)
+		)
+			return "13";
+
+		return super.toString();
 	}
 }

@@ -2,9 +2,9 @@ package es.danisales.datune.chords.tonal;
 
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
-import es.danisales.datune.function.ChromaticDegreeFunction;
-import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
+import es.danisales.datune.function.HarmonicFunction;
+import es.danisales.datune.function.SecondaryDominant;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityRetrieval;
 import es.danisales.utils.building.BuildingException;
@@ -16,7 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class TonalChordRetrievalChromatic {
     private Collection<ChromaticChord> chromaticChords;
     private Collection<Tonality<Chromatic>> tonalityList;
-    private Collection<? extends ChromaticFunction> harmonicFunctionList;
+    private Collection<? extends HarmonicFunction> harmonicFunctionList;
     private Collection<Chromatic> chromatics;
 
     TonalChordRetrievalChromatic() {
@@ -77,26 +77,26 @@ public class TonalChordRetrievalChromatic {
         return melodicMinorModesET12();
     }
 
-    public TonalChordRetrievalChromatic harmonicFunctions(@NonNull Collection<? extends ChromaticFunction> chromaticFunctions) {
+    public TonalChordRetrievalChromatic harmonicFunctions(@NonNull Collection<? extends HarmonicFunction> chromaticFunctions) {
         this.harmonicFunctionList = Objects.requireNonNull(chromaticFunctions);
 
         return this;
     }
 
-    public TonalChordRetrievalChromatic harmonicFunctions(@NonNull ChromaticFunction... chromaticFunctions) {
+    public TonalChordRetrievalChromatic harmonicFunctions(@NonNull HarmonicFunction... chromaticFunctions) {
         this.harmonicFunctionList = Arrays.asList( Objects.requireNonNull(chromaticFunctions) );
 
         return this;
     }
 
     public TonalChordRetrievalChromatic allDiatonicFunctions() {
-        return harmonicFunctions( DiatonicFunction.values() );
+        return harmonicFunctions( DiatonicFunction.immutableValues() );
     }
 
     public TonalChordRetrievalChromatic tonalityFunctionsAndTensionFunctions() {
-        List<ChromaticFunction> harmonicFunctionList = new ArrayList<>();
-        harmonicFunctionList.addAll( Arrays.asList(DiatonicFunction.values() ) );
-        harmonicFunctionList.addAll( ChromaticDegreeFunction.SECONDARY_DOMINANT_FUNCTIONS );
+        List<HarmonicFunction> harmonicFunctionList = new ArrayList<>();
+        harmonicFunctionList.addAll( DiatonicFunction.immutableValues() );
+        harmonicFunctionList.addAll( SecondaryDominant.values() );
         return harmonicFunctions( harmonicFunctionList );
     }
 
@@ -114,7 +114,7 @@ public class TonalChordRetrievalChromatic {
 
         tonalityList.parallelStream().forEach((Tonality<Chromatic> tonality) -> {
             if (chromatics == null || chromatics.contains(tonality.getRoot()))
-                harmonicFunctionList.parallelStream().forEach((ChromaticFunction harmonicFunction) -> {
+                harmonicFunctionList.parallelStream().forEach((HarmonicFunction harmonicFunction) -> {
                     if (chromaticChords == null) {
                         parametricChordList.add(TonalChord.from(tonality, harmonicFunction));
                         return;
@@ -122,12 +122,15 @@ public class TonalChordRetrievalChromatic {
 
                     chromaticChords.parallelStream ().forEach((ChromaticChord chromaticChord) -> {
                         ChromaticChord forEachChromaticChord;
+
                         try {
                             forEachChromaticChord = ChromaticChord.builder()
                                     .tonality(tonality)
                                     .function(harmonicFunction)
                                     .build();
-                        } catch (BuildingException e) {
+                            if (forEachChromaticChord == null)
+                                throw new RuntimeException();
+                        } catch (Exception e) {
                             return;
                         }
 

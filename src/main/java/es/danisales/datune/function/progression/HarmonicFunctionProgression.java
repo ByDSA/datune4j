@@ -5,8 +5,9 @@ import es.danisales.datastructures.ListProxy;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.function.ChromaticDegreeFunction;
-import es.danisales.datune.function.ChromaticFunction;
+import es.danisales.datune.function.CompoundFunction;
 import es.danisales.datune.function.HarmonicFunction;
+import es.danisales.datune.function.SecondaryDominant;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -40,16 +41,16 @@ public class HarmonicFunctionProgression
             .shift(3)
             .build();
 
-    public static final HarmonicFunctionProgression Rhythm_changes = builder()
+    public static final HarmonicFunctionProgression RHYTHM_CHANGES = builder()
             .add(
-                    ChromaticDegreeFunction.I,
-                    ChromaticDegreeFunction.vi,
-                    ChromaticDegreeFunction.ii,
-                    ChromaticDegreeFunction.V, // todo
-                    //SecondaryDominant.,
-                    ChromaticDegreeFunction.from(ChromaticDegreeFunction.II, ChromaticDegreeFunction.V),
-                    ChromaticDegreeFunction.ii,
-                    ChromaticDegreeFunction.V
+                    ChromaticDegreeFunction.IMaj7,
+                    ChromaticDegreeFunction.vi7,
+                    ChromaticDegreeFunction.ii7,
+                    ChromaticDegreeFunction.V7,
+                    CompoundFunction.from(SecondaryDominant.ii, ChromaticDegreeFunction.ii7),
+                    SecondaryDominant.V7_II,
+                    ChromaticDegreeFunction.ii7,
+                    ChromaticDegreeFunction.V7
                     ).build();
 
     /* END CONSTANTS **/
@@ -67,9 +68,9 @@ public class HarmonicFunctionProgression
         List<ChromaticChord> chromaticChordProgression = new ArrayList<>();
         for (HarmonicFunction harmonicFunction : this) {
             ChromaticChord chromaticChord;
-            if (harmonicFunction instanceof ChromaticFunction) {
+            if (harmonicFunction != null) {
                 try {
-                    chromaticChord = ((ChromaticFunction) harmonicFunction).getChromaticChordFromTonality(tonality);
+                    chromaticChord = harmonicFunction.getChromaticChordFromTonality(tonality);
                 } catch (ScaleRelativeDegreeException e) {
                     e.printStackTrace();
                     continue;

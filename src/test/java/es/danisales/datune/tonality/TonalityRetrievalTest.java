@@ -94,7 +94,7 @@ public class TonalityRetrievalTest {
     }
 
     @Test
-    public void mainMinorAreRealleMinor() {
+    public void mainMinorAreReallyMinor() {
         Set<Tonality<Chromatic>> tonalityList = TonalityRetrieval.ET12.ALL_MINOR;
 
         for (Tonality tonality : tonalityList)

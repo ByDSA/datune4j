@@ -7,13 +7,11 @@ import es.danisales.datune.chords.IntervalShifter;
 import es.danisales.datune.chords.tonal.TonalChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.octave.CyclicDegree;
-import es.danisales.datune.function.ChromaticFunction;
+import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.midi.pitch.PitchTonalMidi;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;
-import es.danisales.utils.NeverHappensException;
-import es.danisales.utils.building.BuildingException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Arrays;
@@ -2444,21 +2442,18 @@ public final class ChromaticChord
         return new ChromaticChordBuilder();
     }
 
-    public static <C extends CyclicDegree> ChromaticChord from(@NonNull TonalChord<C> parametricChord) {
-        Tonality<Chromatic> tonality = PitchTonalMidi.turnToTonalityChromatic(parametricChord.getTonality());
+    public static <C extends CyclicDegree> ChromaticChord from(@NonNull TonalChord<C> tonalChord) {
+        Tonality<Chromatic> tonality = PitchTonalMidi.turnToTonalityChromatic(tonalChord.getTonality());
         try {
-            return builder()
-                    .function((ChromaticFunction)parametricChord.getHarmonicFunction())
+            ChromaticChord chromaticChord = builder()
+                    .function(tonalChord.getHarmonicFunction())
                     .tonality(tonality)
                     .build();
-        } catch (BuildingException e) {
-            if (e.getInnerException() instanceof ScaleRelativeDegreeException)
+            if (chromaticChord == null)
+                throw new RuntimeException();
+            return chromaticChord;
+        } catch (Exception e) {
                 return null;
-            else {
-                e.getInnerException().printStackTrace();
-                throw NeverHappensException.make("");
-            }
-
         }
     }
 
@@ -2470,9 +2465,19 @@ public final class ChromaticChord
         super(chromaticChordInterface);
     }
 
-    public static ChromaticChord from(Tonality<Chromatic> tonality, ChromaticFunction chromaticFunction) {
+    private ChromaticChord(ChromaticChord chromaticChord) {
+        super(chromaticChord);
+    }
+
+    public static ChromaticChord immutableFrom(@NonNull ChromaticChord chromaticChord) {
+        if (chromaticChord.isImmutable())
+            return chromaticChord;
+        return new ChromaticChord(chromaticChord);
+    }
+
+    public static ChromaticChord from(Tonality<Chromatic> tonality, HarmonicFunction harmonicFunction) {
         try {
-            return chromaticFunction.getChromaticChordFromTonality(tonality);
+            return harmonicFunction.getChromaticChordFromTonality(tonality);
         } catch (ScaleRelativeDegreeException e) {
             return null;
         }

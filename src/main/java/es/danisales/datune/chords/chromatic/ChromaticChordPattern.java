@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import es.danisales.datune.chords.Pattern;
 import es.danisales.datune.degrees.octave.Chromatic;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -304,7 +305,7 @@ public final class ChromaticChordPattern extends Pattern {
             .put(ChromaticChordPattern.SEVENTH, "SEVENTH")
             .build();
 
-    public @NonNull String symbol() {
+    public @Nullable String symbol() {
         String str = symbolMap.get(this);
 
         if (str == null)

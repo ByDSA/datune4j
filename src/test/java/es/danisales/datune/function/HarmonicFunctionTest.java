@@ -6,6 +6,8 @@ import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
 import org.junit.Test;
 
+import java.util.Set;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -14,10 +16,11 @@ public class HarmonicFunctionTest {
     public void get() {
         Tonality<Chromatic> tonality = Tonality.ET12.Cm;
         ChromaticChord chromaticChord = ChromaticChord.DD;
-        HarmonicFunction harmonicFunction = HarmonicFunction.get(chromaticChord, tonality);
+        Set<HarmonicFunction> harmonicFunctions = tonality.getFunctionsFrom(chromaticChord);
 
-        assertTrue(harmonicFunction instanceof DiatonicFunction);
-        assertEquals(DiatonicFunction.III, harmonicFunction);
+        assertEquals(2, harmonicFunctions.size());
+        assertTrue(harmonicFunctions.contains(DiatonicFunction.III));
+        assertTrue(harmonicFunctions.contains(ChromaticDegreeFunction.bIII));
     }
 
     @Test
@@ -25,33 +28,37 @@ public class HarmonicFunctionTest {
         Tonality<Chromatic> tonality = Tonality.ET12.Cm;
         ChromaticChord chromaticChord = ChromaticChord.DD.clone();
         chromaticChord.inv();
-        HarmonicFunction harmonicFunction = HarmonicFunction.get(chromaticChord, tonality);
+        Set<HarmonicFunction> harmonicFunctions = tonality.getFunctionsFrom(chromaticChord);
 
-        assertTrue(harmonicFunction instanceof DiatonicFunction);
-        assertEquals(DiatonicFunction.III, harmonicFunction);
+        assertEquals(2, harmonicFunctions.size());
+        assertTrue(harmonicFunctions.contains(DiatonicFunction.III));
+        assertTrue(harmonicFunctions.contains(ChromaticDegreeFunction.bIII));
     }
 
     @Test
     public void get_cachePersistence_setScale() {
         ChromaticChord chromaticChord = ChromaticChord.DD.clone();
         Tonality<Chromatic> tonality = Tonality.ET12.C.clone();
-        HarmonicFunction.get(chromaticChord, tonality); // creates caches
+        tonality.getFunctionsFrom(chromaticChord); // creates caches
         tonality.setScale(Scale.MINOR); // should clear caches
-        HarmonicFunction harmonicFunction = HarmonicFunction.get(chromaticChord, tonality); // should recreate caches
+        Set<HarmonicFunction> harmonicFunctions = tonality.getFunctionsFrom(chromaticChord); // should recreate caches
 
-        assertTrue(harmonicFunction instanceof DiatonicFunction);
-        assertEquals(DiatonicFunction.III, harmonicFunction);
+        assertEquals(2, harmonicFunctions.size());
+        assertTrue(harmonicFunctions.contains(DiatonicFunction.III));
+        assertTrue(harmonicFunctions.contains(ChromaticDegreeFunction.bIII));
     }
 
     @Test
     public void get_cachePersistence_setRoot() {
         ChromaticChord chromaticChord = ChromaticChord.DD.clone();
         Tonality<Chromatic> tonality = Tonality.ET12.C.clone();
-        HarmonicFunction.get(chromaticChord, tonality); // creates cache
+        tonality.getFunctionsFrom(chromaticChord); // creates caches
         tonality.setRoot(Chromatic.DD); // should clear caches
-        HarmonicFunction harmonicFunction = HarmonicFunction.get(chromaticChord, tonality); // should recreate caches
+        Set<HarmonicFunction> harmonicFunctions = tonality.getFunctionsFrom(chromaticChord); // should recreate caches
 
-        assertTrue(harmonicFunction instanceof DiatonicFunction);
-        assertEquals(DiatonicFunction.I, harmonicFunction);
+        assertEquals(3, harmonicFunctions.size());
+        assertTrue(harmonicFunctions.contains(DiatonicFunction.I));
+        assertTrue(harmonicFunctions.contains(ChromaticDegreeFunction.I));
+        assertTrue(harmonicFunctions.contains(SecondaryDominant.V_IV));
     }
 }

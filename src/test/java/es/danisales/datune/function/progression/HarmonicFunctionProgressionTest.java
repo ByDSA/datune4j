@@ -1,8 +1,9 @@
-package es.danisales.datune.function;
+package es.danisales.datune.function.progression;
 
 import es.danisales.datune.chords.chromatic.ChromaticChord;
-import es.danisales.datune.function.progression.HarmonicFunctionProgression;
+import es.danisales.datune.function.ChromaticDegreeFunction;
 import es.danisales.datune.tonality.Tonality;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.List;
@@ -10,15 +11,40 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class ChromaticFunctionProgressionTest {
+public class HarmonicFunctionProgressionTest {
     @Test
     public void I_V_vi_iv() {
         HarmonicFunctionProgression chromaticFunctionProgression = HarmonicFunctionProgression.I_V_vi_IV;
 
-        assertEquals(ChromaticDegreeFunction.I, chromaticFunctionProgression.get(0));
+        Assert.assertEquals(ChromaticDegreeFunction.I, chromaticFunctionProgression.get(0));
         assertEquals(ChromaticDegreeFunction.V, chromaticFunctionProgression.get(1));
         assertEquals(ChromaticDegreeFunction.vi, chromaticFunctionProgression.get(2));
         assertEquals(ChromaticDegreeFunction.IV, chromaticFunctionProgression.get(3));
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void immutable_areReallyImmutable_remove() {
+        HarmonicFunctionProgression.I_V_vi_IV.remove(0);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void immutable_areReallyImmutable_set() {
+        HarmonicFunctionProgression.I_V_vi_IV.set(0, ChromaticDegreeFunction.i);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void immutable_areReallyImmutable_add1() {
+        HarmonicFunctionProgression.I_V_vi_IV.add(0,ChromaticDegreeFunction.i);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void immutable_areReallyImmutable_add2() {
+        HarmonicFunctionProgression.I_V_vi_IV.add(ChromaticDegreeFunction.i);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void immutable_areReallyImmutable_clear() {
+        HarmonicFunctionProgression.I_V_vi_IV.clear();
     }
 
     @Test
@@ -60,6 +86,21 @@ public class ChromaticFunctionProgressionTest {
         assertEquals(ChromaticChord.G, chromaticChordProgression.get(1));
         assertEquals(ChromaticChord.Am, chromaticChordProgression.get(2));
         assertEquals(ChromaticChord.F, chromaticChordProgression.get(3));
+    }
+
+    @Test
+    public void getChordsFrom_rhythmChanges() {
+        HarmonicFunctionProgression chromaticFunctionProgression = HarmonicFunctionProgression.RHYTHM_CHANGES;
+
+        List<ChromaticChord> chromaticChordProgression = chromaticFunctionProgression.getChordsFrom(Tonality.ET12.DD);
+        assertEquals(ChromaticChord.DDMaj7, chromaticChordProgression.get(0));
+        assertEquals(ChromaticChord.Cm7, chromaticChordProgression.get(1));
+        assertEquals(ChromaticChord.Fm7, chromaticChordProgression.get(2));
+        assertEquals(ChromaticChord.AA7, chromaticChordProgression.get(3));
+        assertEquals(ChromaticChord.Gm7, chromaticChordProgression.get(4));
+        assertEquals(ChromaticChord.C7, chromaticChordProgression.get(5));
+        assertEquals(ChromaticChord.Fm7, chromaticChordProgression.get(6));
+        assertEquals(ChromaticChord.AA7, chromaticChordProgression.get(7));
     }
 
     @Test

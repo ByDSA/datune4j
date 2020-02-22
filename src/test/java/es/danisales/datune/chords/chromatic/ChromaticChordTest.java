@@ -837,7 +837,7 @@ public class ChromaticChordTest {
         /* Root */
         @Test
         public void getRootIndex_initialIsZero() {
-            for (DiatonicFunction function : DiatonicFunction.values()) {
+            for (DiatonicFunction function : DiatonicFunction.immutableValues()) {
                 TonalChord parametricChord1 = TonalChord.from(Tonality.C, function);
                 ChromaticChord chromaticChord1 = ChromaticChord.from(parametricChord1);
                 assertEquals(0, chromaticChord1.getRootIndex());
@@ -876,7 +876,7 @@ public class ChromaticChordTest {
         /* Inversion */
         @Test
         public void getInversionNumber_initialIsZero() {
-            for (DiatonicFunction function : DiatonicFunction.values()) {
+            for (DiatonicFunction function : DiatonicFunction.immutableValues()) {
                 TonalChord parametricChord1 = TonalChord.from(Tonality.C, function);
                 ChromaticChord chromaticChord1 = ChromaticChord.from(parametricChord1);
                 assertEquals(0, chromaticChord1.getInversionNumber());

@@ -2,18 +2,13 @@ package es.danisales.datune.timelayer;
 
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
-import es.danisales.datune.function.ChromaticFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
-import es.danisales.datune.function.MainTonalFunction;
 import es.danisales.datune.tempo.MusicalTime;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityRetrieval;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class TonalLayerCalculator {
     private RhythmLayer rhythmLayer;
@@ -82,7 +77,7 @@ public class TonalLayerCalculator {
     }
 
     private void discardTonalitiesFromFirstChord() {
-        ChromaticFunction rootFunction = DiatonicFunction.I7;
+        HarmonicFunction rootFunction = DiatonicFunction.I7;
 
         for (int i = 0; i < possibleTonalities.size(); i++) {
             Tonality<Chromatic> tonality = possibleTonalities.get(i);
@@ -116,12 +111,22 @@ public class TonalLayerCalculator {
             tonalLayer.add(durableEvent);
 
             for (Tonality<Chromatic> tonality : possibleTonalities) {
-                TonalLayer.Node node = TonalLayer.Node.from(tonality, tonality.getFunctionFrom(entry1.getNote()));
+                Set<HarmonicFunction> harmonicFunctionSet = tonality.getFunctionsFrom(entry1.getNote());
+                HarmonicFunction harmonicFunction = harmonicFunctionSelector(harmonicFunctionSet);
+                TonalLayer.Node node = TonalLayer.Node.from(tonality, harmonicFunction);
                 l.add(node);
             }
         }
 
         return tonalLayer;
+    }
+
+    private HarmonicFunction harmonicFunctionSelector(Set<HarmonicFunction> harmonicFunctionSet) {
+        for (HarmonicFunction harmonicFunction : harmonicFunctionSet) { // todo: provisional
+            return harmonicFunction;
+        }
+
+        return null;
     }
 
     public TonalLayer generate() {

@@ -2,7 +2,6 @@ package es.danisales.datune.timelayer;
 
 import es.danisales.datastructures.Pair;
 import es.danisales.datune.degrees.octave.Chromatic;
-import es.danisales.datune.function.MainTonalFunction;
 import es.danisales.datune.tempo.MusicalTime;
 import es.danisales.datune.tonality.Tonality;
 

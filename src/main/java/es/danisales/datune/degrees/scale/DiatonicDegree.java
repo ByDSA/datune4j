@@ -1,10 +1,8 @@
 package es.danisales.datune.degrees.scale;
 
 import es.danisales.datune.degrees.octave.Diatonic;
-import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.utils.MathUtils;
-import es.danisales.utils.NeverHappensException;
 import es.danisales.utils.Utils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -52,61 +50,6 @@ public enum DiatonicDegree implements ScaleDegree {
 		if ( n < 0 )
 			n += Diatonic.NUMBER;
 		return n;
-	}
-
-	public static @NonNull DiatonicDegree from(@NonNull DiatonicFunction diatonicFunction) {
-		switch ( diatonicFunction ) {
-			case I:
-			case I6:
-			case I7:
-			case I9:
-			case I11:
-			case I13:
-				return DiatonicDegree.I;
-			case II:
-			case II6:
-			case II7:
-			case II9:
-			case II11:
-			case II13:
-				return DiatonicDegree.II;
-			case III:
-			case III6:
-			case III7:
-			case III9:
-			case III11:
-			case III13:
-				return DiatonicDegree.III;
-			case IV:
-			case IV6:
-			case IV7:
-			case IV9:
-			case IV11:
-			case IV13:
-				return DiatonicDegree.IV;
-			case V:
-			case V6:
-			case V7:
-			case V9:
-			case V11:
-			case V13:
-				return DiatonicDegree.V;
-			case VI:
-			case VI6:
-			case VI7:
-			case VI9:
-			case VI11:
-			case VI13:
-				return DiatonicDegree.VI;
-			case VII:
-			case VII6:
-			case VII7:
-			case VII9:
-			case VII11:
-			case VII13:
-				return DiatonicDegree.VII;
-		}
-		throw NeverHappensException.switchOf(diatonicFunction);
 	}
 
 	@NonNull

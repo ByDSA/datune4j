@@ -1,18 +1,16 @@
 package es.danisales.datune.tonality;
 
 import es.danisales.datune.chords.Chord;
-import es.danisales.datune.degrees.octave.DiatonicAlt;
-import es.danisales.datune.chords.diatonicalt.DiatonicAltRetrieval;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
+import es.danisales.datune.chords.diatonicalt.DiatonicAltRetrieval;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.octave.Diatonic;
+import es.danisales.datune.degrees.octave.DiatonicAlt;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
-import es.danisales.datune.function.ChromaticDegreeFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
-import es.danisales.datune.midi.ChordMidi;
+import es.danisales.datune.function.SecondaryDominant;
 import es.danisales.utils.NeverHappensException;
-import es.danisales.utils.building.BuildingException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -32,14 +30,16 @@ public class TonalityRetrieval {
     private static List<Tonality<Chromatic>> getFromChord(ChromaticChord chromaticChord, List<Tonality<Chromatic>> tonalities) {
         List<Tonality<Chromatic>> ret = new ArrayList<>();
         List<HarmonicFunction> harmonicFunctionList = new ArrayList<>();
-        harmonicFunctionList.addAll(Arrays.asList(DiatonicFunction.values()));
-        harmonicFunctionList.addAll(ChromaticDegreeFunction.SECONDARY_DOMINANT_FUNCTIONS);
+        harmonicFunctionList.addAll(DiatonicFunction.immutableValues());
+        harmonicFunctionList.addAll(SecondaryDominant.values());
 
         for (Tonality<Chromatic> tonality : tonalities) {
-            HarmonicFunction harmonicFunction = tonality.getFunctionFrom(chromaticChord);
-            if (harmonicFunctionList.contains(harmonicFunction)) {
-                ret.add(tonality);
-            }
+            Set<HarmonicFunction> harmonicFunctions = tonality.getFunctionsFrom(chromaticChord);
+            for (HarmonicFunction harmonicFunction : harmonicFunctions)
+                if (harmonicFunctionList.contains(harmonicFunction)) {
+                    ret.add(tonality);
+                    break;
+                }
         }
 
         return ret;
@@ -687,7 +687,7 @@ public class TonalityRetrieval {
     public static @NonNull List<Tonality<Chromatic>> listFromChordAllFunctions(@NonNull ChromaticChord chromaticChord) {
         List<Tonality<Chromatic>> out = new ArrayList<>();
         for (Tonality<Chromatic> tonality : TonalityRetrieval.allUsualKeys()) {
-            if (TonalityUtils.hasAsChromaticFunction(tonality, chromaticChord))
+            if (tonality.getFunctionsFrom(chromaticChord).size() > 0)
                 out.add( tonality );
         }
 
@@ -810,37 +810,6 @@ public class TonalityRetrieval {
         }
 
         return Collections.unmodifiableSet(ret);
-    }
-
-    public static Tonality searchInModeSameRoot(Tonality tonality, ChordMidi c) {
-        List<Tonality> ts;
-        if ( tonality.getScale().isDiatonic() ) {
-            ts = new ArrayList<>();
-            ts.add( Tonality.from( tonality.getRoot(), Scale.MAJOR ) );
-            ts.add( Tonality.from( tonality.getRoot(), Scale.MINOR ) );
-            ts.add( Tonality.from( tonality.getRoot(), Scale.DORIAN ) );
-            ts.add( Tonality.from( tonality.getRoot(), Scale.PHRYGIAN ) );
-            ts.add( Tonality.from( tonality.getRoot(), Scale.LYDIAN ) );
-            ts.add( Tonality.from( tonality.getRoot(), Scale.MIXOLYDIAN ) );
-            ts.add( Tonality.from( tonality.getRoot(), Scale.LOCRIAN ) );
-        } else
-            ts = tonality.getModesSameRoot();
-
-        for ( Tonality t : ts ) {
-            if ( t.equals( tonality ) )
-                continue;
-            ChromaticChord chromaticChord = null;
-            try {
-                chromaticChord = ChromaticChord.builder().fromChordMidi(c).build();
-            } catch (BuildingException e) {
-                throw NeverHappensException.make("");
-            }
-            DiatonicFunction diatonicFunction = DiatonicFunction.from(chromaticChord, t);
-            if (diatonicFunction != null)
-                return t;
-        }
-
-        return null;
     }
 
     public static @Nullable Tonality getRelativeMinorFrom(@NonNull Tonality tonality) {

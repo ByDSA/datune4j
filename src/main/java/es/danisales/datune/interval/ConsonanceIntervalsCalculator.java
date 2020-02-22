@@ -37,9 +37,7 @@ public class ConsonanceIntervalsCalculator {
 
         int ret = 0;
         for (int i = 0; i < intervalsFrom.size(); i++) {
-            // todo: quitar comentario cuando vaya bien
-            //System.out.println(differenceOfConsonanceInterval(intervalsFrom.generate(i), intervalsTo.generate(i)) + " " + intervalsFrom.generate(i) + " " + intervalsTo.generate(i));
-            ret += differenceOfConsonanceInterval(intervalsFrom.get(i), intervalsTo.get(i));
+          ret += differenceOfConsonanceInterval(intervalsFrom.get(i), intervalsTo.get(i));
         }
 
         return ret;

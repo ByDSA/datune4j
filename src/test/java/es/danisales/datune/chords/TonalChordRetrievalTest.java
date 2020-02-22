@@ -24,7 +24,7 @@ public class TonalChordRetrievalTest {
     public void C_in_C() {
         List<TonalChord> parametricChordList = TonalChord.retrieval()
                 .from(ChromaticChord.C)
-                .harmonicFunctions(DiatonicFunction.values())
+                .harmonicFunctions(DiatonicFunction.immutableValues())
                 .tonalities(Tonality.ET12.C)
                 .retrieve();
 
@@ -40,7 +40,7 @@ public class TonalChordRetrievalTest {
     public void C_in_C_Am() {
         List<TonalChord> parametricChordList = TonalChord.retrieval()
                 .from(ChromaticChord.C)
-                .harmonicFunctions(DiatonicFunction.values())
+                .harmonicFunctions(DiatonicFunction.immutableValues())
                 .tonalities(Tonality.ET12.C, Tonality.ET12.Am)
                 .retrieve();
 
@@ -57,7 +57,7 @@ public class TonalChordRetrievalTest {
     public void C_in_12ET_MAJOR_MINOR() {
         List<TonalChord> parametricChordList = TonalChord.retrieval()
                 .from(ChromaticChord.C)
-                .harmonicFunctions(DiatonicFunction.values())
+                .harmonicFunctions(DiatonicFunction.immutableValues())
                 .tonalities(TonalityRetrieval.ET12.ALL_MAJOR_MINOR)
                 .retrieve();
 
@@ -78,7 +78,7 @@ public class TonalChordRetrievalTest {
     public void C7_in_12ET_MAJOR_MINOR() {
         List<TonalChord> parametricChordList = TonalChord.retrieval()
                 .from(ChromaticChord.CMaj7)
-                .harmonicFunctions(DiatonicFunction.values())
+                .harmonicFunctions(DiatonicFunction.immutableValues())
                 .majorMinorET12()
                 .retrieve();
 
@@ -89,26 +89,6 @@ public class TonalChordRetrievalTest {
                         TonalChord.from(Tonality.ET12.Em, DiatonicFunction.VI7),
                         TonalChord.from(Tonality.ET12.G, DiatonicFunction.IV7),
                         TonalChord.from(Tonality.ET12.Am, DiatonicFunction.III7)
-                )
-        );
-    }
-
-    @Test
-    public void aa() {
-        List<TonalChord> parametricChordList = TonalChord.retrieval()
-                .from(ChromaticChord.C)
-                .harmonicFunctions(DiatonicFunction.TRIADS)
-                .main21ModesET12()
-                .root(Chromatic.C)
-                .retrieve();
-
-        assertEquals(4, parametricChordList.size());
-        contains(parametricChordList,
-                Arrays.asList(
-                        TonalChord.from(Tonality.C, DiatonicFunction.I7),
-                        TonalChord.from(Tonality.Em, DiatonicFunction.VI7),
-                        TonalChord.from(Tonality.G, DiatonicFunction.IV7),
-                        TonalChord.from(Tonality.Am, DiatonicFunction.III7)
                 )
         );
     }
