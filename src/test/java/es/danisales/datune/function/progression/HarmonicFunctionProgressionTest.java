@@ -81,7 +81,7 @@ public class HarmonicFunctionProgressionTest {
     public void getChordsFrom_I_V_vi_IV() {
         HarmonicFunctionProgression chromaticFunctionProgression = HarmonicFunctionProgression.I_V_vi_IV;
 
-        List<ChromaticChord> chromaticChordProgression = chromaticFunctionProgression.getChordsFrom(Tonality.ET12.C);
+        List<ChromaticChord> chromaticChordProgression = chromaticFunctionProgression.getChordsFrom(Tonality.C);
         assertEquals(ChromaticChord.C, chromaticChordProgression.get(0));
         assertEquals(ChromaticChord.G, chromaticChordProgression.get(1));
         assertEquals(ChromaticChord.Am, chromaticChordProgression.get(2));
@@ -92,7 +92,7 @@ public class HarmonicFunctionProgressionTest {
     public void getChordsFrom_rhythmChanges() {
         HarmonicFunctionProgression chromaticFunctionProgression = HarmonicFunctionProgression.RHYTHM_CHANGES;
 
-        List<ChromaticChord> chromaticChordProgression = chromaticFunctionProgression.getChordsFrom(Tonality.ET12.DD);
+        List<ChromaticChord> chromaticChordProgression = chromaticFunctionProgression.getChordsFrom(Tonality.DD);
         assertEquals(ChromaticChord.DDMaj7, chromaticChordProgression.get(0));
         assertEquals(ChromaticChord.Cm7, chromaticChordProgression.get(1));
         assertEquals(ChromaticChord.Fm7, chromaticChordProgression.get(2));
@@ -107,7 +107,7 @@ public class HarmonicFunctionProgressionTest {
     public void getChordsFrom_i_VI_III_VII() {
         HarmonicFunctionProgression chromaticFunctionProgression = HarmonicFunctionProgression.i_bVI_bIII_bVII;
 
-        List<ChromaticChord> chromaticChordProgression = chromaticFunctionProgression.getChordsFrom(Tonality.ET12.Am);
+        List<ChromaticChord> chromaticChordProgression = chromaticFunctionProgression.getChordsFrom(Tonality.Am);
         assertEquals(ChromaticChord.Am, chromaticChordProgression.get(0));
         assertEquals(ChromaticChord.F, chromaticChordProgression.get(1));
         assertEquals(ChromaticChord.C, chromaticChordProgression.get(2));

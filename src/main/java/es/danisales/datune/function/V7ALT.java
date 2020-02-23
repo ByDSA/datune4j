@@ -21,10 +21,7 @@ public enum V7ALT implements HarmonicFunction {
         tonality = Tonality.from(newRoot, Scale.SUPERLOCRIAN);
 
         try {
-            return ChromaticChord.builder()
-                    .tonality(tonality)
-                    .function(diatonicFunction)
-                    .build();
+            return diatonicFunction.getChromaticChordFromTonality(tonality);
         } catch (Exception e) {
                 throw NeverHappensException.make("");
         }

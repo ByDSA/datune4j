@@ -3,7 +3,6 @@ package es.danisales.datune;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
-import es.danisales.datune.chords.chromatic.ChromaticChordBuilder;
 import es.danisales.datune.chords.tonal.TonalChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
@@ -240,14 +239,10 @@ class Loader {
                 continue;
             }
 
-            ChromaticChordBuilder chromaticChordBuilder = ChromaticChord.builder();
-            if (parametricChord.getHarmonicFunction() != null)
-                chromaticChordBuilder.function(parametricChord.getHarmonicFunction());
-
-            chromaticChordBuilder.tonality(parametricChord.getTonality());
-            ChromaticChord chromaticChord;
+            ChromaticChord chromaticChord = null;
             try {
-                chromaticChord = chromaticChordBuilder.build();
+                if (parametricChord.getHarmonicFunction() != null)
+                    chromaticChord = parametricChord.getHarmonicFunction().getChromaticChordFromTonality(parametricChord.getTonality());
                 if (chromaticChord == null)
                     throw new RuntimeException();
             } catch (Exception e) {

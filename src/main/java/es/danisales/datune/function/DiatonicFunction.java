@@ -187,7 +187,7 @@ public final class DiatonicFunction
 	}
 
 	public String toString() {
-		return symbolDegree() + symbolPattern();
+		return symbolDegree() + symbolPattern() + " (Diatonic)";
 	}
 
 	private String symbolDegree() {

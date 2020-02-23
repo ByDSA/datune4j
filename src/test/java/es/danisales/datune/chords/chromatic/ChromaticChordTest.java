@@ -10,6 +10,7 @@ import es.danisales.datune.function.ChromaticDegreeFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.lang.Language;
+import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.utils.building.BuildingException;
 import org.junit.Assert;
@@ -25,7 +26,7 @@ import static org.junit.Assert.*;
 public class ChromaticChordTest {
     /* Building */
     @Test
-    public void from() throws BuildingException {
+    public void from() {
         ChromaticChord chromaticChord = ChromaticChord.builder().addAll(Arrays.asList(Chromatic.C, Chromatic.D, Chromatic.E)).build();
         assertNotNull(chromaticChord);
 
@@ -37,10 +38,10 @@ public class ChromaticChordTest {
     }
 
     @Test
-    public void fromChromaticDiatonicChordTonality() throws BuildingException {
+    public void fromChromaticDiatonicChordTonality() {
         ChromaticChord chromaticChord = ChromaticChord.builder()
                 .diatonicDegreePattern(DiatonicDegreePattern.VII9)
-                .tonality(Tonality.ET12.C)
+                .tonality(Tonality.C)
                 .build();
         assertEquals( Arrays.asList(
                 Chromatic.B, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C),
@@ -50,21 +51,15 @@ public class ChromaticChordTest {
 
     public static class BuilderTest {
         @Test
-        public void fromFunction() throws BuildingException {
-            ChromaticChord chromaticChord = ChromaticChord.builder()
-                    .function(DiatonicFunction.I)
-                    .tonality(Tonality.ET12.C)
-                    .build();
+        public void fromFunction() throws ScaleRelativeDegreeException {
+            ChromaticChord chromaticChord = DiatonicFunction.I.getChromaticChordFromTonality(Tonality.C);
 
             assertEquals(ChromaticChord.C, chromaticChord);
         }
 
         @Test
-        public void fromFunction_bVII() throws BuildingException {
-            ChromaticChord chromaticChord = ChromaticChord.builder()
-                    .function(ChromaticDegreeFunction.bVII)
-                    .tonality(Tonality.ET12.C)
-                    .build();
+        public void fromFunction_bVII() throws ScaleRelativeDegreeException {
+            ChromaticChord chromaticChord = ChromaticDegreeFunction.bVII.getChromaticChordFromTonality(Tonality.C);
 
             ChromaticChord chromaticChordReference = ChromaticChord.AA;
 
@@ -72,11 +67,8 @@ public class ChromaticChordTest {
         }
 
         @Test
-        public void fromFunction_bVI() throws BuildingException {
-            ChromaticChord chromaticChord = ChromaticChord.builder()
-                    .function(ChromaticDegreeFunction.bVI)
-                    .tonality(Tonality.ET12.C)
-                    .build();
+        public void fromFunction_bVI() throws ScaleRelativeDegreeException {
+            ChromaticChord chromaticChord = ChromaticDegreeFunction.bVI.getChromaticChordFromTonality(Tonality.C);
 
             ChromaticChord chromaticChordReference = ChromaticChord.GG;
 
@@ -84,10 +76,10 @@ public class ChromaticChordTest {
         }
 
         @Test
-        public void fromInterval_C_I_Third() throws BuildingException {
+        public void fromInterval_C_I_Third() {
             ChromaticChord chromaticChord = ChromaticChord.builder()
                     .intervalDiatonic(IntervalDiatonic.THIRD)
-                    .tonality(Tonality.ET12.C)
+                    .tonality(Tonality.C)
                     .build();
 
             assertEquals(2, chromaticChord.size());
@@ -96,10 +88,10 @@ public class ChromaticChordTest {
         }
 
         @Test
-        public void fromInterval_C_VII_Second() throws BuildingException {
+        public void fromInterval_C_VII_Second() {
             ChromaticChord chromaticChord = ChromaticChord.builder()
                     .intervalDiatonic(DiatonicDegree.VII, IntervalDiatonic.SECOND)
-                    .tonality(Tonality.ET12.C)
+                    .tonality(Tonality.C)
                     .build();
 
             assertEquals(2, chromaticChord.size());
@@ -108,10 +100,10 @@ public class ChromaticChordTest {
         }
 
         @Test
-        public void fromInterval_Cm_I_Third() throws BuildingException {
+        public void fromInterval_Cm_I_Third() {
             ChromaticChord chromaticChord = ChromaticChord.builder()
                     .intervalDiatonic(IntervalDiatonic.THIRD)
-                    .tonality(Tonality.ET12.Cm)
+                    .tonality(Tonality.Cm)
                     .build();
 
             assertEquals(2, chromaticChord.size());
@@ -124,10 +116,10 @@ public class ChromaticChordTest {
         }
 
         @Test
-        public void fromDiatonicFunction3() throws BuildingException {
+        public void fromDiatonicFunction3() {
             ChromaticChord diatonicChordMidi = ChromaticChord.builder()
                     .intervalDiatonic(IntervalDiatonic.THIRD)
-                    .tonality(Tonality.ET12.Gm)
+                    .tonality(Tonality.Gm)
                     .build();
             Assert.assertEquals(2, diatonicChordMidi.size());
             assertPitchInChord(Chromatic.G, diatonicChordMidi, 0);
@@ -135,10 +127,10 @@ public class ChromaticChordTest {
         }
 
         @Test
-        public void fromDiatonicFunction4() throws BuildingException {
+        public void fromDiatonicFunction4() {
             ChromaticChord diatonicChordMidi = ChromaticChord.builder()
                     .intervalDiatonic(DiatonicDegree.II, IntervalDiatonic.THIRD)
-                    .tonality(Tonality.ET12.Gm)
+                    .tonality(Tonality.Gm)
                     .build();
             Assert.assertEquals(2, diatonicChordMidi.size());
             assertPitchInChord(Chromatic.A, diatonicChordMidi, 0);
@@ -146,10 +138,10 @@ public class ChromaticChordTest {
         }
 
         @Test
-        public void fromDiatonicFunction5() throws BuildingException {
+        public void fromDiatonicFunction5() {
             ChromaticChord chromaticChord = ChromaticChord.builder()
                     .intervalDiatonic(DiatonicDegree.VI, IntervalDiatonic.THIRD)
-                    .tonality(Tonality.ET12.Gm)
+                    .tonality(Tonality.Gm)
                     .build();
             Assert.assertEquals(2, chromaticChord.size());
             assertPitchInChord(Chromatic.DD, chromaticChord, 0);
@@ -157,11 +149,8 @@ public class ChromaticChordTest {
         }
 
         @Test
-        public void fromChromaticFunction_ISUS4() throws BuildingException {
-            ChromaticChord chromaticChord = ChromaticChord.builder()
-                    .function(ChromaticDegreeFunction.ISUS4)
-                    .tonality(Tonality.ET12.C)
-                    .build();
+        public void fromChromaticFunction_ISUS4() throws ScaleRelativeDegreeException {
+            ChromaticChord chromaticChord = ChromaticDegreeFunction.ISUS4.getChromaticChordFromTonality(Tonality.C);
             Assert.assertEquals(3, chromaticChord.size());
             assertPitchInChord(Chromatic.C, chromaticChord, 0);
             assertPitchInChord(Chromatic.F, chromaticChord, 1);

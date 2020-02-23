@@ -18,7 +18,7 @@ public class TonalityChordRetrieval {
         for ( HarmonicFunction harmonicFunction : harmonicFunctions ) {
             ChromaticChord chromaticChord;
             try {
-                chromaticChord = ChromaticChord.builder().tonality(tonality).function(harmonicFunction).build();
+                chromaticChord = harmonicFunction.getChromaticChordFromTonality(tonality);
                 if (chromaticChord == null)
                     throw new RuntimeException();
             } catch (Exception e) {

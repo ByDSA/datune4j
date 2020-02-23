@@ -2445,10 +2445,7 @@ public final class ChromaticChord
     public static <C extends CyclicDegree> ChromaticChord from(@NonNull TonalChord<C> tonalChord) {
         Tonality<Chromatic> tonality = PitchTonalMidi.turnToTonalityChromatic(tonalChord.getTonality());
         try {
-            ChromaticChord chromaticChord = builder()
-                    .function(tonalChord.getHarmonicFunction())
-                    .tonality(tonality)
-                    .build();
+            ChromaticChord chromaticChord = tonalChord.getHarmonicFunction().getChromaticChordFromTonality(tonality);
             if (chromaticChord == null)
                 throw new RuntimeException();
             return chromaticChord;

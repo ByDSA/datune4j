@@ -4,6 +4,7 @@ import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
+import es.danisales.datune.function.SecondaryDominant;
 import es.danisales.datune.tempo.MusicalTime;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityRetrieval;
@@ -66,9 +67,9 @@ public class TonalLayerCalculator {
 
     private void initializePossibleTonalities() {
         possibleTonalities = new ArrayList<>();
-        possibleTonalities.addAll(TonalityRetrieval.ET12.ALL_MAJOR_MODES);
-        possibleTonalities.addAll(TonalityRetrieval.ET12.ALL_MELODIC_MINOR);
-        possibleTonalities.addAll(TonalityRetrieval.ET12.ALL_HARMONIC_MINOR);
+        possibleTonalities.addAll(TonalityRetrieval.ALL_MAJOR_MODES);
+        possibleTonalities.addAll(TonalityRetrieval.ALL_MELODIC_MINOR);
+        possibleTonalities.addAll(TonalityRetrieval.ALL_HARMONIC_MINOR);
     }
 
     private void showPossibleTonalities() {
@@ -122,11 +123,16 @@ public class TonalLayerCalculator {
     }
 
     private HarmonicFunction harmonicFunctionSelector(Set<HarmonicFunction> harmonicFunctionSet) {
-        for (HarmonicFunction harmonicFunction : harmonicFunctionSet) { // todo: provisional
-            return harmonicFunction;
+        HarmonicFunction ret = null;
+        for (HarmonicFunction harmonicFunction : harmonicFunctionSet) {
+            if (ret == null
+                    || (harmonicFunction instanceof DiatonicFunction && !(ret instanceof DiatonicFunction))
+                    || (harmonicFunction instanceof SecondaryDominant && !(ret instanceof SecondaryDominant) && !(ret instanceof DiatonicFunction))
+            )
+                ret = harmonicFunction;
         }
 
-        return null;
+        return ret;
     }
 
     public TonalLayer generate() {

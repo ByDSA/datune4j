@@ -14,7 +14,7 @@ import static org.junit.Assert.assertTrue;
 public class HarmonicFunctionTest {
     @Test
     public void get() {
-        Tonality<Chromatic> tonality = Tonality.ET12.Cm;
+        Tonality<Chromatic> tonality = Tonality.Cm;
         ChromaticChord chromaticChord = ChromaticChord.DD;
         Set<HarmonicFunction> harmonicFunctions = tonality.getFunctionsFrom(chromaticChord);
 
@@ -25,7 +25,7 @@ public class HarmonicFunctionTest {
 
     @Test
     public void get_chromaticChordInverted() {
-        Tonality<Chromatic> tonality = Tonality.ET12.Cm;
+        Tonality<Chromatic> tonality = Tonality.Cm;
         ChromaticChord chromaticChord = ChromaticChord.DD.clone();
         chromaticChord.inv();
         Set<HarmonicFunction> harmonicFunctions = tonality.getFunctionsFrom(chromaticChord);
@@ -38,7 +38,7 @@ public class HarmonicFunctionTest {
     @Test
     public void get_cachePersistence_setScale() {
         ChromaticChord chromaticChord = ChromaticChord.DD.clone();
-        Tonality<Chromatic> tonality = Tonality.ET12.C.clone();
+        Tonality<Chromatic> tonality = Tonality.C.clone();
         tonality.getFunctionsFrom(chromaticChord); // creates caches
         tonality.setScale(Scale.MINOR); // should clear caches
         Set<HarmonicFunction> harmonicFunctions = tonality.getFunctionsFrom(chromaticChord); // should recreate caches
@@ -51,7 +51,7 @@ public class HarmonicFunctionTest {
     @Test
     public void get_cachePersistence_setRoot() {
         ChromaticChord chromaticChord = ChromaticChord.DD.clone();
-        Tonality<Chromatic> tonality = Tonality.ET12.C.clone();
+        Tonality<Chromatic> tonality = Tonality.C.clone();
         tonality.getFunctionsFrom(chromaticChord); // creates caches
         tonality.setRoot(Chromatic.DD); // should clear caches
         Set<HarmonicFunction> harmonicFunctions = tonality.getFunctionsFrom(chromaticChord); // should recreate caches

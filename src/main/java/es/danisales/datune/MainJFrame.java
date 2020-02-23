@@ -28,7 +28,7 @@ public class MainJFrame extends JFrame {
 
     private void initializeTonalitiesJComboBox() {
         tonalitiesComboBox = new JComboBox<>();
-        for (Tonality<Chromatic> t : TonalityRetrieval.ET12.ALL_MAJOR_MINOR)
+        for (Tonality<Chromatic> t : TonalityRetrieval.ALL_MAJOR_MINOR)
             tonalitiesComboBox.addItem(t);
 
         tonalitiesComboBox.addActionListener(e -> {
@@ -58,7 +58,7 @@ public class MainJFrame extends JFrame {
 
         getContentPane().add(panel, BorderLayout.CENTER);
 
-        Tonality<Chromatic> initialTonality = Tonality.ET12.C;
+        Tonality<Chromatic> initialTonality = Tonality.C;
         tonalitiesComboBox.setSelectedItem(initialTonality);
         new Loader(initialTonality, panel).load();
 

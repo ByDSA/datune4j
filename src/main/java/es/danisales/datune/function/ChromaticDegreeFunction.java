@@ -10,7 +10,6 @@ import es.danisales.datune.degrees.scale.ChromaticDegree;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.utils.NeverHappensException;
-import es.danisales.utils.building.BuildingException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.List;
@@ -116,6 +115,32 @@ public class ChromaticDegreeFunction implements HarmonicFunction {
     public static final ChromaticDegreeFunction bVII7 = new ChromaticDegreeFunction(ChromaticDegree.bVII, ChromaticChordPattern.SEVENTH);
     public static final ChromaticDegreeFunction VII7 = new ChromaticDegreeFunction(ChromaticDegree.VII, ChromaticChordPattern.SEVENTH);
 
+    public static final ChromaticDegreeFunction I6 = new ChromaticDegreeFunction(ChromaticDegree.I, ChromaticChordPattern.SIXTH);
+    public static final ChromaticDegreeFunction bII6 = new ChromaticDegreeFunction(ChromaticDegree.bII, ChromaticChordPattern.SIXTH);
+    public static final ChromaticDegreeFunction II6 = new ChromaticDegreeFunction(ChromaticDegree.II, ChromaticChordPattern.SIXTH);
+    public static final ChromaticDegreeFunction bIII6 = new ChromaticDegreeFunction(ChromaticDegree.bIII, ChromaticChordPattern.SIXTH);
+    public static final ChromaticDegreeFunction III6 = new ChromaticDegreeFunction(ChromaticDegree.III, ChromaticChordPattern.SIXTH);
+    public static final ChromaticDegreeFunction IV6 = new ChromaticDegreeFunction(ChromaticDegree.IV, ChromaticChordPattern.SIXTH);
+    public static final ChromaticDegreeFunction bV6 = new ChromaticDegreeFunction(ChromaticDegree.bV, ChromaticChordPattern.SIXTH);
+    public static final ChromaticDegreeFunction V6 = new ChromaticDegreeFunction(ChromaticDegree.V, ChromaticChordPattern.SIXTH);
+    public static final ChromaticDegreeFunction bVI6 = new ChromaticDegreeFunction(ChromaticDegree.bVI, ChromaticChordPattern.SIXTH);
+    public static final ChromaticDegreeFunction VI6 = new ChromaticDegreeFunction(ChromaticDegree.VI, ChromaticChordPattern.SIXTH);
+    public static final ChromaticDegreeFunction bVII6 = new ChromaticDegreeFunction(ChromaticDegree.bVII, ChromaticChordPattern.SIXTH);
+    public static final ChromaticDegreeFunction VII6 = new ChromaticDegreeFunction(ChromaticDegree.VII, ChromaticChordPattern.SIXTH);
+
+    public static final ChromaticDegreeFunction Im6 = new ChromaticDegreeFunction(ChromaticDegree.I, ChromaticChordPattern.SIXTH_MINOR);
+    public static final ChromaticDegreeFunction bIIm6 = new ChromaticDegreeFunction(ChromaticDegree.bII, ChromaticChordPattern.SIXTH_MINOR);
+    public static final ChromaticDegreeFunction IIm6 = new ChromaticDegreeFunction(ChromaticDegree.II, ChromaticChordPattern.SIXTH_MINOR);
+    public static final ChromaticDegreeFunction bIIIm6 = new ChromaticDegreeFunction(ChromaticDegree.bIII, ChromaticChordPattern.SIXTH_MINOR);
+    public static final ChromaticDegreeFunction IIIm6 = new ChromaticDegreeFunction(ChromaticDegree.III, ChromaticChordPattern.SIXTH_MINOR);
+    public static final ChromaticDegreeFunction IVm6 = new ChromaticDegreeFunction(ChromaticDegree.IV, ChromaticChordPattern.SIXTH_MINOR);
+    public static final ChromaticDegreeFunction bVm6 = new ChromaticDegreeFunction(ChromaticDegree.bV, ChromaticChordPattern.SIXTH_MINOR);
+    public static final ChromaticDegreeFunction Vm6 = new ChromaticDegreeFunction(ChromaticDegree.V, ChromaticChordPattern.SIXTH_MINOR);
+    public static final ChromaticDegreeFunction bVIm6 = new ChromaticDegreeFunction(ChromaticDegree.bVI, ChromaticChordPattern.SIXTH_MINOR);
+    public static final ChromaticDegreeFunction VIm6 = new ChromaticDegreeFunction(ChromaticDegree.VI, ChromaticChordPattern.SIXTH_MINOR);
+    public static final ChromaticDegreeFunction bVIIm6 = new ChromaticDegreeFunction(ChromaticDegree.bVII, ChromaticChordPattern.SIXTH_MINOR);
+    public static final ChromaticDegreeFunction VIIm6 = new ChromaticDegreeFunction(ChromaticDegree.VII, ChromaticChordPattern.SIXTH_MINOR);
+
     public static final ChromaticDegreeFunction IMaj7 = new ChromaticDegreeFunction(ChromaticDegree.I, ChromaticChordPattern.SEVENTH_MAJ7);
     public static final ChromaticDegreeFunction bIIMaj7 = new ChromaticDegreeFunction(ChromaticDegree.bII, ChromaticChordPattern.SEVENTH_MAJ7);
     public static final ChromaticDegreeFunction IIMaj7 = new ChromaticDegreeFunction(ChromaticDegree.II, ChromaticChordPattern.SEVENTH_MAJ7);
@@ -141,6 +166,19 @@ public class ChromaticDegreeFunction implements HarmonicFunction {
     public static final ChromaticDegreeFunction vi7 = new ChromaticDegreeFunction(ChromaticDegree.VI, ChromaticChordPattern.SEVENTH_MINOR);
     public static final ChromaticDegreeFunction bvii7 = new ChromaticDegreeFunction(ChromaticDegree.bVII, ChromaticChordPattern.SEVENTH_MINOR);
     public static final ChromaticDegreeFunction vii7 = new ChromaticDegreeFunction(ChromaticDegree.VII, ChromaticChordPattern.SEVENTH_MINOR);
+
+    public static final ChromaticDegreeFunction i7b5 = new ChromaticDegreeFunction(ChromaticDegree.I, ChromaticChordPattern.SEVENTH_MINOR_b5);
+    public static final ChromaticDegreeFunction bii7b5 = new ChromaticDegreeFunction(ChromaticDegree.bII, ChromaticChordPattern.SEVENTH_MINOR_b5);
+    public static final ChromaticDegreeFunction ii7b5 = new ChromaticDegreeFunction(ChromaticDegree.II, ChromaticChordPattern.SEVENTH_MINOR_b5);
+    public static final ChromaticDegreeFunction biii7b5 = new ChromaticDegreeFunction(ChromaticDegree.bIII, ChromaticChordPattern.SEVENTH_MINOR_b5);
+    public static final ChromaticDegreeFunction iii7b5 = new ChromaticDegreeFunction(ChromaticDegree.III, ChromaticChordPattern.SEVENTH_MINOR_b5);
+    public static final ChromaticDegreeFunction iv7b5 = new ChromaticDegreeFunction(ChromaticDegree.IV, ChromaticChordPattern.SEVENTH_MINOR_b5);
+    public static final ChromaticDegreeFunction bv7b5 = new ChromaticDegreeFunction(ChromaticDegree.bV, ChromaticChordPattern.SEVENTH_MINOR_b5);
+    public static final ChromaticDegreeFunction v7b5 = new ChromaticDegreeFunction(ChromaticDegree.V, ChromaticChordPattern.SEVENTH_MINOR_b5);
+    public static final ChromaticDegreeFunction bvi7b5 = new ChromaticDegreeFunction(ChromaticDegree.bVI, ChromaticChordPattern.SEVENTH_MINOR_b5);
+    public static final ChromaticDegreeFunction vi7b5 = new ChromaticDegreeFunction(ChromaticDegree.VI, ChromaticChordPattern.SEVENTH_MINOR_b5);
+    public static final ChromaticDegreeFunction bvii7b5 = new ChromaticDegreeFunction(ChromaticDegree.bVII, ChromaticChordPattern.SEVENTH_MINOR_b5);
+    public static final ChromaticDegreeFunction vii7b5 = new ChromaticDegreeFunction(ChromaticDegree.VII, ChromaticChordPattern.SEVENTH_MINOR_b5);
 
 
     public static final List<ChromaticDegreeFunction> TRIAD_FUNCTIONS = new ImmutableList.Builder<ChromaticDegreeFunction>()
@@ -195,6 +233,87 @@ public class ChromaticDegreeFunction implements HarmonicFunction {
             .add(VIaug)
             .add(bVIIaug)
             .add(VIIaug)
+            .build();
+
+    public static final List<ChromaticDegreeFunction> SEVENTH_FUNCTIONS = new ImmutableList.Builder<ChromaticDegreeFunction>()
+            .add(IMaj7)
+            .add(bIIMaj7)
+            .add(IIMaj7)
+            .add(bIIIMaj7)
+            .add(IIIMaj7)
+            .add(IVMaj7)
+            .add(bVMaj7)
+            .add(VMaj7)
+            .add(bVIMaj7)
+            .add(VIMaj7)
+            .add(bVIIMaj7)
+            .add(VIIMaj7)
+
+            .add(I7)
+            .add(bII7)
+            .add(II7)
+            .add(bIII7)
+            .add(III7)
+            .add(IV7)
+            .add(bV7)
+            .add(V7)
+            .add(bVI7)
+            .add(VI7)
+            .add(bVII7)
+            .add(VII7)
+
+            .add(i7)
+            .add(bii7)
+            .add(ii7)
+            .add(biii7)
+            .add(iii7)
+            .add(iv7)
+            .add(bv7)
+            .add(v7)
+            .add(bvi7)
+            .add(vi7)
+            .add(bvii7)
+            .add(vii7)
+
+            .add(i7b5)
+            .add(bii7b5)
+            .add(ii7b5)
+            .add(biii7b5)
+            .add(iii7b5)
+            .add(iv7b5)
+            .add(bv7b5)
+            .add(v7b5)
+            .add(bvi7b5)
+            .add(vi7b5)
+            .add(bvii7b5)
+            .add(vii7b5)
+
+            .add(I6)
+            .add(bII6)
+            .add(II6)
+            .add(bIII6)
+            .add(III6)
+            .add(IV6)
+            .add(bV6)
+            .add(V6)
+            .add(bVI6)
+            .add(VI6)
+            .add(bVII6)
+            .add(VII6)
+
+            .add(Im6)
+            .add(bIIm6)
+            .add(IIm6)
+            .add(bIIIm6)
+            .add(IIIm6)
+            .add(IVm6)
+            .add(bVm6)
+            .add(Vm6)
+            .add(bVIm6)
+            .add(VIm6)
+            .add(bVIIm6)
+            .add(VIIm6)
+
             .build();
 
     public static final List<ChromaticDegreeFunction> POWER_CHORD_FUNCTIONS = new ImmutableList.Builder<ChromaticDegreeFunction>()
@@ -321,6 +440,7 @@ public class ChromaticDegreeFunction implements HarmonicFunction {
 
     private static final List<ChromaticDegreeFunction> immutableValues = new ImmutableList.Builder<ChromaticDegreeFunction>()
             .addAll(TRIAD_FUNCTIONS)
+            .addAll(SEVENTH_FUNCTIONS)
             .addAll(POWER_CHORD_FUNCTIONS)
             .addAll(SUS4_FUNCTIONS)
             .build();

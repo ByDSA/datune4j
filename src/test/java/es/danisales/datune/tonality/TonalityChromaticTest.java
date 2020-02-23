@@ -2,14 +2,16 @@ package es.danisales.datune.tonality;
 
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.ChromaticDegreeFunction;
 import es.danisales.datune.function.DiatonicFunction;
+import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.function.SecondaryDominant;
-import es.danisales.utils.building.BuildingException;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -21,14 +23,14 @@ import static org.junit.Assert.assertNotNull;
 public class TonalityChromaticTest {
     @Test
     public void from_C_MAJOR() {
-        Tonality<Chromatic> tonality = Tonality.ET12.C;
+        Tonality<Chromatic> tonality = Tonality.C;
         assertEquals(Chromatic.C, tonality.getRoot());
         assertEquals(Scale.MAJOR, tonality.getScale());
     }
 
     @Test
     public void notes_C_MAJOR() throws ScaleRelativeDegreeException {
-        Tonality<Chromatic> tonality = Tonality.ET12.C;
+        Tonality<Chromatic> tonality = Tonality.C;
         assertEquals( Chromatic.C, tonality.getNote(DiatonicDegree.I) );
         assertEquals( Chromatic.D, tonality.getNote(DiatonicDegree.II) );
         assertEquals( Chromatic.E, tonality.getNote(DiatonicDegree.III) );
@@ -40,63 +42,69 @@ public class TonalityChromaticTest {
 
     @Test
     public void contains_E_in_C_MAJOR() {
-        Tonality<Chromatic> tonality = Tonality.ET12.C;
+        Tonality<Chromatic> tonality = Tonality.C;
         assertTrue( tonality.containsAll(Chromatic.E) );
     }
 
     @Test
     public void contains_FF_in_C_MAJOR() {
-        Tonality<Chromatic> tonality = Tonality.ET12.C;
+        Tonality<Chromatic> tonality = Tonality.C;
         assertFalse( tonality.containsAll(Chromatic.FF) );
     }
 
     @Test
     public void contains_chord_C_in_C_MAJOR() {
-        Tonality<Chromatic> tonality = Tonality.ET12.C;
+        Tonality<Chromatic> tonality = Tonality.C;
         assertTrue( tonality.containsAll(ChromaticChord.C) );
     }
 
     @Test
     public void contains_chord_D_in_C_MAJOR() {
-        Tonality<Chromatic> tonality = Tonality.ET12.C;
+        Tonality<Chromatic> tonality = Tonality.C;
         assertFalse( tonality.containsAll(ChromaticChord.D) );
     }
 
     @Test
     public void isModeOf_Cm_of_C() {
-        Tonality<Chromatic> tonality1 = Tonality.ET12.Cm;
-        Tonality<Chromatic> tonality2 = Tonality.ET12.C;
+        Tonality<Chromatic> tonality1 = Tonality.Cm;
+        Tonality<Chromatic> tonality2 = Tonality.C;
         assertTrue( tonality1.isModeOf(tonality2) );
     }
-    
+
     @Test
     public void getFunction_diatonicFunction() {
-        Tonality ton = Tonality.ET12.C;
-        assertTrue(ton.getFunctionsFrom(ChromaticChord.C).contains(DiatonicFunction.I));
-        assertTrue(ton.getFunctionsFrom(ChromaticChord.Dm).contains(DiatonicFunction.II));
-        assertTrue(ton.getFunctionsFrom(ChromaticChord.Em).contains(DiatonicFunction.III));
-        assertTrue(ton.getFunctionsFrom(ChromaticChord.F).contains(DiatonicFunction.IV));
-        assertTrue(ton.getFunctionsFrom(ChromaticChord.G).contains(DiatonicFunction.V));
-        assertTrue(ton.getFunctionsFrom(ChromaticChord.Am).contains(DiatonicFunction.VI));
-        assertTrue(ton.getFunctionsFrom(ChromaticChord.Bdim).contains(DiatonicFunction.VII));
+        Tonality<Chromatic> ton = Tonality.C;
+        assertChromaticChordToFunction(ton, ChromaticChord.C, DiatonicFunction.I, ChromaticDegreeFunction.I, SecondaryDominant.V_IV);
+        assertChromaticChordToFunction(ton, ChromaticChord.Dm, DiatonicFunction.II, ChromaticDegreeFunction.ii);
+        assertChromaticChordToFunction(ton, ChromaticChord.Em, DiatonicFunction.III, ChromaticDegreeFunction.iii);
+        assertChromaticChordToFunction(ton, ChromaticChord.F, DiatonicFunction.IV, ChromaticDegreeFunction.IV);
+        assertChromaticChordToFunction(ton, ChromaticChord.G, DiatonicFunction.V, ChromaticDegreeFunction.V);
+        assertChromaticChordToFunction(ton, ChromaticChord.Am, DiatonicFunction.VI, ChromaticDegreeFunction.vi);
+        assertChromaticChordToFunction(ton, ChromaticChord.Bdim, DiatonicFunction.VII, ChromaticDegreeFunction.VII0);
 
-        assertEquals(DiatonicFunction.I6, ton.getFunctionsFrom(ChromaticChord.C6).iterator().next());
-        assertEquals(DiatonicFunction.II6, ton.getFunctionsFrom(ChromaticChord.Dm6).iterator().next());
-        assertEquals(DiatonicFunction.IV6, ton.getFunctionsFrom(ChromaticChord.F6).iterator().next());
-        assertEquals(DiatonicFunction.V6, ton.getFunctionsFrom(ChromaticChord.G6).iterator().next());
+        assertChromaticChordToFunction(ton, ChromaticChord.C6, DiatonicFunction.I6, ChromaticDegreeFunction.I6);
+        assertChromaticChordToFunction(ton, ChromaticChord.Dm6, DiatonicFunction.II6, ChromaticDegreeFunction.IIm6);
+        assertChromaticChordToFunction(ton, ChromaticChord.F6, DiatonicFunction.IV6, ChromaticDegreeFunction.IV6);
+        assertChromaticChordToFunction(ton, ChromaticChord.G6, DiatonicFunction.V6, ChromaticDegreeFunction.V6);
 
-        assertEquals(DiatonicFunction.I7, ton.getFunctionsFrom(ChromaticChord.CMaj7).iterator().next());
-        assertEquals(DiatonicFunction.II7, ton.getFunctionsFrom(ChromaticChord.Dm7).iterator().next());
-        assertEquals(DiatonicFunction.III7, ton.getFunctionsFrom(ChromaticChord.Em7).iterator().next());
-        assertEquals(DiatonicFunction.IV7, ton.getFunctionsFrom(ChromaticChord.FMaj7).iterator().next());
-        assertEquals(DiatonicFunction.V7, ton.getFunctionsFrom(ChromaticChord.G7).iterator().next());
-        assertEquals(DiatonicFunction.VI7, ton.getFunctionsFrom(ChromaticChord.Am7).iterator().next());
-        assertEquals(DiatonicFunction.VII7, ton.getFunctionsFrom(ChromaticChord.Bm7b5).iterator().next());
+        assertChromaticChordToFunction(ton, ChromaticChord.CMaj7, DiatonicFunction.I7, ChromaticDegreeFunction.IMaj7);
+        assertChromaticChordToFunction(ton, ChromaticChord.Dm7, DiatonicFunction.II7, ChromaticDegreeFunction.ii7);
+        assertChromaticChordToFunction(ton, ChromaticChord.Em7, DiatonicFunction.III7, ChromaticDegreeFunction.iii7);
+        assertChromaticChordToFunction(ton, ChromaticChord.FMaj7, DiatonicFunction.IV7, ChromaticDegreeFunction.IVMaj7);
+        assertChromaticChordToFunction(ton, ChromaticChord.G7, DiatonicFunction.V7, ChromaticDegreeFunction.V7);
+        assertChromaticChordToFunction(ton, ChromaticChord.Am7, DiatonicFunction.VI7, ChromaticDegreeFunction.vi7);
+        assertChromaticChordToFunction(ton, ChromaticChord.Bm7b5, DiatonicFunction.VII7, ChromaticDegreeFunction.vii7b5);
+    }
+
+    private <C extends CyclicDegree> void assertChromaticChordToFunction(Tonality<C> tonality, ChromaticChord chromaticChord, HarmonicFunction... harmonicFunction) {
+        Set<HarmonicFunction> functions = tonality.getFunctionsFrom(chromaticChord);
+        assertEquals(harmonicFunction.length, functions.size());
+        assertTrue(functions.containsAll(Arrays.asList(harmonicFunction)));
     }
 
     @Test
     public void getFunction_chromaticDegree() {
-        Tonality ton = Tonality.ET12.C;
+        Tonality ton = Tonality.C;
 
         assertEquals(1, ton.getFunctionsFrom(ChromaticChord.Csus4).size());
         assertTrue(ton.getFunctionsFrom(ChromaticChord.Csus4).contains(ChromaticDegreeFunction.ISUS4));
@@ -111,41 +119,34 @@ public class TonalityChromaticTest {
     }
 
     @Test
-    public void hasFromDiatonicFunction() throws BuildingException {
-        for (Tonality<Chromatic> t : TonalityRetrieval.ET12.ALL_MAJOR_MINOR)
+    public void hasFromDiatonicFunction() throws ScaleRelativeDegreeException {
+        for (Tonality<Chromatic> t : TonalityRetrieval.ALL_MAJOR_MINOR)
             for (DiatonicFunction df : DiatonicFunction.immutableValues()) {
-                ChromaticChord chromaticChord = ChromaticChord.builder()
-                        .tonality(t)
-                        .function(df)
-                        .build();
+                ChromaticChord chromaticChord = df.getChromaticChordFromTonality(t);
                 Assert.assertTrue(t.toString() + " " + df.toString() + " " + chromaticChord.toString(), t.containsAll(chromaticChord));
             }
     }
 
-
     @Test
-    public void getChromaticFunction() throws BuildingException {
-        Tonality<Chromatic> t = Tonality.ET12.C;
+    public void getChromaticFunction() throws ScaleRelativeDegreeException {
+        Tonality<Chromatic> t = Tonality.C;
         for (ChromaticDegreeFunction cf : SecondaryDominant.values()) {
-            assertNotNull(ChromaticChord.builder()
-                    .tonality(t)
-                    .function(cf)
-                    .build());
+            assertNotNull(cf.getChromaticChordFromTonality(t));
         }
     }
 
     @Test
-    public void getChordFromHarmonicFunction() {
-        Tonality<Chromatic> t = Tonality.ET12.C;
+    public void getChordFromHarmonicFunction() throws ScaleRelativeDegreeException {
+        Tonality<Chromatic> t = Tonality.C;
 
-        t.getChord(DiatonicFunction.I);
+        DiatonicFunction.I.getChromaticChordFromTonality(t);
     }
 
     /* Main Major And Minor */
 
     @Test
     public void mainMajorMinorAreMajorOrMinor() {
-        Set<Tonality<Chromatic>> tonalityList = TonalityRetrieval.ET12.ALL_MAJOR_MINOR;
+        Set<Tonality<Chromatic>> tonalityList = TonalityRetrieval.ALL_MAJOR_MINOR;
 
         for (Tonality tonality : tonalityList)
             assertTrue(ScaleUtils.isMajorOrMinor(tonality.getScale()));
@@ -166,7 +167,7 @@ public class TonalityChromaticTest {
     public void allContainsValues() {
         List<Tonality> tonalities = TonalityRetrieval.allUsualKeys();
 
-        Set<Tonality<Chromatic>> immutableValues = TonalityRetrieval.ET12.ALL_MAJOR_MINOR;
+        Set<Tonality<Chromatic>> immutableValues = TonalityRetrieval.ALL_MAJOR_MINOR;
 
         for (Tonality tonality : immutableValues)
             Assert.assertTrue( tonality.toString(), tonalities.contains(tonality) );
@@ -174,7 +175,7 @@ public class TonalityChromaticTest {
 */
     @Test
     public void valuesSize() {
-        Set<Tonality<Chromatic>> tonalities = TonalityRetrieval.ET12.ALL_MAJOR_MINOR;
+        Set<Tonality<Chromatic>> tonalities = TonalityRetrieval.ALL_MAJOR_MINOR;
 
         Assert.assertEquals( 24, tonalities.size() );
     }
@@ -194,17 +195,17 @@ public class TonalityChromaticTest {
 
     @Test
     public void allContains1() {
-        allContains(Tonality.ET12.C);
+        allContains(Tonality.C);
     }
 
     @Test
     public void allContains2() {
-        allContains(Tonality.ET12.C);
+        allContains(Tonality.C);
     }
 
     @Test
     public void allContains3() {
-        allContains(Tonality.ET12.GG);
+        allContains(Tonality.GG);
     }
 
     @Test

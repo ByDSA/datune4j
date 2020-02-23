@@ -48,27 +48,27 @@ public class TonalChordRetrievalChromatic {
     }
 
     public TonalChordRetrievalChromatic majorMinorET12() {
-        return tonalities(TonalityRetrieval.ET12.ALL_MAJOR_MINOR);
+        return tonalities(TonalityRetrieval.ALL_MAJOR_MINOR);
     }
 
     public TonalChordRetrievalChromatic majorModesET12() {
-        return tonalities(TonalityRetrieval.ET12.ALL_MAJOR_MODES);
+        return tonalities(TonalityRetrieval.ALL_MAJOR_MODES);
     }
 
     public TonalChordRetrievalChromatic harmonicMinorModesET12() {
-        return tonalities(TonalityRetrieval.ET12.ALL_HARMONIC_MINOR_MODES);
+        return tonalities(TonalityRetrieval.ALL_HARMONIC_MINOR_MODES);
     }
 
     public TonalChordRetrievalChromatic harmonicMajorModesET12() {
-        return tonalities(TonalityRetrieval.ET12.ALL_HARMONIC_MAJOR_MODES);
+        return tonalities(TonalityRetrieval.ALL_HARMONIC_MAJOR_MODES);
     }
 
     public TonalChordRetrievalChromatic doubleHarmonicModesET12() {
-        return tonalities(TonalityRetrieval.ET12.ALL_DOUBLE_HARMONIC_MODES);
+        return tonalities(TonalityRetrieval.ALL_DOUBLE_HARMONIC_MODES);
     }
 
     public TonalChordRetrievalChromatic melodicMinorModesET12() {
-        return tonalities(TonalityRetrieval.ET12.ALL_MELODIC_MINOR_MODES);
+        return tonalities(TonalityRetrieval.ALL_MELODIC_MINOR_MODES);
     }
 
     public TonalChordRetrievalChromatic main21ModesET12() {
@@ -124,10 +124,7 @@ public class TonalChordRetrievalChromatic {
                         ChromaticChord forEachChromaticChord;
 
                         try {
-                            forEachChromaticChord = ChromaticChord.builder()
-                                    .tonality(tonality)
-                                    .function(harmonicFunction)
-                                    .build();
+                            forEachChromaticChord = harmonicFunction.getChromaticChordFromTonality(tonality);
                             if (forEachChromaticChord == null)
                                 throw new RuntimeException();
                         } catch (Exception e) {

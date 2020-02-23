@@ -61,7 +61,7 @@ public class ChromaticChordNamesTest {
 
         @Test
         public void C_I_inv3() {
-            parametricChord = TonalChord.from(Tonality.ET12.C, DiatonicFunction.I);
+            parametricChord = TonalChord.from(Tonality.C, DiatonicFunction.I);
             updateChromaticChord();
             chromaticChord.inv(3);
 
@@ -70,7 +70,7 @@ public class ChromaticChordNamesTest {
 
         @Test
         public void C_IV5() {
-            parametricChord = TonalChord.from(Tonality.ET12.C, ChromaticDegreeFunction.IV5);
+            parametricChord = TonalChord.from(Tonality.C, ChromaticDegreeFunction.IV5);
             updateChromaticChord();
 
             assertEquals("F5", chromaticChord.toString());
@@ -78,7 +78,7 @@ public class ChromaticChordNamesTest {
 
         @Test
         public void C_IV5_inv() {
-            parametricChord = TonalChord.from(Tonality.ET12.C, ChromaticDegreeFunction.IV5);
+            parametricChord = TonalChord.from(Tonality.C, ChromaticDegreeFunction.IV5);
             updateChromaticChord();
             chromaticChord.inv();
 
@@ -87,7 +87,7 @@ public class ChromaticChordNamesTest {
 
         @Test
         public void C_VSUS4() {
-            parametricChord = TonalChord.from(Tonality.ET12.C, ChromaticDegreeFunction.VSUS4);
+            parametricChord = TonalChord.from(Tonality.C, ChromaticDegreeFunction.VSUS4);
             updateChromaticChord();
 
             assertEquals("Gsus4", chromaticChord.toString());
@@ -95,7 +95,7 @@ public class ChromaticChordNamesTest {
 
         @Test
         public void C_VSUS4_inv() {
-            parametricChord = TonalChord.from(Tonality.ET12.C, ChromaticDegreeFunction.VSUS4);
+            parametricChord = TonalChord.from(Tonality.C, ChromaticDegreeFunction.VSUS4);
             updateChromaticChord();
             chromaticChord.inv();
 

@@ -46,15 +46,15 @@ public class ChordsLayerTest {
                 ChromaticChord.Bm
         ));
 
-        ChromaticChord chromaticChord = ChromaticChord.from(Tonality.ET12.C, DiatonicFunction.I);
+        ChromaticChord chromaticChord = ChromaticChord.from(Tonality.C, DiatonicFunction.I);
         chordsLayer.add(DurableEvent.from(MusicalTime.ZERO, chromaticChord, MusicalTime.WHOLE));
-        chromaticChord = ChromaticChord.from(Tonality.ET12.C, ChromaticDegreeFunction.bVI);
+        chromaticChord = ChromaticChord.from(Tonality.C, ChromaticDegreeFunction.bVI);
         chordsLayer.add(DurableEvent.from(MusicalTime.WHOLE, chromaticChord, MusicalTime.WHOLE));
-        chromaticChord = ChromaticChord.from(Tonality.ET12.C, ChromaticDegreeFunction.bVII);
+        chromaticChord = ChromaticChord.from(Tonality.C, ChromaticDegreeFunction.bVII);
         chordsLayer.add(DurableEvent.from(MusicalTime.WHOLE.clone().mult(2), chromaticChord, MusicalTime.WHOLE));
-        chromaticChord = ChromaticChord.from(Tonality.ET12.C, DiatonicFunction.I);
+        chromaticChord = ChromaticChord.from(Tonality.C, DiatonicFunction.I);
         chordsLayer.add(DurableEvent.from(MusicalTime.WHOLE.clone().mult(3), chromaticChord, MusicalTime.WHOLE));
-        chromaticChord = ChromaticChord.from(Tonality.ET12.FF, DiatonicFunction.VII);
+        chromaticChord = ChromaticChord.from(Tonality.FF, DiatonicFunction.VII);
         chordsLayer.add(DurableEvent.from(MusicalTime.WHOLE.clone().mult(4), chromaticChord, MusicalTime.WHOLE));
         chordsLayer.add(DurableEvent.from(MusicalTime.WHOLE.clone().mult(5), ChromaticChord.FFm, MusicalTime.WHOLE));
         chordsLayer.add(DurableEvent.from(MusicalTime.WHOLE.clone().mult(6), ChromaticChord.F, MusicalTime.WHOLE));

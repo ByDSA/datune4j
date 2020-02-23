@@ -19,7 +19,7 @@ public class PitchDiatonicMidiTest {
         PitchTonalMidi pitchDiatonicMidi = PitchTonalMidi.from(DiatonicDegree.I, Tonality.C, 5);
         assertNotNull(pitchDiatonicMidi);
         assertEquals(DiatonicDegree.I, pitchDiatonicMidi.getDegree());
-        assertEquals(Tonality.ET12.C, pitchDiatonicMidi.getTonality());
+        assertEquals(Tonality.C, pitchDiatonicMidi.getTonality());
         assertEquals(5, pitchDiatonicMidi.getOctave());
     }
 
@@ -28,7 +28,7 @@ public class PitchDiatonicMidiTest {
         PitchTonalMidi pitchDiatonicMidi = PitchTonalMidi.from(DiatonicDegree.III, Tonality.Am, 5);
         assertNotNull(pitchDiatonicMidi);
         assertEquals(DiatonicDegree.III, pitchDiatonicMidi.getDegree());
-        assertEquals(Tonality.ET12.Am, pitchDiatonicMidi.getTonality());
+        assertEquals(Tonality.Am, pitchDiatonicMidi.getTonality());
         assertEquals(5, pitchDiatonicMidi.getOctave());
     }
 
@@ -51,7 +51,7 @@ public class PitchDiatonicMidiTest {
         Tonality<DiatonicAlt> tonality = Tonality.from(DiatonicAlt.Cb, Scale.MAJOR);
         PitchTonalMidi pitchDiatonicMidi = PitchTonalMidi.from(PitchChromaticMidi.FF6, tonality);
         assertEquals(DiatonicDegree.V, pitchDiatonicMidi.getDegree());
-        assertEquals(Tonality.ET12.B, pitchDiatonicMidi.getTonality());
+        assertEquals(Tonality.B, pitchDiatonicMidi.getTonality());
         assertEquals(5, pitchDiatonicMidi.getOctave());
     }
 

@@ -35,7 +35,7 @@ public class TonalLayerTest {
 
         TonalLayer tonalLayer = tonalLayerCalculator.generate();
         assertEquals(MusicalTime.LONGA, tonalLayer.getLength());
-        assertTonalLayer(Tonality.ET12.C, tonalLayer, Arrays.asList(
+        assertTonalLayer(Tonality.C, tonalLayer, Arrays.asList(
                 new Pair<>(MusicalTime.ZERO, DiatonicFunction.I),
                 new Pair<>(MusicalTime.WHOLE, DiatonicFunction.V),
                 new Pair<>(MusicalTime.WHOLE.clone().mult(2), DiatonicFunction.VI),
@@ -60,7 +60,7 @@ public class TonalLayerTest {
 
         TonalLayer tonalLayer = tonalLayerCalculator.generate();
         assertEquals(MusicalTime.LONGA, tonalLayer.getLength());
-        assertTonalLayer(Tonality.ET12.C, tonalLayer, Arrays.asList(
+        assertTonalLayer(Tonality.C, tonalLayer, Arrays.asList(
                 new Pair<>(MusicalTime.ZERO, DiatonicFunction.I7),
                 new Pair<>(MusicalTime.WHOLE, DiatonicFunction.V7),
                 new Pair<>(MusicalTime.WHOLE.clone().mult(2), DiatonicFunction.VI7),

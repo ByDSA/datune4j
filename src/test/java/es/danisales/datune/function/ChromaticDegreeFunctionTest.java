@@ -55,7 +55,7 @@ public class ChromaticDegreeFunctionTest {
     public void normal_ii() throws ScaleRelativeDegreeException {
         ChromaticDegreeFunction chromaticDegreeFunction = CompoundFunction.from(ChromaticDegreeFunction.ii);
 
-        ChromaticChord chromaticChord = chromaticDegreeFunction.getChromaticChordFromTonality(Tonality.ET12.C);
+        ChromaticChord chromaticChord = chromaticDegreeFunction.getChromaticChordFromTonality(Tonality.C);
 
         assertEquals(ChromaticChord.Dm, chromaticChord);
     }
@@ -64,7 +64,7 @@ public class ChromaticDegreeFunctionTest {
     public void secondaryDominant__V_V() throws ScaleRelativeDegreeException {
         ChromaticDegreeFunction chromaticDegreeFunction = CompoundFunction.from(ChromaticDegreeFunction.V, ChromaticDegreeFunction.V);
 
-        ChromaticChord chromaticChord = chromaticDegreeFunction.getChromaticChordFromTonality(Tonality.ET12.C);
+        ChromaticChord chromaticChord = chromaticDegreeFunction.getChromaticChordFromTonality(Tonality.C);
 
         assertEquals(ChromaticChord.D, chromaticChord);
     }
@@ -73,7 +73,7 @@ public class ChromaticDegreeFunctionTest {
     public void secondaryDominant__v_V() throws ScaleRelativeDegreeException {
         ChromaticDegreeFunction chromaticDegreeFunction = CompoundFunction.from(ChromaticDegreeFunction.V, ChromaticDegreeFunction.v);
 
-        ChromaticChord chromaticChord = chromaticDegreeFunction.getChromaticChordFromTonality(Tonality.ET12.C);
+        ChromaticChord chromaticChord = chromaticDegreeFunction.getChromaticChordFromTonality(Tonality.C);
 
         assertEquals(ChromaticChord.Dm, chromaticChord);
     }
@@ -82,7 +82,7 @@ public class ChromaticDegreeFunctionTest {
     public void normal__V_Eb() throws ScaleRelativeDegreeException {
         ChromaticDegreeFunction chromaticDegreeFunction = CompoundFunction.from(ChromaticDegreeFunction.V7);
 
-        ChromaticChord chromaticChord = chromaticDegreeFunction.getChromaticChordFromTonality(Tonality.ET12.DD);
+        ChromaticChord chromaticChord = chromaticDegreeFunction.getChromaticChordFromTonality(Tonality.DD);
 
         assertEquals(ChromaticChord.AA7, chromaticChord);
     }
@@ -91,7 +91,7 @@ public class ChromaticDegreeFunctionTest {
     public void secondaryDominant__v_V_Eb() throws ScaleRelativeDegreeException {
         ChromaticDegreeFunction chromaticDegreeFunction = CompoundFunction.from(ChromaticDegreeFunction.V, ChromaticDegreeFunction.v);
 
-        ChromaticChord chromaticChord = chromaticDegreeFunction.getChromaticChordFromTonality(Tonality.ET12.DD);
+        ChromaticChord chromaticChord = chromaticDegreeFunction.getChromaticChordFromTonality(Tonality.DD);
 
         assertEquals(ChromaticChord.Fm, chromaticChord);
     }
@@ -100,7 +100,7 @@ public class ChromaticDegreeFunctionTest {
     public void secondaryDominant__ii_Eb() throws ScaleRelativeDegreeException {
         ChromaticDegreeFunction chromaticDegreeFunction = CompoundFunction.from(ChromaticDegreeFunction.ii);
 
-        ChromaticChord chromaticChord = chromaticDegreeFunction.getChromaticChordFromTonality(Tonality.ET12.DD);
+        ChromaticChord chromaticChord = chromaticDegreeFunction.getChromaticChordFromTonality(Tonality.DD);
 
         assertEquals(ChromaticChord.Fm, chromaticChord);
     }
@@ -109,7 +109,7 @@ public class ChromaticDegreeFunctionTest {
     public void secondaryDominant__V7_ii_Eb() throws ScaleRelativeDegreeException {
         ChromaticDegreeFunction chromaticDegreeFunction = CompoundFunction.from(ChromaticDegreeFunction.ii, ChromaticDegreeFunction.V7);
 
-        ChromaticChord chromaticChord = chromaticDegreeFunction.getChromaticChordFromTonality(Tonality.ET12.DD);
+        ChromaticChord chromaticChord = chromaticDegreeFunction.getChromaticChordFromTonality(Tonality.DD);
 
         assertEquals(ChromaticChord.C7, chromaticChord);
     }
@@ -118,7 +118,7 @@ public class ChromaticDegreeFunctionTest {
     public void secondaryDominant__ii_ii_Eb() throws ScaleRelativeDegreeException {
         ChromaticDegreeFunction chromaticDegreeFunction = CompoundFunction.from(ChromaticDegreeFunction.ii, ChromaticDegreeFunction.ii);
 
-        ChromaticChord chromaticChord = chromaticDegreeFunction.getChromaticChordFromTonality(Tonality.ET12.DD);
+        ChromaticChord chromaticChord = chromaticDegreeFunction.getChromaticChordFromTonality(Tonality.DD);
 
         assertEquals(ChromaticChord.Gm, chromaticChord);
     }
