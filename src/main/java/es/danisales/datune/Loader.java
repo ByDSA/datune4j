@@ -15,10 +15,7 @@ import es.danisales.datune.midi.ChordMidi;
 import es.danisales.datune.midi.NoteMidi;
 import es.danisales.datune.midi.binaries.events.NoteOff;
 import es.danisales.datune.midi.binaries.events.NoteOn;
-import es.danisales.datune.tonality.Scale;
-import es.danisales.datune.tonality.ScaleRelativeDegreeException;
-import es.danisales.datune.tonality.Tonality;
-import es.danisales.datune.tonality.TonalityUtils;
+import es.danisales.datune.tonality.*;
 import es.danisales.utils.NeverHappensException;
 import es.danisales.utils.building.BuildingException;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -34,12 +31,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
 class Loader {
-    private Tonality<Chromatic> tonality;
+    private TonalityModern tonality;
     private JPanel panel;
     private JPanel[][] panels = new JPanel[7][6];
     private AtomicReference<ChordMidi> lastPlayed;
 
-    Loader(@NonNull Tonality<Chromatic> tonality, @NonNull JPanel panel) {
+    Loader(@NonNull TonalityModern tonality, @NonNull JPanel panel) {
         this.tonality = Objects.requireNonNull(tonality);
         this.panel = Objects.requireNonNull(panel);
     }
@@ -242,7 +239,7 @@ class Loader {
             ChromaticChord chromaticChord = null;
             try {
                 if (parametricChord.getHarmonicFunction() != null)
-                    chromaticChord = parametricChord.getHarmonicFunction().getChromaticChordFromTonality(parametricChord.getTonality());
+                    chromaticChord = parametricChord.getHarmonicFunction().getChord((TonalityModern)parametricChord.getTonality());
                 if (chromaticChord == null)
                     throw new RuntimeException();
             } catch (Exception e) {

@@ -9,6 +9,7 @@ import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.ChromaticDegree;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityModern;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -362,7 +363,7 @@ public class ChromaticDegreeFunction implements HarmonicFunction {
         } else
             stringBuilder.append(chromaticDegree.toString());
 
-        String s = chromaticChordPattern.symbol();
+        String s = chromaticChordPattern.getSuffix();
         if (s != null)
             stringBuilder.append(s);
 
@@ -467,12 +468,12 @@ public class ChromaticDegreeFunction implements HarmonicFunction {
 
     @Override
     @NonNull
-    public ChromaticChord getChromaticChordFromTonality(Tonality<Chromatic> tonality) throws ScaleRelativeDegreeException {
+    public ChromaticChord getChord(@NonNull TonalityModern tonality) throws ScaleRelativeDegreeException {
         Objects.requireNonNull(tonality);
 
         ChromaticChordPattern chromaticChordPattern = getChromaticChordPattern();
         Objects.requireNonNull(chromaticChordPattern, toString());
-        Chromatic noteBase = TonalityGetChromaticFunction.getNoteBaseFromChromaticFunctionAndTonality(tonality, this);
+        Chromatic noteBase = getNoteBaseFromChromaticFunctionAndTonality(tonality, this);
 
         ChromaticChord ret;
         try {
@@ -485,6 +486,10 @@ public class ChromaticDegreeFunction implements HarmonicFunction {
         }
 
         return ret;
+    }
+
+    static @NonNull Chromatic getNoteBaseFromChromaticFunctionAndTonality(Tonality<Chromatic> tonality, @NonNull ChromaticDegreeFunction chromaticDegreeFunction) throws ScaleRelativeDegreeException {
+        return tonality.getRoot().getShifted(chromaticDegreeFunction.getChromaticDegree().ordinal());
     }
 
     /* Object */

@@ -4,6 +4,7 @@ import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityModern;
 import org.junit.Test;
 
 import java.util.Set;
@@ -14,7 +15,7 @@ import static org.junit.Assert.assertTrue;
 public class HarmonicFunctionTest {
     @Test
     public void get() {
-        Tonality<Chromatic> tonality = Tonality.Cm;
+        TonalityModern tonality = TonalityModern.Cm;
         ChromaticChord chromaticChord = ChromaticChord.DD;
         Set<HarmonicFunction> harmonicFunctions = tonality.getFunctionsFrom(chromaticChord);
 
@@ -25,7 +26,7 @@ public class HarmonicFunctionTest {
 
     @Test
     public void get_chromaticChordInverted() {
-        Tonality<Chromatic> tonality = Tonality.Cm;
+        TonalityModern tonality = TonalityModern.Cm;
         ChromaticChord chromaticChord = ChromaticChord.DD.clone();
         chromaticChord.inv();
         Set<HarmonicFunction> harmonicFunctions = tonality.getFunctionsFrom(chromaticChord);
@@ -38,7 +39,7 @@ public class HarmonicFunctionTest {
     @Test
     public void get_cachePersistence_setScale() {
         ChromaticChord chromaticChord = ChromaticChord.DD.clone();
-        Tonality<Chromatic> tonality = Tonality.C.clone();
+        TonalityModern tonality = TonalityModern.C.clone();
         tonality.getFunctionsFrom(chromaticChord); // creates caches
         tonality.setScale(Scale.MINOR); // should clear caches
         Set<HarmonicFunction> harmonicFunctions = tonality.getFunctionsFrom(chromaticChord); // should recreate caches
@@ -51,7 +52,7 @@ public class HarmonicFunctionTest {
     @Test
     public void get_cachePersistence_setRoot() {
         ChromaticChord chromaticChord = ChromaticChord.DD.clone();
-        Tonality<Chromatic> tonality = Tonality.C.clone();
+        TonalityModern tonality = TonalityModern.C.clone();
         tonality.getFunctionsFrom(chromaticChord); // creates caches
         tonality.setRoot(Chromatic.DD); // should clear caches
         Set<HarmonicFunction> harmonicFunctions = tonality.getFunctionsFrom(chromaticChord); // should recreate caches

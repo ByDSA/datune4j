@@ -7,6 +7,7 @@ import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityModern;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -20,7 +21,7 @@ public class ChordMidiFromDiatonicFunctionTest {
     @Test
     public void fromDiatonicFunction() throws PitchMidiException {
         ChordMidi diatonicChordMidi = ChordMidi.builder()
-                .from(TonalChord.from(Tonality.C, DiatonicFunction.I))
+                .from(TonalChord.from(TonalityModern.C, DiatonicFunction.I))
                 .octaveBase(5)
                 .build();
         assertEquals(3, diatonicChordMidi.size());
@@ -213,8 +214,8 @@ public class ChordMidiFromDiatonicFunctionTest {
     }
 
     @Test
-    public void fromDiatonicFunction20() throws PitchMidiException {
-        Tonality tonality = Tonality.B;
+    public void fromDiatonicFunction20() {
+        Tonality tonality = TonalityModern.B;
         int o = 5;
         ChordMidi c1 = ChordMidi.builder()
                 .from(TonalChord.from(tonality, DiatonicFunction.I))
@@ -230,9 +231,9 @@ public class ChordMidiFromDiatonicFunctionTest {
     }
 
     @Test
-    public void fromDiatonicFunction21() throws PitchMidiException {
+    public void fromDiatonicFunction21() {
         ChordMidi c = ChordMidi.builder()
-                .from(TonalChord.from(Tonality.C, DiatonicFunction.I))
+                .from(TonalChord.from(TonalityModern.C, DiatonicFunction.I))
                 .octaveBase(5)
                 .build();
         assertPitchInChord(PitchChromaticMidi.C5, c, 0);

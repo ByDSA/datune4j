@@ -3,6 +3,7 @@ package es.danisales.datune.interval;
 import es.danisales.datune.GlobalSettings;
 import es.danisales.datune.chords.ChordTransformations;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Comparator;
 import java.util.List;
@@ -20,7 +21,7 @@ public class ConsonanceIntervalsCalculator {
         return -GlobalSettings.sigleton().getCultural().getIntervalConsonance(to) + GlobalSettings.sigleton().getCultural().getIntervalConsonance(from);
     }
 
-    public static int differenceOfConsonanceChord(ChromaticChord from, ChromaticChord to) {
+    public static int differenceOfConsonanceChord(@NonNull ChromaticChord from, @NonNull ChromaticChord to) {
         List<IntervalChromatic> intervalsFrom = ChordTransformations.getIntraIntervals(from);
         List<IntervalChromatic> intervalsTo = ChordTransformations.getIntraIntervals(to);
 

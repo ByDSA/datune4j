@@ -6,8 +6,8 @@ import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityModern;
 import es.danisales.utils.NeverHappensException;
-import es.danisales.utils.building.BuildingException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public enum V7ALT implements HarmonicFunction {
@@ -15,13 +15,13 @@ public enum V7ALT implements HarmonicFunction {
 
     @Override
     @NonNull
-    public ChromaticChord getChromaticChordFromTonality(Tonality<Chromatic> tonality) throws ScaleRelativeDegreeException {
+    public ChromaticChord getChord(TonalityModern tonality) throws ScaleRelativeDegreeException {
         DiatonicFunction diatonicFunction = DiatonicFunction.I7;
         Chromatic newRoot = tonality.getNote(DiatonicDegree.V);
         tonality = Tonality.from(newRoot, Scale.SUPERLOCRIAN);
 
         try {
-            return diatonicFunction.getChromaticChordFromTonality(tonality);
+            return diatonicFunction.getChord(tonality);
         } catch (Exception e) {
                 throw NeverHappensException.make("");
         }

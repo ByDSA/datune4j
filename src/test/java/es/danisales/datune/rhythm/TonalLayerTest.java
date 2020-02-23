@@ -7,6 +7,7 @@ import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.tempo.MusicalTime;
 import es.danisales.datune.timelayer.*;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityModern;
 import javafx.util.Pair;
 import org.junit.Test;
 
@@ -35,7 +36,7 @@ public class TonalLayerTest {
 
         TonalLayer tonalLayer = tonalLayerCalculator.generate();
         assertEquals(MusicalTime.LONGA, tonalLayer.getLength());
-        assertTonalLayer(Tonality.C, tonalLayer, Arrays.asList(
+        assertTonalLayer(TonalityModern.C, tonalLayer, Arrays.asList(
                 new Pair<>(MusicalTime.ZERO, DiatonicFunction.I),
                 new Pair<>(MusicalTime.WHOLE, DiatonicFunction.V),
                 new Pair<>(MusicalTime.WHOLE.clone().mult(2), DiatonicFunction.VI),
@@ -60,7 +61,7 @@ public class TonalLayerTest {
 
         TonalLayer tonalLayer = tonalLayerCalculator.generate();
         assertEquals(MusicalTime.LONGA, tonalLayer.getLength());
-        assertTonalLayer(Tonality.C, tonalLayer, Arrays.asList(
+        assertTonalLayer(TonalityModern.C, tonalLayer, Arrays.asList(
                 new Pair<>(MusicalTime.ZERO, DiatonicFunction.I7),
                 new Pair<>(MusicalTime.WHOLE, DiatonicFunction.V7),
                 new Pair<>(MusicalTime.WHOLE.clone().mult(2), DiatonicFunction.VI7),

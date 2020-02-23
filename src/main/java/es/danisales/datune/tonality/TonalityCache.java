@@ -11,6 +11,7 @@ import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.function.SecondaryDominant;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.*;
 
@@ -41,7 +42,7 @@ class TonalityCache {
         for (HarmonicFunction harmonicFunction : harmonicFunctionList) {
             ChromaticChord chromaticChord;
             try {
-                chromaticChord = harmonicFunction.getChromaticChordFromTonality((Tonality<Chromatic>)tonality);
+                chromaticChord = harmonicFunction.getChord((TonalityModern) tonality);
                 if (chromaticChord == null)
                     throw new RuntimeException();
             } catch (Exception e) {
@@ -52,19 +53,27 @@ class TonalityCache {
             list.add(harmonicFunction);
             if (harmonicFunction instanceof DiatonicFunction) {
                 DiatonicFunction diatonicFunction = (DiatonicFunction)harmonicFunction;
-                Chromatic chromatic = null;
-                try {
-                    chromatic = (Chromatic)tonality.getNote(diatonicFunction.getDiatonicDegree());
-                    chromatic = chromatic.getShifted(-tonality.getRoot().ordinal());
-                    ChromaticDegree chromaticDegree = ChromaticDegree.values()[chromatic.ordinal()];
-                    ChromaticChordPattern chromaticChordPattern = ChromaticChordPattern.from(chromaticChord);
-                    ChromaticDegreeFunction chromaticDegreeFunction = ChromaticDegreeFunction.from(chromaticDegree, chromaticChordPattern);
+                ChromaticDegreeFunction chromaticDegreeFunction = get(diatonicFunction, chromaticChord);
+                if (chromaticDegreeFunction != null) {
                     list.add(chromaticDegreeFunction);
-                } catch (ScaleRelativeDegreeException ignored) {
+                    functionChromaticChordMap.put(chromaticDegreeFunction, chromaticChord);
                 }
             }
             chromaticChordFunctionMap.putIfAbsent(chromaticChord, list);
             functionChromaticChordMap.put(harmonicFunction, chromaticChord);
+        }
+    }
+
+    private @Nullable ChromaticDegreeFunction get(DiatonicFunction diatonicFunction, ChromaticChord chromaticChord) {
+        Chromatic chromatic;
+        try {
+            chromatic = (Chromatic)tonality.getNote(diatonicFunction.getDiatonicDegree());
+            chromatic = chromatic.getShifted(-tonality.getRoot().ordinal());
+            ChromaticDegree chromaticDegree = ChromaticDegree.values()[chromatic.ordinal()];
+            ChromaticChordPattern chromaticChordPattern = ChromaticChordPattern.from(chromaticChord);
+            return ChromaticDegreeFunction.from(chromaticDegree, chromaticChordPattern);
+        } catch (ScaleRelativeDegreeException ignored) {
+            return null;
         }
     }
 
@@ -75,7 +84,6 @@ class TonalityCache {
         return chromaticChordFunctionMap.getOrDefault(chromaticChord, new HashSet<>());
     }
 
-    @SuppressWarnings("WeakerAccess")
     public ChromaticChord getChord(@NonNull HarmonicFunction harmonicFunction) {
         createIfNeeded();
 
@@ -91,5 +99,11 @@ class TonalityCache {
         if (chromaticChordFunctionMap == null || functionChromaticChordMap == null)
             create();
         checkState(chromaticChordFunctionMap != null && functionChromaticChordMap != null);
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public Set<? extends HarmonicFunction> getFunctions() {
+        createIfNeeded();
+        return functionChromaticChordMap.keySet();
     }
 }

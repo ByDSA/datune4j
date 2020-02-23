@@ -1,48 +1,31 @@
 package es.danisales.datune.tonality;
 
-import com.google.common.collect.ImmutableList;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.function.DiatonicFunction;
-import es.danisales.datune.function.HarmonicFunction;
+import es.danisales.datune.function.progression.HarmonicFunctionProgression;
 
-import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("WeakerAccess")
 public class TonalityChordRetrieval {
     private TonalityChordRetrieval() {
     }
 
-    public static List<ChromaticChord> getChordsFrom(Iterable<? extends HarmonicFunction> harmonicFunctions, Tonality tonality) {
-        ScaleNonDiatonicException.check(tonality.getScale());
-        List<ChromaticChord> ret = new ArrayList<>();
-        for ( HarmonicFunction harmonicFunction : harmonicFunctions ) {
-            ChromaticChord chromaticChord;
-            try {
-                chromaticChord = harmonicFunction.getChromaticChordFromTonality(tonality);
-                if (chromaticChord == null)
-                    throw new RuntimeException();
-            } catch (Exception e) {
-                continue;
-            }
-            ret.add(chromaticChord);
-        }
-
-        return ret;
-    }
-
-    public static List<ChromaticChord> getTriadChordsFrom(Tonality tonality) {
-        List<DiatonicFunction> triadFunctions = new ImmutableList.Builder<DiatonicFunction>()
+    @SuppressWarnings("WeakerAccess")
+    public static List<ChromaticChord> getTriadChordsFrom(TonalityModern tonality) {
+        HarmonicFunctionProgression harmonicFunctionProgression = HarmonicFunctionProgression.builder()
                 .addAll(DiatonicFunction.TRIADS)
                 .build();
 
-        return getChordsFrom(triadFunctions, tonality);
+        return harmonicFunctionProgression.getChordsFrom(tonality);
     }
 
-    public static List<ChromaticChord> getSeventhChordsFrom(Tonality tonality) {
-        List<DiatonicFunction> seventhFunctions = new ImmutableList.Builder<DiatonicFunction>()
+    @SuppressWarnings("WeakerAccess")
+    public static List<ChromaticChord> getSeventhChordsFrom(TonalityModern tonality) {
+        HarmonicFunctionProgression harmonicFunctionProgression = HarmonicFunctionProgression.builder()
                 .addAll(DiatonicFunction.SEVENTH)
                 .build();
 
-        return getChordsFrom(seventhFunctions, tonality);
+        return harmonicFunctionProgression.getChordsFrom(tonality);
     }
 }

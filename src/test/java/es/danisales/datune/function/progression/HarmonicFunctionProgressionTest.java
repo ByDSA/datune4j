@@ -2,7 +2,7 @@ package es.danisales.datune.function.progression;
 
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.function.ChromaticDegreeFunction;
-import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityModern;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -81,7 +81,7 @@ public class HarmonicFunctionProgressionTest {
     public void getChordsFrom_I_V_vi_IV() {
         HarmonicFunctionProgression chromaticFunctionProgression = HarmonicFunctionProgression.I_V_vi_IV;
 
-        List<ChromaticChord> chromaticChordProgression = chromaticFunctionProgression.getChordsFrom(Tonality.C);
+        List<ChromaticChord> chromaticChordProgression = chromaticFunctionProgression.getChordsFrom(TonalityModern.C);
         assertEquals(ChromaticChord.C, chromaticChordProgression.get(0));
         assertEquals(ChromaticChord.G, chromaticChordProgression.get(1));
         assertEquals(ChromaticChord.Am, chromaticChordProgression.get(2));
@@ -92,7 +92,7 @@ public class HarmonicFunctionProgressionTest {
     public void getChordsFrom_rhythmChanges() {
         HarmonicFunctionProgression chromaticFunctionProgression = HarmonicFunctionProgression.RHYTHM_CHANGES;
 
-        List<ChromaticChord> chromaticChordProgression = chromaticFunctionProgression.getChordsFrom(Tonality.DD);
+        List<ChromaticChord> chromaticChordProgression = chromaticFunctionProgression.getChordsFrom(TonalityModern.DD);
         assertEquals(ChromaticChord.DDMaj7, chromaticChordProgression.get(0));
         assertEquals(ChromaticChord.Cm7, chromaticChordProgression.get(1));
         assertEquals(ChromaticChord.Fm7, chromaticChordProgression.get(2));
@@ -107,7 +107,7 @@ public class HarmonicFunctionProgressionTest {
     public void getChordsFrom_i_VI_III_VII() {
         HarmonicFunctionProgression chromaticFunctionProgression = HarmonicFunctionProgression.i_bVI_bIII_bVII;
 
-        List<ChromaticChord> chromaticChordProgression = chromaticFunctionProgression.getChordsFrom(Tonality.Am);
+        List<ChromaticChord> chromaticChordProgression = chromaticFunctionProgression.getChordsFrom(TonalityModern.Am);
         assertEquals(ChromaticChord.Am, chromaticChordProgression.get(0));
         assertEquals(ChromaticChord.F, chromaticChordProgression.get(1));
         assertEquals(ChromaticChord.C, chromaticChordProgression.get(2));
@@ -123,7 +123,7 @@ public class HarmonicFunctionProgressionTest {
     @Test
     public void copyOf() {
         HarmonicFunctionProgression chromaticFunctionProgression = HarmonicFunctionProgression.builder()
-                .add(
+                .addAll(
                         ChromaticDegreeFunction.I,
                         ChromaticDegreeFunction.V,
                         ChromaticDegreeFunction.vi,

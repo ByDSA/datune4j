@@ -1,12 +1,11 @@
 package es.danisales.datune;
 
 import es.danisales.datune.chords.chromatic.ChromaticChord;
-import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.ChromaticDegreeFunction;
 import es.danisales.datune.function.SecondaryDominant;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
-import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityModern;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -15,27 +14,27 @@ import static org.junit.Assert.assertNotNull;
 public class ChromaticFunctionTest {
 	@Test
 	public void degree() throws ScaleRelativeDegreeException {
-		Tonality<Chromatic> tonality = Tonality.C;
+		TonalityModern tonality = TonalityModern.C;
 
-		ChromaticChord chromaticChord = ChromaticDegreeFunction.I.getChromaticChordFromTonality(tonality);
+		ChromaticChord chromaticChord = ChromaticDegreeFunction.I.getChord(tonality);
 		assertEquals( DiatonicDegree.I, tonality.getDegreeFrom( chromaticChord.get( 0 ) ) );
 
-		chromaticChord = ChromaticDegreeFunction.ii.getChromaticChordFromTonality(tonality);
+		chromaticChord = ChromaticDegreeFunction.ii.getChord(tonality);
 		assertEquals( DiatonicDegree.II, tonality.getDegreeFrom( chromaticChord.get( 0 ) ) );
 
-		chromaticChord = ChromaticDegreeFunction.iii.getChromaticChordFromTonality(tonality);
+		chromaticChord = ChromaticDegreeFunction.iii.getChord(tonality);
 		assertEquals( DiatonicDegree.III, tonality.getDegreeFrom( chromaticChord.get( 0 ) ) );
 
-		chromaticChord = ChromaticDegreeFunction.IV.getChromaticChordFromTonality(tonality);
+		chromaticChord = ChromaticDegreeFunction.IV.getChord(tonality);
 		assertEquals( DiatonicDegree.IV, tonality.getDegreeFrom( chromaticChord.get( 0 ) ) );
 
-		chromaticChord = ChromaticDegreeFunction.V.getChromaticChordFromTonality(tonality);
+		chromaticChord = ChromaticDegreeFunction.V.getChord(tonality);
 		assertEquals( DiatonicDegree.V, tonality.getDegreeFrom( chromaticChord.get( 0 ) ) );
 
-		chromaticChord = ChromaticDegreeFunction.vi.getChromaticChordFromTonality(tonality);
+		chromaticChord = ChromaticDegreeFunction.vi.getChord(tonality);
 		assertEquals( DiatonicDegree.VI, tonality.getDegreeFrom( chromaticChord.get( 0 ) ) );
 
-		chromaticChord = ChromaticDegreeFunction.VII0.getChromaticChordFromTonality(tonality);
+		chromaticChord = ChromaticDegreeFunction.VII0.getChord(tonality);
 		assertEquals( DiatonicDegree.VII, tonality.getDegreeFrom( chromaticChord.get( 0 ) ) );
 	}
 

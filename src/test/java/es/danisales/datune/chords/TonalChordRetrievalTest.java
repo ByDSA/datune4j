@@ -5,6 +5,7 @@ import es.danisales.datune.chords.tonal.TonalChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityModern;
 import es.danisales.datune.tonality.TonalityRetrieval;
 import org.junit.Test;
 
@@ -25,13 +26,13 @@ public class TonalChordRetrievalTest {
         List<TonalChord> parametricChordList = TonalChord.retrieval()
                 .from(ChromaticChord.C)
                 .harmonicFunctions(DiatonicFunction.immutableValues())
-                .tonalities(Tonality.C)
+                .tonalities(TonalityModern.C)
                 .retrieve();
 
         assertEquals(1, parametricChordList.size());
         contains(parametricChordList,
                 Collections.singletonList(
-                        TonalChord.from(Tonality.C, DiatonicFunction.I)
+                        TonalChord.from(TonalityModern.C, DiatonicFunction.I)
                 )
         );
     }
@@ -41,14 +42,14 @@ public class TonalChordRetrievalTest {
         List<TonalChord> parametricChordList = TonalChord.retrieval()
                 .from(ChromaticChord.C)
                 .harmonicFunctions(DiatonicFunction.immutableValues())
-                .tonalities(Tonality.C, Tonality.Am)
+                .tonalities(TonalityModern.C, TonalityModern.Am)
                 .retrieve();
 
         assertEquals(2, parametricChordList.size());
         contains(parametricChordList,
                 Arrays.asList(
-                        TonalChord.from(Tonality.C, DiatonicFunction.I),
-                        TonalChord.from(Tonality.Am, DiatonicFunction.III)
+                        TonalChord.from(TonalityModern.C, DiatonicFunction.I),
+                        TonalChord.from(TonalityModern.Am, DiatonicFunction.III)
                 )
         );
     }
@@ -64,12 +65,12 @@ public class TonalChordRetrievalTest {
         assertEquals(6, parametricChordList.size());
         contains(parametricChordList,
                 Arrays.asList(
-                        TonalChord.from(Tonality.C, DiatonicFunction.I),
-                        TonalChord.from(Tonality.Dm, DiatonicFunction.VII),
-                        TonalChord.from(Tonality.Em, DiatonicFunction.VI),
-                        TonalChord.from(Tonality.F, DiatonicFunction.V),
-                        TonalChord.from(Tonality.G, DiatonicFunction.IV),
-                        TonalChord.from(Tonality.Am, DiatonicFunction.III)
+                        TonalChord.from(TonalityModern.C, DiatonicFunction.I),
+                        TonalChord.from(TonalityModern.Dm, DiatonicFunction.VII),
+                        TonalChord.from(TonalityModern.Em, DiatonicFunction.VI),
+                        TonalChord.from(TonalityModern.F, DiatonicFunction.V),
+                        TonalChord.from(TonalityModern.G, DiatonicFunction.IV),
+                        TonalChord.from(TonalityModern.Am, DiatonicFunction.III)
                 )
         );
     }
@@ -85,10 +86,10 @@ public class TonalChordRetrievalTest {
         assertEquals(4, parametricChordList.size());
         contains(parametricChordList,
                 Arrays.asList(
-                        TonalChord.from(Tonality.C, DiatonicFunction.I7),
-                        TonalChord.from(Tonality.Em, DiatonicFunction.VI7),
-                        TonalChord.from(Tonality.G, DiatonicFunction.IV7),
-                        TonalChord.from(Tonality.Am, DiatonicFunction.III7)
+                        TonalChord.from(TonalityModern.C, DiatonicFunction.I7),
+                        TonalChord.from(TonalityModern.Em, DiatonicFunction.VI7),
+                        TonalChord.from(TonalityModern.G, DiatonicFunction.IV7),
+                        TonalChord.from(TonalityModern.Am, DiatonicFunction.III7)
                 )
         );
     }

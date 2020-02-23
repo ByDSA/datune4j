@@ -4,6 +4,7 @@ import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.eventsequences.Track;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityModern;
 import es.danisales.io.binary.BinEncoder;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -44,18 +45,18 @@ public class KeySignatureEvent extends MetaEvent {
 	private static final byte STATUS = (byte) 0x59;
 
 	public Track channel;
-	private Tonality<Chromatic> tonality;
+	private TonalityModern tonality;
 
-	private KeySignatureEvent(int delta, Tonality<Chromatic> tonality) {
+	private KeySignatureEvent(int delta, TonalityModern tonality) {
 		super(delta, STATUS);
 		this.tonality = tonality;
 	}
 	
-	private KeySignatureEvent(Tonality<Chromatic> tonality) {
+	private KeySignatureEvent(TonalityModern tonality) {
 		this(0, tonality);
 	}
 
-	public static @NonNull KeySignatureEvent from(Tonality<Chromatic> tonality) {
+	public static @NonNull KeySignatureEvent from(TonalityModern tonality) {
 		return new KeySignatureEvent(tonality);
 	}
 

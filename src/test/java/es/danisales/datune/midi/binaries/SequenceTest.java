@@ -7,6 +7,7 @@ import es.danisales.datune.midi.ChordMidi;
 import es.danisales.datune.midi.DurationMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityModern;
 import es.danisales.datune.tonality.TonalityRetrieval;
 import org.junit.Test;
 
@@ -21,7 +22,7 @@ public class SequenceTest {
         Path path = Paths.get("aa1234.mid");
         Sequence sequence = new Sequence(path, 120);
         Track track = sequence.firstChannel;
-        Tonality tonality = Tonality.Cm;
+        Tonality tonality = TonalityModern.Cm;
         ChordMidi diatonicChordMidi = ChordMidi.builder()
                 .from(TonalChord.from(tonality, DiatonicFunction.I))
                 .length(DurationMidi.L1)

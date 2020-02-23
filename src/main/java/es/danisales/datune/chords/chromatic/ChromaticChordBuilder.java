@@ -9,6 +9,7 @@ import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityModern;
 import es.danisales.utils.building.BuilderOfWays;
 import es.danisales.utils.building.BuildingException;
 import es.danisales.utils.building.BuildingWay;
@@ -171,7 +172,7 @@ public class ChromaticChordBuilder extends es.danisales.utils.building.Builder<C
         return self();
     }
 
-    public @NonNull ChromaticChordBuilder tonality(@NonNull Tonality<Chromatic> tonality) {
+    public @NonNull ChromaticChordBuilder tonality(@NonNull TonalityModern tonality) {
         this.tonality = Objects.requireNonNull(tonality);
 
         return self();

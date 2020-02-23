@@ -1,35 +1,34 @@
 package es.danisales.datune.chords.tonal;
 
-import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.tonality.Tonality;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public class TonalChord<C extends CyclicDegree> {
-    private Tonality<C> tonality;
+public class TonalChord {
+    private Tonality tonality;
     private HarmonicFunction harmonicFunction;
 
     private TonalChord() {
     }
 
-    public static @NonNull TonalChord from(@NonNull Tonality tonality, HarmonicFunction harmonicFunction) {
+    public static @NonNull TonalChord from(@NonNull Tonality tonality, @NonNull HarmonicFunction harmonicFunction) {
         TonalChord parametricChord = new TonalChord();
         parametricChord.tonality = tonality;
         parametricChord.harmonicFunction = harmonicFunction;
         return parametricChord;
     }
 
-    public static TonalChordRetrievalChromatic retrieval() {
-        return new TonalChordRetrievalChromatic();
+    public static TonalChordRetrievalET12 retrieval() {
+        return new TonalChordRetrievalET12();
     }
 
     /* Getters and setters */
 
-    public Tonality<C> getTonality() {
+    public Tonality getTonality() {
         return tonality;
     }
 
-    public void setTonality(@NonNull Tonality<C> tonality) {
+    public void setTonality(@NonNull Tonality tonality) {
         this.tonality = tonality;
     }
 
@@ -61,5 +60,11 @@ public class TonalChord<C extends CyclicDegree> {
     @Override
     public int hashCode() {
         return getTonality().hashCode() + getHarmonicFunction().hashCode();
+    }
+
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @Override
+    public TonalChord clone() {
+        return from(tonality, harmonicFunction);
     }
 }

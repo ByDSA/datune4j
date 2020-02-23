@@ -16,7 +16,6 @@ public class ChordsLayer extends SequentialTimeEvents<ChromaticChord, DurableEve
         return new ChordsLayer();
     }
 
-    @SuppressWarnings("WeakerAccess")
     public void analise() {
         List<ChromaticChord> list = toList();
         for (int i = 1; i < list.size(); i++) {

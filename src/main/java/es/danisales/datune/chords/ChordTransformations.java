@@ -4,6 +4,7 @@ import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.interval.IntervalChromatic;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,7 @@ public class ChordTransformations {
         return ret;
     }
 
-    public static List<IntervalChromatic> getIntraIntervals(ChromaticChord chromaticChord) {
+    public static List<IntervalChromatic> getIntraIntervals(@NonNull ChromaticChord chromaticChord) {
         List<IntervalChromatic> ret = new ArrayList<>();
         for (int i = 0; i < chromaticChord.size(); i++){
             for (int j = i+1; j < chromaticChord.size(); j++) {

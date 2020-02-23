@@ -5,24 +5,23 @@ import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.function.SecondaryDominant;
-import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityModern;
 import es.danisales.datune.tonality.TonalityRetrieval;
-import es.danisales.utils.building.BuildingException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class TonalChordRetrievalChromatic {
+public class TonalChordRetrievalET12 {
     private Collection<ChromaticChord> chromaticChords;
-    private Collection<Tonality<Chromatic>> tonalityList;
+    private Collection<TonalityModern> tonalityList;
     private Collection<? extends HarmonicFunction> harmonicFunctionList;
     private Collection<Chromatic> chromatics;
 
-    TonalChordRetrievalChromatic() {
+    TonalChordRetrievalET12() {
     }
 
-    public TonalChordRetrievalChromatic from(@NonNull ChromaticChord... chromaticChords) {
+    public TonalChordRetrievalET12 from(@NonNull ChromaticChord... chromaticChords) {
         if (this.chromaticChords == null)
             this.chromaticChords = new ArrayList<>();
         this.chromaticChords.addAll( Arrays.asList( Objects.requireNonNull(chromaticChords) ) );
@@ -30,7 +29,7 @@ public class TonalChordRetrievalChromatic {
         return this;
     }
 
-    public TonalChordRetrievalChromatic tonalities(@NonNull Collection<Tonality<Chromatic>> tonalityList) {
+    public TonalChordRetrievalET12 tonalities(@NonNull Collection<TonalityModern> tonalityList) {
         if (this.tonalityList == null)
             this.tonalityList = new ArrayList<>();
 
@@ -38,7 +37,7 @@ public class TonalChordRetrievalChromatic {
         return this;
     }
 
-    public TonalChordRetrievalChromatic tonalities(@NonNull Tonality<Chromatic>... tonalityList) {
+    public TonalChordRetrievalET12 tonalities(@NonNull TonalityModern... tonalityList) {
         if (this.tonalityList == null)
             this.tonalityList = new ArrayList<>();
 
@@ -47,60 +46,60 @@ public class TonalChordRetrievalChromatic {
         return this;
     }
 
-    public TonalChordRetrievalChromatic majorMinorET12() {
+    public TonalChordRetrievalET12 majorMinorET12() {
         return tonalities(TonalityRetrieval.ALL_MAJOR_MINOR);
     }
 
-    public TonalChordRetrievalChromatic majorModesET12() {
+    public TonalChordRetrievalET12 majorModesET12() {
         return tonalities(TonalityRetrieval.ALL_MAJOR_MODES);
     }
 
-    public TonalChordRetrievalChromatic harmonicMinorModesET12() {
+    public TonalChordRetrievalET12 harmonicMinorModesET12() {
         return tonalities(TonalityRetrieval.ALL_HARMONIC_MINOR_MODES);
     }
 
-    public TonalChordRetrievalChromatic harmonicMajorModesET12() {
+    public TonalChordRetrievalET12 harmonicMajorModesET12() {
         return tonalities(TonalityRetrieval.ALL_HARMONIC_MAJOR_MODES);
     }
 
-    public TonalChordRetrievalChromatic doubleHarmonicModesET12() {
+    public TonalChordRetrievalET12 doubleHarmonicModesET12() {
         return tonalities(TonalityRetrieval.ALL_DOUBLE_HARMONIC_MODES);
     }
 
-    public TonalChordRetrievalChromatic melodicMinorModesET12() {
+    public TonalChordRetrievalET12 melodicMinorModesET12() {
         return tonalities(TonalityRetrieval.ALL_MELODIC_MINOR_MODES);
     }
 
-    public TonalChordRetrievalChromatic main21ModesET12() {
+    public TonalChordRetrievalET12 main21ModesET12() {
         majorModesET12();
         harmonicMinorModesET12();
         return melodicMinorModesET12();
     }
 
-    public TonalChordRetrievalChromatic harmonicFunctions(@NonNull Collection<? extends HarmonicFunction> chromaticFunctions) {
+    public TonalChordRetrievalET12 harmonicFunctions(@NonNull Collection<? extends HarmonicFunction> chromaticFunctions) {
         this.harmonicFunctionList = Objects.requireNonNull(chromaticFunctions);
 
         return this;
     }
 
-    public TonalChordRetrievalChromatic harmonicFunctions(@NonNull HarmonicFunction... chromaticFunctions) {
+    public TonalChordRetrievalET12 harmonicFunctions(@NonNull HarmonicFunction... chromaticFunctions) {
         this.harmonicFunctionList = Arrays.asList( Objects.requireNonNull(chromaticFunctions) );
 
         return this;
     }
 
-    public TonalChordRetrievalChromatic allDiatonicFunctions() {
+    public TonalChordRetrievalET12 allDiatonicFunctions() {
         return harmonicFunctions( DiatonicFunction.immutableValues() );
     }
 
-    public TonalChordRetrievalChromatic tonalityFunctionsAndTensionFunctions() {
+    public TonalChordRetrievalET12 tonalityFunctionsAndTensionFunctions() {
         List<HarmonicFunction> harmonicFunctionList = new ArrayList<>();
         harmonicFunctionList.addAll( DiatonicFunction.immutableValues() );
         harmonicFunctionList.addAll( SecondaryDominant.values() );
         return harmonicFunctions( harmonicFunctionList );
     }
 
-    public TonalChordRetrievalChromatic root(@NonNull Chromatic... diatonicAlts) {
+    public TonalChordRetrievalET12 root(@NonNull Chromatic... diatonicAlts) {
         if (this.chromatics == null)
             this.chromatics = new ArrayList<>();
 
@@ -112,7 +111,7 @@ public class TonalChordRetrievalChromatic {
     public @NonNull List<TonalChord> retrieve() {
         List<TonalChord> parametricChordList = new CopyOnWriteArrayList<>();
 
-        tonalityList.parallelStream().forEach((Tonality<Chromatic> tonality) -> {
+        tonalityList.parallelStream().forEach((TonalityModern tonality) -> {
             if (chromatics == null || chromatics.contains(tonality.getRoot()))
                 harmonicFunctionList.parallelStream().forEach((HarmonicFunction harmonicFunction) -> {
                     if (chromaticChords == null) {
@@ -124,7 +123,7 @@ public class TonalChordRetrievalChromatic {
                         ChromaticChord forEachChromaticChord;
 
                         try {
-                            forEachChromaticChord = harmonicFunction.getChromaticChordFromTonality(tonality);
+                            forEachChromaticChord = harmonicFunction.getChord(tonality);
                             if (forEachChromaticChord == null)
                                 throw new RuntimeException();
                         } catch (Exception e) {

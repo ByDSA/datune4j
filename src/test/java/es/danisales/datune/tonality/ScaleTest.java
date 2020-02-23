@@ -205,7 +205,7 @@ public class ScaleTest {
 
     @Test
     public void fromDiatonicAlt_List() throws ScaleRelativeDegreeException {
-        Tonality<DiatonicAlt> s = Tonality.Classical.A;
+        Tonality<DiatonicAlt> s = TonalityClassical.A;
         List<DiatonicAlt> notes = new ArrayList<>();
         for (DiatonicDegree diatonicDegree : DiatonicDegree.values())
             notes.add(s.getNote(diatonicDegree));
@@ -236,7 +236,7 @@ public class ScaleTest {
         assertEquals(Scale.PENTATONIC, Scale.PENTATONIC_MINOR.getModeFrom(DiatonicDegree.II));
     }
 
-    /* getModes */
+    /* getParallelModes */
 
     @Test
     public void getModes_FromMajor() {

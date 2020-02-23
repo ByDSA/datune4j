@@ -3,8 +3,10 @@ package es.danisales.datune.eventsequences;
 import es.danisales.datune.midi.binaries.Sequence;
 import es.danisales.datune.midi.binaries.events.*;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityModern;
 import es.danisales.io.binary.BinData;
 import es.danisales.io.binary.BinEncoder;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.function.BiConsumer;
 
@@ -75,11 +77,11 @@ public class Track extends EventSequence {
 		return channel == 10-1;
 	}
 
-	public void add(EventComplex eventComplex) {
+	public void add(@NonNull EventComplex eventComplex) {
 		add(0, eventComplex);
 	}
 
-	public void setTonality(Tonality tonality) {
+	public void setTonality(@NonNull TonalityModern tonality) {
 		add(0, KeySignatureEvent.from(tonality));
 	}
 
@@ -96,7 +98,7 @@ public class Track extends EventSequence {
 		add(0, new Volume(0, p, channel));
 	}
 
-	public void firstOfSequence(Sequence s) {
+	public void firstOfSequence(@NonNull Sequence s) {
 		sequence = s;
 	}
 

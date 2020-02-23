@@ -1,5 +1,6 @@
 package es.danisales.datune.midi;
 
+import es.danisales.datune.chords.chromatic.ChromaticChordRetrieval;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
@@ -164,7 +165,7 @@ public class ChromaticChordMidiTest {
 
     @Test
     public void sizeSameAsChromaticChord() throws PitchMidiException {
-        for (ChromaticChord chromaticChord : ChromaticChord.immutableValues()) {
+        for (ChromaticChord chromaticChord : ChromaticChordRetrieval.immutableValues()) {
             assertEquals(chromaticChord.size(), ChordMidi.builder().fromChromaticChord(chromaticChord).build().size());
         }
     }

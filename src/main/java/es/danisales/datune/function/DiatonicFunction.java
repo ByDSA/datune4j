@@ -5,13 +5,12 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Table;
 import es.danisales.datune.chords.DiatonicDegreePattern;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
-import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.chords.tonal.TonalChord;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
-import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityModern;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.List;
 import java.util.Objects;
@@ -33,7 +32,9 @@ public final class DiatonicFunction
 	public static final DiatonicFunction III6 = from(DiatonicDegree.III, DiatonicDegreePattern.III6);
 	public static final DiatonicFunction IV6 = from(DiatonicDegree.IV, DiatonicDegreePattern.IV6);
 	public static final DiatonicFunction V6 = from(DiatonicDegree.V, DiatonicDegreePattern.V6);
+	@SuppressWarnings("WeakerAccess")
 	public static final DiatonicFunction VI6 = from(DiatonicDegree.VI, DiatonicDegreePattern.VI6);
+	@SuppressWarnings("WeakerAccess")
 	public static final DiatonicFunction VII6 = from(DiatonicDegree.VII, DiatonicDegreePattern.VII6);
 
 	public static final DiatonicFunction I7 = from(DiatonicDegree.I, DiatonicDegreePattern.I7);
@@ -44,28 +45,49 @@ public final class DiatonicFunction
 	public static final DiatonicFunction VI7 = from(DiatonicDegree.VI, DiatonicDegreePattern.VI7);
 	public static final DiatonicFunction VII7 = from(DiatonicDegree.VII, DiatonicDegreePattern.VII7);
 
+	@SuppressWarnings("WeakerAccess")
 	public static final DiatonicFunction I9 = from(DiatonicDegree.I, DiatonicDegreePattern.I9);
+	@SuppressWarnings("WeakerAccess")
 	public static final DiatonicFunction II9 = from(DiatonicDegree.II, DiatonicDegreePattern.II9);
+	@SuppressWarnings("WeakerAccess")
 	public static final DiatonicFunction III9 = from(DiatonicDegree.III, DiatonicDegreePattern.III9);
+	@SuppressWarnings("WeakerAccess")
 	public static final DiatonicFunction IV9 = from(DiatonicDegree.IV, DiatonicDegreePattern.IV9);
+	@SuppressWarnings("WeakerAccess")
 	public static final DiatonicFunction V9 = from(DiatonicDegree.V, DiatonicDegreePattern.V9);
+	@SuppressWarnings("WeakerAccess")
 	public static final DiatonicFunction VI9 = from(DiatonicDegree.VI, DiatonicDegreePattern.VI9);
+	@SuppressWarnings("WeakerAccess")
 	public static final DiatonicFunction VII9 = from(DiatonicDegree.VII, DiatonicDegreePattern.VII9);
 
+	@SuppressWarnings("WeakerAccess")
 	public static final DiatonicFunction I11 = from(DiatonicDegree.I, DiatonicDegreePattern.I11);
+	@SuppressWarnings("WeakerAccess")
 	public static final DiatonicFunction II11 = from(DiatonicDegree.II, DiatonicDegreePattern.II11);
+	@SuppressWarnings("WeakerAccess")
 	public static final DiatonicFunction III11 = from(DiatonicDegree.III, DiatonicDegreePattern.III11);
+	@SuppressWarnings("WeakerAccess")
 	public static final DiatonicFunction IV11 = from(DiatonicDegree.IV, DiatonicDegreePattern.IV11);
+	@SuppressWarnings("WeakerAccess")
 	public static final DiatonicFunction V11 = from(DiatonicDegree.V, DiatonicDegreePattern.V11);
+	@SuppressWarnings("WeakerAccess")
 	public static final DiatonicFunction VI11 = from(DiatonicDegree.VI, DiatonicDegreePattern.VI11);
+	@SuppressWarnings("WeakerAccess")
 	public static final DiatonicFunction VII11 = from(DiatonicDegree.VII, DiatonicDegreePattern.VII11);
 
+	@SuppressWarnings("WeakerAccess")
 	public static final DiatonicFunction I13 = from(DiatonicDegree.I, DiatonicDegreePattern.I13);
+	@SuppressWarnings("WeakerAccess")
 	public static final DiatonicFunction II13 = from(DiatonicDegree.II, DiatonicDegreePattern.II13);
+	@SuppressWarnings("WeakerAccess")
 	public static final DiatonicFunction III13 = from(DiatonicDegree.III, DiatonicDegreePattern.III13);
+	@SuppressWarnings("WeakerAccess")
 	public static final DiatonicFunction IV13 = from(DiatonicDegree.IV, DiatonicDegreePattern.IV13);
+	@SuppressWarnings("WeakerAccess")
 	public static final DiatonicFunction V13 = from(DiatonicDegree.V, DiatonicDegreePattern.V13);
+	@SuppressWarnings("WeakerAccess")
 	public static final DiatonicFunction VI13 = from(DiatonicDegree.VI, DiatonicDegreePattern.VI13);
+	@SuppressWarnings("WeakerAccess")
 	public static final DiatonicFunction VII13 = from(DiatonicDegree.VII, DiatonicDegreePattern.VII13);
 
 	/** Main Triads */
@@ -110,7 +132,7 @@ public final class DiatonicFunction
 			.add(VII9)
 			.build();
 
-	@SuppressWarnings("unused")
+	@SuppressWarnings("WeakerAccess")
 	public static final List<DiatonicFunction> ELEVENTH = new ImmutableList.Builder<DiatonicFunction>()
 			.add(I11)
 			.add(II11)
@@ -121,7 +143,7 @@ public final class DiatonicFunction
 			.add(VII11)
 			.build();
 
-	@SuppressWarnings("unused")
+	@SuppressWarnings("WeakerAccess")
 	public static final List<DiatonicFunction> THIRTEENTH = new ImmutableList.Builder<DiatonicFunction>()
 			.add(I13)
 			.add(II13)
@@ -169,16 +191,19 @@ public final class DiatonicFunction
 		return diatonicDegree;
 	}
 
+	@SuppressWarnings("WeakerAccess")
 	public DiatonicDegreePattern getDiatonicDegreePattern() {
 		return diatonicDegreePattern;
 	}
 
 	@Override
 	@NonNull
-	public ChromaticChord getChromaticChordFromTonality(@NonNull Tonality<Chromatic> tonality) throws ScaleRelativeDegreeException {
+	public ChromaticChord getChord(@NonNull TonalityModern tonality) throws ScaleRelativeDegreeException {
 		Objects.requireNonNull(tonality);
 
-		return TonalityGetDiatonicFunctionDefault.get(tonality, this);
+		TonalChord tonalChord = TonalChord.from(tonality, this);
+
+		return (ChromaticChord) FunctionCache.get(tonalChord);
 	}
 
 	@Override

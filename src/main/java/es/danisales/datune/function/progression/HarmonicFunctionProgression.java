@@ -2,14 +2,16 @@ package es.danisales.datune.function.progression;
 
 import com.google.common.collect.ImmutableList;
 import es.danisales.datastructures.ListProxy;
+import es.danisales.datune.chords.Chord;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
-import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.function.ChromaticDegreeFunction;
 import es.danisales.datune.function.CompoundFunction;
 import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.function.SecondaryDominant;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityModern;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.*;
@@ -20,29 +22,32 @@ public class HarmonicFunctionProgression
     /* Constants */
 
     public static final HarmonicFunctionProgression I_V_vi_IV = builder()
-            .add(
-            ChromaticDegreeFunction.I,
-            ChromaticDegreeFunction.V,
-            ChromaticDegreeFunction.vi,
-            ChromaticDegreeFunction.IV
-    ).build();
+            .addAll(
+                    ChromaticDegreeFunction.I,
+                    ChromaticDegreeFunction.V,
+                    ChromaticDegreeFunction.vi,
+                    ChromaticDegreeFunction.IV
+            ).build();
 
+    @SuppressWarnings("WeakerAccess")
     public static final HarmonicFunctionProgression I_IV_vi_V = builder()
-            .add(
-            ChromaticDegreeFunction.I,
-            ChromaticDegreeFunction.IV,
-            ChromaticDegreeFunction.vi,
-            ChromaticDegreeFunction.V
-    ).build();
+            .addAll(
+                    ChromaticDegreeFunction.I,
+                    ChromaticDegreeFunction.IV,
+                    ChromaticDegreeFunction.vi,
+                    ChromaticDegreeFunction.V
+            ).build();
 
+    @SuppressWarnings("WeakerAccess")
     public static final HarmonicFunctionProgression i_bVI_bIII_bVII = builder()
             .addAll(I_V_vi_IV)
             .rotate(2)
             .shift(3)
             .build();
 
+    @SuppressWarnings("WeakerAccess")
     public static final HarmonicFunctionProgression RHYTHM_CHANGES = builder()
-            .add(
+            .addAll(
                     ChromaticDegreeFunction.IMaj7,
                     ChromaticDegreeFunction.vi7,
                     ChromaticDegreeFunction.ii7,
@@ -51,7 +56,7 @@ public class HarmonicFunctionProgression
                     SecondaryDominant.V7_II,
                     ChromaticDegreeFunction.ii7,
                     ChromaticDegreeFunction.V7
-                    ).build();
+            ).build();
 
     /* END CONSTANTS **/
 
@@ -64,15 +69,14 @@ public class HarmonicFunctionProgression
         super(ImmutableList.copyOf(list));
     }
 
-    public List<ChromaticChord> getChordsFrom(Tonality<Chromatic> tonality) {
+    public List<ChromaticChord> getChordsFrom(TonalityModern tonality) {
         List<ChromaticChord> chromaticChordProgression = new ArrayList<>();
         for (HarmonicFunction harmonicFunction : this) {
             ChromaticChord chromaticChord;
             if (harmonicFunction != null) {
                 try {
-                    chromaticChord = harmonicFunction.getChromaticChordFromTonality(tonality);
+                    chromaticChord = harmonicFunction.getChord(tonality);
                 } catch (ScaleRelativeDegreeException e) {
-                    e.printStackTrace();
                     continue;
                 }
             }
@@ -115,8 +119,12 @@ public class HarmonicFunctionProgression
             return self();
         }
 
-        public Builder add(@NonNull HarmonicFunction... harmonicFunctions) {
-            this.harmonicFunctionProgression.addAll(Arrays.asList(harmonicFunctions));
+        public Builder addAll(@NonNull HarmonicFunction... harmonicFunctions) {
+            return addAll(Arrays.asList(harmonicFunctions));
+        }
+
+        public Builder addAll(@NonNull Collection<? extends HarmonicFunction> harmonicFunctions) {
+            this.harmonicFunctionProgression.addAll(harmonicFunctions);
 
             return self();
         }

@@ -1,12 +1,12 @@
 package es.danisales.datune.timelayer;
 
 import es.danisales.datune.chords.chromatic.ChromaticChord;
-import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.chords.tonal.TonalChord;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.function.SecondaryDominant;
 import es.danisales.datune.tempo.MusicalTime;
-import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityModern;
 import es.danisales.datune.tonality.TonalityRetrieval;
 
 import java.util.*;
@@ -35,7 +35,7 @@ public class TonalLayerCalculator {
     private Iterator<Map.Entry<MusicalTime, DurableEvent<ChromaticChord, MusicalTime>>> iterator;
     private List<ChromaticChord> chromaticChordProgression;
     private List<DurableEvent<ChromaticChord, MusicalTime>> entryList;
-    private List<Tonality<Chromatic>> possibleTonalities;
+    private List<TonalityModern> possibleTonalities;
 
     private void calculateFirstCompass() {
         firstCompassTime = rhythmLayer.getFirstCompassTime();
@@ -73,7 +73,7 @@ public class TonalLayerCalculator {
     }
 
     private void showPossibleTonalities() {
-        for (Tonality<Chromatic> tonality : possibleTonalities)
+        for (TonalityModern tonality : possibleTonalities)
             System.out.println(tonality);
     }
 
@@ -81,8 +81,9 @@ public class TonalLayerCalculator {
         HarmonicFunction rootFunction = DiatonicFunction.I7;
 
         for (int i = 0; i < possibleTonalities.size(); i++) {
-            Tonality<Chromatic> tonality = possibleTonalities.get(i);
-            ChromaticChord rootChord = ChromaticChord.from(tonality, rootFunction);
+            TonalityModern tonality = possibleTonalities.get(i);
+            TonalChord tonalChord = TonalChord.from(tonality, rootFunction);
+            ChromaticChord rootChord = ChromaticChord.from(tonalChord);
             if (!chromaticChordProgression.get(0).contains(tonality.getRoot())
                     || !rootChord.containsAll(chromaticChordProgression.get(0))
                     || !tonality.getMainFunctionFrom(chromaticChordProgression.get(0)).equals(MainTonalFunction.TONIC)
@@ -111,7 +112,7 @@ public class TonalLayerCalculator {
             DurableEvent<List<TonalLayer.Node>, MusicalTime> durableEvent = DurableEvent.from(entry1.getIni(), l, length);
             tonalLayer.add(durableEvent);
 
-            for (Tonality<Chromatic> tonality : possibleTonalities) {
+            for (TonalityModern tonality : possibleTonalities) {
                 Set<HarmonicFunction> harmonicFunctionSet = tonality.getFunctionsFrom(entry1.getNote());
                 HarmonicFunction harmonicFunction = harmonicFunctionSelector(harmonicFunctionSet);
                 TonalLayer.Node node = TonalLayer.Node.from(tonality, harmonicFunction);

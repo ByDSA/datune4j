@@ -4,6 +4,7 @@ import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.eventsequences.Instrument;
 import es.danisales.datune.midi.binaries.Midi;
 import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityModern;
 import es.danisales.datune.tonality.TonalityRetrieval;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -14,12 +15,12 @@ import java.util.Objects;
 public class MainJFrame extends JFrame {
     private JPanel panel;
 
-    private JComboBox<Tonality<Chromatic>> tonalitiesComboBox;
+    private JComboBox<TonalityModern> tonalitiesComboBox;
     private JComboBox<Instrument> instrumentJComboBox;
 
-    private @NonNull Tonality<Chromatic> getSelectedTonality() {
+    private @NonNull TonalityModern getSelectedTonality() {
         //noinspection unchecked
-        return Objects.requireNonNull((Tonality<Chromatic>) tonalitiesComboBox.getSelectedItem());
+        return Objects.requireNonNull((TonalityModern) tonalitiesComboBox.getSelectedItem());
     }
 
     private @NonNull Instrument getSelectedInstrument() {
@@ -28,11 +29,11 @@ public class MainJFrame extends JFrame {
 
     private void initializeTonalitiesJComboBox() {
         tonalitiesComboBox = new JComboBox<>();
-        for (Tonality<Chromatic> t : TonalityRetrieval.ALL_MAJOR_MINOR)
+        for (TonalityModern t : TonalityRetrieval.ALL_MAJOR_MINOR)
             tonalitiesComboBox.addItem(t);
 
         tonalitiesComboBox.addActionListener(e -> {
-            Tonality<Chromatic> tonality = getSelectedTonality();
+            TonalityModern tonality = getSelectedTonality();
             new Loader(tonality, panel).load();
         });
     }
@@ -58,7 +59,7 @@ public class MainJFrame extends JFrame {
 
         getContentPane().add(panel, BorderLayout.CENTER);
 
-        Tonality<Chromatic> initialTonality = Tonality.C;
+        TonalityModern initialTonality = TonalityModern.C;
         tonalitiesComboBox.setSelectedItem(initialTonality);
         new Loader(initialTonality, panel).load();
 
