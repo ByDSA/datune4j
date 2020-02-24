@@ -1,7 +1,6 @@
 package es.danisales.datune.tonality;
 
 import es.danisales.datune.GlobalSettings;
-import es.danisales.datune.lang.Language;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -47,11 +46,11 @@ class ScaleNamer {
                 return ScaleInnerImmutable.LYDIAN + " b7";
             case MIXOLYDIAN:
                 return "Mixolidia";
-            case LOCRIAN_H6:
+            case LOCRIAN_a6:
                 return ScaleInnerImmutable.LOCRIAN + " #6";
-            case IONIAN_H5:
+            case IONIAN_a5:
                 return ScaleInnerImmutable.IONIAN + " #5";
-            case DORIAN_H4:
+            case DORIAN_a4:
                 return ScaleInnerImmutable.DORIAN + " #4";
             case UKRANIAN_MINOR_SCALE:
                 break;
@@ -59,7 +58,7 @@ class ScaleNamer {
                 return ScaleInnerImmutable.MIXOLYDIAN + "b9 b13";
             case MIXOLIDIAN_b13:
                 return ScaleInnerImmutable.MIXOLYDIAN + " b13";
-            case LYDIAN_H2:
+            case LYDIAN_a2:
                 return ScaleInnerImmutable.LYDIAN + " #2";
             case SUPERLOCRIAN_bb7:
                 return "Superlocria bb7";
@@ -79,13 +78,13 @@ class ScaleNamer {
                 return ScaleInnerImmutable.LOCRIAN + " bb7";
             case DORIAN_b2:
                 return ScaleInnerImmutable.DORIAN + " b2";
-            case LYDIAN_H5:
+            case LYDIAN_a5:
                 return ScaleInnerImmutable.LYDIAN + " #5";
-            case LOCRIAN_H2:
+            case LOCRIAN_a2:
                 return ScaleInnerImmutable.LOCRIAN + " #2";
             case DOUBLE_HARMONIC:
                 return "Doble Armónica";
-            case LYDIAN_H2_H6:
+            case LYDIAN_a2_a6:
                 return ScaleInnerImmutable.LYDIAN + " #2 #6";
             case ULTRAPHRYGIAN:
                 return "Ultrafrigia";
@@ -93,7 +92,7 @@ class ScaleNamer {
                 return "Húngara menor";
             case ORIENTAL:
                 return "Oriental";
-            case IONIAN_AUGMENTED_H2:
+            case IONIAN_AUGMENTED_a2:
                 return ScaleInnerImmutable.IONIAN + " aumentada #2";
             case LOCRIAN_bb3_bb7:
                 return ScaleInnerImmutable.LOCRIAN + " bb3 bb7";

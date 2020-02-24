@@ -18,6 +18,7 @@ public class TonalChord {
         return parametricChord;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public static TonalChordRetrievalET12 retrieval() {
         return new TonalChordRetrievalET12();
     }

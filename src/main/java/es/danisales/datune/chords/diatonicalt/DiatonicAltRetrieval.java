@@ -27,6 +27,7 @@ public class DiatonicAltRetrieval {
         return ret;
     }
 
+    @SuppressWarnings("unchecked")
     public static <C extends CyclicDegree> @NonNull List<C> listFrom(@NonNull C noteBase, @NonNull final Scale scale) {
         if (noteBase instanceof DiatonicAlt) {
             if (scale.size() == 7)

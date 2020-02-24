@@ -183,48 +183,48 @@ public class TonalityRetrieval {
     )));
 
     public static final Set<TonalityModern> ALL_LOCRIAN_H6 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
-            Tonality.from(Chromatic.C, Scale.LOCRIAN_H6),
-            Tonality.from(Chromatic.CC, Scale.LOCRIAN_H6),
-            Tonality.from(Chromatic.D, Scale.LOCRIAN_H6),
-            Tonality.from(Chromatic.DD, Scale.LOCRIAN_H6),
-            Tonality.from(Chromatic.E, Scale.LOCRIAN_H6),
-            Tonality.from(Chromatic.F, Scale.LOCRIAN_H6),
-            Tonality.from(Chromatic.FF, Scale.LOCRIAN_H6),
-            Tonality.from(Chromatic.G, Scale.LOCRIAN_H6),
-            Tonality.from(Chromatic.GG, Scale.LOCRIAN_H6),
-            Tonality.from(Chromatic.A, Scale.LOCRIAN_H6),
-            Tonality.from(Chromatic.AA, Scale.LOCRIAN_H6),
-            Tonality.from(Chromatic.B, Scale.LOCRIAN_H6)
+            Tonality.from(Chromatic.C, Scale.LOCRIAN_a6),
+            Tonality.from(Chromatic.CC, Scale.LOCRIAN_a6),
+            Tonality.from(Chromatic.D, Scale.LOCRIAN_a6),
+            Tonality.from(Chromatic.DD, Scale.LOCRIAN_a6),
+            Tonality.from(Chromatic.E, Scale.LOCRIAN_a6),
+            Tonality.from(Chromatic.F, Scale.LOCRIAN_a6),
+            Tonality.from(Chromatic.FF, Scale.LOCRIAN_a6),
+            Tonality.from(Chromatic.G, Scale.LOCRIAN_a6),
+            Tonality.from(Chromatic.GG, Scale.LOCRIAN_a6),
+            Tonality.from(Chromatic.A, Scale.LOCRIAN_a6),
+            Tonality.from(Chromatic.AA, Scale.LOCRIAN_a6),
+            Tonality.from(Chromatic.B, Scale.LOCRIAN_a6)
     )));
 
     public static final Set<TonalityModern> ALL_IONIAN_H5 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
-            Tonality.from(Chromatic.C, Scale.IONIAN_H5),
-            Tonality.from(Chromatic.CC, Scale.IONIAN_H5),
-            Tonality.from(Chromatic.D, Scale.IONIAN_H5),
-            Tonality.from(Chromatic.DD, Scale.IONIAN_H5),
-            Tonality.from(Chromatic.E, Scale.IONIAN_H5),
-            Tonality.from(Chromatic.F, Scale.IONIAN_H5),
-            Tonality.from(Chromatic.FF, Scale.IONIAN_H5),
-            Tonality.from(Chromatic.G, Scale.IONIAN_H5),
-            Tonality.from(Chromatic.GG, Scale.IONIAN_H5),
-            Tonality.from(Chromatic.A, Scale.IONIAN_H5),
-            Tonality.from(Chromatic.AA, Scale.IONIAN_H5),
-            Tonality.from(Chromatic.B, Scale.IONIAN_H5)
+            Tonality.from(Chromatic.C, Scale.IONIAN_a5),
+            Tonality.from(Chromatic.CC, Scale.IONIAN_a5),
+            Tonality.from(Chromatic.D, Scale.IONIAN_a5),
+            Tonality.from(Chromatic.DD, Scale.IONIAN_a5),
+            Tonality.from(Chromatic.E, Scale.IONIAN_a5),
+            Tonality.from(Chromatic.F, Scale.IONIAN_a5),
+            Tonality.from(Chromatic.FF, Scale.IONIAN_a5),
+            Tonality.from(Chromatic.G, Scale.IONIAN_a5),
+            Tonality.from(Chromatic.GG, Scale.IONIAN_a5),
+            Tonality.from(Chromatic.A, Scale.IONIAN_a5),
+            Tonality.from(Chromatic.AA, Scale.IONIAN_a5),
+            Tonality.from(Chromatic.B, Scale.IONIAN_a5)
     )));
 
     public static final Set<TonalityModern> ALL_DORIAN_H4 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
-            Tonality.from(Chromatic.C, Scale.DORIAN_H4),
-            Tonality.from(Chromatic.CC, Scale.DORIAN_H4),
-            Tonality.from(Chromatic.D, Scale.DORIAN_H4),
-            Tonality.from(Chromatic.DD, Scale.DORIAN_H4),
-            Tonality.from(Chromatic.E, Scale.DORIAN_H4),
-            Tonality.from(Chromatic.F, Scale.DORIAN_H4),
-            Tonality.from(Chromatic.FF, Scale.DORIAN_H4),
-            Tonality.from(Chromatic.G, Scale.DORIAN_H4),
-            Tonality.from(Chromatic.GG, Scale.DORIAN_H4),
-            Tonality.from(Chromatic.A, Scale.DORIAN_H4),
-            Tonality.from(Chromatic.AA, Scale.DORIAN_H4),
-            Tonality.from(Chromatic.B, Scale.DORIAN_H4)
+            Tonality.from(Chromatic.C, Scale.DORIAN_a4),
+            Tonality.from(Chromatic.CC, Scale.DORIAN_a4),
+            Tonality.from(Chromatic.D, Scale.DORIAN_a4),
+            Tonality.from(Chromatic.DD, Scale.DORIAN_a4),
+            Tonality.from(Chromatic.E, Scale.DORIAN_a4),
+            Tonality.from(Chromatic.F, Scale.DORIAN_a4),
+            Tonality.from(Chromatic.FF, Scale.DORIAN_a4),
+            Tonality.from(Chromatic.G, Scale.DORIAN_a4),
+            Tonality.from(Chromatic.GG, Scale.DORIAN_a4),
+            Tonality.from(Chromatic.A, Scale.DORIAN_a4),
+            Tonality.from(Chromatic.AA, Scale.DORIAN_a4),
+            Tonality.from(Chromatic.B, Scale.DORIAN_a4)
     )));
 
     public static final Set<TonalityModern> ALL_MIXOLIDIAN_b9_b13 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
@@ -243,18 +243,18 @@ public class TonalityRetrieval {
     )));
 
     public static final Set<TonalityModern> ALL_LYDIAN_H2 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
-            Tonality.from(Chromatic.C, Scale.LYDIAN_H2),
-            Tonality.from(Chromatic.CC, Scale.LYDIAN_H2),
-            Tonality.from(Chromatic.D, Scale.LYDIAN_H2),
-            Tonality.from(Chromatic.DD, Scale.LYDIAN_H2),
-            Tonality.from(Chromatic.E, Scale.LYDIAN_H2),
-            Tonality.from(Chromatic.F, Scale.LYDIAN_H2),
-            Tonality.from(Chromatic.FF, Scale.LYDIAN_H2),
-            Tonality.from(Chromatic.G, Scale.LYDIAN_H2),
-            Tonality.from(Chromatic.GG, Scale.LYDIAN_H2),
-            Tonality.from(Chromatic.A, Scale.LYDIAN_H2),
-            Tonality.from(Chromatic.AA, Scale.LYDIAN_H2),
-            Tonality.from(Chromatic.B, Scale.LYDIAN_H2)
+            Tonality.from(Chromatic.C, Scale.LYDIAN_a2),
+            Tonality.from(Chromatic.CC, Scale.LYDIAN_a2),
+            Tonality.from(Chromatic.D, Scale.LYDIAN_a2),
+            Tonality.from(Chromatic.DD, Scale.LYDIAN_a2),
+            Tonality.from(Chromatic.E, Scale.LYDIAN_a2),
+            Tonality.from(Chromatic.F, Scale.LYDIAN_a2),
+            Tonality.from(Chromatic.FF, Scale.LYDIAN_a2),
+            Tonality.from(Chromatic.G, Scale.LYDIAN_a2),
+            Tonality.from(Chromatic.GG, Scale.LYDIAN_a2),
+            Tonality.from(Chromatic.A, Scale.LYDIAN_a2),
+            Tonality.from(Chromatic.AA, Scale.LYDIAN_a2),
+            Tonality.from(Chromatic.B, Scale.LYDIAN_a2)
     )));
 
     public static final Set<TonalityModern> ALL_SUPERLOCRIAN_bb7 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
@@ -314,18 +314,18 @@ public class TonalityRetrieval {
     )));
 
     public static final Set<TonalityModern> ALL_LYDIAN_H5 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
-            Tonality.from(Chromatic.C, Scale.LYDIAN_H5),
-            Tonality.from(Chromatic.CC, Scale.LYDIAN_H5),
-            Tonality.from(Chromatic.D, Scale.LYDIAN_H5),
-            Tonality.from(Chromatic.DD, Scale.LYDIAN_H5),
-            Tonality.from(Chromatic.E, Scale.LYDIAN_H5),
-            Tonality.from(Chromatic.F, Scale.LYDIAN_H5),
-            Tonality.from(Chromatic.FF, Scale.LYDIAN_H5),
-            Tonality.from(Chromatic.G, Scale.LYDIAN_H5),
-            Tonality.from(Chromatic.GG, Scale.LYDIAN_H5),
-            Tonality.from(Chromatic.A, Scale.LYDIAN_H5),
-            Tonality.from(Chromatic.AA, Scale.LYDIAN_H5),
-            Tonality.from(Chromatic.B, Scale.LYDIAN_H5)
+            Tonality.from(Chromatic.C, Scale.LYDIAN_a5),
+            Tonality.from(Chromatic.CC, Scale.LYDIAN_a5),
+            Tonality.from(Chromatic.D, Scale.LYDIAN_a5),
+            Tonality.from(Chromatic.DD, Scale.LYDIAN_a5),
+            Tonality.from(Chromatic.E, Scale.LYDIAN_a5),
+            Tonality.from(Chromatic.F, Scale.LYDIAN_a5),
+            Tonality.from(Chromatic.FF, Scale.LYDIAN_a5),
+            Tonality.from(Chromatic.G, Scale.LYDIAN_a5),
+            Tonality.from(Chromatic.GG, Scale.LYDIAN_a5),
+            Tonality.from(Chromatic.A, Scale.LYDIAN_a5),
+            Tonality.from(Chromatic.AA, Scale.LYDIAN_a5),
+            Tonality.from(Chromatic.B, Scale.LYDIAN_a5)
     )));
 
     public static final Set<TonalityModern> ALL_LYDIAN_b7 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
@@ -359,18 +359,18 @@ public class TonalityRetrieval {
     )));
 
     public static final Set<TonalityModern> ALL_LOCRIAN_H2 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
-            Tonality.from(Chromatic.C, Scale.LOCRIAN_H2),
-            Tonality.from(Chromatic.CC, Scale.LOCRIAN_H2),
-            Tonality.from(Chromatic.D, Scale.LOCRIAN_H2),
-            Tonality.from(Chromatic.DD, Scale.LOCRIAN_H2),
-            Tonality.from(Chromatic.E, Scale.LOCRIAN_H2),
-            Tonality.from(Chromatic.F, Scale.LOCRIAN_H2),
-            Tonality.from(Chromatic.FF, Scale.LOCRIAN_H2),
-            Tonality.from(Chromatic.G, Scale.LOCRIAN_H2),
-            Tonality.from(Chromatic.GG, Scale.LOCRIAN_H2),
-            Tonality.from(Chromatic.A, Scale.LOCRIAN_H2),
-            Tonality.from(Chromatic.AA, Scale.LOCRIAN_H2),
-            Tonality.from(Chromatic.B, Scale.LOCRIAN_H2)
+            Tonality.from(Chromatic.C, Scale.LOCRIAN_a2),
+            Tonality.from(Chromatic.CC, Scale.LOCRIAN_a2),
+            Tonality.from(Chromatic.D, Scale.LOCRIAN_a2),
+            Tonality.from(Chromatic.DD, Scale.LOCRIAN_a2),
+            Tonality.from(Chromatic.E, Scale.LOCRIAN_a2),
+            Tonality.from(Chromatic.F, Scale.LOCRIAN_a2),
+            Tonality.from(Chromatic.FF, Scale.LOCRIAN_a2),
+            Tonality.from(Chromatic.G, Scale.LOCRIAN_a2),
+            Tonality.from(Chromatic.GG, Scale.LOCRIAN_a2),
+            Tonality.from(Chromatic.A, Scale.LOCRIAN_a2),
+            Tonality.from(Chromatic.AA, Scale.LOCRIAN_a2),
+            Tonality.from(Chromatic.B, Scale.LOCRIAN_a2)
     )));
 
     public static final Set<TonalityModern> ALL_SUPERLOCRIAN = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
@@ -531,18 +531,18 @@ public class TonalityRetrieval {
     )));
 
     public static final Set<TonalityModern> ALL_LYDIAN_H2_H6 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
-            Tonality.from(Chromatic.C, Scale.LYDIAN_H2_H6),
-            Tonality.from(Chromatic.CC, Scale.LYDIAN_H2_H6),
-            Tonality.from(Chromatic.D, Scale.LYDIAN_H2_H6),
-            Tonality.from(Chromatic.DD, Scale.LYDIAN_H2_H6),
-            Tonality.from(Chromatic.E, Scale.LYDIAN_H2_H6),
-            Tonality.from(Chromatic.F, Scale.LYDIAN_H2_H6),
-            Tonality.from(Chromatic.FF, Scale.LYDIAN_H2_H6),
-            Tonality.from(Chromatic.G, Scale.LYDIAN_H2_H6),
-            Tonality.from(Chromatic.GG, Scale.LYDIAN_H2_H6),
-            Tonality.from(Chromatic.A, Scale.LYDIAN_H2_H6),
-            Tonality.from(Chromatic.AA, Scale.LYDIAN_H2_H6),
-            Tonality.from(Chromatic.B, Scale.LYDIAN_H2_H6)
+            Tonality.from(Chromatic.C, Scale.LYDIAN_a2_a6),
+            Tonality.from(Chromatic.CC, Scale.LYDIAN_a2_a6),
+            Tonality.from(Chromatic.D, Scale.LYDIAN_a2_a6),
+            Tonality.from(Chromatic.DD, Scale.LYDIAN_a2_a6),
+            Tonality.from(Chromatic.E, Scale.LYDIAN_a2_a6),
+            Tonality.from(Chromatic.F, Scale.LYDIAN_a2_a6),
+            Tonality.from(Chromatic.FF, Scale.LYDIAN_a2_a6),
+            Tonality.from(Chromatic.G, Scale.LYDIAN_a2_a6),
+            Tonality.from(Chromatic.GG, Scale.LYDIAN_a2_a6),
+            Tonality.from(Chromatic.A, Scale.LYDIAN_a2_a6),
+            Tonality.from(Chromatic.AA, Scale.LYDIAN_a2_a6),
+            Tonality.from(Chromatic.B, Scale.LYDIAN_a2_a6)
     )));
 
     public static final Set<TonalityModern> ALL_ULTRAPHRYGIAN = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
@@ -591,18 +591,18 @@ public class TonalityRetrieval {
     )));
 
     public static final Set<TonalityModern> ALL_IONIAN_AUGMENTED_H2 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
-            Tonality.from(Chromatic.C, Scale.IONIAN_AUGMENTED_H2),
-            Tonality.from(Chromatic.CC, Scale.IONIAN_AUGMENTED_H2),
-            Tonality.from(Chromatic.D, Scale.IONIAN_AUGMENTED_H2),
-            Tonality.from(Chromatic.DD, Scale.IONIAN_AUGMENTED_H2),
-            Tonality.from(Chromatic.E, Scale.IONIAN_AUGMENTED_H2),
-            Tonality.from(Chromatic.F, Scale.IONIAN_AUGMENTED_H2),
-            Tonality.from(Chromatic.FF, Scale.IONIAN_AUGMENTED_H2),
-            Tonality.from(Chromatic.G, Scale.IONIAN_AUGMENTED_H2),
-            Tonality.from(Chromatic.GG, Scale.IONIAN_AUGMENTED_H2),
-            Tonality.from(Chromatic.A, Scale.IONIAN_AUGMENTED_H2),
-            Tonality.from(Chromatic.AA, Scale.IONIAN_AUGMENTED_H2),
-            Tonality.from(Chromatic.B, Scale.IONIAN_AUGMENTED_H2)
+            Tonality.from(Chromatic.C, Scale.IONIAN_AUGMENTED_a2),
+            Tonality.from(Chromatic.CC, Scale.IONIAN_AUGMENTED_a2),
+            Tonality.from(Chromatic.D, Scale.IONIAN_AUGMENTED_a2),
+            Tonality.from(Chromatic.DD, Scale.IONIAN_AUGMENTED_a2),
+            Tonality.from(Chromatic.E, Scale.IONIAN_AUGMENTED_a2),
+            Tonality.from(Chromatic.F, Scale.IONIAN_AUGMENTED_a2),
+            Tonality.from(Chromatic.FF, Scale.IONIAN_AUGMENTED_a2),
+            Tonality.from(Chromatic.G, Scale.IONIAN_AUGMENTED_a2),
+            Tonality.from(Chromatic.GG, Scale.IONIAN_AUGMENTED_a2),
+            Tonality.from(Chromatic.A, Scale.IONIAN_AUGMENTED_a2),
+            Tonality.from(Chromatic.AA, Scale.IONIAN_AUGMENTED_a2),
+            Tonality.from(Chromatic.B, Scale.IONIAN_AUGMENTED_a2)
     )));
 
     public static final Set<TonalityModern> ALL_LOCRIAN_bb3_bb7 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(

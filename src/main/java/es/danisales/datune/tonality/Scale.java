@@ -35,13 +35,13 @@ public final class Scale implements Iterable<ScaleDistance> {
 	public static final Scale LOCRIAN = new Scale(ScaleInnerImmutable.LOCRIAN);
 
 	public static final Scale HARMONIC_MINOR = new Scale(ScaleInnerImmutable.HARMONIC_MINOR);
-	public static final Scale LOCRIAN_H6 = new Scale(ScaleInnerImmutable.LOCRIAN_H6);
-	public static final Scale IONIAN_H5 = new Scale(ScaleInnerImmutable.IONIAN_H5);
-	public static final Scale DORIAN_H4 = new Scale(ScaleInnerImmutable.DORIAN_H4);
+	public static final Scale LOCRIAN_a6 = new Scale(ScaleInnerImmutable.LOCRIAN_a6);
+	public static final Scale IONIAN_a5 = new Scale(ScaleInnerImmutable.IONIAN_a5);
+	public static final Scale DORIAN_a4 = new Scale(ScaleInnerImmutable.DORIAN_a4);
 	@SuppressWarnings("unused")
 	public static final Scale UKRANIAN_MINOR_SCALE = new Scale(ScaleInnerImmutable.UKRANIAN_MINOR_SCALE);
 	public static final Scale MIXOLIDIAN_b9_b13 = new Scale(ScaleInnerImmutable.MIXOLIDIAN_b9_b13);
-	public static final Scale LYDIAN_H2 = new Scale(ScaleInnerImmutable.LYDIAN_H2);
+	public static final Scale LYDIAN_a2 = new Scale(ScaleInnerImmutable.LYDIAN_a2);
 	public static final Scale SUPERLOCRIAN_bb7 = new Scale(ScaleInnerImmutable.SUPERLOCRIAN_bb7);
 
 	public static final Scale HARMONIC_MAJOR = new Scale(ScaleInnerImmutable.HARMONIC_MAJOR);
@@ -54,18 +54,18 @@ public final class Scale implements Iterable<ScaleDistance> {
 
 	public static final Scale MELODIC_MINOR = new Scale(ScaleInnerImmutable.MELODIC_MINOR);
 	public static final Scale DORIAN_b2 = new Scale(ScaleInnerImmutable.DORIAN_b2);
-	public static final Scale LYDIAN_H5 = new Scale(ScaleInnerImmutable.LYDIAN_H5);
+	public static final Scale LYDIAN_a5 = new Scale(ScaleInnerImmutable.LYDIAN_a5);
 	public static final Scale LYDIAN_b7 = new Scale(ScaleInnerImmutable.LYDIAN_b7);
 	public static final Scale MIXOLIDIAN_b13 = new Scale(ScaleInnerImmutable.MIXOLIDIAN_b13);
-	public static final Scale LOCRIAN_H2 = new Scale(ScaleInnerImmutable.LOCRIAN_H2);
+	public static final Scale LOCRIAN_a2 = new Scale(ScaleInnerImmutable.LOCRIAN_a2);
 	public static final Scale SUPERLOCRIAN = new Scale(ScaleInnerImmutable.SUPERLOCRIAN);
 
 	public static final Scale DOUBLE_HARMONIC = new Scale(ScaleInnerImmutable.DOUBLE_HARMONIC);
-	public static final Scale LYDIAN_H2_H6 = new Scale(ScaleInnerImmutable.LYDIAN_H2_H6);
+	public static final Scale LYDIAN_a2_a6 = new Scale(ScaleInnerImmutable.LYDIAN_a2_a6);
 	public static final Scale ULTRAPHRYGIAN = new Scale(ScaleInnerImmutable.ULTRAPHRYGIAN);
 	public static final Scale HUNGARIAN_MINOR = new Scale(ScaleInnerImmutable.HUNGARIAN_MINOR);
 	public static final Scale ORIENTAL = new Scale(ScaleInnerImmutable.ORIENTAL);
-	public static final Scale IONIAN_AUGMENTED_H2 = new Scale(ScaleInnerImmutable.IONIAN_AUGMENTED_H2);
+	public static final Scale IONIAN_AUGMENTED_a2 = new Scale(ScaleInnerImmutable.IONIAN_AUGMENTED_a2);
 	public static final Scale LOCRIAN_bb3_bb7 = new Scale(ScaleInnerImmutable.LOCRIAN_bb3_bb7);
 
 	public static final Scale NEAPOLITAN_MINOR = new Scale(ScaleInnerImmutable.NEAPOLITAN_MINOR);
@@ -113,12 +113,12 @@ public final class Scale implements Iterable<ScaleDistance> {
 			MINOR,
 			//AEOLIAN,
 			LOCRIAN,HARMONIC_MINOR,
-			LOCRIAN_H6,
-			IONIAN_H5,
-			DORIAN_H4,
+			LOCRIAN_a6,
+			IONIAN_a5,
+			DORIAN_a4,
 			//UKRANIAN_MINOR_SCALE,
 			MIXOLIDIAN_b9_b13,
-			LYDIAN_H2,
+			LYDIAN_a2,
 			SUPERLOCRIAN_bb7,
 			HARMONIC_MAJOR,
 			DORIAN_b5,
@@ -129,17 +129,17 @@ public final class Scale implements Iterable<ScaleDistance> {
 			LOCRIAN_bb7,
 			MELODIC_MINOR,
 			DORIAN_b2,
-			LYDIAN_H5,
+			LYDIAN_a5,
 			LYDIAN_b7,
 			MIXOLIDIAN_b13,
-			LOCRIAN_H2,
+			LOCRIAN_a2,
 			SUPERLOCRIAN,
 			DOUBLE_HARMONIC,
-			LYDIAN_H2_H6,
+			LYDIAN_a2_a6,
 			ULTRAPHRYGIAN,
 			HUNGARIAN_MINOR,
 			ORIENTAL,
-			IONIAN_AUGMENTED_H2,
+			IONIAN_AUGMENTED_a2,
 			LOCRIAN_bb3_bb7,
 			NEAPOLITAN_MINOR,
 			NEAPOLITAN_MAJOR,

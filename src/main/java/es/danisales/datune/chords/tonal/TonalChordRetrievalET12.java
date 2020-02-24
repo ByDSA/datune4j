@@ -4,7 +4,6 @@ import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
-import es.danisales.datune.function.SecondaryDominant;
 import es.danisales.datune.tonality.TonalityModern;
 import es.danisales.datune.tonality.TonalityRetrieval;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -29,6 +28,7 @@ public class TonalChordRetrievalET12 {
         return this;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public TonalChordRetrievalET12 tonalities(@NonNull Collection<TonalityModern> tonalityList) {
         if (this.tonalityList == null)
             this.tonalityList = new ArrayList<>();
@@ -37,6 +37,7 @@ public class TonalChordRetrievalET12 {
         return this;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public TonalChordRetrievalET12 tonalities(@NonNull TonalityModern... tonalityList) {
         if (this.tonalityList == null)
             this.tonalityList = new ArrayList<>();
@@ -46,60 +47,54 @@ public class TonalChordRetrievalET12 {
         return this;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public TonalChordRetrievalET12 majorMinorET12() {
         return tonalities(TonalityRetrieval.ALL_MAJOR_MINOR);
     }
 
+    @SuppressWarnings("WeakerAccess")
     public TonalChordRetrievalET12 majorModesET12() {
         return tonalities(TonalityRetrieval.ALL_MAJOR_MODES);
     }
 
+    @SuppressWarnings("WeakerAccess")
     public TonalChordRetrievalET12 harmonicMinorModesET12() {
         return tonalities(TonalityRetrieval.ALL_HARMONIC_MINOR_MODES);
     }
 
-    public TonalChordRetrievalET12 harmonicMajorModesET12() {
-        return tonalities(TonalityRetrieval.ALL_HARMONIC_MAJOR_MODES);
-    }
-
-    public TonalChordRetrievalET12 doubleHarmonicModesET12() {
-        return tonalities(TonalityRetrieval.ALL_DOUBLE_HARMONIC_MODES);
-    }
-
+    @SuppressWarnings("WeakerAccess")
     public TonalChordRetrievalET12 melodicMinorModesET12() {
         return tonalities(TonalityRetrieval.ALL_MELODIC_MINOR_MODES);
     }
 
+    @SuppressWarnings("WeakerAccess")
     public TonalChordRetrievalET12 main21ModesET12() {
-        majorModesET12();
-        harmonicMinorModesET12();
-        return melodicMinorModesET12();
+        return majorModesET12()
+        .harmonicMinorModesET12()
+        .melodicMinorModesET12();
     }
 
+    @SuppressWarnings("WeakerAccess")
     public TonalChordRetrievalET12 harmonicFunctions(@NonNull Collection<? extends HarmonicFunction> chromaticFunctions) {
         this.harmonicFunctionList = Objects.requireNonNull(chromaticFunctions);
 
         return this;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public TonalChordRetrievalET12 harmonicFunctions(@NonNull HarmonicFunction... chromaticFunctions) {
         this.harmonicFunctionList = Arrays.asList( Objects.requireNonNull(chromaticFunctions) );
 
         return this;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public TonalChordRetrievalET12 allDiatonicFunctions() {
         return harmonicFunctions( DiatonicFunction.immutableValues() );
     }
 
-    public TonalChordRetrievalET12 tonalityFunctionsAndTensionFunctions() {
-        List<HarmonicFunction> harmonicFunctionList = new ArrayList<>();
-        harmonicFunctionList.addAll( DiatonicFunction.immutableValues() );
-        harmonicFunctionList.addAll( SecondaryDominant.values() );
-        return harmonicFunctions( harmonicFunctionList );
-    }
-
-    public TonalChordRetrievalET12 root(@NonNull Chromatic... diatonicAlts) {
+    @SuppressWarnings("WeakerAccess")
+    public TonalChordRetrievalET12 rootAny(@NonNull Chromatic... diatonicAlts) {
         if (this.chromatics == null)
             this.chromatics = new ArrayList<>();
 
@@ -108,6 +103,7 @@ public class TonalChordRetrievalET12 {
         return this;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public @NonNull List<TonalChord> retrieve() {
         List<TonalChord> parametricChordList = new CopyOnWriteArrayList<>();
 
