@@ -19,6 +19,8 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
+import static com.google.common.base.Preconditions.checkState;
+
 public class EventSequence implements Durable, EventComplex {
 	static {
 		BinEncoder.register(EventSequence.class, (EventSequence self, BinEncoder.EncoderSettings settings) -> {
@@ -62,13 +64,11 @@ public class EventSequence implements Durable, EventComplex {
 				}
 			});
 		});
-		BinSize.register(EventSequence.class, (EventSequence self, BinEncoder.EncoderSettings settings) -> {
-			return BinData.encoder().from(self).getBytes().length;
-		});
+		BinSize.register(EventSequence.class, (EventSequence self, BinEncoder.EncoderSettings settings) -> BinData.encoder().from(self).getBytes().length);
 	}
 
-	protected TreeMap<Long, ArrayList<Event>>	map;
-	protected int								duration;
+	protected TreeMap<Long, ArrayList<Event>> map;
+	protected int duration;
 
 	public EventSequence() {
 		map = new TreeMap<>();
@@ -112,9 +112,7 @@ public class EventSequence implements Durable, EventComplex {
 	public int size() {
 		int n = 0;
 
-		for ( Iterator<Map.Entry<Long, ArrayList<Event>>> it = getMap().entrySet().iterator(); it
-				.hasNext(); ) {
-			Map.Entry<Long, ArrayList<Event>> entry = it.next();
+		for (Map.Entry<Long, ArrayList<Event>> entry : getMap().entrySet()) {
 			Long key = entry.getKey();
 			List<Event> value = entry.getValue();
 
@@ -128,19 +126,17 @@ public class EventSequence implements Durable, EventComplex {
 	}
 
 	public void show(long scale) {
-		for ( Iterator<Map.Entry<Long, ArrayList<Event>>> it = getMap().entrySet().iterator(); it
-				.hasNext(); ) {
-			Map.Entry<Long, ArrayList<Event>> entry = it.next();
+		for (Map.Entry<Long, ArrayList<Event>> entry : getMap().entrySet()) {
 			Long key = entry.getKey();
 			ArrayList<Event> value = entry.getValue();
 
-			for ( Event e : value )
-				System.out.println( ( ( (float) key ) / scale ) + ":\t" + e );
+			for (Event e : value)
+				System.out.println((((float) key) / scale) + ":\t" + e);
 		}
 	}
 
 	public static ChordMidi whatNotesArePlaying(EventSequence es, long time) {
-		assert time < es.getLength();
+		checkState( time < es.getLength() );
 		ChordMidi notes = ChordMidi.builder().build();
 
 		es.forEach( (Long t, Event ev) -> {

@@ -7,9 +7,7 @@ import es.danisales.datune.degrees.octave.Diatonic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.degrees.scale.ScaleDegree;
 import es.danisales.datune.interval.IntervalDiatonic;
-import es.danisales.datune.tonality.ScaleRelativeDegreeException;
-import es.danisales.datune.tonality.Tonality;
-import es.danisales.datune.tonality.TonalityException;
+import es.danisales.datune.tonality.*;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -18,7 +16,7 @@ import java.util.Objects;
 public class PitchTonalMidi implements PitchOctaveMidiEditable, PitchMidiInterface<IntervalDiatonic> {
 	protected ScaleDegree degree;
 	protected int octave;
-	protected Tonality<Chromatic> tonality;
+	protected TonalityModern tonality;
 
 	public static PitchTonalMidi from(@NonNull PitchTonalMidi pitchDiatonicMidi) {
 		try {
@@ -29,7 +27,7 @@ public class PitchTonalMidi implements PitchOctaveMidiEditable, PitchMidiInterfa
 	}
 
 	public static <C extends CyclicDegree> @NonNull PitchTonalMidi from(@NonNull ScaleDegree scaleDegree, @NonNull Tonality<C> tonality, int octave) throws PitchMidiException {
-		Tonality<Chromatic> tonality2 = turnToTonalityChromatic(tonality);
+		TonalityModern tonality2 = turnToTonalityModern(tonality);
 		if (tonality.getRoot() instanceof DiatonicAlt)
 			//noinspection unchecked
 			octave += PitchChromaticMidi.octaveCorrectorAltRoot((Tonality<DiatonicAlt>)tonality);
@@ -40,14 +38,12 @@ public class PitchTonalMidi implements PitchOctaveMidiEditable, PitchMidiInterfa
 		return PitchTonalMidiAdapter.from(pitchChromaticMidi, tonality);
 	}
 
-	public static <C extends CyclicDegree>  Tonality<Chromatic> turnToTonalityChromatic(Tonality<C> tonality) {
-		Tonality<Chromatic> tonality2;
+	static <C extends CyclicDegree> TonalityModern turnToTonalityModern(Tonality<C> tonality) {
+		TonalityModern tonality2;
 		if (tonality.getRoot() instanceof Chromatic)
-			//noinspection unchecked
-			tonality2 = (Tonality<Chromatic>)tonality;
+			tonality2 = (TonalityModern)tonality;
 		else if (tonality.getRoot() instanceof DiatonicAlt) {
-			//noinspection unchecked
-			tonality2 = TonalityConverter.fromDiatonicAltToChromatic((Tonality<DiatonicAlt>)tonality);
+			tonality2 = TonalityConverter.fromDiatonicAltToChromatic((TonalityClassical)tonality);
 		} else
 			throw new RuntimeException();
 
@@ -152,7 +148,7 @@ public class PitchTonalMidi implements PitchOctaveMidiEditable, PitchMidiInterfa
 		degree = diatonicDegree;
 	}
 
-	public void setTonality(@NonNull Tonality<Chromatic> tonality) {
+	public void setTonality(@NonNull TonalityModern tonality) {
 		Objects.requireNonNull(tonality);
 		this.tonality = tonality;
 	}

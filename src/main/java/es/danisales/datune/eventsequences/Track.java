@@ -2,7 +2,6 @@ package es.danisales.datune.eventsequences;
 
 import es.danisales.datune.midi.binaries.Sequence;
 import es.danisales.datune.midi.binaries.events.*;
-import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityModern;
 import es.danisales.io.binary.BinData;
 import es.danisales.io.binary.BinEncoder;
@@ -106,6 +105,7 @@ public class Track extends EventSequence {
 		return channel;
 	}
 
+	@SuppressWarnings("WeakerAccess")
 	public Instrument getInstrument() {
 		return midiInstrument;
 	}
@@ -129,7 +129,7 @@ public class Track extends EventSequence {
 
 		int channel;
 
-		public MetaEvent20(int channel) {
+		MetaEvent20(int channel) {
 			super(0, (byte) 0x20);
 
 			this.channel = ChannelEvent.boundChannel(channel);

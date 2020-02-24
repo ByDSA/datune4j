@@ -42,7 +42,9 @@ interface ScaleInner {
 		if (scaleDegreeReparametrizer == null)
 			return ImmutableSet.copyOf(ret);
 
-		ret.addAll(scaleDegreeReparametrizer.getByIndex(i));
+		Set<ScaleDegree> scaleDegrees_i = scaleDegreeReparametrizer.getByIndex(i);
+		if (scaleDegrees_i != null)
+			ret.addAll(scaleDegrees_i);
 
 		return ImmutableSet.copyOf(ret);
 	}

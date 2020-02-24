@@ -9,10 +9,12 @@ public class RhythmLayer extends SequentialTimeEvents<RhythmPattern, DurableEven
         return new RhythmLayer();
     }
 
+    @SuppressWarnings("WeakerAccess")
     public MusicalTime getFirstCompassTime() {
         return MusicalTime.ZERO.clone();
     }
 
+    @SuppressWarnings("WeakerAccess")
     public MusicalTime getNextCompassTime(MusicalTime fromTime) {
         return MusicalTime.WHOLE.clone().mult(4);//getEvent(fromTime).getEnd();
     }

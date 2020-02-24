@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.google.common.base.Preconditions.checkState;
-
 public class TonalityClassical extends Tonality<DiatonicAlt> {
     public static final TonalityClassical C = new TonalityClassical(TonalityInnerImmutable.C);
     @SuppressWarnings("WeakerAccess")
@@ -28,25 +26,18 @@ public class TonalityClassical extends Tonality<DiatonicAlt> {
     public static final TonalityClassical B = new TonalityClassical(TonalityInnerImmutable.B);
 
     public static final TonalityClassical Cm = new TonalityClassical(TonalityInnerImmutable.Cm);
-    @SuppressWarnings("WeakerAccess")
     public static final TonalityClassical CCm = new TonalityClassical(TonalityInnerImmutable.CCm);
     public static final TonalityClassical Dm = new TonalityClassical(TonalityInnerImmutable.Dm);
-    @SuppressWarnings("WeakerAccess")
     public static final TonalityClassical DDm = new TonalityClassical(TonalityInnerImmutable.DDm);
     @SuppressWarnings("WeakerAccess")
     public static final TonalityClassical Ebm = new TonalityClassical(TonalityInnerImmutable.Ebm);
     public static final TonalityClassical Em = new TonalityClassical(TonalityInnerImmutable.Em);
-    @SuppressWarnings("WeakerAccess")
     public static final TonalityClassical Fm = new TonalityClassical(TonalityInnerImmutable.Fm);
-    @SuppressWarnings("WeakerAccess")
     public static final TonalityClassical FFm = new TonalityClassical(TonalityInnerImmutable.FFm);
     public static final TonalityClassical Gm = new TonalityClassical(TonalityInnerImmutable.Gm);
-    @SuppressWarnings("WeakerAccess")
     public static final TonalityClassical GGm = new TonalityClassical(TonalityInnerImmutable.GGm);
     public static final TonalityClassical Am = new TonalityClassical(TonalityInnerImmutable.Am);
-    @SuppressWarnings("WeakerAccess")
     public static final TonalityClassical Bbm = new TonalityClassical(TonalityInnerImmutable.Bbm);
-    @SuppressWarnings("WeakerAccess")
     public static final TonalityClassical Bm = new TonalityClassical(TonalityInnerImmutable.Bm);
 
     /**

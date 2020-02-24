@@ -1,13 +1,9 @@
 package es.danisales.datune.function;
 
 import es.danisales.datune.chords.Chord;
-import es.danisales.datune.chords.DiatonicDegreePattern;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.chords.tonal.TonalChord;
-import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.octave.CyclicDegree;
-import es.danisales.datune.degrees.octave.DiatonicAlt;
-import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityClassical;
 import es.danisales.datune.tonality.TonalityModern;
@@ -16,8 +12,6 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 class FunctionCache {
     private final Map<TonalChord, Chord<? extends CyclicDegree>> map = new HashMap<>();

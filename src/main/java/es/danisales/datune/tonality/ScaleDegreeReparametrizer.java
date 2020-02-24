@@ -119,6 +119,7 @@ public class ScaleDegreeReparametrizer implements Cloneable {
                     .build()
     );
 
+    @SuppressWarnings("WeakerAccess")
     public static final ScaleDegreeReparametrizer CHROMATIC = new ScaleDegreeReparametrizer(
             new ImmutableMultimap.Builder<Integer, ScaleDegree>()
                     .put(0, DiatonicDegree.I)

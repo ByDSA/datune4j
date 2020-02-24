@@ -8,6 +8,7 @@ import es.danisales.datune.degrees.scale.ScaleDegree;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityException;
+import es.danisales.datune.tonality.TonalityModern;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -24,7 +25,7 @@ class PitchTonalMidiAdapter {
     public static <C extends CyclicDegree> @NonNull PitchTonalMidi from(@NonNull PitchChromaticMidi pitchChromaticMidi, @NonNull Tonality<C> tonality) throws TonalityException {
         Objects.requireNonNull(pitchChromaticMidi);
         Objects.requireNonNull(tonality);
-        Tonality<Chromatic> tonality2 = PitchTonalMidi.turnToTonalityChromatic(tonality);
+        TonalityModern tonality2 = PitchTonalMidi.turnToTonalityModern(tonality);
         ScaleDegree scaleDegree = getDegreeFromPitchChromaticMidi(pitchChromaticMidi, tonality2);
 
         int octave = getRootOctaveFromChromaticMidi(pitchChromaticMidi, scaleDegree, tonality2);
@@ -121,7 +122,7 @@ class PitchTonalMidiAdapter {
         return pitchChromaticMidiRootWithoutAlts.getOctave();
     }
 
-    static @NonNull PitchTonalMidi fromUncheck(@NonNull ScaleDegree diatonicDegree, @NonNull Tonality<Chromatic> tonality, int octave) {
+    static @NonNull PitchTonalMidi fromUncheck(@NonNull ScaleDegree diatonicDegree, @NonNull TonalityModern tonality, int octave) {
         PitchTonalMidi ret = new PitchTonalMidi();
         ret.degree = diatonicDegree;
         ret.tonality = tonality;
@@ -134,7 +135,7 @@ class PitchTonalMidiAdapter {
      * FROM DiatonicDegree, Tonality, Octave
      */
 
-    public static @NonNull PitchTonalMidi from(@NonNull ScaleDegree scaleDegree, @NonNull Tonality<Chromatic> tonality, int octave) throws PitchMidiException {
+    public static @NonNull PitchTonalMidi from(@NonNull ScaleDegree scaleDegree, @NonNull TonalityModern tonality, int octave) throws PitchMidiException {
         Objects.requireNonNull(scaleDegree);
         Objects.requireNonNull(tonality);
         PitchTonalMidi ret = PitchTonalMidiAdapter.fromUncheck(scaleDegree, tonality, octave);

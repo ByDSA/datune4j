@@ -1,5 +1,7 @@
-package es.danisales.datune.eventsequences;
+package es.danisales.datune.eventsequences.drums;
 
+import es.danisales.datune.eventsequences.Instrument;
+import es.danisales.datune.eventsequences.Track;
 import es.danisales.datune.midi.binaries.events.NoteOn;
 import es.danisales.utils.NeverHappensException;
 import es.danisales.utils.building.BuildingException;

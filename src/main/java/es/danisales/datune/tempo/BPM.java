@@ -13,6 +13,7 @@ public class BPM extends Tempo {
 		return of(q, MusicalTime.QUARTER);
 	}
 
+	@SuppressWarnings("WeakerAccess")
 	public static BPM of(int q, MusicalTime sd) {
 		BPM bpm = new BPM();
 		bpm.bpm = q;

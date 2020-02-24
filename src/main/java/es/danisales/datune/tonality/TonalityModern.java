@@ -21,23 +21,17 @@ public class TonalityModern extends Tonality<Chromatic> {
     public static final TonalityModern B = Tonality.from(Chromatic.B, Scale.MAJOR);
 
     public static final TonalityModern Cm = Tonality.from(Chromatic.C, Scale.MINOR);
-    @SuppressWarnings("WeakerAccess")
     public static final TonalityModern CCm = Tonality.from(Chromatic.CC, Scale.MINOR);
     public static final TonalityModern Dm = Tonality.from(Chromatic.D, Scale.MINOR);
-    @SuppressWarnings("WeakerAccess")
     public static final TonalityModern DDm = Tonality.from(Chromatic.DD, Scale.MINOR);
     public static final TonalityModern Em = Tonality.from(Chromatic.E, Scale.MINOR);
-    @SuppressWarnings("WeakerAccess")
     public static final TonalityModern Fm = Tonality.from(Chromatic.F, Scale.MINOR);
-    @SuppressWarnings("WeakerAccess")
     public static final TonalityModern FFm = Tonality.from(Chromatic.FF, Scale.MINOR);
     public static final TonalityModern Gm = Tonality.from(Chromatic.G, Scale.MINOR);
-    @SuppressWarnings("WeakerAccess")
     public static final TonalityModern GGm = Tonality.from(Chromatic.GG, Scale.MINOR);
     public static final TonalityModern Am = Tonality.from(Chromatic.A, Scale.MINOR);
     @SuppressWarnings("WeakerAccess")
     public static final TonalityModern AAm = Tonality.from(Chromatic.AA, Scale.MINOR);
-    @SuppressWarnings("WeakerAccess")
     public static final TonalityModern Bm = Tonality.from(Chromatic.B, Scale.MINOR);
 
     /**

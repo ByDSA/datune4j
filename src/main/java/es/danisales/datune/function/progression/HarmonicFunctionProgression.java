@@ -2,15 +2,11 @@ package es.danisales.datune.function.progression;
 
 import com.google.common.collect.ImmutableList;
 import es.danisales.datastructures.ListProxy;
-import es.danisales.datune.chords.Chord;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
-import es.danisales.datune.degrees.octave.CyclicDegree;
 import es.danisales.datune.function.ChromaticDegreeFunction;
 import es.danisales.datune.function.CompoundFunction;
 import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.function.SecondaryDominant;
-import es.danisales.datune.tonality.ScaleRelativeDegreeException;
-import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityModern;
 import org.checkerframework.checker.nullness.qual.NonNull;
 

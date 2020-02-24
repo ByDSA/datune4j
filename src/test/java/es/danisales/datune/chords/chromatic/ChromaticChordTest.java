@@ -8,6 +8,7 @@ import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.function.ChromaticDegreeFunction;
 import es.danisales.datune.function.DiatonicFunction;
+import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.lang.Language;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
@@ -47,6 +48,25 @@ public class ChromaticChordTest {
                 Chromatic.B, Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.C),
                 chromaticChord
         );
+    }
+
+    @Test
+    public void shift() {
+        ChromaticChord chromaticChord = ChromaticChord.B.clone();
+        chromaticChord.shift(IntervalChromatic.MINOR_SECOND);
+        assertEquals(ChromaticChord.C, chromaticChord);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void shift_immutable() {
+        ChromaticChord.C.shift(IntervalChromatic.MINOR_SECOND);
+    }
+
+    @Test
+    public void shiftNegative() {
+        ChromaticChord chromaticChord = ChromaticChord.C.clone();
+        chromaticChord.shiftNegative(IntervalChromatic.MINOR_SECOND);
+        assertEquals(ChromaticChord.B, chromaticChord);
     }
 
     public static class BuilderTest {

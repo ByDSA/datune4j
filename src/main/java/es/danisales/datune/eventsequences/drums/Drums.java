@@ -1,4 +1,4 @@
-package es.danisales.datune.eventsequences;
+package es.danisales.datune.eventsequences.drums;
 
 public enum Drums {
     ACOUSTIC_BASS_DRUM(35),

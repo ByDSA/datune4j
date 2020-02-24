@@ -6,11 +6,14 @@ import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Builder<ChromaticChordMidiBuilder, ChordMidi> {
     private List<Chromatic> fromChromatic;
@@ -44,6 +47,7 @@ public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Build
         return self();
     }
 
+    @SuppressWarnings("WeakerAccess")
     public ChromaticChordMidiBuilder octaveBase(int octave) {
         this.octave = octave;
 
@@ -123,8 +127,10 @@ public class ChromaticChordMidiBuilder extends es.danisales.utils.building.Build
         return add(chromaticMidi);
     }
 
-    public ChromaticChordMidiBuilder from(TonalChord from) {
-        return fromChromaticChord(ChromaticChord.from(from));
+    public ChromaticChordMidiBuilder from(@NonNull TonalChord from) {
+        ChromaticChord chromaticChord = ChromaticChord.from(from);
+        checkNotNull(chromaticChord);
+        return fromChromaticChord(chromaticChord);
     }
 
     @Override

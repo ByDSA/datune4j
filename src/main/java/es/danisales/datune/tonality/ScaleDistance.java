@@ -40,6 +40,6 @@ public enum ScaleDistance {
 
     @Override
     public String toString() {
-        return ScaleNamer.from(this);
+        return ScaleNominator.from(this);
     }
 }

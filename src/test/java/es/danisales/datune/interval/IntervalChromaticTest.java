@@ -3,6 +3,7 @@ package es.danisales.datune.interval;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.interval.IntervalDiatonic;
 import es.danisales.datune.chords.Quality;
+import es.danisales.datune.lang.Nominator;
 import org.junit.Test;
 
 import java.util.Set;
@@ -115,5 +116,27 @@ public class IntervalChromaticTest {
         for (IntervalChromatic intervalChromatic : IntervalChromatic.values()) {
             assertNotNull(intervalChromatic.toString());
         }
+    }
+
+    @Test
+    public void shortName_notNull() {
+        for (IntervalChromatic intervalChromatic : IntervalChromatic.values()) {
+            assertNotNull( Nominator.shortFrom( intervalChromatic ) );
+        }
+    }
+
+    @Test
+    public void shortName_minorThird() {
+        assertEquals("m3", Nominator.shortFrom(IntervalChromatic.MINOR_THIRD));
+    }
+
+    @Test
+    public void shortName_majorThird() {
+        assertEquals("M3", Nominator.shortFrom(IntervalChromatic.MAJOR_THIRD));
+    }
+
+    @Test
+    public void shortName_diminishedFifth() {
+        assertEquals("d5", Nominator.shortFrom(IntervalChromatic.DIMINISHED_FIFTH));
     }
 }

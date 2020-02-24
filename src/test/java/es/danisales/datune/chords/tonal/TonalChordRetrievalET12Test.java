@@ -113,7 +113,7 @@ public class TonalChordRetrievalET12Test {
                         TonalChord.from(TonalityModern.from(Chromatic.D, Scale.DORIAN), DiatonicFunction.VII7),
                         TonalChord.from(TonalityModern.from(Chromatic.E, Scale.HARMONIC_MINOR), DiatonicFunction.VI7),
                         TonalChord.from(TonalityModern.from(Chromatic.G, Scale.IONIAN_a5), DiatonicFunction.IV7),
-                        TonalChord.from(TonalityModern.from(Chromatic.B, Scale.MIXOLIDIAN_b9_b13), DiatonicFunction.II7),
+                        TonalChord.from(TonalityModern.from(Chromatic.B, Scale.MIXOLYDIAN_b9_b13), DiatonicFunction.II7),
                         TonalChord.from(TonalityModern.from(Chromatic.C, Scale.LYDIAN_a2), DiatonicFunction.I7),
                         TonalChord.from(TonalityModern.from(Chromatic.FF, Scale.LOCRIAN_a6), DiatonicFunction.V7),
                         TonalChord.from(TonalityModern.from(Chromatic.DD, Scale.SUPERLOCRIAN_bb7), DiatonicFunction.VII7),

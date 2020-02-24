@@ -40,7 +40,7 @@ public final class Scale implements Iterable<ScaleDistance> {
 	public static final Scale DORIAN_a4 = new Scale(ScaleInnerImmutable.DORIAN_a4);
 	@SuppressWarnings("unused")
 	public static final Scale UKRANIAN_MINOR_SCALE = new Scale(ScaleInnerImmutable.UKRANIAN_MINOR_SCALE);
-	public static final Scale MIXOLIDIAN_b9_b13 = new Scale(ScaleInnerImmutable.MIXOLIDIAN_b9_b13);
+	public static final Scale MIXOLYDIAN_b9_b13 = new Scale(ScaleInnerImmutable.MIXOLYDIAN_b9_b13);
 	public static final Scale LYDIAN_a2 = new Scale(ScaleInnerImmutable.LYDIAN_a2);
 	public static final Scale SUPERLOCRIAN_bb7 = new Scale(ScaleInnerImmutable.SUPERLOCRIAN_bb7);
 
@@ -56,7 +56,7 @@ public final class Scale implements Iterable<ScaleDistance> {
 	public static final Scale DORIAN_b2 = new Scale(ScaleInnerImmutable.DORIAN_b2);
 	public static final Scale LYDIAN_a5 = new Scale(ScaleInnerImmutable.LYDIAN_a5);
 	public static final Scale LYDIAN_b7 = new Scale(ScaleInnerImmutable.LYDIAN_b7);
-	public static final Scale MIXOLIDIAN_b13 = new Scale(ScaleInnerImmutable.MIXOLIDIAN_b13);
+	public static final Scale MIXOLYDIAN_b13 = new Scale(ScaleInnerImmutable.MIXOLYDIAN_b13);
 	public static final Scale LOCRIAN_a2 = new Scale(ScaleInnerImmutable.LOCRIAN_a2);
 	public static final Scale SUPERLOCRIAN = new Scale(ScaleInnerImmutable.SUPERLOCRIAN);
 
@@ -117,7 +117,7 @@ public final class Scale implements Iterable<ScaleDistance> {
 			IONIAN_a5,
 			DORIAN_a4,
 			//UKRANIAN_MINOR_SCALE,
-			MIXOLIDIAN_b9_b13,
+			MIXOLYDIAN_b9_b13,
 			LYDIAN_a2,
 			SUPERLOCRIAN_bb7,
 			HARMONIC_MAJOR,
@@ -131,7 +131,7 @@ public final class Scale implements Iterable<ScaleDistance> {
 			DORIAN_b2,
 			LYDIAN_a5,
 			LYDIAN_b7,
-			MIXOLIDIAN_b13,
+			MIXOLYDIAN_b13,
 			LOCRIAN_a2,
 			SUPERLOCRIAN,
 			DOUBLE_HARMONIC,
@@ -347,7 +347,7 @@ public final class Scale implements Iterable<ScaleDistance> {
 
 	@Override
 	public String toString() {
-		return ScaleNamer.from(this);
+		return ScaleNominator.from(this);
 	}
 
 	@Override

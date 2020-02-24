@@ -6,6 +6,7 @@ import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.tonality.Scale;
 import es.danisales.datune.tonality.Tonality;
 
+@SuppressWarnings("WeakerAccess")
 public class Settings {
 	public static final int VELOCITY_MAX = 127;
 	public static class DefaultValues {

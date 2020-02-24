@@ -11,6 +11,8 @@ import es.danisales.datune.tonality.TonalityRetrieval;
 
 import java.util.*;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class TonalLayerCalculator {
     private RhythmLayer rhythmLayer;
     private ChordsLayer chordsLayer;
@@ -82,8 +84,10 @@ public class TonalLayerCalculator {
 
         for (int i = 0; i < possibleTonalities.size(); i++) {
             TonalityModern tonality = possibleTonalities.get(i);
-            TonalChord tonalChord = TonalChord.from(tonality, rootFunction);
-            ChromaticChord rootChord = ChromaticChord.from(tonalChord);
+            ChromaticChord rootChord = tonality.getChord(rootFunction);
+
+            checkNotNull(rootChord);
+
             if (!chromaticChordProgression.get(0).contains(tonality.getRoot())
                     || !rootChord.containsAll(chromaticChordProgression.get(0))
                     || !tonality.getMainFunctionFrom(chromaticChordProgression.get(0)).equals(MainTonalFunction.TONIC)

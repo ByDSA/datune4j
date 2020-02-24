@@ -4,8 +4,8 @@ import es.danisales.datune.GlobalSettings;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-class ScaleNamer {
-    private ScaleNamer() {
+class ScaleNominator {
+    private ScaleNominator() {
     }
 
     static @NonNull String numberFrom(@NonNull ScaleDistance scaleDistance) {
@@ -54,9 +54,9 @@ class ScaleNamer {
                 return ScaleInnerImmutable.DORIAN + " #4";
             case UKRANIAN_MINOR_SCALE:
                 break;
-            case MIXOLIDIAN_b9_b13:
+            case MIXOLYDIAN_b9_b13:
                 return ScaleInnerImmutable.MIXOLYDIAN + "b9 b13";
-            case MIXOLIDIAN_b13:
+            case MIXOLYDIAN_b13:
                 return ScaleInnerImmutable.MIXOLYDIAN + " b13";
             case LYDIAN_a2:
                 return ScaleInnerImmutable.LYDIAN + " #2";

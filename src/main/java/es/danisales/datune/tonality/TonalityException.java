@@ -9,21 +9,21 @@ public class TonalityException extends Exception {
 	private TonalityException(@NonNull DiatonicAlt diatonicAlt, @NonNull Tonality<DiatonicAlt> tonality) {
 		super(
 			"La nota " + diatonicAlt + " no pertenece a la tonalidad " + tonality + ": "
-					+ TonalityNamer.notesFrom(tonality) + "."
+					+ tonality.getNotes() + "."
 				);
 	}
 
 	private TonalityException(@NonNull Diatonic diatonic, @NonNull Tonality<DiatonicAlt> tonality) {
 		super(
 				"El grado " + diatonic + " no está en la tonalidad " + tonality + ": "
-						+ TonalityNamer.notesFrom(tonality) + "."
+						+ tonality.getNotes() + "."
 		);
 	}
 
 	private TonalityException(@NonNull Chromatic chromatic, @NonNull Tonality<Chromatic> tonality) {
 		super(
 			"La nota " + chromatic + " no pertenece a la tonalidad " + tonality + ": "
-					+ TonalityNamer.notesFrom(tonality) + "."
+					+ tonality.getNotes() + "."
 				);
 	}
 

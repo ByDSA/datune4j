@@ -49,7 +49,7 @@ abstract class Chunk implements Event {
         byteOutputStream.write(lengthBytes);
     }
 
-	protected byte[] type;
+	private byte[] type;
     private List<Object> data;
 	protected int length;
 

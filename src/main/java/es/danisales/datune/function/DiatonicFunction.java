@@ -198,7 +198,6 @@ public final class DiatonicFunction
 		return diatonicDegree;
 	}
 
-	@SuppressWarnings("WeakerAccess")
 	public DiatonicDegreePattern getDiatonicDegreePattern() {
 		return diatonicDegreePattern;
 	}

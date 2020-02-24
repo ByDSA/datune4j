@@ -2,10 +2,9 @@ package es.danisales.datune.tonality;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
-import es.danisales.datune.degrees.octave.Diatonic;
-import es.danisales.datune.degrees.octave.DiatonicAlt;
 import es.danisales.datune.chords.diatonicalt.DiatonicAltRetrieval;
 import es.danisales.datune.degrees.octave.CyclicDegree;
+import es.danisales.datune.degrees.octave.DiatonicAlt;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -64,7 +63,7 @@ enum TonalityInnerImmutable implements TonalityInner<DiatonicAlt> {
 		this.root = noteBase;
 		this.scale = scale;
 
-		notes = (List<DiatonicAlt>)Collections.unmodifiableList( DiatonicAltRetrieval.listFrom(noteBase, scale) );
+		notes = Collections.unmodifiableList( DiatonicAltRetrieval.listFrom(noteBase, scale) );
 	}
 
 	public @NonNull Scale getScale() {

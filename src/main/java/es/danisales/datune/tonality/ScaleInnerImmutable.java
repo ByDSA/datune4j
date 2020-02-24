@@ -26,7 +26,7 @@ enum ScaleInnerImmutable implements ScaleInner {
 	IONIAN_a5(HARMONIC_MINOR.getModeFromSecure(DiatonicDegree.III)),
 	DORIAN_a4(HARMONIC_MINOR.getModeFromSecure(DiatonicDegree.IV)),
 	UKRANIAN_MINOR_SCALE(DORIAN_a4),
-	MIXOLIDIAN_b9_b13(HARMONIC_MINOR.getModeFromSecure(DiatonicDegree.V)),
+	MIXOLYDIAN_b9_b13(HARMONIC_MINOR.getModeFromSecure(DiatonicDegree.V)),
 	LYDIAN_a2(HARMONIC_MINOR.getModeFromSecure(DiatonicDegree.VI)),
 	SUPERLOCRIAN_bb7(HARMONIC_MINOR.getModeFromSecure(DiatonicDegree.VII)),
 
@@ -42,7 +42,7 @@ enum ScaleInnerImmutable implements ScaleInner {
 	DORIAN_b2(MELODIC_MINOR.getModeFromSecure(DiatonicDegree.II)),
 	LYDIAN_a5(MELODIC_MINOR.getModeFromSecure(DiatonicDegree.III)),
 	LYDIAN_b7(MELODIC_MINOR.getModeFromSecure(DiatonicDegree.IV)),
-	MIXOLIDIAN_b13(MELODIC_MINOR.getModeFromSecure(DiatonicDegree.V)),
+	MIXOLYDIAN_b13(MELODIC_MINOR.getModeFromSecure(DiatonicDegree.V)),
 	LOCRIAN_a2(MELODIC_MINOR.getModeFromSecure(DiatonicDegree.VI)),
 	SUPERLOCRIAN(MELODIC_MINOR.getModeFromSecure(DiatonicDegree.VII)),
 
@@ -142,7 +142,7 @@ enum ScaleInnerImmutable implements ScaleInner {
 
 	@Override
 	public String toString() {
-		return ScaleNamer.from(this);
+		return ScaleNominator.from(this);
 	}
 
     @Override

@@ -1,6 +1,6 @@
 package es.danisales.datune.midi.binaries;
 
-import es.danisales.datune.eventsequences.DrumsTrack;
+import es.danisales.datune.eventsequences.drums.DrumsTrack;
 import es.danisales.datune.eventsequences.EventSequence;
 import es.danisales.datune.eventsequences.Instrument;
 import es.danisales.datune.eventsequences.Track;

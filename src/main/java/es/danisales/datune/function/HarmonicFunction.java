@@ -2,7 +2,6 @@ package es.danisales.datune.function;
 
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.chords.tonal.TonalChord;
-import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.TonalityModern;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -15,7 +14,8 @@ public abstract class HarmonicFunction {
         ChromaticChord chromaticChord = (ChromaticChord)functionCache.get(tonalChord);
         if (functionCache.containsKey(tonalChord)) {
             chromaticChord = calculateChord(tonality);
-            functionCache.put(tonalChord.clone(), ChromaticChord.immutableFrom(chromaticChord));
+            ChromaticChord immutableChromaticChord = chromaticChord == null ? null : ChromaticChord.immutableFrom(chromaticChord);
+            functionCache.put(tonalChord.clone(), immutableChromaticChord);
         }
 
         return chromaticChord;

@@ -75,7 +75,6 @@ public abstract class Tonality<C extends CyclicDegree> implements Iterable<C> {
         return this.getRoot().equals(t.getRoot()) && !getScale().equals(t.getScale());
     }
 
-    @SuppressWarnings("WeakerAccess")
     public abstract @NonNull List<? extends Tonality> getParallelModes();
 
     public @Nullable ScaleDegree getDegreeFrom(@NonNull C c) {
@@ -146,7 +145,7 @@ public abstract class Tonality<C extends CyclicDegree> implements Iterable<C> {
     }
 
     private void turnInnerIntoMutable() {
-        innerTonality = new TonalityInnerMutable(innerTonality.getRoot(), innerTonality.getScale());
+        innerTonality = new TonalityInnerMutable<>(innerTonality.getRoot(), innerTonality.getScale());
     }
 
     public boolean containsAll(C note) {
@@ -220,7 +219,8 @@ public abstract class Tonality<C extends CyclicDegree> implements Iterable<C> {
             return MainTonalFunction.TONIC;
     }
 
-    public MainTonalFunction getMainFunctionFrom(HarmonicFunction harmonicFunction) {
+    @SuppressWarnings("WeakerAccess")
+    public MainTonalFunction getMainFunctionFrom(@NonNull HarmonicFunction harmonicFunction) {
         Chord<C> chord = (Chord<C>)harmonicFunction.getChord((TonalityModern) this);
         if (chord == null)
             return null;
@@ -228,7 +228,7 @@ public abstract class Tonality<C extends CyclicDegree> implements Iterable<C> {
         return getMainFunctionFrom(chord);
     }
 
-    private Chord<C> getRootChord() {
+    private @NonNull Chord<C> getRootChord() {
         C root = getRoot();
         C note2 = null;
         C note3 = null;
@@ -241,8 +241,9 @@ public abstract class Tonality<C extends CyclicDegree> implements Iterable<C> {
             e.printStackTrace();
         }
 
-        Chord<C> chord = null;
+        Chord<C> chord;
         if (root instanceof Chromatic) {
+            //noinspection unchecked
             chord = (Chord<C>) ChromaticChord.builder()
                     .build();
 
@@ -250,11 +251,12 @@ public abstract class Tonality<C extends CyclicDegree> implements Iterable<C> {
             chord.add(note2);
             chord.add(note3);
             chord.add(note4);
+            return chord;
         } else if (root instanceof DiatonicAlt) {
             return null;
         }
 
-        return chord;
+        throw new RuntimeException();
     }
 
     /** Functions **/
@@ -286,7 +288,7 @@ public abstract class Tonality<C extends CyclicDegree> implements Iterable<C> {
     int getMaxAltsNote() {
         if (getRoot() instanceof DiatonicAlt) {
             float max = Float.MIN_VALUE;
-            for (DiatonicAlt diatonicAlt : (Tonality<DiatonicAlt>)this) {
+            for (DiatonicAlt diatonicAlt : (TonalityClassical)this) {
                 float uAlts = diatonicAlt.getUnsignedAlterations();
                 if (uAlts > max)
                     max = uAlts;

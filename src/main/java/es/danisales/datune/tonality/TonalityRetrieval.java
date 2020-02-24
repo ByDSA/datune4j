@@ -45,6 +45,7 @@ public class TonalityRetrieval {
         return ret;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public static final Set<TonalityModern> ALL_MAJOR = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             TonalityModern.C,
             TonalityModern.CC,
@@ -60,6 +61,7 @@ public class TonalityRetrieval {
             TonalityModern.B
     )));
 
+    @SuppressWarnings("WeakerAccess")
     public static final Set<TonalityModern> ALL_MINOR = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             TonalityModern.Cm,
             TonalityModern.CCm,
@@ -80,6 +82,7 @@ public class TonalityRetrieval {
                     .collect(Collectors.toSet())
     );
 
+    @SuppressWarnings("WeakerAccess")
     public static final Set<TonalityModern> ALL_DORIAN = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.from(Chromatic.C, Scale.DORIAN),
             Tonality.from(Chromatic.CC, Scale.DORIAN),
@@ -95,6 +98,7 @@ public class TonalityRetrieval {
             Tonality.from(Chromatic.B, Scale.DORIAN)
     )));
 
+    @SuppressWarnings("WeakerAccess")
     public static final Set<TonalityModern> ALL_PHRYGIAN = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.from(Chromatic.C, Scale.PHRYGIAN),
             Tonality.from(Chromatic.CC, Scale.PHRYGIAN),
@@ -110,6 +114,7 @@ public class TonalityRetrieval {
             Tonality.from(Chromatic.B, Scale.PHRYGIAN)
     )));
 
+    @SuppressWarnings("WeakerAccess")
     public static final Set<TonalityModern> ALL_LYDIAN = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.from(Chromatic.C, Scale.LYDIAN),
             Tonality.from(Chromatic.CC, Scale.LYDIAN),
@@ -125,6 +130,7 @@ public class TonalityRetrieval {
             Tonality.from(Chromatic.B, Scale.LYDIAN)
     )));
 
+    @SuppressWarnings("WeakerAccess")
     public static final Set<TonalityModern> ALL_MIXOLYDIAN = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.from(Chromatic.C, Scale.MIXOLYDIAN),
             Tonality.from(Chromatic.CC, Scale.MIXOLYDIAN),
@@ -140,6 +146,7 @@ public class TonalityRetrieval {
             Tonality.from(Chromatic.B, Scale.MIXOLYDIAN)
     )));
 
+    @SuppressWarnings("WeakerAccess")
     public static final Set<TonalityModern> ALL_LOCRIAN = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.from(Chromatic.C, Scale.LOCRIAN),
             Tonality.from(Chromatic.CC, Scale.LOCRIAN),
@@ -182,7 +189,8 @@ public class TonalityRetrieval {
             Tonality.from(Chromatic.B, Scale.HARMONIC_MINOR)
     )));
 
-    public static final Set<TonalityModern> ALL_LOCRIAN_H6 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+    @SuppressWarnings("WeakerAccess")
+    public static final Set<TonalityModern> ALL_LOCRIAN_a6 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.from(Chromatic.C, Scale.LOCRIAN_a6),
             Tonality.from(Chromatic.CC, Scale.LOCRIAN_a6),
             Tonality.from(Chromatic.D, Scale.LOCRIAN_a6),
@@ -197,7 +205,8 @@ public class TonalityRetrieval {
             Tonality.from(Chromatic.B, Scale.LOCRIAN_a6)
     )));
 
-    public static final Set<TonalityModern> ALL_IONIAN_H5 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+    @SuppressWarnings("WeakerAccess")
+    public static final Set<TonalityModern> ALL_IONIAN_a5 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.from(Chromatic.C, Scale.IONIAN_a5),
             Tonality.from(Chromatic.CC, Scale.IONIAN_a5),
             Tonality.from(Chromatic.D, Scale.IONIAN_a5),
@@ -212,7 +221,8 @@ public class TonalityRetrieval {
             Tonality.from(Chromatic.B, Scale.IONIAN_a5)
     )));
 
-    public static final Set<TonalityModern> ALL_DORIAN_H4 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+    @SuppressWarnings("WeakerAccess")
+    public static final Set<TonalityModern> ALL_DORIAN_a4 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.from(Chromatic.C, Scale.DORIAN_a4),
             Tonality.from(Chromatic.CC, Scale.DORIAN_a4),
             Tonality.from(Chromatic.D, Scale.DORIAN_a4),
@@ -227,22 +237,24 @@ public class TonalityRetrieval {
             Tonality.from(Chromatic.B, Scale.DORIAN_a4)
     )));
 
-    public static final Set<TonalityModern> ALL_MIXOLIDIAN_b9_b13 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
-            Tonality.from(Chromatic.C, Scale.MIXOLIDIAN_b9_b13),
-            Tonality.from(Chromatic.CC, Scale.MIXOLIDIAN_b9_b13),
-            Tonality.from(Chromatic.D, Scale.MIXOLIDIAN_b9_b13),
-            Tonality.from(Chromatic.DD, Scale.MIXOLIDIAN_b9_b13),
-            Tonality.from(Chromatic.E, Scale.MIXOLIDIAN_b9_b13),
-            Tonality.from(Chromatic.F, Scale.MIXOLIDIAN_b9_b13),
-            Tonality.from(Chromatic.FF, Scale.MIXOLIDIAN_b9_b13),
-            Tonality.from(Chromatic.G, Scale.MIXOLIDIAN_b9_b13),
-            Tonality.from(Chromatic.GG, Scale.MIXOLIDIAN_b9_b13),
-            Tonality.from(Chromatic.A, Scale.MIXOLIDIAN_b9_b13),
-            Tonality.from(Chromatic.AA, Scale.MIXOLIDIAN_b9_b13),
-            Tonality.from(Chromatic.B, Scale.MIXOLIDIAN_b9_b13)
+    @SuppressWarnings("WeakerAccess")
+    public static final Set<TonalityModern> ALL_MIXOLYDIAN_b9_b13 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+            Tonality.from(Chromatic.C, Scale.MIXOLYDIAN_b9_b13),
+            Tonality.from(Chromatic.CC, Scale.MIXOLYDIAN_b9_b13),
+            Tonality.from(Chromatic.D, Scale.MIXOLYDIAN_b9_b13),
+            Tonality.from(Chromatic.DD, Scale.MIXOLYDIAN_b9_b13),
+            Tonality.from(Chromatic.E, Scale.MIXOLYDIAN_b9_b13),
+            Tonality.from(Chromatic.F, Scale.MIXOLYDIAN_b9_b13),
+            Tonality.from(Chromatic.FF, Scale.MIXOLYDIAN_b9_b13),
+            Tonality.from(Chromatic.G, Scale.MIXOLYDIAN_b9_b13),
+            Tonality.from(Chromatic.GG, Scale.MIXOLYDIAN_b9_b13),
+            Tonality.from(Chromatic.A, Scale.MIXOLYDIAN_b9_b13),
+            Tonality.from(Chromatic.AA, Scale.MIXOLYDIAN_b9_b13),
+            Tonality.from(Chromatic.B, Scale.MIXOLYDIAN_b9_b13)
     )));
 
-    public static final Set<TonalityModern> ALL_LYDIAN_H2 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+    @SuppressWarnings("WeakerAccess")
+    public static final Set<TonalityModern> ALL_LYDIAN_a2 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.from(Chromatic.C, Scale.LYDIAN_a2),
             Tonality.from(Chromatic.CC, Scale.LYDIAN_a2),
             Tonality.from(Chromatic.D, Scale.LYDIAN_a2),
@@ -257,6 +269,7 @@ public class TonalityRetrieval {
             Tonality.from(Chromatic.B, Scale.LYDIAN_a2)
     )));
 
+    @SuppressWarnings("WeakerAccess")
     public static final Set<TonalityModern> ALL_SUPERLOCRIAN_bb7 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.from(Chromatic.C, Scale.SUPERLOCRIAN_bb7),
             Tonality.from(Chromatic.CC, Scale.SUPERLOCRIAN_bb7),
@@ -274,11 +287,11 @@ public class TonalityRetrieval {
 
     public static final Set<TonalityModern> ALL_HARMONIC_MINOR_MODES = Collections.unmodifiableSet(
             Stream.concat(ALL_HARMONIC_MINOR.stream(),
-                    Stream.concat(ALL_LOCRIAN_H6.stream(),
-                            Stream.concat(ALL_IONIAN_H5.stream(),
-                                    Stream.concat(ALL_DORIAN_H4.stream(),
-                                            Stream.concat(ALL_MIXOLIDIAN_b9_b13.stream(),
-                                                    Stream.concat(ALL_LYDIAN_H2.stream(),
+                    Stream.concat(ALL_LOCRIAN_a6.stream(),
+                            Stream.concat(ALL_IONIAN_a5.stream(),
+                                    Stream.concat(ALL_DORIAN_a4.stream(),
+                                            Stream.concat(ALL_MIXOLYDIAN_b9_b13.stream(),
+                                                    Stream.concat(ALL_LYDIAN_a2.stream(),
                                                             ALL_SUPERLOCRIAN_bb7.stream()))))))
                     .collect(Collectors.toSet())
     );
@@ -298,6 +311,7 @@ public class TonalityRetrieval {
             Tonality.from(Chromatic.B, Scale.MELODIC_MINOR)
     )));
 
+    @SuppressWarnings("WeakerAccess")
     public static final Set<TonalityModern> ALL_DORIAN_b2 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.from(Chromatic.C, Scale.DORIAN_b2),
             Tonality.from(Chromatic.CC, Scale.DORIAN_b2),
@@ -313,7 +327,8 @@ public class TonalityRetrieval {
             Tonality.from(Chromatic.B, Scale.DORIAN_b2)
     )));
 
-    public static final Set<TonalityModern> ALL_LYDIAN_H5 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+    @SuppressWarnings("WeakerAccess")
+    public static final Set<TonalityModern> ALL_LYDIAN_a5 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.from(Chromatic.C, Scale.LYDIAN_a5),
             Tonality.from(Chromatic.CC, Scale.LYDIAN_a5),
             Tonality.from(Chromatic.D, Scale.LYDIAN_a5),
@@ -328,6 +343,7 @@ public class TonalityRetrieval {
             Tonality.from(Chromatic.B, Scale.LYDIAN_a5)
     )));
 
+    @SuppressWarnings("WeakerAccess")
     public static final Set<TonalityModern> ALL_LYDIAN_b7 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.from(Chromatic.C, Scale.LYDIAN_b7),
             Tonality.from(Chromatic.CC, Scale.LYDIAN_b7),
@@ -343,22 +359,24 @@ public class TonalityRetrieval {
             Tonality.from(Chromatic.B, Scale.LYDIAN_b7)
     )));
 
-    public static final Set<TonalityModern> ALL_MIXOLIDIAN_b13 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
-            Tonality.from(Chromatic.C, Scale.MIXOLIDIAN_b13),
-            Tonality.from(Chromatic.CC, Scale.MIXOLIDIAN_b13),
-            Tonality.from(Chromatic.D, Scale.MIXOLIDIAN_b13),
-            Tonality.from(Chromatic.DD, Scale.MIXOLIDIAN_b13),
-            Tonality.from(Chromatic.E, Scale.MIXOLIDIAN_b13),
-            Tonality.from(Chromatic.F, Scale.MIXOLIDIAN_b13),
-            Tonality.from(Chromatic.FF, Scale.MIXOLIDIAN_b13),
-            Tonality.from(Chromatic.G, Scale.MIXOLIDIAN_b13),
-            Tonality.from(Chromatic.GG, Scale.MIXOLIDIAN_b13),
-            Tonality.from(Chromatic.A, Scale.MIXOLIDIAN_b13),
-            Tonality.from(Chromatic.AA, Scale.MIXOLIDIAN_b13),
-            Tonality.from(Chromatic.B, Scale.MIXOLIDIAN_b13)
+    @SuppressWarnings("WeakerAccess")
+    public static final Set<TonalityModern> ALL_MIXOLYDIAN_b13 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+            Tonality.from(Chromatic.C, Scale.MIXOLYDIAN_b13),
+            Tonality.from(Chromatic.CC, Scale.MIXOLYDIAN_b13),
+            Tonality.from(Chromatic.D, Scale.MIXOLYDIAN_b13),
+            Tonality.from(Chromatic.DD, Scale.MIXOLYDIAN_b13),
+            Tonality.from(Chromatic.E, Scale.MIXOLYDIAN_b13),
+            Tonality.from(Chromatic.F, Scale.MIXOLYDIAN_b13),
+            Tonality.from(Chromatic.FF, Scale.MIXOLYDIAN_b13),
+            Tonality.from(Chromatic.G, Scale.MIXOLYDIAN_b13),
+            Tonality.from(Chromatic.GG, Scale.MIXOLYDIAN_b13),
+            Tonality.from(Chromatic.A, Scale.MIXOLYDIAN_b13),
+            Tonality.from(Chromatic.AA, Scale.MIXOLYDIAN_b13),
+            Tonality.from(Chromatic.B, Scale.MIXOLYDIAN_b13)
     )));
 
-    public static final Set<TonalityModern> ALL_LOCRIAN_H2 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+    @SuppressWarnings("WeakerAccess")
+    public static final Set<TonalityModern> ALL_LOCRIAN_a2 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.from(Chromatic.C, Scale.LOCRIAN_a2),
             Tonality.from(Chromatic.CC, Scale.LOCRIAN_a2),
             Tonality.from(Chromatic.D, Scale.LOCRIAN_a2),
@@ -373,6 +391,7 @@ public class TonalityRetrieval {
             Tonality.from(Chromatic.B, Scale.LOCRIAN_a2)
     )));
 
+    @SuppressWarnings("WeakerAccess")
     public static final Set<TonalityModern> ALL_SUPERLOCRIAN = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.from(Chromatic.C, Scale.SUPERLOCRIAN),
             Tonality.from(Chromatic.CC, Scale.SUPERLOCRIAN),
@@ -391,14 +410,15 @@ public class TonalityRetrieval {
     public static final Set<TonalityModern> ALL_MELODIC_MINOR_MODES = Collections.unmodifiableSet(
             Stream.concat(ALL_MELODIC_MINOR.stream(),
                     Stream.concat(ALL_DORIAN_b2.stream(),
-                            Stream.concat(ALL_LYDIAN_H5.stream(),
+                            Stream.concat(ALL_LYDIAN_a5.stream(),
                                     Stream.concat(ALL_LYDIAN_b7.stream(),
-                                            Stream.concat(ALL_MIXOLIDIAN_b13.stream(),
-                                                    Stream.concat(ALL_LOCRIAN_H2.stream(),
+                                            Stream.concat(ALL_MIXOLYDIAN_b13.stream(),
+                                                    Stream.concat(ALL_LOCRIAN_a2.stream(),
                                                             ALL_SUPERLOCRIAN.stream()))))))
                     .collect(Collectors.toSet())
     );
 
+    @SuppressWarnings("WeakerAccess")
     public static final Set<TonalityModern> ALL_HARMONIC_MAJOR = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.from(Chromatic.C, Scale.HARMONIC_MAJOR),
             Tonality.from(Chromatic.CC, Scale.HARMONIC_MAJOR),
@@ -414,6 +434,7 @@ public class TonalityRetrieval {
             Tonality.from(Chromatic.B, Scale.HARMONIC_MAJOR)
     )));
 
+    @SuppressWarnings("WeakerAccess")
     public static final Set<TonalityModern> ALL_DORIAN_b5 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.from(Chromatic.C, Scale.DORIAN_b5),
             Tonality.from(Chromatic.CC, Scale.DORIAN_b5),
@@ -429,6 +450,7 @@ public class TonalityRetrieval {
             Tonality.from(Chromatic.B, Scale.DORIAN_b5)
     )));
 
+    @SuppressWarnings("WeakerAccess")
     public static final Set<TonalityModern> ALL_PHRYGIAN_b4 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.from(Chromatic.C, Scale.PHRYGIAN_b4),
             Tonality.from(Chromatic.CC, Scale.PHRYGIAN_b4),
@@ -444,6 +466,7 @@ public class TonalityRetrieval {
             Tonality.from(Chromatic.B, Scale.PHRYGIAN_b4)
     )));
 
+    @SuppressWarnings("WeakerAccess")
     public static final Set<TonalityModern> ALL_LYDIAN_b3 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.from(Chromatic.C, Scale.LYDIAN_b3),
             Tonality.from(Chromatic.CC, Scale.LYDIAN_b3),
@@ -459,6 +482,7 @@ public class TonalityRetrieval {
             Tonality.from(Chromatic.B, Scale.LYDIAN_b3)
     )));
 
+    @SuppressWarnings("WeakerAccess")
     public static final Set<TonalityModern> ALL_MIXOLYDIAN_b2 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.from(Chromatic.C, Scale.MIXOLYDIAN_b2),
             Tonality.from(Chromatic.CC, Scale.MIXOLYDIAN_b2),
@@ -474,6 +498,7 @@ public class TonalityRetrieval {
             Tonality.from(Chromatic.B, Scale.MIXOLYDIAN_b2)
     )));
 
+    @SuppressWarnings("WeakerAccess")
     public static final Set<TonalityModern> ALL_AEOLIAN_b1 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.from(Chromatic.C, Scale.AEOLIAN_b1),
             Tonality.from(Chromatic.CC, Scale.AEOLIAN_b1),
@@ -489,6 +514,7 @@ public class TonalityRetrieval {
             Tonality.from(Chromatic.B, Scale.AEOLIAN_b1)
     )));
 
+    @SuppressWarnings("WeakerAccess")
     public static final Set<TonalityModern> ALL_LOCRIAN_bb7 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.from(Chromatic.C, Scale.LOCRIAN_bb7),
             Tonality.from(Chromatic.CC, Scale.LOCRIAN_bb7),
@@ -515,6 +541,7 @@ public class TonalityRetrieval {
                     .collect(Collectors.toSet())
     );
 
+    @SuppressWarnings("WeakerAccess")
     public static final Set<TonalityModern> ALL_DOUBLE_HARMONIC = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.from(Chromatic.C, Scale.DOUBLE_HARMONIC),
             Tonality.from(Chromatic.CC, Scale.DOUBLE_HARMONIC),
@@ -530,7 +557,8 @@ public class TonalityRetrieval {
             Tonality.from(Chromatic.B, Scale.DOUBLE_HARMONIC)
     )));
 
-    public static final Set<TonalityModern> ALL_LYDIAN_H2_H6 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+    @SuppressWarnings("WeakerAccess")
+    public static final Set<TonalityModern> ALL_LYDIAN_a2_a6 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.from(Chromatic.C, Scale.LYDIAN_a2_a6),
             Tonality.from(Chromatic.CC, Scale.LYDIAN_a2_a6),
             Tonality.from(Chromatic.D, Scale.LYDIAN_a2_a6),
@@ -545,6 +573,7 @@ public class TonalityRetrieval {
             Tonality.from(Chromatic.B, Scale.LYDIAN_a2_a6)
     )));
 
+    @SuppressWarnings("WeakerAccess")
     public static final Set<TonalityModern> ALL_ULTRAPHRYGIAN = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.from(Chromatic.C, Scale.ULTRAPHRYGIAN),
             Tonality.from(Chromatic.CC, Scale.ULTRAPHRYGIAN),
@@ -560,6 +589,7 @@ public class TonalityRetrieval {
             Tonality.from(Chromatic.B, Scale.ULTRAPHRYGIAN)
     )));
 
+    @SuppressWarnings("WeakerAccess")
     public static final Set<TonalityModern> ALL_HUNGARIAN_MINOR = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.from(Chromatic.C, Scale.HUNGARIAN_MINOR),
             Tonality.from(Chromatic.CC, Scale.HUNGARIAN_MINOR),
@@ -575,6 +605,7 @@ public class TonalityRetrieval {
             Tonality.from(Chromatic.B, Scale.HUNGARIAN_MINOR)
     )));
 
+    @SuppressWarnings("WeakerAccess")
     public static final Set<TonalityModern> ALL_ORIENTAL = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.from(Chromatic.C, Scale.ORIENTAL),
             Tonality.from(Chromatic.CC, Scale.ORIENTAL),
@@ -590,7 +621,8 @@ public class TonalityRetrieval {
             Tonality.from(Chromatic.B, Scale.ORIENTAL)
     )));
 
-    public static final Set<TonalityModern> ALL_IONIAN_AUGMENTED_H2 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+    @SuppressWarnings("WeakerAccess")
+    public static final Set<TonalityModern> ALL_IONIAN_AUGMENTED_a2 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.from(Chromatic.C, Scale.IONIAN_AUGMENTED_a2),
             Tonality.from(Chromatic.CC, Scale.IONIAN_AUGMENTED_a2),
             Tonality.from(Chromatic.D, Scale.IONIAN_AUGMENTED_a2),
@@ -605,6 +637,7 @@ public class TonalityRetrieval {
             Tonality.from(Chromatic.B, Scale.IONIAN_AUGMENTED_a2)
     )));
 
+    @SuppressWarnings("WeakerAccess")
     public static final Set<TonalityModern> ALL_LOCRIAN_bb3_bb7 = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             Tonality.from(Chromatic.C, Scale.LOCRIAN_bb3_bb7),
             Tonality.from(Chromatic.CC, Scale.LOCRIAN_bb3_bb7),
@@ -622,11 +655,11 @@ public class TonalityRetrieval {
 
     public static final Set<TonalityModern> ALL_DOUBLE_HARMONIC_MODES = Collections.unmodifiableSet(
             Stream.concat(ALL_DOUBLE_HARMONIC.stream(),
-                    Stream.concat(ALL_LYDIAN_H2_H6.stream(),
+                    Stream.concat(ALL_LYDIAN_a2_a6.stream(),
                             Stream.concat(ALL_ULTRAPHRYGIAN.stream(),
                                     Stream.concat(ALL_HUNGARIAN_MINOR.stream(),
                                             Stream.concat(ALL_ORIENTAL.stream(),
-                                                    Stream.concat(ALL_IONIAN_AUGMENTED_H2.stream(),
+                                                    Stream.concat(ALL_IONIAN_AUGMENTED_a2.stream(),
                                                             ALL_LOCRIAN_bb3_bb7.stream()))))))
                     .collect(Collectors.toSet())
     );
@@ -638,6 +671,7 @@ public class TonalityRetrieval {
     private TonalityRetrieval() {
     }
 
+    @SuppressWarnings("WeakerAccess")
     public static @NonNull List<TonalityClassical> allUsualKeysDiatonicAlt() {
         List<TonalityClassical> ret = new ArrayList<>();
         List<DiatonicAlt> diatonicAltList = DiatonicAltRetrieval.listFromAlterations(1);
@@ -651,6 +685,7 @@ public class TonalityRetrieval {
         return ret;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public static @NonNull List<TonalityModern> allUsualKeys() {
         List<TonalityModern> ret = new ArrayList<>();
         for (Scale mode : Scale.allUsualScales())
@@ -660,29 +695,6 @@ public class TonalityRetrieval {
             }
 
         return ret;
-    }
-
-    // todo: DiatonicAltChord
-/*
-    @SuppressWarnings("WeakerAccess")
-    public static @NonNull List<TonalityModern> listFromChordDiatonicFunction(@NonNull ChromaticChord c) {
-        List<TonalityModern> out = new ArrayList<>();
-        for (TonalityModern t : TonalityRetrieval.allUsualKeys()) {
-            if (t.containsAll(c))
-                out.addAll( t );
-        }
-
-        return out;
-    }
-*/
-    @SuppressWarnings("WeakerAccess")
-    public static @Nullable TonalityModern listFromChordFirst(@NonNull ChromaticChord c) {
-        for (TonalityModern t : TonalityRetrieval.allUsualKeys()) {
-            if (t.containsAll(c))
-                return t;
-        }
-
-        return null;
     }
 
     @SuppressWarnings("WeakerAccess")
@@ -814,6 +826,7 @@ public class TonalityRetrieval {
         return Collections.unmodifiableSet(ret);
     }
 
+    @SuppressWarnings("WeakerAccess")
     public static @Nullable Tonality getRelativeMinorFrom(@NonNull Tonality tonality) {
         return getRelativeFrom(tonality, Scale.MINOR);
     }
