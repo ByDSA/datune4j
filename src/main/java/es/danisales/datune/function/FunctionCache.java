@@ -12,42 +12,47 @@ import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityClassical;
 import es.danisales.datune.tonality.TonalityModern;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
 
-class FunctionCache { // todo: generalziar para todas harmonic function
-    private static final Map<TonalChord, Chord<? extends CyclicDegree>> map = new HashMap<>();
+import static com.google.common.base.Preconditions.checkNotNull;
 
-    static @NonNull Chord<? extends CyclicDegree> get(@NonNull TonalChord tonalChord) throws ScaleRelativeDegreeException {
+class FunctionCache {
+    private final Map<TonalChord, Chord<? extends CyclicDegree>> map = new HashMap<>();
+
+    @Nullable Chord<? extends CyclicDegree> get(@NonNull TonalChord tonalChord) {
         Chord<? extends CyclicDegree> cached = map.get(tonalChord);
         if (cached != null)
             return cached;
 
         Tonality tonality = tonalChord.getTonality();
-        DiatonicFunction diatonicFunction = (DiatonicFunction)tonalChord.getHarmonicFunction();
-        CyclicDegree noteBase = getNoteBaseFrom(tonality, diatonicFunction);
-        DiatonicDegreePattern diatonicChordPattern = diatonicFunction.getDiatonicDegreePattern();
+        HarmonicFunction harmonicFunction = tonalChord.getHarmonicFunction();
 
         Chord<? extends CyclicDegree> chord;
-        if (noteBase instanceof Chromatic && tonality instanceof TonalityModern) {
-                chord = ChromaticChord.builder()
-                        .chromaticBase((Chromatic) noteBase)
-                        .diatonicDegreePattern(diatonicChordPattern)
-                        .tonality((TonalityModern)tonality)
-                        .build();
-                //noinspection CastCanBeRemovedNarrowingVariableType
-                map.put(tonalChord.clone(), ChromaticChord.immutableFrom((ChromaticChord)chord));
+        if (tonality instanceof TonalityModern) {
+            chord = harmonicFunction.calculateChord((TonalityModern)tonality);
+            if (chord == null)
+                return null;
+            //noinspection CastCanBeRemovedNarrowingVariableType
+            map.put(tonalChord.clone(), ChromaticChord.immutableFrom((ChromaticChord)chord));
 
-                return chord;
-        } else if (noteBase instanceof DiatonicAlt && tonality instanceof TonalityClassical) {
+            return chord;
+        } else if (tonality instanceof TonalityClassical) {
             return null; // todo
         }
 
-        throw new ScaleRelativeDegreeException(diatonicFunction.getDiatonicDegree(), tonality.getScale());
+        return null;
     }
 
-    private static CyclicDegree getNoteBaseFrom(Tonality tonality, DiatonicFunction diatonicFunction) throws ScaleRelativeDegreeException {
-        return tonality.getNote( diatonicFunction.getDiatonicDegree() );
+
+    void put(TonalChord tonalChord, Chord<? extends CyclicDegree> chord) {
+        map.put(tonalChord, chord);
     }
+
+    boolean containsKey(TonalChord tonalChord) {
+        return map.containsKey(tonalChord);
+    }
+
 }

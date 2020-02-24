@@ -221,12 +221,10 @@ public abstract class Tonality<C extends CyclicDegree> implements Iterable<C> {
     }
 
     public MainTonalFunction getMainFunctionFrom(HarmonicFunction harmonicFunction) {
-        Chord<C> chord = null;
-        try {
-            chord = (Chord<C>)harmonicFunction.getChord((TonalityModern) this);
-        } catch (ScaleRelativeDegreeException e) {
+        Chord<C> chord = (Chord<C>)harmonicFunction.getChord((TonalityModern) this);
+        if (chord == null)
             return null;
-        }
+
         return getMainFunctionFrom(chord);
     }
 

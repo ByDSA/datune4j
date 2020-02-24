@@ -1215,7 +1215,7 @@ public final class ChromaticChord
         super(chromaticChord);
     }
 
-    public ChromaticChordRetrieval retrieval() {
+    public static ChromaticChordRetrieval retrieval() {
         return new ChromaticChordRetrieval();
     }
 

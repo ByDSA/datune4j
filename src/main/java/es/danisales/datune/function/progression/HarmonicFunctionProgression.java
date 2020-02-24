@@ -74,11 +74,9 @@ public class HarmonicFunctionProgression
         for (HarmonicFunction harmonicFunction : this) {
             ChromaticChord chromaticChord;
             if (harmonicFunction != null) {
-                try {
-                    chromaticChord = harmonicFunction.getChord(tonality);
-                } catch (ScaleRelativeDegreeException e) {
+                chromaticChord = harmonicFunction.getChord(tonality);
+                if (chromaticChord == null)
                     continue;
-                }
             }
             else
                 continue;

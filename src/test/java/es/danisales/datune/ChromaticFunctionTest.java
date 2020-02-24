@@ -12,11 +12,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class ChromaticFunctionTest {
+	@SuppressWarnings("ConstantConditions")
 	@Test
-	public void degree() throws ScaleRelativeDegreeException {
+	public void degree() {
 		TonalityModern tonality = TonalityModern.C;
 
-		ChromaticChord chromaticChord = ChromaticDegreeFunction.I.getChord(tonality);
+		ChromaticChord chromaticChord = tonality.getChord(ChromaticDegreeFunction.I);
 		assertEquals( DiatonicDegree.I, tonality.getDegreeFrom( chromaticChord.get( 0 ) ) );
 
 		chromaticChord = ChromaticDegreeFunction.ii.getChord(tonality);

@@ -1,8 +1,17 @@
 package es.danisales.datune.tonality;
 
 import com.google.common.collect.ImmutableList;
-import es.danisales.datune.degrees.scale.ScaleDegree;
+import com.google.common.collect.ImmutableSet;
+import es.danisales.datune.chords.DiatonicDegreePattern;
+import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.octave.DiatonicAlt;
+import es.danisales.datune.degrees.scale.DiatonicDegree;
+import es.danisales.datune.degrees.scale.ScaleDegree;
+import es.danisales.datune.function.ChromaticDegreeFunction;
+import es.danisales.datune.function.DiatonicFunction;
+import es.danisales.datune.function.HarmonicFunction;
+import es.danisales.datune.function.SecondaryDominant;
+import es.danisales.utils.MathUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -162,6 +171,7 @@ public final class Scale implements Iterable<ScaleDistance> {
 
 	ScaleInner innerScale;
 	private final boolean fixed;
+	private final Set<HarmonicFunction> harmonicFunctions;
 
 	public static @NonNull Scale fromIntegers(List<Integer> v) {
 		return new Scale( ScaleAdapter.fromIntegers(v) );
@@ -177,12 +187,64 @@ public final class Scale implements Iterable<ScaleDistance> {
 
 	Scale(@NonNull ScaleInner scaleInterface) {
 		innerScale = scaleInterface;
+		harmonicFunctions = ImmutableSet.copyOf( calculateHarmonicFunctions() );
 		fixed = true;
 	}
 
 	private Scale(@NonNull ScaleInner scaleInner, boolean fixed) {
 		innerScale = scaleInner;
+		harmonicFunctions = ImmutableSet.copyOf( calculateHarmonicFunctions() );
 		this.fixed = fixed;
+	}
+
+	private Set<Float> getSemisSet() {
+		Set<Float> ret = new HashSet<>();
+		float d = 0;
+		ret.add(d);
+		for (ScaleDistance scaleDegree : this) {
+			d += scaleDegree.getMicrotonalSemitones();
+			ret.add(d);
+		}
+
+		return ret;
+	}
+
+	private Set<HarmonicFunction> calculateHarmonicFunctions() {
+		Set<HarmonicFunction> f = new HashSet<>();
+
+		Set<Float> floatSet = getSemisSet();
+
+		// DiatonicFunctions
+		for (DiatonicFunction diatonicFunction : DiatonicFunction.immutableValues()) {
+			DiatonicDegreePattern diatonicDegreePattern = diatonicFunction.getDiatonicDegreePattern();
+			try {
+				for (DiatonicDegree diatonicDegree : diatonicDegreePattern) {
+					getIndexByDegree(diatonicDegree);
+				}
+				f.add(diatonicFunction);
+			} catch (ScaleRelativeDegreeException ignored) {
+			}
+		}
+
+		// ChromaticDegree
+		mainFor: for (ChromaticDegreeFunction harmonicFunction : ChromaticDegreeFunction.immutableValues()) {
+			int iniNote = harmonicFunction.getChromaticDegree().ordinal();
+			for (int n : harmonicFunction.getChromaticChordPattern()) {
+				float note = MathUtils.rotativeTrim(iniNote + n, Chromatic.NUMBER);
+				if (!floatSet.contains(note))
+					continue mainFor;
+			}
+			f.add(harmonicFunction);
+		}
+
+		// SecondaryDominants
+		for (ChromaticDegreeFunction harmonicFunction : SecondaryDominant.values()) {
+			int iniNote = harmonicFunction.getChromaticDegree().ordinal();
+			if (floatSet.contains((float)iniNote))
+				f.add(harmonicFunction);
+		}
+
+		return f;
 	}
 
 	public @NonNull Scale getModeFrom(@NonNull ScaleDegree degree) throws ScaleRelativeDegreeException {
@@ -192,8 +254,8 @@ public final class Scale implements Iterable<ScaleDistance> {
 	}
 
 	/**
-     * Get allUsual modes patternFrom the scale
-     * @return the array within allUsual modes patternFrom the scale
+	 * Get allUsual modes patternFrom the scale
+	 * @return the array within allUsual modes patternFrom the scale
 	 */
 	public @NonNull List<Scale> getModes() {
 		List<ScaleDistance> scaleDistanceList = new ArrayList<>(getCode());
@@ -270,7 +332,7 @@ public final class Scale implements Iterable<ScaleDistance> {
 	/**
 	 * The function scale is obtained fromDiatonicAlt a chain fromDiatonicAlt six successive fifths
 	 It is either a sequence fromDiatonicAlt successive natural notes or a transposition thereof.
-     It can be written using seven consecutive notes without accidentals on a staff with no pitch signature or, when transposed, with a conventional pitch signature or with accidentals.
+	 It can be written using seven consecutive notes without accidentals on a staff with no pitch signature or, when transposed, with a conventional pitch signature or with accidentals.
 	 * @return if it's function
 	 */
 	public boolean isDiatonic() {
@@ -309,5 +371,9 @@ public final class Scale implements Iterable<ScaleDistance> {
 		}
 
 		return code;
+	}
+
+	public Set<HarmonicFunction> getHarmonicFunctions() {
+		return harmonicFunctions;
 	}
 }

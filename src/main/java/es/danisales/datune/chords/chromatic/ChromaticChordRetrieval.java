@@ -2,17 +2,17 @@ package es.danisales.datune.chords.chromatic;
 
 import com.google.common.collect.ImmutableSet;
 import es.danisales.datastructures.SetUtils;
+import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.tonality.TonalityModern;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 public final class ChromaticChordRetrieval {
-    ChromaticChordRetrieval() {
-    }
-
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_FIFTH = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_FIFTH = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C5,
             ChromaticChord.CC5,
             ChromaticChord.D5,
@@ -25,10 +25,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A5,
             ChromaticChord.AA5,
             ChromaticChord.B5
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_MAJOR = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_MAJOR = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C,
             ChromaticChord.CC,
             ChromaticChord.D,
@@ -41,10 +41,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A,
             ChromaticChord.AA,
             ChromaticChord.B
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_MINOR = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_MINOR = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.Cm,
             ChromaticChord.CCm,
             ChromaticChord.Dm,
@@ -57,10 +57,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.Am,
             ChromaticChord.AAm,
             ChromaticChord.Bm
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_AUGMENTED = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_AUGMENTED = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.Caug,
             ChromaticChord.CCaug,
             ChromaticChord.Daug,
@@ -73,10 +73,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.Aaug,
             ChromaticChord.AAaug,
             ChromaticChord.Baug
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_DIMINISHED = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_DIMINISHED = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.Cdim,
             ChromaticChord.CCdim,
             ChromaticChord.Ddim,
@@ -89,10 +89,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.Adim,
             ChromaticChord.AAdim,
             ChromaticChord.Bdim
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_SUS4 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_SUS4 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.Csus4,
             ChromaticChord.CCsus4,
             ChromaticChord.Dsus4,
@@ -105,10 +105,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.Asus4,
             ChromaticChord.AAsus4,
             ChromaticChord.Bsus4
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_7 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_7 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C7,
             ChromaticChord.CC7,
             ChromaticChord.D7,
@@ -121,10 +121,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A7,
             ChromaticChord.AA7,
             ChromaticChord.B7
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_7b5 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_7b5 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C7b5,
             ChromaticChord.CC7b5,
             ChromaticChord.D7b5,
@@ -137,10 +137,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A7b5,
             ChromaticChord.AA7b5,
             ChromaticChord.B7b5
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_7a5 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_7a5 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C7a5,
             ChromaticChord.CC7a5,
             ChromaticChord.D7a5,
@@ -153,10 +153,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A7a5,
             ChromaticChord.AA7a5,
             ChromaticChord.B7a5
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_7sus4 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_7sus4 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C7sus4,
             ChromaticChord.CC7sus4,
             ChromaticChord.D7sus4,
@@ -169,10 +169,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A7sus4,
             ChromaticChord.AA7sus4,
             ChromaticChord.B7sus4
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_m7 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_m7 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.Cm7,
             ChromaticChord.CCm7,
             ChromaticChord.Dm7,
@@ -185,10 +185,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.Am7,
             ChromaticChord.AAm7,
             ChromaticChord.Bm7
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_m7b5 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_m7b5 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.Cm7b5,
             ChromaticChord.CCm7b5,
             ChromaticChord.Dm7b5,
@@ -201,10 +201,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.Am7b5,
             ChromaticChord.AAm7b5,
             ChromaticChord.Bm7b5
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_m7a5 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_m7a5 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.Cm7a5,
             ChromaticChord.CCm7a5,
             ChromaticChord.Dm7a5,
@@ -217,10 +217,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.Am7a5,
             ChromaticChord.AAm7a5,
             ChromaticChord.Bm7a5
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_6 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_6 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C6,
             ChromaticChord.CC6,
             ChromaticChord.D6,
@@ -233,10 +233,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A6,
             ChromaticChord.AA6,
             ChromaticChord.B6
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_6sus4 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_6sus4 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C6sus4,
             ChromaticChord.CC6sus4,
             ChromaticChord.D6sus4,
@@ -249,10 +249,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A6sus4,
             ChromaticChord.AA6sus4,
             ChromaticChord.B6sus4
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_Maj7 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_Maj7 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.CMaj7,
             ChromaticChord.CCMaj7,
             ChromaticChord.DMaj7,
@@ -265,10 +265,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.AMaj7,
             ChromaticChord.AAMaj7,
             ChromaticChord.BMaj7
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_mMaj7 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_mMaj7 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.CmMaj7,
             ChromaticChord.CCmMaj7,
             ChromaticChord.DmMaj7,
@@ -281,10 +281,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.AmMaj7,
             ChromaticChord.AAmMaj7,
             ChromaticChord.BmMaj7
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_6add9 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_6add9 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C6add9,
             ChromaticChord.CC6add9,
             ChromaticChord.D6add9,
@@ -297,10 +297,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A6add9,
             ChromaticChord.AA6add9,
             ChromaticChord.B6add9
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_m6add9 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_m6add9 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.Cm6add9,
             ChromaticChord.CCm6add9,
             ChromaticChord.Dm6add9,
@@ -313,10 +313,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.Am6add9,
             ChromaticChord.AAm6add9,
             ChromaticChord.Bm6add9
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_7b9 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_7b9 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C7b9,
             ChromaticChord.CC7b9,
             ChromaticChord.D7b9,
@@ -329,9 +329,9 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A7b9,
             ChromaticChord.AA7b9,
             ChromaticChord.B7b9
-    ));
+    ).build();
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_m6 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_m6 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.Cm6,
             ChromaticChord.CCm6,
             ChromaticChord.Dm6,
@@ -344,10 +344,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.Am6,
             ChromaticChord.AAm6,
             ChromaticChord.Bm6
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_7a9 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_7a9 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C7a9,
             ChromaticChord.CC7a9,
             ChromaticChord.D7a9,
@@ -360,10 +360,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A7a9,
             ChromaticChord.AA7a9,
             ChromaticChord.B7a9
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_m7b9 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_m7b9 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.Cm7b9,
             ChromaticChord.CCm7b9,
             ChromaticChord.Dm7b9,
@@ -376,10 +376,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.Am7b9,
             ChromaticChord.AAm7b9,
             ChromaticChord.Bm7b9
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_7add11 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_7add11 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C7add11,
             ChromaticChord.CC7add11,
             ChromaticChord.D7add11,
@@ -392,10 +392,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A7add11,
             ChromaticChord.AA7add11,
             ChromaticChord.B7add11
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_7add13 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_7add13 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C7add13,
             ChromaticChord.CC7add13,
             ChromaticChord.D7add13,
@@ -408,10 +408,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A7add13,
             ChromaticChord.AA7add13,
             ChromaticChord.B7add13
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_9 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_9 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C9,
             ChromaticChord.CC9,
             ChromaticChord.D9,
@@ -424,10 +424,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A9,
             ChromaticChord.AA9,
             ChromaticChord.B9
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_m9 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_m9 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.Cm9,
             ChromaticChord.CCm9,
             ChromaticChord.Dm9,
@@ -440,10 +440,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.Am9,
             ChromaticChord.AAm9,
             ChromaticChord.Bm9
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_9b5 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_9b5 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C9b5,
             ChromaticChord.CC9b5,
             ChromaticChord.D9b5,
@@ -456,10 +456,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A9b5,
             ChromaticChord.AA9b5,
             ChromaticChord.B9b5
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_9a5 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_9a5 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C9a5,
             ChromaticChord.CC9a5,
             ChromaticChord.D9a5,
@@ -472,10 +472,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A9a5,
             ChromaticChord.AA9a5,
             ChromaticChord.B9a5
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_9sus4 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_9sus4 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C9sus4,
             ChromaticChord.CC9sus4,
             ChromaticChord.D9sus4,
@@ -488,10 +488,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A9sus4,
             ChromaticChord.AA9sus4,
             ChromaticChord.B9sus4
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_Maj9 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_Maj9 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.CMaj9,
             ChromaticChord.CCMaj9,
             ChromaticChord.DMaj9,
@@ -504,10 +504,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.AMaj9,
             ChromaticChord.AAMaj9,
             ChromaticChord.BMaj9
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_mMaj9 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_mMaj9 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.CmMaj9,
             ChromaticChord.CCmMaj9,
             ChromaticChord.DmMaj9,
@@ -520,10 +520,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.AmMaj9,
             ChromaticChord.AAmMaj9,
             ChromaticChord.BmMaj9
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_9add6 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_9add6 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C9add6,
             ChromaticChord.CC9add6,
             ChromaticChord.D9add6,
@@ -536,10 +536,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A9add6,
             ChromaticChord.AA9add6,
             ChromaticChord.B9add6
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_9a11 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_9a11 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C9a11,
             ChromaticChord.CC9a11,
             ChromaticChord.D9a11,
@@ -552,10 +552,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A9a11,
             ChromaticChord.AA9a11,
             ChromaticChord.B9a11
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_Maj9a11 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_Maj9a11 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.CMaj9a11,
             ChromaticChord.CCMaj9a11,
             ChromaticChord.DMaj9a11,
@@ -568,10 +568,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.AMaj9a11,
             ChromaticChord.AAMaj9a11,
             ChromaticChord.BMaj9a11
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_11 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_11 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C11,
             ChromaticChord.CC11,
             ChromaticChord.D11,
@@ -584,10 +584,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A11,
             ChromaticChord.AA11,
             ChromaticChord.B11
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_m11 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_m11 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.Cm11,
             ChromaticChord.CCm11,
             ChromaticChord.Dm11,
@@ -600,10 +600,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.Am11,
             ChromaticChord.AAm11,
             ChromaticChord.Bm11
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_11b9 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_11b9 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C11b9,
             ChromaticChord.CC11b9,
             ChromaticChord.D11b9,
@@ -616,10 +616,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A11b9,
             ChromaticChord.AA11b9,
             ChromaticChord.B11b9
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_11a9 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_11a9 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C11a9,
             ChromaticChord.CC11a9,
             ChromaticChord.D11a9,
@@ -632,10 +632,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A11a9,
             ChromaticChord.AA11a9,
             ChromaticChord.B11a9
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_Maj11 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_Maj11 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.CMaj11,
             ChromaticChord.CCMaj11,
             ChromaticChord.DMaj11,
@@ -648,10 +648,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.AMaj11,
             ChromaticChord.AAMaj11,
             ChromaticChord.BMaj11
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_mMaj11 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_mMaj11 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.CmMaj11,
             ChromaticChord.CCmMaj11,
             ChromaticChord.DmMaj11,
@@ -664,10 +664,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.AmMaj11,
             ChromaticChord.AAmMaj11,
             ChromaticChord.BmMaj11
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_m13 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_m13 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.Cm13,
             ChromaticChord.CCm13,
             ChromaticChord.Dm13,
@@ -692,10 +692,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.Am13omit11,
             ChromaticChord.AAm13omit11,
             ChromaticChord.Bm13omit11
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_13sus4 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_13sus4 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C13sus4,
             ChromaticChord.CC13sus4,
             ChromaticChord.D13sus4,
@@ -720,10 +720,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A13sus4omit11,
             ChromaticChord.AA13sus4omit11,
             ChromaticChord.B13sus4omit11
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_13b5 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_13b5 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C13b5,
             ChromaticChord.CC13b5,
             ChromaticChord.D13b5,
@@ -748,10 +748,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A13b5omit11,
             ChromaticChord.AA13b5omit11,
             ChromaticChord.B13b5omit11
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_13a5 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_13a5 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C13a5,
             ChromaticChord.CC13a5,
             ChromaticChord.D13a5,
@@ -776,10 +776,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A13a5omit11,
             ChromaticChord.AA13a5omit11,
             ChromaticChord.B13a5omit11
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_13b9 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_13b9 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C13b9,
             ChromaticChord.CC13b9,
             ChromaticChord.D13b9,
@@ -804,10 +804,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A13b9omit11,
             ChromaticChord.AA13b9omit11,
             ChromaticChord.B13b9omit11
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_13a9 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_13a9 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C13a9,
             ChromaticChord.CC13a9,
             ChromaticChord.D13a9,
@@ -832,10 +832,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A13a9omit11,
             ChromaticChord.AA13a9omit11,
             ChromaticChord.B13a9omit11
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_13b5b9 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_13b5b9 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C13b5b9,
             ChromaticChord.CC13b5b9,
             ChromaticChord.D13b5b9,
@@ -860,10 +860,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A13b5b9omit11,
             ChromaticChord.AA13b5b9omit11,
             ChromaticChord.B13b5b9omit11
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_13b5a9 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_13b5a9 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C13b5a9,
             ChromaticChord.CC13b5a9,
             ChromaticChord.D13b5a9,
@@ -888,10 +888,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A13b5a9omit11,
             ChromaticChord.AA13b5a9omit11,
             ChromaticChord.B13b5a9omit11
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_13a5b9 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_13a5b9 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C13a5b9,
             ChromaticChord.CC13a5b9,
             ChromaticChord.D13a5b9,
@@ -916,10 +916,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A13a5b9omit11,
             ChromaticChord.AA13a5b9omit11,
             ChromaticChord.B13a5b9omit11
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_13a5a9 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_13a5a9 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.C13a5a9,
             ChromaticChord.CC13a5a9,
             ChromaticChord.D13a5a9,
@@ -944,10 +944,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.A13a5a9omit11,
             ChromaticChord.AA13a5a9omit11,
             ChromaticChord.B13a5a9omit11
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_Maj13 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_Maj13 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.CMaj13,
             ChromaticChord.CCMaj13,
             ChromaticChord.DMaj13,
@@ -972,10 +972,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.AMaj13omit11,
             ChromaticChord.AAMaj13omit11,
             ChromaticChord.BMaj13omit11
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_mMaj13 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_mMaj13 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.CmMaj13,
             ChromaticChord.CCmMaj13,
             ChromaticChord.DmMaj13,
@@ -1000,10 +1000,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.AmMaj13omit11,
             ChromaticChord.AAmMaj13omit11,
             ChromaticChord.BmMaj13omit11
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_Maj13b5 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_Maj13b5 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.CMaj13b5,
             ChromaticChord.CCMaj13b5,
             ChromaticChord.DMaj13b5,
@@ -1028,10 +1028,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.AMaj13b5omit11,
             ChromaticChord.AAMaj13b5omit11,
             ChromaticChord.BMaj13b5omit11
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_Maj13a5 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_Maj13a5 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.CMaj13a5,
             ChromaticChord.CCMaj13a5,
             ChromaticChord.DMaj13a5,
@@ -1056,10 +1056,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.AMaj13a5omit11,
             ChromaticChord.AAMaj13a5omit11,
             ChromaticChord.BMaj13a5omit11
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_Maj13b9 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_Maj13b9 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.CMaj13b9,
             ChromaticChord.CCMaj13b9,
             ChromaticChord.DMaj13b9,
@@ -1084,10 +1084,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.AMaj13b9omit11,
             ChromaticChord.AAMaj13b9omit11,
             ChromaticChord.BMaj13b9omit11
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_Maj13a9 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_Maj13a9 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.CMaj13a9,
             ChromaticChord.CCMaj13a9,
             ChromaticChord.DMaj13a9,
@@ -1112,10 +1112,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.AMaj13a9omit11,
             ChromaticChord.AAMaj13a9omit11,
             ChromaticChord.BMaj13a9omit11
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_Maj13b5b9 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_Maj13b5b9 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.CMaj13b5b9,
             ChromaticChord.CCMaj13b5b9,
             ChromaticChord.DMaj13b5b9,
@@ -1140,10 +1140,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.AMaj13b5b9omit11,
             ChromaticChord.AAMaj13b5b9omit11,
             ChromaticChord.BMaj13b5b9omit11
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_Maj13b5a9 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_Maj13b5a9 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.CMaj13b5a9,
             ChromaticChord.CCMaj13b5a9,
             ChromaticChord.DMaj13b5a9,
@@ -1168,10 +1168,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.AMaj13b5a9omit11,
             ChromaticChord.AAMaj13b5a9omit11,
             ChromaticChord.BMaj13b5a9omit11
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_Maj13a5b9 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_Maj13a5b9 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.CMaj13a5b9,
             ChromaticChord.CCMaj13a5b9,
             ChromaticChord.DMaj13a5b9,
@@ -1196,10 +1196,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.AMaj13a5b9omit11,
             ChromaticChord.AAMaj13a5b9omit11,
             ChromaticChord.BMaj13a5b9omit11
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_Maj13a5a9 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_Maj13a5a9 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.CMaj13a5a9,
             ChromaticChord.CCMaj13a5a9,
             ChromaticChord.DMaj13a5a9,
@@ -1224,10 +1224,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.AMaj13a5a9omit11,
             ChromaticChord.AAMaj13a5a9omit11,
             ChromaticChord.BMaj13a5a9omit11
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_SUSa4 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_SUSa4 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.Csusa4,
             ChromaticChord.CCsusa4,
             ChromaticChord.Dsusa4,
@@ -1240,10 +1240,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.Asusa4,
             ChromaticChord.AAsusa4,
             ChromaticChord.Bsusa4
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_SUSb2 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_SUSb2 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.Csusb2,
             ChromaticChord.CCsusb2,
             ChromaticChord.Dsusb2,
@@ -1256,10 +1256,10 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.Asusb2,
             ChromaticChord.AAsusb2,
             ChromaticChord.Bsusb2
-    ));
+    ).build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> CHORDS_SUSb2b5 = ImmutableSet.copyOf(Arrays.asList(
+    protected static final Set<ChromaticChord> CHORDS_SUSb2b5 = new ImmutableSet.Builder<ChromaticChord>().add(
             ChromaticChord.Csusb2b5,
             ChromaticChord.CCsusb2b5,
             ChromaticChord.Dsusb2b5,
@@ -1272,103 +1272,105 @@ public final class ChromaticChordRetrieval {
             ChromaticChord.Asusb2b5,
             ChromaticChord.AAsusb2b5,
             ChromaticChord.Bsusb2b5
-    ));
+    ).build();
+
+    // todo: datils SetUtils.concatImmutable remove
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> UNUSUAL_CHORDS = SetUtils.concatImmutable(
-            CHORDS_SUSb2,
-            CHORDS_SUSa4,
-            CHORDS_SUSb2b5
-    );
+    protected static final Set<ChromaticChord> UNUSUAL_CHORDS = new ImmutableSet.Builder<ChromaticChord>()
+            .addAll(CHORDS_SUSb2)
+            .addAll(CHORDS_SUSa4)
+            .addAll(CHORDS_SUSb2b5)
+            .build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> TRIAD_CHORDS = SetUtils.concatImmutable(
-            CHORDS_MAJOR,
-            CHORDS_MINOR,
-            CHORDS_DIMINISHED,
-            CHORDS_AUGMENTED,
-            CHORDS_SUS4
-    );
+    protected static final Set<ChromaticChord> TRIAD_CHORDS = new ImmutableSet.Builder<ChromaticChord>()
+            .addAll(CHORDS_MAJOR)
+            .addAll(CHORDS_MINOR)
+            .addAll(CHORDS_DIMINISHED)
+            .addAll(CHORDS_AUGMENTED)
+            .addAll(CHORDS_SUS4)
+            .build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> SEVENTH_CHORDS = SetUtils.concatImmutable(
-            CHORDS_7,
-            CHORDS_Maj7,
-            CHORDS_m7,
-            CHORDS_7b5,
-            CHORDS_mMaj7,
-            CHORDS_7a5,
-            CHORDS_m7a5,
-            CHORDS_m7b5,
-            CHORDS_7add11,
-            CHORDS_7add13,
-            CHORDS_7sus4
-    );
+    protected static final Set<ChromaticChord> SEVENTH_CHORDS = new ImmutableSet.Builder<ChromaticChord>()
+            .addAll(CHORDS_7)
+            .addAll(CHORDS_Maj7)
+            .addAll(CHORDS_m7)
+            .addAll(CHORDS_7b5)
+            .addAll(CHORDS_mMaj7)
+            .addAll(CHORDS_7a5)
+            .addAll(CHORDS_m7a5)
+            .addAll(CHORDS_m7b5)
+            .addAll(CHORDS_7add11)
+            .addAll(CHORDS_7add13)
+            .addAll(CHORDS_7sus4)
+            .build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> SIXTH_CHORDS = SetUtils.concatImmutable(
-            CHORDS_6,
-            CHORDS_m6,
-            CHORDS_6sus4,
-            CHORDS_6add9,
-            CHORDS_m6add9
-    );
+    protected static final Set<ChromaticChord> SIXTH_CHORDS = new ImmutableSet.Builder<ChromaticChord>()
+            .addAll(CHORDS_6)
+            .addAll(CHORDS_m6)
+            .addAll(CHORDS_6sus4)
+            .addAll(CHORDS_6add9)
+            .addAll(CHORDS_m6add9)
+            .build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> NINTH_CHORDS = SetUtils.concatImmutable(
-            CHORDS_7b9,
-            CHORDS_7a9,
-            CHORDS_m7b9,
-            CHORDS_9,
-            CHORDS_m9,
-            CHORDS_9b5,
-            CHORDS_9a5,
-            CHORDS_9sus4,
-            CHORDS_Maj9,
-            CHORDS_mMaj9,
-            CHORDS_9add6,
-            CHORDS_9a11,
-            CHORDS_Maj9a11
-    );
+    protected static final Set<ChromaticChord> NINTH_CHORDS = new ImmutableSet.Builder<ChromaticChord>()
+            .addAll(CHORDS_7b9)
+            .addAll(CHORDS_7a9)
+            .addAll(CHORDS_m7b9)
+            .addAll(CHORDS_9)
+            .addAll(CHORDS_m9)
+            .addAll(CHORDS_9b5)
+            .addAll(CHORDS_9a5)
+            .addAll(CHORDS_9sus4)
+            .addAll(CHORDS_Maj9)
+            .addAll(CHORDS_mMaj9)
+            .addAll(CHORDS_9add6)
+            .addAll(CHORDS_9a11)
+            .addAll(CHORDS_Maj9a11)
+            .build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> ELEVENTH_CHORDS = SetUtils.concatImmutable(
-            CHORDS_11,
-            CHORDS_m11,
-            CHORDS_11b9,
-            CHORDS_11a9,
-            CHORDS_Maj11,
-            CHORDS_mMaj11
-    );
+    protected static final Set<ChromaticChord> ELEVENTH_CHORDS = new ImmutableSet.Builder<ChromaticChord>()
+            .addAll(CHORDS_11)
+            .addAll(CHORDS_m11)
+            .addAll(CHORDS_11b9)
+            .addAll(CHORDS_11a9)
+            .addAll(CHORDS_Maj11)
+            .addAll(CHORDS_mMaj11)
+            .build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> THIRTEENTH_CHORDS = SetUtils.concatImmutable(
-            CHORDS_m13,
-            CHORDS_13sus4,
-            CHORDS_13b5,
-            CHORDS_13a5,
-            CHORDS_13b9,
-            CHORDS_13a9,
-            CHORDS_13b5b9,
-            CHORDS_13b5a9,
-            CHORDS_13a5b9,
-            CHORDS_13a5a9,
-            CHORDS_Maj13,
-            CHORDS_mMaj13,
-            CHORDS_Maj13b5,
-            CHORDS_Maj13a5,
-            CHORDS_Maj13b9,
-            CHORDS_Maj13a9,
-            CHORDS_Maj13b5b9,
-            CHORDS_Maj13b5a9,
-            CHORDS_Maj13a5b9,
-            CHORDS_Maj13a5a9
-    );
+    protected static final Set<ChromaticChord> THIRTEENTH_CHORDS = new ImmutableSet.Builder<ChromaticChord>()
+            .addAll(CHORDS_m13)
+            .addAll(CHORDS_13sus4)
+            .addAll(CHORDS_13b5)
+            .addAll(CHORDS_13a5)
+            .addAll(CHORDS_13b9)
+            .addAll(CHORDS_13a9)
+            .addAll(CHORDS_13b5b9)
+            .addAll(CHORDS_13b5a9)
+            .addAll(CHORDS_13a5b9)
+            .addAll(CHORDS_13a5a9)
+            .addAll(CHORDS_Maj13)
+            .addAll(CHORDS_mMaj13)
+            .addAll(CHORDS_Maj13b5)
+            .addAll(CHORDS_Maj13a5)
+            .addAll(CHORDS_Maj13b9)
+            .addAll(CHORDS_Maj13a9)
+            .addAll(CHORDS_Maj13b5b9)
+            .addAll(CHORDS_Maj13b5a9)
+            .addAll(CHORDS_Maj13a5b9)
+            .addAll(CHORDS_Maj13a5a9)
+            .build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> PARTIAL_CHORDS = SetUtils.concatImmutable(
-            CHORDS_FIFTH
-    );
+    protected static final Set<ChromaticChord> PARTIAL_CHORDS = new ImmutableSet.Builder<ChromaticChord>()
+            .addAll(CHORDS_FIFTH)
+            .build();
 
     @SuppressWarnings("WeakerAccess")
     protected static final Set<ChromaticChord> COMMON_CHORDS = SetUtils.concatImmutable(
@@ -1380,8 +1382,83 @@ public final class ChromaticChordRetrieval {
         return SetUtils.concatImmutable(COMMON_CHORDS, UNUSUAL_CHORDS);
     }
 
+    private Set<ChromaticChord> base;
+    private Set<Chromatic> containsChromatic;
+    private Set<TonalityModern> tonalitiesAny;
+    private Set<TonalityModern> tonalitiesAll;
 
-    public static Set<ChromaticChord> all_triads() {
-        return TRIAD_CHORDS;
+    ChromaticChordRetrieval() {
+        base = new HashSet<>();
+
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public ChromaticChordRetrieval triads() {
+        base.addAll(TRIAD_CHORDS);
+
+        return this;
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public Set<ChromaticChord> retrieve() {
+        Set<ChromaticChord> ret = new HashSet<>();
+
+        for (ChromaticChord chromaticChord : base) {
+            if ((chromaticChord == null || chromaticChord.containsAll(containsChromatic))
+                    && (tonalitiesAny == null || tonalitiesContainsAny(chromaticChord))
+                    && (tonalitiesAll == null || tonalitiesContainsAll(chromaticChord)))
+                ret.add(chromaticChord);
+        }
+
+        return ret;
+    }
+
+    private boolean tonalitiesContainsAny(ChromaticChord chromaticChord) {
+        for (TonalityModern tonalityModern : tonalitiesAny) {
+            if (tonalityModern.getFunctionsFrom(chromaticChord).size() > 0)
+                return true;
+        }
+
+        return false;
+    }
+
+    private boolean tonalitiesContainsAll(ChromaticChord chromaticChord) {
+        for (TonalityModern tonalityModern : tonalitiesAll) {
+            if (tonalityModern.getFunctionsFrom(chromaticChord).size() == 0)
+                return false;
+        }
+
+        return true;
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public ChromaticChordRetrieval whichContains(Chromatic... chromatics) {
+        containsChromatic = new HashSet<>();
+        containsChromatic.addAll(Arrays.asList(chromatics));
+
+        return this;
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public ChromaticChordRetrieval sevenths() {
+        base.addAll(SEVENTH_CHORDS);
+
+        return this;
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public ChromaticChordRetrieval inAnyTonalities(TonalityModern... tonalityModern) {
+        tonalitiesAny = new HashSet<>();
+        tonalitiesAny.addAll(Arrays.asList(tonalityModern));
+
+        return this;
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public ChromaticChordRetrieval inAllTonalities(TonalityModern... tonalityModern) {
+        tonalitiesAll = new HashSet<>();
+        tonalitiesAll.addAll(Arrays.asList(tonalityModern));
+
+        return this;
     }
 }

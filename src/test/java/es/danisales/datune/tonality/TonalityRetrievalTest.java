@@ -99,7 +99,7 @@ public class TonalityRetrievalTest {
             assertEquals(tonality.getScale(), Scale.MINOR);
     }
 
-    @Test(timeout = 1000)
+    @Test(timeout = 1500)
     public void fromChordHarmonicFunction() {
         List<TonalityModern> ts = TonalityRetrieval.listFromChordAllFunctions(ChromaticChord.C);
         assertFalse(ts.isEmpty());

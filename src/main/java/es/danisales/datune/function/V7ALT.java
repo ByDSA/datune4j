@@ -9,15 +9,21 @@ import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityModern;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
-public enum V7ALT implements HarmonicFunction {
-    b5;
+public class V7ALT extends HarmonicFunction {
+    public static final V7ALT b5 = new V7ALT();
 
     @Override
-    @NonNull
-    public ChromaticChord getChord(TonalityModern tonality) throws ScaleRelativeDegreeException {
+    @Nullable
+    public ChromaticChord calculateChord(TonalityModern tonality) {
         DiatonicFunction diatonicFunction = DiatonicFunction.I7;
-        Chromatic newRoot = tonality.getNote(DiatonicDegree.V);
+        Chromatic newRoot;
+        try {
+            newRoot = tonality.getNote(DiatonicDegree.V);
+        } catch (ScaleRelativeDegreeException e) {
+            return null;
+        }
         tonality = Tonality.from(newRoot, Scale.SUPERLOCRIAN);
 
         try {

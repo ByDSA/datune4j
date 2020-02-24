@@ -3,20 +3,27 @@ package es.danisales.datune.function;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Table;
+import es.danisales.datune.chords.Chord;
 import es.danisales.datune.chords.DiatonicDegreePattern;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.chords.tonal.TonalChord;
+import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.degrees.octave.CyclicDegree;
+import es.danisales.datune.degrees.octave.DiatonicAlt;
 import es.danisales.datune.degrees.scale.DiatonicDegree;
 import es.danisales.datune.tonality.ScaleRelativeDegreeException;
+import es.danisales.datune.tonality.Tonality;
+import es.danisales.datune.tonality.TonalityClassical;
 import es.danisales.datune.tonality.TonalityModern;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.List;
 import java.util.Objects;
 
 public final class DiatonicFunction
-		implements HarmonicFunction {
+		extends HarmonicFunction {
 	private static final Table<DiatonicDegreePattern, DiatonicDegree, DiatonicFunction> table = HashBasedTable.create();
 
 	public static final DiatonicFunction I = from(DiatonicDegree.I, DiatonicDegreePattern.I);
@@ -197,13 +204,43 @@ public final class DiatonicFunction
 	}
 
 	@Override
-	@NonNull
-	public ChromaticChord getChord(@NonNull TonalityModern tonality) throws ScaleRelativeDegreeException {
+	@Nullable
+	public ChromaticChord calculateChord(@NonNull TonalityModern tonality) {
 		Objects.requireNonNull(tonality);
 
 		TonalChord tonalChord = TonalChord.from(tonality, this);
 
-		return (ChromaticChord) FunctionCache.get(tonalChord);
+		try {
+			return (ChromaticChord) get(tonalChord);
+		} catch (ScaleRelativeDegreeException e) {
+			return null;
+		}
+	}
+
+	private static @NonNull Chord<? extends CyclicDegree> get(@NonNull TonalChord tonalChord) throws ScaleRelativeDegreeException {
+		Tonality tonality = tonalChord.getTonality();
+		DiatonicFunction diatonicFunction = (DiatonicFunction)tonalChord.getHarmonicFunction();
+		CyclicDegree noteBase = getNoteBaseFrom(tonality, diatonicFunction);
+		DiatonicDegreePattern diatonicChordPattern = diatonicFunction.getDiatonicDegreePattern();
+
+		Chord<? extends CyclicDegree> chord;
+		if (noteBase instanceof Chromatic && tonality instanceof TonalityModern) {
+			chord = ChromaticChord.builder()
+					.chromaticBase((Chromatic) noteBase)
+					.diatonicDegreePattern(diatonicChordPattern)
+					.tonality((TonalityModern)tonality)
+					.build();
+
+			return chord;
+		} else if (noteBase instanceof DiatonicAlt && tonality instanceof TonalityClassical) {
+			return null; // todo
+		}
+
+		throw new ScaleRelativeDegreeException(diatonicFunction.getDiatonicDegree(), tonality.getScale());
+	}
+
+	private static CyclicDegree getNoteBaseFrom(Tonality tonality, DiatonicFunction diatonicFunction) throws ScaleRelativeDegreeException {
+		return tonality.getNote( diatonicFunction.getDiatonicDegree() );
 	}
 
 	@Override

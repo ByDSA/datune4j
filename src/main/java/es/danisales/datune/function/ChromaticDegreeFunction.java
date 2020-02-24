@@ -12,6 +12,7 @@ import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityModern;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,7 @@ import java.util.Objects;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @SuppressWarnings("WeakerAccess")
-public class ChromaticDegreeFunction implements HarmonicFunction {
+public class ChromaticDegreeFunction extends HarmonicFunction {
     public static final ChromaticDegreeFunction I5 = new ChromaticDegreeFunction(ChromaticDegree.I, ChromaticChordPattern.POWER_CHORD);
     public static final ChromaticDegreeFunction bII5 = new ChromaticDegreeFunction(ChromaticDegree.bII, ChromaticChordPattern.POWER_CHORD);
     public static final ChromaticDegreeFunction II5 = new ChromaticDegreeFunction(ChromaticDegree.II, ChromaticChordPattern.POWER_CHORD);
@@ -467,13 +468,18 @@ public class ChromaticDegreeFunction implements HarmonicFunction {
     }
 
     @Override
-    @NonNull
-    public ChromaticChord getChord(@NonNull TonalityModern tonality) throws ScaleRelativeDegreeException {
+    @Nullable
+    public ChromaticChord calculateChord(@NonNull TonalityModern tonality) {
         Objects.requireNonNull(tonality);
 
         ChromaticChordPattern chromaticChordPattern = getChromaticChordPattern();
         Objects.requireNonNull(chromaticChordPattern, toString());
-        Chromatic noteBase = getNoteBaseFromChromaticFunctionAndTonality(tonality, this);
+        Chromatic noteBase;
+        try {
+            noteBase = getNoteBaseFromChromaticFunctionAndTonality(tonality, this);
+        } catch (ScaleRelativeDegreeException e) {
+            return null;
+        }
 
         ChromaticChord ret;
         try {

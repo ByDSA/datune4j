@@ -1,7 +1,6 @@
 package es.danisales.datune.chords.chromatic;
 
 import es.danisales.datune.degrees.octave.Chromatic;
-import es.danisales.utils.building.BuildingException;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -11,6 +10,42 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class ChromaticChordPatternTest {
+    /* Immutable */
+
+    @Test
+    public void immutableOf_integers() {
+        ChromaticChordPattern chromaticChordPattern = ChromaticChordPattern.immutableOf(0, 4, 7);
+        assertTrue(chromaticChordPattern.isImmutable());
+        assertSame(ChromaticChordPattern.TRIAD_MAJOR, chromaticChordPattern);
+    }
+
+    @Test
+    public void immutableOf_integers_reuse() {
+        ChromaticChordPattern chromaticChordPattern = ChromaticChordPattern.immutableOf(0, 4, 7);
+        assertSame(ChromaticChordPattern.TRIAD_MAJOR, chromaticChordPattern);
+    }
+
+    @Test
+    public void immutableOf_integers_reuse_unregistered() {
+        ChromaticChordPattern chromaticChordPattern = ChromaticChordPattern.immutableOf(0, 1, 2, 3);
+        ChromaticChordPattern chromaticChordPattern2 = ChromaticChordPattern.immutableOf(0, 1, 2, 3);
+        assertSame(chromaticChordPattern, chromaticChordPattern2);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void immutableOf_editing() {
+        ChromaticChordPattern chromaticChordPattern = ChromaticChordPattern.immutableOf(0, 4, 7);
+        chromaticChordPattern.clear();
+    }
+
+    @Test
+    public void immutableOf_ChromaticChordPattern() {
+        ChromaticChordPattern chromaticChordPattern = ChromaticChordPattern.from(0, 4, 7);
+        assertFalse(chromaticChordPattern.isImmutable());
+        ChromaticChordPattern chromaticChordPattern2 = ChromaticChordPattern.immutableOf(chromaticChordPattern);
+        assertSame(ChromaticChordPattern.TRIAD_MAJOR, chromaticChordPattern2);
+    }
+
     /* patternFrom */
 
     @Test
@@ -26,7 +61,7 @@ public class ChromaticChordPatternTest {
     }
 
     @Test
-    public void from_ChromaticChord_Custom() throws BuildingException {
+    public void from_ChromaticChord_Custom() {
         ChromaticChord chromaticChord = ChromaticChord.builder()
                 .addAll(Chromatic.FF, Chromatic.A, Chromatic.CC)
                 .build();

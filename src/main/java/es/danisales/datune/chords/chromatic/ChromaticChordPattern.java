@@ -1,15 +1,14 @@
 package es.danisales.datune.chords.chromatic;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import es.danisales.datune.chords.Pattern;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.lang.ChordNotation;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -101,17 +100,106 @@ public final class ChromaticChordPattern extends Pattern {
     public static final ChromaticChordPattern SUS2b2b5 = new ChromaticChordPattern(0, 1, 6);
     public static final ChromaticChordPattern N6 = new ChromaticChordPattern(5, 8, 13);
 
-    private static final Map<Integer, ChromaticChordPattern> registeredImmutables;
+    private static final Set<ChromaticChordPattern> VALUES = new ImmutableSet.Builder<ChromaticChordPattern>().add(
+            POWER_CHORD,
+            TRIAD_MAJOR,
+            TRIAD_MINOR,
+            TRIAD_DIMINISHED,
+            TRIAD_AUGMENTED,
+            SUS4,
+            SEVENTH,
+            SEVENTH_b5,
+            SEVENTH_a5,
+            SEVENTH_SUS4,
+            SEVENTH_MINOR,
+            SEVENTH_MINOR_b5,
+            SEVENTH_MINOR_a5,
+            SIXTH,
+            SIXTH_MINOR,
+            SIXTH_SUS4,
+            SEVENTH_MAJ7,
+            SEVENTH_MINOR_MAJ7,
+            SIXTH_ADD9,
+            SIXTH_MINOR_ADD9,
+            SEVENTH_b9,
+            SEVENTH_a9,
+            SEVENTH_MINOR_b9,
+            SEVENTH_ADD11,
+            SEVENTH_ADD13,
+            NINTH,
+            NINTH_MINOR,
+            NINTH_b5,
+            NINTH_a5,
+            NINTH_SUS4,
+            NINTH_MAJ9,
+            NINTH_MINOR_MAJ9,
+            NINTH_ADD6,
+            NINTH_a11,
+            NINTH_MAJ9_a11,
+            ELEVENTH,
+            ELEVENTH_MINOR,
+            ELEVENTH_b9,
+            ELEVENTH_a9,
+            ELEVENTH_MAJ11,
+            ELEVENTH_MINOR_MAJ11,
+            THIRTEENTH_MINOR,
+            THIRTEENTH_SUS4,
+            THIRTEENTH_b5,
+            THIRTEENTH_a5,
+            THIRTEENTH_b9,
+            THIRTEENTH_a9,
+            THIRTEENTH_b5b9,
+            THIRTEENTH_b5a9,
+            THIRTEENTH_a5b9,
+            THIRTEENTH_a5a9,
+            THIRTEENTH_MAJ13,
+            THIRTEENTH_MINOR_MAJ13,
+            THIRTEENTH_MAJ13_b5,
+            THIRTEENTH_MAJ13_a5,
+            THIRTEENTH_MAJ13_b9,
+            THIRTEENTH_MAJ13_a9,
+            THIRTEENTH_MAJ13_b5b9,
+            THIRTEENTH_MAJ13_b5a9,
+            THIRTEENTH_MAJ13_a5b9,
+            THIRTEENTH_MAJ13_a5a9,
+            THIRTEENTH_MINOR_OMIT11,
+            THIRTEENTH_SUS4_OMIT11,
+            THIRTEENTH_b5_OMIT11,
+            THIRTEENTH_a5_OMIT11,
+            THIRTEENTH_b9_OMIT11,
+            THIRTEENTH_a9_OMIT11,
+            THIRTEENTH_b5b9_OMIT11,
+            THIRTEENTH_b5a9_OMIT11,
+            THIRTEENTH_a5b9_OMIT11,
+            THIRTEENTH_a5a9_OMIT11,
+            THIRTEENTH_MAJ13_OMIT11,
+            THIRTEENTH_MINOR_MAJ13_OMIT11,
+            THIRTEENTH_MAJ13_b5_OMIT11,
+            THIRTEENTH_MAJ13_a5_OMIT11,
+            THIRTEENTH_MAJ13_b9_OMIT11,
+            THIRTEENTH_MAJ13_a9_OMIT11,
+            THIRTEENTH_MAJ13_b5b9_OMIT11,
+            THIRTEENTH_MAJ13_b5a9_OMIT11,
+            THIRTEENTH_MAJ13_a5b9_OMIT11,
+            THIRTEENTH_MAJ13_a5a9_OMIT11,
+            SUS4a4,
+            SUS2b2,
+            SUS2b2b5,
+            N6
+    ).build();
+
+    private static final Map<Integer, ChromaticChordPattern> immutablesCache = new HashMap<>();
 
     static {
-        ImmutableMap.Builder<Integer, ChromaticChordPattern> builder = ImmutableMap.builder();
-        for (ChromaticChordPattern chromaticChordPattern : values())
-            builder.put(Arrays.hashCode(chromaticChordPattern.toArray()), chromaticChordPattern);
-
-        registeredImmutables = builder.build();
+        initializeImmutablesCache();
     }
 
-    /* Immutables */
+    private static  void initializeImmutablesCache() {
+        for (ChromaticChordPattern chromaticChordPattern : VALUES)
+            immutablesCache.put(Arrays.hashCode(chromaticChordPattern.toArray()), chromaticChordPattern);
+    }
+
+    /* Immutable */
 
     private ChromaticChordPattern(Integer... chromaticChordPatternEnum) {
         super(chromaticChordPatternEnum);
@@ -128,108 +216,34 @@ public final class ChromaticChordPattern extends Pattern {
     public static @NonNull ChromaticChordPattern immutableOf(@NonNull ChromaticChordPattern pattern) {
         if (pattern.isImmutable())
             return pattern;
-        else
-            return registeredImmutables.getOrDefault(
-                    pattern.hashCode(),
-                    new ChromaticChordPattern(pattern)
-            );
+
+        return getOrPutIfAbsent(pattern);
+    }
+
+    private static ChromaticChordPattern getOrPutIfAbsent(ChromaticChordPattern pattern) {
+        int hashCode = pattern.hashCode();
+        ChromaticChordPattern chromaticChordPattern = immutablesCache.get( hashCode );
+        if (chromaticChordPattern == null) {
+            chromaticChordPattern = new ChromaticChordPattern(pattern);
+            immutablesCache.put(hashCode, chromaticChordPattern);
+        }
+
+        return chromaticChordPattern;
+    }
+
+    private static ChromaticChordPattern getOrPutIfAbsent(Integer[] patternArray) {
+        int hashCode = Arrays.hashCode(patternArray);
+        ChromaticChordPattern chromaticChordPattern = immutablesCache.get( hashCode );
+        if (chromaticChordPattern == null) {
+            chromaticChordPattern =  new ChromaticChordPattern(Arrays.asList(patternArray));
+            immutablesCache.put(hashCode, chromaticChordPattern);
+        }
+
+        return chromaticChordPattern;
     }
 
     private static @NonNull ChromaticChordPattern immutableFromIntegers(Integer[] patternArray) {
-        return registeredImmutables.getOrDefault(
-                Arrays.hashCode(patternArray),
-                new ChromaticChordPattern(Arrays.asList(patternArray))
-        );
-    }
-
-    private static ChromaticChordPattern[] values() {
-        return new ChromaticChordPattern[]{
-                POWER_CHORD,
-                TRIAD_MAJOR,
-                TRIAD_MINOR,
-                TRIAD_DIMINISHED,
-                TRIAD_AUGMENTED,
-                SUS4,
-                SEVENTH,
-                SEVENTH_b5,
-                SEVENTH_a5,
-                SEVENTH_SUS4,
-                SEVENTH_MINOR,
-                SEVENTH_MINOR_b5,
-                SEVENTH_MINOR_a5,
-                SIXTH,
-                SIXTH_MINOR,
-                SIXTH_SUS4,
-                SEVENTH_MAJ7,
-                SEVENTH_MINOR_MAJ7,
-                SIXTH_ADD9,
-                SIXTH_MINOR_ADD9,
-                SEVENTH_b9,
-                SEVENTH_a9,
-                SEVENTH_MINOR_b9,
-                SEVENTH_ADD11,
-                SEVENTH_ADD13,
-                NINTH,
-                NINTH_MINOR,
-                NINTH_b5,
-                NINTH_a5,
-                NINTH_SUS4,
-                NINTH_MAJ9,
-                NINTH_MINOR_MAJ9,
-                NINTH_ADD6,
-                NINTH_a11,
-                NINTH_MAJ9_a11,
-                ELEVENTH,
-                ELEVENTH_MINOR,
-                ELEVENTH_b9,
-                ELEVENTH_a9,
-                ELEVENTH_MAJ11,
-                ELEVENTH_MINOR_MAJ11,
-                THIRTEENTH_MINOR,
-                THIRTEENTH_SUS4,
-                THIRTEENTH_b5,
-                THIRTEENTH_a5,
-                THIRTEENTH_b9,
-                THIRTEENTH_a9,
-                THIRTEENTH_b5b9,
-                THIRTEENTH_b5a9,
-                THIRTEENTH_a5b9,
-                THIRTEENTH_a5a9,
-                THIRTEENTH_MAJ13,
-                THIRTEENTH_MINOR_MAJ13,
-                THIRTEENTH_MAJ13_b5,
-                THIRTEENTH_MAJ13_a5,
-                THIRTEENTH_MAJ13_b9,
-                THIRTEENTH_MAJ13_a9,
-                THIRTEENTH_MAJ13_b5b9,
-                THIRTEENTH_MAJ13_b5a9,
-                THIRTEENTH_MAJ13_a5b9,
-                THIRTEENTH_MAJ13_a5a9,
-                THIRTEENTH_MINOR_OMIT11,
-                THIRTEENTH_SUS4_OMIT11,
-                THIRTEENTH_b5_OMIT11,
-                THIRTEENTH_a5_OMIT11,
-                THIRTEENTH_b9_OMIT11,
-                THIRTEENTH_a9_OMIT11,
-                THIRTEENTH_b5b9_OMIT11,
-                THIRTEENTH_b5a9_OMIT11,
-                THIRTEENTH_a5b9_OMIT11,
-                THIRTEENTH_a5a9_OMIT11,
-                THIRTEENTH_MAJ13_OMIT11,
-                THIRTEENTH_MINOR_MAJ13_OMIT11,
-                THIRTEENTH_MAJ13_b5_OMIT11,
-                THIRTEENTH_MAJ13_a5_OMIT11,
-                THIRTEENTH_MAJ13_b9_OMIT11,
-                THIRTEENTH_MAJ13_a9_OMIT11,
-                THIRTEENTH_MAJ13_b5b9_OMIT11,
-                THIRTEENTH_MAJ13_b5a9_OMIT11,
-                THIRTEENTH_MAJ13_a5b9_OMIT11,
-                THIRTEENTH_MAJ13_a5a9_OMIT11,
-                SUS4a4,
-                SUS2b2,
-                SUS2b2b5,
-                N6
-        };
+        return getOrPutIfAbsent(patternArray);
     }
 
     /* Mutables */
