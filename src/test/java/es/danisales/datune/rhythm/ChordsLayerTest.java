@@ -7,7 +7,6 @@ import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.tempo.MusicalTime;
 import es.danisales.datune.timelayer.ChordsLayer;
 import es.danisales.datune.timelayer.DurableEvent;
-import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.TonalityModern;
 import es.danisales.random.RandomMode;
 import es.danisales.random.target.RandomPicker;

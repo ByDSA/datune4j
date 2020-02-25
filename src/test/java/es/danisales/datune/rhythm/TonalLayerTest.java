@@ -1,12 +1,10 @@
 package es.danisales.datune.rhythm;
 
 import es.danisales.datune.chords.chromatic.ChromaticChord;
-import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.tempo.MusicalTime;
 import es.danisales.datune.timelayer.*;
-import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityModern;
 import javafx.util.Pair;
 import org.junit.Test;
@@ -15,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class TonalLayerTest {
 
@@ -69,12 +68,14 @@ public class TonalLayerTest {
         ));
     }
 
-    private void assertTonalLayer(Tonality<Chromatic> tonality, TonalLayer tonalLayer, List<Pair<MusicalTime, HarmonicFunction>> pairs) {
+    @SuppressWarnings("SameParameterValue")
+    private void assertTonalLayer(TonalityModern tonality, TonalLayer tonalLayer, List<Pair<MusicalTime, HarmonicFunction>> pairs) {
         for (Pair<MusicalTime, HarmonicFunction> pair : pairs) {
-            assertEquals(tonalLayer.get(pair.getKey()).toString(),
-                    1, tonalLayer.get(pair.getKey()).size());
-            assertEquals(TonalLayer.Node.from(tonality, pair.getValue()), tonalLayer.get(pair.getKey()).get(0));
+            List<TonalLayer.Node> nodes = tonalLayer.get(pair.getKey());
+            assertNotNull(nodes);
+            assertEquals(nodes.toString(),
+                    1, nodes.size());
+            assertEquals(TonalLayer.Node.from(tonality, pair.getValue()), nodes.get(0));
         }
-
     }
 }

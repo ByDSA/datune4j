@@ -5,7 +5,6 @@ import es.danisales.datune.chords.tonal.TonalChord;
 import es.danisales.datune.function.ChromaticDegreeFunction;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.lang.Language;
-import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityModern;
 import org.junit.Test;
 
@@ -22,6 +21,7 @@ public class ChromaticChordNamesTest {
         private static TonalChord parametricChord;
         private static ChromaticChord chromaticChord;
 
+        @SuppressWarnings("ConstantConditions")
         static void updateChromaticChord() {
             chromaticChord = ChromaticChord.from(parametricChord).clone();
         }
@@ -103,21 +103,7 @@ public class ChromaticChordNamesTest {
             assertEquals("Gsus4/C", chromaticChord.toString());
         }
     }
-/*
-    @Test
-    public void names() throws PitchException, BuildingException {
-        TonalChord parametricChord = TonalChord.from(Tonality.C, DiatonicFunction.I);
-        ChromaticChord chromaticChord = ChromaticChord.from(parametricChord);
 
-        chromaticChord = ChromaticChord.builder().addAll(
-                Arrays.asList(Chromatic.C, Chromatic.D, Chromatic.G)
-                ;
-        parametricChord = DiatonicChordMidi.builder()
-                .from(chromaticChord, Tonality.C)
-                .build();
-        assertEquals("Csus2 (ISUS2)", parametricChord.toString());
-    }
-*/
     public static class Fixed {
         @Test
         public void F5() {

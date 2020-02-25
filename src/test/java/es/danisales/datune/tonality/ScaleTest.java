@@ -591,7 +591,7 @@ public class ScaleTest {
         Scale scale = Scale.CHROMATIC.clone();
         scale.setScaleDegreeReparametrizer(null);
 
-        ScaleDegreeReparametrizer scaleDiatonicReparametrizer = getCopyFrom(Scale.CHROMATIC);
+        ScaleDegreeReparameterize scaleDiatonicReparametrizer = getCopyFrom(Scale.CHROMATIC);
         scale.setScaleDegreeReparametrizer(scaleDiatonicReparametrizer);
 
         assertEquals(Scale.CHROMATIC, scale);
@@ -599,8 +599,8 @@ public class ScaleTest {
     }
 
     @SuppressWarnings("SameParameterValue")
-    private ScaleDegreeReparametrizer getCopyFrom(Scale scale) {
-        ScaleDegreeReparametrizer scaleDiatonicReparametrizer = ScaleDegreeReparametrizer.create();
+    private ScaleDegreeReparameterize getCopyFrom(Scale scale) {
+        ScaleDegreeReparameterize scaleDiatonicReparametrizer = ScaleDegreeReparameterize.create();
         for (int i = 0; i < scale.size(); i++)
             scaleDiatonicReparametrizer.put(i,
                     scale.degreeGetter()

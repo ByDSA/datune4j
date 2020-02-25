@@ -1,11 +1,10 @@
 package es.danisales.datune.function;
 
 import es.danisales.datune.chords.chromatic.ChromaticChord;
-import es.danisales.datune.tonality.ScaleRelativeDegreeException;
 import es.danisales.datune.tonality.TonalityModern;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ChromaticDegreeFunctionTest {
     @Test
@@ -52,7 +51,7 @@ public class ChromaticDegreeFunctionTest {
     }
 
     @Test
-    public void normal_ii() throws ScaleRelativeDegreeException {
+    public void normal_ii() {
         ChromaticDegreeFunction chromaticDegreeFunction = CompoundFunction.from(ChromaticDegreeFunction.ii);
 
         ChromaticChord chromaticChord = chromaticDegreeFunction.getChord(TonalityModern.C);
@@ -61,7 +60,7 @@ public class ChromaticDegreeFunctionTest {
     }
 
     @Test
-    public void secondaryDominant__V_V() throws ScaleRelativeDegreeException {
+    public void secondaryDominant__V_V() {
         ChromaticDegreeFunction chromaticDegreeFunction = CompoundFunction.from(ChromaticDegreeFunction.V, ChromaticDegreeFunction.V);
 
         ChromaticChord chromaticChord = chromaticDegreeFunction.getChord(TonalityModern.C);
@@ -70,7 +69,7 @@ public class ChromaticDegreeFunctionTest {
     }
 
     @Test
-    public void secondaryDominant__v_V() throws ScaleRelativeDegreeException {
+    public void secondaryDominant__v_V() {
         ChromaticDegreeFunction chromaticDegreeFunction = CompoundFunction.from(ChromaticDegreeFunction.V, ChromaticDegreeFunction.v);
 
         ChromaticChord chromaticChord = chromaticDegreeFunction.getChord(TonalityModern.C);
@@ -79,7 +78,7 @@ public class ChromaticDegreeFunctionTest {
     }
 
     @Test
-    public void normal__V_Eb() throws ScaleRelativeDegreeException {
+    public void normal__V_Eb() {
         ChromaticDegreeFunction chromaticDegreeFunction = CompoundFunction.from(ChromaticDegreeFunction.V7);
 
         ChromaticChord chromaticChord = chromaticDegreeFunction.getChord(TonalityModern.DD);
@@ -88,7 +87,7 @@ public class ChromaticDegreeFunctionTest {
     }
 
     @Test
-    public void secondaryDominant__v_V_Eb() throws ScaleRelativeDegreeException {
+    public void secondaryDominant__v_V_Eb() {
         ChromaticDegreeFunction chromaticDegreeFunction = CompoundFunction.from(ChromaticDegreeFunction.V, ChromaticDegreeFunction.v);
 
         ChromaticChord chromaticChord = chromaticDegreeFunction.getChord(TonalityModern.DD);
@@ -97,7 +96,7 @@ public class ChromaticDegreeFunctionTest {
     }
 
     @Test
-    public void secondaryDominant__ii_Eb() throws ScaleRelativeDegreeException {
+    public void secondaryDominant__ii_Eb() {
         ChromaticDegreeFunction chromaticDegreeFunction = CompoundFunction.from(ChromaticDegreeFunction.ii);
 
         ChromaticChord chromaticChord = chromaticDegreeFunction.getChord(TonalityModern.DD);
@@ -106,7 +105,7 @@ public class ChromaticDegreeFunctionTest {
     }
 
     @Test
-    public void secondaryDominant__V7_ii_Eb() throws ScaleRelativeDegreeException {
+    public void secondaryDominant__V7_ii_Eb() {
         ChromaticDegreeFunction chromaticDegreeFunction = CompoundFunction.from(ChromaticDegreeFunction.ii, ChromaticDegreeFunction.V7);
 
         ChromaticChord chromaticChord = chromaticDegreeFunction.getChord(TonalityModern.DD);
@@ -115,7 +114,7 @@ public class ChromaticDegreeFunctionTest {
     }
 
     @Test
-    public void secondaryDominant__ii_ii_Eb() throws ScaleRelativeDegreeException {
+    public void secondaryDominant__ii_ii_Eb() {
         ChromaticDegreeFunction chromaticDegreeFunction = CompoundFunction.from(ChromaticDegreeFunction.ii, ChromaticDegreeFunction.ii);
 
         ChromaticChord chromaticChord = chromaticDegreeFunction.getChord(TonalityModern.DD);

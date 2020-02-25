@@ -299,7 +299,7 @@ public final class Scale implements Iterable<ScaleDistance> {
 			throw new UnsupportedOperationException();
 	}
 
-	public void setScaleDegreeReparametrizer(@Nullable ScaleDegreeReparametrizer scaleDiatonicReparametrizer) {
+	public void setScaleDegreeReparametrizer(@Nullable ScaleDegreeReparameterize scaleDiatonicReparametrizer) {
 		if (Objects.equals(innerScale.getScaleDegreeReparametrizer(), scaleDiatonicReparametrizer))
 			return;
 

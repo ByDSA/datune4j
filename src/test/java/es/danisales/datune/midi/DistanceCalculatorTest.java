@@ -1,7 +1,5 @@
 package es.danisales.datune.midi;
 
-import es.danisales.datune.midi.DistanceCalculator;
-import es.danisales.datune.midi.NoteMidi;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import org.junit.Test;
 

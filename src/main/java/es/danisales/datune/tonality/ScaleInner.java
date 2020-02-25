@@ -32,17 +32,17 @@ interface ScaleInner {
 	}
 
 	default @NonNull Set<ScaleDegree> getRelativeDegreeByIndex(int i) {
-		ScaleDegreeReparametrizer scaleDegreeReparametrizer = getScaleDegreeReparametrizer();
+		ScaleDegreeReparameterize scaleDegreeReparameterize = getScaleDegreeReparametrizer();
 		i = MathUtils.rotativeTrim(i, size());
 
 		Set<ScaleDegree> ret = new HashSet<>();
 		ScaleDegree iDegree = getMainDegrees().get(i);
 		ret.add(iDegree);
 
-		if (scaleDegreeReparametrizer == null)
+		if (scaleDegreeReparameterize == null)
 			return ImmutableSet.copyOf(ret);
 
-		Set<ScaleDegree> scaleDegrees_i = scaleDegreeReparametrizer.getByIndex(i);
+		Set<ScaleDegree> scaleDegrees_i = scaleDegreeReparameterize.getByIndex(i);
 		if (scaleDegrees_i != null)
 			ret.addAll(scaleDegrees_i);
 
@@ -50,11 +50,11 @@ interface ScaleInner {
 	}
 
 	default int getIndexByDegree(ScaleDegree relativeDegree) throws ScaleRelativeDegreeException {
-		ScaleDegreeReparametrizer scaleDegreeReparametrizer = getScaleDegreeReparametrizer();
-		if (scaleDegreeReparametrizer == null)
+		ScaleDegreeReparameterize scaleDegreeReparameterize = getScaleDegreeReparametrizer();
+		if (scaleDegreeReparameterize == null)
 			return getIndexByDegreeDefault(relativeDegree);
 
-		Integer ret = scaleDegreeReparametrizer.getByKey(relativeDegree);
+		Integer ret = scaleDegreeReparameterize.getByKey(relativeDegree);
 		if (ret == null)
 			ret = getIndexByDegreeDefault(relativeDegree);
 
@@ -108,7 +108,7 @@ interface ScaleInner {
 		return getCode().get(index - 1);
 	}
 
-	@Nullable ScaleDegreeReparametrizer getScaleDegreeReparametrizer();
+	@Nullable ScaleDegreeReparameterize getScaleDegreeReparametrizer();
 
-	void setScaleDegreeReparametrizer(@Nullable ScaleDegreeReparametrizer scaleDegreeReparametrizer);
+	void setScaleDegreeReparametrizer(@Nullable ScaleDegreeReparameterize scaleDegreeReparameterize);
 }

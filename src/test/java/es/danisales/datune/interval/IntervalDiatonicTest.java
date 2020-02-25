@@ -1,7 +1,5 @@
 package es.danisales.datune.interval;
 
-import es.danisales.datune.interval.IntervalChromatic;
-import es.danisales.datune.interval.IntervalDiatonic;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertTrue;

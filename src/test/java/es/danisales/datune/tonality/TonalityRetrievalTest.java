@@ -132,7 +132,7 @@ public class TonalityRetrievalTest {
 
 
     @Test
-    public void C_iv() throws ScaleRelativeDegreeException {
+    public void C_iv() {
         ChromaticChord chromaticChord = DiatonicFunction.IV.getChord(TonalityModern.C);
 
         assertEquals(ChromaticChord.F, chromaticChord);

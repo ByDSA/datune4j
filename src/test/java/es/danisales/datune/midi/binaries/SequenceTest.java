@@ -5,7 +5,6 @@ import es.danisales.datune.eventsequences.Track;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.midi.ChordMidi;
 import es.danisales.datune.midi.DurationMidi;
-import es.danisales.datune.midi.pitch.PitchMidiException;
 import es.danisales.datune.tonality.Tonality;
 import es.danisales.datune.tonality.TonalityModern;
 import es.danisales.datune.tonality.TonalityRetrieval;
@@ -18,7 +17,7 @@ import static junit.framework.TestCase.assertNotNull;
 
 public class SequenceTest {
     @Test
-    public void aa() throws PitchMidiException {
+    public void aa() {
         Path path = Paths.get("aa1234.mid");
         Sequence sequence = new Sequence(path, 120);
         Track track = sequence.firstChannel;

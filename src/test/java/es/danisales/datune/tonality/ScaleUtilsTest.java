@@ -135,20 +135,20 @@ public class ScaleUtilsTest {
     @Test
     public void getMajorScaleAlterationsFrom_ChromaticCustom() {
         Scale scale = Scale.CHROMATIC.clone();
-        ScaleDegreeReparametrizer scaleDiatonicReparametrizer = ScaleDegreeReparametrizer.create();
-        scaleDiatonicReparametrizer.put(0, DiatonicDegree.I);
-        scaleDiatonicReparametrizer.put(1, DiatonicDegree.I);
-        scaleDiatonicReparametrizer.put(2, DiatonicDegree.II);
-        scaleDiatonicReparametrizer.put(3, DiatonicDegree.III);
-        scaleDiatonicReparametrizer.put(4, DiatonicDegree.III);
-        scaleDiatonicReparametrizer.put(5, DiatonicDegree.IV);
-        scaleDiatonicReparametrizer.put(6, DiatonicDegree.IV);
-        scaleDiatonicReparametrizer.put(7, DiatonicDegree.V);
-        scaleDiatonicReparametrizer.put(8, DiatonicDegree.V);
-        scaleDiatonicReparametrizer.put(9, DiatonicDegree.VI);
-        scaleDiatonicReparametrizer.put(10, DiatonicDegree.VII);
-        scaleDiatonicReparametrizer.put(11, DiatonicDegree.VII);
-        scale.setScaleDegreeReparametrizer(scaleDiatonicReparametrizer);
+        ScaleDegreeReparameterize scaleDiatonicReparameterize = ScaleDegreeReparameterize.create();
+        scaleDiatonicReparameterize.put(0, DiatonicDegree.I);
+        scaleDiatonicReparameterize.put(1, DiatonicDegree.I);
+        scaleDiatonicReparameterize.put(2, DiatonicDegree.II);
+        scaleDiatonicReparameterize.put(3, DiatonicDegree.III);
+        scaleDiatonicReparameterize.put(4, DiatonicDegree.III);
+        scaleDiatonicReparameterize.put(5, DiatonicDegree.IV);
+        scaleDiatonicReparameterize.put(6, DiatonicDegree.IV);
+        scaleDiatonicReparameterize.put(7, DiatonicDegree.V);
+        scaleDiatonicReparameterize.put(8, DiatonicDegree.V);
+        scaleDiatonicReparameterize.put(9, DiatonicDegree.VI);
+        scaleDiatonicReparameterize.put(10, DiatonicDegree.VII);
+        scaleDiatonicReparameterize.put(11, DiatonicDegree.VII);
+        scale.setScaleDegreeReparametrizer(scaleDiatonicReparameterize);
 
         String str = ScaleUtils.getMajorScaleAlterationsFrom(scale);
         assertEquals("1-#1-2-b3-3-4-#4-5-#5-6-b7-7", str);

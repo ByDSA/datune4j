@@ -205,12 +205,12 @@ public class PitchDiatonicMidiTest {
     }
 
 
-    private void _shiftNegative(PitchChromaticMidi pirchChromaticMidi, IntervalDiatonic intervalDiatonic) throws PitchMidiException {
+    private void _shiftNegative(PitchChromaticMidi pitchChromaticMidi1, IntervalDiatonic intervalDiatonic) throws PitchMidiException {
         PitchTonalMidi pitchDiatonicMidi = PitchTonalMidi.from(DiatonicDegree.V, TonalityModern.E, 6);
         assertNotNull(pitchDiatonicMidi);
         pitchDiatonicMidi.shiftNegative(intervalDiatonic);
         PitchChromaticMidi pitchChromaticMidi = PitchChromaticMidi.from(pitchDiatonicMidi);
-        assertEquals(pirchChromaticMidi, pitchChromaticMidi);
+        assertEquals(pitchChromaticMidi1, pitchChromaticMidi);
     }
 
     @Test

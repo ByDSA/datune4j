@@ -1,10 +1,10 @@
 package es.danisales.datune.midi;
 
+import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.chords.chromatic.ChromaticChordRetrieval;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.midi.pitch.PitchChromaticMidi;
 import es.danisales.datune.midi.pitch.PitchMidiException;
-import es.danisales.datune.chords.chromatic.ChromaticChord;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -12,12 +12,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.*;
 
 public class ChromaticChordMidiTest {
     @Test
-    public void fromChromaticChord() throws PitchMidiException {
+    public void fromChromaticChord() {
         ChromaticChord chromaticChord = ChromaticChord.F5;
         ChordMidi chromaticChordMidi = ChordMidi.builder().fromChromaticChord(chromaticChord).build();
         for (int i = 0; i < chromaticChord.size(); i++)
@@ -28,7 +27,7 @@ public class ChromaticChordMidiTest {
     }
 
     @Test
-    public void fromChromaticChord2() throws PitchMidiException {
+    public void fromChromaticChord2() {
         ChromaticChord chromaticChord = ChromaticChord.B9;
         ChordMidi chromaticChordMidi = ChordMidi.builder().fromChromaticChord(chromaticChord).build();
         for (int i = 0; i < chromaticChord.size(); i++)
@@ -95,13 +94,13 @@ public class ChromaticChordMidiTest {
     }
 
     @Test
-    public void distItself() throws PitchMidiException {
+    public void distItself() {
         ChordMidi ccm = ChordMidi.builder().fromChromaticChord(ChromaticChord.C).build();
         assertEquals(0.0f, ChordMidiTransformations.dist(ccm, ccm), 0);
     }
 
     @Test
-    public void distSameBidirectional() throws PitchMidiException {
+    public void distSameBidirectional() {
         ChordMidi ccm = ChordMidi.builder().fromChromaticChord(ChromaticChord.C).build();
         ChordMidi ccm2 = ChordMidi.builder().fromChromaticChord(ChromaticChord.D).build();
         assertEquals(ChordMidiTransformations.dist(ccm2, ccm), ChordMidiTransformations.dist(ccm, ccm2), 0);
@@ -109,7 +108,7 @@ public class ChromaticChordMidiTest {
     }
 
     @Test
-    public void setMinOctave() throws PitchMidiException {
+    public void setMinOctave() {
         ChordMidi ccm = ChordMidi.builder()
                 .fromChromaticChord(ChromaticChord.C5)
                 .build();
@@ -137,17 +136,7 @@ public class ChromaticChordMidiTest {
     }
 
     @Test
-    public void whatIsIt3() {
-        ChordMidi cu = ChordMidi.builder().fromNoteMidi(
-                NoteMidi.builder().pitch(Chromatic.C).build(),
-                NoteMidi.builder().pitch(Chromatic.E).build(),
-                NoteMidi.builder().pitch(Chromatic.G).build()
-        ).build();
-        // assertEquals("", cu.toChordFunc(false).getAllFrom(0).str);
-    }
-
-    @Test
-    public void octave_default() throws PitchMidiException {
+    public void octave_default() {
         ChordMidi chromaticChordMidi = ChordMidi.builder()
                 .fromChromaticChord(ChromaticChord.C5)
                 .build();
@@ -164,12 +153,11 @@ public class ChromaticChordMidiTest {
     }
 
     @Test
-    public void sizeSameAsChromaticChord() throws PitchMidiException {
+    public void sizeSameAsChromaticChord() {
         for (ChromaticChord chromaticChord : ChromaticChordRetrieval.immutableValues()) {
             assertEquals(chromaticChord.size(), ChordMidi.builder().fromChromaticChord(chromaticChord).build().size());
         }
     }
-
 
     @Test
     public void sizeFromNew() {
@@ -439,185 +427,5 @@ public class ChromaticChordMidiTest {
         assertEquals(chromaticMidi.pitch, chromaticChordMidi.get(0).pitch);
         assertEquals(chromaticMidi2.pitch, chromaticChordMidi.get(1).pitch);
         assertEquals(chromaticMidi3.pitch, chromaticChordMidi.get(2).pitch);
-    }
-
-    @Test
-    public void indexOf() {  // todo
-    }
-
-    @Test
-    public void isEmpty() { // todo
-    }
-
-    @Test
-    public void iterator() { // todo
-    }
-
-    @Test
-    public void lastIndexOf() { // todo
-    }
-
-    @Test
-    public void listIterator() { // todo
-    }
-
-    @Test
-    public void listIterator1() { // todo
-    }
-
-    @Test
-    public void remove1() { // todo
-    }
-
-    @Test
-    public void remove2() { // todo
-    }
-
-    @Test
-    public void removeAll() { // todo
-    }
-
-    @Test
-    public void retainAll() { // todo
-    }
-
-    @Test
-    public void set() { // todo
-    }
-
-    @Test
-    public void size() { // todo
-    }
-
-    @Test
-    public void subList() { // todo
-    }
-
-    @Test
-    public void toArray() { // todo
-    }
-
-    @Test
-    public void toArray1() { // todo
-    }
-
-    @Test
-    public void replaceAll() { // todo
-    }
-
-    @Test
-    public void sort() { // todo
-    }
-
-    @Test
-    public void spliterator() { // todo
-    }
-
-    @Test
-    public void removeIf() { // todo
-    }
-
-    @Test
-    public void spliterator1() { // todo
-    }
-
-    @Test
-    public void stream() { // todo
-    }
-
-    @Test
-    public void parallelStream() { // todo
-    }
-
-    @Test
-    public void forEach() { // todo
-    }
-
-    @Test
-    public void spliterator2() { // todo
-    }
-
-    @Test
-    public void getAllInversions() { // todo
-    }
-
-    @Test
-    public void resetRoot() { // todo
-    }
-
-    @Test
-    public void over() { // todo
-    }
-
-    @Test
-    public void inv() { // todo
-    }
-
-    @Test
-    public void inv1() { // todo
-    }
-
-    @Test
-    public void getInversionNumber() { // todo
-    }
-
-    @Test
-    public void from() { // todo
-    }
-
-    @Test
-    public void builder() { // todo
-    }
-
-    @Test
-    public void from1() { // todo
-    }
-
-    @Test
-    public void from2() { // todo
-    }
-
-    @Test
-    public void from3() { // todo
-    }
-
-    @Test
-    public void from4() { // todo
-    }
-
-    @Test
-    public void fromDiatonicChordMidi() { // todo
-    }
-
-    @Test
-    public void addAll3() { // todo
-    }
-
-    @Test
-    public void add5() { // todo
-    }
-
-    @Test
-    public void add6() { // todo
-    }
-
-    @Test
-    public void compact() { // todo
-    }
-
-    @Test
-    public void getQuality() { // todo
-    }
-
-    @Test
-    public void shift() { // todo
-    }
-
-    @Test
-    public void shiftNegative() { // todo
-    }
-
-    @Test
-    public void clone1() { // todo
     }
 }

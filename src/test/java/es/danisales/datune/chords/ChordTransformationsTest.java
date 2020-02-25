@@ -4,9 +4,8 @@ import es.danisales.datune.chords.chromatic.ChromaticChord;
 import org.junit.Test;
 
 import java.util.List;
-import java.util.Set;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ChordTransformationsTest {
     @Test

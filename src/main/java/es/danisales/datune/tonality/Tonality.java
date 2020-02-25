@@ -75,7 +75,7 @@ public abstract class Tonality<C extends CyclicDegree> implements Iterable<C> {
         return this.getRoot().equals(t.getRoot()) && !getScale().equals(t.getScale());
     }
 
-    public abstract @NonNull List<? extends Tonality> getParallelModes();
+    public abstract @NonNull List<? extends Tonality<C>> getParallelModes();
 
     public @Nullable ScaleDegree getDegreeFrom(@NonNull C c) {
         Objects.requireNonNull(c, "No se ha especificado nota");

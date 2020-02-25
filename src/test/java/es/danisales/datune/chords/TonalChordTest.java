@@ -9,7 +9,6 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class TonalChordTest {
-
     @Test
     public void from() {
         TonalChord parametricChord = TonalChord.from(TonalityModern.C, DiatonicFunction.I);

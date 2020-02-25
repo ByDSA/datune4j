@@ -9,11 +9,11 @@ import java.util.List;
 
 class ScaleInnerMutable implements ScaleInner {
 	private List<ScaleDistance> value;
-    private ScaleDegreeReparametrizer scaleDiatonicReparametrizer;
+    private ScaleDegreeReparameterize scaleDiatonicReparametrizer;
 
     ScaleInnerMutable(@NonNull List<ScaleDistance> values) {
 		value = values;
-        scaleDiatonicReparametrizer = ScaleDegreeReparametrizer.create();
+        scaleDiatonicReparametrizer = ScaleDegreeReparameterize.create();
 
 		sumCheck();
 	}
@@ -37,12 +37,12 @@ class ScaleInnerMutable implements ScaleInner {
     }
 
     @Override
-    public @Nullable ScaleDegreeReparametrizer getScaleDegreeReparametrizer() {
+    public @Nullable ScaleDegreeReparameterize getScaleDegreeReparametrizer() {
         return scaleDiatonicReparametrizer;
     }
 
     @Override
-    public void setScaleDegreeReparametrizer(@Nullable ScaleDegreeReparametrizer scaleDegreeReparametrizer) {
-        this.scaleDiatonicReparametrizer = scaleDegreeReparametrizer;
+    public void setScaleDegreeReparametrizer(@Nullable ScaleDegreeReparameterize scaleDegreeReparameterize) {
+        this.scaleDiatonicReparametrizer = scaleDegreeReparameterize;
 	}
 }

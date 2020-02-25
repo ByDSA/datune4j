@@ -13,9 +13,9 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import java.util.Map;
 import java.util.Set;
 
-public class ScaleDegreeReparametrizer implements Cloneable {
+public class ScaleDegreeReparameterize implements Cloneable {
     @SuppressWarnings("WeakerAccess")
-    public static final ScaleDegreeReparametrizer PENTATONIC = new ScaleDegreeReparametrizer(
+    public static final ScaleDegreeReparameterize PENTATONIC = new ScaleDegreeReparameterize(
             new ImmutableMultimap.Builder<Integer, ScaleDegree>()
                     .put(0, DiatonicDegree.I)
                     .put(1, DiatonicDegree.II)
@@ -26,7 +26,7 @@ public class ScaleDegreeReparametrizer implements Cloneable {
     );
 
     @SuppressWarnings("WeakerAccess")
-    public static final ScaleDegreeReparametrizer PENTATONIC_MINOR = new ScaleDegreeReparametrizer(
+    public static final ScaleDegreeReparameterize PENTATONIC_MINOR = new ScaleDegreeReparameterize(
             new ImmutableMultimap.Builder<Integer, ScaleDegree>()
                     .put(0, DiatonicDegree.I)
                     .put(1, DiatonicDegree.III)
@@ -37,7 +37,7 @@ public class ScaleDegreeReparametrizer implements Cloneable {
     );
 
     @SuppressWarnings("WeakerAccess")
-    public static final ScaleDegreeReparametrizer EGYPTIAN = new ScaleDegreeReparametrizer(
+    public static final ScaleDegreeReparameterize EGYPTIAN = new ScaleDegreeReparameterize(
             new ImmutableMultimap.Builder<Integer, ScaleDegree>()
                     .put(0, DiatonicDegree.I)
                     .put(1, DiatonicDegree.II)
@@ -48,7 +48,7 @@ public class ScaleDegreeReparametrizer implements Cloneable {
     );
 
     @SuppressWarnings("WeakerAccess")
-    public static final ScaleDegreeReparametrizer BLUE_MINOR = new ScaleDegreeReparametrizer(
+    public static final ScaleDegreeReparameterize BLUE_MINOR = new ScaleDegreeReparameterize(
             new ImmutableMultimap.Builder<Integer, ScaleDegree>()
                     .put(0, DiatonicDegree.I)
                     .put(1, DiatonicDegree.III)
@@ -59,7 +59,7 @@ public class ScaleDegreeReparametrizer implements Cloneable {
     );
 
     @SuppressWarnings("WeakerAccess")
-    public static final ScaleDegreeReparametrizer BLUES_b5 = new ScaleDegreeReparametrizer(
+    public static final ScaleDegreeReparameterize BLUES_b5 = new ScaleDegreeReparameterize(
             new ImmutableMultimap.Builder<Integer, ScaleDegree>()
                     .put(0, DiatonicDegree.I)
                     .put(1, DiatonicDegree.III)
@@ -78,7 +78,7 @@ public class ScaleDegreeReparametrizer implements Cloneable {
     );
 
     @SuppressWarnings("WeakerAccess")
-    public static final ScaleDegreeReparametrizer BLUES_a4 = new ScaleDegreeReparametrizer(
+    public static final ScaleDegreeReparameterize BLUES_a4 = new ScaleDegreeReparameterize(
             new ImmutableMultimap.Builder<Integer, ScaleDegree>()
                     .put(0, DiatonicDegree.I)
                     .put(1, DiatonicDegree.III)
@@ -97,7 +97,7 @@ public class ScaleDegreeReparametrizer implements Cloneable {
     );
 
     @SuppressWarnings("WeakerAccess")
-    public static final ScaleDegreeReparametrizer BLUE_MAJOR = new ScaleDegreeReparametrizer(
+    public static final ScaleDegreeReparameterize BLUE_MAJOR = new ScaleDegreeReparameterize(
             new ImmutableMultimap.Builder<Integer, ScaleDegree>()
                     .put(0, DiatonicDegree.I)
                     .put(1, DiatonicDegree.II)
@@ -108,7 +108,7 @@ public class ScaleDegreeReparametrizer implements Cloneable {
     );
 
     @SuppressWarnings("WeakerAccess")
-    public static final ScaleDegreeReparametrizer WHOLE_NOTE = new ScaleDegreeReparametrizer(
+    public static final ScaleDegreeReparameterize WHOLE_NOTE = new ScaleDegreeReparameterize(
             new ImmutableMultimap.Builder<Integer, ScaleDegree>()
                     .put(0, DiatonicDegree.I)
                     .put(1, DiatonicDegree.II)
@@ -120,7 +120,7 @@ public class ScaleDegreeReparametrizer implements Cloneable {
     );
 
     @SuppressWarnings("WeakerAccess")
-    public static final ScaleDegreeReparametrizer CHROMATIC = new ScaleDegreeReparametrizer(
+    public static final ScaleDegreeReparameterize CHROMATIC = new ScaleDegreeReparameterize(
             new ImmutableMultimap.Builder<Integer, ScaleDegree>()
                     .put(0, DiatonicDegree.I)
                     .put(1, DiatonicDegree.I)
@@ -140,19 +140,19 @@ public class ScaleDegreeReparametrizer implements Cloneable {
     private Multimap<Integer, ScaleDegree> multimap;
     private final boolean fixed;
 
-    private ScaleDegreeReparametrizer(Multimap<Integer, ScaleDegree> map) {
+    private ScaleDegreeReparameterize(Multimap<Integer, ScaleDegree> map) {
         multimap = ArrayListMultimap.create();
         multimap.putAll(map);
         fixed = true;
     }
 
-    private ScaleDegreeReparametrizer() {
+    private ScaleDegreeReparameterize() {
         multimap = ArrayListMultimap.create();
         fixed = false;
     }
 
-    public static ScaleDegreeReparametrizer create() {
-        return new ScaleDegreeReparametrizer();
+    public static ScaleDegreeReparameterize create() {
+        return new ScaleDegreeReparameterize();
     }
 
     private void checkFixed() {
@@ -184,10 +184,10 @@ public class ScaleDegreeReparametrizer implements Cloneable {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof ScaleDegreeReparametrizer))
+        if (!(o instanceof ScaleDegreeReparameterize))
             return false;
 
-        ScaleDegreeReparametrizer scaleDiatonicReparametrizer = (ScaleDegreeReparametrizer) o;
+        ScaleDegreeReparameterize scaleDiatonicReparametrizer = (ScaleDegreeReparameterize) o;
 
         return multimap.equals(scaleDiatonicReparametrizer.multimap);
     }
@@ -199,8 +199,8 @@ public class ScaleDegreeReparametrizer implements Cloneable {
 
     @SuppressWarnings("MethodDoesntCallSuperMethod")
     @Override
-    public ScaleDegreeReparametrizer clone() {
-        ScaleDegreeReparametrizer scaleDiatonicReparametrizer = create();
+    public ScaleDegreeReparameterize clone() {
+        ScaleDegreeReparameterize scaleDiatonicReparametrizer = create();
         scaleDiatonicReparametrizer.multimap.putAll(multimap);
         return scaleDiatonicReparametrizer;
     }

@@ -18,7 +18,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
 public class ChromaticTest {
-
     @Test
     public void from_int() {
         assertSame(Chromatic.C, Chromatic.from(0));

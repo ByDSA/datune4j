@@ -26,13 +26,6 @@ public class DegreeTest {
 	
 	@Test
 	public void get() {
-		/*assertEquals( DiatonicDegree.I, DiatonicDegree.fromIndex(-7) );
-		assertEquals( DiatonicDegree.bII, DiatonicDegree.fromIndex(-6) );
-		assertEquals( DiatonicDegree.II, DiatonicDegree.fromIndex(-5) );
-		assertEquals( DiatonicDegree.bIII, DiatonicDegree.fromIndex(-4) );
-		assertEquals( DiatonicDegree.III, DiatonicDegree.fromIndex(-3) );
-		assertEquals( DiatonicDegree.IV, DiatonicDegree.fromIndex(-2) );
-		assertEquals( DiatonicDegree.bV, DiatonicDegree.fromIndex(-1) );*/
 		assertEquals( DiatonicDegree.I, DiatonicDegree.from(IntervalDiatonic.UNISON) );
 		assertEquals( DiatonicDegree.II, DiatonicDegree.from(IntervalDiatonic.SECOND) );
 		assertEquals( DiatonicDegree.III, DiatonicDegree.from(IntervalDiatonic.THIRD) );

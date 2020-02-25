@@ -57,23 +57,23 @@ enum ScaleInnerImmutable implements ScaleInner {
 	NEAPOLITAN_MINOR( 1, 2, 2, 2, 1, 3, 1 ),
 	NEAPOLITAN_MAJOR( 1, 2, 2, 2, 2, 2, 1 ),
 	// 6
-	BLUES_b5(ScaleDegreeReparametrizer.BLUES_b5, 3, 2, 1, 1, 3, 2),
-	BLUES_a4(ScaleDegreeReparametrizer.BLUES_a4, BLUES_b5),
+	BLUES_b5(ScaleDegreeReparameterize.BLUES_b5, 3, 2, 1, 1, 3, 2),
+	BLUES_a4(ScaleDegreeReparameterize.BLUES_a4, BLUES_b5),
 
-    WHOLE_TONE(ScaleDegreeReparametrizer.WHOLE_NOTE, 2, 2, 2, 2, 2, 2),
+    WHOLE_TONE(ScaleDegreeReparameterize.WHOLE_NOTE, 2, 2, 2, 2, 2, 2),
 
 	// 5
-    PENTATONIC_MINOR(ScaleDegreeReparametrizer.PENTATONIC_MINOR, 3, 2, 2, 3, 2),
-	PENTATONIC(ScaleDegreeReparametrizer.PENTATONIC, PENTATONIC_MINOR.getModeFromSecure(PentatonicDegree.II)),
-	EGYPCIAN(ScaleDegreeReparametrizer.EGYPTIAN, PENTATONIC_MINOR.getModeFromSecure(PentatonicDegree.III)),
+    PENTATONIC_MINOR(ScaleDegreeReparameterize.PENTATONIC_MINOR, 3, 2, 2, 3, 2),
+	PENTATONIC(ScaleDegreeReparameterize.PENTATONIC, PENTATONIC_MINOR.getModeFromSecure(PentatonicDegree.II)),
+	EGYPCIAN(ScaleDegreeReparameterize.EGYPTIAN, PENTATONIC_MINOR.getModeFromSecure(PentatonicDegree.III)),
 	SUSPENDED( EGYPCIAN ),
-	BLUES_MINOR(ScaleDegreeReparametrizer.BLUE_MINOR, PENTATONIC_MINOR.getModeFromSecure(PentatonicDegree.IV)),
+	BLUES_MINOR(ScaleDegreeReparameterize.BLUE_MINOR, PENTATONIC_MINOR.getModeFromSecure(PentatonicDegree.IV)),
 	MAN_GONG( BLUES_MINOR ),
-	BLUES_MAJOR(ScaleDegreeReparametrizer.BLUE_MAJOR, PENTATONIC_MINOR.getModeFromSecure(PentatonicDegree.V)),
+	BLUES_MAJOR(ScaleDegreeReparameterize.BLUE_MAJOR, PENTATONIC_MINOR.getModeFromSecure(PentatonicDegree.V)),
 	YO_SCALE( BLUES_MAJOR),
 
 	// 12
-    CHROMATIC(ScaleDegreeReparametrizer.CHROMATIC, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+    CHROMATIC(ScaleDegreeReparameterize.CHROMATIC, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 
 	private static final Map<List<ScaleDistance>, ScaleInnerImmutable> _map = new HashMap<>();
 	static {
@@ -93,9 +93,9 @@ enum ScaleInnerImmutable implements ScaleInner {
 	}
 
 	private final List<ScaleDistance> value;
-    final ScaleDegreeReparametrizer scaleDiatonicReparametrizer;
+    final ScaleDegreeReparameterize scaleDiatonicReparametrizer;
 
-    ScaleInnerImmutable(@Nullable ScaleDegreeReparametrizer scaleDiatonicReparametrizer, @NonNull List<ScaleDistance> values) {
+    ScaleInnerImmutable(@Nullable ScaleDegreeReparameterize scaleDiatonicReparametrizer, @NonNull List<ScaleDistance> values) {
         value = Collections.unmodifiableList(values);
 
         sumCheck();
@@ -118,11 +118,11 @@ enum ScaleInnerImmutable implements ScaleInner {
         return Arrays.asList(distanceScales);
     }
 
-    ScaleInnerImmutable(ScaleDegreeReparametrizer scaleDiatonicReparametrizer, int... intValues) {
+    ScaleInnerImmutable(ScaleDegreeReparameterize scaleDiatonicReparametrizer, int... intValues) {
         this(scaleDiatonicReparametrizer, toList(intValues));
     }
 
-    ScaleInnerImmutable(ScaleDegreeReparametrizer scaleDiatonicReparametrizer, ScaleInner scaleInner) {
+    ScaleInnerImmutable(ScaleDegreeReparameterize scaleDiatonicReparametrizer, ScaleInner scaleInner) {
         this(scaleDiatonicReparametrizer, scaleInner.getCode());
 	}
 
@@ -146,12 +146,12 @@ enum ScaleInnerImmutable implements ScaleInner {
 	}
 
     @Override
-    public @Nullable ScaleDegreeReparametrizer getScaleDegreeReparametrizer() {
+    public @Nullable ScaleDegreeReparameterize getScaleDegreeReparametrizer() {
         return scaleDiatonicReparametrizer;
     }
 
     @Override
-    public void setScaleDegreeReparametrizer(@Nullable ScaleDegreeReparametrizer scaleDegreeReparametrizer) {
+    public void setScaleDegreeReparametrizer(@Nullable ScaleDegreeReparameterize scaleDegreeReparameterize) {
         throw new UnsupportedOperationException();
     }
 }

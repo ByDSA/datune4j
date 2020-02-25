@@ -298,7 +298,7 @@ public class TonalityTest {
 
     @Test
     public void getRelativeMinor2() {
-        Tonality<Chromatic> tonality = TonalityModern.from(Chromatic.C, Scale.DORIAN);
+        TonalityModern tonality = TonalityModern.from(Chromatic.C, Scale.DORIAN);
         tonality = TonalityRetrieval.getRelativeMinorFrom(tonality);
         assertEquals(TonalityModern.Cm, tonality);
     }
@@ -684,7 +684,7 @@ public class TonalityTest {
     }
 
     @Test
-    public void getChordFunction() throws ScaleRelativeDegreeException {
+    public void getChordFunction() {
         TonalityModern ton = TonalityModern.E;
         ChromaticChord cc = DiatonicFunction.I.getChord(ton);
 
@@ -804,7 +804,7 @@ public class TonalityTest {
     }
 
     @Test
-    public void getDegree() throws TonalityException {
+    public void getDegree() {
         Tonality<Chromatic> ton = TonalityModern.C;
 
         assertEquals(DiatonicDegree.I, ton.getDegreeFrom(PitchChromaticMidi.C5.getNote()));
@@ -815,7 +815,7 @@ public class TonalityTest {
     }
 
     @Test
-    public void get() throws ScaleRelativeDegreeException {
+    public void get() {
         TonalityModern ton = TonalityModern.C;
         assertEquals(ChromaticChord.C, DiatonicFunction.I.getChord(ton));
         assertEquals(ChromaticChord.Dm, DiatonicFunction.II.getChord(ton));
@@ -876,8 +876,7 @@ public class TonalityTest {
 
         assertEquals(SecondaryDominant.SUBV7_V.getChord(ton), ChromaticChord.GG7);
 
-        assertEquals(SecondaryDominant.SUBV7_VI.getChord(ton).toString(),
-                SecondaryDominant.SUBV7_VI.getChord(ton), ChromaticChord.AA7);
+        assertEquals(SecondaryDominant.SUBV7_VI.getChord(ton), ChromaticChord.AA7);
 
         ChromaticChord c = ChromaticChord.CC.clone();
 
@@ -895,7 +894,7 @@ public class TonalityTest {
     }
 
     @Test
-    public void getDiatonicFunction() throws ScaleRelativeDegreeException {
+    public void getDiatonicFunction() {
         TonalityModern t = TonalityModern.C;
         for (DiatonicFunction df : DiatonicFunction.immutableValues()) {
             assertNotNull(df.getChord(t));
@@ -971,7 +970,7 @@ public class TonalityTest {
     }
 
     @Test
-    public void otherChromaticFunctions() throws ScaleRelativeDegreeException {
+    public void otherChromaticFunctions() {
         assertEquals(MainTonalFunction.SUBDOMINANT, TonalityModern.C.getMainFunctionFrom(ChromaticDegreeFunction.N6)); // ?
 
         ChromaticChord chromaticChord = DiatonicFunction.I.getChord(TonalityModern.Cm);

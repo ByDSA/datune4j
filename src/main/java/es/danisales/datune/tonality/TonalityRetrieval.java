@@ -827,23 +827,24 @@ public class TonalityRetrieval {
     }
 
     @SuppressWarnings("WeakerAccess")
-    public static @Nullable Tonality getRelativeMinorFrom(@NonNull Tonality tonality) {
+    public static @Nullable <T extends Tonality> T getRelativeMinorFrom(@NonNull T tonality) {
         return getRelativeFrom(tonality, Scale.MINOR);
     }
 
-    public static @Nullable Tonality getRelativeMajorFrom(@NonNull Tonality tonality) {
+    public static @Nullable <T extends Tonality> T getRelativeMajorFrom(@NonNull T tonality) {
         return getRelativeFrom(tonality, Scale.MAJOR);
     }
 
-    private static @Nullable Tonality getRelativeFrom(@NonNull Tonality tonalityBase, @NonNull Scale scale) {
+    private static @Nullable <T extends Tonality> T getRelativeFrom(@NonNull T tonalityBase, @NonNull Scale scale) {
         Objects.requireNonNull(tonalityBase);
         Objects.requireNonNull(scale);
 
         if (tonalityBase.getScale().equals(scale))
             return tonalityBase;
 
-        List<Tonality> modes = tonalityBase.getParallelModes();
-        for ( Tonality tonality : modes )
+        @SuppressWarnings("unchecked")
+        List<T> modes = (List<T>)tonalityBase.getParallelModes();
+        for ( T tonality : modes )
             if ( tonality.getScale().equals( scale ) )
                 return tonality;
 
