@@ -110,6 +110,7 @@ public enum Chromatic implements CyclicDegree, OrderedDegree, Cloneable {
 		return pitchDiatonicMidi.getDiatonicAlt();
 	}
 
+	@NonNull
     public Chromatic getNext(int n) {
 		int index = delimit(ordinal() + n);
 		return values()[index];

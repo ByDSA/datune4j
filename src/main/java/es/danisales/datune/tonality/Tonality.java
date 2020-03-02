@@ -12,14 +12,12 @@ import es.danisales.datune.degrees.scale.ScaleDegree;
 import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.interval.IntervalChromatic;
 import es.danisales.datune.timelayer.MainTonalFunction;
+import es.danisales.utils.MathUtils;
 import es.danisales.utils.NeverHappensException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public abstract class Tonality<C extends CyclicDegree> implements Iterable<C> {
     TonalityInner<C> innerTonality;
@@ -50,6 +48,41 @@ public abstract class Tonality<C extends CyclicDegree> implements Iterable<C> {
         TonalityInner<Chromatic> tonalityInterface = new TonalityInnerMutable<>(chromatic, scale);
 
         return new TonalityModern(tonalityInterface, false);
+    }
+
+    public static @NonNull TonalityModern from(@NonNull List<Chromatic> notes) {
+        Chromatic first = notes.get(0);
+        notes.sort((o1, o2) -> {
+            int o1Int = o1.ordinal();
+            if (o1Int < first.ordinal())
+                o1Int += Chromatic.NUMBER;
+
+            int o2Int = o2.ordinal();
+            if (o2Int < first.ordinal())
+                o2Int += Chromatic.NUMBER;
+
+            return Integer.compare(o1Int, o2Int);
+        });
+
+        List<Integer> ints = notes2intScale(notes);
+        Scale scale = Scale.fromIntegers(ints);
+
+        return TonalityModern.from(first, scale);
+    }
+
+    private static List<Integer> notes2intScale(@NonNull List<Chromatic> list) {
+        List<Integer> ret = new ArrayList<>();
+        int sum = 0;
+        for (int i = 1; i < list.size(); i++) {
+            int n = list.get(i).ordinal() - list.get(i-1).ordinal();
+            n = MathUtils.rotativeTrim(n, Chromatic.NUMBER);
+            ret.add(n);
+            sum += n;
+        }
+
+        ret.add(Chromatic.NUMBER - sum);
+
+        return ret;
     }
 
     /** Notes **/

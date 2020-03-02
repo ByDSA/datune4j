@@ -11,8 +11,8 @@ sourceCompatibility = 1.8
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    //implementation 'com.gitlab.danisales:datils4j:-SNAPSHOT'
-    implementation 'com.github.ByDSA:datils4j:master-SNAPSHOT'
+    implementation 'com.gitlab.danisales:datils4j:-SNAPSHOT'
+    //implementation 'com.github.ByDSA:datils4j:master-SNAPSHOT'
 }
 
 jar {

@@ -3,11 +3,16 @@ package es.danisales.datune.chords;
 import es.danisales.datune.chords.chromatic.ChromaticChord;
 import es.danisales.datune.degrees.octave.Chromatic;
 import es.danisales.datune.degrees.octave.CyclicDegree;
+import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.interval.IntervalChromatic;
+import es.danisales.datune.tonality.TonalityModern;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public class ChordTransformations {
     private ChordTransformations() {
@@ -68,5 +73,71 @@ public class ChordTransformations {
         }
 
         return ret;
+    }
+
+    public static @NonNull TonalityModern negativeHarmony(@NonNull TonalityModern tonalityModern, @NonNull Chromatic axis) {
+        ChromaticChord chromaticChord = tonalityModern.getChord(DiatonicFunction.I7);
+        checkNotNull(chromaticChord);
+        ChromaticChord chord = ChordTransformations.negativeHarmony(chromaticChord, axis);
+
+        ChromaticChord tensions = tonalityModern.getChord(DiatonicFunction.II);
+        checkNotNull(tensions);
+        ChromaticChord resultTensions = ChordTransformations.negativeHarmony(tensions, axis);
+
+        List<Chromatic> notes = new ArrayList<>();
+        notes.addAll(chord);
+        notes.addAll(resultTensions);
+
+        return TonalityModern.from(notes);
+    }
+
+    public static TonalityModern negativeHarmonyTonality(TonalityModern tonalityModern, Chromatic root) {
+        ChromaticChord chromaticChord = ChromaticChord.builder().build();
+        chromaticChord.addAll(tonalityModern.getNotes());
+
+        ChromaticChord result = negativeHarmonyNoteByNote(chromaticChord, root);
+
+        return TonalityModern.from(result);
+
+    }
+
+    public static @NonNull TonalityModern negativeHarmony(@NonNull TonalityModern tonalityModern) {
+        Chromatic root = tonalityModern.getRoot();
+        return negativeHarmony(tonalityModern, root);
+    }
+
+    public static @NonNull ChromaticChord negativeHarmony(@NonNull ChromaticChord chromaticChord) {
+        Chromatic root = chromaticChord.getRoot();
+        checkNotNull(root);
+        return negativeHarmony(chromaticChord, root);
+    }
+
+    public static @NonNull ChromaticChord negativeHarmony(@NonNull ChromaticChord chromaticChord, @NonNull Chromatic root) {
+        ChromaticChord chromaticChord2 = negativeHarmonyNoteByNote(chromaticChord, root);
+
+        Collections.reverse(chromaticChord2);
+
+        return chromaticChord2;
+    }
+
+    private static @NonNull ChromaticChord negativeHarmonyNoteByNote(@NonNull ChromaticChord chromaticChord, @NonNull Chromatic root) {
+        ChromaticChord chromaticChord1;
+        if (chromaticChord.getInversionNumber() > 0) {
+            chromaticChord1 = chromaticChord.clone();
+            chromaticChord1.toFundamental();
+        } else {
+            chromaticChord1 = chromaticChord;
+        }
+
+        int doubleCenter = root.ordinal() + 7;
+
+        ChromaticChord chromaticChord2 = ChromaticChord.builder().build();
+        for (Chromatic chromatic : chromaticChord1) {
+            int n = doubleCenter - chromatic.ordinal();
+            Chromatic chromatic1 = Chromatic.from(n);
+            chromaticChord2.add(chromatic1);
+        }
+
+        return chromaticChord2;
     }
 }

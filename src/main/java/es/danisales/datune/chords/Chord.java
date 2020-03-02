@@ -142,7 +142,7 @@ public class Chord<C extends CyclicDegree>
             sb.append(n);
         }
 
-        sb.append(" | rootAny = ");
+        sb.append(" | root = ");
         sb.append(chord.getRoot());
         sb.append("(");
         sb.append(chord.getRootIndex());
