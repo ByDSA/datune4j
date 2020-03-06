@@ -7,6 +7,7 @@ import es.danisales.datune.tonality.TonalityModern;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -1393,7 +1394,7 @@ public final class ChromaticChordRetrieval {
     }
 
     @SuppressWarnings("WeakerAccess")
-    public ChromaticChordRetrieval triads() {
+    public ChromaticChordRetrieval fromTriads() {
         base.addAll(TRIAD_CHORDS);
 
         return this;
@@ -1433,14 +1434,19 @@ public final class ChromaticChordRetrieval {
 
     @SuppressWarnings("WeakerAccess")
     public ChromaticChordRetrieval whichContains(Chromatic... chromatics) {
+        return whichContains(Arrays.asList(chromatics));
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public ChromaticChordRetrieval whichContains(Collection<Chromatic> chromatics) {
         containsChromatic = new HashSet<>();
-        containsChromatic.addAll(Arrays.asList(chromatics));
+        containsChromatic.addAll(chromatics);
 
         return this;
     }
 
     @SuppressWarnings("WeakerAccess")
-    public ChromaticChordRetrieval sevenths() {
+    public ChromaticChordRetrieval fromSevenths() {
         base.addAll(SEVENTH_CHORDS);
 
         return this;

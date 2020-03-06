@@ -13,7 +13,7 @@ public class ChromaticChordRetrievalTest {
     @Test
     public void triads_contains_C_E_G() {
         Set<ChromaticChord> chromaticChordSet = ChromaticChord.retrieval()
-                .triads()
+                .fromTriads()
                 .whichContains(Chromatic.C, Chromatic.E, Chromatic.G)
                 .retrieve();
 
@@ -24,7 +24,7 @@ public class ChromaticChordRetrievalTest {
     @Test
     public void triads_contains_C_E() {
         Set<ChromaticChord> chromaticChordSet = ChromaticChord.retrieval()
-                .triads()
+                .fromTriads()
                 .whichContains(Chromatic.C, Chromatic.E)
                 .retrieve();
 
@@ -39,7 +39,7 @@ public class ChromaticChordRetrievalTest {
     @Test
     public void seventh_contains_C_E_G() {
         Set<ChromaticChord> chromaticChordSet = ChromaticChord.retrieval()
-                .sevenths()
+                .fromSevenths()
                 .whichContains(Chromatic.C, Chromatic.E, Chromatic.G)
                 .retrieve();
 
@@ -55,7 +55,7 @@ public class ChromaticChordRetrievalTest {
     @Test
     public void seventh_contains_C_E_G_Tonality_any_C_Am() {
         Set<ChromaticChord> chromaticChordSet = ChromaticChord.retrieval()
-                .sevenths()
+                .fromSevenths()
                 .whichContains(Chromatic.C, Chromatic.E, Chromatic.G)
                 .inAnyTonalities(TonalityModern.C, TonalityModern.Am)
                 .retrieve();
@@ -69,7 +69,7 @@ public class ChromaticChordRetrievalTest {
     @Test
     public void seventh_contains_C_E_G_Tonality_all_C_Cm() {
         Set<ChromaticChord> chromaticChordSet = ChromaticChord.retrieval()
-                .sevenths()
+                .fromSevenths()
                 .whichContains(Chromatic.C, Chromatic.E, Chromatic.G)
                 .inAllTonalities(TonalityModern.C, TonalityModern.Cm)
                 .retrieve();
