@@ -292,7 +292,7 @@ public final class ChromaticChord
     public static final ChromaticChord AAm6add9 = new ChromaticChord(ChromaticChordEnum.AAm6add9);
     public static final ChromaticChord Bm6add9 = new ChromaticChord(ChromaticChordEnum.Bm6add9);
 
-    // 7th addAll b9
+    // 7th add b9
     public static final ChromaticChord C7b9 = new ChromaticChord(ChromaticChordEnum.C7b9);
     public static final ChromaticChord CC7b9 = new ChromaticChord(ChromaticChordEnum.CC7b9);
     public static final ChromaticChord D7b9 = new ChromaticChord(ChromaticChordEnum.D7b9);
@@ -306,7 +306,7 @@ public final class ChromaticChord
     public static final ChromaticChord AA7b9 = new ChromaticChord(ChromaticChordEnum.AA7b9);
     public static final ChromaticChord B7b9 = new ChromaticChord(ChromaticChordEnum.B7b9);
 
-    // 7th addAll #9
+    // 7th add #9
     public static final ChromaticChord C7a9 = new ChromaticChord(ChromaticChordEnum.C7a9);
     public static final ChromaticChord CC7a9 = new ChromaticChord(ChromaticChordEnum.CC7a9);
     public static final ChromaticChord D7a9 = new ChromaticChord(ChromaticChordEnum.D7a9);
@@ -320,7 +320,7 @@ public final class ChromaticChord
     public static final ChromaticChord AA7a9 = new ChromaticChord(ChromaticChordEnum.AA7a9);
     public static final ChromaticChord B7a9 = new ChromaticChord(ChromaticChordEnum.B7a9);
 
-    // 7th minor addAll b9
+    // 7th minor add b9
     public static final ChromaticChord Cm7b9 = new ChromaticChord(ChromaticChordEnum.Cm7b9);
     public static final ChromaticChord CCm7b9 = new ChromaticChord(ChromaticChordEnum.CCm7b9);
     public static final ChromaticChord Dm7b9 = new ChromaticChord(ChromaticChordEnum.Dm7b9);
@@ -334,7 +334,7 @@ public final class ChromaticChord
     public static final ChromaticChord AAm7b9 = new ChromaticChord(ChromaticChordEnum.AAm7b9);
     public static final ChromaticChord Bm7b9 = new ChromaticChord(ChromaticChordEnum.Bm7b9);
 
-    // 7th addAll 11
+    // 7th add 11
     public static final ChromaticChord C7add11 = new ChromaticChord(ChromaticChordEnum.C7add11);
     public static final ChromaticChord CC7add11 = new ChromaticChord(ChromaticChordEnum.CC7add11);
     public static final ChromaticChord D7add11 = new ChromaticChord(ChromaticChordEnum.D7add11);
@@ -348,7 +348,7 @@ public final class ChromaticChord
     public static final ChromaticChord AA7add11 = new ChromaticChord(ChromaticChordEnum.AA7add11);
     public static final ChromaticChord B7add11 = new ChromaticChord(ChromaticChordEnum.B7add11);
 
-    // 7th addAll 13
+    // 7th add 13
     public static final ChromaticChord C7add13 = new ChromaticChord(ChromaticChordEnum.C7add13);
     public static final ChromaticChord CC7add13 = new ChromaticChord(ChromaticChordEnum.CC7add13);
     public static final ChromaticChord D7add13 = new ChromaticChord(ChromaticChordEnum.D7add13);
