@@ -23,6 +23,57 @@ public class ChromaticChordRetrievalTest {
     }
 
     @Test
+    public void allTonalities_C_D_onlyDiatonic() {
+        Set<ChromaticChord> chromaticChordSet = ChromaticChord.retrieval()
+                .fromTriads()
+                .onlyDiatonic()
+                .inAllTonalities(TonalityModern.C, TonalityModern.D)
+                .retrieve();
+
+        assertEquals(5, chromaticChordSet.size());
+        assertTrue(chromaticChordSet.contains(ChromaticChord.G));
+        assertTrue(chromaticChordSet.contains(ChromaticChord.Asus4));
+        assertTrue(chromaticChordSet.contains(ChromaticChord.Em));
+        assertTrue(chromaticChordSet.contains(ChromaticChord.Dsus4));
+        assertTrue(chromaticChordSet.contains(ChromaticChord.Esus4));
+    }
+
+    @Test
+    public void allTonalities_C_D_E_onlyDiatonic() {
+        Set<ChromaticChord> chromaticChordSet = ChromaticChord.retrieval()
+                .fromTriads()
+                .onlyDiatonic()
+                .inAllTonalities(TonalityModern.C, TonalityModern.D, TonalityModern.E)
+                .retrieve();
+
+        assertEquals(1, chromaticChordSet.size());
+        assertTrue(chromaticChordSet.contains(ChromaticChord.Esus4));
+    }
+
+    @Test
+    public void allTonalities_C_Am_onlyDiatonic() {
+        Set<ChromaticChord> chromaticChordSet = ChromaticChord.retrieval()
+                .fromTriads()
+                .onlyDiatonic()
+                .inAllTonalities(TonalityModern.C, TonalityModern.Am)
+                .retrieve();
+
+        assertEquals(12, chromaticChordSet.size());
+        assertTrue(chromaticChordSet.contains(ChromaticChord.C));
+        assertTrue(chromaticChordSet.contains(ChromaticChord.Dm));
+        assertTrue(chromaticChordSet.contains(ChromaticChord.Em));
+        assertTrue(chromaticChordSet.contains(ChromaticChord.F));
+        assertTrue(chromaticChordSet.contains(ChromaticChord.G));
+        assertTrue(chromaticChordSet.contains(ChromaticChord.Am));
+        assertTrue(chromaticChordSet.contains(ChromaticChord.Bdim));
+        assertTrue(chromaticChordSet.contains(ChromaticChord.Asus4));
+        assertTrue(chromaticChordSet.contains(ChromaticChord.Csus4));
+        assertTrue(chromaticChordSet.contains(ChromaticChord.Dsus4));
+        assertTrue(chromaticChordSet.contains(ChromaticChord.Gsus4));
+        assertTrue(chromaticChordSet.contains(ChromaticChord.Esus4));
+    }
+
+    @Test
     public void triads_contains_C_E_G() {
         Set<ChromaticChord> chromaticChordSet = ChromaticChord.retrieval()
                 .fromTriads()

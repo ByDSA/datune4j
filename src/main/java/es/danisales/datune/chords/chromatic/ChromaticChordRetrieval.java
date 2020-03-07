@@ -3,13 +3,11 @@ package es.danisales.datune.chords.chromatic;
 import com.google.common.collect.ImmutableSet;
 import es.danisales.datastructures.SetUtils;
 import es.danisales.datune.degrees.octave.Chromatic;
+import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.tonality.TonalityModern;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public final class ChromaticChordRetrieval {
     @SuppressWarnings("WeakerAccess")
@@ -1382,6 +1380,7 @@ public final class ChromaticChordRetrieval {
     private Set<Chromatic> containsChromatic;
     private Set<TonalityModern> tonalitiesAny;
     private Set<TonalityModern> tonalitiesAll;
+    private boolean onlyDiatonic = false;
 
     ChromaticChordRetrieval() {
         base = new HashSet<>();
@@ -1445,17 +1444,36 @@ public final class ChromaticChordRetrieval {
 
     private boolean tonalitiesContainsAny(ChromaticChord chromaticChord) {
         for (TonalityModern tonalityModern : tonalitiesAny) {
-            if (tonalityModern.getFunctionsFrom(chromaticChord).size() > 0)
-                return true;
+            Set<HarmonicFunction> functions = tonalityModern.getFunctionsFrom(chromaticChord);
+            if (!onlyDiatonic) {
+                if (functions.size() > 0)
+                    return true;
+            } else {
+                if (tonalityModern.containsAll(chromaticChord))
+                    return true;
+            }
         }
 
         return false;
     }
 
+    @SuppressWarnings("WeakerAccess")
+    public ChromaticChordRetrieval onlyDiatonic() {
+        onlyDiatonic = true;
+
+        return this;
+    }
+
     private boolean tonalitiesContainsAll(ChromaticChord chromaticChord) {
         for (TonalityModern tonalityModern : tonalitiesAll) {
-            if (tonalityModern.getFunctionsFrom(chromaticChord).size() == 0)
-                return false;
+            Set<HarmonicFunction> functions = tonalityModern.getFunctionsFrom(chromaticChord);
+            if (!onlyDiatonic) {
+                if (functions.size() == 0)
+                    return false;
+            } else {
+                if (!tonalityModern.containsAll(chromaticChord))
+                    return false;
+            }
         }
 
         return true;
