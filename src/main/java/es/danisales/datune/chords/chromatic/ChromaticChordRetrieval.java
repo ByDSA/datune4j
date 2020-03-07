@@ -1410,21 +1410,21 @@ public final class ChromaticChordRetrieval {
     }
 
     @SuppressWarnings("WeakerAccess")
-    public ChromaticChordRetrieval fromNinth() {
+    public ChromaticChordRetrieval fromNinths() {
         base.addAll(NINTH_CHORDS);
 
         return this;
     }
 
     @SuppressWarnings("WeakerAccess")
-    public ChromaticChordRetrieval fromEleventh() {
+    public ChromaticChordRetrieval fromElevenths() {
         base.addAll(ELEVENTH_CHORDS);
 
         return this;
     }
 
     @SuppressWarnings("WeakerAccess")
-    public ChromaticChordRetrieval fromThirteenth() {
+    public ChromaticChordRetrieval fromThirteenths() {
         base.addAll(THIRTEENTH_CHORDS);
 
         return this;

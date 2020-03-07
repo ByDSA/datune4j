@@ -91,7 +91,7 @@ public class ChromaticChordRetrievalTest {
     @Test
     public void ninth_contains_C_E_G_B() {
         Set<ChromaticChord> chromaticChordSet = ChromaticChord.retrieval()
-                .fromNinth()
+                .fromNinths()
                 .whichContains(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.B)
                 .retrieve();
 
@@ -105,7 +105,7 @@ public class ChromaticChordRetrievalTest {
     @Test
     public void eleventh_contains_C_E_G_B() {
         Set<ChromaticChord> chromaticChordSet = ChromaticChord.retrieval()
-                .fromEleventh()
+                .fromElevenths()
                 .whichContains(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.B)
                 .retrieve();
 
@@ -117,7 +117,7 @@ public class ChromaticChordRetrievalTest {
     @Test
     public void thirteenth_contains_C_E_G_B_D_F() {
         Set<ChromaticChord> chromaticChordSet = ChromaticChord.retrieval()
-                .fromThirteenth()
+                .fromThirteenths()
                 .whichContains(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.F)
                 .retrieve();
 
