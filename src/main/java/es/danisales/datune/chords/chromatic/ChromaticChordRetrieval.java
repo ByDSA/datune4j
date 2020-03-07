@@ -1435,9 +1435,8 @@ public final class ChromaticChordRetrieval {
         Set<ChromaticChord> ret = new HashSet<>();
 
         for (ChromaticChord chromaticChord : base) {
-            if ((chromaticChord == null || chromaticChord.containsAll(containsChromatic))
-                    && (tonalitiesAny == null || tonalitiesContainsAny(chromaticChord))
-                    && (tonalitiesAll == null || tonalitiesContainsAll(chromaticChord)))
+            if ((containsChromatic == null || chromaticChord.containsAll(containsChromatic))
+                    && (tonalitiesAny == null || tonalitiesContainsAny(chromaticChord)) && (tonalitiesAll == null || tonalitiesContainsAll(chromaticChord)))
                 ret.add(chromaticChord);
         }
 
