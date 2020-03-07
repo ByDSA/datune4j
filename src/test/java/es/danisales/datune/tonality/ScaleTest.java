@@ -78,7 +78,7 @@ public class ScaleTest {
     }
 
     @Test
-    public void fromIntegers() {
+    public void fromIntegers_list() {
         Scale scale = Scale.fromIntegers(Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
         assertEquals(Scale.CHROMATIC, scale);
         assertEquals(Scale.CHROMATIC.hashCode(), scale.hashCode());
@@ -86,8 +86,30 @@ public class ScaleTest {
     }
 
     @Test
-    public void fromIntegers2() {
+    public void fromIntegers_list2() {
         Scale scale = Scale.fromIntegers(Arrays.asList(2, 2, 1, 2, 2, 2, 1));
+        assertEquals(Arrays.asList(
+                ScaleDistance.WHOLE,
+                ScaleDistance.WHOLE,
+                ScaleDistance.HALF,
+                ScaleDistance.WHOLE,
+                ScaleDistance.WHOLE,
+                ScaleDistance.WHOLE,
+                ScaleDistance.HALF
+        ), scale.getCode());
+    }
+
+    @Test
+    public void fromIntegers_array() {
+        Scale scale = Scale.fromIntegers(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+        assertEquals(Scale.CHROMATIC, scale);
+        assertEquals(Scale.CHROMATIC.hashCode(), scale.hashCode());
+        assertEquals(12, scale.getCode().size());
+    }
+
+    @Test
+    public void fromIntegers_array2() {
+        Scale scale = Scale.fromIntegers(2, 2, 1, 2, 2, 2, 1);
         assertEquals(Arrays.asList(
                 ScaleDistance.WHOLE,
                 ScaleDistance.WHOLE,

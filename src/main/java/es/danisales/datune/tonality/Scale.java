@@ -177,6 +177,13 @@ public final class Scale implements Iterable<ScaleDistance> {
 		return new Scale( ScaleAdapter.fromIntegers(v) );
 	}
 
+	public static @NonNull Scale fromIntegers(int... v) {
+		List<Integer> list = new ArrayList<>();
+		for (int n : v)
+			list.add(n);
+		return fromIntegers(list);
+	}
+
 	public static @NonNull Scale fromDistances(@NonNull List<ScaleDistance> scaleDistances) {
 		return new Scale(ScaleInner.from(scaleDistances));
 	}
