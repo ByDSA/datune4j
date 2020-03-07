@@ -11,6 +11,18 @@ import static org.junit.Assert.assertTrue;
 
 public class ChromaticChordRetrievalTest {
     @Test
+    public void fifths_contains_C() {
+        Set<ChromaticChord> chromaticChordSet = ChromaticChord.retrieval()
+                .fromFifths()
+                .whichContains(Chromatic.C)
+                .retrieve();
+
+        assertEquals(2, chromaticChordSet.size());
+        assertTrue(chromaticChordSet.contains(ChromaticChord.C5));
+        assertTrue(chromaticChordSet.contains(ChromaticChord.F5));
+    }
+
+    @Test
     public void triads_contains_C_E_G() {
         Set<ChromaticChord> chromaticChordSet = ChromaticChord.retrieval()
                 .fromTriads()
@@ -43,12 +55,10 @@ public class ChromaticChordRetrievalTest {
                 .whichContains(Chromatic.C, Chromatic.E, Chromatic.G)
                 .retrieve();
 
-        assertEquals(6, chromaticChordSet.size());
+        assertEquals(4, chromaticChordSet.size());
         assertTrue(chromaticChordSet.contains(ChromaticChord.Em7a5));
         assertTrue(chromaticChordSet.contains(ChromaticChord.Am7));
         assertTrue(chromaticChordSet.contains(ChromaticChord.CMaj7));
-        assertTrue(chromaticChordSet.contains(ChromaticChord.C7add13));
-        assertTrue(chromaticChordSet.contains(ChromaticChord.C7add11));
         assertTrue(chromaticChordSet.contains(ChromaticChord.C7));
     }
 
@@ -76,5 +86,45 @@ public class ChromaticChordRetrievalTest {
 
         assertEquals(1, chromaticChordSet.size());
         assertTrue(chromaticChordSet.contains(ChromaticChord.C7));
+    }
+
+    @Test
+    public void ninth_contains_C_E_G_B() {
+        Set<ChromaticChord> chromaticChordSet = ChromaticChord.retrieval()
+                .fromNinth()
+                .whichContains(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.B)
+                .retrieve();
+
+        assertEquals(4, chromaticChordSet.size());
+        assertTrue(chromaticChordSet.contains(ChromaticChord.Am9));
+        assertTrue(chromaticChordSet.contains(ChromaticChord.CMaj9a11));
+        assertTrue(chromaticChordSet.contains(ChromaticChord.FMaj9a11));
+        assertTrue(chromaticChordSet.contains(ChromaticChord.CMaj9));
+    }
+
+    @Test
+    public void eleventh_contains_C_E_G_B() {
+        Set<ChromaticChord> chromaticChordSet = ChromaticChord.retrieval()
+                .fromEleventh()
+                .whichContains(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.B)
+                .retrieve();
+
+        assertEquals(2, chromaticChordSet.size());
+        assertTrue(chromaticChordSet.contains(ChromaticChord.CMaj11));
+        assertTrue(chromaticChordSet.contains(ChromaticChord.Am11));
+    }
+
+    @Test
+    public void thirteenth_contains_C_E_G_B_D_F() {
+        Set<ChromaticChord> chromaticChordSet = ChromaticChord.retrieval()
+                .fromThirteenth()
+                .whichContains(Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.B, Chromatic.D, Chromatic.F)
+                .retrieve();
+
+        assertEquals(4, chromaticChordSet.size());
+        assertTrue(chromaticChordSet.contains(ChromaticChord.CMaj13));
+        assertTrue(chromaticChordSet.contains(ChromaticChord.G13b9));
+        assertTrue(chromaticChordSet.contains(ChromaticChord.G13a9));
+        assertTrue(chromaticChordSet.contains(ChromaticChord.Dm13));
     }
 }

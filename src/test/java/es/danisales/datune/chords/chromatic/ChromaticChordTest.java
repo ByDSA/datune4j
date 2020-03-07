@@ -998,10 +998,10 @@ public class ChromaticChordTest {
                     assertEquals(c.toString(), 5, c.size());
 
             for (ChromaticChord c : ChromaticChordRetrieval.ELEVENTH_CHORDS)
-                assertEquals(c.toString(), 6, c.size());
+                assertTrue(c.toString(), c.size() == 6 || ChromaticChordPattern.from(c).equals(ChromaticChordPattern.SEVENTH_ADD11) && c.size() == 5);
 
             for (ChromaticChord c : ChromaticChordRetrieval.THIRTEENTH_CHORDS)
-                Assert.assertTrue(c.toString(), c.size() == 6 || c.size() == 7);
+                Assert.assertTrue(c.toString(), c.size() == 6 || c.size() == 7 || ChromaticChordPattern.from(c).equals(ChromaticChordPattern.SEVENTH_ADD13) && c.size() == 5);
         }
 
         @Test(expected = UnsupportedOperationException.class)

@@ -1303,8 +1303,6 @@ public final class ChromaticChordRetrieval {
             .addAll(CHORDS_7a5)
             .addAll(CHORDS_m7a5)
             .addAll(CHORDS_m7b5)
-            .addAll(CHORDS_7add11)
-            .addAll(CHORDS_7add13)
             .addAll(CHORDS_7sus4)
             .build();
 
@@ -1336,6 +1334,7 @@ public final class ChromaticChordRetrieval {
 
     @SuppressWarnings("WeakerAccess")
     protected static final Set<ChromaticChord> ELEVENTH_CHORDS = new ImmutableSet.Builder<ChromaticChord>()
+            .addAll(CHORDS_7add11)
             .addAll(CHORDS_11)
             .addAll(CHORDS_m11)
             .addAll(CHORDS_11b9)
@@ -1346,6 +1345,7 @@ public final class ChromaticChordRetrieval {
 
     @SuppressWarnings("WeakerAccess")
     protected static final Set<ChromaticChord> THIRTEENTH_CHORDS = new ImmutableSet.Builder<ChromaticChord>()
+            .addAll(CHORDS_7add13)
             .addAll(CHORDS_m13)
             .addAll(CHORDS_13sus4)
             .addAll(CHORDS_13b5)
@@ -1369,14 +1369,9 @@ public final class ChromaticChordRetrieval {
             .build();
 
     @SuppressWarnings("WeakerAccess")
-    protected static final Set<ChromaticChord> PARTIAL_CHORDS = new ImmutableSet.Builder<ChromaticChord>()
-            .addAll(CHORDS_FIFTH)
-            .build();
-
-    @SuppressWarnings("WeakerAccess")
     protected static final Set<ChromaticChord> COMMON_CHORDS = SetUtils.concatImmutable(
-            TRIAD_CHORDS, SEVENTH_CHORDS, SIXTH_CHORDS, NINTH_CHORDS,
-            ELEVENTH_CHORDS, THIRTEENTH_CHORDS, PARTIAL_CHORDS
+            CHORDS_FIFTH, TRIAD_CHORDS, SEVENTH_CHORDS, SIXTH_CHORDS, NINTH_CHORDS,
+            ELEVENTH_CHORDS, THIRTEENTH_CHORDS
     );
 
     public static @NonNull Set<ChromaticChord> immutableValues() {
@@ -1394,8 +1389,43 @@ public final class ChromaticChordRetrieval {
     }
 
     @SuppressWarnings("WeakerAccess")
+    public ChromaticChordRetrieval fromFifths() {
+        base.addAll(CHORDS_FIFTH);
+
+        return this;
+    }
+
+    @SuppressWarnings("WeakerAccess")
     public ChromaticChordRetrieval fromTriads() {
         base.addAll(TRIAD_CHORDS);
+
+        return this;
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public ChromaticChordRetrieval fromSevenths() {
+        base.addAll(SEVENTH_CHORDS);
+
+        return this;
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public ChromaticChordRetrieval fromNinth() {
+        base.addAll(NINTH_CHORDS);
+
+        return this;
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public ChromaticChordRetrieval fromEleventh() {
+        base.addAll(ELEVENTH_CHORDS);
+
+        return this;
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public ChromaticChordRetrieval fromThirteenth() {
+        base.addAll(THIRTEENTH_CHORDS);
 
         return this;
     }
@@ -1441,13 +1471,6 @@ public final class ChromaticChordRetrieval {
     public ChromaticChordRetrieval whichContains(Collection<Chromatic> chromatics) {
         containsChromatic = new HashSet<>();
         containsChromatic.addAll(chromatics);
-
-        return this;
-    }
-
-    @SuppressWarnings("WeakerAccess")
-    public ChromaticChordRetrieval fromSevenths() {
-        base.addAll(SEVENTH_CHORDS);
 
         return this;
     }
