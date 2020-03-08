@@ -19,20 +19,20 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class TonalityRetrieval {
-    public static List<TonalityModern> fromChordProgression(List<ChromaticChord> chromaticChordProgression, List<TonalityModern> tonalities) {
+    public static List<TonalityModern> fromChordProgression(List<ChromaticChord> chromaticChordProgression, List<TonalityModern> tonalities, boolean onlyDiatonic) {
         tonalities = new ArrayList<>(tonalities);
         for (Chord<Chromatic> chromaticChord : chromaticChordProgression) {
-            tonalities = getFromChord((ChromaticChord)chromaticChord, tonalities);
+            tonalities = getFromChord((ChromaticChord)chromaticChord, tonalities, onlyDiatonic);
         }
         return tonalities;
     }
 
     @SuppressWarnings("WeakerAccess")
-    public static List<TonalityModern> getFromChord(ChromaticChord chromaticChord, List<TonalityModern> tonalities) {
+    public static List<TonalityModern> getFromChord(ChromaticChord chromaticChord, List<TonalityModern> tonalities, boolean onlyDiatonic) {
         List<TonalityModern> ret = new ArrayList<>();
-        List<HarmonicFunction> harmonicFunctionList = new ArrayList<>();
-        harmonicFunctionList.addAll(DiatonicFunction.immutableValues());
-        harmonicFunctionList.addAll(SecondaryDominant.values());
+        List<HarmonicFunction> harmonicFunctionList = new ArrayList<>(DiatonicFunction.immutableValues());
+        if (!onlyDiatonic)
+            harmonicFunctionList.addAll(SecondaryDominant.values());
 
         for (TonalityModern tonality : tonalities) {
             Set<HarmonicFunction> harmonicFunctions = tonality.getFunctionsFrom(chromaticChord);

@@ -1,7 +1,6 @@
 package es.danisales.datune.timelayer;
 
 import es.danisales.datune.chords.chromatic.ChromaticChord;
-import es.danisales.datune.chords.tonal.TonalChord;
 import es.danisales.datune.function.DiatonicFunction;
 import es.danisales.datune.function.HarmonicFunction;
 import es.danisales.datune.function.SecondaryDominant;
@@ -102,7 +101,7 @@ public class TonalLayerCalculator {
     }
 
     private void calculatePossibleTonalitiesFromProgression() {
-        possibleTonalities = TonalityRetrieval.fromChordProgression(chromaticChordProgression, possibleTonalities);
+        possibleTonalities = TonalityRetrieval.fromChordProgression(chromaticChordProgression, possibleTonalities, false);
 
         System.out.println("------------\nTonalities after calculatePossibleTonalitiesFromProgression:");
         showPossibleTonalities();

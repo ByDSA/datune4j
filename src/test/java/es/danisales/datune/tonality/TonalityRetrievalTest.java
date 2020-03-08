@@ -151,7 +151,7 @@ public class TonalityRetrievalTest {
         t.addAll(TonalityRetrieval.ALL_HARMONIC_MINOR_MODES);
         t.addAll(TonalityRetrieval.ALL_MELODIC_MINOR_MODES);
 
-        List<TonalityModern> tonalities = TonalityRetrieval.fromChordProgression(chromaticChordProgression, t);
+        List<TonalityModern> tonalities = TonalityRetrieval.fromChordProgression(chromaticChordProgression, t, false);
         System.out.println(tonalities);
     }
 }
