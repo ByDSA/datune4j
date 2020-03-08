@@ -27,7 +27,8 @@ public class TonalityRetrieval {
         return tonalities;
     }
 
-    private static List<TonalityModern> getFromChord(ChromaticChord chromaticChord, List<TonalityModern> tonalities) {
+    @SuppressWarnings("WeakerAccess")
+    public static List<TonalityModern> getFromChord(ChromaticChord chromaticChord, List<TonalityModern> tonalities) {
         List<TonalityModern> ret = new ArrayList<>();
         List<HarmonicFunction> harmonicFunctionList = new ArrayList<>();
         harmonicFunctionList.addAll(DiatonicFunction.immutableValues());
