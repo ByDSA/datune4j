@@ -1,1 +1,0 @@
-export { ChromaticChord } from './chords/ChromaticChord';

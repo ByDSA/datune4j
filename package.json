@@ -1,9 +1,25 @@
 {
   "name": "datune",
   "version": "0.0.0",
+  "deprecated": false,
   "description": "Datune",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "typings": "./index.d.ts"
+  "author": {
+    "name": "Daniel Sales",
+    "email": "danisales.es@gmail.com"
+  },
+  "typings": "./index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/danisales/datune.git"
+  },
+  "keywords": [
+    "Datune",
+	"Music",
+	"Harmony",
+    "ES6",
+    "ES2015"
+  ]
 }
