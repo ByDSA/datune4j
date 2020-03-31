@@ -4,5 +4,6 @@
   "description": "Datune",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-  }
+  },
+  "typings": "./index.d.ts"
 }
