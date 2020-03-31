@@ -1,25 +1,46 @@
 {
-  "name": "datune",
-  "version": "0.0.0",
+  "_from": "git+https://gitlab.com/danisales/datune.git",
+  "_id": "datune@0.0.0",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/datune",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "https://gitlab.com/danisales/datune",
+    "rawSpec": "https://gitlab.com/danisales/datune",
+    "saveSpec": "git+https://gitlab.com/danisales/datune.git",
+    "fetchSpec": "https://gitlab.com/danisales/datune.git",
+    "gitCommittish": null
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "git+https://gitlab.com/danisales/datune.git#00931e7885338bfcab59687b2029e424f517a98e",
+  "_spec": "https://gitlab.com/danisales/datune",
+  "_where": "F:\\git\\datune-front",
+  "bundleDependencies": false,
   "deprecated": false,
   "description": "Datune",
+  "dependencies": {
+    "hashids": "^2.2.1"
+  },
+  "name": "datune",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf dist && tsc --declaration",
+	"clean": "rm -rf dist"
   },
-  "author": {
-    "name": "Daniel Sales",
-    "email": "danisales.es@gmail.com"
-  },
-  "typings": "./index.d.ts",
-  "repository": {
-    "type": "git",
-    "url": "git+https://gitlab.com/danisales/datune.git"
-  },
-  "keywords": [
-    "Datune",
-	"Music",
-	"Harmony",
-    "ES6",
-    "ES2015"
-  ]
+  "include": [
+    "dist"
+  ],
+  "files": [
+   "dist/**/*.ts"
+  ],
+  "typings": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "version": "0.0.0",
+  "type": "module"
 }
