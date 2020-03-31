@@ -1,0 +1,8 @@
+{
+  "name": "datune",
+  "version": "0.0.0",
+  "description": "Datune",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
