@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rm -rf dist && tsc --declaration",
     "clean": "rm -rf dist",
-	"postinstall": "tsc --declaration"
+	"postinstall": "echo \"Compiling...\" && tsc --declaration"
   },
   "typings": "./dist/index.d.ts",
   "main": "./dist/index.js",
