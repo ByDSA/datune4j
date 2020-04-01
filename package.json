@@ -8,9 +8,9 @@
   "name": "datune",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -rf dist && tsc --declaration",
+    "build": "npm run clean && tsc --declaration",
     "clean": "rm -rf dist",
-	"postinstall": "echo \"Compiling...\" && tsc --declaration"
+	"postinstall": "npm run build && rm -r src"
   },
   "typings": "./dist/index.d.ts",
   "main": "./dist/index.js",
