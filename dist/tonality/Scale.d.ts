@@ -77,7 +77,7 @@ export declare class Scale {
     private calculateAbsoluteIntervalsIfNeeded;
     getIntervals(): number[];
     private _totalModes;
-    readonly totalModes: number;
+    get totalModes(): number;
     length(): number;
     hasAbsoluteInterval(absoluteInterval: number): boolean;
     getAbsoluteIntervals(): number[];
