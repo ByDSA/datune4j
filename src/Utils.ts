@@ -55,7 +55,7 @@ export class Utils {
             return false;
 
         for (let i = 0; i < a.length; i++) {
-            if (a[i] != a[i])
+            if (a[i] != b[i])
                 return false;
         }
 
