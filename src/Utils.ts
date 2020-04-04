@@ -46,4 +46,19 @@ export class Utils {
   public static hashArray(array: any[]): string {
     return Utils.hashids.encode(array);
   }
+  
+  public static arraySameContent<T>(a: T[], b: T[]): boolean {
+        if (a == b)
+            return true;
+
+        if (a.length != b.length)
+            return false;
+
+        for (let i = 0; i < a.length; i++) {
+            if (a[i] != a[i])
+                return false;
+        }
+
+        return true;
+    }
 }
