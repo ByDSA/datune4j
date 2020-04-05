@@ -222,7 +222,7 @@ export class Scale {
         return this.intervals;
     }
 
-    private _modes = null;
+    private _modes: Scale[] = null;
 
     public get modes(): Scale[] {
         if (this._modes == null) {
@@ -232,6 +232,7 @@ export class Scale {
                 scaleTmp = ScaleModeUtils.getRotatedScale(scaleTmp, 1);
                 if (scaleTmp == this)
                     break;
+                this._modes.push(scaleTmp);
             }
         }
         return this._modes;
