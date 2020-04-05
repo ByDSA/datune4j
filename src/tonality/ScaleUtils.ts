@@ -1,12 +1,6 @@
-import { Scale } from './Scale';
-import { NameUtils } from '../lang/NameUtils';
 import { ChromaticChordPattern } from '../chords/chromatic/ChromaticChordPattern';
-import { ScaleModeUtils } from './ScaleModeUtils';
-
-export interface SourceScaleInfo {
-    scale: Scale,
-    mode: number
-}
+import { NameUtils } from '../lang/NameUtils';
+import { Scale } from './Scale';
 
 export class ScaleUtils {
     private constructor() {
@@ -91,69 +85,6 @@ export class ScaleUtils {
         }
 
         return this.toStringByIntervals(scale);
-    }
-
-    public static getSourceScaleFrom(scale: Scale): SourceScaleInfo {
-        switch (scale) {
-            case Scale.MAJOR: return { scale: Scale.MAJOR, mode: 1 };
-            case Scale.DORIAN: return { scale: Scale.MAJOR, mode: 2 };
-            case Scale.PHRYGIAN: return { scale: Scale.MAJOR, mode: 3 };
-            case Scale.LYDIAN: return { scale: Scale.MAJOR, mode: 4 };
-            case Scale.MIXOLYDIAN: return { scale: Scale.MAJOR, mode: 5 };
-            case Scale.MINOR: return { scale: Scale.MAJOR, mode: 6 };
-            case Scale.LOCRIAN: return { scale: Scale.MAJOR, mode: 7 };
-
-            case Scale.HARMONIC_MINOR: return { scale: Scale.HARMONIC_MINOR, mode: 1 };
-            case Scale.LOCRIAN_a6: return { scale: Scale.HARMONIC_MINOR, mode: 2 };
-            case Scale.IONIAN_a5: return { scale: Scale.HARMONIC_MINOR, mode: 3 };
-            case Scale.DORIAN_a4: return { scale: Scale.HARMONIC_MINOR, mode: 4 };
-            case Scale.MIXOLYDIAN_b9_b13: return { scale: Scale.HARMONIC_MINOR, mode: 5 };
-            case Scale.LYDIAN_a2: return { scale: Scale.HARMONIC_MINOR, mode: 6 };
-            case Scale.SUPERLOCRIAN_bb7: return { scale: Scale.HARMONIC_MINOR, mode: 7 };
-
-            case Scale.MELODIC_MINOR: return { scale: Scale.MELODIC_MINOR, mode: 1 };
-            case Scale.DORIAN_b2: return { scale: Scale.MELODIC_MINOR, mode: 2 };
-            case Scale.LYDIAN_a5: return { scale: Scale.MELODIC_MINOR, mode: 3 };
-            case Scale.LYDIAN_b7: return { scale: Scale.MELODIC_MINOR, mode: 4 };
-            case Scale.MIXOLYDIAN_b13: return { scale: Scale.MELODIC_MINOR, mode: 5 };
-            case Scale.LOCRIAN_a2: return { scale: Scale.MELODIC_MINOR, mode: 6 };
-            case Scale.SUPERLOCRIAN: return { scale: Scale.MELODIC_MINOR, mode: 7 };
-
-            case Scale.PENTATONIC: return { scale: Scale.PENTATONIC, mode: 1 };
-            case Scale.EGYPCIAN: return { scale: Scale.PENTATONIC, mode: 2 };
-            case Scale.BLUES_MINOR: return { scale: Scale.PENTATONIC, mode: 3 };
-            case Scale.BLUES_MAJOR: return { scale: Scale.PENTATONIC, mode: 4 };
-            case Scale.PENTATONIC_MINOR: return { scale: Scale.PENTATONIC, mode: 5 };
-
-            case Scale.HARMONIC_MAJOR: return { scale: Scale.HARMONIC_MAJOR, mode: 1 };
-            case Scale.DORIAN_b5: return { scale: Scale.HARMONIC_MAJOR, mode: 2 };
-            case Scale.PHRYGIAN_b4: return { scale: Scale.HARMONIC_MAJOR, mode: 3 };
-            case Scale.LYDIAN_b3: return { scale: Scale.HARMONIC_MAJOR, mode: 4 };
-            case Scale.MIXOLYDIAN_b2: return { scale: Scale.HARMONIC_MAJOR, mode: 5 };
-            case Scale.AEOLIAN_b1: return { scale: Scale.HARMONIC_MAJOR, mode: 6 };
-            case Scale.LOCRIAN_bb7: return { scale: Scale.HARMONIC_MAJOR, mode: 7 };
-
-            case Scale.DOUBLE_HARMONIC: return { scale: Scale.DOUBLE_HARMONIC, mode: 1 };
-            case Scale.LYDIAN_a2_a6: return { scale: Scale.DOUBLE_HARMONIC, mode: 2 };
-            case Scale.ULTRAPHRYGIAN: return { scale: Scale.DOUBLE_HARMONIC, mode: 3 };
-            case Scale.HUNGARIAN_MINOR: return { scale: Scale.DOUBLE_HARMONIC, mode: 4 };
-            case Scale.ORIENTAL: return { scale: Scale.DOUBLE_HARMONIC, mode: 5 };
-            case Scale.IONIAN_AUGMENTED_a2: return { scale: Scale.DOUBLE_HARMONIC, mode: 6 };
-            case Scale.LOCRIAN_bb3_bb7: return { scale: Scale.DOUBLE_HARMONIC, mode: 7 };
-            default:
-                let allScales = Scale.all();
-                if (allScales.has(scale))
-                    return { scale: scale, mode: 1 };
-
-                let clonedScale = scale.clone();
-                for (let i = 2; i <= scale.length(); i++) {
-                    let scaleTmp = ScaleModeUtils.getMode(scale, i);
-                    if (allScales.has(scale))
-                        return { scale: scale, mode: scale.length() - i };
-                }
-        }
-
-        return { scale: scale, mode: 1 };
     }
 
     private static toStringByIntervals(scale: Scale): string {

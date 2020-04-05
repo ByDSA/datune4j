@@ -78,7 +78,7 @@ export class Scale {
     public static BEBOP_MAJOR = new Scale(2, 2, 1, 2, 1, 1, 2, 1);
 
 
-    public static allDiatonicScales(): Scale[] {
+    public static get allDiatonicScales(): Scale[] {
         return [
             this.MAJOR,
             this.DORIAN,
@@ -90,9 +90,9 @@ export class Scale {
         ];
     }
 
-    public static allHeptatonicScales(): Scale[] {
+    public static get allHeptatonicScales(): Scale[] {
         return []
-            .concat(this.allDiatonicScales())
+            .concat(this.allDiatonicScales)
             .concat([
                 this.HARMONIC_MINOR,
                 this.LOCRIAN_a6,
@@ -131,13 +131,13 @@ export class Scale {
             ]);
     }
 
-    public static allBebopScales() {
+    public static get allBebopScales() {
         return [
             this.BEBOP_MAJOR
         ];
     }
 
-    public static allPentatonicScales() {
+    public static get allPentatonicScales() {
         return [
             this.PENTATONIC_MINOR,
             this.PENTATONIC,
@@ -146,7 +146,7 @@ export class Scale {
         ];
     }
 
-    public static allHexatonicScales() {
+    public static get allHexatonicScales() {
         return [
             this.BLUES_b5,
             this.BLUES_a4,
@@ -154,18 +154,18 @@ export class Scale {
         ];
     }
 
-    public static all(): Set<Scale> {
+    public static get all(): Set<Scale> {
         let ret: Set<Scale> = new Set<Scale>();
-        Utils.setAddArray(ret, this.allHeptatonicScales());
-        Utils.setAddArray(ret, this.allPentatonicScales());
-        Utils.setAddArray(ret, this.allHexatonicScales());
-        Utils.setAddArray(ret, this.allBebopScales());
-        Utils.setAddArray(ret, Scale.symmetricScales());
+        Utils.setAddArray(ret, this.allHeptatonicScales);
+        Utils.setAddArray(ret, this.allPentatonicScales);
+        Utils.setAddArray(ret, this.allHexatonicScales);
+        Utils.setAddArray(ret, this.allBebopScales);
+        Utils.setAddArray(ret, Scale.symmetricScales);
 
         return ret;
     }
 
-    public static symmetricScales(): Scale[] {
+    public static get symmetricScales(): Scale[] {
         return [
             Scale.CHROMATIC,
             Scale.WHOLE_TONE,
@@ -182,29 +182,6 @@ export class Scale {
             Scale.MESSIAEN_IV,
             Scale.MESSIAEN_VI,
             Scale.MESSIAEN_VII
-        ];
-    }
-
-    public static allSourceScales() {
-        return [
-            this.MAJOR,
-            this.HARMONIC_MINOR,
-            this.HARMONIC_MAJOR,
-            this.MELODIC_MINOR,
-            this.DOUBLE_HARMONIC,
-
-            this.NEAPOLITAN_MINOR,
-            this.NEAPOLITAN_MAJOR,
-
-            // 6
-            this.BLUES_b5,
-            this.WHOLE_TONE,
-
-            // 5
-            this.PENTATONIC_MINOR,
-
-            // 12
-            this.CHROMATIC
         ];
     }
 
@@ -245,25 +222,22 @@ export class Scale {
         return this.intervals;
     }
 
-    private _totalModes = -1;
+    private _modes = null;
 
-    public get totalModes() {
-        if (this._totalModes == -1) {
-            let i = 1;
-            let scaleTmp = this.clone();
+    public get modes(): Scale[] {
+        if (this._modes == null) {
+            let scaleTmp: Scale = this;
+            this._modes = [this];
             while (true) {
                 scaleTmp = ScaleModeUtils.getRotatedScale(scaleTmp, 1);
                 if (scaleTmp == this)
                     break;
-                i++;
             }
-            this._totalModes = i;
-            console.log(this + " " + this._totalModes)
         }
-        return this._totalModes;
+        return this._modes;
     }
 
-    public length(): number {
+    public get length(): number {
         return this.intervals.length;
     }
 
