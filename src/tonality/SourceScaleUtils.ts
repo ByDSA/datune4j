@@ -40,9 +40,16 @@ export class SourceScaleUtils {
         if (!ret) {
             let allScales = Scale.all;
 
+            let i = 1;
+            for (const element of scale.modes) {
+                if (allScales.has(element)) {
+                    let modeNum = (scale.length - i + 1) % scale.length;
+                    ret = { scale: element, mode: modeNum };
+                }
+                i++;
+            }
             scale.modes.forEach((element, index) => {
-                if (!ret && allScales.has(element))
-                    ret = { scale: element, mode: scale.length - index + 1 };
+
             });
             if (!ret)
                 ret = { scale: scale, mode: 1 };
