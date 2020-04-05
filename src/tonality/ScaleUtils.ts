@@ -216,9 +216,9 @@ export class ScaleUtils {
                 }
                 break;
             default:
-                if (scale.length() == 7)
+                if (scale.length == 7)
                     return i;
-                else if (scale.length() > 7) {
+                else if (scale.length > 7) {
                     switch (scale.getAbsoluteIntervals()[i - 1]) {
                         case 0:
                         case 1:
