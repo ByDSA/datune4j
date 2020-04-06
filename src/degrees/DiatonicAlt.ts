@@ -212,7 +212,7 @@ export class DiatonicAlt {
     }
 
     public get diatonic(): Diatonic {
-        return this.diatonic;
+        return this._diatonic;
     }
 
     public get alts(): number {
