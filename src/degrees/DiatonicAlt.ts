@@ -193,7 +193,7 @@ export class DiatonicAlt {
 
     }
 
-    private constructor(private diatonic: Diatonic, private alts: number) {
+    private constructor(private _diatonic: Diatonic, private _alts: number) {
     }
 
     getShifted(intervalChromatic: IntervalChromatic): DiatonicAlt {
@@ -211,12 +211,12 @@ export class DiatonicAlt {
         return DiatonicAlt.from(diatonic, alts);
     }
 
-    public getDiatonic(): Diatonic {
+    public get diatonic(): Diatonic {
         return this.diatonic;
     }
 
-    public getAlts(): number {
-        return this.alts;
+    public get alts(): number {
+        return this._alts;
     }
 
     public toString(): string {
