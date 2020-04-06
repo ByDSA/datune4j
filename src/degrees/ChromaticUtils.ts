@@ -8,8 +8,8 @@ export class ChromaticUtils {
     public static NUMBER = 12;
 
     static fromDiatonicAlt(diatonicAlt: DiatonicAlt): Chromatic {
-        let chromatic = ChromaticUtils.fromDiatonic(diatonicAlt.getDiatonic());
-        chromatic += diatonicAlt.getAlts();
+        let chromatic = ChromaticUtils.fromDiatonic(diatonicAlt.diatonic);
+        chromatic += diatonicAlt.alts);
         chromatic = MathUtils.rotativeTrim(chromatic, ChromaticUtils.NUMBER);
 
         return chromatic;
