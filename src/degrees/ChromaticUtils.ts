@@ -9,7 +9,7 @@ export class ChromaticUtils {
 
     static fromDiatonicAlt(diatonicAlt: DiatonicAlt): Chromatic {
         let chromatic = ChromaticUtils.fromDiatonic(diatonicAlt.diatonic);
-        chromatic += diatonicAlt.alts);
+        chromatic += diatonicAlt.alts;
         chromatic = MathUtils.rotativeTrim(chromatic, ChromaticUtils.NUMBER);
 
         return chromatic;
