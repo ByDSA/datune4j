@@ -1,9 +1,8 @@
+import { DiatonicAlt } from '../degrees/DiatonicAlt';
+import { DiatonicUtils } from '../degrees/DiatonicUtils';
 import { Chromatic } from '../degrees/Chromatic';
-import { Scale } from './Scale';
 import { ChromaticUtils } from '../degrees/ChromaticUtils';
-import { DiatonicAlt } from 'degrees/DiatonicAlt';
-import { Diatonic } from 'index';
-import { DiatonicUtils } from 'degrees/DiatonicUtils';
+import { Scale } from './Scale';
 
 export class Tonality {
     public static C = Tonality.from(DiatonicAlt.C, Scale.MAJOR);
