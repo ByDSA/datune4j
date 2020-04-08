@@ -1,3 +1,3 @@
-import { DefaultSettings } from './DefaultSettings';
+import { DefaultSettings } from '../settings/DefaultSettings';
 
 export const Settings = DefaultSettings;

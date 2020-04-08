@@ -4,7 +4,7 @@ import { Chromatic } from '../degrees/Chromatic';
 import { Diatonic } from '../degrees/Diatonic';
 import { Settings } from '../settings/Settings';
 import { Scale } from '../tonality/Scale';
-import { Tonality } from 'tonality/Tonality';
+import { Tonality } from '../tonality/Tonality';
 
 export class Naming {
     private constructor() {
