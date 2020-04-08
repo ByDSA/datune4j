@@ -5,7 +5,7 @@ import { Chromatic } from './Chromatic';
 import { ChromaticUtils } from './ChromaticUtils';
 import { Diatonic } from './Diatonic';
 import { DiatonicUtils } from './DiatonicUtils';
-import { Settings } from 'Settings';
+import { Settings } from '../Settings';
 
 export class DiatonicAlt {
     public static C = DiatonicAlt.from(Diatonic.C, 0);

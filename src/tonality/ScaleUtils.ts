@@ -1,4 +1,4 @@
-import { Settings } from 'Settings';
+import { Settings } from '../Settings';
 import { ChromaticChordPattern } from '../chords/chromatic/ChromaticChordPattern';
 import { Scale } from './Scale';
 
