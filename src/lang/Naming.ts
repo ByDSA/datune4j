@@ -26,10 +26,14 @@ export class Naming {
             case Chromatic.B: return Naming.diatonic(Diatonic.B);
         }
 
-        return "";
+        throw new Error("Can't get string from '" + chromatic + "'.");
     }
 
     static getChromatic(noteStr: string): Chromatic {
+        noteStr = noteStr
+        .replace('#', Settings.symbols.sharp)
+        .replace('b', Settings.symbols.bemol);
+        
         switch (noteStr) {
             case Naming.chromatic(Chromatic.C): return Chromatic.C;
             case Naming.chromatic(Chromatic.CC): return Chromatic.CC;
