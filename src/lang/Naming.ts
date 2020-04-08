@@ -1,9 +1,10 @@
-import { ChromaticChordPattern } from 'chords/chromatic/ChromaticChordPattern';
-import { DiatonicAlt } from 'degrees/DiatonicAlt';
+import { ChromaticChordPattern } from '../chords/chromatic/ChromaticChordPattern';
+import { DiatonicAlt } from '../degrees/DiatonicAlt';
 import { Chromatic } from '../degrees/Chromatic';
 import { Diatonic } from '../degrees/Diatonic';
 import { Settings } from '../settings/Settings';
 import { Scale } from '../tonality/Scale';
+import { Tonality } from 'tonality/Tonality';
 
 export class Naming {
     private constructor() {
@@ -246,5 +247,9 @@ export class Naming {
         }
 
         return pattern.values.toString();
+    }
+
+    public static tonality(tonality: Tonality) {
+        return Naming.diatonicAlt(tonality.root) + " " + Naming.scale(tonality.scale);
     }
 }
