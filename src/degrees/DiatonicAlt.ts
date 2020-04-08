@@ -1,3 +1,4 @@
+import { Naming } from '../lang/Naming';
 import { IntervalChromatic } from '../interval/IntervalChromatic';
 import { IntervalDiatonicUtils } from '../interval/IntervalDiatonicUtils';
 import { Utils } from '../Utils';
@@ -5,7 +6,6 @@ import { Chromatic } from './Chromatic';
 import { ChromaticUtils } from './ChromaticUtils';
 import { Diatonic } from './Diatonic';
 import { DiatonicUtils } from './DiatonicUtils';
-import { Settings } from '../settings/Settings';
 
 export class DiatonicAlt {
     public static C = DiatonicAlt.from(Diatonic.C, 0);
@@ -220,10 +220,6 @@ export class DiatonicAlt {
     }
 
     public toString(): string {
-        return DiatonicUtils.toString(this.diatonic) + this.altsToString();
-    }
-
-    private altsToString(): string {
-        return Settings.symbols.alts(this.alts);
+        return Naming.diatonicAlt(this);
     }
 }

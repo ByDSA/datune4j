@@ -1,5 +1,4 @@
 import { Scale } from './Scale';
-import { ScaleModeUtils } from './ScaleModeUtils';
 
 export interface SourceScaleInfo {
     scale: Scale,

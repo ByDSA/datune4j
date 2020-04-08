@@ -1,6 +1,7 @@
 import { Utils } from '../Utils';
 import { ScaleModeUtils } from './ScaleModeUtils';
 import { ScaleUtils } from './ScaleUtils';
+import { Naming } from '../lang/Naming';
 
 export class Scale {
     public static MAJOR = new Scale(2, 2, 1, 2, 2, 2, 1);
@@ -184,13 +185,13 @@ export class Scale {
         ];
     }
 
-    private intervals: number[];
-    private absoluteIntervals: number[] = null;
+    private _intervals: number[];
+    private _absoluteIntervals: number[] = null;
     private intervalsSet = new Set<number>();
     private static immutablesMap;
 
     private constructor(...intervals: number[]) {
-        this.intervals = intervals;
+        this._intervals = intervals;
         let hash = Utils.hashArray(intervals);
 
         Scale.immutablesMap = Scale.immutablesMap || new Map<string, Scale>();
@@ -207,18 +208,18 @@ export class Scale {
     }
 
     private calculateAbsoluteIntervals() {
-        this.absoluteIntervals = ScaleUtils.calculateAbsoluteIntervals(this);
-        for (let absoluteInterval of this.absoluteIntervals)
+        this._absoluteIntervals = ScaleUtils.calculateAbsoluteIntervals(this);
+        for (let absoluteInterval of this._absoluteIntervals)
             this.intervalsSet.add(absoluteInterval);
     }
 
     private calculateAbsoluteIntervalsIfNeeded() {
-        if (this.absoluteIntervals == null)
+        if (this._absoluteIntervals == null)
             this.calculateAbsoluteIntervals();
     }
 
-    public getIntervals(): number[] {
-        return this.intervals;
+    public get intervals(): number[] {
+        return Array.from(this._intervals);
     }
 
     private _modes: Scale[] = null;
@@ -238,7 +239,7 @@ export class Scale {
     }
 
     public get length(): number {
-        return this.intervals.length;
+        return this._intervals.length;
     }
 
     public hasAbsoluteInterval(absoluteInterval: number): boolean {
@@ -246,18 +247,18 @@ export class Scale {
         return this.intervalsSet.has(absoluteInterval);
     }
 
-    public getAbsoluteIntervals() {
+    public get absoluteIntervals() {
         this.calculateAbsoluteIntervalsIfNeeded();
-        return this.absoluteIntervals;
+        return this._absoluteIntervals;
     }
 
     public toString(): string {
-        return ScaleUtils.toString(this);
+        return Naming.scale(this);
     }
 
     public clone(): Scale {
         let scale = new Scale(0);
-        scale.intervals = Array.from(this.intervals);
+        scale._intervals = Array.from(this._intervals);
         return scale;
     }
 }

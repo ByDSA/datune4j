@@ -50,8 +50,8 @@ export class Tonality {
         let lastNote = ChromaticUtils.fromDiatonicAlt(this.root);
         let lastDiatonic = this.root.diatonic;
         let i = 0;
-        for (let n of this.scale.getIntervals()) {
-            if (i >= this.scale.getIntervals().length)
+        for (let n of this.scale.intervals) {
+            if (i >= this.scale.intervals.length)
                 continue;
             lastNote += n;
             lastNote %= ChromaticUtils.NUMBER;

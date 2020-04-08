@@ -2,6 +2,7 @@ import { ChromaticChord } from '../chords/chromatic/ChromaticChord';
 import { ChromaticChordPattern } from '../chords/chromatic/ChromaticChordPattern';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
 import { IntervalChromatic } from '../interval/IntervalChromatic';
+import { Naming } from './Naming';
 
 export class NameChordCalculator {
     private pattern: ChromaticChordPattern;
@@ -14,11 +15,7 @@ export class NameChordCalculator {
         this.pattern = ChromaticChordPattern.from(this.chord);
         this.inversion = this.chord.inversionNumber;
 
-        return this.rootDiatonicAlt.toString() + this.patternName() + this.inversionName();
-    }
-
-    private patternName(): string {
-        return (this.pattern ? this.pattern.toStringShort() : '');
+        return this.rootDiatonicAlt.toString() + Naming.patternShort(this.pattern) + this.inversionName();
     }
 
     private inversionName(): string {
