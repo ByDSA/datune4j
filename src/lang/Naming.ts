@@ -31,9 +31,9 @@ export class Naming {
 
     static getChromatic(noteStr: string): Chromatic {
         noteStr = noteStr
-        .replace('#', Settings.symbols.sharp)
-        .replace('b', Settings.symbols.bemol);
-        
+        .replace(/'#'/g, Settings.symbols.sharp)
+        .replace(/'b'/g, Settings.symbols.bemol);
+
         switch (noteStr) {
             case Naming.chromatic(Chromatic.C): return Chromatic.C;
             case Naming.chromatic(Chromatic.CC): return Chromatic.CC;
