@@ -236,7 +236,7 @@ export class ScaleUtils {
         return Settings.symbols.alts(intervalAbsolute - ScaleUtils.MAJOR_ABSOLUTE_INTERVALS[pos - 1]) + pos;
     }
 
-    private static MAJOR_ABSOLUTE_INTERVALS = ScaleUtils.calculateAbsoluteIntervals(Scale.MAJOR);
+    private static get MAJOR_ABSOLUTE_INTERVALS() { return ScaleUtils.calculateAbsoluteIntervals(Scale.MAJOR); }
 
     public static toStringParams(scale: Scale): string {
         return this.toString(scale).toUpperCase();
