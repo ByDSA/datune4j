@@ -96,12 +96,12 @@ export interface SettingsInterface {
 
 const DefaultSettings: SettingsInterface = {
     default: {
-        chromatic: Chromatic.C,
-        diatonicAlt: DiatonicAlt.C,
-        scale: Scale.MAJOR,
-        tonality: Tonality.C,
-        chord: ChromaticChord.C,
-        pattern: ChromaticChordPattern.TRIAD_MAJOR
+        get chromatic(): Chromatic { return Chromatic.C },
+        get diatonicAlt(): DiatonicAlt { return DiatonicAlt.C },
+        get scale(): Scale { return Scale.MAJOR },
+        get tonality(): Tonality { return Tonality.C },
+        get chord(): ChromaticChord { return ChromaticChord.C },
+        get pattern(): ChromaticChordPattern { return ChromaticChordPattern.TRIAD_MAJOR }
     },
     lang: Language.ENG,
     scales: {
