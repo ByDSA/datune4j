@@ -1,16 +1,20 @@
-import { Chromatic } from 'degrees/Chromatic';
-import { DiatonicAlt } from 'degrees/DiatonicAlt';
-import { Scale } from 'tonality/Scale';
-import { Tonality } from 'tonality/Tonality';
-import { Language } from 'lang/Language';
-import { LanguageInterface } from 'lang/LanguageInterface';
+import { Chromatic } from './degrees/Chromatic';
+import { DiatonicAlt } from './degrees/DiatonicAlt';
+import { Scale } from './tonality/Scale';
+import { Tonality } from './tonality/Tonality';
+import { Language } from './lang/Language';
+import { LanguageInterface } from './lang/LanguageInterface';
+import { ChromaticChord } from './chords/chromatic/ChromaticChord';
+import { ChromaticChordPattern } from './chords/chromatic/ChromaticChordPattern';
 
 export interface SettingsInterface {
     default: {
         chromatic: Chromatic,
         diatonicAlt: DiatonicAlt,
         scale: Scale,
-        tonality: Tonality
+        tonality: Tonality,
+        chord: ChromaticChord,
+        pattern: ChromaticChordPattern
     },
     scales: {
         MAJOR: string,
@@ -95,7 +99,9 @@ const DefaultSettings: SettingsInterface = {
         chromatic: Chromatic.C,
         diatonicAlt: DiatonicAlt.C,
         scale: Scale.MAJOR,
-        tonality: Tonality.C
+        tonality: Tonality.C,
+        chord: ChromaticChord.C,
+        pattern: ChromaticChordPattern.TRIAD_MAJOR
     },
     lang: Language.ENG,
     scales: {
