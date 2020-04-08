@@ -4,7 +4,7 @@ import { Chromatic } from './Chromatic';
 import { Diatonic } from './Diatonic';
 import { DiatonicAlt } from './DiatonicAlt';
 import { DiatonicUtils } from './DiatonicUtils';
-import { Settings } from '../Settings';
+import { Settings } from '../settings/Settings';
 
 export class ChromaticUtils {
     public static NUMBER = 12;

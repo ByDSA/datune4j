@@ -1,7 +1,7 @@
 import { Diatonic } from './Diatonic';
 import { IntervalDiatonic } from '../interval/IntervalDiatonic';
 import { MathUtils } from '../MathUtils';
-import { Settings } from '../Settings';
+import { Settings } from '../settings/Settings';
 
 export class DiatonicUtils {
     public static NUMBER = 7;

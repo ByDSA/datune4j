@@ -14,4 +14,4 @@ export * from './tonality/Tonality';
 export * from './tonality/TonalityUtils';
 export * from './lang/Language';
 export * from './lang/LanguageInterface';
-export * from './Settings';
+export * from './settings/Settings';
