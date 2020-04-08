@@ -1,5 +1,3 @@
-import { Scale } from 'tonality/Scale'
-
 export interface LanguageInterface {
     diatonic: {
         C: string,

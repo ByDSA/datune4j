@@ -1,4 +1,10 @@
-import { LanguageInterface, Chromatic, DiatonicAlt, Scale, Tonality, ChromaticChord, ChromaticChordPattern } from 'index';
+import { Chromatic } from '../degrees/Chromatic';
+import { DiatonicAlt } from '../degrees/DiatonicAlt';
+import { Scale } from '../tonality/Scale';
+import { Tonality } from '../tonality/Tonality';
+import { ChromaticChord } from '../chords/chromatic/ChromaticChord';
+import { ChromaticChordPattern } from '../chords/chromatic/ChromaticChordPattern';
+import { LanguageInterface } from '../lang/LanguageInterface';
 
 export interface SettingsInterface {
     default: {
