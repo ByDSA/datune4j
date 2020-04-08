@@ -18,7 +18,7 @@ export class CommonDifferentCalculator {
 
     private addAllAbsoluteIntervalsToCommon(): void {
         for (let scale of this.scales) {
-            let absoluteIntervals = scale.getAbsoluteIntervals();
+            let absoluteIntervals = scale.absoluteIntervals;
             for (let absoluteInterval of absoluteIntervals)
                 this._common.add(absoluteInterval);
         }
