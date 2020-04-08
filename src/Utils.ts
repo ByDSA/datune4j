@@ -5,7 +5,9 @@ export class Utils {
     return (' ' + str).slice(1);
   }
   static arrayRemove<T>(array: T[], item: T): void {
-    array.splice(array.indexOf(item), 1);
+    let index = array.indexOf(item);
+    if (index >= 0 && index < array.length)
+      array.splice(index, 1);
   }
   public static assertNotNull(v: any, name?: string): void {
     if (v === undefined || v === null)
@@ -46,19 +48,19 @@ export class Utils {
   public static hashArray(array: any[]): string {
     return Utils.hashids.encode(array);
   }
-  
+
   public static arraySameContent<T>(a: T[], b: T[]): boolean {
-        if (a == b)
-            return true;
+    if (a == b)
+      return true;
 
-        if (a.length != b.length)
-            return false;
+    if (a.length != b.length)
+      return false;
 
-        for (let i = 0; i < a.length; i++) {
-            if (a[i] != b[i])
-                return false;
-        }
-
-        return true;
+    for (let i = 0; i < a.length; i++) {
+      if (a[i] != b[i])
+        return false;
     }
+
+    return true;
+  }
 }
