@@ -138,12 +138,12 @@ export class ChromaticChordPattern implements Iterable<number> {
         ];
     }
 
-    private values: number[];
+    private _values: number[];
     private valuesHash: string;
     private diatonicChordPattern: DiatonicChordPattern;
 
     private constructor(first?: number | number[], ...rest: number[]) {
-        this.values =
+        this._values =
             first === undefined
                 ? []
                 : first instanceof Array
@@ -174,9 +174,9 @@ export class ChromaticChordPattern implements Iterable<number> {
     }
 
     public static getUnsortedNotes(chord: ChromaticChord): Chromatic[] {
-        let sortedNotes = chord.getNotes();
+        let sortedNotes = chord.notes;
         let unsortedNotes = sortedNotes;
-        Utils.arrayRotate(unsortedNotes, chord.getRootIndex());
+        Utils.arrayRotate(unsortedNotes, chord.rootIndex);
         return unsortedNotes;
     }
 
@@ -212,15 +212,15 @@ export class ChromaticChordPattern implements Iterable<number> {
     }
 
     [Symbol.iterator](): Iterator<number> {
-        return this.getValues()[Symbol.iterator]();
+        return this.values[Symbol.iterator]();
     }
 
     getDiatonicChordPattern(): DiatonicChordPattern {
         return this.diatonicChordPattern;
     }
 
-    public getValues(): number[] {
-        return this.values;
+    public get values(): number[] {
+        return this._values;
     }
 
     public toString(): string {

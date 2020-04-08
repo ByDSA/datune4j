@@ -12,7 +12,7 @@ export class NameChordCalculator {
 
     public get(): string {
         this.pattern = ChromaticChordPattern.from(this.chord);
-        this.inversion = this.chord.getInversionNumber();
+        this.inversion = this.chord.inversionNumber;
 
         return this.rootDiatonicAlt.toString() + this.patternName() + this.inversionName();
     }

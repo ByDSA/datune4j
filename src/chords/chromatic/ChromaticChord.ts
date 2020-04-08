@@ -11,7 +11,7 @@ export class ChromaticChord {
     public static C7 = new ChromaticChord(0, [Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.AA]);
     public static Dm7 = new ChromaticChord(0, [Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.AA]);
 
-    private constructor(private rootIndex: number, private notes: Chromatic[], private str?: string) {
+    private constructor(private _rootIndex: number, private _notes: Chromatic[], private str?: string) {
     }
 
     public static fromRootNotes(rootIndex: number, notes: Chromatic[], str?: string): ChromaticChord {
@@ -19,7 +19,7 @@ export class ChromaticChord {
     }
 
     public static fromRootPattern(root: Chromatic, pattern: ChromaticChordPattern, inversion: number = 0): ChromaticChord {
-        let rootPos = this.inversionToRootPos(inversion, pattern.getValues().length);
+        let rootPos = this.inversionToRootPos(inversion, pattern.values.length);
         let notes: Chromatic[] = [root];
 
         let first = true;
@@ -36,7 +36,7 @@ export class ChromaticChord {
         return ChromaticChord.fromRootNotes(rootPos, notes);
     }
 
-    public getRoot(): Chromatic {
+    public get root(): Chromatic {
         return this.notes[this.rootIndex];
     }
 
@@ -49,22 +49,18 @@ export class ChromaticChord {
         this.str = new NameChordCalculator(this, rootDiatonicAlt).get();
     }
 
-    public getName(): string|undefined {
-        return this.str;
+    public get rootIndex(): number {
+        return this._rootIndex;
     }
 
-    public getRootIndex(): number {
-        return this.rootIndex;
-    }
-
-    public getInversionNumber(): number {
+    public get inversionNumber(): number {
         return (this.notes.length - this.rootIndex) % this.notes.length;
     }
 
-    public getNotes(): Chromatic[] {
-        let notes = Array.from(this.notes);
+    public get notes(): Chromatic[] {
+        let notes = Array.from(this._notes);
 
-        Utils.arrayRotate(notes, this.getRootIndex(), true);
+        Utils.arrayRotate(notes, this.rootIndex, true);
         return notes;
     }
 
