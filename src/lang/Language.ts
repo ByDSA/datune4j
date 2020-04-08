@@ -1,5 +1,5 @@
 import { Settings } from 'Settings';
-import { LanguageInterface } from './LanguageInterface';
+import { LanguageInterface } from 'lang/LanguageInterface';
 
 export class Language {
     static ENG: LanguageInterface = {
