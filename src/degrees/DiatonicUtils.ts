@@ -1,6 +1,7 @@
 import { Diatonic } from './Diatonic';
 import { IntervalDiatonic } from '../interval/IntervalDiatonic';
 import { MathUtils } from '../MathUtils';
+import { Settings } from 'Settings';
 
 export class DiatonicUtils {
     public static NUMBER = 7;
@@ -11,13 +12,13 @@ export class DiatonicUtils {
 
     public static toString(diatonic : Diatonic) : string {
         switch(diatonic) {
-            case Diatonic.C: return "C";
-            case Diatonic.D: return "D";
-            case Diatonic.E: return "E";
-            case Diatonic.F: return "F";
-            case Diatonic.G: return "G";
-            case Diatonic.A: return "A";
-            case Diatonic.B: return "B";
+            case Diatonic.C: return Settings.lang.diatonic.C;
+            case Diatonic.D: return Settings.lang.diatonic.D;
+            case Diatonic.E: return Settings.lang.diatonic.E;
+            case Diatonic.F: return Settings.lang.diatonic.F;
+            case Diatonic.G: return Settings.lang.diatonic.G;
+            case Diatonic.A: return Settings.lang.diatonic.A;
+            case Diatonic.B: return Settings.lang.diatonic.B;
         }
 
         Error();

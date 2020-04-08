@@ -31,7 +31,7 @@ export class NameChordCalculator {
     }
 
     private getInversionDiatonicAlt(): DiatonicAlt {
-        let semis: number = this.pattern.getValues()[this.inversion];
+        let semis: number = this.pattern.values[this.inversion];
         let intervalDiatonic: number = this.pattern.getDiatonicChordPattern().getValues()[this.inversion];
         let intervalChromatic = IntervalChromatic.fromSemisAndNotes(semis, intervalDiatonic);
         return this.rootDiatonicAlt.getShifted(intervalChromatic);

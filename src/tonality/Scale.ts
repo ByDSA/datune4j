@@ -48,7 +48,6 @@ export class Scale {
 
     // 6
     public static BLUES_b5 = new Scale(3, 2, 1, 1, 3, 2);
-    public static BLUES_a4 = Scale.BLUES_b5.clone();
 
     // 5
     public static PENTATONIC_MINOR = new Scale(3, 2, 2, 3, 2);
@@ -149,7 +148,7 @@ export class Scale {
     public static get allHexatonicScales() {
         return [
             this.BLUES_b5,
-            this.BLUES_a4,
+            //this.BLUES_a4,
             this.WHOLE_TONE
         ];
     }

@@ -29,9 +29,9 @@ export class Tonality {
     public static Am = Tonality.from(DiatonicAlt.A, Scale.MINOR);
     public static Bm = Tonality.from(DiatonicAlt.B, Scale.MINOR);
 
-    private notes: DiatonicAlt[] = [];
+    private _notes: DiatonicAlt[] = [];
 
-    private constructor(private root: DiatonicAlt, private scale: Scale) {
+    private constructor(private _root: DiatonicAlt, private _scale: Scale) {
         this.calculateNotes();
     }
 
@@ -62,15 +62,15 @@ export class Tonality {
         }
     }
 
-    getRoot(): DiatonicAlt {
-        return this.root;
+    get root(): DiatonicAlt {
+        return this._root;
     }
 
-    getScale(): Scale {
-        return this.scale;
+    get scale(): Scale {
+        return this._scale;
     }
 
-    getNotes(): DiatonicAlt[] {
-        return Array.from(this.notes);
+    get notes(): DiatonicAlt[] {
+        return Array.from(this._notes);
     }
 }

@@ -1,11 +1,11 @@
-import { Diatonic } from './Diatonic';
-import { Chromatic } from './Chromatic';
-import { DiatonicUtils } from './DiatonicUtils';
 import { IntervalChromatic } from '../interval/IntervalChromatic';
 import { IntervalDiatonicUtils } from '../interval/IntervalDiatonicUtils';
-import { ChromaticUtils } from './ChromaticUtils';
 import { Utils } from '../Utils';
-import { NameUtils } from '../lang/NameUtils';
+import { Chromatic } from './Chromatic';
+import { ChromaticUtils } from './ChromaticUtils';
+import { Diatonic } from './Diatonic';
+import { DiatonicUtils } from './DiatonicUtils';
+import { Settings } from 'Settings';
 
 export class DiatonicAlt {
     public static C = DiatonicAlt.from(Diatonic.C, 0);
@@ -201,7 +201,7 @@ export class DiatonicAlt {
 
         let intervalDiatonic = IntervalDiatonicUtils.fromIntervalChromatic(intervalChromatic);
         let diatonic = DiatonicUtils.getShifted(this.diatonic, intervalDiatonic);
-        let alts = ChromaticUtils.fromDiatonicAlt(this) + intervalChromatic.getSemis() - ChromaticUtils.fromDiatonic(diatonic);
+        let alts = ChromaticUtils.fromDiatonicAlt(this) + intervalChromatic.semis - ChromaticUtils.fromDiatonic(diatonic);
         alts %= ChromaticUtils.NUMBER;
         if (alts > 4)
             alts -= ChromaticUtils.NUMBER;
@@ -224,6 +224,6 @@ export class DiatonicAlt {
     }
 
     private altsToString(): string {
-        return NameUtils.alts(this.alts);
+        return Settings.symbols.alts(this.alts);
     }
 }

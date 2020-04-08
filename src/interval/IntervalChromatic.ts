@@ -238,7 +238,7 @@ export class IntervalChromatic {
         throw new Error();
     }
 
-    getSemis() {
+    get semis() {
         return this.semitones;
     }
 }

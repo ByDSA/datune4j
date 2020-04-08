@@ -1,9 +1,8 @@
-import { ChromaticChord } from './ChromaticChord';
 import { Chromatic } from '../../degrees/Chromatic';
-
-import { DiatonicChordPattern } from '../Diatonic/DiatonicChordPattern';
-import { NameUtils } from '../../lang/NameUtils';
 import { Utils } from '../../Utils';
+import { DiatonicChordPattern } from '../Diatonic/DiatonicChordPattern';
+import { ChromaticChord } from './ChromaticChord';
+import { Settings } from 'Settings';
 
 export class ChromaticChordPattern implements Iterable<number> {
     private static immutables = new Map<string, ChromaticChordPattern>();
@@ -234,18 +233,18 @@ export class ChromaticChordPattern implements Iterable<number> {
             case ChromaticChordPattern.ELEVENTH.valuesHash: return "ELEVENTH";
             case ChromaticChordPattern.ELEVENTH_MAJ11.valuesHash: return "ELEVENTH MAJ11";
             case ChromaticChordPattern.ELEVENTH_MINOR_MAJ11.valuesHash: return "ELEVENTH MINOR MAJ11";
-            case ChromaticChordPattern.ELEVENTH_a9.valuesHash: return "ELEVENTH " + NameUtils.a9;
-            case ChromaticChordPattern.ELEVENTH_b9.valuesHash: return "ELEVENTH " + NameUtils.b9;
+            case ChromaticChordPattern.ELEVENTH_a9.valuesHash: return "ELEVENTH " + Settings.mods.a9;
+            case ChromaticChordPattern.ELEVENTH_b9.valuesHash: return "ELEVENTH " + Settings.mods.b9;
             case ChromaticChordPattern.NINTH.valuesHash: return "NINTH";
             case ChromaticChordPattern.NINTH_ADD6.valuesHash: return "NINTH ADD6";
             case ChromaticChordPattern.NINTH_MAJ9.valuesHash: return "NINTH MAJ9";
-            case ChromaticChordPattern.NINTH_MAJ9_a11.valuesHash: return "NINTH MAJ9 " + NameUtils.a11;
+            case ChromaticChordPattern.NINTH_MAJ9_a11.valuesHash: return "NINTH MAJ9 " + Settings.mods.a11;
             case ChromaticChordPattern.NINTH_MINOR.valuesHash: return "NINTH_MINOR";
             case ChromaticChordPattern.NINTH_MINOR_MAJ9.valuesHash: return "NINTH MINOR MAJ9";
             case ChromaticChordPattern.NINTH_SUS4.valuesHash: return "NINTH SUS4";
-            case ChromaticChordPattern.NINTH_a11.valuesHash: return "NINTH " + NameUtils.a11;
-            case ChromaticChordPattern.NINTH_a5.valuesHash: return "NINTH " + NameUtils.a5;
-            case ChromaticChordPattern.NINTH_b5.valuesHash: return "NINTH " + NameUtils.b5;
+            case ChromaticChordPattern.NINTH_a11.valuesHash: return "NINTH " + Settings.mods.a11;
+            case ChromaticChordPattern.NINTH_a5.valuesHash: return "NINTH " + Settings.mods.a5;
+            case ChromaticChordPattern.NINTH_b5.valuesHash: return "NINTH " + Settings.mods.b5;
             case ChromaticChordPattern.POWER_CHORD.valuesHash: return "POWER CHORD";
             case ChromaticChordPattern.SEVENTH.valuesHash: return "SEVENTH";
             case ChromaticChordPattern.SEVENTH_ADD11.valuesHash: return "SEVENTH ADD11";
@@ -253,23 +252,22 @@ export class ChromaticChordPattern implements Iterable<number> {
             case ChromaticChordPattern.SEVENTH_MAJ7.valuesHash: return "SEVENTH MAJ7";
             case ChromaticChordPattern.SEVENTH_MINOR.valuesHash: return "SEVENTH MINOR";
             case ChromaticChordPattern.SEVENTH_MINOR_MAJ7.valuesHash: return "SEVENTH MINOR MAJ7";
-            case ChromaticChordPattern.SEVENTH_MINOR_a5.valuesHash: return "SEVENTH MINOR " + NameUtils.a5;
-            case ChromaticChordPattern.SEVENTH_MINOR_b5.valuesHash: return "SEVENTH MINOR " + NameUtils.b5;
-            case ChromaticChordPattern.SEVENTH_MINOR_b9.valuesHash: return "SEVENTH MINOR " + NameUtils.b9;
+            case ChromaticChordPattern.SEVENTH_MINOR_a5.valuesHash: return "SEVENTH MINOR " + Settings.mods.a5;
+            case ChromaticChordPattern.SEVENTH_MINOR_b5.valuesHash: return "SEVENTH MINOR " + Settings.mods.b5;
+            case ChromaticChordPattern.SEVENTH_MINOR_b9.valuesHash: return "SEVENTH MINOR " + Settings.mods.b9;
             case ChromaticChordPattern.SEVENTH_SUS4.valuesHash: return "SEVENTH SUS4";
-            case ChromaticChordPattern.SEVENTH_a5.valuesHash: return "SEVENTH " + NameUtils.a5;
-            case ChromaticChordPattern.SEVENTH_a9.valuesHash: return "SEVENTH " + NameUtils.a9;
-            case ChromaticChordPattern.SEVENTH_b5.valuesHash: return "SEVENTH " + NameUtils.b5;
-            case ChromaticChordPattern.SEVENTH_b9.valuesHash: return "SEVENTH " + NameUtils.b9;
+            case ChromaticChordPattern.SEVENTH_a5.valuesHash: return "SEVENTH " + Settings.mods.a5;
+            case ChromaticChordPattern.SEVENTH_a9.valuesHash: return "SEVENTH " + Settings.mods.a9;
+            case ChromaticChordPattern.SEVENTH_b5.valuesHash: return "SEVENTH " + Settings.mods.b5;
+            case ChromaticChordPattern.SEVENTH_b9.valuesHash: return "SEVENTH " + Settings.mods.b9;
             case ChromaticChordPattern.SIXTH.valuesHash: return "SIXTH";
             case ChromaticChordPattern.SIXTH_ADD9.valuesHash: return "SIXTH ADD9";
             case ChromaticChordPattern.SIXTH_MINOR.valuesHash: return "SIXTH MINOR";
             case ChromaticChordPattern.SIXTH_MINOR_ADD9.valuesHash: return "SIXTH MINOR ADD9";
             case ChromaticChordPattern.SIXTH_SUS4.valuesHash: return "SIXTH SUS4";
-            case ChromaticChordPattern.TRIAD_SUS4.valuesHash: return "SUS4";
             case ChromaticChordPattern.THIRTEENTH_MAJ13.valuesHash: return "THIRTEENTH MAJ13";
-            case ChromaticChordPattern.THIRTEENTH_MAJ13_a5.valuesHash: return "THIRTEENTH MAJ13 " + NameUtils.a5;
-            case ChromaticChordPattern.THIRTEENTH_MAJ13_a5a9.valuesHash: return "THIRTEENTH MAJ13 " + NameUtils.a5 + NameUtils.a9;
+            case ChromaticChordPattern.THIRTEENTH_MAJ13_a5.valuesHash: return "THIRTEENTH MAJ13 " + Settings.mods.a5;
+            case ChromaticChordPattern.THIRTEENTH_MAJ13_a5a9.valuesHash: return "THIRTEENTH MAJ13 " + Settings.mods.a5 + Settings.mods.a9;
         }
         return this.values.toString();
     }
@@ -294,9 +292,9 @@ export class ChromaticChordPattern implements Iterable<number> {
             case ChromaticChordPattern.NINTH_MINOR.valuesHash: return "m9";
             case ChromaticChordPattern.NINTH_MINOR_MAJ9.valuesHash: return "mMaj9";
             case ChromaticChordPattern.NINTH_SUS4.valuesHash: return "9sus4";
-            case ChromaticChordPattern.NINTH_a11.valuesHash: return "9" + NameUtils.a11;
-            case ChromaticChordPattern.NINTH_a5.valuesHash: return "9" + NameUtils.a5;
-            case ChromaticChordPattern.NINTH_b5.valuesHash: return "9" + NameUtils.b5;
+            case ChromaticChordPattern.NINTH_a11.valuesHash: return "9" + Settings.mods.a11;
+            case ChromaticChordPattern.NINTH_a5.valuesHash: return "9" + Settings.mods.a5;
+            case ChromaticChordPattern.NINTH_b5.valuesHash: return "9" + Settings.mods.b5;
             case ChromaticChordPattern.POWER_CHORD.valuesHash: return "5";
             case ChromaticChordPattern.SEVENTH.valuesHash: return "7";
             case ChromaticChordPattern.SEVENTH_ADD11.valuesHash: return "7add11";
@@ -304,14 +302,14 @@ export class ChromaticChordPattern implements Iterable<number> {
             case ChromaticChordPattern.SEVENTH_MAJ7.valuesHash: return "Maj7";
             case ChromaticChordPattern.SEVENTH_MINOR.valuesHash: return "m7";
             case ChromaticChordPattern.SEVENTH_MINOR_MAJ7.valuesHash: return "mMaj7";
-            case ChromaticChordPattern.SEVENTH_MINOR_a5.valuesHash: return "m7" + NameUtils.a5;
-            case ChromaticChordPattern.SEVENTH_MINOR_b5.valuesHash: return "m7" + NameUtils.b5;
-            case ChromaticChordPattern.SEVENTH_MINOR_b9.valuesHash: return "m7" + NameUtils.b9;
+            case ChromaticChordPattern.SEVENTH_MINOR_a5.valuesHash: return "m7" + Settings.mods.a5;
+            case ChromaticChordPattern.SEVENTH_MINOR_b5.valuesHash: return "m7" + Settings.mods.b5;
+            case ChromaticChordPattern.SEVENTH_MINOR_b9.valuesHash: return "m7" + Settings.mods.b9;
             case ChromaticChordPattern.SEVENTH_SUS4.valuesHash: return "7sus4";
-            case ChromaticChordPattern.SEVENTH_a5.valuesHash: return "7" + NameUtils.a5;
-            case ChromaticChordPattern.SEVENTH_a9.valuesHash: return "7" + NameUtils.a9;
-            case ChromaticChordPattern.SEVENTH_b5.valuesHash: return "7" + NameUtils.b5;
-            case ChromaticChordPattern.SEVENTH_b9.valuesHash: return "7" + NameUtils.b9;
+            case ChromaticChordPattern.SEVENTH_a5.valuesHash: return "7" + Settings.mods.a5;
+            case ChromaticChordPattern.SEVENTH_a9.valuesHash: return "7" + Settings.mods.a9;
+            case ChromaticChordPattern.SEVENTH_b5.valuesHash: return "7" + Settings.mods.b5;
+            case ChromaticChordPattern.SEVENTH_b9.valuesHash: return "7" + Settings.mods.b9;
             case ChromaticChordPattern.SIXTH.valuesHash: return "6";
             case ChromaticChordPattern.SIXTH_ADD9.valuesHash: return "6add9";
             case ChromaticChordPattern.SIXTH_MINOR.valuesHash: return "m6";
@@ -319,8 +317,8 @@ export class ChromaticChordPattern implements Iterable<number> {
             case ChromaticChordPattern.SIXTH_SUS4.valuesHash: return "6sus4";
             case ChromaticChordPattern.TRIAD_SUS4.valuesHash: return "sus4";
             case ChromaticChordPattern.THIRTEENTH_MAJ13.valuesHash: return "Maj13";
-            case ChromaticChordPattern.THIRTEENTH_MAJ13_a5.valuesHash: return "Maj13" + NameUtils.a5;
-            case ChromaticChordPattern.THIRTEENTH_MAJ13_a5a9.valuesHash: return "Maj13" + NameUtils.a5 + NameUtils.a9;
+            case ChromaticChordPattern.THIRTEENTH_MAJ13_a5.valuesHash: return "Maj13" + Settings.mods.a5;
+            case ChromaticChordPattern.THIRTEENTH_MAJ13_a5a9.valuesHash: return "Maj13" + Settings.mods.a5 + Settings.mods.a9;
         }
 
         return this.values.toString();

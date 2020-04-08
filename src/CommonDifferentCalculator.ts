@@ -1,8 +1,8 @@
 import { Scale } from './tonality/Scale';
 
 export class CommonDifferentCalculator {
-    private common = new Set<number>();
-    private different = new Set<number>();
+    private _common = new Set<number>();
+    private _different = new Set<number>();
 
     private constructor(private scales: Scale[]) {
     }
@@ -20,26 +20,26 @@ export class CommonDifferentCalculator {
         for (let scale of this.scales) {
             let absoluteIntervals = scale.getAbsoluteIntervals();
             for (let absoluteInterval of absoluteIntervals)
-                this.common.add(absoluteInterval);
+                this._common.add(absoluteInterval);
         }
     }
 
     private removeAbsoluteIntervalsFromCommon(): void {
-        mainFor: for (let absoluteInterval of this.common)
+        mainFor: for (let absoluteInterval of this._common)
             for (let scale of this.scales) {
                 if (!scale.hasAbsoluteInterval(absoluteInterval)) {
-                    this.common.delete(absoluteInterval)
-                    this.different.add(absoluteInterval);
+                    this._common.delete(absoluteInterval)
+                    this._different.add(absoluteInterval);
                     continue mainFor;
                 }
             }
     }
 
-    public getCommon(): Set<number> {
-        return this.common;
+    public get common(): Set<number> {
+        return this._common;
     }
 
-    public getDifferent(): Set<number> {
-        return this.different;
+    public get different(): Set<number> {
+        return this._different;
     }
 }

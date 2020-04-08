@@ -5,12 +5,12 @@ import { ChromaticChord } from '../chords/chromatic/ChromaticChord';
 
 export class TonalityUtils {
     public static toStringParams(tonality: Tonality) {
-        return tonality.getRoot().toString() + ":" + ScaleUtils.toStringParams(tonality.getScale());
+        return tonality.root.toString() + ":" + ScaleUtils.toStringParams(tonality.scale);
     }
 
     public static getChordFrom(tonality: Tonality): ChromaticChord {
-        let patternScale = ScaleUtils.getChromaticChordPattern(tonality.getScale());
-        let chromaticRoot = ChromaticUtils.fromDiatonicAlt(tonality.getRoot())
+        let patternScale = ScaleUtils.getChromaticChordPattern(tonality.scale);
+        let chromaticRoot = ChromaticUtils.fromDiatonicAlt(tonality.root)
         let chord = ChromaticChord.fromRootPattern(chromaticRoot, patternScale);
 
         return chord;
