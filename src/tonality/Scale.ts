@@ -1,6 +1,7 @@
 import { Hashing } from '../Hashing';
 import { Utils } from '../Utils';
 import { ScaleModeUtils } from './ScaleModeUtils';
+import { error } from 'console';
 
 export class Scale {
     public static MAJOR = new Scale(2, 2, 1, 2, 2, 2, 1);
@@ -193,6 +194,7 @@ export class Scale {
         if (!intervals)
             throw new Error("No intervals have been put.");
         this._intervals = intervals;
+        Utils.assertNotNull(this._intervals);
         Scale.addToImmutables(this);
     }
 
@@ -200,11 +202,11 @@ export class Scale {
         let hash = Hashing.hashArray(scale._intervals);
 
         Scale.immutablesMap = Scale.immutablesMap || new Map<string, Scale>();
-        Scale.immutablesMap.set(hash, this);
+        Scale.immutablesMap.set(hash, scale);
     }
 
     public static from(...intervals: number[]): Scale {
-        let scale = Scale.getFromImmutables(intervals);
+        let scale: Scale | undefined = Scale.getFromImmutables(intervals);
         if (!scale)
             scale = new Scale(...intervals);
 
@@ -220,7 +222,7 @@ export class Scale {
 
     public get intervals(): number[] {
         Utils.assertNotNull(this._intervals);
-        let ret = Array.from(this._intervals);
+        let ret: number[] = Array.from(this._intervals);
         Utils.assertNotNull(ret);
         return ret;
     }

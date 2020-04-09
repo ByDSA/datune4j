@@ -37,7 +37,7 @@ export class SourceScaleUtils {
     public static getSourceScaleFrom(scale: Scale): SourceScaleInfo {
         let ret: SourceScaleInfo = SourceScaleUtils.sourceScaleMap.get(scale);
         if (!ret) {
-            let allScales = Scale.all;
+            let allScales: Set<Scale> = Scale.all;
 
             let i = 1;
             for (const element of scale.modes) {
