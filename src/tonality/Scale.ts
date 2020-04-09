@@ -220,7 +220,9 @@ export class Scale {
 
     public get intervals(): number[] {
         Utils.assertNotNull(this._intervals);
-        return Array.from(this._intervals);
+        let ret = Array.from(this._intervals);
+        Utils.assertNotNull(ret);
+        return ret;
     }
 
     // Modes
