@@ -26,14 +26,15 @@
     "strictInjectionParameters": true
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
   ],
   "files": [
     "src/index.ts"
   ],
   "exclude": [
     "dist",
-    "node_modules"
+    "node_modules",
+    "**/*.spec.ts"
   ],
   "filesGlob": [
     "src/**/*.ts"

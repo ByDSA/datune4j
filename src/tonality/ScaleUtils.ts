@@ -1,5 +1,4 @@
 import { ChromaticChordPattern } from '../chords/chromatic/ChromaticChordPattern';
-import { Settings } from '../settings/Settings';
 import { Scale } from './Scale';
 
 export class ScaleUtils {

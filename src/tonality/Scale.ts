@@ -1,7 +1,6 @@
+import { Hashing } from '../Hashing';
 import { Utils } from '../Utils';
 import { ScaleModeUtils } from './ScaleModeUtils';
-import { ScaleUtils } from './ScaleUtils';
-import { Naming } from '../lang/Naming';
 
 export class Scale {
     public static MAJOR = new Scale(2, 2, 1, 2, 2, 2, 1);
@@ -199,7 +198,7 @@ export class Scale {
     }
 
     private static addToImmutables(scale: Scale): void {
-        let hash = Utils.hashArray(scale._intervals);
+        let hash = Hashing.hashArray(scale._intervals);
 
         Scale.immutablesMap = Scale.immutablesMap || new Map<string, Scale>();
         Scale.immutablesMap.set(hash, this);
@@ -214,7 +213,7 @@ export class Scale {
     }
 
     private static getFromImmutables(intervals: number[]): Scale | undefined {
-        let hash = Utils.hashArray(intervals);
+        let hash = Hashing.hashArray(intervals);
         return Scale.immutablesMap.get(hash);
     }
 
@@ -282,10 +281,6 @@ export class Scale {
 
     public get length(): number {
         return this._intervals.length;
-    }
-
-    public toString(): string {
-        return Naming.scale(this);
     }
 
     public clone(): Scale {

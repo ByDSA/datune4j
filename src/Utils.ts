@@ -1,13 +1,15 @@
-import Hashids from 'hashids';
-
 export class Utils {
   static cloneString(str: String): string {
     return (' ' + str).slice(1);
   }
-  static arrayRemove<T>(array: T[], item: T): void {
+  static arrayRemove<T>(array: T[], item: T): boolean {
     let index = array.indexOf(item);
-    if (index >= 0 && index < array.length)
+    if (index >= 0 && index < array.length) {
       array.splice(index, 1);
+      return true;
+    }
+
+    return false;
   }
   public static assertNotNull(v: any, name?: string): void {
     if (v === undefined || v === null)
@@ -41,12 +43,6 @@ export class Utils {
     while (i--)
       roman = (key[+digits.pop() + (i * 10)] || "") + roman;
     return Array(+digits.join("") + 1).join("M") + roman;
-  }
-
-  private static hashids = new Hashids();
-
-  public static hashArray(array: any[]): string {
-    return Utils.hashids.encode(Array.from(array));
   }
 
   public static arraySameContent<T>(a: T[], b: T[]): boolean {

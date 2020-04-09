@@ -2,6 +2,7 @@ import { Chromatic } from '../../degrees/Chromatic';
 import { Utils } from '../../Utils';
 import { DiatonicChordPattern } from '../Diatonic/DiatonicChordPattern';
 import { ChromaticChord } from './ChromaticChord';
+import { Hashing } from 'Hashing';
 
 export class ChromaticChordPattern implements Iterable<number> {
     private static immutables = new Map<string, ChromaticChordPattern>();
@@ -148,7 +149,7 @@ export class ChromaticChordPattern implements Iterable<number> {
                     ? [...first, ...rest]
                     : [first, ...rest];
 
-        this.valuesHash = Utils.hashArray(this.values);
+        this.valuesHash = Hashing.hashArray(this.values);
     }
 
     private static fromArrayAndDiatonicChordPattern(diatonicChordPattern: DiatonicChordPattern, ...rest: number[]): ChromaticChordPattern {
@@ -166,7 +167,7 @@ export class ChromaticChordPattern implements Iterable<number> {
                     : [first, ...rest];
 
         let immutableCache = new ChromaticChordPattern(patternArray);
-        ChromaticChordPattern.immutables.set(Utils.hashArray(immutableCache.values), immutableCache);
+        ChromaticChordPattern.immutables.set(Hashing.hashArray(immutableCache.values), immutableCache);
 
         return immutableCache;
     }
@@ -200,7 +201,7 @@ export class ChromaticChordPattern implements Iterable<number> {
             patternArray.push(value);
         });
 
-        let valuesHash = Utils.hashArray(patternArray);
+        let valuesHash = Hashing.hashArray(patternArray);
         let immutableCache = ChromaticChordPattern.immutables.get(valuesHash);
 
         if (immutableCache == null)
