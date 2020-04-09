@@ -19,7 +19,7 @@ export class Utils {
 
   public static assertNotNull(v: any, name?: string): void {
     if (v === undefined || v === null)
-      throw new AssertionError({ message: "Variable " + (name ? "'" + name + "' " : '') + "is null or undefined." });
+      throw new Error( "Variable " + (name ? "'" + name + "' " : '') + "is null or undefined.");
   }
 
   public static arrayRotate<T>(array: T[], n: number, reverse = false): T[] {
