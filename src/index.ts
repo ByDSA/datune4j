@@ -18,3 +18,4 @@ export * from './settings/Settings';
 export * from './settings/DefaultSettings';
 export * from './settings/SettingsInterface';
 export * from './lang/Naming';
+export * from './Hashing';
