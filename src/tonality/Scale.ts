@@ -189,40 +189,42 @@ export class Scale {
     private _absoluteIntervals: number[] = null;
     private intervalsSet = new Set<number>();
     private static immutablesMap;
+    private _modes: Scale[] = null;
 
     private constructor(...intervals: number[]) {
+        if (!intervals)
+            throw new Error("No intervals have been put.");
         this._intervals = intervals;
-        let hash = Utils.hashArray(intervals);
+        Scale.addToImmutables(this);
+    }
+
+    private static addToImmutables(scale: Scale): void {
+        let hash = Utils.hashArray(scale._intervals);
 
         Scale.immutablesMap = Scale.immutablesMap || new Map<string, Scale>();
         Scale.immutablesMap.set(hash, this);
     }
 
     public static from(...intervals: number[]): Scale {
-        let hash = Utils.hashArray(intervals);
-        let scale = Scale.immutablesMap.get(hash);
+        let scale = Scale.getFromImmutables(intervals);
         if (!scale)
             scale = new Scale(...intervals);
 
         return scale;
     }
 
-    private calculateAbsoluteIntervals() {
-        this._absoluteIntervals = ScaleUtils.calculateAbsoluteIntervals(this);
-        for (let absoluteInterval of this._absoluteIntervals)
-            this.intervalsSet.add(absoluteInterval);
+    private static getFromImmutables(intervals: number[]): Scale | undefined {
+        let hash = Utils.hashArray(intervals);
+        return Scale.immutablesMap.get(hash);
     }
 
-    private calculateAbsoluteIntervalsIfNeeded() {
-        if (this._absoluteIntervals == null)
-            this.calculateAbsoluteIntervals();
-    }
+    // Relative Intervals
 
     public get intervals(): number[] {
         return Array.from(this._intervals);
     }
 
-    private _modes: Scale[] = null;
+    // Modes
 
     public get modes(): Scale[] {
         if (this._modes == null) {
@@ -238,8 +240,32 @@ export class Scale {
         return this._modes;
     }
 
-    public get length(): number {
-        return this._intervals.length;
+    // Absolute Intervals
+
+    private static calculateAbsoluteIntervals(scale: Scale): number[] {
+        let absoluteIntervals = [0];
+
+        let relativeIntervals = scale.intervals;
+        relativeIntervals.pop();
+
+        let acc = 0;
+        relativeIntervals.forEach(n => {
+            acc += n;
+            absoluteIntervals.push(acc);
+        });
+
+        return absoluteIntervals;
+    }
+
+    private updateAbsoluteIntervals() {
+        this._absoluteIntervals = Scale.calculateAbsoluteIntervals(this);
+        for (let absoluteInterval of this._absoluteIntervals)
+            this.intervalsSet.add(absoluteInterval);
+    }
+
+    private calculateAbsoluteIntervalsIfNeeded() {
+        if (this._absoluteIntervals == null)
+            this.updateAbsoluteIntervals();
     }
 
     public hasAbsoluteInterval(absoluteInterval: number): boolean {
@@ -250,6 +276,12 @@ export class Scale {
     public get absoluteIntervals() {
         this.calculateAbsoluteIntervalsIfNeeded();
         return this._absoluteIntervals;
+    }
+
+    // General
+
+    public get length(): number {
+        return this._intervals.length;
     }
 
     public toString(): string {

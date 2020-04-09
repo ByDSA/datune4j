@@ -6,40 +6,6 @@ export class ScaleUtils {
     private constructor() {
     }
 
-    public static calculateAbsoluteIntervals(scale: Scale): number[] {
-        let absoluteIntervals = [0];
-
-        let relativeIntervals = scale.intervals;
-        relativeIntervals.pop();
-
-        let acc = 0;
-        relativeIntervals.forEach(n => {
-            acc += n;
-            absoluteIntervals.push(acc);
-        });
-
-        return absoluteIntervals;
-    }
-
-    public static toStringAboluteIntervals(scale: Scale): string {
-        let absoluteIntervals = ScaleUtils.calculateAbsoluteIntervals(scale);
-
-        let first = true;
-        let ret: string = "";
-        let i = 1;
-        absoluteIntervals.forEach(n => {
-            if (first)
-                first = false;
-            else
-                ret += "-";
-            let refNum = ScaleUtils.getRefNum(scale, i);
-            ret += ScaleUtils.toStringAboluteInterval(refNum, n);
-            i++;
-        });
-
-        return ret;
-    }
-
     public static getRefNum(scale: Scale, i: number): number {
         switch (scale) {
             case Scale.BLUES_b5:
@@ -149,12 +115,6 @@ export class ScaleUtils {
 
         return i;
     }
-
-    public static toStringAboluteInterval(pos: number, intervalAbsolute: number): string {
-        return Settings.symbols.alts(intervalAbsolute - ScaleUtils.MAJOR_ABSOLUTE_INTERVALS[pos - 1]) + pos;
-    }
-
-    private static get MAJOR_ABSOLUTE_INTERVALS() { return ScaleUtils.calculateAbsoluteIntervals(Scale.MAJOR); }
 
     public static getChromaticChordPattern(scale: Scale): ChromaticChordPattern {
         let array = [0];
