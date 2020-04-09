@@ -15,7 +15,7 @@ export class ScaleModeUtils {
     }
 
     public static getRotatedScale(sourceScale: Scale, n: number): Scale {
-        let scaleIntervals: number[] = Array.from((<any>sourceScale).intervals);
+        let scaleIntervals: number[] = sourceScale.intervals;
 
         if (n > 0)
             Utils.arrayRotate(scaleIntervals, n);
