@@ -1,3 +1,5 @@
+declare var require: any
+
 const Hashids = require('hashids/cjs');
 
 export class Hashing {

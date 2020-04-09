@@ -12,7 +12,7 @@
   "name": "datune",
   "scripts": {
     "test": "jest",
-    "build": "npm run clean && tsc --declaration",
+    "build": "tsc --declaration",
     "build-dev": "npm run clean && tsc --declaration --outDir dist/",
     "clean": "rm -rf dist",
     "postinstall": "npm run build && rm -r src"
