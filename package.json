@@ -12,7 +12,6 @@
   "name": "datune",
   "scripts": {
     "test": "jest",
-    "test-debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand",
     "build": "tsc --declaration",
     "build-dev": "npm run clean && tsc --declaration --outDir dist/",
     "clean": "rm -rf dist",

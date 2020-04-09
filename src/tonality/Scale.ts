@@ -1,7 +1,6 @@
 import { Hashing } from '../Hashing';
 import { Utils } from '../Utils';
 import { ScaleModeUtils } from './ScaleModeUtils';
-import { error } from 'console';
 
 export class Scale {
     public static MAJOR = new Scale(2, 2, 1, 2, 2, 2, 1);
@@ -221,10 +220,7 @@ export class Scale {
     // Relative Intervals
 
     public get intervals(): number[] {
-        Utils.assertNotNull(this._intervals);
-        let ret: number[] = Array.from(this._intervals);
-        Utils.assertNotNull(ret);
-        return ret;
+        return Array.from(this._intervals);
     }
 
     // Modes
