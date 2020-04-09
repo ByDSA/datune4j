@@ -46,7 +46,7 @@ export class Utils {
   private static hashids = new Hashids();
 
   public static hashArray(array: any[]): string {
-    return Utils.hashids.encode(array);
+    return Utils.hashids.encode(Array.from(array));
   }
 
   public static arraySameContent<T>(a: T[], b: T[]): boolean {
