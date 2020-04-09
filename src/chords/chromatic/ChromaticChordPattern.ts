@@ -2,7 +2,7 @@ import { Chromatic } from '../../degrees/Chromatic';
 import { Utils } from '../../Utils';
 import { DiatonicChordPattern } from '../Diatonic/DiatonicChordPattern';
 import { ChromaticChord } from './ChromaticChord';
-import { Hashing } from 'Hashing';
+import { Hashing } from '../../Hashing';
 
 export class ChromaticChordPattern implements Iterable<number> {
     private static immutables = new Map<string, ChromaticChordPattern>();
