@@ -27,7 +27,7 @@ export class CommonDifferentCalculator {
     private removeAbsoluteIntervalsFromCommon(): void {
         mainFor: for (let absoluteInterval of this._common)
             for (let scale of this.scales) {
-                if (!scale.hasAbsoluteInterval(absoluteInterval)) {
+                if (scale.absoluteIntervals.indexOf(absoluteInterval) < 0) {
                     this._common.delete(absoluteInterval)
                     this._different.add(absoluteInterval);
                     continue mainFor;
