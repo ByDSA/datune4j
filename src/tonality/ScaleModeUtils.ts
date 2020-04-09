@@ -6,6 +6,8 @@ export class ScaleModeUtils {
     }
 
     public static getMode(sourceScale: Scale, n: number): Scale {
+        Utils.assertNotNull(sourceScale);
+
         if (n > 0)
             return ScaleModeUtils.getRotatedScale(sourceScale, n - 1);
         else if (n < 0)
@@ -15,6 +17,8 @@ export class ScaleModeUtils {
     }
 
     public static getRotatedScale(sourceScale: Scale, n: number): Scale {
+        Utils.assertNotNull(sourceScale);
+        
         let scaleIntervals: number[] = sourceScale.intervals;
 
         if (n > 0)
