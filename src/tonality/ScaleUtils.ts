@@ -1,6 +1,5 @@
 import { ChromaticChordPattern } from '../chords/chromatic/ChromaticChordPattern';
 import { Scale } from './Scale';
-import { ScalePrecalc } from './ScalePrecalc';
 
 export class ScaleUtils {
     private constructor() {
@@ -8,7 +7,7 @@ export class ScaleUtils {
 
     public static getRefNum(scale: Scale, i: number): number {
         switch (scale) {
-            case ScalePrecalc.BLUES_b5:
+            case Scale.BLUES_b5:
                 switch (i) {
                     case 2:
                     case 3:
@@ -16,27 +15,27 @@ export class ScaleUtils {
                         return i + 1;
                 }
                 break;
-            /*case ScalePrecalc.BLUES_a4:
+            /*case Scale.BLUES_a4:
                 switch (i) {
                     case 2:
                     case 3:
                         return i + 1;
                 }
                 break;*/
-            case ScalePrecalc.PENTATONIC:
+            case Scale.PENTATONIC:
                 switch (i) {
                     case 4:
                     case 5: return i + 1;
                 }
                 break;
-            case ScalePrecalc.EGYPCIAN:
+            case Scale.EGYPCIAN:
                 switch (i) {
                     case 3:
                     case 4: return i + 1;
                     case 5: return i + 2;
                 }
                 break;
-            case ScalePrecalc.BLUES_MINOR:
+            case Scale.BLUES_MINOR:
                 switch (i) {
                     case 2:
                     case 3: return i + 1;
@@ -45,7 +44,7 @@ export class ScaleUtils {
                         return i + 2;
                 }
                 break;
-            case ScalePrecalc.BLUES_MAJOR:
+            case Scale.BLUES_MAJOR:
                 switch (i) {
                     case 3:
                     case 4:
@@ -53,7 +52,7 @@ export class ScaleUtils {
                         return i + 1;
                 }
                 break;
-            case ScalePrecalc.PENTATONIC_MINOR:
+            case Scale.PENTATONIC_MINOR:
                 switch (i) {
                     case 2:
                     case 3:
@@ -62,21 +61,21 @@ export class ScaleUtils {
                     case 5: return i + 2;
                 }
                 break;
-            case ScalePrecalc.BEBOP_MAJOR:
+            case Scale.BEBOP_MAJOR:
                 switch (i) {
                     case 7:
                     case 8:
                         return i - 1;
                 }
                 break;
-            case ScalePrecalc.AUGMENTED_TRIAD:
+            case Scale.AUGMENTED_TRIAD:
                 switch (i) {
                     case 2: return 3;
                     case 3: return 5;
                 }
                 break;
-            case ScalePrecalc.DIMINISHED_7th:
-            case ScalePrecalc.DOM7b5:
+            case Scale.DIMINISHED_7th:
+            case Scale.DOM7b5:
                 switch (i) {
                     case 2: return 3;
                     case 3: return 5;

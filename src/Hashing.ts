@@ -11,4 +11,8 @@ export class Hashing {
     public static hashArray(array: any[]): string {
         return Hashing.hashids.encode(Array.from(array));
     }
+
+    public static hash(value: any): string {
+        return Hashing.hashids.encode(value);
+    }
 }

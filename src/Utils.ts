@@ -4,7 +4,7 @@ export class Utils {
   static cloneString(str: String): string {
     return (' ' + str).slice(1);
   }
-  
+
   static arrayRemove<T>(array: T[], item: T): boolean {
     this.assertNotNull(array);
 
@@ -19,7 +19,7 @@ export class Utils {
 
   public static assertNotNull(v: any, message?: string): void {
     if (v === undefined || v === null)
-      throw new Error( "Variable is null or undefined." + (message ? " " + message : ""));
+      throw new Error("Variable is null or undefined." + (message ? " " + message : ""));
   }
 
   public static arrayRotate<T>(array: T[], n: number, reverse = false): T[] {
@@ -31,6 +31,10 @@ export class Utils {
       else
         array.push(array.shift());
     return array;
+  }
+
+  public static arrayHas<T>(array: T[], obj: T): boolean {
+    return array.indexOf(obj) >= 0;
   }
 
   public static setAddArray<T>(set: Set<T>, array: T[]): void {

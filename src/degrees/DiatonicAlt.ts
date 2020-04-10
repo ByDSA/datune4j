@@ -6,8 +6,10 @@ import { Chromatic } from './Chromatic';
 import { ChromaticUtils } from './ChromaticUtils';
 import { Diatonic } from './Diatonic';
 import { DiatonicUtils } from './DiatonicUtils';
+import { Hashing } from '../Hashing';
+import { Hashable } from '../Hashable';
 
-export class DiatonicAlt {
+export class DiatonicAlt implements Hashable {
     public static C = DiatonicAlt.from(Diatonic.C, 0);
     public static CC = DiatonicAlt.from(Diatonic.C, 1);
     public static CCC = DiatonicAlt.from(Diatonic.C, 2);
@@ -221,5 +223,9 @@ export class DiatonicAlt {
 
     public toString(): string {
         return Naming.diatonicAlt(this);
+    }
+
+    hashCode(): string {
+        return Hashing.hash(this.diatonic) + Hashing.hash(this.alts);
     }
 }

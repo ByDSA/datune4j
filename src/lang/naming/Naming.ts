@@ -6,7 +6,6 @@ import { Scale } from '../../tonality/Scale';
 import { ScaleUtils } from '../../tonality/ScaleUtils';
 import { Tonality } from '../../tonality/Tonality';
 import { NamingScale } from './NamingScale';
-import { ScalePrecalc } from '../../tonality/ScalePrecalc';
 
 export class Naming {
     private constructor() {
@@ -156,6 +155,6 @@ export class Naming {
     }
 
     public static absoluteInterval(pos: number, intervalAbsolute: number): string {
-        return Settings.symbols.alts(intervalAbsolute - ScalePrecalc.MAJOR.absoluteIntervals[pos - 1]) + pos;
+        return Settings.symbols.alts(intervalAbsolute - Scale.MAJOR.absoluteIntervals[pos - 1]) + pos;
     }
 }

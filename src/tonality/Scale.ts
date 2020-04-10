@@ -1,41 +1,119 @@
+import { Hashable } from '../Hashable';
 import { Hashing } from '../Hashing';
+import { Immutables } from '../Immutables';
 import { NamingScale } from '../lang/naming/NamingScale';
-import { Utils } from '../Utils';
 import { ScaleModeUtils } from './ScaleModeUtils';
 
-export class Scale {
+export class Scale implements Hashable {
+    static MAJOR;
+    static DORIAN;
+    static PHRYGIAN;
+    static LYDIAN;
+    static MIXOLYDIAN;
+    static MINOR;
+    static LOCRIAN;
+
+    static HARMONIC_MINOR;
+    static LOCRIAN_a6;
+    static IONIAN_a5;
+    static DORIAN_a4;
+    static MIXOLYDIAN_b9_b13;
+    static LYDIAN_a2;
+    static SUPERLOCRIAN_bb7;
+
+    static HARMONIC_MAJOR;
+    static DORIAN_b5;
+    static PHRYGIAN_b4;
+    static LYDIAN_b3;
+    static MIXOLYDIAN_b2;
+    static AEOLIAN_b1;
+    static LOCRIAN_bb7;
+
+    static MELODIC_MINOR;
+    static DORIAN_b2;
+    static LYDIAN_a5;
+    static LYDIAN_b7;
+    static MIXOLYDIAN_b13;
+    static LOCRIAN_a2;
+    static SUPERLOCRIAN;
+
+    static DOUBLE_HARMONIC;
+    static LYDIAN_a2_a6;
+    static ULTRAPHRYGIAN;
+    static HUNGARIAN_MINOR;
+    static ORIENTAL;
+    static IONIAN_AUGMENTED_a2;
+    static LOCRIAN_bb3_bb7;
+
+    static NEAPOLITAN_MINOR;
+    static NEAPOLITAN_MAJOR;
+
+    // 6
+    static BLUES_b5;
+
+    // 5
+    static PENTATONIC_MINOR;
+    static PENTATONIC;
+    static EGYPCIAN;
+    static BLUES_MINOR;
+    static BLUES_MAJOR;
+
+    // Symmetric
+    static CHROMATIC;
+    static WHOLE_TONE;
+    static AUGMENTED_TRIAD;
+    static DIMINISHED_7th;
+    static MESSIAEN_V_TRUNCATED;
+    static DOM7b5;
+    static MESSIAEN_INV_III_V_TRUNCATED_n2;
+    static HALF_DIMINISHED;
+    static MESSIAEN_V;
+    static RAGA_INDRUPRIYA_INDIA;
+    static MESSIAEN_II_TRUNCATED_n3;
+    static MESSIAEN_III_INV;
+    static MESSIAEN_IV;
+    static MESSIAEN_VI;
+    static MESSIAEN_VII;
+
+    // Bebop
+    static BEBOP_MAJOR;
+
+    static allDiatonicScales: () => Scale[];
+
+    static allHeptatonicScales: () => Scale[];
+
+    static allBebopScales: () => Scale[];
+
+    static allPentatonicScales: () => Scale[];
+
+    static allHexatonicScales: () => Scale[];
+
+    static all: () => Scale[];
+
+    static symmetricScales: () => Scale[];
+
+    private static immutables = new Immutables<Scale, number[]>(
+        function (hashingObject: number[]) {
+            return Hashing.hashArray(hashingObject);
+        },
+        function (scale: Scale) {
+            return scale._intervals;
+        },
+        function (intervals: number[]): Scale {
+            return new Scale(...intervals);
+        }
+    );
+
     private _intervals: number[];
     private _absoluteIntervals: number[] = null;
-    private static immutablesMap;
     private _modes: Scale[] = null;
 
     private constructor(...intervals: number[]) {
-        if (!intervals)
-            throw new Error("No intervals have been put.");
         this._intervals = intervals;
-        Utils.assertNotNull(this._intervals);
-        Scale.addToImmutables(this);
-    }
-
-    private static addToImmutables(scale: Scale): void {
-        let hash = Hashing.hashArray(scale._intervals);
-
-        Scale.immutablesMap = Scale.immutablesMap || new Map<string, Scale>();
-        Scale.immutablesMap.set(hash, scale);
     }
 
     public static from(...intervals: number[]): Scale {
-        let scale: Scale | undefined = Scale.getFromImmutables(intervals);
-        if (!scale)
-            scale = new Scale(...intervals);
-
-        return scale;
-    }
-
-    private static getFromImmutables(intervals: number[]): Scale | undefined {
-        let hash = Hashing.hashArray(intervals);
-        Scale.immutablesMap = Scale.immutablesMap || new Map<string, Scale>();
-        return Scale.immutablesMap.get(hash);
+        return Scale.immutables.getOrCreate(intervals);
     }
 
     // Relative Intervals
@@ -102,5 +180,9 @@ export class Scale {
         let scale = new Scale(0);
         scale._intervals = this.intervals;
         return scale;
+    }
+
+    hashCode(): string {
+        return Hashing.hashArray(this.intervals);
     }
 }

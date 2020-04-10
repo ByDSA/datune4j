@@ -1,8 +1,9 @@
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
-import { TonalityPrecalc } from './TonalityPrecalc';
-import { ScalePrecalc } from './ScalePrecalc';
+import { Scale } from './Scale';
+import { Tonality } from './Tonality';
+require('../precalc')
 
 test('Tonality - predefined: ', () => {
-    expect(TonalityPrecalc.C.scale).toBe(ScalePrecalc.MAJOR);
-    expect(TonalityPrecalc.C.root).toBe(DiatonicAlt.C);
+    expect(Tonality.C.scale).toBe(Scale.MAJOR);
+    expect(Tonality.C.root).toBe(DiatonicAlt.C);
 });
