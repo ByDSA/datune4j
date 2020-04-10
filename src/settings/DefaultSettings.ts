@@ -7,7 +7,7 @@ import { Scale } from '../tonality/Scale';
 import { Tonality } from '../tonality/Tonality';
 import { Settings } from './Settings';
 import { SettingsInterface } from './SettingsInterface';
-import { DiatonicAltChord } from 'chords/DiatonicAltChord';
+import { DiatonicAltChord } from '../chords/DiatonicAltChord';
 
 export const DefaultSettings: SettingsInterface = {
     default: {
