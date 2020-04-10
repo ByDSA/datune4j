@@ -22,4 +22,5 @@ export * from './lang/naming/NamingChromatic';
 export * from './lang/naming/NamingScale';
 export * from './Hashing';
 
+let require;
 require('./precalc');
