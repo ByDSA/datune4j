@@ -19,6 +19,7 @@ export class Diatonic {
     }
 
     static fromInt(intValue: number): Diatonic {
+        intValue = MathUtils.rotativeTrim(intValue, Diatonic.NUMBER);
         switch (intValue) {
             case 0: return Diatonic.C;
             case 1: return Diatonic.D;

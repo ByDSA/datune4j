@@ -67,6 +67,7 @@ export class Chromatic {
     }
 
     static fromInt(intValue: number): Chromatic {
+        intValue = MathUtils.rotativeTrim(intValue, Chromatic.NUMBER);
         switch (intValue) {
             case 0: return Chromatic.C;
             case 1: return Chromatic.CC;
