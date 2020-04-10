@@ -1,55 +1,54 @@
-import { Naming } from '../lang/naming/Naming';
+import { Hashable } from '../Hashable';
+import { Hashing } from '../Hashing';
 import { IntervalChromatic } from '../interval/IntervalChromatic';
 import { IntervalDiatonicUtils } from '../interval/IntervalDiatonicUtils';
+import { Settings } from '../settings/Settings';
 import { Utils } from '../Utils';
 import { Chromatic } from './Chromatic';
 import { Diatonic } from './Diatonic';
-import { DiatonicUtils } from './DiatonicUtils';
-import { Hashing } from '../Hashing';
-import { Hashable } from '../Hashable';
 
 export class DiatonicAlt implements Hashable {
-    public static C = DiatonicAlt.from(Diatonic.C, 0);
-    public static CC = DiatonicAlt.from(Diatonic.C, 1);
-    public static CCC = DiatonicAlt.from(Diatonic.C, 2);
-    public static Cb = DiatonicAlt.from(Diatonic.C, -1);
-    public static Cbb = DiatonicAlt.from(Diatonic.C, -2);
+    public static C: DiatonicAlt;
+    public static CC: DiatonicAlt;
+    public static CCC: DiatonicAlt;
+    public static Cb: DiatonicAlt;
+    public static Cbb: DiatonicAlt;
 
-    public static D = DiatonicAlt.from(Diatonic.D, 0);
-    public static DD = DiatonicAlt.from(Diatonic.D, 1);
-    public static DDD = DiatonicAlt.from(Diatonic.D, 2);
-    public static Db = DiatonicAlt.from(Diatonic.D, -1);
-    public static Dbb = DiatonicAlt.from(Diatonic.D, -2);
+    public static D: DiatonicAlt;
+    public static DD: DiatonicAlt;
+    public static DDD: DiatonicAlt;
+    public static Db: DiatonicAlt;
+    public static Dbb: DiatonicAlt;
 
-    public static E = DiatonicAlt.from(Diatonic.E, 0);
-    public static EE = DiatonicAlt.from(Diatonic.E, 1);
-    public static EEE = DiatonicAlt.from(Diatonic.E, 2);
-    public static Eb = DiatonicAlt.from(Diatonic.E, -1);
-    public static Ebb = DiatonicAlt.from(Diatonic.E, -2);
+    public static E: DiatonicAlt;
+    public static EE: DiatonicAlt;
+    public static EEE: DiatonicAlt;
+    public static Eb: DiatonicAlt;
+    public static Ebb: DiatonicAlt;
 
-    public static F = DiatonicAlt.from(Diatonic.F, 0);
-    public static FF = DiatonicAlt.from(Diatonic.F, 1);
-    public static FFF = DiatonicAlt.from(Diatonic.F, 2);
-    public static Fb = DiatonicAlt.from(Diatonic.F, -1);
-    public static Fbb = DiatonicAlt.from(Diatonic.F, -2);
+    public static F: DiatonicAlt;
+    public static FF: DiatonicAlt;
+    public static FFF: DiatonicAlt;
+    public static Fb: DiatonicAlt;
+    public static Fbb: DiatonicAlt;
 
-    public static G = DiatonicAlt.from(Diatonic.G, 0);
-    public static GG = DiatonicAlt.from(Diatonic.G, 1);
-    public static GGG = DiatonicAlt.from(Diatonic.G, 2);
-    public static Gb = DiatonicAlt.from(Diatonic.G, -1);
-    public static Gbb = DiatonicAlt.from(Diatonic.G, -2);
+    public static G: DiatonicAlt;
+    public static GG: DiatonicAlt;
+    public static GGG: DiatonicAlt;
+    public static Gb: DiatonicAlt;
+    public static Gbb: DiatonicAlt;
 
-    public static A = DiatonicAlt.from(Diatonic.A, 0);
-    public static AA = DiatonicAlt.from(Diatonic.A, 1);
-    public static AAA = DiatonicAlt.from(Diatonic.A, 2);
-    public static Ab = DiatonicAlt.from(Diatonic.A, -1);
-    public static Abb = DiatonicAlt.from(Diatonic.A, -2);
+    public static A: DiatonicAlt;
+    public static AA: DiatonicAlt;
+    public static AAA: DiatonicAlt;
+    public static Ab: DiatonicAlt;
+    public static Abb: DiatonicAlt;
 
-    public static B = DiatonicAlt.from(Diatonic.B, 0);
-    public static BB = DiatonicAlt.from(Diatonic.B, 1);
-    public static BBB = DiatonicAlt.from(Diatonic.B, 2);
-    public static Bb = DiatonicAlt.from(Diatonic.B, -1);
-    public static Bbb = DiatonicAlt.from(Diatonic.B, -2);
+    public static B: DiatonicAlt;
+    public static BB: DiatonicAlt;
+    public static BBB: DiatonicAlt;
+    public static Bb: DiatonicAlt;
+    public static Bbb: DiatonicAlt;
 
     public static from(diatonic: Diatonic, alts: number): DiatonicAlt {
         return new DiatonicAlt(diatonic, alts);
@@ -201,7 +200,7 @@ export class DiatonicAlt implements Hashable {
         Utils.assertNotNull(intervalChromatic);
 
         let intervalDiatonic = IntervalDiatonicUtils.fromIntervalChromatic(intervalChromatic);
-        let diatonic = DiatonicUtils.getShifted(this.diatonic, intervalDiatonic);
+        let diatonic = Diatonic.getShifted(this.diatonic, intervalDiatonic);
         let alts = Chromatic.fromDiatonicAlt(this).intValue + intervalChromatic.semis - Chromatic.fromDiatonic(diatonic).intValue;
         alts %= Chromatic.NUMBER;
         if (alts > 4)
@@ -221,10 +220,54 @@ export class DiatonicAlt implements Hashable {
     }
 
     public toString(): string {
-        return Naming.diatonicAlt(this);
+        return this.diatonic.toString() + Settings.symbols.alts(this.alts);
     }
 
     hashCode(): string {
         return Hashing.hash(this.diatonic) + Hashing.hash(this.alts);
+    }
+
+    private static initialize() {
+        DiatonicAlt.C = DiatonicAlt.from(Diatonic.C, 0);
+    DiatonicAlt.CC = DiatonicAlt.from(Diatonic.C, 1);
+    DiatonicAlt.CCC = DiatonicAlt.from(Diatonic.C, 2);
+    DiatonicAlt.Cb = DiatonicAlt.from(Diatonic.C, -1);
+    DiatonicAlt.Cbb = DiatonicAlt.from(Diatonic.C, -2);
+
+    DiatonicAlt.D = DiatonicAlt.from(Diatonic.D, 0);
+    DiatonicAlt.DD = DiatonicAlt.from(Diatonic.D, 1);
+    DiatonicAlt.DDD = DiatonicAlt.from(Diatonic.D, 2);
+    DiatonicAlt.Db = DiatonicAlt.from(Diatonic.D, -1);
+    DiatonicAlt.Dbb = DiatonicAlt.from(Diatonic.D, -2);
+
+    DiatonicAlt.E = DiatonicAlt.from(Diatonic.E, 0);
+    DiatonicAlt.EE = DiatonicAlt.from(Diatonic.E, 1);
+    DiatonicAlt.EEE = DiatonicAlt.from(Diatonic.E, 2);
+    DiatonicAlt.Eb = DiatonicAlt.from(Diatonic.E, -1);
+    DiatonicAlt.Ebb = DiatonicAlt.from(Diatonic.E, -2);
+
+    DiatonicAlt.F = DiatonicAlt.from(Diatonic.F, 0);
+    DiatonicAlt.FF = DiatonicAlt.from(Diatonic.F, 1);
+    DiatonicAlt.FFF = DiatonicAlt.from(Diatonic.F, 2);
+    DiatonicAlt.Fb = DiatonicAlt.from(Diatonic.F, -1);
+    DiatonicAlt.Fbb = DiatonicAlt.from(Diatonic.F, -2);
+
+    DiatonicAlt.G = DiatonicAlt.from(Diatonic.G, 0);
+    DiatonicAlt.GG = DiatonicAlt.from(Diatonic.G, 1);
+    DiatonicAlt.GGG = DiatonicAlt.from(Diatonic.G, 2);
+    DiatonicAlt.Gb = DiatonicAlt.from(Diatonic.G, -1);
+    DiatonicAlt.Gbb = DiatonicAlt.from(Diatonic.G, -2);
+
+    DiatonicAlt.A = DiatonicAlt.from(Diatonic.A, 0);
+    DiatonicAlt.AA = DiatonicAlt.from(Diatonic.A, 1);
+    DiatonicAlt.AAA = DiatonicAlt.from(Diatonic.A, 2);
+    DiatonicAlt.Ab = DiatonicAlt.from(Diatonic.A, -1);
+    DiatonicAlt.Abb = DiatonicAlt.from(Diatonic.A, -2);
+
+    DiatonicAlt.B = DiatonicAlt.from(Diatonic.B, 0);
+    DiatonicAlt.BB = DiatonicAlt.from(Diatonic.B, 1);
+    DiatonicAlt.BBB = DiatonicAlt.from(Diatonic.B, 2);
+    DiatonicAlt.Bb = DiatonicAlt.from(Diatonic.B, -1);
+    DiatonicAlt.Bbb = DiatonicAlt.from(Diatonic.B, -2);
     }
 }

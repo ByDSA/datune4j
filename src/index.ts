@@ -4,7 +4,6 @@ export * from './CommonDifferentCalculator';
 export * from './degrees/Chromatic';
 export * from './degrees/Diatonic';
 export * from './degrees/DiatonicAlt';
-export * from './degrees/DiatonicUtils';
 export * from './Hashing';
 export * from './lang/Language';
 export * from './lang/LanguageInterface';

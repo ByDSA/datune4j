@@ -2,6 +2,8 @@ import { DiatonicAlt } from '../degrees/DiatonicAlt';
 import { Scale } from './Scale';
 import { Tonality } from './Tonality';
 import * as precalc from "../precalc";
+precalc.diatonics();
+precalc.diatonicsAlts();
 precalc.chromatics();
 precalc.scales();
 precalc.tonalities();

@@ -1,6 +1,6 @@
+import { Diatonic } from '../degrees/Diatonic';
 import { Chromatic } from '../degrees/Chromatic';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
-import { DiatonicUtils } from '../degrees/DiatonicUtils';
 import { Immutables } from '../Immutables';
 import { Scale } from './Scale';
 
@@ -61,16 +61,17 @@ export class Tonality {
         this.notes.push(this.root);
 
         let lastChromaticInt = Chromatic.fromDiatonicAlt(this.root).intValue;
-        let lastDiatonic = this.root.diatonic;
+        let lastDiatonicInt = this.root.diatonic.intValue;
         let i = 0;
         for (let n of this.scale.intervals) {
             if (i >= this.scale.intervals.length)
                 continue;
             lastChromaticInt += n;
             lastChromaticInt %= Chromatic.NUMBER;
-            lastDiatonic++;
-            lastDiatonic %= DiatonicUtils.NUMBER;
+            lastDiatonicInt++;
+            lastDiatonicInt %= Diatonic.NUMBER;
             let lastChromatic = Chromatic.fromInt(lastChromaticInt);
+            let lastDiatonic = Diatonic.fromInt(lastDiatonicInt);
             let note = DiatonicAlt.fromChromatic(lastChromatic, lastDiatonic);
             this.notes.push(note);
         }

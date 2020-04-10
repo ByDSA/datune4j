@@ -1,26 +1,25 @@
 import { Chromatic } from '../../degrees/Chromatic';
-import { Naming } from './Naming';
 import { Diatonic } from '../../degrees/Diatonic';
 import { Settings } from '../../settings/Settings';
 
 export class NamingChromatic {
     private constructor() {
     }
-    
+
     public static toString(chromatic: Chromatic): string {
         switch (chromatic) {
-            case Chromatic.C: return Naming.diatonic(Diatonic.C);
-            case Chromatic.CC: return Naming.diatonic(Diatonic.C) + Settings.symbols.alts(1);
-            case Chromatic.D: return Naming.diatonic(Diatonic.D);
-            case Chromatic.DD: return Naming.diatonic(Diatonic.D) + Settings.symbols.alts(1);
-            case Chromatic.E: return Naming.diatonic(Diatonic.E);
-            case Chromatic.F: return Naming.diatonic(Diatonic.F);
-            case Chromatic.FF: return Naming.diatonic(Diatonic.F) + Settings.symbols.alts(1);
-            case Chromatic.G: return Naming.diatonic(Diatonic.G);
-            case Chromatic.GG: return Naming.diatonic(Diatonic.G) + Settings.symbols.alts(1);
-            case Chromatic.A: return Naming.diatonic(Diatonic.A);
-            case Chromatic.AA: return Naming.diatonic(Diatonic.A) + Settings.symbols.alts(1);
-            case Chromatic.B: return Naming.diatonic(Diatonic.B);
+            case Chromatic.C: return Diatonic.C.toString();
+            case Chromatic.CC: return Diatonic.C.toString() + Settings.symbols.alts(1);
+            case Chromatic.D: return Diatonic.D.toString();
+            case Chromatic.DD: return Diatonic.D.toString() + Settings.symbols.alts(1);
+            case Chromatic.E: return Diatonic.E.toString();
+            case Chromatic.F: return Diatonic.F.toString();
+            case Chromatic.FF: return Diatonic.F.toString() + Settings.symbols.alts(1);
+            case Chromatic.G: return Diatonic.G.toString();
+            case Chromatic.GG: return Diatonic.G.toString() + Settings.symbols.alts(1);
+            case Chromatic.A: return Diatonic.A.toString();
+            case Chromatic.AA: return Diatonic.A.toString() + Settings.symbols.alts(1);
+            case Chromatic.B: return Diatonic.B.toString();
         }
 
         throw new Error("Can't get string from '" + chromatic + "'.");
@@ -28,8 +27,8 @@ export class NamingChromatic {
 
     static getChromatic(noteStr: string): Chromatic {
         noteStr = noteStr
-        .replace(/'#'/g, Settings.symbols.sharp)
-        .replace(/'b'/g, Settings.symbols.bemol);
+            .replace(/#/g, Settings.symbols.sharp)
+            .replace(/b/g, Settings.symbols.bemol);
 
         switch (noteStr) {
             case NamingChromatic.toString(Chromatic.C): return Chromatic.C;

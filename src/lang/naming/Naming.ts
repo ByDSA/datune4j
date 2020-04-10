@@ -11,24 +11,6 @@ export class Naming {
     private constructor() {
     }
 
-    public static diatonic(diatonic: Diatonic): string {
-        switch (diatonic) {
-            case Diatonic.C: return Settings.lang.diatonic.C;
-            case Diatonic.D: return Settings.lang.diatonic.D;
-            case Diatonic.E: return Settings.lang.diatonic.E;
-            case Diatonic.F: return Settings.lang.diatonic.F;
-            case Diatonic.G: return Settings.lang.diatonic.G;
-            case Diatonic.A: return Settings.lang.diatonic.A;
-            case Diatonic.B: return Settings.lang.diatonic.B;
-        }
-
-        Error();
-    }
-
-    public static diatonicAlt(diatonicAlt: DiatonicAlt): string {
-        return Naming.diatonic(diatonicAlt.diatonic) + Settings.symbols.alts(diatonicAlt.alts);
-    }
-
     public static pattern(pattern: ChromaticChordPattern): string {
         switch ((<any>pattern).valuesHash) {
             case (<any>ChromaticChordPattern.TRIAD_MAJOR).valuesHash: return "MAJOR";
@@ -132,7 +114,7 @@ export class Naming {
     }
 
     public static tonality(tonality: Tonality) {
-        return Naming.diatonicAlt(tonality.root) + " " + NamingScale.toString(tonality.scale);
+        return tonality.root.toString() + " " + NamingScale.toString(tonality.scale);
     }
 
     public static aboluteIntervals(scale: Scale): string {

@@ -4,6 +4,17 @@ import { ScaleModeUtils } from './tonality/ScaleModeUtils';
 import { SourceScaleUtils } from './tonality/SourceScaleUtils';
 import { Tonality } from './tonality/Tonality';
 import { Chromatic } from './degrees/Chromatic';
+import { Diatonic } from './degrees/Diatonic';
+
+// DIATONICS
+export function diatonics() {
+    (<any>Diatonic).initialize();
+}
+
+// DIATONIC ALTS
+export function diatonicsAlts() {
+    (<any>DiatonicAlt).initialize();
+}
 
 // CHROMATICS
 export function chromatics() {
@@ -237,9 +248,12 @@ export function tonalities() {
     Tonality.Bm = Tonality.from(DiatonicAlt.B, Scale.MINOR);
 };
 
+const self = this;
 export function all() {
-    this.chromatics();
-    this.scales();
-    this.sourceScales();
-    this.tonalities();
+    self.diatonic();
+    self.diatonicAlts();
+    self.chromatics();
+    self.scales();
+    self.sourceScales();
+    self.tonalities();
 }
