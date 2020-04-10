@@ -1,6 +1,6 @@
 import { Scale } from './Scale';
 import { ScaleModeUtils } from './ScaleModeUtils';
-import { Utils } from 'Utils';
+import { Utils } from '../Utils';
 
 export class ScalePrecalc {
     private constructor() {
