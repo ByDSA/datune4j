@@ -1,6 +1,6 @@
 import { Scale } from "./Scale";
-
-require('../precalc');
+import * as precalc from "../precalc";
+precalc.scales();
 
 test('Scale: ', () => {
     let scale = Scale.MAJOR;
