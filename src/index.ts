@@ -21,3 +21,5 @@ export * from './lang/naming/Naming';
 export * from './lang/naming/NamingChromatic';
 export * from './lang/naming/NamingScale';
 export * from './Hashing';
+
+require('./precalc');
