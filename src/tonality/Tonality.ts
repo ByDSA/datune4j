@@ -7,29 +7,29 @@ import { Scale } from './Scale';
 
 type HashingObjectType = { root: DiatonicAlt, scale: Scale };
 export class Tonality {
-    public static C;
-    public static CC;
-    public static D;
-    public static DD;
-    public static E;
-    public static F;
-    public static FF;
-    public static G;
-    public static GG;
-    public static A;
-    public static B;
+    public static C: Tonality;
+    public static CC: Tonality;
+    public static D: Tonality;
+    public static DD: Tonality;
+    public static E: Tonality;
+    public static F: Tonality;
+    public static FF: Tonality;
+    public static G: Tonality;
+    public static GG: Tonality;
+    public static A: Tonality;
+    public static B: Tonality;
 
-    public static Cm;
-    public static CCm;
-    public static Dm;
-    public static DDm;
-    public static Em;
-    public static Fm;
-    public static FFm;
-    public static Gm;
-    public static GGm;
-    public static Am;
-    public static Bm;
+    public static Cm: Tonality;
+    public static CCm: Tonality;
+    public static Dm: Tonality;
+    public static DDm: Tonality;
+    public static Em: Tonality;
+    public static Fm: Tonality;
+    public static FFm: Tonality;
+    public static Gm: Tonality;
+    public static GGm: Tonality;
+    public static Am: Tonality;
+    public static Bm: Tonality;
 
     private static immutables = new Immutables<Tonality, HashingObjectType>(
         function (hashingObject: HashingObjectType) {

@@ -5,78 +5,78 @@ import { NamingScale } from '../lang/naming/NamingScale';
 import { ScaleModeUtils } from './ScaleModeUtils';
 
 export class Scale implements Hashable {
-    static MAJOR;
-    static DORIAN;
-    static PHRYGIAN;
-    static LYDIAN;
-    static MIXOLYDIAN;
-    static MINOR;
-    static LOCRIAN;
+    static MAJOR: Scale;
+    static DORIAN: Scale;
+    static PHRYGIAN: Scale;
+    static LYDIAN: Scale;
+    static MIXOLYDIAN: Scale;
+    static MINOR: Scale;
+    static LOCRIAN: Scale;
 
-    static HARMONIC_MINOR;
-    static LOCRIAN_a6;
-    static IONIAN_a5;
-    static DORIAN_a4;
-    static MIXOLYDIAN_b9_b13;
-    static LYDIAN_a2;
-    static SUPERLOCRIAN_bb7;
+    static HARMONIC_MINOR: Scale;
+    static LOCRIAN_a6: Scale;
+    static IONIAN_a5: Scale;
+    static DORIAN_a4: Scale;
+    static MIXOLYDIAN_b9_b13: Scale;
+    static LYDIAN_a2: Scale;
+    static SUPERLOCRIAN_bb7: Scale;
 
-    static HARMONIC_MAJOR;
-    static DORIAN_b5;
-    static PHRYGIAN_b4;
-    static LYDIAN_b3;
-    static MIXOLYDIAN_b2;
-    static AEOLIAN_b1;
-    static LOCRIAN_bb7;
+    static HARMONIC_MAJOR: Scale;
+    static DORIAN_b5: Scale;
+    static PHRYGIAN_b4: Scale;
+    static LYDIAN_b3: Scale;
+    static MIXOLYDIAN_b2: Scale;
+    static AEOLIAN_b1: Scale;
+    static LOCRIAN_bb7: Scale;
 
-    static MELODIC_MINOR;
-    static DORIAN_b2;
-    static LYDIAN_a5;
-    static LYDIAN_b7;
-    static MIXOLYDIAN_b13;
-    static LOCRIAN_a2;
-    static SUPERLOCRIAN;
+    static MELODIC_MINOR: Scale;
+    static DORIAN_b2: Scale;
+    static LYDIAN_a5: Scale;
+    static LYDIAN_b7: Scale;
+    static MIXOLYDIAN_b13: Scale;
+    static LOCRIAN_a2: Scale;
+    static SUPERLOCRIAN: Scale;
 
-    static DOUBLE_HARMONIC;
-    static LYDIAN_a2_a6;
-    static ULTRAPHRYGIAN;
-    static HUNGARIAN_MINOR;
-    static ORIENTAL;
-    static IONIAN_AUGMENTED_a2;
-    static LOCRIAN_bb3_bb7;
+    static DOUBLE_HARMONIC: Scale;
+    static LYDIAN_a2_a6: Scale;
+    static ULTRAPHRYGIAN: Scale;
+    static HUNGARIAN_MINOR: Scale;
+    static ORIENTAL: Scale;
+    static IONIAN_AUGMENTED_a2: Scale;
+    static LOCRIAN_bb3_bb7: Scale;
 
-    static NEAPOLITAN_MINOR;
-    static NEAPOLITAN_MAJOR;
+    static NEAPOLITAN_MINOR: Scale;
+    static NEAPOLITAN_MAJOR: Scale;
 
     // 6
-    static BLUES_b5;
+    static BLUES_b5: Scale;
 
     // 5
-    static PENTATONIC_MINOR;
-    static PENTATONIC;
-    static EGYPCIAN;
-    static BLUES_MINOR;
-    static BLUES_MAJOR;
+    static PENTATONIC_MINOR: Scale;
+    static PENTATONIC: Scale;
+    static EGYPCIAN: Scale;
+    static BLUES_MINOR: Scale;
+    static BLUES_MAJOR: Scale;
 
     // Symmetric
-    static CHROMATIC;
-    static WHOLE_TONE;
-    static AUGMENTED_TRIAD;
-    static DIMINISHED_7th;
-    static MESSIAEN_V_TRUNCATED;
-    static DOM7b5;
-    static MESSIAEN_INV_III_V_TRUNCATED_n2;
-    static HALF_DIMINISHED;
-    static MESSIAEN_V;
-    static RAGA_INDRUPRIYA_INDIA;
-    static MESSIAEN_II_TRUNCATED_n3;
-    static MESSIAEN_III_INV;
-    static MESSIAEN_IV;
-    static MESSIAEN_VI;
-    static MESSIAEN_VII;
+    static CHROMATIC: Scale;
+    static WHOLE_TONE: Scale;
+    static AUGMENTED_TRIAD: Scale;
+    static DIMINISHED_7th: Scale;
+    static MESSIAEN_V_TRUNCATED: Scale;
+    static DOM7b5: Scale;
+    static MESSIAEN_INV_III_V_TRUNCATED_n2: Scale;
+    static HALF_DIMINISHED: Scale;
+    static MESSIAEN_V: Scale;
+    static RAGA_INDRUPRIYA_INDIA: Scale;
+    static MESSIAEN_II_TRUNCATED_n3: Scale;
+    static MESSIAEN_III_INV: Scale;
+    static MESSIAEN_IV: Scale;
+    static MESSIAEN_VI: Scale;
+    static MESSIAEN_VII: Scale;
 
     // Bebop
-    static BEBOP_MAJOR;
+    static BEBOP_MAJOR: Scale;
 
     static allDiatonicScales: () => Scale[];
 
