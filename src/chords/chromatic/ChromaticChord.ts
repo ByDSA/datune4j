@@ -3,7 +3,7 @@ import { ChromaticChordPattern } from './ChromaticChordPattern';
 import { NameChromaticChordCalculator } from '../../lang/naming/NameChromaticChordCalculator';
 import { DiatonicAlt } from '../../degrees/DiatonicAlt';
 import { Utils } from '../../Utils';
-import { DiatonicAltChord } from 'chords/DiatonicAltChord';
+import { DiatonicAltChord } from '../../chords/DiatonicAltChord';
 
 export class ChromaticChord {
     public static C = new ChromaticChord(0, [Chromatic.C, Chromatic.E, Chromatic.G]);
