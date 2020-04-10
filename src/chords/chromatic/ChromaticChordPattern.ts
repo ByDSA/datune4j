@@ -184,7 +184,7 @@ export class ChromaticChordPattern implements Iterable<number> {
         let last: Chromatic;
         let lastValue = 0;
 
-        let unsortedNotes = this.getUnsortedNotes(chord);
+        let unsortedNotes: Chromatic[] = this.getUnsortedNotes(chord);
 
         let first = true;
         unsortedNotes.forEach(current => {
@@ -194,7 +194,7 @@ export class ChromaticChordPattern implements Iterable<number> {
                 return;
             }
 
-            let value = (current - last) % 12;
+            let value = (current.intValue - last.intValue) % Chromatic.NUMBER;
             if (value < 0)
                 value += 12;
             lastValue = value;
