@@ -12,7 +12,7 @@ export function diatonics() {
 }
 
 // DIATONIC ALTS
-export function diatonicsAlts() {
+export function diatonicAlts() {
     (<any>DiatonicAlt).initialize();
 }
 
@@ -248,12 +248,11 @@ export function tonalities() {
     Tonality.Bm = Tonality.from(DiatonicAlt.B, Scale.MINOR);
 };
 
-const self = this;
 export function all() {
-    self.diatonic();
-    self.diatonicAlts();
-    self.chromatics();
-    self.scales();
-    self.sourceScales();
-    self.tonalities();
+    diatonics();
+    diatonicAlts();
+    chromatics();
+    scales();
+    sourceScales();
+    tonalities();
 }
