@@ -3,6 +3,7 @@ import { ChromaticChordPattern } from './ChromaticChordPattern';
 import { NameChromaticChordCalculator } from '../../lang/naming/NameChromaticChordCalculator';
 import { DiatonicAlt } from '../../degrees/DiatonicAlt';
 import { Utils } from '../../Utils';
+import { DiatonicAltChord } from 'chords/DiatonicAltChord';
 
 export class ChromaticChord {
     public static C = new ChromaticChord(0, [Chromatic.C, Chromatic.E, Chromatic.G]);
@@ -35,6 +36,16 @@ export class ChromaticChord {
         return ChromaticChord.fromRootNotes(rootPos, notes);
     }
 
+    public static fromDiatonicAltChord(diatonicAltChord: DiatonicAltChord) {
+        let notes: DiatonicAlt[] = diatonicAltChord.notes;
+        let notesChromatic: Chromatic[] = [];
+        for (let diatonicAlt of notes) {
+            let chromatic = Chromatic.fromDiatonicAlt(diatonicAlt);
+            notesChromatic.push(chromatic);
+        }
+        return ChromaticChord.fromRootNotes(0, notesChromatic);
+    }
+
     public get root(): Chromatic {
         return this.notes[this.rootIndex];
     }
@@ -63,7 +74,7 @@ export class ChromaticChord {
         return notes;
     }
 
-    public toString(): string|undefined {
+    public toString(): string | undefined {
         return this.str;
     }
 }

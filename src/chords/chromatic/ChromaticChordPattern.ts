@@ -149,13 +149,7 @@ export class ChromaticChordPattern implements Iterable<number> {
     }
 
     static fromDiatonicAltChord(chord: DiatonicAltChord): ChromaticChordPattern {
-        let notes: DiatonicAlt[] = chord.notes;
-        let notesChromatic: Chromatic[] = [];
-        for (let diatonicAlt of notes) {
-            let chromatic = Chromatic.fromDiatonicAlt(diatonicAlt);
-            notesChromatic.push(chromatic);
-        }
-        let chromaticChord = ChromaticChord.fromRootNotes(0, notesChromatic);
+        let chromaticChord: ChromaticChord = ChromaticChord.fromDiatonicAltChord(chord);
 
         return ChromaticChordPattern.from(chromaticChord);
     }
