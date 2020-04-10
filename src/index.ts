@@ -20,7 +20,4 @@ export * from './tonality/ScaleUtils';
 export * from './tonality/Tonality';
 export * from './tonality/TonalityUtils';
 export * from './Utils';
-
-// precalc
-import * as precalc from './precalc';
-precalc.all();
+export * from './precalc'
