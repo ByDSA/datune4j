@@ -34,6 +34,7 @@ export class Scale {
 
     private static getFromImmutables(intervals: number[]): Scale | undefined {
         let hash = Hashing.hashArray(intervals);
+        Scale.immutablesMap = Scale.immutablesMap || new Map<string, Scale>();
         return Scale.immutablesMap.get(hash);
     }
 
