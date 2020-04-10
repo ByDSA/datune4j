@@ -2,7 +2,7 @@ import { NamingChromatic } from '../lang/naming/NamingChromatic';
 import { DiatonicAlt } from './DiatonicAlt';
 import { MathUtils } from '../MathUtils';
 import { Diatonic } from './Diatonic';
-import { IntervalChromatic } from 'interval/IntervalChromatic';
+import { IntervalChromatic } from '../interval/IntervalChromatic';
 
 export class Chromatic {
     static C: Chromatic;
