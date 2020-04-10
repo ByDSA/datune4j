@@ -6,7 +6,7 @@ import { Utils } from '../Utils';
 import { NameDiatonicAltChordCalculator } from '../lang/naming/NameDiatonicAltChordCalculator';
 
 export class DiatonicAltChord {
-    public static C = new DiatonicAltChord(0, [DiatonicAlt.C, DiatonicAlt.E, DiatonicAlt.G]);
+    public static C: DiatonicAltChord;
 
     private constructor(private _rootIndex: number, private _notes: DiatonicAlt[], private str?: string) {
     }
@@ -70,5 +70,9 @@ export class DiatonicAltChord {
 
     public toString(): string | undefined {
         return this.str;
+    }
+
+    private static initialize() {
+        DiatonicAltChord.C = new DiatonicAltChord(0, [DiatonicAlt.C, DiatonicAlt.E, DiatonicAlt.G]);
     }
 }
