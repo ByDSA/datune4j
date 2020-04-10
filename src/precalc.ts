@@ -5,6 +5,7 @@ import { SourceScaleUtils } from './tonality/SourceScaleUtils';
 import { Tonality } from './tonality/Tonality';
 import { Chromatic } from './degrees/Chromatic';
 import { Diatonic } from './degrees/Diatonic';
+import { ChromaticChordPattern } from './chords/chromatic/ChromaticChordPattern';
 
 // DIATONICS
 export function diatonics() {
@@ -19,6 +20,11 @@ export function diatonicAlts() {
 // CHROMATICS
 export function chromatics() {
     (<any>Chromatic).initialize();
+}
+
+// CHROMATIC CHORD PATTERNS
+export function chromaticChordPatterns() {
+    (<any>ChromaticChordPattern).initialize();
 }
 
 // SCALES
@@ -252,6 +258,7 @@ export function all() {
     diatonics();
     diatonicAlts();
     chromatics();
+    chromaticChordPatterns();
     scales();
     sourceScales();
     tonalities();

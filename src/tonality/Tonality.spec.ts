@@ -3,7 +3,7 @@ import { Scale } from './Scale';
 import { Tonality } from './Tonality';
 import * as precalc from "../precalc";
 precalc.diatonics();
-precalc.diatonicsAlts();
+precalc.diatonicAlts();
 precalc.chromatics();
 precalc.scales();
 precalc.tonalities();
