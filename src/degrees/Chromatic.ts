@@ -38,7 +38,6 @@ export class Chromatic {
     static fromDiatonicAlt(diatonicAlt: DiatonicAlt): Chromatic {
         let chromaticInt = Chromatic.fromDiatonic(diatonicAlt.diatonic).intValue;
         chromaticInt += diatonicAlt.alts;
-        chromaticInt = MathUtils.rotativeTrim(chromaticInt, Chromatic.NUMBER);
 
         return Chromatic.fromInt(chromaticInt);
     }

@@ -1,6 +1,10 @@
 import * as precalc from "../precalc";
 import { Chromatic } from './Chromatic';
+import { DiatonicAlt } from "./DiatonicAlt";
+import { Diatonic } from "./Diatonic";
 precalc.chromatics();
+precalc.diatonics();
+precalc.diatonicAlts();
 
 test('Chromatic - intValues ', () => {
     expect(Chromatic.C.intValue).toBe(0);
@@ -30,4 +34,36 @@ test('Chromatic - fromInt ', () => {
     expect(Chromatic.fromInt(9)).toBe(Chromatic.A);
     expect(Chromatic.fromInt(10)).toBe(Chromatic.AA);
     expect(Chromatic.fromInt(11)).toBe(Chromatic.B);
+});
+
+test('Chromatic - fromDiatonic: B ', () => {
+    expect(Chromatic.fromDiatonic(Diatonic.B)).toBe(Chromatic.B);
+});
+
+test('Chromatic - fromDiatonic: C ', () => {
+    expect(Chromatic.fromDiatonic(Diatonic.C)).toBe(Chromatic.C);
+});
+
+test('Chromatic - fromDiatonic: A ', () => {
+    expect(Chromatic.fromDiatonic(Diatonic.A)).toBe(Chromatic.A);
+});
+
+test('Chromatic - fromDiatonicAlt: BBB ', () => {
+    expect(Chromatic.fromDiatonicAlt(DiatonicAlt.BBB)).toBe(Chromatic.CC);
+});
+
+test('Chromatic - fromDiatonicAlt: BB ', () => {
+    expect(Chromatic.fromDiatonicAlt(DiatonicAlt.BB)).toBe(Chromatic.C);
+});
+
+test('Chromatic - fromDiatonicAlt: C ', () => {
+    expect(Chromatic.fromDiatonicAlt(DiatonicAlt.C)).toBe(Chromatic.C);
+});
+
+test('Chromatic - fromDiatonicAlt: Cb ', () => {
+    expect(Chromatic.fromDiatonicAlt(DiatonicAlt.Cb)).toBe(Chromatic.B);
+});
+
+test('Chromatic - fromDiatonicAlt: Cbb ', () => {
+    expect(Chromatic.fromDiatonicAlt(DiatonicAlt.Cbb)).toBe(Chromatic.AA);
 });
