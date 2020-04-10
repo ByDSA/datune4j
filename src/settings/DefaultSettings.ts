@@ -7,6 +7,7 @@ import { Scale } from '../tonality/Scale';
 import { Tonality } from '../tonality/Tonality';
 import { Settings } from './Settings';
 import { SettingsInterface } from './SettingsInterface';
+import { DiatonicAltChord } from 'chords/DiatonicAltChord';
 
 export const DefaultSettings: SettingsInterface = {
     default: {
@@ -14,7 +15,8 @@ export const DefaultSettings: SettingsInterface = {
         get diatonicAlt(): DiatonicAlt { return DiatonicAlt.C },
         get scale(): Scale { return Scale.MAJOR },
         get tonality(): Tonality { return Tonality.C },
-        get chord(): ChromaticChord { return ChromaticChord.C },
+        get chromaticChord(): ChromaticChord { return ChromaticChord.C },
+        get diatonicAltChord(): DiatonicAltChord { return DiatonicAltChord.C },
         get pattern(): ChromaticChordPattern { return ChromaticChordPattern.TRIAD_MAJOR }
     },
     lang: Language.ENG,

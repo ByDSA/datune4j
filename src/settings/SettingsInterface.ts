@@ -5,6 +5,7 @@ import { Tonality } from '../tonality/Tonality';
 import { ChromaticChord } from '../chords/chromatic/ChromaticChord';
 import { ChromaticChordPattern } from '../chords/chromatic/ChromaticChordPattern';
 import { LanguageInterface } from '../lang/LanguageInterface';
+import { DiatonicAltChord } from 'chords/DiatonicAltChord';
 
 export interface SettingsInterface {
     default: {
@@ -12,7 +13,8 @@ export interface SettingsInterface {
         diatonicAlt: DiatonicAlt,
         scale: Scale,
         tonality: Tonality,
-        chord: ChromaticChord,
+        chromaticChord: ChromaticChord,
+        diatonicAltChord: DiatonicAltChord,
         pattern: ChromaticChordPattern
     },
     scales: {
