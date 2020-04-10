@@ -1,4 +1,5 @@
 import { Scale } from './Scale';
+import { ScalePrecalc } from './ScalePrecalc';
 
 export interface SourceScaleInfo {
     scale: Scale,
@@ -10,12 +11,12 @@ export class SourceScaleUtils {
     }
 
     private static _sourceScales: Scale[] = [
-        Scale.MAJOR,
-        Scale.HARMONIC_MINOR,
-        Scale.MELODIC_MINOR,
-        Scale.HARMONIC_MAJOR,
-        Scale.DOUBLE_HARMONIC,
-        Scale.PENTATONIC
+        ScalePrecalc.MAJOR,
+        ScalePrecalc.HARMONIC_MINOR,
+        ScalePrecalc.MELODIC_MINOR,
+        ScalePrecalc.HARMONIC_MAJOR,
+        ScalePrecalc.DOUBLE_HARMONIC,
+        ScalePrecalc.PENTATONIC
     ];
 
     static get sourceScales() {
@@ -37,7 +38,7 @@ export class SourceScaleUtils {
     public static getSourceScaleFrom(scale: Scale): SourceScaleInfo {
         let ret: SourceScaleInfo = SourceScaleUtils.sourceScaleMap.get(scale);
         if (!ret) {
-            let allScales: Set<Scale> = Scale.all;
+            let allScales: Set<Scale> = ScalePrecalc.all;
 
             let i = 1;
             for (const element of scale.modes) {

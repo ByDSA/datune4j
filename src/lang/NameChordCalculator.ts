@@ -2,7 +2,7 @@ import { ChromaticChord } from '../chords/chromatic/ChromaticChord';
 import { ChromaticChordPattern } from '../chords/chromatic/ChromaticChordPattern';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
 import { IntervalChromatic } from '../interval/IntervalChromatic';
-import { Naming } from './Naming';
+import { Naming } from './naming/Naming';
 
 export class NameChordCalculator {
     private pattern: ChromaticChordPattern;

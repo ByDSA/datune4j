@@ -1,8 +1,8 @@
 import { SourceScaleUtils } from './SourceScaleUtils';
-import { Scale } from './Scale';
+import { ScalePrecalc } from './ScalePrecalc';
 
 test('SourceScaleUtils - getSourceScaleFrom: ', () => {
-    for (let scale of Scale.all) {
+    for (let scale of ScalePrecalc.all) {
         let sourceScale = SourceScaleUtils.getSourceScaleFrom(scale);
         expect(sourceScale).not.toBe(undefined);
         expect(sourceScale).not.toBe(null);

@@ -7,13 +7,15 @@ import { Scale } from '../tonality/Scale';
 import { Tonality } from '../tonality/Tonality';
 import { SettingsInterface } from './SettingsInterface';
 import { Settings } from './Settings';
+import { TonalityPrecalc } from '../tonality/TonalityPrecalc';
+import { ScalePrecalc } from '../tonality/ScalePrecalc';
 
 export const DefaultSettings: SettingsInterface = {
     default: {
         get chromatic(): Chromatic { return Chromatic.C },
         get diatonicAlt(): DiatonicAlt { return DiatonicAlt.C },
-        get scale(): Scale { return Scale.MAJOR },
-        get tonality(): Tonality { return Tonality.C },
+        get scale(): Scale { return ScalePrecalc.MAJOR },
+        get tonality(): Tonality { return TonalityPrecalc.C },
         get chord(): ChromaticChord { return ChromaticChord.C },
         get pattern(): ChromaticChordPattern { return ChromaticChordPattern.TRIAD_MAJOR }
     },

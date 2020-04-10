@@ -1,4 +1,4 @@
-import { Naming } from '../lang/Naming';
+import { Naming } from '../lang/naming/Naming';
 import { IntervalChromatic } from '../interval/IntervalChromatic';
 import { IntervalDiatonicUtils } from '../interval/IntervalDiatonicUtils';
 import { Utils } from '../Utils';
