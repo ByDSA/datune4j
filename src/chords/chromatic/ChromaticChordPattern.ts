@@ -3,6 +3,7 @@ import { Hashing } from '../../Hashing';
 import { Utils } from '../../Utils';
 import { DiatonicChordPattern } from '../Diatonic/DiatonicChordPattern';
 import { ChromaticChord } from './ChromaticChord';
+import { NamingChromaticChordPattern } from '../../lang/naming/NamingChromaticChordPattern';
 
 export class ChromaticChordPattern implements Iterable<number> {
     private static immutables = new Map<string, ChromaticChordPattern>();
@@ -155,6 +156,14 @@ export class ChromaticChordPattern implements Iterable<number> {
 
     public get values(): number[] {
         return this._values;
+    }
+
+    public toString() {
+        return NamingChromaticChordPattern.toString(this);
+    }
+
+    public toStringShort() {
+        return NamingChromaticChordPattern.toStringShort(this);
     }
 
     private static initialize() {
