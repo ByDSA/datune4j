@@ -1,4 +1,4 @@
-import { Diatonic } from 'degrees/Diatonic';
+import { Diatonic } from '../degrees/Diatonic';
 import { Chromatic } from '../degrees/Chromatic';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
 import { ChromaticChordPattern } from './chromatic/ChromaticChordPattern';
