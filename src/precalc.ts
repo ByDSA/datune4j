@@ -6,7 +6,7 @@ import { Tonality } from './tonality/Tonality';
 import { Chromatic } from './degrees/Chromatic';
 import { Diatonic } from './degrees/Diatonic';
 import { ChromaticChordPattern } from './chords/chromatic/ChromaticChordPattern';
-import { DiatonicAltChord } from 'chords/DiatonicAltChord';
+import { DiatonicAltChord } from './chords/DiatonicAltChord';
 
 // DIATONICS
 export function diatonics() {
