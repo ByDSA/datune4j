@@ -1,6 +1,6 @@
 import { Chromatic } from '../../degrees/Chromatic'
 import { ChromaticChordPattern } from './ChromaticChordPattern';
-import { NameChordCalculator } from '../../lang/NameChordCalculator';
+import { NameChromaticChordCalculator } from '../../lang/naming/NameChromaticChordCalculator';
 import { DiatonicAlt } from '../../degrees/DiatonicAlt';
 import { Utils } from '../../Utils';
 
@@ -45,7 +45,7 @@ export class ChromaticChord {
 
     public updateName(rootDiatonicAlt: DiatonicAlt): void {
         Utils.assertNotNull(rootDiatonicAlt);
-        this.str = new NameChordCalculator(this, rootDiatonicAlt).get();
+        this.str = new NameChromaticChordCalculator(this, rootDiatonicAlt).get();
     }
 
     public get rootIndex(): number {

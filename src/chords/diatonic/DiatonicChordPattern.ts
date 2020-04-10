@@ -16,11 +16,11 @@ export class DiatonicChordPattern {
     public static SUS4 = DiatonicChordPattern.fromArray(0, 3, 4);
     public static SEVENTH_SUS4 = DiatonicChordPattern.fromArray(0, 3, 4, 6);
 
-    private values: number[];
+    private _values: number[];
     private diatonicChordPattern: DiatonicChordPattern;
 
     private constructor(first?: number | number[], ...rest: number[]) {
-        this.values =
+        this._values =
             first === undefined
                 ? []
                 : first instanceof Array
@@ -39,11 +39,11 @@ export class DiatonicChordPattern {
         return new DiatonicChordPattern(patternArray);
     }
 
-    public getValues(): number[] {
-        return this.values;
+    public get values(): number[] {
+        return Array.from(this._values);
     }
 
     public toString(): string {
-        return this.values.toString();
+        return this._values.toString();
     }
 }

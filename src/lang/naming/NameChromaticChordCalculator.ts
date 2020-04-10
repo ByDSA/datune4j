@@ -1,10 +1,9 @@
-import { ChromaticChord } from '../chords/chromatic/ChromaticChord';
-import { ChromaticChordPattern } from '../chords/chromatic/ChromaticChordPattern';
-import { DiatonicAlt } from '../degrees/DiatonicAlt';
-import { IntervalChromatic } from '../interval/IntervalChromatic';
-import { Naming } from './naming/Naming';
+import { ChromaticChord } from '../../chords/chromatic/ChromaticChord';
+import { ChromaticChordPattern } from '../../chords/chromatic/ChromaticChordPattern';
+import { DiatonicAlt } from '../../degrees/DiatonicAlt';
+import { IntervalChromatic } from '../../interval/IntervalChromatic';
 
-export class NameChordCalculator {
+export class NameChromaticChordCalculator {
     private pattern: ChromaticChordPattern;
     private inversion: number;
 
@@ -29,7 +28,7 @@ export class NameChordCalculator {
 
     private getInversionDiatonicAlt(): DiatonicAlt {
         let semis: number = this.pattern.values[this.inversion];
-        let intervalDiatonic: number = this.pattern.getDiatonicChordPattern().getValues()[this.inversion];
+        let intervalDiatonic: number = this.pattern.diatonicChordPattern.values[this.inversion];
         let intervalChromatic = IntervalChromatic.fromSemisAndNotes(semis, intervalDiatonic);
         return this.rootDiatonicAlt.getShifted(intervalChromatic);
     }

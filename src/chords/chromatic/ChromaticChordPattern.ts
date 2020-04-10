@@ -4,6 +4,8 @@ import { Utils } from '../../Utils';
 import { DiatonicChordPattern } from '../Diatonic/DiatonicChordPattern';
 import { ChromaticChord } from './ChromaticChord';
 import { NamingChromaticChordPattern } from '../../lang/naming/NamingChromaticChordPattern';
+import { DiatonicAltChord } from '../../chords/DiatonicAltChord';
+import { DiatonicAlt } from '../../degrees/DiatonicAlt';
 
 export class ChromaticChordPattern implements Iterable<number> {
     private static immutables = new Map<string, ChromaticChordPattern>();
@@ -75,7 +77,7 @@ export class ChromaticChordPattern implements Iterable<number> {
 
     private _values: number[];
     private valuesHash: string;
-    private diatonicChordPattern: DiatonicChordPattern;
+    private _diatonicChordPattern: DiatonicChordPattern;
 
     private constructor(first?: number | number[], ...rest: number[]) {
         this._values =
@@ -90,7 +92,7 @@ export class ChromaticChordPattern implements Iterable<number> {
 
     private static fromArrayAndDiatonicChordPattern(diatonicChordPattern: DiatonicChordPattern, ...rest: number[]): ChromaticChordPattern {
         let instance = this.fromArray(rest);
-        instance.diatonicChordPattern = diatonicChordPattern;
+        instance._diatonicChordPattern = diatonicChordPattern;
         return instance;
     }
 
@@ -146,12 +148,24 @@ export class ChromaticChordPattern implements Iterable<number> {
         return immutableCache;
     }
 
+    static fromDiatonicAltChord(chord: DiatonicAltChord): ChromaticChordPattern {
+        let notes: DiatonicAlt[] = chord.notes;
+        let notesChromatic: Chromatic[] = [];
+        for (let diatonicAlt of notes) {
+            let chromatic = Chromatic.fromDiatonicAlt(diatonicAlt);
+            notesChromatic.push(chromatic);
+        }
+        let chromaticChord = ChromaticChord.fromRootNotes(0, notesChromatic);
+
+        return ChromaticChordPattern.from(chromaticChord);
+    }
+
     [Symbol.iterator](): Iterator<number> {
         return this.values[Symbol.iterator]();
     }
 
-    getDiatonicChordPattern(): DiatonicChordPattern {
-        return this.diatonicChordPattern;
+    get diatonicChordPattern(): DiatonicChordPattern {
+        return this._diatonicChordPattern;
     }
 
     public get values(): number[] {
