@@ -1,8 +1,8 @@
+import { NamingDiatonicAlt } from '../lang/naming/NamingDiatonicAlt';
 import { Hashable } from '../Hashable';
 import { Hashing } from '../Hashing';
 import { IntervalChromatic } from '../interval/IntervalChromatic';
 import { IntervalDiatonicUtils } from '../interval/IntervalDiatonicUtils';
-import { Settings } from '../settings/Settings';
 import { Utils } from '../Utils';
 import { Chromatic } from './Chromatic';
 import { Diatonic } from './Diatonic';
@@ -220,7 +220,7 @@ export class DiatonicAlt implements Hashable {
     }
 
     public toString(): string {
-        return this.diatonic.toString() + Settings.symbols.alts(this.alts);
+        return NamingDiatonicAlt.toString(this);
     }
 
     hashCode(): string {
