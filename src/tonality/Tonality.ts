@@ -1,5 +1,4 @@
 import { Chromatic } from '../degrees/Chromatic';
-import { ChromaticUtils } from '../degrees/ChromaticUtils';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
 import { DiatonicUtils } from '../degrees/DiatonicUtils';
 import { Immutables } from '../Immutables';
@@ -61,17 +60,18 @@ export class Tonality {
     private calculateNotes(): void {
         this.notes.push(this.root);
 
-        let lastNote = ChromaticUtils.fromDiatonicAlt(this.root);
+        let lastChromaticInt = Chromatic.fromDiatonicAlt(this.root).intValue;
         let lastDiatonic = this.root.diatonic;
         let i = 0;
         for (let n of this.scale.intervals) {
             if (i >= this.scale.intervals.length)
                 continue;
-            lastNote += n;
-            lastNote %= ChromaticUtils.NUMBER;
+            lastChromaticInt += n;
+            lastChromaticInt %= Chromatic.NUMBER;
             lastDiatonic++;
             lastDiatonic %= DiatonicUtils.NUMBER;
-            let note = DiatonicAlt.fromChromatic(lastNote, lastDiatonic);
+            let lastChromatic = Chromatic.fromInt(lastChromaticInt);
+            let note = DiatonicAlt.fromChromatic(lastChromatic, lastDiatonic);
             this.notes.push(note);
         }
     }

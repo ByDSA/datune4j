@@ -3,7 +3,6 @@ import { IntervalChromatic } from '../interval/IntervalChromatic';
 import { IntervalDiatonicUtils } from '../interval/IntervalDiatonicUtils';
 import { Utils } from '../Utils';
 import { Chromatic } from './Chromatic';
-import { ChromaticUtils } from './ChromaticUtils';
 import { Diatonic } from './Diatonic';
 import { DiatonicUtils } from './DiatonicUtils';
 import { Hashing } from '../Hashing';
@@ -203,12 +202,12 @@ export class DiatonicAlt implements Hashable {
 
         let intervalDiatonic = IntervalDiatonicUtils.fromIntervalChromatic(intervalChromatic);
         let diatonic = DiatonicUtils.getShifted(this.diatonic, intervalDiatonic);
-        let alts = ChromaticUtils.fromDiatonicAlt(this) + intervalChromatic.semis - ChromaticUtils.fromDiatonic(diatonic);
-        alts %= ChromaticUtils.NUMBER;
+        let alts = Chromatic.fromDiatonicAlt(this).intValue + intervalChromatic.semis - Chromatic.fromDiatonic(diatonic).intValue;
+        alts %= Chromatic.NUMBER;
         if (alts > 4)
-            alts -= ChromaticUtils.NUMBER;
+            alts -= Chromatic.NUMBER;
         else if (alts < -4)
-            alts += ChromaticUtils.NUMBER;
+            alts += Chromatic.NUMBER;
 
         return DiatonicAlt.from(diatonic, alts);
     }

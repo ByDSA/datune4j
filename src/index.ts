@@ -2,7 +2,6 @@ export * from './chords/chromatic/ChromaticChord';
 export * from './chords/chromatic/ChromaticChordPattern';
 export * from './CommonDifferentCalculator';
 export * from './degrees/Chromatic';
-export * from './degrees/ChromaticUtils';
 export * from './degrees/Diatonic';
 export * from './degrees/DiatonicAlt';
 export * from './degrees/DiatonicUtils';
@@ -24,6 +23,4 @@ export * from './Utils';
 
 // precalc
 import * as precalc from './precalc';
-precalc.scales();
-precalc.sourceScales();
-precalc.tonalities();
+precalc.all();

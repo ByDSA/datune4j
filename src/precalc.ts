@@ -3,6 +3,12 @@ import { Scale } from './tonality/Scale';
 import { ScaleModeUtils } from './tonality/ScaleModeUtils';
 import { SourceScaleUtils } from './tonality/SourceScaleUtils';
 import { Tonality } from './tonality/Tonality';
+import { Chromatic } from './degrees/Chromatic';
+
+// CHROMATICS
+export function chromatics() {
+    (<any>Chromatic).initialize();
+}
 
 // SCALES
 export function scales() {
@@ -230,3 +236,10 @@ export function tonalities() {
     Tonality.Am = Tonality.from(DiatonicAlt.A, Scale.MINOR);
     Tonality.Bm = Tonality.from(DiatonicAlt.B, Scale.MINOR);
 };
+
+export function all() {
+    this.chromatics();
+    this.scales();
+    this.sourceScales();
+    this.tonalities();
+}

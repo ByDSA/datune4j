@@ -1,6 +1,5 @@
 import { Chromatic } from '../../degrees/Chromatic'
 import { ChromaticChordPattern } from './ChromaticChordPattern';
-import { ChromaticUtils } from '../../degrees/ChromaticUtils';
 import { NameChordCalculator } from '../../lang/NameChordCalculator';
 import { DiatonicAlt } from '../../degrees/DiatonicAlt';
 import { Utils } from '../../Utils';
@@ -29,7 +28,7 @@ export class ChromaticChord {
                 continue;
             }
 
-            let chromaticShifted = ChromaticUtils.getShiftedBySemis(root, semis);
+            let chromaticShifted = Chromatic.getShiftedBySemis(root, semis);
             notes.push(chromaticShifted);
         }
 
