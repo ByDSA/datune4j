@@ -1,6 +1,7 @@
 import { IntervalDiatonic } from '../interval/IntervalDiatonic';
 import { NamingDiatonic } from '../lang/naming/NamingDiatonic';
 import { MathUtils } from '../Utils/MathUtils';
+import { Immutables } from '../Utils/Immutables';
 
 export class Diatonic {
     static C: Diatonic;
@@ -52,5 +53,7 @@ export class Diatonic {
         Diatonic.G = new Diatonic(4);
         Diatonic.A = new Diatonic(5);
         Diatonic.B = new Diatonic(6);
+
+        Immutables.lock(Diatonic);
     }
 }

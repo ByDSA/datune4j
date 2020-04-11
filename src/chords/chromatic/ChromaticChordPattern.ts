@@ -6,6 +6,7 @@ import { ChromaticChord } from './ChromaticChord';
 import { NamingChromaticChordPattern } from '../../lang/naming/NamingChromaticChordPattern';
 import { DiatonicAltChord } from '../../chords/DiatonicAltChord';
 import { DiatonicAlt } from '../../degrees/DiatonicAlt';
+import { Immutables } from 'Utils/Immutables';
 
 export class ChromaticChordPattern implements Iterable<number> {
     private static immutables = new Map<string, ChromaticChordPattern>();
@@ -304,5 +305,7 @@ export class ChromaticChordPattern implements Iterable<number> {
                 this.THIRTEENTH_MAJ13_a5a9
             ];
         }
+
+        Immutables.lockr(ChromaticChordPattern);
     }
 }

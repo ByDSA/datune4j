@@ -6,6 +6,7 @@ import { IntervalDiatonicUtils } from '../interval/IntervalDiatonicUtils';
 import { Utils } from '../Utils/Utils';
 import { Chromatic } from './Chromatic';
 import { Diatonic } from './Diatonic';
+import { Immutables } from '../Utils/Immutables';
 
 export class DiatonicAlt implements Hashable {
     public static C: DiatonicAlt;
@@ -269,5 +270,7 @@ export class DiatonicAlt implements Hashable {
         DiatonicAlt.BBB = DiatonicAlt.from(Diatonic.B, 2);
         DiatonicAlt.Bb = DiatonicAlt.from(Diatonic.B, -1);
         DiatonicAlt.Bbb = DiatonicAlt.from(Diatonic.B, -2);
+
+        Immutables.lockr(DiatonicAlt);
     }
 }
