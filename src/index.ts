@@ -8,8 +8,6 @@ export * from './Hashing';
 export * from './lang/Language';
 export * from './lang/LanguageInterface';
 export * from './lang/naming/Naming';
-export * from './lang/naming/NamingChromatic';
-export * from './lang/naming/NamingScale';
 export * from './settings/DefaultSettings';
 export * from './settings/Settings';
 export * from './settings/SettingsInterface';

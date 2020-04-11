@@ -1,6 +1,3 @@
-import { ChromaticChordPattern } from '../../chords/chromatic/ChromaticChordPattern';
-import { Diatonic } from '../../degrees/Diatonic';
-import { DiatonicAlt } from '../../degrees/DiatonicAlt';
 import { Settings } from '../../settings/Settings';
 import { Scale } from '../../tonality/Scale';
 import { ScaleUtils } from '../../tonality/ScaleUtils';

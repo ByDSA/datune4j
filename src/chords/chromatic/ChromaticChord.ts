@@ -29,7 +29,7 @@ export class ChromaticChord {
                 continue;
             }
 
-            let chromaticShifted = Chromatic.getShiftedBySemis(root, semis);
+            let chromaticShifted = root.getShift(semis);
             notes.push(chromaticShifted);
         }
 
