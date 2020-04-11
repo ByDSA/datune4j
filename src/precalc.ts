@@ -7,6 +7,8 @@ import { Chromatic } from './degrees/Chromatic';
 import { Diatonic } from './degrees/Diatonic';
 import { ChromaticChordPattern } from './chords/chromatic/ChromaticChordPattern';
 import { DiatonicAltChord } from './chords/DiatonicAltChord';
+import { Settings } from './settings/Settings';
+import { DefaultSettings } from './settings/DefaultSettings';
 
 // DIATONICS
 export function diatonics() {
@@ -260,6 +262,11 @@ export function tonalities() {
     Tonality.Bm = Tonality.from(DiatonicAlt.B, Scale.MINOR);
 };
 
+// Settings
+export function settings() {
+    Object.assign(Settings, DefaultSettings)
+}
+
 export function all() {
     diatonics();
     diatonicAlts();
@@ -269,4 +276,5 @@ export function all() {
     scales();
     sourceScales();
     tonalities();
+    settings();
 }

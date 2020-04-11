@@ -1,5 +1,6 @@
 import { ChromaticChord } from '../chords/chromatic/ChromaticChord';
 import { ChromaticChordPattern } from '../chords/chromatic/ChromaticChordPattern';
+import { DiatonicAltChord } from '../chords/DiatonicAltChord';
 import { Chromatic } from '../degrees/Chromatic';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
 import { Language } from '../lang/Language';
@@ -7,7 +8,6 @@ import { Scale } from '../tonality/Scale';
 import { Tonality } from '../tonality/Tonality';
 import { Settings } from './Settings';
 import { SettingsInterface } from './SettingsInterface';
-import { DiatonicAltChord } from '../chords/DiatonicAltChord';
 
 export const DefaultSettings: SettingsInterface = {
     default: {
@@ -19,7 +19,7 @@ export const DefaultSettings: SettingsInterface = {
         get diatonicAltChord(): DiatonicAltChord { return DiatonicAltChord.C },
         get pattern(): ChromaticChordPattern { return ChromaticChordPattern.TRIAD_MAJOR }
     },
-    lang: Language.ENG,
+    get lang() { return Language.ENG},
     scales: {
         get MAJOR(): string { return Settings.lang.scales.MAJOR },
         get MINOR(): string { return Settings.lang.scales.MINOR },
