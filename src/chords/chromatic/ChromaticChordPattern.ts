@@ -1,12 +1,11 @@
+import { DiatonicAltChord } from '../../chords/DiatonicAltChord';
 import { Chromatic } from '../../degrees/Chromatic';
+import { NamingChromaticChordPattern } from '../../lang/naming/NamingChromaticChordPattern';
 import { Hashing } from '../../Utils/Hashing';
+import { Immutables } from '../../Utils/Immutables';
 import { Utils } from '../../Utils/Utils';
 import { DiatonicChordPattern } from '../Diatonic/DiatonicChordPattern';
 import { ChromaticChord } from './ChromaticChord';
-import { NamingChromaticChordPattern } from '../../lang/naming/NamingChromaticChordPattern';
-import { DiatonicAltChord } from '../../chords/DiatonicAltChord';
-import { DiatonicAlt } from '../../degrees/DiatonicAlt';
-import { Immutables } from 'Utils/Immutables';
 
 export class ChromaticChordPattern implements Iterable<number> {
     private static immutables = new Map<string, ChromaticChordPattern>();
