@@ -2,6 +2,7 @@ import { IntervalDiatonic } from '../interval/IntervalDiatonic';
 import { NamingDiatonic } from '../lang/naming/NamingDiatonic';
 import { MathUtils } from '../Utils/MathUtils';
 import { Immutables } from '../Utils/Immutables';
+import { Hashing } from '../Utils/Hashing';
 
 export class Diatonic {
     static C: Diatonic;
@@ -43,6 +44,10 @@ export class Diatonic {
 
     toString() {
         return NamingDiatonic.toString(this);
+    }
+
+    hashCode(): string {
+       return Hashing.hash(this.intValue);
     }
 
     private static initialize() {
