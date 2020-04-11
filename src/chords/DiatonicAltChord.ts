@@ -1,27 +1,62 @@
-import { Diatonic } from '../degrees/Diatonic';
 import { Chromatic } from '../degrees/Chromatic';
+import { Diatonic } from '../degrees/Diatonic';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
-import { ChromaticChordPattern } from './chromatic/ChromaticChordPattern';
-import { Utils } from '../Utils/Utils';
 import { NameDiatonicAltChordCalculator } from '../lang/naming/NameDiatonicAltChordCalculator';
+import { Assert } from '../Utils/Assert';
+import { Hashing } from '../Utils/Hashing';
 import { Immutables } from '../Utils/Immutables';
+import { ImmutablesCache } from '../Utils/ImmutablesCache';
+import { Utils } from '../Utils/Utils';
+import { ChromaticChordPattern } from './chromatic/ChromaticChordPattern';
 
+type HashingObjectType = { rootIndex: number, notes: DiatonicAlt[] };
 export class DiatonicAltChord {
     public static C: DiatonicAltChord;
+    public static C7: DiatonicAltChord;
 
-    private str: string;
+    private static immutablesCache = new ImmutablesCache<DiatonicAltChord, HashingObjectType>(
+        function (hashingObject: HashingObjectType) {
+            let ret = Hashing.hash(hashingObject.rootIndex);
+            for (let diatonicAlt of hashingObject.notes)
+                ret += diatonicAlt.hashCode();
+
+            return ret;
+        },
+        function (diatonicAltChord: DiatonicAltChord): HashingObjectType {
+            return { rootIndex: diatonicAltChord.rootIndex, notes: diatonicAltChord.notes };
+        },
+        function (hashingObject: HashingObjectType): DiatonicAltChord {
+            return new DiatonicAltChord(hashingObject.rootIndex, hashingObject.notes);
+        }
+    );
 
     private constructor(private _rootIndex: number, private _notes: DiatonicAlt[]) {
-        this.calculateName();
         Immutables.lockr(this);
     }
 
+    private static checkValidNotes(notes: DiatonicAlt[]) {
+        for (let note of notes)
+            Assert.notNull(note);
+    }
+
     public static fromRootNotes(rootIndex: number, notes: DiatonicAlt[]): DiatonicAltChord {
-        return new DiatonicAltChord(rootIndex, notes);
+        this.checkValidNotes(notes);
+        return DiatonicAltChord.immutablesCache.getOrCreate(
+            {
+                rootIndex: rootIndex,
+                notes: notes
+            }
+        );
     }
 
     public static fromRootPattern(root: DiatonicAlt, pattern: ChromaticChordPattern, inversion: number = 0): DiatonicAltChord {
         let rootPos = this.inversionToRootPos(inversion, pattern.values.length);
+        let notes = this.getNotesFromPattern(root, pattern);
+
+        return DiatonicAltChord.fromRootNotes(rootPos, notes);
+    }
+
+    private static getNotesFromPattern(root: DiatonicAlt, pattern: ChromaticChordPattern) {
         let notes: DiatonicAlt[] = [root];
         let rootChromaticInt = Chromatic.fromDiatonicAlt(root).intValue;
         let rootDiatonicInt = root.diatonic.intValue;
@@ -42,7 +77,7 @@ export class DiatonicAltChord {
             notes.push(diatonicAlt);
         }
 
-        return DiatonicAltChord.fromRootNotes(rootPos, notes);
+        return notes;
     }
 
     public get root(): DiatonicAlt {
@@ -51,10 +86,6 @@ export class DiatonicAltChord {
 
     private static inversionToRootPos(inv: number, length: number): number {
         return (length - inv) % length;
-    }
-
-    private calculateName(): void {
-        this.str = new NameDiatonicAltChordCalculator(this).get();
     }
 
     public get rootIndex(): number {
@@ -73,12 +104,13 @@ export class DiatonicAltChord {
     }
 
     public toString(): string {
-        return this.str;
+        return new NameDiatonicAltChordCalculator(this).get();
     }
 
     private static initialize() {
-        DiatonicAltChord.C = new DiatonicAltChord(0, [DiatonicAlt.C, DiatonicAlt.E, DiatonicAlt.G]);
+        DiatonicAltChord.C = DiatonicAltChord.fromRootNotes(0, [DiatonicAlt.C, DiatonicAlt.E, DiatonicAlt.G]);
+        DiatonicAltChord.C7 = DiatonicAltChord.fromRootNotes(0, [DiatonicAlt.C, DiatonicAlt.E, DiatonicAlt.G, DiatonicAlt.Bb]);
 
-        Immutables.lockr(DiatonicAlt);
+        Immutables.lockrIf(DiatonicAltChord, (obj) => !(obj instanceof ImmutablesCache));
     }
 }
