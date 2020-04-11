@@ -1,12 +1,13 @@
 import { Scale } from './Scale';
 import { Utils } from '../Utils/Utils';
+import { Assert } from '../Utils/Assert';
 
 export class ScaleModeUtils {
     private constructor() {
     }
 
     public static getMode(sourceScale: Scale, n: number): Scale {
-        Utils.assertNotNull(sourceScale);
+        Assert.notNull(sourceScale);
 
         if (n > 0)
             return ScaleModeUtils.getRotatedScale(sourceScale, n - 1);
@@ -17,6 +18,8 @@ export class ScaleModeUtils {
     }
 
     public static getRotatedScale(sourceScale: Scale, n: number): Scale {
+        Assert.notNull(sourceScale);
+        
         let scaleIntervals: number[] = sourceScale.intervals;
         
         if (n > 0)

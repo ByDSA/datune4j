@@ -1,6 +1,6 @@
 import { Quality } from '../Quality';
+import { Assert } from '../Utils/Assert';
 import { IntervalDiatonic } from './IntervalDiatonic';
-import { Utils } from '../Utils/Utils';
 
 export class IntervalChromatic {
     public static PERFECT_UNISON = IntervalChromatic.from(0, Quality.PERFECT);
@@ -64,8 +64,8 @@ export class IntervalChromatic {
     }
 
     public static fromSemisAndNotes(semitones: number, intervalDiatonic: IntervalDiatonic): IntervalChromatic {
-        Utils.assertNotNull(semitones);
-        Utils.assertNotNull(intervalDiatonic);
+        Assert.notNull(semitones);
+        Assert.notNull(intervalDiatonic);
 
         switch (intervalDiatonic) {
             case IntervalDiatonic.UNISON:

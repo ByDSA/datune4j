@@ -1,4 +1,4 @@
-import { AssertionError } from 'assert';
+import { Assert } from './Assert';
 
 export class Utils {
   static cloneString(str: String): string {
@@ -6,7 +6,7 @@ export class Utils {
   }
 
   static arrayRemove<T>(array: T[], item: T): boolean {
-    this.assertNotNull(array);
+    Assert.notNull(array);
 
     let index = array.indexOf(item);
     if (index >= 0 && index < array.length) {
@@ -17,13 +17,8 @@ export class Utils {
     return false;
   }
 
-  public static assertNotNull(v: any, message?: string): void {
-    if (v === undefined || v === null)
-      throw new Error("Variable is null or undefined." + (message ? " " + message : ""));
-  }
-
   public static arrayRotate<T>(array: T[], n: number, reverse = false): T[] {
-    this.assertNotNull(array);
+    Assert.notNull(array);
 
     for (let i = 0; i < n; i++)
       if (reverse)
@@ -38,7 +33,7 @@ export class Utils {
   }
 
   public static setAddArray<T>(set: Set<T>, array: T[]): void {
-    this.assertNotNull(array);
+    Assert.notNull(array);
 
     for (let e of array)
       set.add(e);
@@ -60,8 +55,8 @@ export class Utils {
   }
 
   public static arraySameContent<T>(a: T[], b: T[]): boolean {
-    this.assertNotNull(a);
-    this.assertNotNull(b);
+    Assert.notNull(a);
+    Assert.notNull(b);
 
     if (a == b)
       return true;

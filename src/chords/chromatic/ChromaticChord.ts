@@ -4,6 +4,7 @@ import { NameChromaticChordCalculator } from '../../lang/naming/NameChromaticCho
 import { DiatonicAlt } from '../../degrees/DiatonicAlt';
 import { Utils } from '../../Utils/Utils';
 import { DiatonicAltChord } from '../../chords/DiatonicAltChord';
+import { Assert } from '../../Utils/Assert';
 
 export class ChromaticChord {
     public static C = new ChromaticChord(0, [Chromatic.C, Chromatic.E, Chromatic.G]);
@@ -55,7 +56,7 @@ export class ChromaticChord {
     }
 
     public updateName(rootDiatonicAlt: DiatonicAlt): void {
-        Utils.assertNotNull(rootDiatonicAlt);
+        Assert.notNull(rootDiatonicAlt);
         this.str = new NameChromaticChordCalculator(this, rootDiatonicAlt).get();
     }
 

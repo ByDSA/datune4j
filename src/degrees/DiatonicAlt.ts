@@ -1,12 +1,12 @@
-import { NamingDiatonicAlt } from '../lang/naming/NamingDiatonicAlt';
-import { Hashable } from '../Utils/Hashable';
-import { Hashing } from '../Utils/Hashing';
 import { IntervalChromatic } from '../interval/IntervalChromatic';
 import { IntervalDiatonicUtils } from '../interval/IntervalDiatonicUtils';
-import { Utils } from '../Utils/Utils';
+import { NamingDiatonicAlt } from '../lang/naming/NamingDiatonicAlt';
+import { Assert } from '../Utils/Assert';
+import { Hashable } from '../Utils/Hashable';
+import { Hashing } from '../Utils/Hashing';
+import { Immutables } from '../Utils/Immutables';
 import { Chromatic } from './Chromatic';
 import { Diatonic } from './Diatonic';
-import { Immutables } from '../Utils/Immutables';
 
 export class DiatonicAlt implements Hashable {
     public static C: DiatonicAlt;
@@ -198,7 +198,7 @@ export class DiatonicAlt implements Hashable {
     }
 
     getShifted(intervalChromatic: IntervalChromatic): DiatonicAlt {
-        Utils.assertNotNull(intervalChromatic);
+        Assert.notNull(intervalChromatic);
 
         let intervalDiatonic = IntervalDiatonicUtils.fromIntervalChromatic(intervalChromatic);
         let diatonic = Diatonic.getShifted(this.diatonic, intervalDiatonic);

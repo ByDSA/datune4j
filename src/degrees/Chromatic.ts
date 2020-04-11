@@ -1,5 +1,6 @@
 import { IntervalChromatic } from '../interval/IntervalChromatic';
 import { NamingChromatic } from '../lang/naming/NamingChromatic';
+import { Assert } from '../Utils/Assert';
 import { Immutables } from '../Utils/Immutables';
 import { MathUtils } from '../Utils/MathUtils';
 import { Diatonic } from './Diatonic';
@@ -27,6 +28,7 @@ export class Chromatic {
     }
 
     static fromDiatonic(diatonic: Diatonic): Chromatic {
+        Assert.notNull(diatonic);
         switch (diatonic) {
             case Diatonic.C: return Chromatic.C;
             case Diatonic.D: return Chromatic.D;
@@ -60,6 +62,7 @@ export class Chromatic {
     }
 
     static fromDiatonicAlt(diatonicAlt: DiatonicAlt): Chromatic {
+        Assert.notNull(diatonicAlt);
         let chromaticInt = Chromatic.fromDiatonic(diatonicAlt.diatonic).intValue;
         chromaticInt += diatonicAlt.alts;
 
