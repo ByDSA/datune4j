@@ -8,6 +8,7 @@ import { IntervalChromatic } from "../interval/IntervalChromatic";
 precalc.chromatics();
 precalc.diatonics();
 precalc.diatonicAlts();
+precalc.settings();
 
 test('Chromatic - precalc ', () => {
     expect(Chromatic.C).not.toBe(undefined);
@@ -108,6 +109,14 @@ test('Chromatic - fromDiatonicAlt: Cb ', () => {
 
 test('Chromatic - fromDiatonicAlt: Cbb ', () => {
     expect(Chromatic.fromDiatonicAlt(DiatonicAlt.Cbb)).toBe(Chromatic.AA);
+});
+
+test('Chromatic - fromDiatonicAlt: Custom Cbbb ', () => {
+    expect(Chromatic.fromDiatonicAlt(DiatonicAlt.from(Diatonic.C, -3))).toBe(Chromatic.A);
+});
+
+test('Chromatic - fromDiatonicAlt: Custom Ebbbb ', () => {
+    expect(Chromatic.fromDiatonicAlt(DiatonicAlt.from(Diatonic.E, -4))).toBe(Chromatic.C);
 });
 
 test('Chromatic - toString() - ENG', () => {
