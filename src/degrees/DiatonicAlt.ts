@@ -7,7 +7,9 @@ import { Hashing } from '../Utils/Hashing';
 import { Immutables } from '../Utils/Immutables';
 import { Chromatic } from './Chromatic';
 import { Diatonic } from './Diatonic';
+import { ImmutablesCache } from '../Utils/ImmutablesCache';
 
+type HashingObjectType = { diatonic: Diatonic, alts: number };
 export class DiatonicAlt implements Hashable {
     public static C: DiatonicAlt;
     public static CC: DiatonicAlt;
@@ -51,147 +53,54 @@ export class DiatonicAlt implements Hashable {
     public static Bb: DiatonicAlt;
     public static Bbb: DiatonicAlt;
 
+    private static immutablesCache = new ImmutablesCache<DiatonicAlt, HashingObjectType>(
+        function (hashingObject: HashingObjectType) {
+            return hashingObject.diatonic.hashCode() + Hashing.hash(Chromatic.NUMBER+hashingObject.alts); // +Chromatic.Number, porque hay problema con hash de números negativos
+        },
+        function (diatonicAlt: DiatonicAlt): HashingObjectType {
+            return { diatonic: diatonicAlt.diatonic, alts: diatonicAlt.alts };
+        },
+        function (hashingObject: HashingObjectType): DiatonicAlt {
+            return new DiatonicAlt(hashingObject.diatonic, hashingObject.alts);
+        }
+    );
+
     public static from(diatonic: Diatonic, alts: number): DiatonicAlt {
-        return new DiatonicAlt(diatonic, alts);
+        return DiatonicAlt.immutablesCache.getOrCreate({ diatonic: diatonic, alts: alts });
     }
 
     public static fromChromatic(chromatic: Chromatic, diatonic?: Diatonic): DiatonicAlt {
-        switch (chromatic) {
-            case Chromatic.C:
-                switch (diatonic) {
-                    case Diatonic.B:
-                        return DiatonicAlt.BB;
-                    case undefined:
-                    case Diatonic.C:
-                        return DiatonicAlt.C;
-                    case Diatonic.D:
-                        return DiatonicAlt.Dbb;
-
-                }
-                break;
-            case Chromatic.CC:
-                switch (diatonic) {
-                    case Diatonic.B:
-                        return DiatonicAlt.BBB;
-                    case undefined:
-                    case Diatonic.C:
-                        return DiatonicAlt.CC;
-                    case Diatonic.D:
-                        return DiatonicAlt.Db;
-                }
-                break;
-            case Chromatic.D:
-                switch (diatonic) {
-                    case Diatonic.C:
-                        return DiatonicAlt.CCC;
-                    case undefined:
-                    case Diatonic.D:
-                        return DiatonicAlt.D;
-                    case Diatonic.E:
-                        return DiatonicAlt.Ebb;
-                }
-                break;
-            case Chromatic.DD:
-                switch (diatonic) {
-                    case undefined:
-                    case Diatonic.D:
-                        return DiatonicAlt.DD;
-                    case Diatonic.E:
-                        return DiatonicAlt.Eb;
-                    case Diatonic.F:
-                        return DiatonicAlt.Fbb;
-                }
-                break;
-            case Chromatic.E:
-                switch (diatonic) {
-                    case Diatonic.D:
-                        return DiatonicAlt.DDD;
-                    case undefined:
-                    case Diatonic.E:
-                        return DiatonicAlt.E;
-                    case Diatonic.F:
-                        return DiatonicAlt.Fb;
-                }
-                break;
-            case Chromatic.F:
-                switch (diatonic) {
-                    case Diatonic.E:
-                        return DiatonicAlt.EE;
-                    case undefined:
-                    case Diatonic.F:
-                        return DiatonicAlt.F;
-                    case Diatonic.G:
-                        return DiatonicAlt.Gbb;
-                }
-                break;
-            case Chromatic.FF:
-                switch (diatonic) {
-                    case Diatonic.E:
-                        return DiatonicAlt.EEE;
-                    case undefined:
-                    case Diatonic.F:
-                        return DiatonicAlt.FF;
-                    case Diatonic.G:
-                        return DiatonicAlt.Gb;
-                }
-                break;
-            case Chromatic.G:
-                switch (diatonic) {
-                    case Diatonic.F:
-                        return DiatonicAlt.FFF;
-                    case undefined:
-                    case Diatonic.G:
-                        return DiatonicAlt.G;
-                    case Diatonic.A:
-                        return DiatonicAlt.Abb;
-
-                }
-                break;
-            case Chromatic.GG:
-                switch (diatonic) {
-                    case undefined:
-                    case Diatonic.G:
-                        return DiatonicAlt.GG;
-                    case Diatonic.A:
-                        return DiatonicAlt.Ab;
-                }
-                break;
-            case Chromatic.A:
-                switch (diatonic) {
-                    case Diatonic.G:
-                        return DiatonicAlt.GGG;
-                    case undefined:
-                    case Diatonic.A:
-                        return DiatonicAlt.A;
-                    case Diatonic.B:
-                        return DiatonicAlt.Bbb;
-
-                }
-                break;
-            case Chromatic.AA:
-                switch (diatonic) {
-                    case undefined:
-                    case Diatonic.A:
-                        return DiatonicAlt.AA;
-                    case Diatonic.D:
-                        return DiatonicAlt.Bb;
-                }
-                break;
-            case Chromatic.B:
-                switch (diatonic) {
-                    case Diatonic.A:
-                        return DiatonicAlt.AAA;
-                    case undefined:
-                    case Diatonic.B:
-                        return DiatonicAlt.B;
-                    case Diatonic.C:
-                        return DiatonicAlt.Cb;
-                }
-                break;
+        if (!diatonic) {
+            switch (chromatic) {
+                case Chromatic.C: return DiatonicAlt.C;
+                case Chromatic.CC: return DiatonicAlt.CC;
+                case Chromatic.D: return DiatonicAlt.D;
+                case Chromatic.DD: return DiatonicAlt.DD;
+                case Chromatic.E: return DiatonicAlt.E;
+                case Chromatic.F: return DiatonicAlt.F;
+                case Chromatic.FF: return DiatonicAlt.FF;
+                case Chromatic.G: return DiatonicAlt.G;
+                case Chromatic.GG: return DiatonicAlt.GG;
+                case Chromatic.A: return DiatonicAlt.A;
+                case Chromatic.AA: return DiatonicAlt.AA;
+                case Chromatic.B: return DiatonicAlt.B;
+            }
         }
 
-        Error();
+        let alts = DiatonicAlt.getAltsFromChromaticAndDiatonic(chromatic, diatonic);
 
+        return DiatonicAlt.from(diatonic, alts);
+    }
+
+    private static getAltsFromChromaticAndDiatonic(chromatic: Chromatic, diatonic: Diatonic): number {
+        let alts = chromatic.intValue - Chromatic.fromDiatonic(diatonic).intValue;
+        alts %= Chromatic.NUMBER;
+        if (alts <= -6)
+            alts += Chromatic.NUMBER;
+        else if (alts > 6)
+            alts -= Chromatic.NUMBER;
+
+        return alts;
     }
 
     private constructor(private _diatonic: Diatonic, private _alts: number) {
@@ -225,7 +134,7 @@ export class DiatonicAlt implements Hashable {
     }
 
     hashCode(): string {
-        return Hashing.hash(this.diatonic) + Hashing.hash(this.alts);
+        return this.diatonic.hashCode() + Hashing.hash(this.alts);
     }
 
     private static initialize() {
@@ -271,6 +180,6 @@ export class DiatonicAlt implements Hashable {
         DiatonicAlt.Bb = DiatonicAlt.from(Diatonic.B, -1);
         DiatonicAlt.Bbb = DiatonicAlt.from(Diatonic.B, -2);
 
-        Immutables.lockr(DiatonicAlt);
+        Immutables.lockrIf(DiatonicAlt, (obj) => !(obj instanceof ImmutablesCache));
     }
 }
