@@ -4,16 +4,23 @@ export class Immutables {
     }
 
     static lockr<T>(obj: T): T {
+        return this.lockrIf(obj, () => true);
+    }
+
+    static lockrIf<T>(obj: T, ifFunction: (T) => boolean): T {
+        if (!ifFunction(obj))
+            return obj;
+
         for (var k in obj) {
             if (typeof obj[k] == "object" && obj[k] !== null)
-                this.lockr(k);
+                this.lockrIf(obj[k], ifFunction);
         }
 
         if (typeof obj == "function") {
             let p = Object.getOwnPropertyNames(obj);
             for (let k of p) {
                 if (typeof obj[k] == "object" && obj[k])
-                    this.lockr(obj[k]);
+                    this.lockrIf(obj[k], ifFunction);
             }
         }
 
