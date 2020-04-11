@@ -38,13 +38,13 @@ export class ChromaticChord {
     }
 
     public static fromDiatonicAltChord(diatonicAltChord: DiatonicAltChord) {
-        let notes: DiatonicAlt[] = diatonicAltChord.notes;
+        let notes: DiatonicAlt[] = (<any>diatonicAltChord)._notes;
         let notesChromatic: Chromatic[] = [];
-        for (let diatonicAlt of notes) {
+        for (const diatonicAlt of notes) {
             let chromatic = Chromatic.fromDiatonicAlt(diatonicAlt);
             notesChromatic.push(chromatic);
         }
-        return ChromaticChord.fromRootNotes(0, notesChromatic);
+        return ChromaticChord.fromRootNotes(diatonicAltChord.rootIndex, notesChromatic);
     }
 
     public get root(): Chromatic {

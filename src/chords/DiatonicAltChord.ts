@@ -6,6 +6,7 @@ import { Assert } from '../Utils/Assert';
 import { Hashing } from '../Utils/Hashing';
 import { Immutables } from '../Utils/Immutables';
 import { ImmutablesCache } from '../Utils/ImmutablesCache';
+import { MathUtils } from '../Utils/MathUtils';
 import { Utils } from '../Utils/Utils';
 import { ChromaticChordPattern } from './chromatic/ChromaticChordPattern';
 
@@ -56,6 +57,12 @@ export class DiatonicAltChord {
         return DiatonicAltChord.fromRootNotes(rootPos, notes);
     }
 
+    public getInv(n: number = 1): DiatonicAltChord {
+        let rootIndex = this.rootIndex - n;
+        rootIndex = MathUtils.rotativeTrim(rootIndex, this._notes.length);
+        return DiatonicAltChord.fromRootNotes(rootIndex, this.notesPattern);
+    }
+
     private static getNotesFromPattern(root: DiatonicAlt, pattern: ChromaticChordPattern) {
         let notes: DiatonicAlt[] = [root];
         let rootChromaticInt = Chromatic.fromDiatonicAlt(root).intValue;
@@ -81,7 +88,7 @@ export class DiatonicAltChord {
     }
 
     public get root(): DiatonicAlt {
-        return this.notes[this.rootIndex];
+        return this.notesPattern[0];
     }
 
     private static inversionToRootPos(inv: number, length: number): number {
@@ -97,10 +104,14 @@ export class DiatonicAltChord {
     }
 
     public get notes(): DiatonicAlt[] {
-        let notes = Array.from(this._notes);
+        let notes = this.notesPattern;
 
         Utils.arrayRotate(notes, this.rootIndex, true);
         return notes;
+    }
+
+    public get notesPattern(): DiatonicAlt[] {
+        return Array.from(this._notes);
     }
 
     public toString(): string {

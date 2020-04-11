@@ -45,3 +45,56 @@ test('DiatonicAltChord - toString: B##7', () => {
     let expected = DiatonicAlt.BBB.toString() + "7";
     expect(str).toBe(expected);
 });
+
+test('DiatonicAltChord - toString: C7/E', () => {
+    let str = DiatonicAltChord.C7.getInv(1).toString();
+
+    let expected = "C7/E";
+    expect(str).toBe(expected);
+});
+
+test('DiatonicAltChord - getInv: C7 + inv = C7/E', () => {
+    let diatonicAltChord = DiatonicAltChord.C7.getInv(1);
+
+    let expected = DiatonicAlt.C;
+    expect(diatonicAltChord.root).toBe(expected);
+    expect(diatonicAltChord.notes).toStrictEqual([
+        DiatonicAlt.E,
+        DiatonicAlt.G,
+        DiatonicAlt.Bb,
+        DiatonicAlt.C
+    ]);
+
+});
+
+test('DiatonicAltChord - getInv: C7 + 2inv = C7/G', () => {
+    let diatonicAltChord = DiatonicAltChord.C7.getInv(2);
+
+    expect(diatonicAltChord.root).toBe(DiatonicAlt.C);
+    expect(diatonicAltChord.notes).toStrictEqual([
+        DiatonicAlt.G,
+        DiatonicAlt.Bb,
+        DiatonicAlt.C,
+        DiatonicAlt.E
+    ]);
+});
+
+test('DiatonicAltChord - getInv: C7 + 4 inv', () => {
+    let diatonicAltChord = DiatonicAltChord.C7.getInv(4);
+
+    let expected = DiatonicAltChord.C7;
+    expect(diatonicAltChord).toBe(expected);
+});
+
+
+test('DiatonicAltChord - getInv: C7 + 1 inv + 1 inv', () => {
+    let diatonicAltChord = DiatonicAltChord.C7.getInv(1).getInv(1);
+
+    expect(diatonicAltChord.root).toBe(DiatonicAlt.C);
+    expect(diatonicAltChord.notes).toStrictEqual([
+        DiatonicAlt.G,
+        DiatonicAlt.Bb,
+        DiatonicAlt.C,
+        DiatonicAlt.E
+    ]);
+});
