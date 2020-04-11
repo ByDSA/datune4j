@@ -92,7 +92,7 @@ export class Scale implements Hashable {
 
     static symmetricScales: () => Scale[];
 
-    private static immutables = new ImmutablesCache<Scale, number[]>(
+    private static immutablesCache = new ImmutablesCache<Scale, number[]>(
         function (hashingObject: number[]) {
             return Hashing.hashArray(hashingObject);
         },
@@ -113,7 +113,7 @@ export class Scale implements Hashable {
     }
 
     public static from(...intervals: number[]): Scale {
-        return Scale.immutables.getOrCreate(intervals);
+        return Scale.immutablesCache.getOrCreate(intervals);
     }
 
     // Relative Intervals
