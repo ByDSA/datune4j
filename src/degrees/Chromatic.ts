@@ -28,7 +28,6 @@ export class Chromatic {
     }
 
     static fromDiatonic(diatonic: Diatonic): Chromatic {
-        Assert.notNull(diatonic);
         switch (diatonic) {
             case Diatonic.C: return Chromatic.C;
             case Diatonic.D: return Chromatic.D;

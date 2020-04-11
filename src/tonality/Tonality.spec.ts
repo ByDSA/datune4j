@@ -7,6 +7,7 @@ precalc.diatonicAlts();
 precalc.chromatics();
 precalc.scales();
 precalc.tonalities();
+precalc.settings();
 
 test('Tonality - predefined: ', () => {
     expect(Tonality.C.scale).toBe(Scale.MAJOR);
