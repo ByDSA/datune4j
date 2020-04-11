@@ -1,6 +1,6 @@
 import { Quality } from '../Quality';
 import { IntervalDiatonic } from './IntervalDiatonic';
-import { Utils } from '../Utils';
+import { Utils } from '../Utils/Utils';
 
 export class IntervalChromatic {
     public static PERFECT_UNISON = IntervalChromatic.from(0, Quality.PERFECT);

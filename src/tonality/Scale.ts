@@ -1,6 +1,6 @@
-import { Hashable } from '../Hashable';
-import { Hashing } from '../Hashing';
-import { Immutables } from '../Immutables';
+import { Hashable } from '../Utils/Hashable';
+import { Hashing } from '../Utils/Hashing';
+import { ImmutablesCache } from '../Utils/ImmutablesCache';
 import { NamingScale } from '../lang/naming/NamingScale';
 import { ScaleModeUtils } from './ScaleModeUtils';
 
@@ -92,7 +92,7 @@ export class Scale implements Hashable {
 
     static symmetricScales: () => Scale[];
 
-    private static immutables = new Immutables<Scale, number[]>(
+    private static immutables = new ImmutablesCache<Scale, number[]>(
         function (hashingObject: number[]) {
             return Hashing.hashArray(hashingObject);
         },

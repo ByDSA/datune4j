@@ -17,10 +17,6 @@ export class Utils {
     return false;
   }
 
-  public static immutable<T>(obj: T): T {
-    return Object.freeze(Object.preventExtensions(obj));
-  }
-
   public static assertNotNull(v: any, message?: string): void {
     if (v === undefined || v === null)
       throw new Error("Variable is null or undefined." + (message ? " " + message : ""));

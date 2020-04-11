@@ -1,6 +1,6 @@
 import { Hashing } from './Hashing';
 
-export class Immutables<T, H> {
+export class ImmutablesCache<T, H> {
     private immutablesMap;
 
     protected getHash: (H) => number;

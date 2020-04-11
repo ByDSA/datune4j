@@ -1,5 +1,5 @@
 import { Scale } from './Scale';
-import { Utils } from '../Utils';
+import { Utils } from '../Utils/Utils';
 
 export interface SourceScaleInfo {
     scale: Scale,

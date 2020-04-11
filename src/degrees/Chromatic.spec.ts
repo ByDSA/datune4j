@@ -26,28 +26,14 @@ test('Chromatic - precalc ', () => {
 
 test('Chromatic - precalc immutables: reassign Chromatic.C', () => {
     const t = () => {
-        (<any>Chromatic).C = Chromatic.D;
+        Chromatic.C = Chromatic.D;
     };
     expect(t).toThrow(TypeError);
 });
 
-test('Chromatic - precalc immutables: reassign NUMBER', () => {
+test('Chromatic - precalc immutables: reassign Chromatic.C._intValue', () => {
     const t = () => {
-        (<any>Chromatic).NUMBER = 99;
-    };
-    expect(t).toThrow(TypeError);
-});
-
-test('Chromatic - precalc immutables: reassign intValue', () => {
-    const t = () => {
-        (<any>Chromatic.C)._intValue = 99;
-    };
-    expect(t).toThrow(TypeError);
-});
-
-test('Chromatic - precalc immutables: new property', () => {
-    const t = () => {
-        (<any>Chromatic.C).aa = 99;
+        (<any>Chromatic.C)._intValue = 2;
     };
     expect(t).toThrow(TypeError);
 });

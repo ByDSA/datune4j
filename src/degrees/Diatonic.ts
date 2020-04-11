@@ -1,6 +1,6 @@
 import { IntervalDiatonic } from '../interval/IntervalDiatonic';
 import { NamingDiatonic } from '../lang/naming/NamingDiatonic';
-import { MathUtils } from '../MathUtils';
+import { MathUtils } from '../Utils/MathUtils';
 
 export class Diatonic {
     static C: Diatonic;

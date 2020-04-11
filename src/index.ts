@@ -4,7 +4,7 @@ export * from './CommonDifferentCalculator';
 export * from './degrees/Chromatic';
 export * from './degrees/Diatonic';
 export * from './degrees/DiatonicAlt';
-export * from './Hashing';
+export * from './Utils/Hashing';
 export * from './lang/Language';
 export * from './lang/LanguageInterface';
 export * from './lang/naming/Naming';
@@ -16,5 +16,5 @@ export * from './tonality/ScaleModeUtils';
 export * from './tonality/ScaleUtils';
 export * from './tonality/Tonality';
 export * from './tonality/TonalityUtils';
-export * from './Utils';
+export * from './Utils/Utils';
 export * from './precalc'

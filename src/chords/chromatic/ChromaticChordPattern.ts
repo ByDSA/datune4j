@@ -1,6 +1,6 @@
 import { Chromatic } from '../../degrees/Chromatic';
-import { Hashing } from '../../Hashing';
-import { Utils } from '../../Utils';
+import { Hashing } from '../../Utils/Hashing';
+import { Utils } from '../../Utils/Utils';
 import { DiatonicChordPattern } from '../Diatonic/DiatonicChordPattern';
 import { ChromaticChord } from './ChromaticChord';
 import { NamingChromaticChordPattern } from '../../lang/naming/NamingChromaticChordPattern';

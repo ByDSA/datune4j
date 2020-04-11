@@ -2,7 +2,7 @@ import { Diatonic } from '../degrees/Diatonic';
 import { Chromatic } from '../degrees/Chromatic';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
 import { ChromaticChordPattern } from './chromatic/ChromaticChordPattern';
-import { Utils } from '../Utils';
+import { Utils } from '../Utils/Utils';
 import { NameDiatonicAltChordCalculator } from '../lang/naming/NameDiatonicAltChordCalculator';
 
 export class DiatonicAltChord {

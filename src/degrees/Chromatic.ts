@@ -1,9 +1,9 @@
 import { IntervalChromatic } from '../interval/IntervalChromatic';
 import { NamingChromatic } from '../lang/naming/NamingChromatic';
-import { MathUtils } from '../MathUtils';
+import { Immutables } from '../Utils/Immutables';
+import { MathUtils } from '../Utils/MathUtils';
 import { Diatonic } from './Diatonic';
 import { DiatonicAlt } from './DiatonicAlt';
-import { Utils } from '../Utils';
 
 export class Chromatic {
     public static NUMBER = 12;
@@ -88,19 +88,19 @@ export class Chromatic {
     }
 
     private static initialize() {
-        Chromatic.C = Utils.immutable(new Chromatic(0));
-        Chromatic.CC = Utils.immutable(new Chromatic(1));
-        Chromatic.D = Utils.immutable(new Chromatic(2));
-        Chromatic.DD = Utils.immutable(new Chromatic(3));
-        Chromatic.E = Utils.immutable(new Chromatic(4));
-        Chromatic.F = Utils.immutable(new Chromatic(5));
-        Chromatic.FF = Utils.immutable(new Chromatic(6));
-        Chromatic.G = Utils.immutable(new Chromatic(7));
-        Chromatic.GG = Utils.immutable(new Chromatic(8));
-        Chromatic.A = Utils.immutable(new Chromatic(9));
-        Chromatic.AA = Utils.immutable(new Chromatic(10));
-        Chromatic.B = Utils.immutable(new Chromatic(11));
+        Chromatic.C = new Chromatic(0);
+        Chromatic.CC = new Chromatic(1);
+        Chromatic.D = new Chromatic(2);
+        Chromatic.DD = new Chromatic(3);
+        Chromatic.E = new Chromatic(4);
+        Chromatic.F = new Chromatic(5);
+        Chromatic.FF = new Chromatic(6);
+        Chromatic.G = new Chromatic(7);
+        Chromatic.GG = new Chromatic(8);
+        Chromatic.A = new Chromatic(9);
+        Chromatic.AA = new Chromatic(10);
+        Chromatic.B = new Chromatic(11);
 
-        Utils.immutable(Chromatic);
+        Immutables.lockr(Chromatic);
     }
 }

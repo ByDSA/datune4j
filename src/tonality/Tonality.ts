@@ -1,7 +1,7 @@
 import { Diatonic } from '../degrees/Diatonic';
 import { Chromatic } from '../degrees/Chromatic';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
-import { Immutables } from '../Immutables';
+import { ImmutablesCache } from '../Utils/ImmutablesCache';
 import { Scale } from './Scale';
 
 type HashingObjectType = { root: DiatonicAlt, scale: Scale };
@@ -30,7 +30,7 @@ export class Tonality {
     public static Am: Tonality;
     public static Bm: Tonality;
 
-    private static immutables = new Immutables<Tonality, HashingObjectType>(
+    private static immutables = new ImmutablesCache<Tonality, HashingObjectType>(
         function (hashingObject: HashingObjectType) {
             return hashingObject.scale.hashCode() + hashingObject.root.hashCode();
         },
