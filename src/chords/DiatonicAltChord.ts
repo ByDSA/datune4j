@@ -4,15 +4,20 @@ import { DiatonicAlt } from '../degrees/DiatonicAlt';
 import { ChromaticChordPattern } from './chromatic/ChromaticChordPattern';
 import { Utils } from '../Utils/Utils';
 import { NameDiatonicAltChordCalculator } from '../lang/naming/NameDiatonicAltChordCalculator';
+import { Immutables } from '../Utils/Immutables';
 
 export class DiatonicAltChord {
     public static C: DiatonicAltChord;
 
-    private constructor(private _rootIndex: number, private _notes: DiatonicAlt[], private str?: string) {
+    private str: string;
+
+    private constructor(private _rootIndex: number, private _notes: DiatonicAlt[]) {
+        this.calculateName();
+        Immutables.lockr(this);
     }
 
-    public static fromRootNotes(rootIndex: number, notes: DiatonicAlt[], str?: string): DiatonicAltChord {
-        return new DiatonicAltChord(rootIndex, notes, str);
+    public static fromRootNotes(rootIndex: number, notes: DiatonicAlt[]): DiatonicAltChord {
+        return new DiatonicAltChord(rootIndex, notes);
     }
 
     public static fromRootPattern(root: DiatonicAlt, pattern: ChromaticChordPattern, inversion: number = 0): DiatonicAltChord {
@@ -48,8 +53,7 @@ export class DiatonicAltChord {
         return (length - inv) % length;
     }
 
-    public updateName(rootDiatonicAlt: DiatonicAlt): void {
-        Utils.assertNotNull(rootDiatonicAlt);
+    private calculateName(): void {
         this.str = new NameDiatonicAltChordCalculator(this).get();
     }
 
@@ -68,11 +72,13 @@ export class DiatonicAltChord {
         return notes;
     }
 
-    public toString(): string | undefined {
+    public toString(): string {
         return this.str;
     }
 
     private static initialize() {
         DiatonicAltChord.C = new DiatonicAltChord(0, [DiatonicAlt.C, DiatonicAlt.E, DiatonicAlt.G]);
+
+        Immutables.lockr(DiatonicAlt);
     }
 }
