@@ -3,6 +3,7 @@ import { NamingDiatonic } from '../lang/naming/NamingDiatonic';
 import { MathUtils } from '../Utils/MathUtils';
 import { Immutables } from '../Utils/Immutables';
 import { Hashing } from '../Utils/Hashing';
+import { Chromatic } from './Chromatic';
 
 export class Diatonic {
     static C: Diatonic;
@@ -47,7 +48,19 @@ export class Diatonic {
     }
 
     hashCode(): string {
-       return Hashing.hash(this.intValue);
+        return Hashing.hash(this.intValue);
+    }
+
+    get chromatic() {
+        switch (this) {
+            case Diatonic.C: return Chromatic.C;
+            case Diatonic.D: return Chromatic.D;
+            case Diatonic.E: return Chromatic.E;
+            case Diatonic.F: return Chromatic.F;
+            case Diatonic.G: return Chromatic.G;
+            case Diatonic.A: return Chromatic.A;
+            case Diatonic.B: return Chromatic.B;
+        }
     }
 
     private static initialize() {

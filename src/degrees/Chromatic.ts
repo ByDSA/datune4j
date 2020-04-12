@@ -27,20 +27,6 @@ export class Chromatic {
     private constructor(private _intValue: number) {
     }
 
-    static fromDiatonic(diatonic: Diatonic): Chromatic {
-        switch (diatonic) {
-            case Diatonic.C: return Chromatic.C;
-            case Diatonic.D: return Chromatic.D;
-            case Diatonic.E: return Chromatic.E;
-            case Diatonic.F: return Chromatic.F;
-            case Diatonic.G: return Chromatic.G;
-            case Diatonic.A: return Chromatic.A;
-            case Diatonic.B: return Chromatic.B;
-        }
-
-        throw new Error("Impossible get Chromatic from Diatonic: " + diatonic);
-    }
-
     static fromInt(intValue: number): Chromatic {
         intValue = MathUtils.rotativeTrim(intValue, Chromatic.NUMBER);
         switch (intValue) {
@@ -62,7 +48,7 @@ export class Chromatic {
 
     static fromDiatonicAlt(diatonicAlt: DiatonicAlt): Chromatic {
         Assert.notNull(diatonicAlt);
-        let chromaticInt = Chromatic.fromDiatonic(diatonicAlt.diatonic).intValue;
+        let chromaticInt = diatonicAlt.diatonic.chromatic.intValue;
         chromaticInt += diatonicAlt.alts;
 
         return Chromatic.fromInt(chromaticInt);

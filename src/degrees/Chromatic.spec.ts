@@ -79,18 +79,6 @@ test('Chromatic - fromInt: above 11', () => {
     expect(Chromatic.fromInt(25)).toBe(Chromatic.CC);
 });
 
-test('Chromatic - fromDiatonic: B ', () => {
-    expect(Chromatic.fromDiatonic(Diatonic.B)).toBe(Chromatic.B);
-});
-
-test('Chromatic - fromDiatonic: C ', () => {
-    expect(Chromatic.fromDiatonic(Diatonic.C)).toBe(Chromatic.C);
-});
-
-test('Chromatic - fromDiatonic: A ', () => {
-    expect(Chromatic.fromDiatonic(Diatonic.A)).toBe(Chromatic.A);
-});
-
 test('Chromatic - fromDiatonicAlt: BBB ', () => {
     expect(Chromatic.fromDiatonicAlt(DiatonicAlt.BBB)).toBe(Chromatic.CC);
 });

@@ -93,7 +93,7 @@ export class DiatonicAlt implements Hashable {
     }
 
     private static getAltsFromChromaticAndDiatonic(chromatic: Chromatic, diatonic: Diatonic): number {
-        let alts = chromatic.intValue - Chromatic.fromDiatonic(diatonic).intValue;
+        let alts = chromatic.intValue - diatonic.chromatic.intValue;
         alts %= Chromatic.NUMBER;
         if (alts <= -6)
             alts += Chromatic.NUMBER;
@@ -111,7 +111,7 @@ export class DiatonicAlt implements Hashable {
 
         let intervalDiatonic = IntervalDiatonicUtils.fromIntervalChromatic(intervalChromatic);
         let diatonic = Diatonic.getShifted(this.diatonic, intervalDiatonic);
-        let alts = Chromatic.fromDiatonicAlt(this).intValue + intervalChromatic.semis - Chromatic.fromDiatonic(diatonic).intValue;
+        let alts = Chromatic.fromDiatonicAlt(this).intValue + intervalChromatic.semis - diatonic.chromatic.intValue;
         alts %= Chromatic.NUMBER;
         if (alts > 4)
             alts -= Chromatic.NUMBER;
