@@ -1,10 +1,8 @@
-import * as precalc from "../precalc";
-import { Chromatic } from './Chromatic';
-import { DiatonicAlt } from "./DiatonicAlt";
-import { Diatonic } from "./Diatonic";
-import { Settings } from "../settings/Settings";
-import { Language } from "../lang/Language";
 import { IntervalChromatic } from "../interval/IntervalChromatic";
+import { Language } from "../lang/Language";
+import * as precalc from "../precalc";
+import { Settings } from "../settings/Settings";
+import { Chromatic } from './Chromatic';
 precalc.chromatics();
 precalc.diatonics();
 precalc.diatonicAlts();
