@@ -11,7 +11,7 @@ export class NameChromaticChordCalculator {
     }
 
     public get(): string {
-        this.pattern = ChromaticChordPattern.from(this.chord);
+        this.pattern = ChromaticChordPattern.fromChord(this.chord);
         this.inversion = this.chord.inversionNumber;
 
         return this.chord.root.toString() + this.pattern.toStringShort() + this.inversionName();

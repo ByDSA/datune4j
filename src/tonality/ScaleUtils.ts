@@ -122,6 +122,6 @@ export class ScaleUtils {
             array.push(newValue);
         }
 
-        return ChromaticChordPattern.fromArray(...array);
+        return ChromaticChordPattern.from(...array);
     }
 }

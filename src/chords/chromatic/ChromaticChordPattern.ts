@@ -95,16 +95,22 @@ export class ChromaticChordPattern implements Iterable<number> {
     }
 
     private static fromArrayAndDiatonicChordPattern(diatonicChordPattern: DiatonicChordPattern, ...values: number[]): ChromaticChordPattern {
-        let instance = this.fromArray(...values);
+        let instance = this.from(...values);
         instance._diatonicChordPattern = diatonicChordPattern;
         return instance;
     }
 
-    public static fromArray(...values: number[]): ChromaticChordPattern {
+    public static from(...values: number[]): ChromaticChordPattern {
         return this.immutablesCache.getOrCreate(values);
     }
 
-    public static from(chord: ChromaticChord): ChromaticChordPattern {
+    public static fromChord(chord: ChromaticChord): ChromaticChordPattern {
+        let patternArray = this.getArrayFromChromaticChord(chord);
+
+        return this.immutablesCache.getOrCreate(patternArray);
+    }
+
+    private static getArrayFromChromaticChord(chord: ChromaticChord): number[] {
         let patternArray = [0];
         let last: Chromatic;
 
@@ -122,13 +128,13 @@ export class ChromaticChordPattern implements Iterable<number> {
             patternArray.push(dist);
         });
 
-        return this.immutablesCache.getOrCreate(patternArray);
+        return patternArray;
     }
 
     static fromDiatonicAltChord(chord: DiatonicAltChord): ChromaticChordPattern {
         let chromaticChord: ChromaticChord = ChromaticChord.fromDiatonicAltChord(chord);
 
-        return ChromaticChordPattern.from(chromaticChord);
+        return ChromaticChordPattern.fromChord(chromaticChord);
     }
 
     [Symbol.iterator](): Iterator<number> {
