@@ -7,6 +7,7 @@ import { Immutables } from '../../Utils/Immutables';
 import { ImmutablesCache } from '../../Utils/ImmutablesCache';
 import { Utils } from '../../Utils/Utils';
 import { ChromaticChordPattern } from './ChromaticChordPattern';
+import { MathUtils } from '../../Utils/MathUtils';
 
 type HashingObjectType = { rootIndex: number, chromatics: Chromatic[] };
 export class ChromaticChord {
@@ -85,6 +86,12 @@ export class ChromaticChord {
 
         Utils.arrayRotate(notes, this.rootIndex, true);
         return notes;
+    }
+
+    public getInv(n: number = 1): ChromaticChord {
+        let rootIndex = this.rootIndex - n;
+        rootIndex = MathUtils.rotativeTrim(rootIndex, this._notes.length);
+        return ChromaticChord.fromRootNotes(rootIndex, this.notesPattern);
     }
 
     public get notesPattern(): Chromatic[] {
