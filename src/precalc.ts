@@ -9,6 +9,7 @@ import { ChromaticChordPattern } from './chords/chromatic/ChromaticChordPattern'
 import { DiatonicAltChord } from './chords/DiatonicAltChord';
 import { Settings } from './settings/Settings';
 import { DefaultSettings } from './settings/DefaultSettings';
+import { ChromaticChord } from './chords/chromatic/ChromaticChord';
 
 // DIATONICS
 export function diatonics() {
@@ -33,6 +34,11 @@ export function chromatics() {
 // CHROMATIC CHORD PATTERNS
 export function chromaticChordPatterns() {
     (<any>ChromaticChordPattern).initialize();
+}
+
+// CHROMATIC CHORDS
+export function chromaticChords() {
+    (<any>ChromaticChord).initialize();
 }
 
 // SCALES

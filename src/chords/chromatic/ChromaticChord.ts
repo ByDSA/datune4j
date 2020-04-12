@@ -2,21 +2,42 @@ import { DiatonicAltChord } from '../../chords/DiatonicAltChord';
 import { Chromatic } from '../../degrees/Chromatic';
 import { DiatonicAlt } from '../../degrees/DiatonicAlt';
 import { NameChromaticChordCalculator } from '../../lang/naming/NameChromaticChordCalculator';
-import { Assert } from '../../Utils/Assert';
+import { Hashing } from '../../Utils/Hashing';
+import { Immutables } from '../../Utils/Immutables';
+import { ImmutablesCache } from '../../Utils/ImmutablesCache';
 import { Utils } from '../../Utils/Utils';
 import { ChromaticChordPattern } from './ChromaticChordPattern';
 
+type HashingObjectType = { rootIndex: number, chromatics: Chromatic[] };
 export class ChromaticChord {
-    public static C = new ChromaticChord(0, [Chromatic.C, Chromatic.E, Chromatic.G]);
-    public static Dm = new ChromaticChord(0, [Chromatic.D, Chromatic.F, Chromatic.A]);
-    public static C7 = new ChromaticChord(0, [Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.AA]);
-    public static Dm7 = new ChromaticChord(0, [Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.AA]);
+    // Precalc
 
-    private constructor(private _rootIndex: number, private _notes: Chromatic[], private str?: string) {
+    public static C;
+    public static Dm;
+    public static C7;
+    public static Dm7;
+
+    private static immutablesCache = new ImmutablesCache<ChromaticChord, HashingObjectType>(
+        function (hashingObject: HashingObjectType) {
+            let ret = Hashing.hash(hashingObject.rootIndex) + "|";
+            for (const chromatic of hashingObject.chromatics)
+                ret += chromatic.hashCode();
+
+            return ret;
+        },
+        function (chromaticChord: ChromaticChord): HashingObjectType {
+            return { rootIndex: chromaticChord.rootIndex, chromatics: chromaticChord.notesPattern };
+        },
+        function (hashingObject: HashingObjectType): ChromaticChord {
+            return new ChromaticChord(hashingObject.rootIndex, hashingObject.chromatics);
+        }
+    );
+
+    private constructor(private _rootIndex: number, private _notes: Chromatic[]) {
     }
 
-    public static fromRootNotes(rootIndex: number, notes: Chromatic[], str?: string): ChromaticChord {
-        return new ChromaticChord(rootIndex, notes, str);
+    public static fromRootNotes(rootIndex: number, notes: Chromatic[]): ChromaticChord {
+        return this.immutablesCache.getOrCreate({ rootIndex: rootIndex, chromatics: notes });
     }
 
     public static fromRootPattern(root: Chromatic, pattern: ChromaticChordPattern, inversion: number = 0): ChromaticChord {
@@ -39,7 +60,7 @@ export class ChromaticChord {
 
     public static fromDiatonicAltChord(diatonicAltChord: DiatonicAltChord) {
         let notesChromatic = diatonicAltChord.notes.map((diatonicAlt: DiatonicAlt) => diatonicAlt.chromatic);
-        
+
         return ChromaticChord.fromRootNotes(diatonicAltChord.rootIndex, notesChromatic);
     }
 
@@ -51,11 +72,6 @@ export class ChromaticChord {
         return (length - inv) % length;
     }
 
-    public updateName(rootDiatonicAlt: DiatonicAlt): void {
-        Assert.notNull(rootDiatonicAlt);
-        this.str = new NameChromaticChordCalculator(this, rootDiatonicAlt).get();
-    }
-
     public get rootIndex(): number {
         return this._rootIndex;
     }
@@ -65,13 +81,27 @@ export class ChromaticChord {
     }
 
     public get notes(): Chromatic[] {
-        let notes = Array.from(this._notes);
+        let notes = this.notesPattern;
 
         Utils.arrayRotate(notes, this.rootIndex, true);
         return notes;
     }
 
-    public toString(): string | undefined {
-        return this.str;
+    public get notesPattern(): Chromatic[] {
+        return Array.from(this._notes);
+    }
+
+    public toString(): string {
+        return new NameChromaticChordCalculator(this).get();
+    }
+
+    private static initialize() {
+        this.C = ChromaticChord.fromRootNotes(0, [Chromatic.C, Chromatic.E, Chromatic.G]);
+        this.Dm = ChromaticChord.fromRootNotes(0, [Chromatic.D, Chromatic.F, Chromatic.A]);
+        this.C7 = ChromaticChord.fromRootNotes(0, [Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.AA]);
+        this.Dm7 = ChromaticChord.fromRootNotes(0, [Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.AA]);
+
+        Immutables.lockrIf(ChromaticChord, (obj) => !(obj instanceof ImmutablesCache));
+
     }
 }
