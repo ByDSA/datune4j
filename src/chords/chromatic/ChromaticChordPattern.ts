@@ -87,7 +87,6 @@ export class ChromaticChordPattern implements Iterable<number> {
     );
 
     private _values: number[];
-    private valuesHash: string;
     private _diatonicChordPattern: DiatonicChordPattern;
 
     private constructor(...values: number[]) {
@@ -140,13 +139,13 @@ export class ChromaticChordPattern implements Iterable<number> {
     [Symbol.iterator](): Iterator<number> {
         return this.values[Symbol.iterator]();
     }
-
+    
     get diatonicChordPattern(): DiatonicChordPattern {
         return this._diatonicChordPattern;
     }
 
     public get values(): number[] {
-        return this._values;
+        return Array.from(this._values);
     }
 
     public toString() {
