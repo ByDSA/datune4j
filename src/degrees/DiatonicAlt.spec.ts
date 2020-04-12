@@ -72,7 +72,7 @@ test('DiatonicAlt - toString - ENG', () => {
     expect(DiatonicAlt.BBB.toString()).toBe("B♯♯");
 });
 
-test('Chromatic - toString() - ESP', () => {
+test('DiatonicAlt - toString() - ESP', () => {
     Settings.lang = Language.ESP;
     expect(DiatonicAlt.BB.toString()).toBe("Si♯");
     expect(DiatonicAlt.Eb.toString()).toBe("Mi♭");
@@ -97,4 +97,32 @@ test('Chromatic - getShift: -27', () => {
     let chromatic = Chromatic.C.getShift(-27);
     let expected = Chromatic.A;
     expect(chromatic).toBe(expected);
+});
+
+test('DiatonicAlt - chromatic: BBB ', () => {
+    expect(DiatonicAlt.BBB.chromatic).toBe(Chromatic.CC);
+});
+
+test('DiatonicAlt - chromatic: BB ', () => {
+    expect(DiatonicAlt.BB.chromatic).toBe(Chromatic.C);
+});
+
+test('DiatonicAlt - chromatic: C ', () => {
+    expect(DiatonicAlt.C.chromatic).toBe(Chromatic.C);
+});
+
+test('DiatonicAlt - chromatic: Cb ', () => {
+    expect(DiatonicAlt.Cb.chromatic).toBe(Chromatic.B);
+});
+
+test('DiatonicAlt - chromatic: Cbb ', () => {
+    expect(DiatonicAlt.Cbb.chromatic).toBe(Chromatic.AA);
+});
+
+test('DiatonicAlt - chromatic: Custom Cbbb ', () => {
+    expect(DiatonicAlt.from(Diatonic.C, -3).chromatic).toBe(Chromatic.A);
+});
+
+test('DiatonicAlt - chromatic: Custom Ebbbb ', () => {
+    expect(DiatonicAlt.from(Diatonic.E, -4).chromatic).toBe(Chromatic.C);
 });

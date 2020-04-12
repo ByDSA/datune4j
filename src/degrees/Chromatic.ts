@@ -46,14 +46,6 @@ export class Chromatic {
         throw new Error("Impossible get Chromatic from int value: " + intValue);
     }
 
-    static fromDiatonicAlt(diatonicAlt: DiatonicAlt): Chromatic {
-        Assert.notNull(diatonicAlt);
-        let chromaticInt = diatonicAlt.diatonic.chromatic.intValue;
-        chromaticInt += diatonicAlt.alts;
-
-        return Chromatic.fromInt(chromaticInt);
-    }
-
     public getAdd(intervalChromatic: IntervalChromatic): Chromatic {
         return this.getShift(intervalChromatic.semis);
     }

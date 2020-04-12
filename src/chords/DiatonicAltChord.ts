@@ -65,7 +65,7 @@ export class DiatonicAltChord {
 
     private static getNotesFromPattern(root: DiatonicAlt, pattern: ChromaticChordPattern) {
         let notes: DiatonicAlt[] = [root];
-        let rootChromaticInt = Chromatic.fromDiatonicAlt(root).intValue;
+        let rootChromaticInt = root.chromatic.intValue;
         let rootDiatonicInt = root.diatonic.intValue;
         let first = true;
         for (let i = 0; i < pattern.values.length; i++) {

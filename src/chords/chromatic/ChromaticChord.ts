@@ -1,10 +1,10 @@
-import { Chromatic } from '../../degrees/Chromatic'
-import { ChromaticChordPattern } from './ChromaticChordPattern';
-import { NameChromaticChordCalculator } from '../../lang/naming/NameChromaticChordCalculator';
-import { DiatonicAlt } from '../../degrees/DiatonicAlt';
-import { Utils } from '../../Utils/Utils';
 import { DiatonicAltChord } from '../../chords/DiatonicAltChord';
+import { Chromatic } from '../../degrees/Chromatic';
+import { DiatonicAlt } from '../../degrees/DiatonicAlt';
+import { NameChromaticChordCalculator } from '../../lang/naming/NameChromaticChordCalculator';
 import { Assert } from '../../Utils/Assert';
+import { Utils } from '../../Utils/Utils';
+import { ChromaticChordPattern } from './ChromaticChordPattern';
 
 export class ChromaticChord {
     public static C = new ChromaticChord(0, [Chromatic.C, Chromatic.E, Chromatic.G]);
@@ -38,12 +38,8 @@ export class ChromaticChord {
     }
 
     public static fromDiatonicAltChord(diatonicAltChord: DiatonicAltChord) {
-        let notes: DiatonicAlt[] = (<any>diatonicAltChord)._notes;
-        let notesChromatic: Chromatic[] = [];
-        for (const diatonicAlt of notes) {
-            let chromatic = Chromatic.fromDiatonicAlt(diatonicAlt);
-            notesChromatic.push(chromatic);
-        }
+        let notesChromatic = diatonicAltChord.notes.map((diatonicAlt: DiatonicAlt) => diatonicAlt.chromatic);
+        
         return ChromaticChord.fromRootNotes(diatonicAltChord.rootIndex, notesChromatic);
     }
 

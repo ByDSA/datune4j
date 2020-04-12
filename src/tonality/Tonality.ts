@@ -60,7 +60,7 @@ export class Tonality {
     private calculateNotes(): void {
         this.notes.push(this.root);
 
-        let lastChromaticInt = Chromatic.fromDiatonicAlt(this.root).intValue;
+        let lastChromaticInt = this.root.chromatic.intValue;
         let lastDiatonicInt = this.root.diatonic.intValue;
         let i = 0;
         for (let n of this.scale.intervals) {

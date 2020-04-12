@@ -79,34 +79,6 @@ test('Chromatic - fromInt: above 11', () => {
     expect(Chromatic.fromInt(25)).toBe(Chromatic.CC);
 });
 
-test('Chromatic - fromDiatonicAlt: BBB ', () => {
-    expect(Chromatic.fromDiatonicAlt(DiatonicAlt.BBB)).toBe(Chromatic.CC);
-});
-
-test('Chromatic - fromDiatonicAlt: BB ', () => {
-    expect(Chromatic.fromDiatonicAlt(DiatonicAlt.BB)).toBe(Chromatic.C);
-});
-
-test('Chromatic - fromDiatonicAlt: C ', () => {
-    expect(Chromatic.fromDiatonicAlt(DiatonicAlt.C)).toBe(Chromatic.C);
-});
-
-test('Chromatic - fromDiatonicAlt: Cb ', () => {
-    expect(Chromatic.fromDiatonicAlt(DiatonicAlt.Cb)).toBe(Chromatic.B);
-});
-
-test('Chromatic - fromDiatonicAlt: Cbb ', () => {
-    expect(Chromatic.fromDiatonicAlt(DiatonicAlt.Cbb)).toBe(Chromatic.AA);
-});
-
-test('Chromatic - fromDiatonicAlt: Custom Cbbb ', () => {
-    expect(Chromatic.fromDiatonicAlt(DiatonicAlt.from(Diatonic.C, -3))).toBe(Chromatic.A);
-});
-
-test('Chromatic - fromDiatonicAlt: Custom Ebbbb ', () => {
-    expect(Chromatic.fromDiatonicAlt(DiatonicAlt.from(Diatonic.E, -4))).toBe(Chromatic.C);
-});
-
 test('Chromatic - toString() - ENG', () => {
     Settings.lang = Language.ENG;
     expect(Chromatic.C.toString()).toBe("C");
