@@ -103,39 +103,6 @@ export class ChromaticChordPattern implements Iterable<number> {
         return this.immutablesCache.getOrCreate(values);
     }
 
-    public static fromChord(chord: ChromaticChord): ChromaticChordPattern {
-        let patternArray = this.getArrayFromChromaticChord(chord);
-
-        return this.immutablesCache.getOrCreate(patternArray);
-    }
-
-    private static getArrayFromChromaticChord(chord: ChromaticChord): number[] {
-        let patternArray = [0];
-        let last: Chromatic;
-
-        let unsortedNotes: Chromatic[] = chord.notesPattern;
-
-        let first = true;
-        unsortedNotes.forEach(current => {
-            if (first) {
-                first = false;
-                last = current;
-                return;
-            }
-
-            let dist = MathUtils.rotativeTrim(current.intValue - last.intValue, Chromatic.NUMBER);
-            patternArray.push(dist);
-        });
-
-        return patternArray;
-    }
-
-    static fromDiatonicAltChord(chord: DiatonicAltChord): ChromaticChordPattern {
-        let chromaticChord: ChromaticChord = ChromaticChord.fromDiatonicAltChord(chord);
-
-        return ChromaticChordPattern.fromChord(chromaticChord);
-    }
-
     [Symbol.iterator](): Iterator<number> {
         return this.values[Symbol.iterator]();
     }

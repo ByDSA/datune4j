@@ -98,6 +98,61 @@ export class ChromaticChord {
         return Array.from(this._notes);
     }
 
+    
+    public get pattern(): ChromaticChordPattern {
+        let patternArray = this.getArrayFromChromaticChord();
+
+        return ChromaticChordPattern.from(...patternArray);
+    }
+
+    public get patternRoot(): ChromaticChordPattern {
+        let patternArray = this.getArrayFromChromaticChordRoot();
+
+        return ChromaticChordPattern.from(...patternArray);
+    }
+
+    private getArrayFromChromaticChord(): number[] {
+        let patternArray = [0];
+        let last: Chromatic;
+
+        let unsortedNotes: Chromatic[] = this.notes;
+
+        let first = true;
+        unsortedNotes.forEach(current => {
+            if (first) {
+                first = false;
+                last = current;
+                return;
+            }
+
+            let dist = MathUtils.rotativeTrim(current.intValue - last.intValue, Chromatic.NUMBER);
+            patternArray.push(dist);
+        });
+
+        return patternArray;
+    }
+
+    private getArrayFromChromaticChordRoot(): number[] {
+        let patternArray = [0];
+        let last: Chromatic;
+
+        let unsortedNotes: Chromatic[] = this.notesPattern;
+
+        let first = true;
+        unsortedNotes.forEach(current => {
+            if (first) {
+                first = false;
+                last = current;
+                return;
+            }
+
+            let dist = MathUtils.rotativeTrim(current.intValue - last.intValue, Chromatic.NUMBER);
+            patternArray.push(dist);
+        });
+
+        return patternArray;
+    }
+
     public toString(): string {
         return new NameChromaticChordCalculator(this).get();
     }
