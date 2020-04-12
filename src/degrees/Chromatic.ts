@@ -1,10 +1,8 @@
+import { Hashing } from '../Utils/Hashing';
 import { IntervalChromatic } from '../interval/IntervalChromatic';
 import { NamingChromatic } from '../lang/naming/NamingChromatic';
-import { Assert } from '../Utils/Assert';
 import { Immutables } from '../Utils/Immutables';
 import { MathUtils } from '../Utils/MathUtils';
-import { Diatonic } from './Diatonic';
-import { DiatonicAlt } from './DiatonicAlt';
 
 export class Chromatic {
     public static NUMBER = 12;
@@ -65,6 +63,10 @@ export class Chromatic {
 
     toString() {
         return NamingChromatic.toString(this);
+    }
+
+    hashCode() {
+        return Hashing.hash(this.intValue);
     }
 
     private static initialize() {
