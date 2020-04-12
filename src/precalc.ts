@@ -1,15 +1,15 @@
+import { ChromaticChord } from './chords/chromatic/ChromaticChord';
+import { ChromaticChordPattern } from './chords/chromatic/ChromaticChordPattern';
+import { DiatonicAltChord } from './chords/DiatonicAltChord';
+import { Chromatic } from './degrees/Chromatic';
+import { Diatonic } from './degrees/Diatonic';
 import { DiatonicAlt } from './degrees/DiatonicAlt';
+import { DefaultSettings } from './settings/DefaultSettings';
+import { Settings } from './settings/Settings';
 import { Scale } from './tonality/Scale';
 import { ScaleModeUtils } from './tonality/ScaleModeUtils';
 import { SourceScaleUtils } from './tonality/SourceScaleUtils';
 import { Tonality } from './tonality/Tonality';
-import { Chromatic } from './degrees/Chromatic';
-import { Diatonic } from './degrees/Diatonic';
-import { ChromaticChordPattern } from './chords/chromatic/ChromaticChordPattern';
-import { DiatonicAltChord } from './chords/DiatonicAltChord';
-import { Settings } from './settings/Settings';
-import { DefaultSettings } from './settings/DefaultSettings';
-import { ChromaticChord } from './chords/chromatic/ChromaticChord';
 
 // DIATONICS
 export function diatonics() {
@@ -18,6 +18,9 @@ export function diatonics() {
 
 // DIATONIC ALTS
 export function diatonicAlts() {
+    if (!Diatonic.C)
+        diatonics();
+        
     (<any>DiatonicAlt).initialize();
 }
 
@@ -38,6 +41,9 @@ export function chromaticChordPatterns() {
 
 // CHROMATIC CHORDS
 export function chromaticChords() {
+    if (!Chromatic.C)
+        chromatics();
+
     (<any>ChromaticChord).initialize();
 }
 
