@@ -6,10 +6,10 @@ import { Immutables } from '../../Utils/Immutables';
 import { Utils } from '../../Utils/Utils';
 import { DiatonicChordPattern } from '../Diatonic/DiatonicChordPattern';
 import { ChromaticChord } from './ChromaticChord';
+import { ImmutablesCache } from '../../Utils/ImmutablesCache';
+import { MathUtils } from '../../Utils/MathUtils';
 
 export class ChromaticChordPattern implements Iterable<number> {
-    private static immutables = new Map<string, ChromaticChordPattern>();
-
     public static POWER_CHORD: ChromaticChordPattern;
     public static TRIAD_MAJOR: ChromaticChordPattern;
     public static TRIAD_MINOR: ChromaticChordPattern;
@@ -75,39 +75,34 @@ export class ChromaticChordPattern implements Iterable<number> {
 
     public static all: () => ChromaticChordPattern[];
 
+    private static immutablesCache = new ImmutablesCache<ChromaticChordPattern, number[]>(
+        function (hashingObject: number[]) {
+            return Hashing.hashArray(hashingObject);
+        },
+        function (chromaticChordPattern: ChromaticChordPattern) {
+            return chromaticChordPattern._values;
+        },
+        function (values: number[]): ChromaticChordPattern {
+            return new ChromaticChordPattern(...values);
+        }
+    );
+
     private _values: number[];
     private valuesHash: string;
     private _diatonicChordPattern: DiatonicChordPattern;
 
-    private constructor(first?: number | number[], ...rest: number[]) {
-        this._values =
-            first === undefined
-                ? []
-                : first instanceof Array
-                    ? [...first, ...rest]
-                    : [first, ...rest];
-
-        this.valuesHash = Hashing.hashArray(this.values);
+    private constructor(...values: number[]) {
+        this._values = values;
     }
 
-    private static fromArrayAndDiatonicChordPattern(diatonicChordPattern: DiatonicChordPattern, ...rest: number[]): ChromaticChordPattern {
-        let instance = this.fromArray(rest);
+    private static fromArrayAndDiatonicChordPattern(diatonicChordPattern: DiatonicChordPattern, ...values: number[]): ChromaticChordPattern {
+        let instance = this.fromArray(...values);
         instance._diatonicChordPattern = diatonicChordPattern;
         return instance;
     }
 
-    public static fromArray(first?: number | number[], ...rest: number[]): ChromaticChordPattern {
-        let patternArray =
-            first === undefined
-                ? []
-                : first instanceof Array
-                    ? [...first, ...rest]
-                    : [first, ...rest];
-
-        let immutableCache = new ChromaticChordPattern(patternArray);
-        ChromaticChordPattern.immutables.set(Hashing.hashArray(immutableCache.values), immutableCache);
-
-        return immutableCache;
+    public static fromArray(...values: number[]): ChromaticChordPattern {
+        return this.immutablesCache.getOrCreate(values);
     }
 
     public static getUnsortedNotes(chord: ChromaticChord): Chromatic[] {
@@ -120,7 +115,6 @@ export class ChromaticChordPattern implements Iterable<number> {
     public static from(chord: ChromaticChord): ChromaticChordPattern {
         let patternArray = [0];
         let last: Chromatic;
-        let lastValue = 0;
 
         let unsortedNotes: Chromatic[] = this.getUnsortedNotes(chord);
 
@@ -132,20 +126,11 @@ export class ChromaticChordPattern implements Iterable<number> {
                 return;
             }
 
-            let value = (current.intValue - last.intValue) % Chromatic.NUMBER;
-            if (value < 0)
-                value += 12;
-            lastValue = value;
-            patternArray.push(value);
+            let dist = MathUtils.rotativeTrim(current.intValue - last.intValue, Chromatic.NUMBER);
+            patternArray.push(dist);
         });
 
-        let valuesHash = Hashing.hashArray(patternArray);
-        let immutableCache = ChromaticChordPattern.immutables.get(valuesHash);
-
-        if (immutableCache == null)
-            immutableCache = this.fromArray(patternArray);
-
-        return immutableCache;
+        return this.immutablesCache.getOrCreate(patternArray);
     }
 
     static fromDiatonicAltChord(chord: DiatonicAltChord): ChromaticChordPattern {
@@ -305,6 +290,6 @@ export class ChromaticChordPattern implements Iterable<number> {
             ];
         }
 
-        Immutables.lockr(ChromaticChordPattern);
+        Immutables.lockrIf(ChromaticChordPattern, (obj) => !(obj instanceof ImmutablesCache));
     }
 }
