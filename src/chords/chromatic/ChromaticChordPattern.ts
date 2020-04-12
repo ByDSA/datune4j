@@ -3,11 +3,10 @@ import { Chromatic } from '../../degrees/Chromatic';
 import { NamingChromaticChordPattern } from '../../lang/naming/NamingChromaticChordPattern';
 import { Hashing } from '../../Utils/Hashing';
 import { Immutables } from '../../Utils/Immutables';
-import { Utils } from '../../Utils/Utils';
-import { DiatonicChordPattern } from '../Diatonic/DiatonicChordPattern';
-import { ChromaticChord } from './ChromaticChord';
 import { ImmutablesCache } from '../../Utils/ImmutablesCache';
 import { MathUtils } from '../../Utils/MathUtils';
+import { DiatonicChordPattern } from '../Diatonic/DiatonicChordPattern';
+import { ChromaticChord } from './ChromaticChord';
 
 export class ChromaticChordPattern implements Iterable<number> {
     public static POWER_CHORD: ChromaticChordPattern;
@@ -105,18 +104,11 @@ export class ChromaticChordPattern implements Iterable<number> {
         return this.immutablesCache.getOrCreate(values);
     }
 
-    public static getUnsortedNotes(chord: ChromaticChord): Chromatic[] {
-        let sortedNotes = chord.notes;
-        let unsortedNotes = sortedNotes;
-        Utils.arrayRotate(unsortedNotes, chord.rootIndex);
-        return unsortedNotes;
-    }
-
     public static from(chord: ChromaticChord): ChromaticChordPattern {
         let patternArray = [0];
         let last: Chromatic;
 
-        let unsortedNotes: Chromatic[] = this.getUnsortedNotes(chord);
+        let unsortedNotes: Chromatic[] = chord.notesPattern;
 
         let first = true;
         unsortedNotes.forEach(current => {
