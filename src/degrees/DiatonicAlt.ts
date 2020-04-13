@@ -69,6 +69,10 @@ export class DiatonicAlt implements Hashable {
         return DiatonicAlt.immutablesCache.getOrCreate({ diatonic: diatonic, alts: alts });
     }
 
+    public static fromString(str: string): DiatonicAlt {
+        return NamingDiatonicAlt.get(str);
+    }
+
     public static fromChromatic(chromatic: Chromatic, diatonic?: Diatonic): DiatonicAlt {
         if (!diatonic) {
             switch (chromatic) {
