@@ -128,18 +128,18 @@ export function all() {
     diatonics();
     diatonicChordPatterns();
 
+    chromatics();
+    chromaticChordPatterns();
+    chromaticChords();
+
     diatonicAlts();
     intervalDiatonicAlts();
     diatonicAltChordPatterns();
     diatonicAltChords();
 
-    chromatics();
-    chromaticChordPatterns();
-    chromaticChords();
-    
     scales();
     sourceScales();
-    
+
     tonalities();
     settings();
 }
