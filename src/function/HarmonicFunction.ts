@@ -17,4 +17,6 @@ export abstract class HarmonicFunction {
     }
 
     protected abstract calculateChord(tonality: Tonality): DiatonicAltChord | null;
+
+    public abstract hashCode(): string;
 }

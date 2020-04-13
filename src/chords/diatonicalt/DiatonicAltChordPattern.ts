@@ -195,6 +195,14 @@ export class DiatonicAltChordPattern implements Iterable<DiatonicAltChordPattern
         return this._chromaticChordPattern.toStringShort();
     }
 
+    public hashCode(): string {
+        let ret = "";
+        for (const value of this.values) {
+            ret += "s:" + value.semis + "d:" + value.diatonicIntValue;
+        }
+        return ret;
+    }
+
     private static initialize() {
         DiatonicAltChordPattern.POWER_CHORD = DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.POWER_CHORD, DiatonicChordPattern.FIFTH);
         DiatonicAltChordPattern.TRIAD_MAJOR = DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.TRIAD_MAJOR, DiatonicChordPattern.TRIAD);

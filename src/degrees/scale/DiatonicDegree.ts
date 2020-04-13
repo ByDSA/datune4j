@@ -1,5 +1,5 @@
-import { Immutables } from '../../Utils/Immutables';
 import { Diatonic } from '../../degrees/Diatonic';
+import { Immutables } from '../../Utils/Immutables';
 import { MathUtils } from '../../Utils/MathUtils';
 
 export class DiatonicDegree {
@@ -32,6 +32,10 @@ export class DiatonicDegree {
 
     get intValue(): number {
         return this._intValue;
+    }
+
+    public hashCode(): string {
+        return "DiatonicDegree:" + this._intValue;
     }
 
     private static initialize() {

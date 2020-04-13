@@ -38,10 +38,10 @@ export class Tonality {
     public static Bm: Tonality;
 
     private static immutablesCache = new ImmutablesCache<Tonality, HashingObjectType>(
-        function (hashingObject: HashingObjectType) {
+        function (hashingObject: HashingObjectType): string {
             return hashingObject.scale.hashCode() + hashingObject.root.hashCode();
         },
-        function (tonality: Tonality) {
+        function (tonality: Tonality): HashingObjectType {
             return { root: tonality.root, scale: tonality.scale };
         },
         function (hashingObject: HashingObjectType): Tonality {
@@ -73,8 +73,8 @@ export class Tonality {
         let lastChromatic = this.root.chromatic;
         let lastDiatonic = this.root.diatonic;
         let i = 2;
-        for (let n of this.scale.intervals) {
-            if (i > this.scale.intervals.length)
+        for (let n of this.scale.distances) {
+            if (i > this.scale.distances.length)
                 break;
             lastChromatic = lastChromatic.getShift(n);
             let diatonicIntAdd = ScaleUtils.getRefNum(this.scale, i) - 1;
@@ -191,5 +191,9 @@ export class Tonality {
 
     get notes(): DiatonicAlt[] {
         return Array.from(this._notes);
+    }
+
+    public hashCode():string {
+        return "tonality:" + this.root.hashCode() + "|" + this.scale.hashCode(); 
     }
 }

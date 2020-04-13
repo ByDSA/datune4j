@@ -1,5 +1,9 @@
+import { Diatonic } from '../../degrees/Diatonic';
+import { Hashing } from '../../Utils/Hashing';
+import { ImmutablesCache } from '../../Utils/ImmutablesCache';
 import { DiatonicDegree } from './DiatonicDegree';
 
+type HashingObjectType = { diatonicDegree: DiatonicDegree, alts: number };
 export class DiatonicAltDegree {
     public static I: DiatonicAltDegree;
     public static bII: DiatonicAltDegree;
@@ -14,11 +18,23 @@ export class DiatonicAltDegree {
     public static bVII: DiatonicAltDegree;
     public static VII: DiatonicAltDegree;
 
+    private static immutablesCache = new ImmutablesCache<DiatonicAltDegree, HashingObjectType>(
+        function (hashingObject: HashingObjectType): string {
+            return hashingObject.diatonicDegree.hashCode() + "|" + Hashing.hash(hashingObject.alts);
+        },
+        function (diatonicAltDegree: DiatonicAltDegree): HashingObjectType {
+            return { diatonicDegree: diatonicAltDegree.diatonicDegree, alts: diatonicAltDegree.alts };
+        },
+        function (hashingObject: HashingObjectType): DiatonicAltDegree {
+            return new DiatonicAltDegree(hashingObject.diatonicDegree, hashingObject.alts);
+        }
+    );
+
     private constructor(private _diatonicDegree: DiatonicDegree, private _alts: number) {
     }
 
     public static from(diatonicDegree: DiatonicDegree, alts: number): DiatonicAltDegree {
-        return new DiatonicAltDegree(diatonicDegree, alts);
+        return this.immutablesCache.getOrCreate({ diatonicDegree: diatonicDegree, alts: alts });
     }
 
     public get diatonicDegree(): DiatonicDegree {
@@ -29,7 +45,26 @@ export class DiatonicAltDegree {
         return this._alts;
     }
 
+    public get semis(): number {
+        return Diatonic.fromInt(this.diatonicDegree.intValue).chromatic.intValue + this.alts;
+    }
+
+    public hashCode(): string {
+        return this._diatonicDegree.hashCode() + "|alts:" + Hashing.hash(this._alts);
+    }
+
     private static initialize() {
         DiatonicAltDegree.I = DiatonicAltDegree.from(DiatonicDegree.I, 0);
+        DiatonicAltDegree.bII = DiatonicAltDegree.from(DiatonicDegree.II, -1);
+        DiatonicAltDegree.II = DiatonicAltDegree.from(DiatonicDegree.II, 0);
+        DiatonicAltDegree.bIII = DiatonicAltDegree.from(DiatonicDegree.III, -1);
+        DiatonicAltDegree.III = DiatonicAltDegree.from(DiatonicDegree.III, 0);
+        DiatonicAltDegree.IV = DiatonicAltDegree.from(DiatonicDegree.IV, 0);
+        DiatonicAltDegree.bV = DiatonicAltDegree.from(DiatonicDegree.V, -1);
+        DiatonicAltDegree.V = DiatonicAltDegree.from(DiatonicDegree.V, 0);
+        DiatonicAltDegree.bVI = DiatonicAltDegree.from(DiatonicDegree.VI, -1);
+        DiatonicAltDegree.VI = DiatonicAltDegree.from(DiatonicDegree.VI, 0);
+        DiatonicAltDegree.bVII = DiatonicAltDegree.from(DiatonicDegree.VII, -1);
+        DiatonicAltDegree.VII = DiatonicAltDegree.from(DiatonicDegree.VII, 0);
     }
 }

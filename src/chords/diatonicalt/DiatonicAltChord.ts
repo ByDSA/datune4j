@@ -34,6 +34,7 @@ export class DiatonicAltChord {
     public static CmMaj7: DiatonicAltChord;
 
     public static C7: DiatonicAltChord;
+    public static C0: DiatonicAltChord;
 
     private static immutablesCache = new ImmutablesCache<DiatonicAltChord, HashingObjectType>(
         function (hashingObject: HashingObjectType) {

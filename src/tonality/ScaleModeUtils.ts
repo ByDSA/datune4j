@@ -20,7 +20,7 @@ export class ScaleModeUtils {
     public static getRotatedScale(sourceScale: Scale, n: number): Scale {
         Assert.notNull(sourceScale);
         
-        let scaleIntervals: number[] = sourceScale.intervals;
+        let scaleIntervals: number[] = sourceScale.distances;
         
         if (n > 0)
             Utils.arrayRotate(scaleIntervals, n);

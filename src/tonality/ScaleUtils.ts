@@ -86,7 +86,7 @@ export class ScaleUtils {
                 if (scale.length == 7)
                     return i;
                 else if (scale.length > 7) {
-                    switch (scale.absoluteIntervals[i - 1]) {
+                    switch (scale.absoluteDistances[i - 1]) {
                         case 0:
                         case 1:
                             return 1;
@@ -117,7 +117,7 @@ export class ScaleUtils {
 
     public static getChromaticChordPattern(scale: Scale): ChromaticChordPattern {
         let array = [0];
-        for (let n of scale.intervals) {
+        for (let n of scale.distances) {
             let newValue = array[array.length - 1] + n;
             array.push(newValue);
         }

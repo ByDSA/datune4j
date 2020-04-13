@@ -1,8 +1,12 @@
+import { DiatonicAltDegree } from '../degrees/scale/DiatonicAltDegree';
+import { DiatonicDegree } from '../degrees/scale/DiatonicDegree';
+import { DegreeFunction } from '../function/DegreeFunction';
 import { NamingScale } from '../lang/naming/NamingScale';
 import { Hashable } from '../Utils/Hashable';
 import { Hashing } from '../Utils/Hashing';
 import { ImmutablesCache } from '../Utils/ImmutablesCache';
 import { ScaleModeUtils } from './ScaleModeUtils';
+import { ScaleUtils } from './ScaleUtils';
 
 export class Scale implements Hashable {
     static MAJOR: Scale;
@@ -97,29 +101,30 @@ export class Scale implements Hashable {
             return Hashing.hashArray(hashingObject);
         },
         function (scale: Scale) {
-            return scale._intervals;
+            return scale._distances;
         },
         function (intervals: number[]): Scale {
             return new Scale(...intervals);
         }
     );
 
-    private _intervals: number[];
-    private _absoluteIntervals: number[] = null;
+    private _distances: number[];
+    private _absoluteIntervals: DiatonicAltDegree[] = null;
+    private _absoluteDistances: number[] = null;
     private _modes: Scale[] = null;
 
-    private constructor(...intervals: number[]) {
-        this._intervals = intervals;
+    private constructor(...distances: number[]) {
+        this._distances = distances;
     }
 
-    public static from(...intervals: number[]): Scale {
-        return Scale.immutablesCache.getOrCreate(intervals);
+    public static from(...distances: number[]): Scale {
+        return Scale.immutablesCache.getOrCreate(distances);
     }
 
     // Relative Intervals
 
-    public get intervals(): number[] {
-        return Array.from(this._intervals);
+    public get distances(): number[] {
+        return Array.from(this._distances);
     }
 
     // Modes
@@ -144,32 +149,70 @@ export class Scale implements Hashable {
 
     // Absolute Intervals
 
-    public get absoluteIntervals() {
-        if (this._absoluteIntervals == null)
+    public get absoluteIntervals(): DiatonicAltDegree[] {
+        if (this._absoluteIntervals == null) {
             this._absoluteIntervals = this.calculateAbsoluteIntervals();
+        }
 
         return this._absoluteIntervals;
     }
 
-    private calculateAbsoluteIntervals(): number[] {
-        let absoluteIntervals = [0];
+    public get absoluteDistances(): number[] {
+        if (this._absoluteDistances == null) {
+            this._absoluteDistances = this.calculateAbsoluteDistances();
+        }
 
-        let relativeIntervals = this.intervals;
+        return this._absoluteDistances;
+    }
+
+    private calculateAbsoluteDistances(): number[] {
+        let absoluteDistances = [0];
+
+        let relativeIntervals = this.distances;
         relativeIntervals.pop();
 
         let acc = 0;
-        relativeIntervals.forEach(n => {
+        for (let i = 0; i < relativeIntervals.length; i++) {
+            let n = relativeIntervals[i];
             acc += n;
-            absoluteIntervals.push(acc);
-        });
+            absoluteDistances.push(acc);
+        };
+
+        return absoluteDistances;
+    }
+
+    private calculateAbsoluteIntervals(): DiatonicAltDegree[] {
+        let absoluteIntervals = [DiatonicAltDegree.I];
+
+        let relativeIntervals = this.distances;
+        relativeIntervals.pop();
+
+        let acc = 0;
+        for (let i = 1; i <= relativeIntervals.length; i++) {
+            let n = relativeIntervals[i-1];
+            acc += n;
+            let alts = 0;
+            let iFixed = ScaleUtils.getRefNum(this, i);
+            if (this != Scale.MAJOR)
+                alts = acc - Scale.MAJOR.absoluteDistances[iFixed];
+
+            let diatonicDegree = DiatonicDegree.fromInt(iFixed);
+            let diatonicAltDegree = DiatonicAltDegree.from(diatonicDegree, alts);
+            absoluteIntervals.push(diatonicAltDegree);
+        };
 
         return absoluteIntervals;
+    }
+
+    get degreeFunctions(): DegreeFunction[] {
+        let ret = [];
+        return ret;
     }
 
     // General
 
     public get length(): number {
-        return this._intervals.length;
+        return this._distances.length;
     }
 
     public toString(): string {
@@ -178,12 +221,12 @@ export class Scale implements Hashable {
 
     public clone(): Scale {
         let scale = new Scale(0);
-        scale._intervals = this.intervals;
+        scale._distances = this.distances;
         return scale;
     }
 
     hashCode(): string {
-        return Hashing.hashArray(this.intervals);
+        return Hashing.hashArray(this.distances);
     }
 
     private static initialize() {

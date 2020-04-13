@@ -74,7 +74,7 @@ export class NamingScale {
     private static scaleToStringByIntervals(scale: Scale): string {
         let first = true;
         let ret: string = "";
-        scale.intervals.forEach(i => {
+        scale.distances.forEach(i => {
             if (first)
                 first = false;
             else
