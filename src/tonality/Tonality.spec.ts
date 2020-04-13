@@ -29,3 +29,17 @@ test('Tonality - notes: C', () => {
         ]
     );
 });
+
+test('Tonality - notes: C BLUES MINOR', () => {
+    let notes = Tonality.from(DiatonicAlt.C, Scale.BLUES_MINOR).notes;
+    expect(notes.length).toBe(5);
+    expect(notes).toStrictEqual(
+        [
+            DiatonicAlt.C,
+            DiatonicAlt.Eb,
+            DiatonicAlt.F,
+            DiatonicAlt.Ab,
+            DiatonicAlt.Bb
+        ]
+    );
+});
