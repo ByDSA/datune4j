@@ -4,10 +4,11 @@ import * as precalc from "../precalc";
 import { Scale } from './Scale';
 import { Tonality } from './Tonality';
 precalc.diatonics();
+precalc.chromatics();
 precalc.diatonicAlts();
+precalc.intervalDiatonicAlts();
 precalc.diatonicAltChordPatterns();
 precalc.diatonicAltChords();
-precalc.chromatics();
 precalc.scales();
 precalc.tonalities();
 precalc.settings();
@@ -39,12 +40,17 @@ test('Tonality - rootChord3: C -> C', () => {
     expect(rootChord3).toBe(DiatonicAltChord.C);
 });
 
+test('Tonality - rootChord3: C Oriental -> Am', () => {
+    let rootChord3: DiatonicAltChord = Tonality.from(DiatonicAlt.C, Scale.ORIENTAL).rootChord3;
+    expect(rootChord3.length).toBe(3);
+    expect(rootChord3).toBe(DiatonicAltChord.Am);
+});
+
 test('Tonality - rootChord4: C -> CMaj7', () => {
     let rootChord4 = Tonality.C.rootChord4;
     expect(rootChord4.length).toBe(4);
     expect(rootChord4).toBe(DiatonicAltChord.CMaj7);
 });
-
 
 test('Tonality - notes: C BLUES MINOR', () => {
     let notes = Tonality.from(DiatonicAlt.C, Scale.BLUES_MINOR).notes;
