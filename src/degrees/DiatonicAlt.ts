@@ -1,16 +1,16 @@
-import { IntervalChromatic } from '../interval/IntervalChromatic';
-import { IntervalDiatonicUtils } from '../interval/IntervalDiatonicUtils';
+import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
 import { NamingDiatonicAlt } from '../lang/naming/NamingDiatonicAlt';
-import { Assert } from '../Utils/Assert';
 import { Hashable } from '../Utils/Hashable';
 import { Hashing } from '../Utils/Hashing';
 import { Immutables } from '../Utils/Immutables';
+import { ImmutablesCache } from '../Utils/ImmutablesCache';
 import { Chromatic } from './Chromatic';
 import { Diatonic } from './Diatonic';
-import { ImmutablesCache } from '../Utils/ImmutablesCache';
 
 type HashingObjectType = { diatonic: Diatonic, alts: number };
 export class DiatonicAlt implements Hashable {
+    // Precalc
+
     public static C: DiatonicAlt;
     public static CC: DiatonicAlt;
     public static CCC: DiatonicAlt;
@@ -55,7 +55,7 @@ export class DiatonicAlt implements Hashable {
 
     private static immutablesCache = new ImmutablesCache<DiatonicAlt, HashingObjectType>(
         function (hashingObject: HashingObjectType) {
-            return hashingObject.diatonic.hashCode() + Hashing.hash(Chromatic.NUMBER+hashingObject.alts); // +Chromatic.Number, porque hay problema con hash de números negativos
+            return hashingObject.diatonic.hashCode() + Hashing.hash(Chromatic.NUMBER + hashingObject.alts); // +Chromatic.Number, porque hay problema con hash de números negativos
         },
         function (diatonicAlt: DiatonicAlt): HashingObjectType {
             return { diatonic: diatonicAlt.diatonic, alts: diatonicAlt.alts };
@@ -106,19 +106,16 @@ export class DiatonicAlt implements Hashable {
     private constructor(private _diatonic: Diatonic, private _alts: number) {
     }
 
-    getShifted(intervalChromatic: IntervalChromatic): DiatonicAlt {
-        Assert.notNull(intervalChromatic);
+    getAdd(intervalDiatonicAlt: IntervalDiatonicAlt) {
+        let diatonic: Diatonic = this.diatonic.getAdd(intervalDiatonicAlt.intervalDiatonic);
+        let chromatic: Chromatic = this.chromatic.getShift(intervalDiatonicAlt.semis);
+        return DiatonicAlt.fromChromatic(chromatic, diatonic);
+    }
 
-        let intervalDiatonic = IntervalDiatonicUtils.fromIntervalChromatic(intervalChromatic);
-        let diatonic = Diatonic.getShifted(this.diatonic, intervalDiatonic);
-        let alts = this.chromatic.intValue + intervalChromatic.semis - diatonic.chromatic.intValue;
-        alts %= Chromatic.NUMBER;
-        if (alts > 4)
-            alts -= Chromatic.NUMBER;
-        else if (alts < -4)
-            alts += Chromatic.NUMBER;
-
-        return DiatonicAlt.from(diatonic, alts);
+    getSub(intervalDiatonicAlt: IntervalDiatonicAlt) {
+        let diatonic: Diatonic = this.diatonic.getSub(intervalDiatonicAlt.intervalDiatonic);
+        let chromatic: Chromatic = this.chromatic.getShift(-intervalDiatonicAlt.semis);
+        return DiatonicAlt.fromChromatic(chromatic, diatonic);
     }
 
     get chromatic(): Chromatic {

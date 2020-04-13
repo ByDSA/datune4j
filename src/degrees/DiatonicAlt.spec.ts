@@ -1,4 +1,4 @@
-import { IntervalChromatic } from "../interval/IntervalChromatic";
+import { IntervalDiatonicAlt } from "../interval/IntervalDiatonicAlt";
 import { Language } from "../lang/Language";
 import * as precalc from "../precalc";
 import { Settings } from "../settings/Settings";
@@ -8,6 +8,7 @@ import { DiatonicAlt } from "./DiatonicAlt";
 precalc.chromatics();
 precalc.diatonics();
 precalc.diatonicAlts();
+precalc.intervalDiatonicAlts();
 precalc.settings();
 
 test('DiatonicAlt - precalc ', () => {
@@ -81,21 +82,15 @@ test('DiatonicAlt - toString() - ESP', () => {
     expect(DiatonicAlt.BBB.toString()).toBe("Si♯♯");
 });
 
-test('Chromatic - getAdd: minor second', () => {
-    let chromatic = Chromatic.C.getAdd(IntervalChromatic.MINOR_SECOND);
-    let expected = Chromatic.CC;
+test('DiatonicAlt - getAdd: minor second', () => {
+    let chromatic = DiatonicAlt.C.getAdd(IntervalDiatonicAlt.MINOR_SECOND);
+    let expected = DiatonicAlt.Db;
     expect(chromatic).toBe(expected);
 });
 
-test('Chromatic - getSub: minor second', () => {
-    let chromatic = Chromatic.C.getSub(IntervalChromatic.MINOR_SECOND);
-    let expected = Chromatic.B;
-    expect(chromatic).toBe(expected);
-});
-
-test('Chromatic - getShift: -27', () => {
-    let chromatic = Chromatic.C.getShift(-27);
-    let expected = Chromatic.A;
+test('DiatonicAlt - getSub: minor second', () => {
+    let chromatic = DiatonicAlt.C.getSub(IntervalDiatonicAlt.MINOR_SECOND);
+    let expected = DiatonicAlt.B;
     expect(chromatic).toBe(expected);
 });
 
@@ -109,6 +104,10 @@ test('DiatonicAlt - chromatic: BB ', () => {
 
 test('DiatonicAlt - chromatic: C ', () => {
     expect(DiatonicAlt.C.chromatic).toBe(Chromatic.C);
+});
+
+test('DiatonicAlt - chromatic: E ', () => {
+    expect(DiatonicAlt.E.chromatic).toBe(Chromatic.E);
 });
 
 test('DiatonicAlt - chromatic: Cb ', () => {

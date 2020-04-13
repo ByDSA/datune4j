@@ -1,5 +1,5 @@
 import { Hashing } from '../Utils/Hashing';
-import { IntervalChromatic } from '../interval/IntervalChromatic';
+import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
 import { NamingChromatic } from '../lang/naming/NamingChromatic';
 import { Immutables } from '../Utils/Immutables';
 import { MathUtils } from '../Utils/MathUtils';
@@ -42,14 +42,6 @@ export class Chromatic {
             case 11: return Chromatic.B;
         }
         throw new Error("Impossible get Chromatic from int value: " + intValue);
-    }
-
-    public getAdd(intervalChromatic: IntervalChromatic): Chromatic {
-        return this.getShift(intervalChromatic.semis);
-    }
-
-    public getSub(intervalChromatic: IntervalChromatic): Chromatic {
-        return this.getShift(-intervalChromatic.semis);
     }
 
     public getShift(semis: number): Chromatic {

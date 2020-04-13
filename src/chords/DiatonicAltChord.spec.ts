@@ -1,11 +1,14 @@
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
 import * as precalc from "../precalc";
-import { ChromaticChordPattern } from './chromatic/ChromaticChordPattern';
 import { DiatonicAltChord } from './DiatonicAltChord';
+import { DiatonicAltChordPattern } from './DiatonicAltChordPattern';
 precalc.chromatics();
 precalc.chromaticChordPatterns();
+precalc.diatonicChordPatterns();
+precalc.diatonicAltChordPatterns();
 precalc.diatonics();
 precalc.diatonicAlts();
+precalc.intervalDiatonicAlts();
 precalc.diatonicAltChords();
 precalc.settings();
 
@@ -23,12 +26,11 @@ test('DiatonicAltChord - fromRootNotes: get from ImmutableCache', () => {
 });
 
 test('DiatonicAltChord - fromRootPattern: get from ImmutableCache', () => {
-    let diatonicAltChord = DiatonicAltChord.fromRootPattern(DiatonicAlt.C, ChromaticChordPattern.SEVENTH);
+    let diatonicAltChord = DiatonicAltChord.fromRootPattern(DiatonicAlt.C, DiatonicAltChordPattern.SEVENTH);
 
     let expected = DiatonicAltChord.C7;
     expect(diatonicAltChord).toBe(expected);
 });
-
 
 test('DiatonicAltChord - toString: C7', () => {
     let str = DiatonicAltChord.C7.toString();
@@ -40,7 +42,7 @@ test('DiatonicAltChord - toString: C7', () => {
 test('DiatonicAltChord - toString: B##7', () => {
     let str = DiatonicAltChord.fromRootPattern(
         DiatonicAlt.BBB,
-        ChromaticChordPattern.SEVENTH).toString();
+        DiatonicAltChordPattern.SEVENTH).toString();
 
     let expected = DiatonicAlt.BBB.toString() + "7";
     expect(str).toBe(expected);
@@ -54,7 +56,7 @@ test('DiatonicAltChord - toString: C7/E', () => {
 });
 
 test('DiatonicAltChord - getInv: C7 + inv = C7/E', () => {
-    let diatonicAltChord = DiatonicAltChord.C7.getInv(1);
+    let diatonicAltChord = DiatonicAltChord.C7.getInv();
 
     let expected = DiatonicAlt.C;
     expect(diatonicAltChord.root).toBe(expected);
@@ -88,7 +90,7 @@ test('DiatonicAltChord - getInv: C7 + 4 inv', () => {
 
 
 test('DiatonicAltChord - getInv: C7 + 1 inv + 1 inv', () => {
-    let diatonicAltChord = DiatonicAltChord.C7.getInv(1).getInv(1);
+    let diatonicAltChord = DiatonicAltChord.C7.getInv().getInv();
 
     expect(diatonicAltChord.root).toBe(DiatonicAlt.C);
     expect(diatonicAltChord.notes).toStrictEqual([

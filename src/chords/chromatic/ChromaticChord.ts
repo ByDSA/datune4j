@@ -27,7 +27,7 @@ export class ChromaticChord {
             return ret;
         },
         function (chromaticChord: ChromaticChord): HashingObjectType {
-            return { rootIndex: chromaticChord.rootIndex, chromatics: chromaticChord.notesPattern };
+            return { rootIndex: chromaticChord.rootIndex, chromatics: chromaticChord.notesFromRoot };
         },
         function (hashingObject: HashingObjectType): ChromaticChord {
             return new ChromaticChord(hashingObject.rootIndex, hashingObject.chromatics);
@@ -82,7 +82,7 @@ export class ChromaticChord {
     }
 
     public get notes(): Chromatic[] {
-        let notes = this.notesPattern;
+        let notes = this.notesFromRoot;
 
         Utils.arrayRotate(notes, this.rootIndex, true);
         return notes;
@@ -91,13 +91,12 @@ export class ChromaticChord {
     public getInv(n: number = 1): ChromaticChord {
         let rootIndex = this.rootIndex - n;
         rootIndex = MathUtils.rotativeTrim(rootIndex, this._notes.length);
-        return ChromaticChord.fromRootNotes(rootIndex, this.notesPattern);
+        return ChromaticChord.fromRootNotes(rootIndex, this.notesFromRoot);
     }
 
-    public get notesPattern(): Chromatic[] {
+    public get notesFromRoot(): Chromatic[] {
         return Array.from(this._notes);
     }
-
     
     public get pattern(): ChromaticChordPattern {
         let patternArray = this.getArrayFromChromaticChord();
@@ -105,7 +104,7 @@ export class ChromaticChord {
         return ChromaticChordPattern.from(...patternArray);
     }
 
-    public get patternRoot(): ChromaticChordPattern {
+    public get patternFromRoot(): ChromaticChordPattern {
         let patternArray = this.getArrayFromChromaticChordRoot();
 
         return ChromaticChordPattern.from(...patternArray);
@@ -136,7 +135,7 @@ export class ChromaticChord {
         let patternArray = [0];
         let last: Chromatic;
 
-        let unsortedNotes: Chromatic[] = this.notesPattern;
+        let unsortedNotes: Chromatic[] = this.notesFromRoot;
 
         let first = true;
         unsortedNotes.forEach(current => {

@@ -1,4 +1,4 @@
-import { IntervalChromatic } from "../interval/IntervalChromatic";
+import { IntervalDiatonicAlt } from "../interval/IntervalDiatonicAlt";
 import { Language } from "../lang/Language";
 import * as precalc from "../precalc";
 import { Settings } from "../settings/Settings";
@@ -109,14 +109,14 @@ test('Chromatic - toString() - ESP', () => {
     expect(Chromatic.B.toString()).toBe("Si");
 });
 
-test('Chromatic - getAdd: minor second', () => {
-    let chromatic = Chromatic.C.getAdd(IntervalChromatic.MINOR_SECOND);
+test('Chromatic - getShift: +1', () => {
+    let chromatic = Chromatic.C.getShift(1);
     let expected = Chromatic.CC;
     expect(chromatic).toBe(expected);
 });
 
-test('Chromatic - getSub: minor second', () => {
-    let chromatic = Chromatic.C.getSub(IntervalChromatic.MINOR_SECOND);
+test('Chromatic - getShift: -1', () => {
+    let chromatic = Chromatic.C.getShift(-1);
     let expected = Chromatic.B;
     expect(chromatic).toBe(expected);
 });

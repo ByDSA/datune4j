@@ -1,15 +1,18 @@
 import { ChromaticChord } from './chords/chromatic/ChromaticChord';
 import { ChromaticChordPattern } from './chords/chromatic/ChromaticChordPattern';
 import { DiatonicAltChord } from './chords/DiatonicAltChord';
+import { DiatonicAltChordPattern } from './chords/DiatonicAltChordPattern';
 import { Chromatic } from './degrees/Chromatic';
 import { Diatonic } from './degrees/Diatonic';
 import { DiatonicAlt } from './degrees/DiatonicAlt';
+import { IntervalDiatonicAlt } from './interval/IntervalDiatonicAlt';
 import { DefaultSettings } from './settings/DefaultSettings';
 import { Settings } from './settings/Settings';
 import { Scale } from './tonality/Scale';
 import { ScaleModeUtils } from './tonality/ScaleModeUtils';
 import { SourceScaleUtils } from './tonality/SourceScaleUtils';
 import { Tonality } from './tonality/Tonality';
+import { DiatonicChordPattern } from './chords/Diatonic/DiatonicChordPattern';
 
 // DIATONICS
 export function diatonics() {
@@ -20,7 +23,7 @@ export function diatonics() {
 export function diatonicAlts() {
     if (!Diatonic.C)
         diatonics();
-        
+
     (<any>DiatonicAlt).initialize();
 }
 
@@ -29,9 +32,25 @@ export function diatonicAltChords() {
     (<any>DiatonicAltChord).initialize();
 }
 
+
+// INTERVAL DIATONIC ALTS
+export function intervalDiatonicAlts() {
+    (<any>IntervalDiatonicAlt).initialize();
+}
+
 // CHROMATICS
 export function chromatics() {
     (<any>Chromatic).initialize();
+}
+
+// DIATONIC ALT CHORD PATTERNS
+export function diatonicChordPatterns() {
+    (<any>DiatonicChordPattern).initialize();
+}
+
+// DIATONIC ALT CHORD PATTERNS
+export function diatonicAltChordPatterns() {
+    (<any>DiatonicAltChordPattern).initialize();
 }
 
 // CHROMATIC CHORD PATTERNS
@@ -282,8 +301,12 @@ export function settings() {
 export function all() {
     diatonics();
     diatonicAlts();
+    intervalDiatonicAlts();
     diatonicAltChords();
+    diatonicAltChordPatterns();
+    diatonicChordPatterns();
     chromatics();
+    chromaticChords();
     chromaticChordPatterns();
     scales();
     sourceScales();

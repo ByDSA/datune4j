@@ -1,8 +1,8 @@
 import { IntervalDiatonic } from '../interval/IntervalDiatonic';
 import { NamingDiatonic } from '../lang/naming/NamingDiatonic';
-import { MathUtils } from '../Utils/MathUtils';
-import { Immutables } from '../Utils/Immutables';
 import { Hashing } from '../Utils/Hashing';
+import { Immutables } from '../Utils/Immutables';
+import { MathUtils } from '../Utils/MathUtils';
 import { Chromatic } from './Chromatic';
 
 export class Diatonic {
@@ -16,8 +16,13 @@ export class Diatonic {
 
     public static NUMBER = 7;
 
-    public static getShifted(diatonic: Diatonic, intervalDiatonic: IntervalDiatonic): Diatonic {
-        let intValue = MathUtils.rotativeTrim(diatonic.intValue + intervalDiatonic, Diatonic.NUMBER);
+    public getAdd(intervalDiatonic: IntervalDiatonic): Diatonic {
+        let intValue = this.intValue + intervalDiatonic;
+        return Diatonic.fromInt(intValue);
+    }
+
+    public getSub(intervalDiatonic: IntervalDiatonic): Diatonic {
+        let intValue = this.intValue - intervalDiatonic;
         return Diatonic.fromInt(intValue);
     }
 
