@@ -1,4 +1,4 @@
-import { DiatonicAltChord } from '../../chords/DiatonicAltChord';
+import { DiatonicAltChord } from '../diatonicalt/DiatonicAltChord';
 import { Chromatic } from '../../degrees/Chromatic';
 import { DiatonicAlt } from '../../degrees/DiatonicAlt';
 import { NameChromaticChordCalculator } from '../../lang/naming/NameChromaticChordCalculator';

@@ -1,6 +1,6 @@
 import { ChromaticChord } from '../chords/chromatic/ChromaticChord';
 import { ChromaticChordPattern } from '../chords/chromatic/ChromaticChordPattern';
-import { DiatonicAltChord } from '../chords/DiatonicAltChord';
+import { DiatonicAltChord } from '../chords/diatonicalt/DiatonicAltChord';
 import { Chromatic } from '../degrees/Chromatic';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
 import { Language } from '../lang/Language';

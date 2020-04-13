@@ -1,5 +1,5 @@
-import { DiatonicAltChord } from '../../chords/DiatonicAltChord';
-import { DiatonicAltChordPattern, DiatonicAltChordPatternValueType } from '../../chords/DiatonicAltChordPattern';
+import { DiatonicAltChord } from '../../chords/diatonicalt/DiatonicAltChord';
+import { DiatonicAltChordPattern, DiatonicAltChordPatternValueType } from '../../chords/diatonicalt/DiatonicAltChordPattern';
 import { DiatonicAlt } from '../../degrees/DiatonicAlt';
 import { IntervalDiatonicAlt } from '../../interval/IntervalDiatonicAlt';
 

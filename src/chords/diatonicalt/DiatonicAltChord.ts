@@ -1,12 +1,12 @@
-import { DiatonicAlt } from '../degrees/DiatonicAlt';
-import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
-import { NameDiatonicAltChordCalculator } from '../lang/naming/NameDiatonicAltChordCalculator';
-import { Assert } from '../Utils/Assert';
-import { Hashing } from '../Utils/Hashing';
-import { Immutables } from '../Utils/Immutables';
-import { ImmutablesCache } from '../Utils/ImmutablesCache';
-import { MathUtils } from '../Utils/MathUtils';
-import { Utils } from '../Utils/Utils';
+import { DiatonicAlt } from '../../degrees/DiatonicAlt';
+import { IntervalDiatonicAlt } from '../../interval/IntervalDiatonicAlt';
+import { NameDiatonicAltChordCalculator } from '../../lang/naming/NameDiatonicAltChordCalculator';
+import { Assert } from '../../Utils/Assert';
+import { Hashing } from '../../Utils/Hashing';
+import { Immutables } from '../../Utils/Immutables';
+import { ImmutablesCache } from '../../Utils/ImmutablesCache';
+import { MathUtils } from '../../Utils/MathUtils';
+import { Utils } from '../../Utils/Utils';
 import { DiatonicAltChordPattern } from './DiatonicAltChordPattern';
 
 type HashingObjectType = { rootIndex: number, notes: DiatonicAlt[] };

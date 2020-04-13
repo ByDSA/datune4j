@@ -1,7 +1,7 @@
 import { ChromaticChord } from './chords/chromatic/ChromaticChord';
 import { ChromaticChordPattern } from './chords/chromatic/ChromaticChordPattern';
-import { DiatonicAltChord } from './chords/DiatonicAltChord';
-import { DiatonicAltChordPattern } from './chords/DiatonicAltChordPattern';
+import { DiatonicAltChord } from './chords/diatonicalt/DiatonicAltChord';
+import { DiatonicAltChordPattern } from './chords/diatonicalt/DiatonicAltChordPattern';
 import { Chromatic } from './degrees/Chromatic';
 import { Diatonic } from './degrees/Diatonic';
 import { DiatonicAlt } from './degrees/DiatonicAlt';

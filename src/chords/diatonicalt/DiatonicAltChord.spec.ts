@@ -1,5 +1,5 @@
-import { DiatonicAlt } from '../degrees/DiatonicAlt';
-import * as precalc from "../precalc";
+import { DiatonicAlt } from '../../degrees/DiatonicAlt';
+import * as precalc from "../../precalc";
 import { DiatonicAltChord } from './DiatonicAltChord';
 import { DiatonicAltChordPattern } from './DiatonicAltChordPattern';
 precalc.chromatics();
