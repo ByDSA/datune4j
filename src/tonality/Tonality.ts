@@ -1,3 +1,4 @@
+import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
 import { ChromaticChordPattern } from '../chords/chromatic/ChromaticChordPattern';
 import { DiatonicChordPattern } from '../chords/Diatonic/DiatonicChordPattern';
 import { DiatonicAltChord } from '../chords/diatonicalt/DiatonicAltChord';
@@ -94,17 +95,17 @@ export class Tonality {
 
     private calculateRootChord3() {
         let chordRootPatternPriority = [
-            DiatonicAltChordPattern.TRIAD_MAJOR, // I
-            DiatonicAltChordPattern.TRIAD_MINOR, // i
-            DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.from(0, 4, 10), DiatonicChordPattern.TRIAD).getInv(-1), // vi
-            DiatonicAltChordPattern.TRIAD_DIMINISHED, // I0
-            DiatonicAltChordPattern.TRIAD_AUGMENTED, // I+
-            DiatonicAltChordPattern.TRIAD_SUS4, // Isus4
+            { interval: IntervalDiatonicAlt.PERFECT_UNISON, pattern: DiatonicAltChordPattern.TRIAD_MAJOR },
+            { interval: IntervalDiatonicAlt.PERFECT_UNISON, pattern: DiatonicAltChordPattern.TRIAD_MINOR },
+            { interval: IntervalDiatonicAlt.MAJOR_SIXTH, pattern: DiatonicAltChordPattern.TRIAD_MINOR },
         ];
 
         this._rootChord3 = null;
+        let notesChromatic = this.notes.map(diatonicAlt => diatonicAlt.chromatic);
         for (const pattern of chordRootPatternPriority) {
-            let chord: DiatonicAltChord = DiatonicAltChord.fromRootPattern(this.root, pattern);
+            let note = this.root.getAdd(pattern.interval);
+            let chord = DiatonicAltChord.fromRootPattern(note, pattern.pattern);
+
             if (this.containsChord(chord)) {
                 this._rootChord3 = chord;
                 break;
