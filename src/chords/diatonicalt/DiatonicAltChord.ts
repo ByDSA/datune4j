@@ -11,8 +11,28 @@ import { DiatonicAltChordPattern } from './DiatonicAltChordPattern';
 
 type HashingObjectType = { rootIndex: number, notes: DiatonicAlt[] };
 export class DiatonicAltChord {
+    // Precalc
     public static C: DiatonicAltChord;
+    public static D: DiatonicAltChord;
+    public static E: DiatonicAltChord;
+    public static F: DiatonicAltChord;
+    public static G: DiatonicAltChord;
+    public static A: DiatonicAltChord;
+    public static B: DiatonicAltChord;
+
+    public static Cm: DiatonicAltChord;
+    public static Dm: DiatonicAltChord;
+    public static Em: DiatonicAltChord;
+    public static Fm: DiatonicAltChord;
+    public static Gm: DiatonicAltChord;
+    public static Am: DiatonicAltChord;
+    public static Bm: DiatonicAltChord;
+
     public static CMaj7: DiatonicAltChord;
+    public static FMaj7: DiatonicAltChord;
+
+    public static CmMaj7: DiatonicAltChord;
+
     public static C7: DiatonicAltChord;
 
     private static immutablesCache = new ImmutablesCache<DiatonicAltChord, HashingObjectType>(
@@ -134,10 +154,88 @@ export class DiatonicAltChord {
         return new NameDiatonicAltChordCalculator(this).get();
     }
 
+    private static diatonicAlt2Str(diatonicAlt: DiatonicAlt): string {
+        switch (diatonicAlt) {
+            case DiatonicAlt.C: return "C";
+            case DiatonicAlt.CC: return "CC";
+            case DiatonicAlt.Db: return "Db";
+            case DiatonicAlt.D: return "D";
+            case DiatonicAlt.DD: return "DD";
+            case DiatonicAlt.Eb: return "Eb";
+            case DiatonicAlt.E: return "E";
+            case DiatonicAlt.Fb: return "Fb";
+            case DiatonicAlt.F: return "F";
+            case DiatonicAlt.FF: return "FF";
+            case DiatonicAlt.Gb: return "Gb";
+            case DiatonicAlt.G: return "G";
+            case DiatonicAlt.GG: return "GG";
+            case DiatonicAlt.Ab: return "Ab";
+            case DiatonicAlt.A: return "A";
+            case DiatonicAlt.AA: return "AA";
+            case DiatonicAlt.Bb: return "Bb";
+            case DiatonicAlt.B: return "B";
+        }
+
+        return null;
+    }
+
+    private static diatonicAltChordPattern2Str(diatonicAltChordPattern: DiatonicAltChordPattern): string {
+        switch (diatonicAltChordPattern) {
+            case DiatonicAltChordPattern.TRIAD_MAJOR: return "";
+            case DiatonicAltChordPattern.TRIAD_MINOR: return "m";
+            case DiatonicAltChordPattern.TRIAD_AUGMENTED: return "AUG";
+            case DiatonicAltChordPattern.TRIAD_DIMINISHED: return "0";
+            case DiatonicAltChordPattern.TRIAD_SUS4: return "SUS4";
+            case DiatonicAltChordPattern.SEVENTH_MAJ7: return "Maj7";
+            case DiatonicAltChordPattern.SEVENTH: return "7";
+            case DiatonicAltChordPattern.SEVENTH_MINOR: return "m7";
+            case DiatonicAltChordPattern.SEVENTH_MINOR_MAJ7: return "mMaj7";
+        }
+
+        return null;
+    }
+
+
     private static initialize() {
-        DiatonicAltChord.C = DiatonicAltChord.fromRootNotes(0, [DiatonicAlt.C, DiatonicAlt.E, DiatonicAlt.G]);
-        DiatonicAltChord.C7 = DiatonicAltChord.fromRootNotes(0, [DiatonicAlt.C, DiatonicAlt.E, DiatonicAlt.G, DiatonicAlt.Bb]);
-        DiatonicAltChord.CMaj7 = DiatonicAltChord.fromRootNotes(0, [DiatonicAlt.C, DiatonicAlt.E, DiatonicAlt.G, DiatonicAlt.B]);
+        let diatonicAlts = [
+            DiatonicAlt.C,
+            DiatonicAlt.CC,
+            DiatonicAlt.Db,
+            DiatonicAlt.D,
+            DiatonicAlt.DD,
+            DiatonicAlt.Eb,
+            DiatonicAlt.E,
+            DiatonicAlt.Fb,
+            DiatonicAlt.F,
+            DiatonicAlt.FF,
+            DiatonicAlt.Gb,
+            DiatonicAlt.G,
+            DiatonicAlt.GG,
+            DiatonicAlt.Ab,
+            DiatonicAlt.A,
+            DiatonicAlt.AA,
+            DiatonicAlt.Bb,
+            DiatonicAlt.B,
+        ];
+
+        let diatonicAltChordPatterns = DiatonicAltChordPattern.all();
+
+        for (const diatonicAlt of diatonicAlts) {
+            const diatonicAltStr = this.diatonicAlt2Str(diatonicAlt);
+            if (diatonicAltStr == null)
+                continue;
+
+            for (const diatonicAltChordPattern of diatonicAltChordPatterns) {
+                const diatonicAltChordPatternStr = this.diatonicAltChordPattern2Str(diatonicAltChordPattern);
+                if (diatonicAltChordPatternStr == null)
+                    continue;
+
+                const name = diatonicAltStr + diatonicAltChordPatternStr;
+
+                DiatonicAltChord[name]
+                    = DiatonicAltChord.fromRootPattern(diatonicAlt, diatonicAltChordPattern);
+            }
+        }
 
         Immutables.lockrIf(DiatonicAltChord, (obj) => !(obj instanceof ImmutablesCache));
     }
