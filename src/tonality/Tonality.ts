@@ -1,10 +1,10 @@
-import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
 import { ChromaticChordPattern } from '../chords/chromatic/ChromaticChordPattern';
 import { DiatonicChordPattern } from '../chords/Diatonic/DiatonicChordPattern';
 import { DiatonicAltChord } from '../chords/diatonicalt/DiatonicAltChord';
 import { DiatonicAltChordPattern } from '../chords/diatonicalt/DiatonicAltChordPattern';
 import { Chromatic } from '../degrees/Chromatic';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
+import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
 import { ImmutablesCache } from '../Utils/ImmutablesCache';
 import { Scale } from './Scale';
 import { ScaleUtils } from './ScaleUtils';
@@ -97,7 +97,24 @@ export class Tonality {
         let chordRootPatternPriority = [
             { interval: IntervalDiatonicAlt.PERFECT_UNISON, pattern: DiatonicAltChordPattern.TRIAD_MAJOR },
             { interval: IntervalDiatonicAlt.PERFECT_UNISON, pattern: DiatonicAltChordPattern.TRIAD_MINOR },
+            { interval: IntervalDiatonicAlt.MAJOR_THIRD, pattern: DiatonicAltChordPattern.TRIAD_MINOR },
+            { interval: IntervalDiatonicAlt.MAJOR_THIRD, pattern: DiatonicAltChordPattern.TRIAD_MAJOR },
+            { interval: IntervalDiatonicAlt.MINOR_THIRD, pattern: DiatonicAltChordPattern.TRIAD_MINOR },
+            { interval: IntervalDiatonicAlt.MINOR_THIRD, pattern: DiatonicAltChordPattern.TRIAD_MAJOR },
             { interval: IntervalDiatonicAlt.MAJOR_SIXTH, pattern: DiatonicAltChordPattern.TRIAD_MINOR },
+            { interval: IntervalDiatonicAlt.MAJOR_SIXTH, pattern: DiatonicAltChordPattern.TRIAD_MAJOR },
+            { interval: IntervalDiatonicAlt.MINOR_SIXTH, pattern: DiatonicAltChordPattern.TRIAD_MINOR },
+            { interval: IntervalDiatonicAlt.MINOR_SIXTH, pattern: DiatonicAltChordPattern.TRIAD_MAJOR },
+            { interval: IntervalDiatonicAlt.PERFECT_UNISON, pattern: DiatonicAltChordPattern.TRIAD_DIMINISHED },
+            { interval: IntervalDiatonicAlt.PERFECT_UNISON, pattern: DiatonicAltChordPattern.TRIAD_AUGMENTED },
+            { interval: IntervalDiatonicAlt.MAJOR_THIRD, pattern: DiatonicAltChordPattern.TRIAD_DIMINISHED },
+            { interval: IntervalDiatonicAlt.MAJOR_THIRD, pattern: DiatonicAltChordPattern.TRIAD_AUGMENTED },
+            { interval: IntervalDiatonicAlt.MINOR_THIRD, pattern: DiatonicAltChordPattern.TRIAD_DIMINISHED },
+            { interval: IntervalDiatonicAlt.MINOR_THIRD, pattern: DiatonicAltChordPattern.TRIAD_AUGMENTED },
+            { interval: IntervalDiatonicAlt.MAJOR_SIXTH, pattern: DiatonicAltChordPattern.TRIAD_DIMINISHED },
+            { interval: IntervalDiatonicAlt.MAJOR_SIXTH, pattern: DiatonicAltChordPattern.TRIAD_AUGMENTED },
+            { interval: IntervalDiatonicAlt.MINOR_SIXTH, pattern: DiatonicAltChordPattern.TRIAD_DIMINISHED },
+            { interval: IntervalDiatonicAlt.MINOR_SIXTH, pattern: DiatonicAltChordPattern.TRIAD_AUGMENTED },
         ];
 
         this._rootChord3 = null;
