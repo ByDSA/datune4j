@@ -1,3 +1,7 @@
+import { ChromaticChordPattern } from '../chords/chromatic/ChromaticChordPattern';
+import { DiatonicChordPattern } from '../chords/Diatonic/DiatonicChordPattern';
+import { DiatonicAltChord } from '../chords/diatonicalt/DiatonicAltChord';
+import { DiatonicAltChordPattern } from '../chords/diatonicalt/DiatonicAltChordPattern';
 import { Chromatic } from '../degrees/Chromatic';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
 import { ImmutablesCache } from '../Utils/ImmutablesCache';
@@ -6,6 +10,8 @@ import { ScaleUtils } from './ScaleUtils';
 
 type HashingObjectType = { root: DiatonicAlt, scale: Scale };
 export class Tonality {
+    // Precalc
+
     public static C: Tonality;
     public static CC: Tonality;
     public static D: Tonality;
@@ -43,9 +49,12 @@ export class Tonality {
     );
 
     private _notes: DiatonicAlt[] = [];
+    private _rootChord3: DiatonicAltChord;
+    private _rootChord4: DiatonicAltChord;
 
     private constructor(private _root: DiatonicAlt, private _scale: Scale) {
         this.calculateNotes();
+        this.calculateRootChord();
     }
 
     public static fromChromatic(chromaticRoot: Chromatic, scale: Scale) {
@@ -73,14 +82,92 @@ export class Tonality {
             this._notes.push(note);
             i++;
         }
+
+        Object.freeze(this._notes);
+    }
+
+    private calculateRootChord() {
+        this.calculateRootChord3();
+        this.calculateRootChord4();
+
+    }
+
+    private calculateRootChord3() {
+        let chordRootPatternPriority = [
+            DiatonicAltChordPattern.TRIAD_MAJOR,
+            DiatonicAltChordPattern.TRIAD_MINOR,
+            DiatonicAltChordPattern.TRIAD_DIMINISHED,
+            DiatonicAltChordPattern.TRIAD_AUGMENTED,
+            DiatonicAltChordPattern.TRIAD_SUS4,
+        ];
+
+        this._rootChord3 = null;
+        for (const pattern of chordRootPatternPriority) {
+            let chord: DiatonicAltChord = DiatonicAltChord.fromRootPattern(this.root, pattern);
+            if (this.containsChord(chord)) {
+                this._rootChord3 = chord;
+                break;
+            }
+        }
+
+        Object.freeze(this._rootChord3);
+    }
+
+    private calculateRootChord4() {
+        let chordRootPatternPriority = [
+            DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.from(0, 4, 7, 11), DiatonicChordPattern.SEVENTH),
+            DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.from(0, 3, 7, 11), DiatonicChordPattern.SEVENTH),
+            DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.from(0, 4, 7, 10), DiatonicChordPattern.SEVENTH),
+            DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.from(0, 3, 7, 10), DiatonicChordPattern.SEVENTH),
+            DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.from(0, 3, 6, 10), DiatonicChordPattern.SEVENTH),
+            DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.from(0, 3, 6, 11), DiatonicChordPattern.SEVENTH),
+            DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.from(0, 4, 8, 10), DiatonicChordPattern.SEVENTH),
+            DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.from(0, 4, 8, 11), DiatonicChordPattern.SEVENTH),
+        ];
+
+        this._rootChord4 = null;
+        for (const pattern of chordRootPatternPriority) {
+            let chord = DiatonicAltChord.fromRootPattern(this.root, pattern);
+            if (this.containsChord(chord)) {
+                this._rootChord4 = chord;
+                break;
+            }
+        }
+
+        Object.freeze(this._rootChord4);
+    }
+
+    public containsChord(chord: DiatonicAltChord): boolean {
+        for (let diatonicAlt of chord.notes) {
+            if (!this.containsNote(diatonicAlt))
+                return false;
+        }
+
+        return true;
+    }
+
+    public containsNote(note: DiatonicAlt): boolean {
+        return this.notes.includes(note);
     }
 
     get root(): DiatonicAlt {
         return this._root;
     }
 
+    get rootChord3(): DiatonicAltChord {
+        return this._rootChord3;
+    }
+
+    get rootChord4(): DiatonicAltChord {
+        return this._rootChord4;
+    }
+
     get scale(): Scale {
         return this._scale;
+    }
+
+    get length(): number {
+        return this._scale.length;
     }
 
     get notes(): DiatonicAlt[] {
