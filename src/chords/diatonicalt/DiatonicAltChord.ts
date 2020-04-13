@@ -12,6 +12,7 @@ import { DiatonicAltChordPattern } from './DiatonicAltChordPattern';
 type HashingObjectType = { rootIndex: number, notes: DiatonicAlt[] };
 export class DiatonicAltChord {
     public static C: DiatonicAltChord;
+    public static CMaj7: DiatonicAltChord;
     public static C7: DiatonicAltChord;
 
     private static immutablesCache = new ImmutablesCache<DiatonicAltChord, HashingObjectType>(
@@ -99,6 +100,10 @@ export class DiatonicAltChord {
         return notes;
     }
 
+    public get length() {
+        return this._notes.length;
+    }
+
     public get notesFromRoot(): DiatonicAlt[] {
         return Array.from(this._notes);
     }
@@ -132,6 +137,7 @@ export class DiatonicAltChord {
     private static initialize() {
         DiatonicAltChord.C = DiatonicAltChord.fromRootNotes(0, [DiatonicAlt.C, DiatonicAlt.E, DiatonicAlt.G]);
         DiatonicAltChord.C7 = DiatonicAltChord.fromRootNotes(0, [DiatonicAlt.C, DiatonicAlt.E, DiatonicAlt.G, DiatonicAlt.Bb]);
+        DiatonicAltChord.CMaj7 = DiatonicAltChord.fromRootNotes(0, [DiatonicAlt.C, DiatonicAlt.E, DiatonicAlt.G, DiatonicAlt.B]);
 
         Immutables.lockrIf(DiatonicAltChord, (obj) => !(obj instanceof ImmutablesCache));
     }
