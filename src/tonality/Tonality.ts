@@ -99,6 +99,7 @@ export class Tonality {
             DiatonicAltChordPattern.TRIAD_DIMINISHED,
             DiatonicAltChordPattern.TRIAD_AUGMENTED,
             DiatonicAltChordPattern.TRIAD_SUS4,
+            DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.from(0, 4, 6), DiatonicChordPattern.TRIAD)
         ];
 
         this._rootChord3 = null;
@@ -122,7 +123,7 @@ export class Tonality {
             DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.from(0, 3, 6, 10), DiatonicChordPattern.SEVENTH),
             DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.from(0, 3, 6, 11), DiatonicChordPattern.SEVENTH),
             DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.from(0, 4, 8, 10), DiatonicChordPattern.SEVENTH),
-            DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.from(0, 4, 8, 11), DiatonicChordPattern.SEVENTH),
+            DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.from(0, 4, 8, 11), DiatonicChordPattern.SEVENTH)
         ];
 
         this._rootChord4 = null;
