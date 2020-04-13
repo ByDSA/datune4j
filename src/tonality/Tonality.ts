@@ -94,12 +94,12 @@ export class Tonality {
 
     private calculateRootChord3() {
         let chordRootPatternPriority = [
-            DiatonicAltChordPattern.TRIAD_MAJOR,
-            DiatonicAltChordPattern.TRIAD_MINOR,
-            DiatonicAltChordPattern.TRIAD_DIMINISHED,
-            DiatonicAltChordPattern.TRIAD_AUGMENTED,
-            DiatonicAltChordPattern.TRIAD_SUS4,
-            DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.from(0, 4, 6), DiatonicChordPattern.TRIAD)
+            DiatonicAltChordPattern.TRIAD_MAJOR, // I
+            DiatonicAltChordPattern.TRIAD_MINOR, // i
+            DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.from(0, 4, 10), DiatonicChordPattern.TRIAD).getInv(-1), // vi
+            DiatonicAltChordPattern.TRIAD_DIMINISHED, // I0
+            DiatonicAltChordPattern.TRIAD_AUGMENTED, // I+
+            DiatonicAltChordPattern.TRIAD_SUS4, // Isus4
         ];
 
         this._rootChord3 = null;
