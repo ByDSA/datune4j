@@ -1,11 +1,11 @@
-import { Chromatic } from '../degrees/Chromatic';
-import { Diatonic } from '../degrees/Diatonic';
-import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
-import { Hashing } from '../Utils/Hashing';
-import { Immutables } from '../Utils/Immutables';
-import { ImmutablesCache } from '../Utils/ImmutablesCache';
-import { ChromaticChordPattern } from './chromatic/ChromaticChordPattern';
-import { DiatonicChordPattern } from './Diatonic/DiatonicChordPattern';
+import { Chromatic } from '../../degrees/Chromatic';
+import { Diatonic } from '../../degrees/Diatonic';
+import { IntervalDiatonicAlt } from '../../interval/IntervalDiatonicAlt';
+import { Hashing } from '../../Utils/Hashing';
+import { Immutables } from '../../Utils/Immutables';
+import { ImmutablesCache } from '../../Utils/ImmutablesCache';
+import { ChromaticChordPattern } from '../chromatic/ChromaticChordPattern';
+import { DiatonicChordPattern } from '../Diatonic/DiatonicChordPattern';
 
 export type DiatonicAltChordPatternValueType = { semis: number, diatonicIntValue: number };
 export class DiatonicAltChordPattern implements Iterable<DiatonicAltChordPatternValueType> {
