@@ -126,16 +126,20 @@ export function settings() {
 
 export function all() {
     diatonics();
+    diatonicChordPatterns();
+
     diatonicAlts();
     intervalDiatonicAlts();
-    diatonicAltChords();
-    chromaticChordPatterns();
-    diatonicChordPatterns();
     diatonicAltChordPatterns();
+    diatonicAltChords();
+
     chromatics();
+    chromaticChordPatterns();
     chromaticChords();
+    
     scales();
     sourceScales();
+    
     tonalities();
     settings();
 }
