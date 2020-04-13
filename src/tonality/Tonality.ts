@@ -1,8 +1,9 @@
-import { Diatonic } from '../degrees/Diatonic';
 import { Chromatic } from '../degrees/Chromatic';
+import { Diatonic } from '../degrees/Diatonic';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
 import { ImmutablesCache } from '../Utils/ImmutablesCache';
 import { Scale } from './Scale';
+import { ScaleUtils } from './ScaleUtils';
 
 type HashingObjectType = { root: DiatonicAlt, scale: Scale };
 export class Tonality {
@@ -58,22 +59,19 @@ export class Tonality {
     }
 
     private calculateNotes(): void {
-        this.notes.push(this.root);
+        this._notes.push(this.root);
 
-        let lastChromaticInt = this.root.chromatic.intValue;
-        let lastDiatonicInt = this.root.diatonic.intValue;
-        let i = 0;
+        let lastChromatic = this.root.chromatic;
+        let lastDiatonic = this.root.diatonic;
+        let i = 1;
         for (let n of this.scale.intervals) {
             if (i >= this.scale.intervals.length)
-                continue;
-            lastChromaticInt += n;
-            lastChromaticInt %= Chromatic.NUMBER;
-            lastDiatonicInt++;
-            lastDiatonicInt %= Diatonic.NUMBER;
-            let lastChromatic = Chromatic.fromInt(lastChromaticInt);
-            let lastDiatonic = Diatonic.fromInt(lastDiatonicInt);
+                break;
+            lastChromatic = lastChromatic.getShift(n);
+            lastDiatonic = Diatonic.fromInt(ScaleUtils.getRefNum(this.scale, i));
             let note = DiatonicAlt.fromChromatic(lastChromatic, lastDiatonic);
-            this.notes.push(note);
+            this._notes.push(note);
+            i++;
         }
     }
 
