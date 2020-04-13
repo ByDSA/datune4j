@@ -1,7 +1,9 @@
 import { Diatonic } from '../../degrees/Diatonic';
+import { IntervalDiatonicAlt } from '../../interval/IntervalDiatonicAlt';
 import { Hashing } from '../../Utils/Hashing';
 import { ImmutablesCache } from '../../Utils/ImmutablesCache';
 import { DiatonicDegree } from './DiatonicDegree';
+import { Settings } from '../../settings/Settings';
 
 type HashingObjectType = { diatonicDegree: DiatonicDegree, alts: number };
 export class DiatonicAltDegree {
@@ -49,8 +51,18 @@ export class DiatonicAltDegree {
         return Diatonic.fromInt(this.diatonicDegree.intValue).chromatic.intValue + this.alts;
     }
 
+    public get intervalDiatonicAlt(): IntervalDiatonicAlt {
+        let semis = Diatonic.fromInt(this.diatonicDegree.intValue).chromatic.intValue + this.alts;
+        return IntervalDiatonicAlt.from(semis, this.diatonicDegree.intValue);
+    }
+
     public hashCode(): string {
         return this._diatonicDegree.hashCode() + "|alts:" + Hashing.hash(this._alts);
+    }
+
+    public toString(): string {
+        let alts = Settings.symbols.alts(this.alts);
+        return alts + this.diatonicDegree;
     }
 
     private static initialize() {

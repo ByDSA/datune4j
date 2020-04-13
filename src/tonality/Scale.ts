@@ -1,3 +1,4 @@
+import { DiatonicAltChordPattern } from '../chords/diatonicalt/DiatonicAltChordPattern';
 import { DiatonicAltDegree } from '../degrees/scale/DiatonicAltDegree';
 import { DiatonicDegree } from '../degrees/scale/DiatonicDegree';
 import { DegreeFunction } from '../function/DegreeFunction';
@@ -189,7 +190,7 @@ export class Scale implements Hashable {
 
         let acc = 0;
         for (let i = 1; i <= relativeIntervals.length; i++) {
-            let n = relativeIntervals[i-1];
+            let n = relativeIntervals[i - 1];
             acc += n;
             let alts = 0;
             let iFixed = ScaleUtils.getRefNum(this, i);
@@ -205,7 +206,20 @@ export class Scale implements Hashable {
     }
 
     get degreeFunctions(): DegreeFunction[] {
-        let ret = [];
+        let ret: DegreeFunction[] = [];
+        let diatonicAltChordPatterns: DiatonicAltChordPattern[] = DiatonicAltChordPattern.all();
+
+        for (const diatonicAltDegree of this.absoluteIntervals) {
+            patternLoop: for (const diatonicAltChordPattern of diatonicAltChordPatterns) {
+                let degreeFunction = DegreeFunction.from(diatonicAltDegree, diatonicAltChordPattern);
+                for (let diatonicAltDegree2 of degreeFunction.degrees) {
+                    if (!this.absoluteIntervals.includes(diatonicAltDegree2))
+                        continue patternLoop;
+                }
+                ret.push(degreeFunction);
+            }
+        }
+
         return ret;
     }
 

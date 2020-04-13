@@ -16,24 +16,55 @@ precalc.tonalities();
 precalc.degreeFunctions();
 precalc.settings();
 
-test('DiatonicAlt - precalc: I', () => {
+test('DegreeFunction - precalc: I', () => {
     expect(DegreeFunction.I.diatonicAltDegree).toBe(DiatonicAltDegree.I);
     expect(DegreeFunction.I.diatonicAltChordPattern).toBe(DiatonicAltChordPattern.TRIAD_MAJOR);
 });
 
-test('DiatonicAlt - precalc: bIIMaj7', () => {
+test('DegreeFunction - precalc: bIIMaj7', () => {
     expect(DegreeFunction.bIIMaj7.diatonicAltDegree).toBe(DiatonicAltDegree.bII);
     expect(DegreeFunction.bIIMaj7.diatonicAltChordPattern).toBe(DiatonicAltChordPattern.SEVENTH_MAJ7);
 });
 
-test('DiatonicAlt - calculateChord: Tonality C, DegreeFunction I = Chord C', () => {
+test('DegreeFunction - calculateChord: Tonality C, DegreeFunction I = Chord C', () => {
     let chord = DegreeFunction.I.getChord(Tonality.C);
     let expected = DiatonicAltChord.C;
     expect(chord).toBe(expected);
 });
 
-test('DiatonicAlt - calculateChord - tonality hasnt degree: Tonality C, DegreeFunction I0 = Chord C0', () => {
+test('DegreeFunction - calculateChord - tonality hasnt degree: Tonality C, DegreeFunction I0 = Chord C0', () => {
     let chord = DegreeFunction.I0.getChord(Tonality.C);
     let expected = DiatonicAltChord.C0;
     expect(chord).toBe(expected);
+});
+
+test('DegreeFunction - degrees: I', () => {
+    let degrees = DegreeFunction.I.degrees;
+    let expected = [
+        DiatonicAltDegree.I,
+        DiatonicAltDegree.III,
+        DiatonicAltDegree.V,
+    ];
+    expect(degrees).toStrictEqual(expected);
+});
+
+test('DegreeFunction - degrees: VII0', () => {
+    let degrees = DegreeFunction.VII0.degrees;
+    let expected = [
+        DiatonicAltDegree.VII,
+        DiatonicAltDegree.II,
+        DiatonicAltDegree.IV
+    ];
+    expect(degrees).toStrictEqual(expected);
+});
+
+test('DegreeFunction - degrees: IVMaj7', () => {
+    let degrees = DegreeFunction.IVMaj7.degrees;
+    let expected = [
+        DiatonicAltDegree.IV,
+        DiatonicAltDegree.VI,
+        DiatonicAltDegree.I,
+        DiatonicAltDegree.III
+    ];
+    expect(degrees).toStrictEqual(expected);
 });

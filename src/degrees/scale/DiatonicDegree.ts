@@ -27,7 +27,7 @@ export class DiatonicDegree {
             case 6: return DiatonicDegree.VII;
         }
 
-        throw new Error();
+        throw new Error("Cannot get DiatonicDegree from int: " + n);
     }
 
     get intValue(): number {
@@ -36,6 +36,20 @@ export class DiatonicDegree {
 
     public hashCode(): string {
         return "DiatonicDegree:" + this._intValue;
+    }
+
+    public toString(): string {
+        switch (this) {
+            case DiatonicDegree.I: return "I";
+            case DiatonicDegree.II: return "II";
+            case DiatonicDegree.III: return "III";
+            case DiatonicDegree.IV: return "IV";
+            case DiatonicDegree.V: return "V";
+            case DiatonicDegree.VI: return "VI";
+            case DiatonicDegree.VII: return "VII";
+        }
+
+        throw new Error();
     }
 
     private static initialize() {

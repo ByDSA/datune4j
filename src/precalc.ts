@@ -166,11 +166,15 @@ export function settings() {
 
 // DEGREE FUNCTIONS
 export function degreeFunctions() {
+    if (DegreeFunction.I)
+        return;
     (<any>DegreeFunction).initialize();
 }
 
 // DEGREE FUNCTIONS
 export function diatonicDegrees() {
+    if (DiatonicDegree.I)
+        return;
     (<any>DiatonicDegree).initialize();
 }
 

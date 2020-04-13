@@ -227,7 +227,7 @@ export class DiatonicAltChordPattern implements Iterable<DiatonicAltChordPattern
         DiatonicAltChordPattern.SIXTH_MINOR_ADD9 = DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.SIXTH_MINOR_ADD9, DiatonicChordPattern.SIXTH_ADD9);
         DiatonicAltChordPattern.SEVENTH_b9 = DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.SEVENTH_MINOR_b5, DiatonicChordPattern.SEVENTH);
         DiatonicAltChordPattern.SEVENTH_a9 = DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.SEVENTH_MINOR_a5, DiatonicChordPattern.SEVENTH);
-        DiatonicAltChordPattern.SEVENTH_MINOR_b9 = DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.SEVENTH_MINOR_b9, DiatonicChordPattern.SEVENTH);
+        DiatonicAltChordPattern.SEVENTH_MINOR_b9 = DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.SEVENTH_MINOR_b9, DiatonicChordPattern.NINTH);
         DiatonicAltChordPattern.SEVENTH_ADD11 = DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.SEVENTH_ADD11, DiatonicChordPattern.SEVENTH_ADD11);
         DiatonicAltChordPattern.SEVENTH_ADD13 = DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.SEVENTH_ADD13, DiatonicChordPattern.SEVENTH_ADD13);
         DiatonicAltChordPattern.NINTH = DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.NINTH, DiatonicChordPattern.NINTH);

@@ -1,9 +1,10 @@
 import { DiatonicAltChord } from '../chords/diatonicalt/DiatonicAltChord';
 import { DiatonicAltChordPattern } from '../chords/diatonicalt/DiatonicAltChordPattern';
+import { Chromatic } from '../degrees/Chromatic';
 import { Diatonic } from '../degrees/Diatonic';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
 import { DiatonicAltDegree } from '../degrees/scale/DiatonicAltDegree';
-import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
+import { DiatonicDegree } from '../degrees/scale/DiatonicDegree';
 import { Tonality } from '../tonality/Tonality';
 import { HarmonicFunction } from './HarmonicFunction';
 
@@ -202,12 +203,25 @@ export class DegreeFunction extends HarmonicFunction {
     }
 
     private static getNoteBaseFromChromaticFunctionAndTonality(tonality: Tonality, degreeFunction: DegreeFunction): DiatonicAlt {
-        return tonality.root.getAdd(degreeFunction.intervalDiatonicAlt);
+        return tonality.root.getAdd(degreeFunction.diatonicAltDegree.intervalDiatonicAlt);
     }
 
-    public get intervalDiatonicAlt(): IntervalDiatonicAlt {
-        let semis = Diatonic.fromInt(this.diatonicAltDegree.diatonicDegree.intValue).chromatic.intValue + this.diatonicAltDegree.alts;
-        return IntervalDiatonicAlt.from(semis, this.diatonicAltDegree.diatonicDegree.intValue);
+    private _degrees: DiatonicAltDegree[];
+
+    public get degrees(): DiatonicAltDegree[] {
+        if (!this._degrees) {
+            this._degrees = [];
+            for (let value of this.diatonicAltChordPattern) {
+                let diatonicDegreeInt = this.diatonicAltDegree.diatonicDegree.intValue + value.diatonicIntValue;
+                let diatonicDegree = DiatonicDegree.fromInt(diatonicDegreeInt);
+                let alts = Diatonic.fromInt(diatonicDegree.intValue).chromatic.intValue - (this.diatonicAltDegree.semis + value.semis);
+                alts %= Chromatic.NUMBER;
+                let degree = DiatonicAltDegree.from(diatonicDegree, alts);
+                this._degrees.push(degree);
+            }
+        }
+
+        return this._degrees;
     }
 
     /* Object */
