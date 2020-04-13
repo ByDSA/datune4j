@@ -37,7 +37,7 @@ export class Tonality {
     public static Am: Tonality;
     public static Bm: Tonality;
 
-    private static immutables = new ImmutablesCache<Tonality, HashingObjectType>(
+    private static immutablesCache = new ImmutablesCache<Tonality, HashingObjectType>(
         function (hashingObject: HashingObjectType) {
             return hashingObject.scale.hashCode() + hashingObject.root.hashCode();
         },
@@ -64,7 +64,7 @@ export class Tonality {
     }
 
     public static from(root: DiatonicAlt, scale: Scale) {
-        return this.immutables.getOrCreate({ root: root, scale: scale });
+        return this.immutablesCache.getOrCreate({ root: root, scale: scale });
     }
 
     private calculateNotes(): void {
