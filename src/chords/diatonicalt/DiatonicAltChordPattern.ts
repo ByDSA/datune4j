@@ -1,7 +1,6 @@
 import { Chromatic } from '../../degrees/Chromatic';
 import { Diatonic } from '../../degrees/Diatonic';
 import { IntervalDiatonicAlt } from '../../interval/IntervalDiatonicAlt';
-import { Hashing } from '../../Utils/Hashing';
 import { Immutables } from '../../Utils/Immutables';
 import { ImmutablesCache } from '../../Utils/ImmutablesCache';
 import { ChromaticChordPattern } from '../chromatic/ChromaticChordPattern';
@@ -78,7 +77,7 @@ export class DiatonicAltChordPattern implements Iterable<DiatonicAltChordPattern
         function (values: DiatonicAltChordPatternValueType[]): string {
             let hash = "";
             for (const value of values) {
-                hash += Hashing.hash(value.semis) + Hashing.hash(value.diatonicIntValue) + "|";
+                hash += DiatonicAltChordPattern.hashCodeDiatonicAltPatternValue(value.semis, value.diatonicIntValue);
             }
             return hash;
         },
@@ -195,10 +194,14 @@ export class DiatonicAltChordPattern implements Iterable<DiatonicAltChordPattern
         return this._chromaticChordPattern.toStringShort();
     }
 
+    private static hashCodeDiatonicAltPatternValue(semis: number, diatonicIntValue: number): string {
+        return "s:" + semis + "d:" + diatonicIntValue;
+    }
+
     public hashCode(): string {
         let ret = "";
         for (const value of this.values) {
-            ret += "s:" + value.semis + "d:" + value.diatonicIntValue;
+            ret += DiatonicAltChordPattern.hashCodeDiatonicAltPatternValue(value.semis, value.diatonicIntValue);
         }
         return ret;
     }

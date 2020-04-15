@@ -6,8 +6,10 @@ import { DiatonicAlt } from '../degrees/DiatonicAlt';
 import { DiatonicAltDegree } from '../degrees/scale/DiatonicAltDegree';
 import { DiatonicDegree } from '../degrees/scale/DiatonicDegree';
 import { Tonality } from '../tonality/Tonality';
+import { ImmutablesCache } from '../Utils/ImmutablesCache';
 import { HarmonicFunction } from './HarmonicFunction';
 
+type HashingObjectType = { degree: DiatonicAltDegree, pattern: DiatonicAltChordPattern };
 export class DegreeFunction extends HarmonicFunction {
     public static I5: DegreeFunction;
     public static bII5: DegreeFunction;
@@ -180,26 +182,42 @@ export class DegreeFunction extends HarmonicFunction {
 
     /********* END CONSTANTS ***********/
 
-    protected constructor(private _diatonicAltDegree: DiatonicAltDegree, private _diatonicAltChordPattern: DiatonicAltChordPattern) {
+    private static hashCodeFunction(degree: DiatonicAltDegree, pattern: DiatonicAltChordPattern): string {
+        return degree.hashCode() + "|" + pattern.hashCode();
+    }
+
+    private static immutablesCache = new ImmutablesCache<DegreeFunction, HashingObjectType>(
+        function (hashingObject: HashingObjectType): string {
+            return DegreeFunction.hashCodeFunction(hashingObject.degree, hashingObject.pattern);
+        },
+        function (degreeFunction: DegreeFunction): HashingObjectType {
+            return { degree: degreeFunction.diatonicAltDegree, pattern: degreeFunction.diatonicAltChordPattern };
+        },
+        function (hashingObject: HashingObjectType): DegreeFunction {
+            return new DegreeFunction(hashingObject.degree, hashingObject.pattern);
+        }
+    );
+
+    protected constructor(private _degree: DiatonicAltDegree, private _pattern: DiatonicAltChordPattern) {
         super();
     }
 
-    public static from(diatonicAltDegree: DiatonicAltDegree, chromaticChordPattern: DiatonicAltChordPattern): DegreeFunction {
-        return new DegreeFunction(diatonicAltDegree, chromaticChordPattern);
+    public static from(degree: DiatonicAltDegree, pattern: DiatonicAltChordPattern): DegreeFunction {
+        return this.immutablesCache.getOrCreate({ degree: degree, pattern: pattern });
     }
 
     public get diatonicAltDegree(): DiatonicAltDegree {
-        return this._diatonicAltDegree;
+        return this._degree;
     }
 
     public get diatonicAltChordPattern(): DiatonicAltChordPattern {
-        return this._diatonicAltChordPattern;
+        return this._pattern;
     }
 
     public calculateChord(tonality: Tonality): DiatonicAltChord {
         let noteBase: DiatonicAlt = DegreeFunction.getNoteBaseFromChromaticFunctionAndTonality(tonality, this);
 
-        return DiatonicAltChord.fromRootPattern(noteBase, this._diatonicAltChordPattern);
+        return DiatonicAltChord.fromRootPattern(noteBase, this._pattern);
     }
 
     private static getNoteBaseFromChromaticFunctionAndTonality(tonality: Tonality, degreeFunction: DegreeFunction): DiatonicAlt {
@@ -227,172 +245,172 @@ export class DegreeFunction extends HarmonicFunction {
     /* Object */
 
     public toString(): string {
-        return this._diatonicAltDegree + " " + this._diatonicAltChordPattern;
+        return this._degree + " " + this._pattern;
     }
 
     public hashCode(): string {
-        return this._diatonicAltDegree.hashCode() + "|" + this._diatonicAltChordPattern.hashCode();
+        return DegreeFunction.hashCodeFunction(this._degree, this._pattern);
     }
 
     private static initialize() {
-        DegreeFunction.I5 = new DegreeFunction(DiatonicAltDegree.I, DiatonicAltChordPattern.POWER_CHORD);
-        DegreeFunction.bII5 = new DegreeFunction(DiatonicAltDegree.bII, DiatonicAltChordPattern.POWER_CHORD);
-        DegreeFunction.II5 = new DegreeFunction(DiatonicAltDegree.II, DiatonicAltChordPattern.POWER_CHORD);
-        DegreeFunction.bIII5 = new DegreeFunction(DiatonicAltDegree.bIII, DiatonicAltChordPattern.POWER_CHORD);
-        DegreeFunction.III5 = new DegreeFunction(DiatonicAltDegree.III, DiatonicAltChordPattern.POWER_CHORD);
-        DegreeFunction.IV5 = new DegreeFunction(DiatonicAltDegree.IV, DiatonicAltChordPattern.POWER_CHORD);
-        DegreeFunction.bV5 = new DegreeFunction(DiatonicAltDegree.bV, DiatonicAltChordPattern.POWER_CHORD);
-        DegreeFunction.V5 = new DegreeFunction(DiatonicAltDegree.V, DiatonicAltChordPattern.POWER_CHORD);
-        DegreeFunction.bVI5 = new DegreeFunction(DiatonicAltDegree.bVI, DiatonicAltChordPattern.POWER_CHORD);
-        DegreeFunction.VI5 = new DegreeFunction(DiatonicAltDegree.VI, DiatonicAltChordPattern.POWER_CHORD);
-        DegreeFunction.bVII5 = new DegreeFunction(DiatonicAltDegree.bVII, DiatonicAltChordPattern.POWER_CHORD);
-        DegreeFunction.VII5 = new DegreeFunction(DiatonicAltDegree.VII, DiatonicAltChordPattern.POWER_CHORD);
+        DegreeFunction.I5 = DegreeFunction.from(DiatonicAltDegree.I, DiatonicAltChordPattern.POWER_CHORD);
+        DegreeFunction.bII5 = DegreeFunction.from(DiatonicAltDegree.bII, DiatonicAltChordPattern.POWER_CHORD);
+        DegreeFunction.II5 = DegreeFunction.from(DiatonicAltDegree.II, DiatonicAltChordPattern.POWER_CHORD);
+        DegreeFunction.bIII5 = DegreeFunction.from(DiatonicAltDegree.bIII, DiatonicAltChordPattern.POWER_CHORD);
+        DegreeFunction.III5 = DegreeFunction.from(DiatonicAltDegree.III, DiatonicAltChordPattern.POWER_CHORD);
+        DegreeFunction.IV5 = DegreeFunction.from(DiatonicAltDegree.IV, DiatonicAltChordPattern.POWER_CHORD);
+        DegreeFunction.bV5 = DegreeFunction.from(DiatonicAltDegree.bV, DiatonicAltChordPattern.POWER_CHORD);
+        DegreeFunction.V5 = DegreeFunction.from(DiatonicAltDegree.V, DiatonicAltChordPattern.POWER_CHORD);
+        DegreeFunction.bVI5 = DegreeFunction.from(DiatonicAltDegree.bVI, DiatonicAltChordPattern.POWER_CHORD);
+        DegreeFunction.VI5 = DegreeFunction.from(DiatonicAltDegree.VI, DiatonicAltChordPattern.POWER_CHORD);
+        DegreeFunction.bVII5 = DegreeFunction.from(DiatonicAltDegree.bVII, DiatonicAltChordPattern.POWER_CHORD);
+        DegreeFunction.VII5 = DegreeFunction.from(DiatonicAltDegree.VII, DiatonicAltChordPattern.POWER_CHORD);
 
-        DegreeFunction.I = new DegreeFunction(DiatonicAltDegree.I, DiatonicAltChordPattern.TRIAD_MAJOR);
-        DegreeFunction.bII = new DegreeFunction(DiatonicAltDegree.bII, DiatonicAltChordPattern.TRIAD_MAJOR);
+        DegreeFunction.I = DegreeFunction.from(DiatonicAltDegree.I, DiatonicAltChordPattern.TRIAD_MAJOR);
+        DegreeFunction.bII = DegreeFunction.from(DiatonicAltDegree.bII, DiatonicAltChordPattern.TRIAD_MAJOR);
         DegreeFunction.N6 = DegreeFunction.bII;
-        DegreeFunction.II = new DegreeFunction(DiatonicAltDegree.II, DiatonicAltChordPattern.TRIAD_MAJOR);
-        DegreeFunction.bIII = new DegreeFunction(DiatonicAltDegree.bIII, DiatonicAltChordPattern.TRIAD_MAJOR);
-        DegreeFunction.III = new DegreeFunction(DiatonicAltDegree.III, DiatonicAltChordPattern.TRIAD_MAJOR);
-        DegreeFunction.IV = new DegreeFunction(DiatonicAltDegree.IV, DiatonicAltChordPattern.TRIAD_MAJOR);
-        DegreeFunction.bV = new DegreeFunction(DiatonicAltDegree.bV, DiatonicAltChordPattern.TRIAD_MAJOR);
-        DegreeFunction.V = new DegreeFunction(DiatonicAltDegree.V, DiatonicAltChordPattern.TRIAD_MAJOR);
-        DegreeFunction.bVI = new DegreeFunction(DiatonicAltDegree.bVI, DiatonicAltChordPattern.TRIAD_MAJOR);
-        DegreeFunction.VI = new DegreeFunction(DiatonicAltDegree.VI, DiatonicAltChordPattern.TRIAD_MAJOR);
-        DegreeFunction.bVII = new DegreeFunction(DiatonicAltDegree.bVII, DiatonicAltChordPattern.TRIAD_MAJOR);
-        DegreeFunction.VII = new DegreeFunction(DiatonicAltDegree.VII, DiatonicAltChordPattern.TRIAD_MAJOR);
+        DegreeFunction.II = DegreeFunction.from(DiatonicAltDegree.II, DiatonicAltChordPattern.TRIAD_MAJOR);
+        DegreeFunction.bIII = DegreeFunction.from(DiatonicAltDegree.bIII, DiatonicAltChordPattern.TRIAD_MAJOR);
+        DegreeFunction.III = DegreeFunction.from(DiatonicAltDegree.III, DiatonicAltChordPattern.TRIAD_MAJOR);
+        DegreeFunction.IV = DegreeFunction.from(DiatonicAltDegree.IV, DiatonicAltChordPattern.TRIAD_MAJOR);
+        DegreeFunction.bV = DegreeFunction.from(DiatonicAltDegree.bV, DiatonicAltChordPattern.TRIAD_MAJOR);
+        DegreeFunction.V = DegreeFunction.from(DiatonicAltDegree.V, DiatonicAltChordPattern.TRIAD_MAJOR);
+        DegreeFunction.bVI = DegreeFunction.from(DiatonicAltDegree.bVI, DiatonicAltChordPattern.TRIAD_MAJOR);
+        DegreeFunction.VI = DegreeFunction.from(DiatonicAltDegree.VI, DiatonicAltChordPattern.TRIAD_MAJOR);
+        DegreeFunction.bVII = DegreeFunction.from(DiatonicAltDegree.bVII, DiatonicAltChordPattern.TRIAD_MAJOR);
+        DegreeFunction.VII = DegreeFunction.from(DiatonicAltDegree.VII, DiatonicAltChordPattern.TRIAD_MAJOR);
 
-        DegreeFunction.ISUS4 = new DegreeFunction(DiatonicAltDegree.I, DiatonicAltChordPattern.TRIAD_SUS4);
-        DegreeFunction.bIISUS4 = new DegreeFunction(DiatonicAltDegree.bII, DiatonicAltChordPattern.TRIAD_SUS4);
-        DegreeFunction.IISUS4 = new DegreeFunction(DiatonicAltDegree.II, DiatonicAltChordPattern.TRIAD_SUS4);
-        DegreeFunction.bIIISUS4 = new DegreeFunction(DiatonicAltDegree.bIII, DiatonicAltChordPattern.TRIAD_SUS4);
-        DegreeFunction.IIISUS4 = new DegreeFunction(DiatonicAltDegree.III, DiatonicAltChordPattern.TRIAD_SUS4);
-        DegreeFunction.IVSUS4 = new DegreeFunction(DiatonicAltDegree.IV, DiatonicAltChordPattern.TRIAD_SUS4);
-        DegreeFunction.bVSUS4 = new DegreeFunction(DiatonicAltDegree.bV, DiatonicAltChordPattern.TRIAD_SUS4);
-        DegreeFunction.VSUS4 = new DegreeFunction(DiatonicAltDegree.V, DiatonicAltChordPattern.TRIAD_SUS4);
-        DegreeFunction.bVISUS4 = new DegreeFunction(DiatonicAltDegree.bVI, DiatonicAltChordPattern.TRIAD_SUS4);
-        DegreeFunction.VISUS4 = new DegreeFunction(DiatonicAltDegree.VI, DiatonicAltChordPattern.TRIAD_SUS4);
-        DegreeFunction.bVIISUS4 = new DegreeFunction(DiatonicAltDegree.bVII, DiatonicAltChordPattern.TRIAD_SUS4);
-        DegreeFunction.VIISUS4 = new DegreeFunction(DiatonicAltDegree.VII, DiatonicAltChordPattern.TRIAD_SUS4);
+        DegreeFunction.ISUS4 = DegreeFunction.from(DiatonicAltDegree.I, DiatonicAltChordPattern.TRIAD_SUS4);
+        DegreeFunction.bIISUS4 = DegreeFunction.from(DiatonicAltDegree.bII, DiatonicAltChordPattern.TRIAD_SUS4);
+        DegreeFunction.IISUS4 = DegreeFunction.from(DiatonicAltDegree.II, DiatonicAltChordPattern.TRIAD_SUS4);
+        DegreeFunction.bIIISUS4 = DegreeFunction.from(DiatonicAltDegree.bIII, DiatonicAltChordPattern.TRIAD_SUS4);
+        DegreeFunction.IIISUS4 = DegreeFunction.from(DiatonicAltDegree.III, DiatonicAltChordPattern.TRIAD_SUS4);
+        DegreeFunction.IVSUS4 = DegreeFunction.from(DiatonicAltDegree.IV, DiatonicAltChordPattern.TRIAD_SUS4);
+        DegreeFunction.bVSUS4 = DegreeFunction.from(DiatonicAltDegree.bV, DiatonicAltChordPattern.TRIAD_SUS4);
+        DegreeFunction.VSUS4 = DegreeFunction.from(DiatonicAltDegree.V, DiatonicAltChordPattern.TRIAD_SUS4);
+        DegreeFunction.bVISUS4 = DegreeFunction.from(DiatonicAltDegree.bVI, DiatonicAltChordPattern.TRIAD_SUS4);
+        DegreeFunction.VISUS4 = DegreeFunction.from(DiatonicAltDegree.VI, DiatonicAltChordPattern.TRIAD_SUS4);
+        DegreeFunction.bVIISUS4 = DegreeFunction.from(DiatonicAltDegree.bVII, DiatonicAltChordPattern.TRIAD_SUS4);
+        DegreeFunction.VIISUS4 = DegreeFunction.from(DiatonicAltDegree.VII, DiatonicAltChordPattern.TRIAD_SUS4);
 
-        DegreeFunction.i = new DegreeFunction(DiatonicAltDegree.I, DiatonicAltChordPattern.TRIAD_MINOR);
-        DegreeFunction.bii = new DegreeFunction(DiatonicAltDegree.bII, DiatonicAltChordPattern.TRIAD_MINOR);
-        DegreeFunction.ii = new DegreeFunction(DiatonicAltDegree.II, DiatonicAltChordPattern.TRIAD_MINOR);
-        DegreeFunction.biii = new DegreeFunction(DiatonicAltDegree.bIII, DiatonicAltChordPattern.TRIAD_MINOR);
-        DegreeFunction.iii = new DegreeFunction(DiatonicAltDegree.III, DiatonicAltChordPattern.TRIAD_MINOR);
-        DegreeFunction.iv = new DegreeFunction(DiatonicAltDegree.IV, DiatonicAltChordPattern.TRIAD_MINOR);
-        DegreeFunction.bv = new DegreeFunction(DiatonicAltDegree.bV, DiatonicAltChordPattern.TRIAD_MINOR);
-        DegreeFunction.v = new DegreeFunction(DiatonicAltDegree.V, DiatonicAltChordPattern.TRIAD_MINOR);
-        DegreeFunction.bvi = new DegreeFunction(DiatonicAltDegree.bVI, DiatonicAltChordPattern.TRIAD_MINOR);
-        DegreeFunction.vi = new DegreeFunction(DiatonicAltDegree.VI, DiatonicAltChordPattern.TRIAD_MINOR);
-        DegreeFunction.bvii = new DegreeFunction(DiatonicAltDegree.bVII, DiatonicAltChordPattern.TRIAD_MINOR);
-        DegreeFunction.vii = new DegreeFunction(DiatonicAltDegree.VII, DiatonicAltChordPattern.TRIAD_MINOR);
+        DegreeFunction.i = DegreeFunction.from(DiatonicAltDegree.I, DiatonicAltChordPattern.TRIAD_MINOR);
+        DegreeFunction.bii = DegreeFunction.from(DiatonicAltDegree.bII, DiatonicAltChordPattern.TRIAD_MINOR);
+        DegreeFunction.ii = DegreeFunction.from(DiatonicAltDegree.II, DiatonicAltChordPattern.TRIAD_MINOR);
+        DegreeFunction.biii = DegreeFunction.from(DiatonicAltDegree.bIII, DiatonicAltChordPattern.TRIAD_MINOR);
+        DegreeFunction.iii = DegreeFunction.from(DiatonicAltDegree.III, DiatonicAltChordPattern.TRIAD_MINOR);
+        DegreeFunction.iv = DegreeFunction.from(DiatonicAltDegree.IV, DiatonicAltChordPattern.TRIAD_MINOR);
+        DegreeFunction.bv = DegreeFunction.from(DiatonicAltDegree.bV, DiatonicAltChordPattern.TRIAD_MINOR);
+        DegreeFunction.v = DegreeFunction.from(DiatonicAltDegree.V, DiatonicAltChordPattern.TRIAD_MINOR);
+        DegreeFunction.bvi = DegreeFunction.from(DiatonicAltDegree.bVI, DiatonicAltChordPattern.TRIAD_MINOR);
+        DegreeFunction.vi = DegreeFunction.from(DiatonicAltDegree.VI, DiatonicAltChordPattern.TRIAD_MINOR);
+        DegreeFunction.bvii = DegreeFunction.from(DiatonicAltDegree.bVII, DiatonicAltChordPattern.TRIAD_MINOR);
+        DegreeFunction.vii = DegreeFunction.from(DiatonicAltDegree.VII, DiatonicAltChordPattern.TRIAD_MINOR);
 
-        DegreeFunction.I0 = new DegreeFunction(DiatonicAltDegree.I, DiatonicAltChordPattern.TRIAD_DIMINISHED);
-        DegreeFunction.bII0 = new DegreeFunction(DiatonicAltDegree.bII, DiatonicAltChordPattern.TRIAD_DIMINISHED);
-        DegreeFunction.II0 = new DegreeFunction(DiatonicAltDegree.II, DiatonicAltChordPattern.TRIAD_DIMINISHED);
-        DegreeFunction.bIII0 = new DegreeFunction(DiatonicAltDegree.bIII, DiatonicAltChordPattern.TRIAD_DIMINISHED);
-        DegreeFunction.III0 = new DegreeFunction(DiatonicAltDegree.III, DiatonicAltChordPattern.TRIAD_DIMINISHED);
-        DegreeFunction.IV0 = new DegreeFunction(DiatonicAltDegree.IV, DiatonicAltChordPattern.TRIAD_DIMINISHED);
-        DegreeFunction.bV0 = new DegreeFunction(DiatonicAltDegree.bV, DiatonicAltChordPattern.TRIAD_DIMINISHED);
-        DegreeFunction.V0 = new DegreeFunction(DiatonicAltDegree.V, DiatonicAltChordPattern.TRIAD_DIMINISHED);
-        DegreeFunction.bVI0 = new DegreeFunction(DiatonicAltDegree.bVI, DiatonicAltChordPattern.TRIAD_DIMINISHED);
-        DegreeFunction.VI0 = new DegreeFunction(DiatonicAltDegree.VI, DiatonicAltChordPattern.TRIAD_DIMINISHED);
-        DegreeFunction.bVII0 = new DegreeFunction(DiatonicAltDegree.bVII, DiatonicAltChordPattern.TRIAD_DIMINISHED);
-        DegreeFunction.VII0 = new DegreeFunction(DiatonicAltDegree.VII, DiatonicAltChordPattern.TRIAD_DIMINISHED);
+        DegreeFunction.I0 = DegreeFunction.from(DiatonicAltDegree.I, DiatonicAltChordPattern.TRIAD_DIMINISHED);
+        DegreeFunction.bII0 = DegreeFunction.from(DiatonicAltDegree.bII, DiatonicAltChordPattern.TRIAD_DIMINISHED);
+        DegreeFunction.II0 = DegreeFunction.from(DiatonicAltDegree.II, DiatonicAltChordPattern.TRIAD_DIMINISHED);
+        DegreeFunction.bIII0 = DegreeFunction.from(DiatonicAltDegree.bIII, DiatonicAltChordPattern.TRIAD_DIMINISHED);
+        DegreeFunction.III0 = DegreeFunction.from(DiatonicAltDegree.III, DiatonicAltChordPattern.TRIAD_DIMINISHED);
+        DegreeFunction.IV0 = DegreeFunction.from(DiatonicAltDegree.IV, DiatonicAltChordPattern.TRIAD_DIMINISHED);
+        DegreeFunction.bV0 = DegreeFunction.from(DiatonicAltDegree.bV, DiatonicAltChordPattern.TRIAD_DIMINISHED);
+        DegreeFunction.V0 = DegreeFunction.from(DiatonicAltDegree.V, DiatonicAltChordPattern.TRIAD_DIMINISHED);
+        DegreeFunction.bVI0 = DegreeFunction.from(DiatonicAltDegree.bVI, DiatonicAltChordPattern.TRIAD_DIMINISHED);
+        DegreeFunction.VI0 = DegreeFunction.from(DiatonicAltDegree.VI, DiatonicAltChordPattern.TRIAD_DIMINISHED);
+        DegreeFunction.bVII0 = DegreeFunction.from(DiatonicAltDegree.bVII, DiatonicAltChordPattern.TRIAD_DIMINISHED);
+        DegreeFunction.VII0 = DegreeFunction.from(DiatonicAltDegree.VII, DiatonicAltChordPattern.TRIAD_DIMINISHED);
 
 
-        DegreeFunction.Iaug = new DegreeFunction(DiatonicAltDegree.I, DiatonicAltChordPattern.TRIAD_AUGMENTED);
-        DegreeFunction.bIIaug = new DegreeFunction(DiatonicAltDegree.bII, DiatonicAltChordPattern.TRIAD_AUGMENTED);
-        DegreeFunction.IIaug = new DegreeFunction(DiatonicAltDegree.II, DiatonicAltChordPattern.TRIAD_AUGMENTED);
-        DegreeFunction.bIIIaug = new DegreeFunction(DiatonicAltDegree.bIII, DiatonicAltChordPattern.TRIAD_AUGMENTED);
-        DegreeFunction.IIIaug = new DegreeFunction(DiatonicAltDegree.III, DiatonicAltChordPattern.TRIAD_AUGMENTED);
-        DegreeFunction.IVaug = new DegreeFunction(DiatonicAltDegree.IV, DiatonicAltChordPattern.TRIAD_AUGMENTED);
-        DegreeFunction.bVaug = new DegreeFunction(DiatonicAltDegree.bV, DiatonicAltChordPattern.TRIAD_AUGMENTED);
-        DegreeFunction.Vaug = new DegreeFunction(DiatonicAltDegree.V, DiatonicAltChordPattern.TRIAD_AUGMENTED);
-        DegreeFunction.bVIaug = new DegreeFunction(DiatonicAltDegree.bVI, DiatonicAltChordPattern.TRIAD_AUGMENTED);
-        DegreeFunction.VIaug = new DegreeFunction(DiatonicAltDegree.VI, DiatonicAltChordPattern.TRIAD_AUGMENTED);
-        DegreeFunction.bVIIaug = new DegreeFunction(DiatonicAltDegree.bVII, DiatonicAltChordPattern.TRIAD_AUGMENTED);
-        DegreeFunction.VIIaug = new DegreeFunction(DiatonicAltDegree.VII, DiatonicAltChordPattern.TRIAD_AUGMENTED);
+        DegreeFunction.Iaug = DegreeFunction.from(DiatonicAltDegree.I, DiatonicAltChordPattern.TRIAD_AUGMENTED);
+        DegreeFunction.bIIaug = DegreeFunction.from(DiatonicAltDegree.bII, DiatonicAltChordPattern.TRIAD_AUGMENTED);
+        DegreeFunction.IIaug = DegreeFunction.from(DiatonicAltDegree.II, DiatonicAltChordPattern.TRIAD_AUGMENTED);
+        DegreeFunction.bIIIaug = DegreeFunction.from(DiatonicAltDegree.bIII, DiatonicAltChordPattern.TRIAD_AUGMENTED);
+        DegreeFunction.IIIaug = DegreeFunction.from(DiatonicAltDegree.III, DiatonicAltChordPattern.TRIAD_AUGMENTED);
+        DegreeFunction.IVaug = DegreeFunction.from(DiatonicAltDegree.IV, DiatonicAltChordPattern.TRIAD_AUGMENTED);
+        DegreeFunction.bVaug = DegreeFunction.from(DiatonicAltDegree.bV, DiatonicAltChordPattern.TRIAD_AUGMENTED);
+        DegreeFunction.Vaug = DegreeFunction.from(DiatonicAltDegree.V, DiatonicAltChordPattern.TRIAD_AUGMENTED);
+        DegreeFunction.bVIaug = DegreeFunction.from(DiatonicAltDegree.bVI, DiatonicAltChordPattern.TRIAD_AUGMENTED);
+        DegreeFunction.VIaug = DegreeFunction.from(DiatonicAltDegree.VI, DiatonicAltChordPattern.TRIAD_AUGMENTED);
+        DegreeFunction.bVIIaug = DegreeFunction.from(DiatonicAltDegree.bVII, DiatonicAltChordPattern.TRIAD_AUGMENTED);
+        DegreeFunction.VIIaug = DegreeFunction.from(DiatonicAltDegree.VII, DiatonicAltChordPattern.TRIAD_AUGMENTED);
 
         /* Seventh */
 
-        DegreeFunction.I7 = new DegreeFunction(DiatonicAltDegree.I, DiatonicAltChordPattern.SEVENTH);
-        DegreeFunction.bII7 = new DegreeFunction(DiatonicAltDegree.bII, DiatonicAltChordPattern.SEVENTH);
-        DegreeFunction.II7 = new DegreeFunction(DiatonicAltDegree.II, DiatonicAltChordPattern.SEVENTH);
-        DegreeFunction.bIII7 = new DegreeFunction(DiatonicAltDegree.bIII, DiatonicAltChordPattern.SEVENTH);
-        DegreeFunction.III7 = new DegreeFunction(DiatonicAltDegree.III, DiatonicAltChordPattern.SEVENTH);
-        DegreeFunction.IV7 = new DegreeFunction(DiatonicAltDegree.IV, DiatonicAltChordPattern.SEVENTH);
-        DegreeFunction.bV7 = new DegreeFunction(DiatonicAltDegree.bV, DiatonicAltChordPattern.SEVENTH);
-        DegreeFunction.V7 = new DegreeFunction(DiatonicAltDegree.V, DiatonicAltChordPattern.SEVENTH);
-        DegreeFunction.bVI7 = new DegreeFunction(DiatonicAltDegree.bVI, DiatonicAltChordPattern.SEVENTH);
-        DegreeFunction.VI7 = new DegreeFunction(DiatonicAltDegree.VI, DiatonicAltChordPattern.SEVENTH);
-        DegreeFunction.bVII7 = new DegreeFunction(DiatonicAltDegree.bVII, DiatonicAltChordPattern.SEVENTH);
-        DegreeFunction.VII7 = new DegreeFunction(DiatonicAltDegree.VII, DiatonicAltChordPattern.SEVENTH);
+        DegreeFunction.I7 = DegreeFunction.from(DiatonicAltDegree.I, DiatonicAltChordPattern.SEVENTH);
+        DegreeFunction.bII7 = DegreeFunction.from(DiatonicAltDegree.bII, DiatonicAltChordPattern.SEVENTH);
+        DegreeFunction.II7 = DegreeFunction.from(DiatonicAltDegree.II, DiatonicAltChordPattern.SEVENTH);
+        DegreeFunction.bIII7 = DegreeFunction.from(DiatonicAltDegree.bIII, DiatonicAltChordPattern.SEVENTH);
+        DegreeFunction.III7 = DegreeFunction.from(DiatonicAltDegree.III, DiatonicAltChordPattern.SEVENTH);
+        DegreeFunction.IV7 = DegreeFunction.from(DiatonicAltDegree.IV, DiatonicAltChordPattern.SEVENTH);
+        DegreeFunction.bV7 = DegreeFunction.from(DiatonicAltDegree.bV, DiatonicAltChordPattern.SEVENTH);
+        DegreeFunction.V7 = DegreeFunction.from(DiatonicAltDegree.V, DiatonicAltChordPattern.SEVENTH);
+        DegreeFunction.bVI7 = DegreeFunction.from(DiatonicAltDegree.bVI, DiatonicAltChordPattern.SEVENTH);
+        DegreeFunction.VI7 = DegreeFunction.from(DiatonicAltDegree.VI, DiatonicAltChordPattern.SEVENTH);
+        DegreeFunction.bVII7 = DegreeFunction.from(DiatonicAltDegree.bVII, DiatonicAltChordPattern.SEVENTH);
+        DegreeFunction.VII7 = DegreeFunction.from(DiatonicAltDegree.VII, DiatonicAltChordPattern.SEVENTH);
 
-        DegreeFunction.I6 = new DegreeFunction(DiatonicAltDegree.I, DiatonicAltChordPattern.SIXTH);
-        DegreeFunction.bII6 = new DegreeFunction(DiatonicAltDegree.bII, DiatonicAltChordPattern.SIXTH);
-        DegreeFunction.II6 = new DegreeFunction(DiatonicAltDegree.II, DiatonicAltChordPattern.SIXTH);
-        DegreeFunction.bIII6 = new DegreeFunction(DiatonicAltDegree.bIII, DiatonicAltChordPattern.SIXTH);
-        DegreeFunction.III6 = new DegreeFunction(DiatonicAltDegree.III, DiatonicAltChordPattern.SIXTH);
-        DegreeFunction.IV6 = new DegreeFunction(DiatonicAltDegree.IV, DiatonicAltChordPattern.SIXTH);
-        DegreeFunction.bV6 = new DegreeFunction(DiatonicAltDegree.bV, DiatonicAltChordPattern.SIXTH);
-        DegreeFunction.V6 = new DegreeFunction(DiatonicAltDegree.V, DiatonicAltChordPattern.SIXTH);
-        DegreeFunction.bVI6 = new DegreeFunction(DiatonicAltDegree.bVI, DiatonicAltChordPattern.SIXTH);
-        DegreeFunction.VI6 = new DegreeFunction(DiatonicAltDegree.VI, DiatonicAltChordPattern.SIXTH);
-        DegreeFunction.bVII6 = new DegreeFunction(DiatonicAltDegree.bVII, DiatonicAltChordPattern.SIXTH);
-        DegreeFunction.VII6 = new DegreeFunction(DiatonicAltDegree.VII, DiatonicAltChordPattern.SIXTH);
+        DegreeFunction.I6 = DegreeFunction.from(DiatonicAltDegree.I, DiatonicAltChordPattern.SIXTH);
+        DegreeFunction.bII6 = DegreeFunction.from(DiatonicAltDegree.bII, DiatonicAltChordPattern.SIXTH);
+        DegreeFunction.II6 = DegreeFunction.from(DiatonicAltDegree.II, DiatonicAltChordPattern.SIXTH);
+        DegreeFunction.bIII6 = DegreeFunction.from(DiatonicAltDegree.bIII, DiatonicAltChordPattern.SIXTH);
+        DegreeFunction.III6 = DegreeFunction.from(DiatonicAltDegree.III, DiatonicAltChordPattern.SIXTH);
+        DegreeFunction.IV6 = DegreeFunction.from(DiatonicAltDegree.IV, DiatonicAltChordPattern.SIXTH);
+        DegreeFunction.bV6 = DegreeFunction.from(DiatonicAltDegree.bV, DiatonicAltChordPattern.SIXTH);
+        DegreeFunction.V6 = DegreeFunction.from(DiatonicAltDegree.V, DiatonicAltChordPattern.SIXTH);
+        DegreeFunction.bVI6 = DegreeFunction.from(DiatonicAltDegree.bVI, DiatonicAltChordPattern.SIXTH);
+        DegreeFunction.VI6 = DegreeFunction.from(DiatonicAltDegree.VI, DiatonicAltChordPattern.SIXTH);
+        DegreeFunction.bVII6 = DegreeFunction.from(DiatonicAltDegree.bVII, DiatonicAltChordPattern.SIXTH);
+        DegreeFunction.VII6 = DegreeFunction.from(DiatonicAltDegree.VII, DiatonicAltChordPattern.SIXTH);
 
-        DegreeFunction.Im6 = new DegreeFunction(DiatonicAltDegree.I, DiatonicAltChordPattern.SIXTH_MINOR);
-        DegreeFunction.bIIm6 = new DegreeFunction(DiatonicAltDegree.bII, DiatonicAltChordPattern.SIXTH_MINOR);
-        DegreeFunction.IIm6 = new DegreeFunction(DiatonicAltDegree.II, DiatonicAltChordPattern.SIXTH_MINOR);
-        DegreeFunction.bIIIm6 = new DegreeFunction(DiatonicAltDegree.bIII, DiatonicAltChordPattern.SIXTH_MINOR);
-        DegreeFunction.IIIm6 = new DegreeFunction(DiatonicAltDegree.III, DiatonicAltChordPattern.SIXTH_MINOR);
-        DegreeFunction.IVm6 = new DegreeFunction(DiatonicAltDegree.IV, DiatonicAltChordPattern.SIXTH_MINOR);
-        DegreeFunction.bVm6 = new DegreeFunction(DiatonicAltDegree.bV, DiatonicAltChordPattern.SIXTH_MINOR);
-        DegreeFunction.Vm6 = new DegreeFunction(DiatonicAltDegree.V, DiatonicAltChordPattern.SIXTH_MINOR);
-        DegreeFunction.bVIm6 = new DegreeFunction(DiatonicAltDegree.bVI, DiatonicAltChordPattern.SIXTH_MINOR);
-        DegreeFunction.VIm6 = new DegreeFunction(DiatonicAltDegree.VI, DiatonicAltChordPattern.SIXTH_MINOR);
-        DegreeFunction.bVIIm6 = new DegreeFunction(DiatonicAltDegree.bVII, DiatonicAltChordPattern.SIXTH_MINOR);
-        DegreeFunction.VIIm6 = new DegreeFunction(DiatonicAltDegree.VII, DiatonicAltChordPattern.SIXTH_MINOR);
+        DegreeFunction.Im6 = DegreeFunction.from(DiatonicAltDegree.I, DiatonicAltChordPattern.SIXTH_MINOR);
+        DegreeFunction.bIIm6 = DegreeFunction.from(DiatonicAltDegree.bII, DiatonicAltChordPattern.SIXTH_MINOR);
+        DegreeFunction.IIm6 = DegreeFunction.from(DiatonicAltDegree.II, DiatonicAltChordPattern.SIXTH_MINOR);
+        DegreeFunction.bIIIm6 = DegreeFunction.from(DiatonicAltDegree.bIII, DiatonicAltChordPattern.SIXTH_MINOR);
+        DegreeFunction.IIIm6 = DegreeFunction.from(DiatonicAltDegree.III, DiatonicAltChordPattern.SIXTH_MINOR);
+        DegreeFunction.IVm6 = DegreeFunction.from(DiatonicAltDegree.IV, DiatonicAltChordPattern.SIXTH_MINOR);
+        DegreeFunction.bVm6 = DegreeFunction.from(DiatonicAltDegree.bV, DiatonicAltChordPattern.SIXTH_MINOR);
+        DegreeFunction.Vm6 = DegreeFunction.from(DiatonicAltDegree.V, DiatonicAltChordPattern.SIXTH_MINOR);
+        DegreeFunction.bVIm6 = DegreeFunction.from(DiatonicAltDegree.bVI, DiatonicAltChordPattern.SIXTH_MINOR);
+        DegreeFunction.VIm6 = DegreeFunction.from(DiatonicAltDegree.VI, DiatonicAltChordPattern.SIXTH_MINOR);
+        DegreeFunction.bVIIm6 = DegreeFunction.from(DiatonicAltDegree.bVII, DiatonicAltChordPattern.SIXTH_MINOR);
+        DegreeFunction.VIIm6 = DegreeFunction.from(DiatonicAltDegree.VII, DiatonicAltChordPattern.SIXTH_MINOR);
 
-        DegreeFunction.IMaj7 = new DegreeFunction(DiatonicAltDegree.I, DiatonicAltChordPattern.SEVENTH_MAJ7);
-        DegreeFunction.bIIMaj7 = new DegreeFunction(DiatonicAltDegree.bII, DiatonicAltChordPattern.SEVENTH_MAJ7);
-        DegreeFunction.IIMaj7 = new DegreeFunction(DiatonicAltDegree.II, DiatonicAltChordPattern.SEVENTH_MAJ7);
-        DegreeFunction.bIIIMaj7 = new DegreeFunction(DiatonicAltDegree.bIII, DiatonicAltChordPattern.SEVENTH_MAJ7);
-        DegreeFunction.IIIMaj7 = new DegreeFunction(DiatonicAltDegree.III, DiatonicAltChordPattern.SEVENTH_MAJ7);
-        DegreeFunction.IVMaj7 = new DegreeFunction(DiatonicAltDegree.IV, DiatonicAltChordPattern.SEVENTH_MAJ7);
-        DegreeFunction.bVMaj7 = new DegreeFunction(DiatonicAltDegree.bV, DiatonicAltChordPattern.SEVENTH_MAJ7);
-        DegreeFunction.VMaj7 = new DegreeFunction(DiatonicAltDegree.V, DiatonicAltChordPattern.SEVENTH_MAJ7);
-        DegreeFunction.bVIMaj7 = new DegreeFunction(DiatonicAltDegree.bVI, DiatonicAltChordPattern.SEVENTH_MAJ7);
-        DegreeFunction.VIMaj7 = new DegreeFunction(DiatonicAltDegree.VI, DiatonicAltChordPattern.SEVENTH_MAJ7);
-        DegreeFunction.bVIIMaj7 = new DegreeFunction(DiatonicAltDegree.bVII, DiatonicAltChordPattern.SEVENTH_MAJ7);
-        DegreeFunction.VIIMaj7 = new DegreeFunction(DiatonicAltDegree.VII, DiatonicAltChordPattern.SEVENTH_MAJ7);
+        DegreeFunction.IMaj7 = DegreeFunction.from(DiatonicAltDegree.I, DiatonicAltChordPattern.SEVENTH_MAJ7);
+        DegreeFunction.bIIMaj7 = DegreeFunction.from(DiatonicAltDegree.bII, DiatonicAltChordPattern.SEVENTH_MAJ7);
+        DegreeFunction.IIMaj7 = DegreeFunction.from(DiatonicAltDegree.II, DiatonicAltChordPattern.SEVENTH_MAJ7);
+        DegreeFunction.bIIIMaj7 = DegreeFunction.from(DiatonicAltDegree.bIII, DiatonicAltChordPattern.SEVENTH_MAJ7);
+        DegreeFunction.IIIMaj7 = DegreeFunction.from(DiatonicAltDegree.III, DiatonicAltChordPattern.SEVENTH_MAJ7);
+        DegreeFunction.IVMaj7 = DegreeFunction.from(DiatonicAltDegree.IV, DiatonicAltChordPattern.SEVENTH_MAJ7);
+        DegreeFunction.bVMaj7 = DegreeFunction.from(DiatonicAltDegree.bV, DiatonicAltChordPattern.SEVENTH_MAJ7);
+        DegreeFunction.VMaj7 = DegreeFunction.from(DiatonicAltDegree.V, DiatonicAltChordPattern.SEVENTH_MAJ7);
+        DegreeFunction.bVIMaj7 = DegreeFunction.from(DiatonicAltDegree.bVI, DiatonicAltChordPattern.SEVENTH_MAJ7);
+        DegreeFunction.VIMaj7 = DegreeFunction.from(DiatonicAltDegree.VI, DiatonicAltChordPattern.SEVENTH_MAJ7);
+        DegreeFunction.bVIIMaj7 = DegreeFunction.from(DiatonicAltDegree.bVII, DiatonicAltChordPattern.SEVENTH_MAJ7);
+        DegreeFunction.VIIMaj7 = DegreeFunction.from(DiatonicAltDegree.VII, DiatonicAltChordPattern.SEVENTH_MAJ7);
 
-        DegreeFunction.i7 = new DegreeFunction(DiatonicAltDegree.I, DiatonicAltChordPattern.SEVENTH_MINOR);
-        DegreeFunction.bii7 = new DegreeFunction(DiatonicAltDegree.bII, DiatonicAltChordPattern.SEVENTH_MINOR);
-        DegreeFunction.ii7 = new DegreeFunction(DiatonicAltDegree.II, DiatonicAltChordPattern.SEVENTH_MINOR);
-        DegreeFunction.biii7 = new DegreeFunction(DiatonicAltDegree.bIII, DiatonicAltChordPattern.SEVENTH_MINOR);
-        DegreeFunction.iii7 = new DegreeFunction(DiatonicAltDegree.III, DiatonicAltChordPattern.SEVENTH_MINOR);
-        DegreeFunction.iv7 = new DegreeFunction(DiatonicAltDegree.IV, DiatonicAltChordPattern.SEVENTH_MINOR);
-        DegreeFunction.bv7 = new DegreeFunction(DiatonicAltDegree.bV, DiatonicAltChordPattern.SEVENTH_MINOR);
-        DegreeFunction.v7 = new DegreeFunction(DiatonicAltDegree.V, DiatonicAltChordPattern.SEVENTH_MINOR);
-        DegreeFunction.bvi7 = new DegreeFunction(DiatonicAltDegree.bVI, DiatonicAltChordPattern.SEVENTH_MINOR);
-        DegreeFunction.vi7 = new DegreeFunction(DiatonicAltDegree.VI, DiatonicAltChordPattern.SEVENTH_MINOR);
-        DegreeFunction.bvii7 = new DegreeFunction(DiatonicAltDegree.bVII, DiatonicAltChordPattern.SEVENTH_MINOR);
-        DegreeFunction.vii7 = new DegreeFunction(DiatonicAltDegree.VII, DiatonicAltChordPattern.SEVENTH_MINOR);
+        DegreeFunction.i7 = DegreeFunction.from(DiatonicAltDegree.I, DiatonicAltChordPattern.SEVENTH_MINOR);
+        DegreeFunction.bii7 = DegreeFunction.from(DiatonicAltDegree.bII, DiatonicAltChordPattern.SEVENTH_MINOR);
+        DegreeFunction.ii7 = DegreeFunction.from(DiatonicAltDegree.II, DiatonicAltChordPattern.SEVENTH_MINOR);
+        DegreeFunction.biii7 = DegreeFunction.from(DiatonicAltDegree.bIII, DiatonicAltChordPattern.SEVENTH_MINOR);
+        DegreeFunction.iii7 = DegreeFunction.from(DiatonicAltDegree.III, DiatonicAltChordPattern.SEVENTH_MINOR);
+        DegreeFunction.iv7 = DegreeFunction.from(DiatonicAltDegree.IV, DiatonicAltChordPattern.SEVENTH_MINOR);
+        DegreeFunction.bv7 = DegreeFunction.from(DiatonicAltDegree.bV, DiatonicAltChordPattern.SEVENTH_MINOR);
+        DegreeFunction.v7 = DegreeFunction.from(DiatonicAltDegree.V, DiatonicAltChordPattern.SEVENTH_MINOR);
+        DegreeFunction.bvi7 = DegreeFunction.from(DiatonicAltDegree.bVI, DiatonicAltChordPattern.SEVENTH_MINOR);
+        DegreeFunction.vi7 = DegreeFunction.from(DiatonicAltDegree.VI, DiatonicAltChordPattern.SEVENTH_MINOR);
+        DegreeFunction.bvii7 = DegreeFunction.from(DiatonicAltDegree.bVII, DiatonicAltChordPattern.SEVENTH_MINOR);
+        DegreeFunction.vii7 = DegreeFunction.from(DiatonicAltDegree.VII, DiatonicAltChordPattern.SEVENTH_MINOR);
 
-        DegreeFunction.i7b5 = new DegreeFunction(DiatonicAltDegree.I, DiatonicAltChordPattern.SEVENTH_MINOR_b5);
-        DegreeFunction.bii7b5 = new DegreeFunction(DiatonicAltDegree.bII, DiatonicAltChordPattern.SEVENTH_MINOR_b5);
-        DegreeFunction.ii7b5 = new DegreeFunction(DiatonicAltDegree.II, DiatonicAltChordPattern.SEVENTH_MINOR_b5);
-        DegreeFunction.biii7b5 = new DegreeFunction(DiatonicAltDegree.bIII, DiatonicAltChordPattern.SEVENTH_MINOR_b5);
-        DegreeFunction.iii7b5 = new DegreeFunction(DiatonicAltDegree.III, DiatonicAltChordPattern.SEVENTH_MINOR_b5);
-        DegreeFunction.iv7b5 = new DegreeFunction(DiatonicAltDegree.IV, DiatonicAltChordPattern.SEVENTH_MINOR_b5);
-        DegreeFunction.bv7b5 = new DegreeFunction(DiatonicAltDegree.bV, DiatonicAltChordPattern.SEVENTH_MINOR_b5);
-        DegreeFunction.v7b5 = new DegreeFunction(DiatonicAltDegree.V, DiatonicAltChordPattern.SEVENTH_MINOR_b5);
-        DegreeFunction.bvi7b5 = new DegreeFunction(DiatonicAltDegree.bVI, DiatonicAltChordPattern.SEVENTH_MINOR_b5);
-        DegreeFunction.vi7b5 = new DegreeFunction(DiatonicAltDegree.VI, DiatonicAltChordPattern.SEVENTH_MINOR_b5);
-        DegreeFunction.bvii7b5 = new DegreeFunction(DiatonicAltDegree.bVII, DiatonicAltChordPattern.SEVENTH_MINOR_b5);
-        DegreeFunction.vii7b5 = new DegreeFunction(DiatonicAltDegree.VII, DiatonicAltChordPattern.SEVENTH_MINOR_b5);
+        DegreeFunction.i7b5 = DegreeFunction.from(DiatonicAltDegree.I, DiatonicAltChordPattern.SEVENTH_MINOR_b5);
+        DegreeFunction.bii7b5 = DegreeFunction.from(DiatonicAltDegree.bII, DiatonicAltChordPattern.SEVENTH_MINOR_b5);
+        DegreeFunction.ii7b5 = DegreeFunction.from(DiatonicAltDegree.II, DiatonicAltChordPattern.SEVENTH_MINOR_b5);
+        DegreeFunction.biii7b5 = DegreeFunction.from(DiatonicAltDegree.bIII, DiatonicAltChordPattern.SEVENTH_MINOR_b5);
+        DegreeFunction.iii7b5 = DegreeFunction.from(DiatonicAltDegree.III, DiatonicAltChordPattern.SEVENTH_MINOR_b5);
+        DegreeFunction.iv7b5 = DegreeFunction.from(DiatonicAltDegree.IV, DiatonicAltChordPattern.SEVENTH_MINOR_b5);
+        DegreeFunction.bv7b5 = DegreeFunction.from(DiatonicAltDegree.bV, DiatonicAltChordPattern.SEVENTH_MINOR_b5);
+        DegreeFunction.v7b5 = DegreeFunction.from(DiatonicAltDegree.V, DiatonicAltChordPattern.SEVENTH_MINOR_b5);
+        DegreeFunction.bvi7b5 = DegreeFunction.from(DiatonicAltDegree.bVI, DiatonicAltChordPattern.SEVENTH_MINOR_b5);
+        DegreeFunction.vi7b5 = DegreeFunction.from(DiatonicAltDegree.VI, DiatonicAltChordPattern.SEVENTH_MINOR_b5);
+        DegreeFunction.bvii7b5 = DegreeFunction.from(DiatonicAltDegree.bVII, DiatonicAltChordPattern.SEVENTH_MINOR_b5);
+        DegreeFunction.vii7b5 = DegreeFunction.from(DiatonicAltDegree.VII, DiatonicAltChordPattern.SEVENTH_MINOR_b5);
     }
 }

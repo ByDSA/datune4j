@@ -82,11 +82,15 @@ export function diatonicAltChordPatterns() {
 
 // CHROMATIC CHORD PATTERNS
 export function chromaticChordPatterns() {
+    if (ChromaticChordPattern.TRIAD_MAJOR)
+        return;
     (<any>ChromaticChordPattern).initialize();
 }
 
 // CHROMATIC CHORDS
 export function chromaticChords() {
+    if (ChromaticChord.C)
+        return;
     if (!Chromatic.C)
         chromatics();
 
@@ -95,11 +99,21 @@ export function chromaticChords() {
 
 // SCALES
 export function scales() {
+    if (Scale.MAJOR)
+        return;
+
+    diatonicAltDegrees();
+    intervalDiatonicAlts();
+    chromatics();
+
     (<any>Scale).initialize();
 };
 
 // SOURCE SCALES
 export function sourceScales() {
+    if ((<any>SourceScaleUtils)._sourceScales)
+        return;
+
     (<any>SourceScaleUtils)._sourceScales = [
         Scale.MAJOR,
         Scale.HARMONIC_MINOR,
@@ -119,20 +133,11 @@ export function tonalities() {
     if (Tonality.C)
         return;
 
-    if (!Scale.MAJOR)
-        scales();
-
-    if (!DiatonicAlt.C)
-        diatonicAlts();
-
-    if (!Chromatic.C)
-        chromatics();
-
-    if (!IntervalDiatonicAlt.PERFECT_UNISON)
-        intervalDiatonicAlts();
-
-    if (!DiatonicAltChordPattern.TRIAD_MAJOR)
-        diatonicAltChordPatterns();
+    scales();
+    diatonicAlts();
+    chromatics();
+    intervalDiatonicAlts();
+    diatonicAltChordPatterns();
 
     Tonality.C = Tonality.from(DiatonicAlt.C, Scale.MAJOR);
     Tonality.CC = Tonality.from(DiatonicAlt.CC, Scale.MAJOR);
@@ -180,8 +185,8 @@ export function diatonicDegrees() {
 
 // DIATONIC ALT DEGREES
 export function diatonicAltDegrees() {
-    if (!DiatonicDegree.I)
-        diatonicDegrees();
+    diatonicDegrees();
+    diatonics();
 
     (<any>DiatonicAltDegree).initialize();
 }

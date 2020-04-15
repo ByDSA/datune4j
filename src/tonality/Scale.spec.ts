@@ -17,22 +17,16 @@ test('Scale: ', () => {
     expect(scale).toBe(Scale.MAJOR);
 });
 
-test('Scale: distances not null or undefined', () => {
-    for (let scale of Scale.all()) {
-        expect(scale.distances).not.toBeNull();
+test('Scale: degrees not null or undefined', () => {
+    for (let scale of Scale.sets.all()) {
+        expect(scale.degrees).not.toBeNull();
     }
 });
 
-test('Scale: absoluteIntervals not null or undefined', () => {
-    for (let scale of Scale.all()) {
-        expect(scale.absoluteIntervals).not.toBeNull();
-    }
-});
-
-test('Scale - absoluteIntervals: MAJOR', () => {
+test('Scale - degrees: MAJOR', () => {
     let scale = Scale.MAJOR;
-    let absoluteIntervals = scale.absoluteIntervals;
-    expect(absoluteIntervals).toStrictEqual([
+    let degrees = scale.degrees;
+    expect(degrees).toStrictEqual([
         DiatonicAltDegree.I,
         DiatonicAltDegree.II,
         DiatonicAltDegree.III,
@@ -43,10 +37,10 @@ test('Scale - absoluteIntervals: MAJOR', () => {
     ]);
 });
 
-test('Scale - absoluteIntervals: MINOR', () => {
+test('Scale - degrees: MINOR', () => {
     let scale = Scale.MINOR;
-    let absoluteIntervals = scale.absoluteIntervals;
-    expect(absoluteIntervals).toStrictEqual([
+    let degrees = scale.degrees;
+    expect(degrees).toStrictEqual([
         DiatonicAltDegree.I,
         DiatonicAltDegree.II,
         DiatonicAltDegree.bIII,
@@ -57,36 +51,8 @@ test('Scale - absoluteIntervals: MINOR', () => {
     ]);
 });
 
-test('Scale - absoluteDistances: MAJOR', () => {
-    let scale = Scale.MAJOR;
-    let absoluteDistances: number[] = scale.absoluteDistances;
-    expect(absoluteDistances).toStrictEqual([
-        0,
-        2,
-        4,
-        5,
-        7,
-        9,
-        11
-    ]);
-});
-
-test('Scale - absoluteDistances: MINOR', () => {
-    let scale = Scale.MINOR;
-    let absoluteDistances: number[] = scale.absoluteDistances;
-    expect(absoluteDistances).toStrictEqual([
-        0,
-        2,
-        3,
-        5,
-        7,
-        8,
-        10
-    ]);
-});
-
 test('Scale - toString: all have string', () => {
-    for (let scale of Scale.all()) {
+    for (let scale of Scale.sets.all()) {
         expect(scale.toString()).not.toBeNull();
         expect(scale.toString()).not.toBeUndefined();
     }
@@ -99,13 +65,15 @@ test('Scale - degreeFunctions: MAJOR', () => {
         DegreeFunction.I,
         DegreeFunction.ISUS4,
         DegreeFunction.ii,
-        DegreeFunction.III,
+        DegreeFunction.iii,
         DegreeFunction.IV,
         DegreeFunction.V,
         DegreeFunction.VSUS4,
         DegreeFunction.vi,
         DegreeFunction.VII0,
-    ]
-    for (const degreeFunction of someFunctions)
-        expect(degreeFunctions).toContainEqual(degreeFunction);
+    ];
+
+    expect([1, 2, 3, 4]).toEqual(expect.arrayContaining([1, 2]));
+
+    expect(degreeFunctions).toEqual(expect.arrayContaining(someFunctions));
 });

@@ -18,6 +18,12 @@ test('Tonality - scales & root: ', () => {
     expect(Tonality.C.root).toBe(DiatonicAlt.C);
 });
 
+test('Tonality - scales & root: Scale.ORIENTAL', () => {
+    let tonality = Tonality.from(DiatonicAlt.C, Scale.ORIENTAL);
+    expect(tonality.scale).toBe(Scale.ORIENTAL);
+    expect(tonality.root).toBe(DiatonicAlt.C);
+});
+
 test('Tonality - notes: C', () => {
     let notes = Tonality.C.notes;
     expect(notes.length).toBe(7);
@@ -41,7 +47,8 @@ test('Tonality - rootChord3: C -> C', () => {
 });
 
 test('Tonality - rootChord3: C Oriental -> Am', () => {
-    let rootChord3: DiatonicAltChord = Tonality.from(DiatonicAlt.C, Scale.ORIENTAL).rootChord3;
+    let tonality = Tonality.from(DiatonicAlt.C, Scale.ORIENTAL);
+    let rootChord3: DiatonicAltChord = tonality.rootChord3;
     expect(rootChord3.length).toBe(3);
     expect(rootChord3).toBe(DiatonicAltChord.Am);
 });
@@ -53,7 +60,8 @@ test('Tonality - rootChord4: C -> CMaj7', () => {
 });
 
 test('Tonality - notes: C BLUES MINOR', () => {
-    let notes = Tonality.from(DiatonicAlt.C, Scale.BLUES_MINOR).notes;
+    let tonality = Tonality.from(DiatonicAlt.C, Scale.BLUES_MINOR);
+    let notes = tonality.notes;
     expect(notes.length).toBe(5);
     expect(notes).toStrictEqual(
         [

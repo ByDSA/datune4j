@@ -1,9 +1,10 @@
 import { Diatonic } from '../../degrees/Diatonic';
 import { IntervalDiatonicAlt } from '../../interval/IntervalDiatonicAlt';
+import { Settings } from '../../settings/Settings';
+import { Scale } from '../../tonality/Scale';
 import { Hashing } from '../../Utils/Hashing';
 import { ImmutablesCache } from '../../Utils/ImmutablesCache';
 import { DiatonicDegree } from './DiatonicDegree';
-import { Settings } from '../../settings/Settings';
 
 type HashingObjectType = { diatonicDegree: DiatonicDegree, alts: number };
 export class DiatonicAltDegree {
@@ -39,6 +40,11 @@ export class DiatonicAltDegree {
         return this.immutablesCache.getOrCreate({ diatonicDegree: diatonicDegree, alts: alts });
     }
 
+    public static fromSemis(diatonicDegree: DiatonicDegree, semis: number): DiatonicAltDegree {
+        let alts = semis - Scale.MAJOR.degrees[diatonicDegree.intValue].semis;
+        return this.from(diatonicDegree, alts);
+    }
+
     public get diatonicDegree(): DiatonicDegree {
         return this._diatonicDegree;
     }
@@ -56,8 +62,24 @@ export class DiatonicAltDegree {
         return IntervalDiatonicAlt.from(semis, this.diatonicDegree.intValue);
     }
 
+    getAdd(interval: IntervalDiatonicAlt) {
+        let semis = this.semis + interval.semis;
+        let diatonicDegreeInt = this.diatonicDegree.intValue + interval.intervalDiatonic;
+        let diatonicDegree = DiatonicDegree.fromInt(diatonicDegreeInt);
+        let alts = semis - Scale.MAJOR.degrees[diatonicDegree.intValue].semis;
+        return DiatonicAltDegree.from(diatonicDegree, alts);
+    }
+
+    getSub(interval: IntervalDiatonicAlt) {
+        let semis = this.semis - interval.semis;
+        let diatonicDegreeInt = this.diatonicDegree.intValue - interval.intervalDiatonic;
+        let diatonicDegree = DiatonicDegree.fromInt(diatonicDegreeInt);
+        let alts = semis - Scale.MAJOR.degrees[diatonicDegree.intValue].semis;
+        return DiatonicAltDegree.from(diatonicDegree, alts);
+    }
+
     public hashCode(): string {
-        return this._diatonicDegree.hashCode() + "|alts:" + Hashing.hash(this._alts);
+        return this._diatonicDegree.hashCode() + "a:" + this._alts;
     }
 
     public toString(): string {

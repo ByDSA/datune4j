@@ -5,7 +5,7 @@ precalc.scales();
 precalc.sourceScales();
 
 test('SourceScaleUtils - getSourceScaleFrom: ', () => {
-    for (let scale of Scale.all()) {
+    for (let scale of Scale.sets.all()) {
         let sourceScale = SourceScaleUtils.getSourceScaleFrom(scale);
         expect(sourceScale).not.toBe(undefined);
         expect(sourceScale).not.toBe(null);

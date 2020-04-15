@@ -1,5 +1,5 @@
-import { Scale } from './Scale';
 import { Utils } from '../Utils/Utils';
+import { Scale } from './Scale';
 
 export interface SourceScaleInfo {
     scale: Scale,
@@ -31,7 +31,7 @@ export class SourceScaleUtils {
     public static getSourceScaleFrom(scale: Scale): SourceScaleInfo {
         let ret: SourceScaleInfo = SourceScaleUtils.sourceScaleMap.get(scale);
         if (!ret) {
-            let allScales: Scale[] = Scale.all();
+            let allScales: Scale[] = Scale.sets.all();
 
             let i = 1;
             for (const element of scale.modes) {

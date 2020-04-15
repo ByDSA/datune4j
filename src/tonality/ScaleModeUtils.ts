@@ -1,6 +1,7 @@
-import { Scale } from './Scale';
-import { Utils } from '../Utils/Utils';
+import { IntervalDiatonicAlt } from 'interval/IntervalDiatonicAlt';
 import { Assert } from '../Utils/Assert';
+import { Utils } from '../Utils/Utils';
+import { Scale } from './Scale';
 
 export class ScaleModeUtils {
     private constructor() {
@@ -19,9 +20,9 @@ export class ScaleModeUtils {
 
     public static getRotatedScale(sourceScale: Scale, n: number): Scale {
         Assert.notNull(sourceScale);
-        
-        let scaleIntervals: number[] = sourceScale.distances;
-        
+
+        let scaleIntervals: IntervalDiatonicAlt[] = sourceScale.intervals;
+
         if (n > 0)
             Utils.arrayRotate(scaleIntervals, n);
         else if (n < 0)
@@ -29,6 +30,6 @@ export class ScaleModeUtils {
         else
             return sourceScale;
 
-        return Scale.from(...scaleIntervals);
+        return Scale.fromIntervals(...scaleIntervals);
     }
 }

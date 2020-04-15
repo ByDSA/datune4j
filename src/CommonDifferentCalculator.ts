@@ -18,16 +18,16 @@ export class CommonDifferentCalculator {
 
     private addAllAbsoluteIntervalsToCommon(): void {
         for (let scale of this.scales) {
-            let absoluteIntervals = scale.absoluteIntervals;
-            for (let absoluteInterval of absoluteIntervals)
-                this._common.add(absoluteInterval);
+            let intervalsFromRoot = scale.degrees;
+            for (let interval of intervalsFromRoot)
+                this._common.add(interval.semis);
         }
     }
 
     private removeAbsoluteIntervalsFromCommon(): void {
         mainFor: for (let absoluteInterval of this._common)
             for (let scale of this.scales) {
-                if (scale.absoluteIntervals.indexOf(absoluteInterval) < 0) {
+                if (scale.degrees.map(interval => interval.semis).indexOf(absoluteInterval) < 0) {
                     this._common.delete(absoluteInterval)
                     this._different.add(absoluteInterval);
                     continue mainFor;

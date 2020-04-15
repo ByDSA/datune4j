@@ -7,7 +7,6 @@ import { DiatonicAlt } from '../degrees/DiatonicAlt';
 import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
 import { ImmutablesCache } from '../Utils/ImmutablesCache';
 import { Scale } from './Scale';
-import { ScaleUtils } from './ScaleUtils';
 
 type HashingObjectType = { root: DiatonicAlt, scale: Scale };
 export class Tonality {
@@ -69,17 +68,12 @@ export class Tonality {
 
     private calculateNotes(): void {
         this._notes.push(this.root);
-
-        let lastChromatic = this.root.chromatic;
-        let lastDiatonic = this.root.diatonic;
         let i = 2;
-        for (let n of this.scale.distances) {
-            if (i > this.scale.distances.length)
+        for (let interval of this.scale.intervals) {
+            if (i > this.scale.intervals.length)
                 break;
-            lastChromatic = lastChromatic.getShift(n);
-            let diatonicIntAdd = ScaleUtils.getRefNum(this.scale, i) - 1;
-            lastDiatonic = this.root.diatonic.getAdd(diatonicIntAdd);
-            let note = DiatonicAlt.fromChromatic(lastChromatic, lastDiatonic);
+            let lastNote = this._notes[this._notes.length - 1];
+            let note = lastNote.getAdd(interval);
             this._notes.push(note);
             i++;
         }
@@ -193,7 +187,7 @@ export class Tonality {
         return Array.from(this._notes);
     }
 
-    public hashCode():string {
-        return "tonality:" + this.root.hashCode() + "|" + this.scale.hashCode(); 
+    public hashCode(): string {
+        return "tonality:" + this.root.hashCode() + "|" + this.scale.hashCode();
     }
 }

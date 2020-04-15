@@ -68,3 +68,9 @@ test('DegreeFunction - degrees: IVMaj7', () => {
     ];
     expect(degrees).toStrictEqual(expected);
 });
+
+test('DegreeFunction - from: I + TRIAD_MAJOR = I', () => {
+    let degreeFunction = DegreeFunction.from(DiatonicAltDegree.I, DiatonicAltChordPattern.TRIAD_MAJOR);
+    let expected = DegreeFunction.I;
+    expect(degreeFunction).toEqual(expected);
+});

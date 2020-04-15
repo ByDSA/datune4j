@@ -35,7 +35,7 @@ export class DiatonicDegree {
     }
 
     public hashCode(): string {
-        return "DiatonicDegree:" + this._intValue;
+        return "dd:" + this._intValue;
     }
 
     public toString(): string {

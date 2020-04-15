@@ -82,6 +82,8 @@ export class IntervalDiatonicAlt {
         Assert.notNull(semitones);
         Assert.notNull(intervalDiatonic);
 
+
+
         switch (intervalDiatonic) {
             case IntervalDiatonic.UNISON:
                 switch (semitones) {
@@ -250,7 +252,7 @@ export class IntervalDiatonicAlt {
             default: throw new Error("Invalid IntervalDiatonic: " + intervalDiatonic);
         }
 
-        throw new Error();
+        throw new Error("Cannot get IntervalDiatonicAlt from semis=" + semitones + ", IntervalDiatonic=" + intervalDiatonic);
     }
 
     get semis() {
@@ -259,6 +261,25 @@ export class IntervalDiatonicAlt {
 
     get intervalDiatonic() {
         return this._intervalDiatonic;
+    }
+
+    toString(): string {
+        let ret = "";
+        switch (this.quality) {
+            case Quality.MAJOR: ret += "M"; break;
+            case Quality.MINOR: ret += "m"; break;
+            case Quality.PERFECT: ret += "P"; break;
+            case Quality.DIMINISHED: ret += "d"; break;
+            case Quality.AUGMENTED: ret += "a"; break;
+        }
+
+        ret += (this.intervalDiatonic + 1);
+
+        return ret;
+    }
+
+    hashCode(): string {
+        return "d:" + this.intervalDiatonic + "s:" + this.semis;
     }
 
     private static initialize() {
