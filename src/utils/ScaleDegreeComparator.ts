@@ -1,7 +1,7 @@
 import { DiatonicAltDegree } from '../degrees/scale/DiatonicAltDegree';
 import { Scale } from '../tonality/Scale';
 
-export class CommonDifferentCalculator {
+export class ScaleDegreeComparator {
     private _common = new Set<DiatonicAltDegree>();
     private _different = new Set<DiatonicAltDegree>();
     private calculated: boolean;
@@ -10,8 +10,8 @@ export class CommonDifferentCalculator {
         this.calculated = false;
     }
 
-    public static from(scales: Scale[], enharmonic = true): CommonDifferentCalculator {
-        return new CommonDifferentCalculator(scales, enharmonic);
+    public static from(scales: Scale[], enharmonic = true): ScaleDegreeComparator {
+        return new ScaleDegreeComparator(scales, enharmonic);
     }
 
     public calculate(): void {
