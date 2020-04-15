@@ -1,45 +1,45 @@
+import { DiatonicAltDegree } from 'degrees/scale/DiatonicAltDegree';
 import { Scale } from './tonality/Scale';
 
 export class CommonDifferentCalculator {
-    private _common = new Set<number>();
-    private _different = new Set<number>();
+    private _common = new Set<DiatonicAltDegree>();
+    private _different = new Set<DiatonicAltDegree>();
 
-    private constructor(private scales: Scale[]) {
+    private constructor(private scales: Scale[], private enharmonic: boolean) {
     }
 
-    public static from(scales: Scale[]): CommonDifferentCalculator {
-        return new CommonDifferentCalculator(scales);
+    public static from(scales: Scale[], enharmonic = true): CommonDifferentCalculator {
+        return new CommonDifferentCalculator(scales, enharmonic);
     }
 
     public calculate(): void {
-        this.addAllAbsoluteIntervalsToCommon();
-        this.removeAbsoluteIntervalsFromCommon();
+        this.addAllScaleDegreesToCommon();
+        this.removeNonCommonDegreesEnharmonic();
     }
 
-    private addAllAbsoluteIntervalsToCommon(): void {
-        for (let scale of this.scales) {
-            let intervalsFromRoot = scale.degrees;
-            for (let interval of intervalsFromRoot)
-                this._common.add(interval.semis);
-        }
+    private addAllScaleDegreesToCommon(): void {
+        for (let scale of this.scales)
+            for (let degree of scale.degrees)
+                this._common.add(degree);
     }
 
-    private removeAbsoluteIntervalsFromCommon(): void {
-        mainFor: for (let absoluteInterval of this._common)
+    private removeNonCommonDegreesEnharmonic(): void {
+        mainFor: for (let degree of this._common)
             for (let scale of this.scales) {
-                if (scale.degrees.map(interval => interval.semis).indexOf(absoluteInterval) < 0) {
-                    this._common.delete(absoluteInterval)
-                    this._different.add(absoluteInterval);
+                if (!this.enharmonic && !scale.degrees.includes(degree) ||
+                    this.enharmonic && !scale.degrees.map(degree => degree.semis).includes(degree.semis)) {
+                    this._common.delete(degree)
+                    this._different.add(degree);
                     continue mainFor;
                 }
             }
     }
 
-    public get common(): Set<number> {
+    public get common(): Set<DiatonicAltDegree> {
         return this._common;
     }
 
-    public get different(): Set<number> {
+    public get different(): Set<DiatonicAltDegree> {
         return this._different;
     }
 }
