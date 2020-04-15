@@ -16,17 +16,13 @@ export class Naming {
 
         let first = true;
         let ret: string = "";
-        let i = 1;
-        let acc = 0;
         degrees.forEach(n => {
             if (first)
                 first = false;
             else
                 ret += "-";
-            acc += n.semis;
-            let refNum = scale.reparametrizer(i, acc);
+            let refNum = n.diatonicDegree.intValue + 1;
             ret += Naming.absoluteInterval(refNum, n.semis);
-            i++;
         });
 
         return ret;
