@@ -1,8 +1,8 @@
 import { IntervalDiatonic } from '../interval/IntervalDiatonic';
 import { NamingDiatonic } from '../lang/naming/NamingDiatonic';
-import { Hashing } from '../Utils/Hashing';
-import { Immutables } from '../Utils/Immutables';
-import { MathUtils } from '../Utils/MathUtils';
+import { Hashing } from '../common/Hashing';
+import { Immutables } from '../common/Immutables';
+import { MathUtils } from '../common/MathUtils';
 import { Chromatic } from './Chromatic';
 
 export class Diatonic {

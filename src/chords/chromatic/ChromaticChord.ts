@@ -2,12 +2,12 @@ import { DiatonicAltChord } from '../diatonicalt/DiatonicAltChord';
 import { Chromatic } from '../../degrees/Chromatic';
 import { DiatonicAlt } from '../../degrees/DiatonicAlt';
 import { NameChromaticChordCalculator } from '../../lang/naming/NameChromaticChordCalculator';
-import { Hashing } from '../../Utils/Hashing';
-import { Immutables } from '../../Utils/Immutables';
-import { ImmutablesCache } from '../../Utils/ImmutablesCache';
-import { Utils } from '../../Utils/Utils';
+import { Hashing } from '../../common/Hashing';
+import { Immutables } from '../../common/Immutables';
+import { ImmutablesCache } from '../../common/ImmutablesCache';
+import { Utils } from '../../common/Utils';
 import { ChromaticChordPattern } from './ChromaticChordPattern';
-import { MathUtils } from '../../Utils/MathUtils';
+import { MathUtils } from '../../common/MathUtils';
 
 type HashingObjectType = { rootIndex: number, chromatics: Chromatic[] };
 export class ChromaticChord {

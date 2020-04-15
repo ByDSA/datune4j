@@ -1,8 +1,8 @@
 import { Chromatic } from '../../degrees/Chromatic';
 import { NamingChromaticChordPattern } from '../../lang/naming/NamingChromaticChordPattern';
-import { Hashing } from '../../Utils/Hashing';
-import { Immutables } from '../../Utils/Immutables';
-import { ImmutablesCache } from '../../Utils/ImmutablesCache';
+import { Hashing } from '../../common/Hashing';
+import { Immutables } from '../../common/Immutables';
+import { ImmutablesCache } from '../../common/ImmutablesCache';
 
 export class ChromaticChordPattern implements Iterable<number> {
     public static POWER_CHORD: ChromaticChordPattern;

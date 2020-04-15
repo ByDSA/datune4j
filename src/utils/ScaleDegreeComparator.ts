@@ -1,11 +1,13 @@
-import { DiatonicAltDegree } from 'degrees/scale/DiatonicAltDegree';
-import { Scale } from './tonality/Scale';
+import { DiatonicAltDegree } from '../degrees/scale/DiatonicAltDegree';
+import { Scale } from '../tonality/Scale';
 
 export class CommonDifferentCalculator {
     private _common = new Set<DiatonicAltDegree>();
     private _different = new Set<DiatonicAltDegree>();
+    private calculated: boolean;
 
     private constructor(private scales: Scale[], private enharmonic: boolean) {
+        this.calculated = false;
     }
 
     public static from(scales: Scale[], enharmonic = true): CommonDifferentCalculator {
@@ -14,7 +16,11 @@ export class CommonDifferentCalculator {
 
     public calculate(): void {
         this.addAllScaleDegreesToCommon();
-        this.removeNonCommonDegreesEnharmonic();
+        if (this.enharmonic)
+            this.removeNonCommonDegreesEnharmonic();
+        else
+            this.removeNonCommonDegreesNonEnharmonic();
+        this.calculated = true;
     }
 
     private addAllScaleDegreesToCommon(): void {
@@ -26,8 +32,18 @@ export class CommonDifferentCalculator {
     private removeNonCommonDegreesEnharmonic(): void {
         mainFor: for (let degree of this._common)
             for (let scale of this.scales) {
-                if (!this.enharmonic && !scale.degrees.includes(degree) ||
-                    this.enharmonic && !scale.degrees.map(degree => degree.semis).includes(degree.semis)) {
+                if (!scale.degrees.map(degree => degree.semis).includes(degree.semis)) {
+                    this._common.delete(degree)
+                    this._different.add(degree);
+                    continue mainFor;
+                }
+            }
+    }
+
+    private removeNonCommonDegreesNonEnharmonic(): void {
+        mainFor: for (let degree of this._common)
+            for (let scale of this.scales) {
+                if (!scale.degrees.includes(degree)) {
                     this._common.delete(degree)
                     this._different.add(degree);
                     continue mainFor;
@@ -36,10 +52,17 @@ export class CommonDifferentCalculator {
     }
 
     public get common(): Set<DiatonicAltDegree> {
+        this.errorIfNotCalculated();
         return this._common;
     }
-
+    
     public get different(): Set<DiatonicAltDegree> {
+        this.errorIfNotCalculated();
         return this._different;
+    }
+
+    private errorIfNotCalculated() {
+        if (!this.calculated)
+            throw new Error("Not calculated yet");
     }
 }

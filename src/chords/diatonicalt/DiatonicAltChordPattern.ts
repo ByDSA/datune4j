@@ -1,8 +1,8 @@
 import { Chromatic } from '../../degrees/Chromatic';
 import { Diatonic } from '../../degrees/Diatonic';
 import { IntervalDiatonicAlt } from '../../interval/IntervalDiatonicAlt';
-import { Immutables } from '../../Utils/Immutables';
-import { ImmutablesCache } from '../../Utils/ImmutablesCache';
+import { Immutables } from '../../common/Immutables';
+import { ImmutablesCache } from '../../common/ImmutablesCache';
 import { ChromaticChordPattern } from '../chromatic/ChromaticChordPattern';
 import { DiatonicChordPattern } from '../Diatonic/DiatonicChordPattern';
 

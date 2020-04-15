@@ -6,9 +6,9 @@ import { DiatonicDegree } from '../degrees/scale/DiatonicDegree';
 import { DegreeFunction } from '../function/DegreeFunction';
 import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
 import { NamingScale } from '../lang/naming/NamingScale';
-import { Hashable } from '../Utils/Hashable';
-import { ImmutablesCache } from '../Utils/ImmutablesCache';
-import { MathUtils } from '../Utils/MathUtils';
+import { Hashable } from '../common/Hashable';
+import { ImmutablesCache } from '../common/ImmutablesCache';
+import { MathUtils } from '../common/MathUtils';
 import { ScaleModeUtils } from './ScaleModeUtils';
 
 type Reparametrizer = (i, acc) => number;

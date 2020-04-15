@@ -1,8 +1,8 @@
-import { Hashing } from '../Utils/Hashing';
+import { Hashing } from '../common/Hashing';
 import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
 import { NamingChromatic } from '../lang/naming/NamingChromatic';
-import { Immutables } from '../Utils/Immutables';
-import { MathUtils } from '../Utils/MathUtils';
+import { Immutables } from '../common/Immutables';
+import { MathUtils } from '../common/MathUtils';
 
 export class Chromatic {
     public static NUMBER = 12;

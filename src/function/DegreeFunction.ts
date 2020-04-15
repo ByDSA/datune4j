@@ -6,7 +6,7 @@ import { DiatonicAlt } from '../degrees/DiatonicAlt';
 import { DiatonicAltDegree } from '../degrees/scale/DiatonicAltDegree';
 import { DiatonicDegree } from '../degrees/scale/DiatonicDegree';
 import { Tonality } from '../tonality/Tonality';
-import { ImmutablesCache } from '../Utils/ImmutablesCache';
+import { ImmutablesCache } from '../common/ImmutablesCache';
 import { HarmonicFunction } from './HarmonicFunction';
 
 type HashingObjectType = { degree: DiatonicAltDegree, pattern: DiatonicAltChordPattern };

@@ -5,7 +5,7 @@ import { DiatonicAltChordPattern } from '../chords/diatonicalt/DiatonicAltChordP
 import { Chromatic } from '../degrees/Chromatic';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
 import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
-import { ImmutablesCache } from '../Utils/ImmutablesCache';
+import { ImmutablesCache } from '../common/ImmutablesCache';
 import { Scale } from './Scale';
 
 type HashingObjectType = { root: DiatonicAlt, scale: Scale };

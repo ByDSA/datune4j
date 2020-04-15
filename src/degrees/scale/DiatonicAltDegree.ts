@@ -2,8 +2,8 @@ import { Diatonic } from '../../degrees/Diatonic';
 import { IntervalDiatonicAlt } from '../../interval/IntervalDiatonicAlt';
 import { Settings } from '../../settings/Settings';
 import { Scale } from '../../tonality/Scale';
-import { Hashing } from '../../Utils/Hashing';
-import { ImmutablesCache } from '../../Utils/ImmutablesCache';
+import { Hashing } from '../../common/Hashing';
+import { ImmutablesCache } from '../../common/ImmutablesCache';
 import { DiatonicDegree } from './DiatonicDegree';
 
 type HashingObjectType = { diatonicDegree: DiatonicDegree, alts: number };

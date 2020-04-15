@@ -1,4 +1,4 @@
-import { Utils } from '../Utils/Utils';
+import { Utils } from '../common/Utils';
 import { Scale } from './Scale';
 
 export interface SourceScaleInfo {

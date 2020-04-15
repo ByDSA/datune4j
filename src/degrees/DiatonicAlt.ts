@@ -1,9 +1,9 @@
 import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
 import { NamingDiatonicAlt } from '../lang/naming/NamingDiatonicAlt';
-import { Hashable } from '../Utils/Hashable';
-import { Hashing } from '../Utils/Hashing';
-import { Immutables } from '../Utils/Immutables';
-import { ImmutablesCache } from '../Utils/ImmutablesCache';
+import { Hashable } from '../common/Hashable';
+import { Hashing } from '../common/Hashing';
+import { Immutables } from '../common/Immutables';
+import { ImmutablesCache } from '../common/ImmutablesCache';
 import { Chromatic } from './Chromatic';
 import { Diatonic } from './Diatonic';
 

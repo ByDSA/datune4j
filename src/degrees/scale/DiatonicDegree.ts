@@ -1,6 +1,6 @@
 import { Diatonic } from '../../degrees/Diatonic';
-import { Immutables } from '../../Utils/Immutables';
-import { MathUtils } from '../../Utils/MathUtils';
+import { Immutables } from '../../common/Immutables';
+import { MathUtils } from '../../common/MathUtils';
 
 export class DiatonicDegree {
     public static I;

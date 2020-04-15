@@ -1,6 +1,6 @@
 import { IntervalDiatonicAlt } from 'interval/IntervalDiatonicAlt';
-import { Assert } from '../Utils/Assert';
-import { Utils } from '../Utils/Utils';
+import { Assert } from '../common/Assert';
+import { Utils } from '../common/Utils';
 import { Scale } from './Scale';
 
 export class ScaleModeUtils {

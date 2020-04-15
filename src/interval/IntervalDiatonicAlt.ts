@@ -1,7 +1,7 @@
 import { Diatonic } from '../degrees/Diatonic';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
-import { Quality } from '../Quality';
-import { Assert } from '../Utils/Assert';
+import { Quality } from './Quality';
+import { Assert } from '../common/Assert';
 import { IntervalDiatonic } from './IntervalDiatonic';
 
 export class IntervalDiatonicAlt {
