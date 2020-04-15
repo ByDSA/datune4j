@@ -90,3 +90,23 @@ test('ScaleDegreeComparator: Scale.LYDIAN and Scale.LOCRIAN enharmonic', () => {
     for (const degree of expected)
         expect(common.has(degree)).toEqual(true);
 });
+
+test('ScaleDegreeComparator: Scale.BLUES_b5 and Scale.BLUES_a4 enharmonic', () => {
+    let scaleComparator = ScaleDegreeComparator.from([Scale.BLUES_b5, Scale.BLUES_a4], true);
+    scaleComparator.calculate();
+    let common: Set<DiatonicAltDegree> = scaleComparator.common;
+    
+    let expected = [
+        DiatonicAltDegree.I,
+        DiatonicAltDegree.bIII,
+        DiatonicAltDegree.IV,
+        DiatonicAltDegree.from(DiatonicDegree.IV, 1),
+        DiatonicAltDegree.bV,
+        DiatonicAltDegree.V,
+        DiatonicAltDegree.bVII,
+    ];
+
+    expect(common.size).toEqual(7);
+    for (const degree of expected)
+        expect(common.has(degree)).toEqual(true);
+});

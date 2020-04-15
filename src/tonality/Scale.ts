@@ -10,6 +10,7 @@ import { Hashable } from '../common/Hashable';
 import { ImmutablesCache } from '../common/ImmutablesCache';
 import { MathUtils } from '../common/MathUtils';
 import { ScaleModeUtils } from './ScaleModeUtils';
+import { DiatonicAlt } from 'degrees/DiatonicAlt';
 
 type Reparametrizer = (i, acc) => number;
 type HashingObject = IntervalDiatonicAlt[];
@@ -59,6 +60,7 @@ export class Scale implements Hashable {
 
     // 6
     static BLUES_b5: Scale;
+    static BLUES_a4: Scale;
 
     // 5
     static PENTATONIC_MINOR: Scale;
@@ -449,9 +451,22 @@ export class Scale implements Hashable {
 
 
         // 6
-        Scale.BLUES_b5 = Scale.fromReparam(
-            reparametrizers.BLUES_b5,
-            3, 2, 1, 1, 3, 2
+        Scale.BLUES_b5 = Scale.fromIntervals(
+            IntervalDiatonicAlt.MINOR_THIRD,
+            IntervalDiatonicAlt.MAJOR_SECOND,
+            IntervalDiatonicAlt.MINOR_SECOND,
+            IntervalDiatonicAlt.AUGMENTED_UNISON,
+            IntervalDiatonicAlt.DIMINISHED_THIRD,
+            IntervalDiatonicAlt.MAJOR_SECOND
+        );
+
+        Scale.BLUES_a4 = Scale.fromIntervals(
+            IntervalDiatonicAlt.MINOR_THIRD,
+            IntervalDiatonicAlt.MAJOR_SECOND,
+            IntervalDiatonicAlt.AUGMENTED_UNISON,
+            IntervalDiatonicAlt.MINOR_SECOND,
+            IntervalDiatonicAlt.MINOR_THIRD,
+            IntervalDiatonicAlt.MAJOR_SECOND
         );
 
         // 5
@@ -556,7 +571,7 @@ export class Scale implements Hashable {
         Scale.sets.allHexatonicScales = function () {
             return [
                 Scale.BLUES_b5,
-                //Scale.BLUES_a4,
+                Scale.BLUES_a4,
                 Scale.WHOLE_TONE
             ];
         }
