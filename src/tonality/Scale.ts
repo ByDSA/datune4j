@@ -11,7 +11,6 @@ import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
 import { NamingScale } from '../lang/naming/NamingScale';
 import { ScaleModeUtils } from './ScaleModeUtils';
 
-type Reparametrizer = (i, acc) => number;
 type HashingObject = IntervalDiatonicAlt[];
 export class Scale implements Hashable {
     static MAJOR: Scale;
@@ -129,7 +128,7 @@ export class Scale implements Hashable {
     }
 
     public static fromIntCodeSeven(d1: number, d2: number, d3: number, d4: number, d5: number, d6: number, d7: number): Scale {
-        let degrees = this.distances2Degrees([d1, d2, d3, d4, d5, d6, d7]);
+        let degrees = this.distances2Degrees([d1, d2, d3, d4, d5, d6, d7], this.sevenReparam);
         let scale = this.fromDegrees(...degrees);
         if (!Object.isFrozen(scale._degrees)) {
             scale._degrees = degrees;
@@ -151,7 +150,12 @@ export class Scale implements Hashable {
         return scale;
     }
 
-    private static defaultReparam(semis: number): DiatonicAltDegree {
+    private static sevenReparam(i: number, semis: number): DiatonicAltDegree {
+        let diatonicDegree = DiatonicDegree.fromInt(i-1);
+        return DiatonicAltDegree.fromSemis(diatonicDegree, semis);
+    }
+
+    private static defaultReparam(i: number, semis: number): DiatonicAltDegree {
         switch (semis) {
             case 0: return DiatonicAltDegree.I;
             case 1: return DiatonicAltDegree.from(DiatonicDegree.I, 1);
@@ -170,7 +174,13 @@ export class Scale implements Hashable {
 
     public static fromDegrees(...degrees: DiatonicAltDegree[]): Scale {
         let intervals = this.degrees2Intervals(degrees);
-        return this.fromIntervals(...intervals);
+        let scale = this.fromIntervals(...intervals);
+        if (scale._degrees == null) {
+            scale._degrees = degrees;
+            Object.freeze(scale._degrees);
+        }
+
+        return scale;
     }
 
     public static fromIntervals(...intervals: IntervalDiatonicAlt[]): Scale {
@@ -193,14 +203,14 @@ export class Scale implements Hashable {
         return intervals;
     }
 
-    private static distances2Degrees(distances: number[], reparametrizer: (number) => DiatonicAltDegree = this.defaultReparam): DiatonicAltDegree[] {
+    private static distances2Degrees(distances: number[], reparametrizer: (i: number, acc: number) => DiatonicAltDegree = this.defaultReparam): DiatonicAltDegree[] {
         let degrees: DiatonicAltDegree[] = [DiatonicAltDegree.I];
         let distancesAcc = 0;
         for (let i = 2; i <= distances.length; i++) {
             distancesAcc += distances[i - 2];
-            let iFixed = reparametrizer(distancesAcc).diatonicDegree.intValue;
-            let diatonicDegree = DiatonicDegree.fromInt(iFixed - 1);
-            let alts = distancesAcc - Scale.MAJOR.degrees[iFixed - 1].semis;
+            let iFixed = reparametrizer(i, distancesAcc).diatonicDegree.intValue;
+            let diatonicDegree = DiatonicDegree.fromInt(iFixed);
+            let alts = distancesAcc - Scale.MAJOR.degrees[iFixed].semis;
             let degree: DiatonicAltDegree = DiatonicAltDegree.from(diatonicDegree, alts);
             degrees.push(degree);
         }
