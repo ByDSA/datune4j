@@ -78,6 +78,67 @@ test('Scale - degrees: BLUES_a4', () => {
     ]);
 });
 
+
+test('Scale - degrees: pentatonic minor', () => {
+    let scale = Scale.PENTATONIC_MINOR;
+    let degrees = scale.degrees;
+    expect(degrees).toStrictEqual([
+        DiatonicAltDegree.I,
+        DiatonicAltDegree.bIII,
+        DiatonicAltDegree.IV,
+        DiatonicAltDegree.V,
+        DiatonicAltDegree.bVII
+    ]);
+});
+
+test('Scale - degrees: pentatonic', () => {
+    let scale = Scale.PENTATONIC;
+    let degrees = scale.degrees;
+    expect(degrees).toStrictEqual([
+        DiatonicAltDegree.I,
+        DiatonicAltDegree.II,
+        DiatonicAltDegree.III,
+        DiatonicAltDegree.V,
+        DiatonicAltDegree.VI
+    ]);
+});
+
+test('Scale - degrees: egypcian', () => {
+    let scale = Scale.EGYPCIAN;
+    let degrees = scale.degrees;
+    expect(degrees).toStrictEqual([
+        DiatonicAltDegree.I,
+        DiatonicAltDegree.II,
+        DiatonicAltDegree.IV,
+        DiatonicAltDegree.V,
+        DiatonicAltDegree.bVII
+    ]);
+});
+
+test('Scale - degrees: blues minor', () => {
+    let scale = Scale.BLUES_MINOR;
+    let degrees = scale.degrees;
+    expect(degrees).toStrictEqual([
+        DiatonicAltDegree.I,
+        DiatonicAltDegree.bIII,
+        DiatonicAltDegree.IV,
+        DiatonicAltDegree.bVI,
+        DiatonicAltDegree.bVII
+    ]);
+});
+
+test('Scale - degrees: blues major', () => {
+    let scale = Scale.BLUES_MAJOR;
+    let degrees = scale.degrees;
+    expect(degrees).toStrictEqual([
+        DiatonicAltDegree.I,
+        DiatonicAltDegree.II,
+        DiatonicAltDegree.IV,
+        DiatonicAltDegree.V,
+        DiatonicAltDegree.VI
+    ]);
+});
+
 test('Scale - toString: all have string', () => {
     for (let scale of Scale.sets.all()) {
         expect(scale.toString()).not.toBeNull();

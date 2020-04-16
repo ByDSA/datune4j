@@ -1,4 +1,7 @@
 import { DiatonicAltChordPattern } from '../chords/diatonicalt/DiatonicAltChordPattern';
+import { Hashable } from '../common/Hashable';
+import { ImmutablesCache } from '../common/ImmutablesCache';
+import { MathUtils } from '../common/MathUtils';
 import { Chromatic } from '../degrees/Chromatic';
 import { Diatonic } from '../degrees/Diatonic';
 import { DiatonicAltDegree } from '../degrees/scale/DiatonicAltDegree';
@@ -6,11 +9,7 @@ import { DiatonicDegree } from '../degrees/scale/DiatonicDegree';
 import { DegreeFunction } from '../function/DegreeFunction';
 import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
 import { NamingScale } from '../lang/naming/NamingScale';
-import { Hashable } from '../common/Hashable';
-import { ImmutablesCache } from '../common/ImmutablesCache';
-import { MathUtils } from '../common/MathUtils';
 import { ScaleModeUtils } from './ScaleModeUtils';
-import { DiatonicAlt } from 'degrees/DiatonicAlt';
 
 type Reparametrizer = (i, acc) => number;
 type HashingObject = IntervalDiatonicAlt[];
@@ -129,9 +128,9 @@ export class Scale implements Hashable {
         Object.freeze(this._intervals);
     }
 
-    public static fromIntCode(d1: number, d2: number, d3: number, d4: number, d5: number, d6: number, d7: number): Scale {
+    public static fromIntCodeSeven(d1: number, d2: number, d3: number, d4: number, d5: number, d6: number, d7: number): Scale {
         let degrees = this.distances2Degrees([d1, d2, d3, d4, d5, d6, d7]);
-        let scale = this.fromDegrees((i) => i, ...degrees);
+        let scale = this.fromDegrees(...degrees);
         if (!Object.isFrozen(scale._degrees)) {
             scale._degrees = degrees;
             Object.freeze(scale._degrees);
@@ -140,13 +139,37 @@ export class Scale implements Hashable {
         return scale;
     }
 
-    public static fromReparam(reparametrizer: Reparametrizer, ...distances: number[]): Scale {
-        let degrees = this.distances2Degrees(distances, reparametrizer);
-        return this.fromDegrees(reparametrizer, ...degrees);
+
+    public static fromIntCode(...ints: number[]): Scale {
+        let degrees = this.distances2Degrees(ints);
+        let scale = this.fromDegrees(...degrees);
+        if (!Object.isFrozen(scale._degrees)) {
+            scale._degrees = degrees;
+            Object.freeze(scale._degrees);
+        }
+
+        return scale;
     }
 
-    public static fromDegrees(reparametrizer: Reparametrizer, ...degrees: DiatonicAltDegree[]): Scale {
-        let intervals = this.degrees2Intervals(reparametrizer, degrees);
+    private static defaultReparam(semis: number): DiatonicAltDegree {
+        switch (semis) {
+            case 0: return DiatonicAltDegree.I;
+            case 1: return DiatonicAltDegree.from(DiatonicDegree.I, 1);
+            case 2: return DiatonicAltDegree.II;
+            case 3: return DiatonicAltDegree.from(DiatonicDegree.II, 1);
+            case 4: return DiatonicAltDegree.III;
+            case 5: return DiatonicAltDegree.IV;
+            case 6: return DiatonicAltDegree.from(DiatonicDegree.IV, 1);
+            case 7: return DiatonicAltDegree.V;
+            case 8: return DiatonicAltDegree.from(DiatonicDegree.V, 1);
+            case 9: return DiatonicAltDegree.VI;
+            case 10: return DiatonicAltDegree.from(DiatonicDegree.VI, 1);
+            case 11: return DiatonicAltDegree.VII;
+        }
+    }
+
+    public static fromDegrees(...degrees: DiatonicAltDegree[]): Scale {
+        let intervals = this.degrees2Intervals(degrees);
         return this.fromIntervals(...intervals);
     }
 
@@ -154,7 +177,7 @@ export class Scale implements Hashable {
         return Scale.immutablesCache.getOrCreate(intervals);
     }
 
-    private static degrees2Intervals(reparametrizer: Reparametrizer, degrees: DiatonicAltDegree[]): IntervalDiatonicAlt[] {
+    private static degrees2Intervals(degrees: DiatonicAltDegree[]): IntervalDiatonicAlt[] {
         let intervals: IntervalDiatonicAlt[] = [];
         for (let i = 1; i <= degrees.length; i++) {
             let degree = degrees[i % degrees.length];
@@ -170,12 +193,12 @@ export class Scale implements Hashable {
         return intervals;
     }
 
-    private static distances2Degrees(distances: number[], reparametrizer = (i, acc) => i): DiatonicAltDegree[] {
+    private static distances2Degrees(distances: number[], reparametrizer: (number) => DiatonicAltDegree = this.defaultReparam): DiatonicAltDegree[] {
         let degrees: DiatonicAltDegree[] = [DiatonicAltDegree.I];
         let distancesAcc = 0;
         for (let i = 2; i <= distances.length; i++) {
             distancesAcc += distances[i - 2];
-            let iFixed = reparametrizer(i, distancesAcc);
+            let iFixed = reparametrizer(distancesAcc).diatonicDegree.intValue;
             let diatonicDegree = DiatonicDegree.fromInt(iFixed - 1);
             let alts = distancesAcc - Scale.MAJOR.degrees[iFixed - 1].semis;
             let degree: DiatonicAltDegree = DiatonicAltDegree.from(diatonicDegree, alts);
@@ -261,7 +284,7 @@ export class Scale implements Hashable {
         let ret = "";
         for (const interval of this._intervals)
             ret += "-" + interval.hashCode();
-            
+
         return ret;
     }
 
@@ -272,7 +295,6 @@ export class Scale implements Hashable {
 
     private static initialize() {
         Scale.MAJOR = Scale.fromDegrees(
-            (i) => i,
             DiatonicAltDegree.I,
             DiatonicAltDegree.II,
             DiatonicAltDegree.III,
@@ -281,25 +303,15 @@ export class Scale implements Hashable {
             DiatonicAltDegree.VI,
             DiatonicAltDegree.VII,
         );
-        Scale.MAJOR._degrees = [
-            DiatonicAltDegree.I,
-            DiatonicAltDegree.II,
-            DiatonicAltDegree.III,
-            DiatonicAltDegree.IV,
-            DiatonicAltDegree.V,
-            DiatonicAltDegree.VI,
-            DiatonicAltDegree.VII
-        ];
-
-        Scale.MINOR = ScaleModeUtils.getMode(Scale.MAJOR, 6);
 
         Scale.DORIAN = ScaleModeUtils.getMode(Scale.MAJOR, 2);
         Scale.PHRYGIAN = ScaleModeUtils.getMode(Scale.MAJOR, 3);
         Scale.LYDIAN = ScaleModeUtils.getMode(Scale.MAJOR, 4);
         Scale.MIXOLYDIAN = ScaleModeUtils.getMode(Scale.MAJOR, 5);
+        Scale.MINOR = ScaleModeUtils.getMode(Scale.MAJOR, 6);
         Scale.LOCRIAN = ScaleModeUtils.getMode(Scale.MAJOR, 7);
 
-        Scale.HARMONIC_MINOR = Scale.fromIntCode(2, 1, 2, 2, 1, 3, 1);
+        Scale.HARMONIC_MINOR = Scale.fromIntCodeSeven(2, 1, 2, 2, 1, 3, 1);
         Scale.LOCRIAN_a6 = ScaleModeUtils.getMode(Scale.HARMONIC_MINOR, 2);
         Scale.IONIAN_a5 = ScaleModeUtils.getMode(Scale.HARMONIC_MINOR, 3);
         Scale.DORIAN_a4 = ScaleModeUtils.getMode(Scale.HARMONIC_MINOR, 4);
@@ -307,7 +319,7 @@ export class Scale implements Hashable {
         Scale.LYDIAN_a2 = ScaleModeUtils.getMode(Scale.HARMONIC_MINOR, 6);
         Scale.SUPERLOCRIAN_bb7 = ScaleModeUtils.getMode(Scale.HARMONIC_MINOR, 7);
 
-        Scale.HARMONIC_MAJOR = Scale.fromIntCode(2, 2, 1, 2, 1, 3, 1);
+        Scale.HARMONIC_MAJOR = Scale.fromIntCodeSeven(2, 2, 1, 2, 1, 3, 1);
         Scale.DORIAN_b5 = ScaleModeUtils.getMode(Scale.HARMONIC_MAJOR, 2);
         Scale.PHRYGIAN_b4 = ScaleModeUtils.getMode(Scale.HARMONIC_MAJOR, 3);
         Scale.LYDIAN_b3 = ScaleModeUtils.getMode(Scale.HARMONIC_MAJOR, 4);
@@ -315,7 +327,7 @@ export class Scale implements Hashable {
         Scale.AEOLIAN_b1 = ScaleModeUtils.getMode(Scale.HARMONIC_MAJOR, 6);
         Scale.LOCRIAN_bb7 = ScaleModeUtils.getMode(Scale.HARMONIC_MAJOR, 7);
 
-        Scale.MELODIC_MINOR = Scale.fromIntCode(2, 1, 2, 2, 2, 2, 1);
+        Scale.MELODIC_MINOR = Scale.fromIntCodeSeven(2, 1, 2, 2, 2, 2, 1);
         Scale.DORIAN_b2 = ScaleModeUtils.getMode(Scale.MELODIC_MINOR, 2);
         Scale.LYDIAN_a5 = ScaleModeUtils.getMode(Scale.MELODIC_MINOR, 3);
         Scale.LYDIAN_b7 = ScaleModeUtils.getMode(Scale.MELODIC_MINOR, 4);
@@ -323,7 +335,7 @@ export class Scale implements Hashable {
         Scale.LOCRIAN_a2 = ScaleModeUtils.getMode(Scale.MELODIC_MINOR, 6);
         Scale.SUPERLOCRIAN = ScaleModeUtils.getMode(Scale.MELODIC_MINOR, 7);
 
-        Scale.DOUBLE_HARMONIC = Scale.fromIntCode(1, 3, 1, 2, 1, 3, 1);
+        Scale.DOUBLE_HARMONIC = Scale.fromIntCodeSeven(1, 3, 1, 2, 1, 3, 1);
         Scale.LYDIAN_a2_a6 = ScaleModeUtils.getMode(Scale.DOUBLE_HARMONIC, 2);
         Scale.ULTRAPHRYGIAN = ScaleModeUtils.getMode(Scale.DOUBLE_HARMONIC, 3);
         Scale.HUNGARIAN_MINOR = ScaleModeUtils.getMode(Scale.DOUBLE_HARMONIC, 4);
@@ -331,124 +343,8 @@ export class Scale implements Hashable {
         Scale.IONIAN_AUGMENTED_a2 = ScaleModeUtils.getMode(Scale.DOUBLE_HARMONIC, 6);
         Scale.LOCRIAN_bb3_bb7 = ScaleModeUtils.getMode(Scale.DOUBLE_HARMONIC, 7);
 
-        Scale.NEAPOLITAN_MINOR = Scale.fromIntCode(1, 2, 2, 2, 1, 3, 1);
-        Scale.NEAPOLITAN_MAJOR = Scale.fromIntCode(1, 2, 2, 2, 2, 2, 1);
-
-
-        let reparametrizers = {
-            BLUES_b5: (i) => (i > 1 ? i + 1 : i),
-            PENTATONIC_MINOR: (i) => {
-                switch (i) {
-                    case 2:
-                    case 3:
-                    case 4:
-                        return i + 1;
-                    case 5: return i + 2;
-                }
-
-                return i;
-            },
-            default: (i, acc) => {
-                switch (acc) {
-                    case 0:
-                    case 1:
-                        return 1;
-                    case 2:
-                    case 3:
-                        return 2;
-                    case 4:
-                        return 3;
-                    case 5:
-                    case 6:
-                        return 4;
-                    case 7:
-                    case 8:
-                        return 5;
-                    case 9:
-                    case 10:
-                        return 6;
-                    case 11:
-                        return 7;
-                }
-            },
-            BLUES_a4: (i) => {
-                switch (i) {
-                    case 2:
-                    case 3:
-                        return i + 1;
-                }
-
-                return i;
-            },
-            PENTATONIC: (i) => {
-                switch (i) {
-                    case 4:
-                    case 5: return i + 1;
-                }
-
-                return i;
-            },
-            EGYPCIAN: (i) => {
-                switch (i) {
-                    case 3:
-                    case 4: return i + 1;
-                    case 5: return i + 2;
-                }
-
-                return i;
-            },
-            BLUES_MINOR: (i) => {
-                switch (i) {
-                    case 2:
-                    case 3: return i + 1;
-                    case 4:
-                    case 5:
-                        return i + 2;
-                }
-
-                return i;
-            },
-            BLUES_MAJOR: (i) => {
-                switch (i) {
-                    case 3:
-                    case 4:
-                    case 5:
-                        return i + 1;
-                }
-
-                return i;
-            },
-            BEBOP_MAJOR: (i) => {
-                switch (i) {
-                    case 7:
-                    case 8:
-                        return i - 1;
-                }
-
-                return i;
-            },
-            AUGMENTED_TRIAD: (i) => {
-                switch (i) {
-                    case 2: return 3;
-                    case 3: return 5;
-                }
-
-                return i;
-            },
-            DIMINISHED_7th: (i) => {
-                return reparametrizers.DOM7b5(i);
-            },
-            DOM7b5: (i) => {
-                switch (i) {
-                    case 2: return 3;
-                    case 3: return 5;
-                    case 4: return 7;
-                }
-
-                return i;
-            }
-        };
-
+        Scale.NEAPOLITAN_MINOR = Scale.fromIntCodeSeven(1, 2, 2, 2, 1, 3, 1);
+        Scale.NEAPOLITAN_MAJOR = Scale.fromIntCodeSeven(1, 2, 2, 2, 2, 2, 1);
 
         // 6
         Scale.BLUES_b5 = Scale.fromIntervals(
@@ -470,9 +366,12 @@ export class Scale implements Hashable {
         );
 
         // 5
-        Scale.PENTATONIC_MINOR = Scale.fromReparam(
-            reparametrizers.PENTATONIC_MINOR,
-            3, 2, 2, 3, 2
+        Scale.PENTATONIC_MINOR = Scale.fromIntervals(
+            IntervalDiatonicAlt.MINOR_THIRD,
+            IntervalDiatonicAlt.MAJOR_SECOND,
+            IntervalDiatonicAlt.MAJOR_SECOND,
+            IntervalDiatonicAlt.MINOR_THIRD,
+            IntervalDiatonicAlt.MAJOR_SECOND
         );
         Scale.PENTATONIC = ScaleModeUtils.getMode(Scale.PENTATONIC_MINOR, 2);
         Scale.EGYPCIAN = ScaleModeUtils.getMode(Scale.PENTATONIC_MINOR, 3);
@@ -480,25 +379,67 @@ export class Scale implements Hashable {
         Scale.BLUES_MAJOR = ScaleModeUtils.getMode(Scale.PENTATONIC_MINOR, 5);
 
         // Symmetric
-        Scale.CHROMATIC = Scale.fromReparam(reparametrizers.default, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
-        Scale.WHOLE_TONE = Scale.fromReparam(reparametrizers.default, 2, 2, 2, 2, 2, 2);
-        Scale.AUGMENTED_TRIAD = Scale.fromReparam(reparametrizers.default, 4, 4, 4);
-        Scale.DIMINISHED_7th = Scale.fromReparam(reparametrizers.DIMINISHED_7th, 3, 3, 3, 3);
-        Scale.MESSIAEN_V_TRUNCATED = Scale.fromReparam(reparametrizers.default, 1, 5, 1, 5);
-        Scale.DOM7b5 = Scale.fromReparam(reparametrizers.DOM7b5, 4, 2, 4, 2);
-        Scale.MESSIAEN_INV_III_V_TRUNCATED_n2 = Scale.fromReparam(reparametrizers.default, 1, 3, 1, 3, 1, 3);
-        Scale.HALF_DIMINISHED = Scale.fromReparam(reparametrizers.default, 1, 2, 1, 2, 1, 2, 1, 2);
-        Scale.MESSIAEN_V = Scale.fromReparam(reparametrizers.default, 1, 1, 4, 1, 1, 4);
-        Scale.RAGA_INDRUPRIYA_INDIA = Scale.fromReparam(reparametrizers.default, 1, 3, 2, 3, 1, 2);
-        Scale.MESSIAEN_II_TRUNCATED_n3 = Scale.fromReparam(reparametrizers.default, 3, 1, 2, 3, 1, 2);
-        Scale.MESSIAEN_III_INV = Scale.fromReparam(reparametrizers.default, 2, 1, 1, 2, 1, 1, 2, 1, 1);
-        Scale.MESSIAEN_IV = Scale.fromReparam(reparametrizers.default, 1, 1, 1, 3, 1, 1, 1, 3);
-        Scale.MESSIAEN_VI = Scale.fromReparam(reparametrizers.default, 1, 1, 2, 2, 1, 1, 2, 2);
-        Scale.MESSIAEN_VII = Scale.fromReparam(reparametrizers.default, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2);
+        Scale.CHROMATIC = Scale.fromDegrees(
+            DiatonicAltDegree.I,
+            DiatonicAltDegree.from(DiatonicDegree.I, 1),
+            DiatonicAltDegree.II,
+            DiatonicAltDegree.from(DiatonicDegree.II, 1),
+            DiatonicAltDegree.III,
+            DiatonicAltDegree.IV,
+            DiatonicAltDegree.from(DiatonicDegree.IV, 1),
+            DiatonicAltDegree.V,
+            DiatonicAltDegree.from(DiatonicDegree.V, 1),
+            DiatonicAltDegree.VI,
+            DiatonicAltDegree.from(DiatonicDegree.VI, 1),
+            DiatonicAltDegree.VII,
+        );
+        Scale.WHOLE_TONE = Scale.fromDegrees(
+            DiatonicAltDegree.I,
+            DiatonicAltDegree.II,
+            DiatonicAltDegree.III,
+            DiatonicAltDegree.bV,
+            DiatonicAltDegree.bVI,
+            DiatonicAltDegree.bVII
+        );
+        Scale.AUGMENTED_TRIAD = Scale.fromIntervals(
+            IntervalDiatonicAlt.MAJOR_THIRD,
+            IntervalDiatonicAlt.MAJOR_THIRD,
+            IntervalDiatonicAlt.MAJOR_THIRD
+        );
+        Scale.DIMINISHED_7th = Scale.fromIntervals(
+            IntervalDiatonicAlt.MINOR_THIRD,
+            IntervalDiatonicAlt.MINOR_THIRD,
+            IntervalDiatonicAlt.MINOR_THIRD,
+            IntervalDiatonicAlt.MINOR_THIRD
+        );
+        Scale.MESSIAEN_V_TRUNCATED = Scale.fromIntCode(1, 5, 1, 5);
+        Scale.DOM7b5 = Scale.fromDegrees(
+            DiatonicAltDegree.I,
+            DiatonicAltDegree.III,
+            DiatonicAltDegree.bV,
+            DiatonicAltDegree.bVII,
+        );
+        Scale.MESSIAEN_INV_III_V_TRUNCATED_n2 = Scale.fromIntCode(1, 3, 1, 3, 1, 3);
+        Scale.HALF_DIMINISHED = Scale.fromIntCode(1, 2, 1, 2, 1, 2, 1, 2);
+        Scale.MESSIAEN_V = Scale.fromIntCode(1, 1, 4, 1, 1, 4);
+        Scale.RAGA_INDRUPRIYA_INDIA = Scale.fromIntCode(1, 3, 2, 3, 1, 2);
+        Scale.MESSIAEN_II_TRUNCATED_n3 = Scale.fromIntCode(3, 1, 2, 3, 1, 2);
+        Scale.MESSIAEN_III_INV = Scale.fromIntCode(2, 1, 1, 2, 1, 1, 2, 1, 1);
+        Scale.MESSIAEN_IV = Scale.fromIntCode(1, 1, 1, 3, 1, 1, 1, 3);
+        Scale.MESSIAEN_VI = Scale.fromIntCode(1, 1, 2, 2, 1, 1, 2, 2);
+        Scale.MESSIAEN_VII = Scale.fromIntCode(1, 1, 1, 1, 2, 1, 1, 1, 1, 2);
 
         // Bebop
-        Scale.BEBOP_MAJOR = Scale.fromReparam(reparametrizers.BEBOP_MAJOR, 2, 2, 1, 2, 1, 1, 2, 1);
-
+        Scale.BEBOP_MAJOR = Scale.fromDegrees(
+            DiatonicAltDegree.I,
+            DiatonicAltDegree.II,
+            DiatonicAltDegree.III,
+            DiatonicAltDegree.IV,
+            DiatonicAltDegree.V,
+            DiatonicAltDegree.VI,
+            DiatonicAltDegree.from(DiatonicDegree.VI, 1),
+            DiatonicAltDegree.VII,
+        );
 
         Scale.sets.allDiatonicScales = function () {
             return [
