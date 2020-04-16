@@ -1,9 +1,9 @@
+import { ImmutablesCache } from '../../common/ImmutablesCache';
 import { Diatonic } from '../../degrees/Diatonic';
+import { DiatonicAlt } from '../../degrees/DiatonicAlt';
 import { IntervalDiatonicAlt } from '../../interval/IntervalDiatonicAlt';
 import { Settings } from '../../settings/Settings';
 import { Scale } from '../../tonality/Scale';
-import { Hashing } from '../../common/Hashing';
-import { ImmutablesCache } from '../../common/ImmutablesCache';
 import { DiatonicDegree } from './DiatonicDegree';
 
 type HashingObjectType = { diatonicDegree: DiatonicDegree, alts: number };
@@ -23,7 +23,7 @@ export class DiatonicAltDegree {
 
     private static immutablesCache = new ImmutablesCache<DiatonicAltDegree, HashingObjectType>(
         function (hashingObject: HashingObjectType): string {
-            return hashingObject.diatonicDegree.hashCode() + "|" + Hashing.hash(hashingObject.alts);
+            return hashingObject.diatonicDegree.hashCode() + "a:" + hashingObject.alts;
         },
         function (diatonicAltDegree: DiatonicAltDegree): HashingObjectType {
             return { diatonicDegree: diatonicAltDegree.diatonicDegree, alts: diatonicAltDegree.alts };
@@ -37,6 +37,7 @@ export class DiatonicAltDegree {
     }
 
     public static from(diatonicDegree: DiatonicDegree, alts: number): DiatonicAltDegree {
+        alts = (<any>DiatonicAlt).fixAlts(alts);
         return this.immutablesCache.getOrCreate({ diatonicDegree: diatonicDegree, alts: alts });
     }
 

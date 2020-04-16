@@ -86,6 +86,10 @@ export class Scale implements Hashable {
 
     // Bebop
     static BEBOP_MAJOR: Scale;
+    static BEBOP_DORIAN: Scale;
+    static BEBOP_DOMINANT: Scale;
+    static BEBOP_MELODIC_MINOR: Scale;
+    static BEBOP_HARMONIC_MINOR: Scale;
 
     static sets = (class {
         static allDiatonicScales: () => Scale[];
@@ -151,7 +155,7 @@ export class Scale implements Hashable {
     }
 
     private static sevenReparam(i: number, semis: number): DiatonicAltDegree {
-        let diatonicDegree = DiatonicDegree.fromInt(i-1);
+        let diatonicDegree = DiatonicDegree.fromInt(i - 1);
         return DiatonicAltDegree.fromSemis(diatonicDegree, semis);
     }
 
@@ -362,7 +366,7 @@ export class Scale implements Hashable {
             IntervalDiatonicAlt.MAJOR_SECOND,
             IntervalDiatonicAlt.MINOR_SECOND,
             IntervalDiatonicAlt.AUGMENTED_UNISON,
-            IntervalDiatonicAlt.DIMINISHED_THIRD,
+            IntervalDiatonicAlt.MINOR_THIRD,
             IntervalDiatonicAlt.MAJOR_SECOND
         );
 
@@ -441,14 +445,58 @@ export class Scale implements Hashable {
 
         // Bebop
         Scale.BEBOP_MAJOR = Scale.fromDegrees(
-            DiatonicAltDegree.I,
-            DiatonicAltDegree.II,
-            DiatonicAltDegree.III,
-            DiatonicAltDegree.IV,
-            DiatonicAltDegree.V,
+            Scale.MAJOR.degrees[0],
+            Scale.MAJOR.degrees[1],
+            Scale.MAJOR.degrees[2],
+            Scale.MAJOR.degrees[3],
+            Scale.MAJOR.degrees[4],
             DiatonicAltDegree.bVI,
-            DiatonicAltDegree.VI,
+            Scale.MAJOR.degrees[5],
+            Scale.MAJOR.degrees[6]
+        );
+
+        Scale.BEBOP_DORIAN = Scale.fromDegrees(
+            Scale.DORIAN.degrees[0],
+            Scale.DORIAN.degrees[1],
+            Scale.DORIAN.degrees[2],
+            DiatonicAltDegree.III,
+            Scale.DORIAN.degrees[3],
+            Scale.DORIAN.degrees[4],
+            Scale.DORIAN.degrees[5],
+            Scale.DORIAN.degrees[6]
+        );
+
+        Scale.BEBOP_DOMINANT = Scale.fromDegrees(
+            Scale.MIXOLYDIAN.degrees[0],
+            Scale.MIXOLYDIAN.degrees[1],
+            Scale.MIXOLYDIAN.degrees[2],
+            Scale.MIXOLYDIAN.degrees[3],
+            Scale.MIXOLYDIAN.degrees[4],
+            Scale.MIXOLYDIAN.degrees[5],
+            Scale.MIXOLYDIAN.degrees[6],
             DiatonicAltDegree.VII,
+        );
+
+        Scale.BEBOP_MELODIC_MINOR = Scale.fromDegrees(
+            Scale.MELODIC_MINOR.degrees[0],
+            Scale.MELODIC_MINOR.degrees[1],
+            Scale.MELODIC_MINOR.degrees[2],
+            Scale.MELODIC_MINOR.degrees[3],
+            Scale.MELODIC_MINOR.degrees[4],
+            DiatonicAltDegree.bVI,
+            Scale.MELODIC_MINOR.degrees[5],
+            Scale.MELODIC_MINOR.degrees[6]
+        );
+
+        Scale.BEBOP_HARMONIC_MINOR = Scale.fromDegrees(
+            Scale.HARMONIC_MINOR.degrees[0],
+            Scale.HARMONIC_MINOR.degrees[1],
+            Scale.HARMONIC_MINOR.degrees[2],
+            Scale.HARMONIC_MINOR.degrees[3],
+            Scale.HARMONIC_MINOR.degrees[4],
+            Scale.HARMONIC_MINOR.degrees[5],
+            DiatonicAltDegree.bVII,
+            Scale.HARMONIC_MINOR.degrees[6]
         );
 
         Scale.sets.allDiatonicScales = function () {
@@ -506,7 +554,11 @@ export class Scale implements Hashable {
 
         Scale.sets.allBebopScales = function () {
             return [
-                Scale.BEBOP_MAJOR
+                Scale.BEBOP_MAJOR,
+                Scale.BEBOP_DORIAN,
+                Scale.BEBOP_DOMINANT,
+                Scale.BEBOP_MELODIC_MINOR,
+                Scale.BEBOP_HARMONIC_MINOR
             ];
         }
 

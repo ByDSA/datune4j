@@ -143,6 +143,34 @@ test('Scale - set all: contains BLUES_a4', () => {
     expect(Scale.sets.all().includes(Scale.BLUES_a4)).toBe(true);
 });
 
+test('Scale - degrees: BEBOP DOMINANT', () => {
+    let scale = Scale.BEBOP_DOMINANT;
+    let degrees = scale.degrees;
+    expect(degrees).toStrictEqual([
+        DiatonicAltDegree.I,
+        DiatonicAltDegree.II,
+        DiatonicAltDegree.III,
+        DiatonicAltDegree.IV,
+        DiatonicAltDegree.V,
+        DiatonicAltDegree.VI,
+        DiatonicAltDegree.bVII,
+        DiatonicAltDegree.VII,
+    ]);
+});
+
+test('Scale - degrees: BLUES_b5, mode V', () => {
+    let scale = Scale.BLUES_b5.modes[4];
+    let degrees = scale.degrees;
+    expect(degrees).toStrictEqual([
+        DiatonicAltDegree.I,
+        DiatonicAltDegree.bIII,
+        DiatonicAltDegree.IV,
+        DiatonicAltDegree.bVI,
+        DiatonicAltDegree.bVII,
+        DiatonicAltDegree.from(DiatonicDegree.I, -1),
+    ]);
+});
+
 test('Scale - toString: all have string', () => {
     for (let scale of Scale.sets.all()) {
         expect(scale.toString()).not.toBeNull();

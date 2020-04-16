@@ -1,9 +1,9 @@
-import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
-import { NamingDiatonicAlt } from '../lang/naming/NamingDiatonicAlt';
 import { Hashable } from '../common/Hashable';
 import { Hashing } from '../common/Hashing';
 import { Immutables } from '../common/Immutables';
 import { ImmutablesCache } from '../common/ImmutablesCache';
+import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
+import { NamingDiatonicAlt } from '../lang/naming/NamingDiatonicAlt';
 import { Chromatic } from './Chromatic';
 import { Diatonic } from './Diatonic';
 
@@ -98,10 +98,16 @@ export class DiatonicAlt implements Hashable {
 
     private static getAltsFromChromaticAndDiatonic(chromatic: Chromatic, diatonic: Diatonic): number {
         let alts = chromatic.intValue - diatonic.chromatic.intValue;
+        alts = this.fixAlts(alts);
+
+        return alts;
+    }
+
+    private static fixAlts(alts: number): number {
         alts %= Chromatic.NUMBER;
-        if (alts <= -6)
+        if (alts < -Chromatic.NUMBER / 2)
             alts += Chromatic.NUMBER;
-        else if (alts > 6)
+        else if (alts > Chromatic.NUMBER / 2)
             alts -= Chromatic.NUMBER;
 
         return alts;
