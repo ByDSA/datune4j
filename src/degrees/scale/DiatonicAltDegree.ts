@@ -1,4 +1,6 @@
+import { Chromatic } from '../../degrees/Chromatic';
 import { ImmutablesCache } from '../../common/ImmutablesCache';
+import { MathUtils } from '../../common/MathUtils';
 import { Diatonic } from '../../degrees/Diatonic';
 import { DiatonicAlt } from '../../degrees/DiatonicAlt';
 import { IntervalDiatonicAlt } from '../../interval/IntervalDiatonicAlt';
@@ -55,7 +57,9 @@ export class DiatonicAltDegree {
     }
 
     public get semis(): number {
-        return Diatonic.fromInt(this.diatonicDegree.intValue).chromatic.intValue + this.alts;
+        let semis = Diatonic.fromInt(this.diatonicDegree.intValue).chromatic.intValue + this.alts;
+        semis = MathUtils.rotativeTrim(semis, Chromatic.NUMBER);
+        return semis;
     }
 
     public get intervalDiatonicAlt(): IntervalDiatonicAlt {
