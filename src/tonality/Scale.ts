@@ -446,8 +446,8 @@ export class Scale implements Hashable {
             DiatonicAltDegree.III,
             DiatonicAltDegree.IV,
             DiatonicAltDegree.V,
+            DiatonicAltDegree.bVI,
             DiatonicAltDegree.VI,
-            DiatonicAltDegree.from(DiatonicDegree.VI, 1),
             DiatonicAltDegree.VII,
         );
 
