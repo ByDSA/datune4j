@@ -56,6 +56,7 @@ export interface SettingsInterface {
         NEAPOLITAN_MINOR: string,
         NEAPOLITAN_MAJOR: string,
         BLUES_b5: string,
+        BLUES_a4: string,
         WHOLE_TONE: string,
         PENTATONIC_MINOR: string,
         PENTATONIC: string,

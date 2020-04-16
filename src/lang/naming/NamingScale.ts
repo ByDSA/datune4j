@@ -45,6 +45,7 @@ export class NamingScale {
             case Scale.NEAPOLITAN_MINOR: return Settings.scales.NEAPOLITAN_MINOR;
             case Scale.NEAPOLITAN_MAJOR: return Settings.scales.NEAPOLITAN_MAJOR;
             case Scale.BLUES_b5: return Settings.scales.BLUES_b5;
+            case Scale.BLUES_a4: return Settings.scales.BLUES_a4;
             case Scale.WHOLE_TONE: return Settings.scales.WHOLE_TONE;
             case Scale.PENTATONIC_MINOR: return Settings.scales.PENTATONIC_MINOR;
             case Scale.PENTATONIC: return Settings.scales.PENTATONIC;

@@ -50,6 +50,7 @@ export let Settings: SettingsInterface = {
         get NEAPOLITAN_MINOR(): string { return Settings.lang.scales.NEAPOLITAN_MINOR },
         get NEAPOLITAN_MAJOR(): string { return Settings.lang.scales.NEAPOLITAN_MAJOR },
         get BLUES_b5(): string { return Settings.lang.scales.BLUES_b5 },
+        get BLUES_a4(): string { return Settings.lang.scales.BLUES_a4 },
         get WHOLE_TONE(): string { return Settings.lang.scales.WHOLE_TONE },
         get PENTATONIC_MINOR(): string { return Settings.lang.scales.PENTATONIC_MINOR },
         get PENTATONIC(): string { return Settings.lang.scales.PENTATONIC },

@@ -139,6 +139,10 @@ test('Scale - degrees: blues major', () => {
     ]);
 });
 
+test('Scale - set all: contains BLUES_a4', () => {
+    expect(Scale.sets.all().includes(Scale.BLUES_a4)).toBe(true);
+});
+
 test('Scale - toString: all have string', () => {
     for (let scale of Scale.sets.all()) {
         expect(scale.toString()).not.toBeNull();
