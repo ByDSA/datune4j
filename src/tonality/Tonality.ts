@@ -2,10 +2,10 @@ import { ChromaticChordPattern } from '../chords/chromatic/ChromaticChordPattern
 import { DiatonicChordPattern } from '../chords/Diatonic/DiatonicChordPattern';
 import { DiatonicAltChord } from '../chords/diatonicalt/DiatonicAltChord';
 import { DiatonicAltChordPattern } from '../chords/diatonicalt/DiatonicAltChordPattern';
+import { ImmutablesCache } from '../common/ImmutablesCache';
 import { Chromatic } from '../degrees/Chromatic';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
 import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
-import { ImmutablesCache } from '../common/ImmutablesCache';
 import { Scale } from './Scale';
 
 type HashingObjectType = { root: DiatonicAlt, scale: Scale };
@@ -189,5 +189,9 @@ export class Tonality {
 
     public hashCode(): string {
         return "tonality:" + this.root.hashCode() + "|" + this.scale.hashCode();
+    }
+
+    public toString(): string {
+        return this.root + " " + this.scale;
     }
 }
