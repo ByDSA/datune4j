@@ -11,7 +11,6 @@ export * from './interval/IntervalDiatonic';
 export * from './interval/IntervalDiatonicAlt';
 export * from './lang/Language';
 export * from './lang/LanguageInterface';
-export * from './lang/naming/Naming';
 export * from './precalc';
 export * from './settings/DefaultSettings';
 export * from './settings/Settings';

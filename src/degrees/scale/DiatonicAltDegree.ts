@@ -92,6 +92,20 @@ export class DiatonicAltDegree {
         return alts + this.diatonicDegree;
     }
 
+    public static toStringArray(degrees: DiatonicAltDegree[]): string {
+        let first = true;
+        let ret: string = "";
+        degrees.forEach(degree => {
+            if (first)
+                first = false;
+            else
+                ret += "-";
+            ret += degree.toString();
+        });
+
+        return ret;
+    }
+
     private static initialize() {
         DiatonicAltDegree.I = DiatonicAltDegree.from(DiatonicDegree.I, 0);
         DiatonicAltDegree.bII = DiatonicAltDegree.from(DiatonicDegree.II, -1);

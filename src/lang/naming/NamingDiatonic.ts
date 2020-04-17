@@ -1,4 +1,3 @@
-import { Naming } from './Naming';
 import { Diatonic } from '../../degrees/Diatonic';
 import { Settings } from '../../settings/Settings';
 
