@@ -222,6 +222,10 @@ export class Scale implements Hashable {
         return degrees;
     }
 
+    get diatonicAltChordPattern():DiatonicAltChordPattern {
+        return DiatonicAltChordPattern.fromIntervals(this.intervals);
+    }
+
     // Modes
 
     public get modes(): Scale[] {
