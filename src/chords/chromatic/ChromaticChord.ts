@@ -1,13 +1,11 @@
-import { DiatonicAltChord } from '../diatonicalt/DiatonicAltChord';
-import { Chromatic } from '../../degrees/Chromatic';
-import { DiatonicAlt } from '../../degrees/DiatonicAlt';
-import { NameChromaticChordCalculator } from '../../lang/naming/NameChromaticChordCalculator';
 import { Hashing } from '../../common/Hashing';
 import { Immutables } from '../../common/Immutables';
 import { ImmutablesCache } from '../../common/ImmutablesCache';
-import { Utils } from '../../common/Utils';
-import { ChromaticChordPattern } from './ChromaticChordPattern';
 import { MathUtils } from '../../common/MathUtils';
+import { Utils } from '../../common/Utils';
+import { Chromatic } from '../../degrees/Chromatic';
+import { NameChromaticChordCalculator } from '../../lang/naming/NameChromaticChordCalculator';
+import { ChromaticChordPattern } from './ChromaticChordPattern';
 
 type HashingObjectType = { rootIndex: number, chromatics: Chromatic[] };
 export class ChromaticChord {
@@ -57,12 +55,6 @@ export class ChromaticChord {
         }
 
         return ChromaticChord.fromRootNotes(rootPos, notes);
-    }
-
-    public static fromDiatonicAltChord(diatonicAltChord: DiatonicAltChord) {
-        let notesChromatic = diatonicAltChord.notes.map((diatonicAlt: DiatonicAlt) => diatonicAlt.chromatic);
-
-        return ChromaticChord.fromRootNotes(diatonicAltChord.rootIndex, notesChromatic);
     }
 
     public get root(): Chromatic {
