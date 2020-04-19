@@ -69,6 +69,23 @@ test('DegreeFunction - degrees: IVMaj7', () => {
     expect(degrees).toStrictEqual(expected);
 });
 
+test('DegreeFunction - degrees: i', () => {
+    let degreeFunction = DegreeFunction.i;
+    let degrees = degreeFunction.degrees;
+    let expected = [
+        DiatonicAltDegree.I,
+        DiatonicAltDegree.bIII,
+        DiatonicAltDegree.V,
+    ];
+    expect(degrees).toStrictEqual(expected);
+});
+
+test('DegreeFunction - pattern: i', () => {
+    let degreeFunction = DegreeFunction.i;
+    let expected = DiatonicAltChordPattern.TRIAD_MINOR;
+    expect(degreeFunction.diatonicAltChordPattern).toStrictEqual(expected);
+});
+
 test('DegreeFunction - from: I + TRIAD_MAJOR = I', () => {
     let degreeFunction = DegreeFunction.from(DiatonicAltDegree.I, DiatonicAltChordPattern.TRIAD_MAJOR);
     let expected = DegreeFunction.I;
