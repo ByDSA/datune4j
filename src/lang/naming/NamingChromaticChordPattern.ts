@@ -79,7 +79,7 @@ export const NamingChromaticChordPattern = {
             case ChromaticChordPattern.SEVENTH_ADD11: return Settings.shortPatterns.SEVENTH_ADD11;
             case ChromaticChordPattern.SEVENTH_ADD13: return Settings.shortPatterns.SEVENTH_ADD13;
             case ChromaticChordPattern.SEVENTH_MAJ7: return Settings.shortPatterns.SEVENTH_MAJ7;
-            case ChromaticChordPattern.SEVENTH_MINOR: return Settings.shortPatterns.NINTH_MINOR;
+            case ChromaticChordPattern.SEVENTH_MINOR: return Settings.shortPatterns.SEVENTH_MINOR;
             case ChromaticChordPattern.SEVENTH_MINOR_MAJ7: return Settings.shortPatterns.SEVENTH_MINOR_MAJ7;
             case ChromaticChordPattern.SEVENTH_MINOR_a5: return Settings.shortPatterns.SEVENTH_MINOR_a5;
             case ChromaticChordPattern.SEVENTH_MINOR_b5: return Settings.shortPatterns.SEVENTH_MINOR_b5;
