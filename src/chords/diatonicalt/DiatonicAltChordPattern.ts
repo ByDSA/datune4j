@@ -14,7 +14,6 @@ export class DiatonicAltChordPattern implements Iterable<DiatonicAltChordPattern
     public static TRIAD_DIMINISHED: DiatonicAltChordPattern;
     public static TRIAD_AUGMENTED: DiatonicAltChordPattern;
     public static TRIAD_SUS4: DiatonicAltChordPattern;
-    public static TRIAD_QUARTAL: DiatonicAltChordPattern;
     public static SEVENTH: DiatonicAltChordPattern;
     public static SEVENTH_b5: DiatonicAltChordPattern;
     public static SEVENTH_a5: DiatonicAltChordPattern;
@@ -213,7 +212,6 @@ export class DiatonicAltChordPattern implements Iterable<DiatonicAltChordPattern
         DiatonicAltChordPattern.TRIAD_DIMINISHED = DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.TRIAD_DIMINISHED, DiatonicChordPattern.TRIAD);
         DiatonicAltChordPattern.TRIAD_AUGMENTED = DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.TRIAD_AUGMENTED, DiatonicChordPattern.TRIAD);
         DiatonicAltChordPattern.TRIAD_SUS4 = DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.TRIAD_SUS4, DiatonicChordPattern.SUS4);
-        DiatonicAltChordPattern.TRIAD_QUARTAL = DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.TRIAD_QUARTAL, DiatonicChordPattern.QUARTAL);
         DiatonicAltChordPattern.SEVENTH = DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.SEVENTH, DiatonicChordPattern.SEVENTH);
         DiatonicAltChordPattern.SEVENTH_b5 = DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.SEVENTH_b5, DiatonicChordPattern.SEVENTH);
         DiatonicAltChordPattern.SEVENTH_a5 = DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.SEVENTH_a5, DiatonicChordPattern.SEVENTH);
