@@ -269,7 +269,7 @@ export class DiatonicAltChordPattern implements Iterable<DiatonicAltChordPattern
         DiatonicAltChordPattern.THIRTEENTH_MAJ13_a5a9 = DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.THIRTEENTH_MAJ13_a5a9, DiatonicChordPattern.THIRTEENTH);
 
         DiatonicAltChordPattern.all = function () {
-            return [
+            return Array.from([
                 this.POWER_CHORD,
                 this.TRIAD_MAJOR,
                 this.TRIAD_MINOR,
@@ -331,9 +331,9 @@ export class DiatonicAltChordPattern implements Iterable<DiatonicAltChordPattern
                 this.THIRTEENTH_MAJ13_b5a9,
                 this.THIRTEENTH_MAJ13_a5b9,
                 this.THIRTEENTH_MAJ13_a5a9
-            ];
+            ]);
         }
 
-        Immutables.lockrIf(DiatonicAltChordPattern, (obj) => !(obj instanceof ImmutablesCache));
+        //Immutables.lockrIf(DiatonicAltChordPattern, (obj) => !(obj instanceof ImmutablesCache));
     }
 }
