@@ -8,6 +8,7 @@ import { DiatonicAltDegree } from '../degrees/scale/DiatonicAltDegree';
 import { DiatonicDegree } from '../degrees/scale/DiatonicDegree';
 import { Tonality } from '../tonality/Tonality';
 import { HarmonicFunction } from './HarmonicFunction';
+import { Immutables } from '../common/Immutables';
 
 type HashingObjectType = { degree: DiatonicAltDegree, pattern: DiatonicAltChordPattern };
 export class DegreeFunction extends HarmonicFunction {
@@ -232,7 +233,7 @@ export class DegreeFunction extends HarmonicFunction {
             for (let value of this.diatonicAltChordPattern) {
                 let diatonicDegreeInt = this.diatonicAltDegree.diatonicDegree.intValue + value.diatonicIntValue;
                 let diatonicDegree = DiatonicDegree.fromInt(diatonicDegreeInt);
-                let alts = Diatonic.fromInt(diatonicDegree.intValue).chromatic.intValue - (this.diatonicAltDegree.semis + value.semis);
+                let alts = (this.diatonicAltDegree.semis + value.semis) - Diatonic.fromInt(diatonicDegree.intValue).chromatic.intValue;
                 alts %= Chromatic.NUMBER;
                 let degree = DiatonicAltDegree.from(diatonicDegree, alts);
                 this._degrees.push(degree);
@@ -416,5 +417,7 @@ export class DegreeFunction extends HarmonicFunction {
         DegreeFunction.vi7b5 = DegreeFunction.from(DiatonicAltDegree.VI, DiatonicAltChordPattern.SEVENTH_MINOR_b5);
         DegreeFunction.bvii7b5 = DegreeFunction.from(DiatonicAltDegree.bVII, DiatonicAltChordPattern.SEVENTH_MINOR_b5);
         DegreeFunction.vii7b5 = DegreeFunction.from(DiatonicAltDegree.VII, DiatonicAltChordPattern.SEVENTH_MINOR_b5);
+
+        //Immutables.lockrIf(DegreeFunction, (obj) => !(obj instanceof ImmutablesCache));
     }
 }
