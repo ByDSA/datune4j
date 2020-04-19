@@ -192,8 +192,20 @@ test('Scale - degreeFunctions: MAJOR', () => {
         DegreeFunction.vi,
         DegreeFunction.VII0,
     ];
+    expect(degreeFunctions).toEqual(expect.arrayContaining(someFunctions));
+});
 
-    expect([1, 2, 3, 4]).toEqual(expect.arrayContaining([1, 2]));
-
+test('Scale - degreeFunctions: MINOR', () => {
+    let scale = Scale.MINOR;
+    let degreeFunctions: DegreeFunction[] = scale.degreeFunctions;
+    let someFunctions = [
+        DegreeFunction.i,
+        DegreeFunction.II0,
+        DegreeFunction.bIII,
+        DegreeFunction.iv,
+        DegreeFunction.v,
+        DegreeFunction.bVI,
+        DegreeFunction.bVII,
+    ];
     expect(degreeFunctions).toEqual(expect.arrayContaining(someFunctions));
 });
