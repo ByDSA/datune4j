@@ -276,7 +276,6 @@ export class DiatonicAltChordPattern implements Iterable<DiatonicAltChordPattern
                 this.TRIAD_DIMINISHED,
                 this.TRIAD_AUGMENTED,
                 this.TRIAD_SUS4,
-                this.TRIAD_QUARTAL,
                 this.SEVENTH,
                 this.SEVENTH_b5,
                 this.SEVENTH_a5,
