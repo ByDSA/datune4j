@@ -1,12 +1,12 @@
 import { DiatonicAltChord } from '../chords/diatonicalt/DiatonicAltChord';
 import { DiatonicAltChordPattern } from '../chords/diatonicalt/DiatonicAltChordPattern';
+import { ImmutablesCache } from '../common/ImmutablesCache';
 import { Chromatic } from '../degrees/Chromatic';
 import { Diatonic } from '../degrees/Diatonic';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
 import { DiatonicAltDegree } from '../degrees/scale/DiatonicAltDegree';
 import { DiatonicDegree } from '../degrees/scale/DiatonicDegree';
 import { Tonality } from '../tonality/Tonality';
-import { ImmutablesCache } from '../common/ImmutablesCache';
 import { HarmonicFunction } from './HarmonicFunction';
 
 type HashingObjectType = { degree: DiatonicAltDegree, pattern: DiatonicAltChordPattern };
@@ -245,7 +245,11 @@ export class DegreeFunction extends HarmonicFunction {
     /* Object */
 
     public toString(): string {
-        return this._degree + " " + this._pattern;
+        switch (this._pattern) {
+            case DiatonicAltChordPattern.TRIAD_MINOR: return this._degree.toString().toLowerCase();
+        }
+
+        return this._degree + this._pattern.toStringShort();
     }
 
     public hashCode(): string {
