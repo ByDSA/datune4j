@@ -222,7 +222,7 @@ export class Scale implements Hashable {
         return degrees;
     }
 
-    get diatonicAltChordPattern():DiatonicAltChordPattern {
+    get diatonicAltChordPattern(): DiatonicAltChordPattern {
         return DiatonicAltChordPattern.fromIntervals(this.intervals);
     }
 
@@ -269,17 +269,23 @@ export class Scale implements Hashable {
         let diatonicAltChordPatterns: DiatonicAltChordPattern[] = DiatonicAltChordPattern.all();
 
         for (const diatonicAltDegree of this.degrees) {
-            patternLoop: for (const diatonicAltChordPattern of diatonicAltChordPatterns) {
+            for (const diatonicAltChordPattern of diatonicAltChordPatterns) {
                 let degreeFunction = DegreeFunction.from(diatonicAltDegree, diatonicAltChordPattern);
-                for (let diatonicAltDegree2 of degreeFunction.degrees) {
-                    if (!this.degrees.includes(diatonicAltDegree2))
-                        continue patternLoop;
-                }
-                ret.push(degreeFunction);
+                if (this.hasDegrees(degreeFunction.degrees))
+                    ret.push(degreeFunction);
             }
         }
 
         return ret;
+    }
+
+    private hasDegrees(degrees: DiatonicAltDegree[]): boolean {
+        for (let degree of degrees) {
+            if (!this.degrees.includes(degree))
+                return false;
+        }
+
+        return true;
     }
 
     // General
