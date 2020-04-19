@@ -211,6 +211,8 @@ export function all() {
 
     tonalities();
 
+    degreeFunctions();
+
 
 
     settings();
