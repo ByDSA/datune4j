@@ -135,7 +135,7 @@ export class DiatonicAltChordPattern implements Iterable<DiatonicAltChordPattern
 
         for (const interval of intervals) {
             semisAcc += interval.semis;
-            diatonicChordPatternAcc += interval.intervalDiatonic;
+            diatonicChordPatternAcc += interval.intervalDiatonic.number;
 
             arrayChromaticChordPattern.push(semisAcc);
             arrayDiatonicChordPattern.push(diatonicChordPatternAcc);

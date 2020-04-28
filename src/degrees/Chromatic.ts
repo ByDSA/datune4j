@@ -1,10 +1,10 @@
 import { Hashing } from '../common/Hashing';
-import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
-import { NamingChromatic } from '../lang/naming/NamingChromatic';
 import { Immutables } from '../common/Immutables';
 import { MathUtils } from '../common/MathUtils';
+import { NamingChromatic } from '../lang/naming/NamingChromatic';
+import { SymbolicNote } from '../tunning/SymbolicNote';
 
-export class Chromatic {
+export class Chromatic implements SymbolicNote {
     public static NUMBER = 12;
 
     // Precalc
@@ -59,6 +59,32 @@ export class Chromatic {
 
     hashCode() {
         return Hashing.hash(this.intValue);
+    }
+
+    compareTo(chromatic: Chromatic): number {
+        if (this._intValue < chromatic._intValue)
+            return -1;
+        else if (this._intValue > chromatic._intValue)
+            return 1;
+        else
+            return 0;
+    }
+
+    static get all(): Chromatic[] {
+        return [
+            Chromatic.C,
+            Chromatic.CC,
+            Chromatic.D,
+            Chromatic.DD,
+            Chromatic.E,
+            Chromatic.F,
+            Chromatic.FF,
+            Chromatic.G,
+            Chromatic.GG,
+            Chromatic.A,
+            Chromatic.AA,
+            Chromatic.B,
+        ];
     }
 
     private static initialize() {

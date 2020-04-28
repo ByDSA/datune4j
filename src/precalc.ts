@@ -1,3 +1,4 @@
+import { IntervalDiatonic } from './interval/IntervalDiatonic';
 import { ChromaticChord } from './chords/chromatic/ChromaticChord';
 import { ChromaticChordPattern } from './chords/chromatic/ChromaticChordPattern';
 import { DiatonicChordPattern } from './chords/Diatonic/DiatonicChordPattern';
@@ -15,6 +16,10 @@ import { Settings } from './settings/Settings';
 import { Scale } from './tonality/Scale';
 import { SourceScaleUtils } from './tonality/SourceScaleUtils';
 import { Tonality } from './tonality/Tonality';
+import { ChromaticSymbolicPitch } from './tunning/ChromaticSymbolicPitch';
+import { ConcertPitch } from './tunning/ConcertPitch';
+import { Temperament } from './tunning/Temperament';
+import { Tuning as Tuning } from './tunning/Tuning';
 
 // DIATONICS
 export function diatonics() {
@@ -51,6 +56,9 @@ export function diatonicAltChords() {
 export function intervalDiatonicAlts() {
     if (IntervalDiatonicAlt.PERFECT_UNISON)
         return;
+
+    intervalDiatonics();
+
     (<any>IntervalDiatonicAlt).initialize();
 }
 
@@ -191,8 +199,57 @@ export function diatonicAltDegrees() {
     (<any>DiatonicAltDegree).initialize();
 }
 
+// TEMPERAMENTS
+export function temperaments() {
+    if (Temperament.EQUAL)
+        return;
+
+    intervalDiatonicAlts();
+
+    (<any>Temperament).initialize();
+}
+
+// CHROMATIC SYMBOLIC PITCHES
+export function chromaticSymbolicPitches() {
+    if (ChromaticSymbolicPitch.A4)
+        return;
+
+    chromatics();
+
+    (<any>ChromaticSymbolicPitch).initialize();
+}
+
+// INTERVAL DIATONIC
+export function intervalDiatonics() {
+    if (IntervalDiatonic.UNISON)
+        return;
+
+    (<any>IntervalDiatonic).initialize();
+}
+
+// CONCERT PITCHES
+export function concertPitches() {
+    if (ConcertPitch.A440)
+        return;
+
+    chromaticSymbolicPitches();
+
+    (<any>ConcertPitch).initialize();
+}
+
+// TUNINGS
+export function tunings() {
+    if (Tuning.EQUAL_440)
+        return;
+
+    concertPitches();
+
+    (<any>Tuning).initialize();
+}
+
 export function all() {
     diatonics();
+    intervalDiatonics();
     diatonicChordPatterns();
 
     chromatics();
@@ -213,6 +270,10 @@ export function all() {
 
     degreeFunctions();
 
+    chromaticSymbolicPitches();
+    concertPitches();
+    temperaments();
+    tunings();
 
 
     settings();

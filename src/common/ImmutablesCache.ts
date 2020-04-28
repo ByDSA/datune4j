@@ -3,8 +3,8 @@ import { Hashing } from './Hashing';
 export class ImmutablesCache<T, H> {
     private immutablesMap;
 
-    protected getHash: (H) => number;
-    protected getHashingObject: (T) => H;
+    public getHash: (H) => string;
+    public getHashingObject: (T) => H;
     protected create: (H) => T;
 
     public constructor(getHash, getHashingObject, create) {
@@ -15,7 +15,7 @@ export class ImmutablesCache<T, H> {
 
     public add(scale: T): void {
         let hashingObject = this.getHashingObject(scale);
-        if (!hashingObject)
+        if (hashingObject === undefined)
             throw new Error("No hashingObject has been put.");
         let hash = this.getHash(hashingObject);
 

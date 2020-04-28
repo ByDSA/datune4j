@@ -2,14 +2,17 @@ import { IntervalDiatonicAlt } from "../../interval/IntervalDiatonicAlt";
 import * as precalc from "../../precalc";
 import { DiatonicAltDegree } from "./DiatonicAltDegree";
 import { DiatonicDegree } from "./DiatonicDegree";
+import { IntervalDiatonic } from "../../interval/IntervalDiatonic";
 precalc.diatonicAltDegrees();
 precalc.intervalDiatonicAlts();
+precalc.intervalDiatonics();
 precalc.chromatics();
 precalc.scales();
 
 test('DiatonicAltDegree- getAdd: bVII + a1 = VII', () => {
     let diatonicAltDegree = DiatonicAltDegree.bVII;
-    let intervalDiatonicAlt = IntervalDiatonicAlt.from(1, 0);
+    let intervalDiatonic = IntervalDiatonic.UNISON;
+    let intervalDiatonicAlt = IntervalDiatonicAlt.from(1, intervalDiatonic);
 
     let sum = diatonicAltDegree.getAdd(intervalDiatonicAlt);
     let expected = DiatonicAltDegree.VII;

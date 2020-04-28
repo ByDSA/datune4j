@@ -1,10 +1,13 @@
+import { MathUtils } from '../common/MathUtils';
+import { Assert } from '../common/Assert';
+import { Chromatic } from '../degrees/Chromatic';
 import { Diatonic } from '../degrees/Diatonic';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
-import { Quality } from './Quality';
-import { Assert } from '../common/Assert';
+import { Interval } from './Interval';
 import { IntervalDiatonic } from './IntervalDiatonic';
+import { Quality } from './Quality';
 
-export class IntervalDiatonicAlt {
+export class IntervalDiatonicAlt implements Interval {
     // precalc
 
     public static PERFECT_UNISON;
@@ -67,15 +70,20 @@ export class IntervalDiatonicAlt {
         return new IntervalDiatonicAlt(semitones, intervalDiatonic, quality);
     }
 
-    public static between(diatonicAlt1: DiatonicAlt, diatonicAlt2: DiatonicAlt) {
-        let intervalDiatonic = diatonicAlt2.diatonic.intValue - diatonicAlt1.diatonic.intValue;
-        if (intervalDiatonic < 0) {
-            intervalDiatonic = (intervalDiatonic % Diatonic.NUMBER) + Diatonic.NUMBER;
-        }
+    public static betweenDiatonicAlt(diatonicAlt1: DiatonicAlt, diatonicAlt2: DiatonicAlt) {
+        let intervalDiatonic: IntervalDiatonic = IntervalDiatonic.from(diatonicAlt2.diatonic.intValue - diatonicAlt1.diatonic.intValue);
 
         let semis = diatonicAlt2.chromatic.intValue - diatonicAlt1.chromatic.intValue;
+        semis = MathUtils.rotativeTrim(semis, Chromatic.NUMBER);
 
         return this.from(semis, intervalDiatonic);
+    }
+
+    public static betweenChromatic(chromatic1: Chromatic, chromatic2: Chromatic) {
+        let diatonicAlt1 = DiatonicAlt.fromChromatic(chromatic1);
+        let diatonicAlt2 = DiatonicAlt.fromChromatic(chromatic2);
+
+        return this.betweenDiatonicAlt(diatonicAlt1, diatonicAlt2);
     }
 
     public static from(semitones: number, intervalDiatonic: IntervalDiatonic): IntervalDiatonicAlt {
@@ -255,12 +263,16 @@ export class IntervalDiatonicAlt {
         throw new Error("Cannot get IntervalDiatonicAlt from semis=" + semitones + ", IntervalDiatonic=" + intervalDiatonic);
     }
 
-    get semis() {
+    get semis(): number {
         return this._semitones;
     }
 
-    get intervalDiatonic() {
+    get intervalDiatonic(): IntervalDiatonic {
         return this._intervalDiatonic;
+    }
+
+    get alts() {
+        return this.semis - Diatonic.fromInt(this.intervalDiatonic.number).chromatic.intValue;
     }
 
     toString(): string {
@@ -273,7 +285,7 @@ export class IntervalDiatonicAlt {
             case Quality.AUGMENTED: ret += "a"; break;
         }
 
-        ret += (this.intervalDiatonic + 1);
+        ret += (this.intervalDiatonic.number + 1);
 
         return ret;
     }

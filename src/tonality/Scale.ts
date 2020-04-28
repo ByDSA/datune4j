@@ -10,6 +10,7 @@ import { DegreeFunction } from '../function/DegreeFunction';
 import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
 import { NamingScale } from '../lang/naming/NamingScale';
 import { ScaleModeUtils } from './ScaleModeUtils';
+import { IntervalDiatonic } from '../interval/IntervalDiatonic';
 
 type HashingObject = IntervalDiatonicAlt[];
 export class Scale implements Hashable {
@@ -200,7 +201,8 @@ export class Scale implements Hashable {
             distDiatonicInt = MathUtils.rotativeTrim(distDiatonicInt, Diatonic.NUMBER);
             let distChromaticInt = degree.semis - prevDegree.semis;
             distChromaticInt = MathUtils.rotativeTrim(distChromaticInt, Chromatic.NUMBER);
-            let interval = IntervalDiatonicAlt.from(distChromaticInt, distDiatonicInt);
+            let intervalDiatonic = IntervalDiatonic.from(distDiatonicInt);
+            let interval = IntervalDiatonicAlt.from(distChromaticInt, intervalDiatonic);
             intervals.push(interval);
         }
 

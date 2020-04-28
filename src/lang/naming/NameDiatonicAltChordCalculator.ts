@@ -2,6 +2,7 @@ import { DiatonicAltChord } from '../../chords/diatonicalt/DiatonicAltChord';
 import { DiatonicAltChordPattern, DiatonicAltChordPatternValueType } from '../../chords/diatonicalt/DiatonicAltChordPattern';
 import { DiatonicAlt } from '../../degrees/DiatonicAlt';
 import { IntervalDiatonicAlt } from '../../interval/IntervalDiatonicAlt';
+import { IntervalDiatonic } from '../../interval/IntervalDiatonic';
 
 export class NameDiatonicAltChordCalculator {
     private pattern: DiatonicAltChordPattern;
@@ -28,7 +29,8 @@ export class NameDiatonicAltChordCalculator {
 
     private getInversionDiatonicAlt(): DiatonicAlt {
         let diatonicAltChordPatternValue: DiatonicAltChordPatternValueType = this.pattern.values[this.inversion];
-        let intervalDiatonicAlt = IntervalDiatonicAlt.from(diatonicAltChordPatternValue.semis, diatonicAltChordPatternValue.diatonicIntValue);
+        let diatonicInterval = IntervalDiatonic.from(diatonicAltChordPatternValue.diatonicIntValue);
+        let intervalDiatonicAlt = IntervalDiatonicAlt.from(diatonicAltChordPatternValue.semis, diatonicInterval);
         return this.chord.root.getAdd(intervalDiatonicAlt);
     }
 }

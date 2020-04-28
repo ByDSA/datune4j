@@ -17,12 +17,12 @@ export class Diatonic {
     public static NUMBER = 7;
 
     public getAdd(intervalDiatonic: IntervalDiatonic): Diatonic {
-        let intValue = this.intValue + intervalDiatonic;
+        let intValue = this.intValue + intervalDiatonic.number;
         return Diatonic.fromInt(intValue);
     }
 
     public getSub(intervalDiatonic: IntervalDiatonic): Diatonic {
-        let intValue = this.intValue - intervalDiatonic;
+        let intValue = this.intValue - intervalDiatonic.number;
         return Diatonic.fromInt(intValue);
     }
 

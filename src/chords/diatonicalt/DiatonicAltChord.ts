@@ -9,6 +9,7 @@ import { DiatonicAlt } from '../../degrees/DiatonicAlt';
 import { IntervalDiatonicAlt } from '../../interval/IntervalDiatonicAlt';
 import { NameDiatonicAltChordCalculator } from '../../lang/naming/NameDiatonicAltChordCalculator';
 import { DiatonicAltChordPattern } from './DiatonicAltChordPattern';
+import { IntervalDiatonic } from '../../interval/IntervalDiatonic';
 
 type HashingObjectType = { rootIndex: number, notes: DiatonicAlt[] };
 export class DiatonicAltChord {
@@ -90,7 +91,8 @@ export class DiatonicAltChord {
 
         for (let i = 1; i < pattern.values.length; i++) {
             let chromatic = root.chromatic.getShift(pattern.values[i].semis);
-            let diatonic = root.diatonic.getAdd(pattern.values[i].diatonicIntValue);
+            let intervalDiatonic = IntervalDiatonic.from(pattern.values[i].diatonicIntValue);
+            let diatonic = root.diatonic.getAdd(intervalDiatonic);
 
             let diatonicAlt = DiatonicAlt.fromChromatic(chromatic, diatonic);
             notes.push(diatonicAlt);
@@ -151,7 +153,7 @@ export class DiatonicAltChord {
     private static getIntervalsFromNotes(notes: DiatonicAlt[]): IntervalDiatonicAlt[] {
         let intervals: IntervalDiatonicAlt[] = [];
         for (let i = 1; i < notes.length; i++) {
-            let interval = IntervalDiatonicAlt.between(notes[i - 1], notes[i]);
+            let interval = IntervalDiatonicAlt.betweenDiatonicAlt(notes[i - 1], notes[i]);
             intervals.push(interval);
         }
 
