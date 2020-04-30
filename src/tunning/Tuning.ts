@@ -41,7 +41,7 @@ export class Tuning {
             throw new Error("Cannot calculate the interval: root=" + symbolicNoteRoot + " note=" + symbolicNote);
         }
 
-        let ratioNumber = this._temperament.getRatio(interval).get();
+        let ratioNumber = this._temperament.getRatio(interval).value;
 
         if (typeof symbolicNote != typeof symbolicNoteRoot)
             throw new Error();

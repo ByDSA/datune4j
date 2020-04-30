@@ -1,7 +1,7 @@
 import { Ratio } from './Ratio';
 
 export class RatioFrac extends Ratio {
-    get(): number {
+    get value(): number {
         return this.numerator / this.denominator;
     }
 

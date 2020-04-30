@@ -1,3 +1,3 @@
 export abstract class Ratio {
-    abstract get(): number;
+    abstract get value(): number;
 }

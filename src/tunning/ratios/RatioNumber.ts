@@ -9,7 +9,7 @@ export class RatioNumber extends Ratio {
         return new RatioNumber(n);
     }
 
-    get(): number {
+    get value(): number {
         return this.num;
     }
 }
