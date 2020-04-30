@@ -1,4 +1,5 @@
 import { IntervalDiatonic } from './interval/IntervalDiatonic';
+import { IntervalPitch } from './interval/IntervalPitch';
 import { ChromaticChord } from './chords/chromatic/ChromaticChord';
 import { ChromaticChordPattern } from './chords/chromatic/ChromaticChordPattern';
 import { DiatonicChordPattern } from './chords/Diatonic/DiatonicChordPattern';
@@ -247,6 +248,14 @@ export function tunings() {
     (<any>Tuning).initialize();
 }
 
+// TUNINGS
+export function intervalPitches() {
+    if (IntervalPitch.UNISON)
+        return;
+
+    (<any>IntervalPitch).initialize();
+}
+
 export function all() {
     diatonics();
     intervalDiatonics();
@@ -274,6 +283,7 @@ export function all() {
     concertPitches();
     temperaments();
     tunings();
+    intervalPitches();
 
 
     settings();
