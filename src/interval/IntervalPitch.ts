@@ -73,6 +73,8 @@ export class IntervalPitch {
         IntervalPitch.JUST.QUARTER_TONE = this.from(RatioFrac.from(246, 239));
         this.JUST.MINOR_SECOND = this.from(RatioFrac.from(16, 15));
         this.JUST.DIMINISHED_THIRD = this.from(RatioFrac.from(256, 225));
+        this.JUST.MAJOR_SECOND = this.PYTHAGOREAN.MAJOR_SECOND;
+        this.JUST.AUGMENTED_SECOND = this.from(RatioFrac.from(75, 64));
         this.JUST.MINOR_THIRD = this.from(RatioFrac.from(6, 5));
         this.JUST.MAJOR_THIRD = this.from(RatioFrac.from(5, 4));
         this.JUST.AUGMENTED_THIRD = this.from(RatioFrac.from(125, 96));
@@ -103,6 +105,8 @@ export namespace IntervalPitch {
         static QUARTER_TONE: IntervalPitch;
         static MINOR_SECOND: IntervalPitch;
         static DIMINISHED_THIRD: IntervalPitch;
+        static MAJOR_SECOND: IntervalPitch;
+        static AUGMENTED_SECOND: IntervalPitch;
         static MINOR_THIRD: IntervalPitch;
         static MAJOR_THIRD: IntervalPitch;
         static AUGMENTED_THIRD: IntervalPitch;
