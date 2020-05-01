@@ -4,6 +4,18 @@ import { SymbolicPitch } from './SymbolicPitch';
 
 type HashingObject = { chromatic: Chromatic, octave: number };
 export class ChromaticSymbolicPitch implements SymbolicPitch {
+    public static C_S1;
+    public static CC_S1;
+    public static D_S1;
+    public static DD_S1;
+    public static E_S1;
+    public static F_S1;
+    public static FF_S1;
+    public static G_S1;
+    public static GG_S1;
+    public static A_S1;
+    public static AA_S1;
+    public static B_S1;
     public static C0;
     public static CC0;
     public static D0;
@@ -112,6 +124,18 @@ export class ChromaticSymbolicPitch implements SymbolicPitch {
     public static A8;
     public static AA8;
     public static B8;
+    public static C9;
+    public static CC9;
+    public static D9;
+    public static DD9;
+    public static E9;
+    public static F9;
+    public static FF9;
+    public static G9;
+    public static GG9;
+    public static A9;
+    public static AA9;
+    public static B9;
 
     private static immutablesCache = new ImmutablesCache<ChromaticSymbolicPitch, HashingObject>(
         function (hashingObject: HashingObject): string {
@@ -144,32 +168,22 @@ export class ChromaticSymbolicPitch implements SymbolicPitch {
         return this._octave;
     }
 
+    public hashCode(): string {
+        return this.chromatic.hashCode() + this.octave;
+    }
+
     private static initialize() {
-        for (let octave of [0, 1, 2, 3, 4, 5, 6, 7, 8])
+        for (let octave of [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
             for (const chromatic of Chromatic.all) {
-                let chromaticStr = this.chromaticToVarStr(chromatic);
-                let varName = chromaticStr + octave;
+                let chromaticStr = (<any>chromatic).varStr;
+                let octaveStr;
+                if (octave >= 0)
+                    octaveStr = octave;
+                else
+                    octaveStr = "_S" + (-octave);
+                let varName = chromaticStr + octaveStr;
                 this[varName] = ChromaticSymbolicPitch.from(chromatic, octave);
                 Object.freeze(this[varName]);
             }
-    }
-
-    private static chromaticToVarStr(chromatic: Chromatic): string {
-        switch (chromatic) {
-            case Chromatic.C: return "C";
-            case Chromatic.CC: return "CC";
-            case Chromatic.D: return "D";
-            case Chromatic.DD: return "DD";
-            case Chromatic.E: return "E";
-            case Chromatic.F: return "F";
-            case Chromatic.FF: return "FF";
-            case Chromatic.G: return "G";
-            case Chromatic.GG: return "GG";
-            case Chromatic.A: return "A";
-            case Chromatic.AA: return "AA";
-            case Chromatic.B: return "B";
-        }
-
-        throw new Error();
     }
 }
