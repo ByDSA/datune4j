@@ -1,6 +1,7 @@
 import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
 import { IntervalPitch } from '../interval/IntervalPitch';
 import { IntervalSymbolic } from '../interval/IntervalSymbolic';
+import { Settings } from 'settings/Settings';
 
 export abstract class Temperament {
     public static ET12;
@@ -77,9 +78,9 @@ export abstract class Temperament {
 
     public toString(): string {
         switch(this) {
-            case Temperament.ET12: return "12-ET";
-            case Temperament.LIMIT_5_SYMMETRIC_N1: return "5-LIMIT: SYMMETRIC N1";
-            case Temperament.LIMIT_5_SYMMETRIC_N2: return "5-LIMIT: SYMMETRIC N2";
+            case Temperament.ET12: return Settings.lang.temperaments.ET12;
+            case Temperament.LIMIT_5_SYMMETRIC_N1: return Settings.lang.temperaments.LIMIT_5_SYMMETRIC_N1;
+            case Temperament.LIMIT_5_SYMMETRIC_N2: return Settings.lang.temperaments.LIMIT_5_SYMMETRIC_N1;
         }
     }
 }

@@ -1,4 +1,4 @@
-import { LanguageInterface } from 'lang/LanguageInterface';
+import { LanguageInterface } from '../lang/LanguageInterface';
 import { Settings } from '../settings/Settings';
 
 export class Language {
@@ -182,6 +182,11 @@ export class Language {
             get THIRTEENTH_MAJ13(): string { return "Maj13"; },
             get THIRTEENTH_MAJ13_a5(): string { return "Maj13" + Settings.mods.a5; },
             get THIRTEENTH_MAJ13_a5a9(): string { return "Maj13" + Settings.mods.a5 + Settings.mods.a9; },
+        },
+        temperaments: {
+            get ET12(): string { return "12-ET" },
+            get LIMIT_5_SYMMETRIC_N1(): string { return "5-LIMIT: SYMMETRIC N1" },
+            get LIMIT_5_SYMMETRIC_N2(): string { return "5-LIMIT: SYMMETRIC N2" },
         }
     }
 
@@ -362,6 +367,11 @@ export class Language {
             get THIRTEENTH_MAJ13(): string { return "Maj13"; },
             get THIRTEENTH_MAJ13_a5(): string { return "Maj13" + Settings.mods.a5; },
             get THIRTEENTH_MAJ13_a5a9(): string { return "Maj13" + Settings.mods.a5 + Settings.mods.a9; },
+        },
+        temperaments: {
+            get ET12(): string { return "12-Temperamento Igual" },
+            get LIMIT_5_SYMMETRIC_N1(): string { return Language.ENG.temperaments.LIMIT_5_SYMMETRIC_N1 },
+            get LIMIT_5_SYMMETRIC_N2(): string { return Language.ENG.temperaments.LIMIT_5_SYMMETRIC_N2 },
         }
     }
 }

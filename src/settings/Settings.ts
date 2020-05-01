@@ -8,7 +8,10 @@ export let Settings: SettingsInterface = {
         tonality: null,
         chromaticChord: null,
         diatonicAltChord: null,
-        pattern: null
+        pattern: null,
+        temperament: null,
+        concertPitch: null,
+        tuning: null
     },
     lang: null,
     scales: {

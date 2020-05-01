@@ -6,6 +6,9 @@ import { DiatonicAlt } from '../degrees/DiatonicAlt';
 import { LanguageInterface } from '../lang/LanguageInterface';
 import { Scale } from '../tonality/Scale';
 import { Tonality } from '../tonality/Tonality';
+import { ConcertPitch } from '../tunning/ConcertPitch';
+import { Temperament } from '../tunning/Temperament';
+import { Tuning } from '../tunning/Tuning';
 
 export interface SettingsInterface {
     default: {
@@ -15,7 +18,10 @@ export interface SettingsInterface {
         tonality: Tonality,
         chromaticChord: ChromaticChord,
         diatonicAltChord: DiatonicAltChord,
-        pattern: ChromaticChordPattern
+        pattern: ChromaticChordPattern,
+        temperament: Temperament,
+        tuning: Tuning,
+        concertPitch: ConcertPitch
     },
     scales: {
         MAJOR: string,

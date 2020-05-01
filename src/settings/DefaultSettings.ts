@@ -8,6 +8,9 @@ import { Scale } from '../tonality/Scale';
 import { Tonality } from '../tonality/Tonality';
 import { Settings } from './Settings';
 import { SettingsInterface } from './SettingsInterface';
+import { Temperament } from 'tunning/Temperament';
+import { Tuning } from 'tunning/Tuning';
+import { ConcertPitch } from 'tunning/ConcertPitch';
 
 export const DefaultSettings: SettingsInterface = {
     default: {
@@ -17,7 +20,10 @@ export const DefaultSettings: SettingsInterface = {
         get tonality(): Tonality { return Tonality.C },
         get chromaticChord(): ChromaticChord { return ChromaticChord.C },
         get diatonicAltChord(): DiatonicAltChord { return DiatonicAltChord.C },
-        get pattern(): ChromaticChordPattern { return ChromaticChordPattern.TRIAD_MAJOR }
+        get pattern(): ChromaticChordPattern { return ChromaticChordPattern.TRIAD_MAJOR },
+        get temperament(): Temperament { return Temperament.ET12 },
+        get tuning(): Tuning { return Tuning.EQUAL_440 },
+        get concertPitch(): ConcertPitch { return ConcertPitch.A440 },
     },
     get lang() { return Language.ENG },
     scales: {

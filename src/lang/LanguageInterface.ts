@@ -175,5 +175,10 @@ export interface LanguageInterface {
         THIRTEENTH_MAJ13: string,
         THIRTEENTH_MAJ13_a5: string,
         THIRTEENTH_MAJ13_a5a9: string,
+    },
+    temperaments: {
+        ET12: string,
+        LIMIT_5_SYMMETRIC_N1: string,
+        LIMIT_5_SYMMETRIC_N2: string,
     }
 }
