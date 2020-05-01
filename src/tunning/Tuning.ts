@@ -1,8 +1,8 @@
 import { ImmutablesCache } from '../common/ImmutablesCache';
 import { Chromatic } from '../degrees/Chromatic';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
-import { IntervalSymbolic } from '../interval/IntervalSymbolic';
 import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
+import { IntervalSymbolic } from '../interval/IntervalSymbolic';
 import { ConcertPitch } from './ConcertPitch';
 import { SymbolicNote } from './SymbolicNote';
 import { SymbolicPitch } from './SymbolicPitch';
@@ -15,7 +15,13 @@ export class Tuning {
 
     private static immutablesCache = new ImmutablesCache<Tuning, HashingObject>(
         function (hashingObject: HashingObject): string {
-            return "" + hashingObject.concertPitch + hashingObject.temperament;
+            let concertPitchHashCode = hashingObject.concertPitch.hashCode();
+            let temperamentHashCode = hashingObject.temperament.hashCode();
+
+            if (!concertPitchHashCode || !temperamentHashCode)
+                throw new Error();
+
+            return concertPitchHashCode + temperamentHashCode;
         },
         function (tuning: Tuning): HashingObject {
             return { concertPitch: tuning.concertPitch, temperament: tuning.temperament };
