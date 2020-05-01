@@ -1,10 +1,10 @@
-import { MathUtils } from '../common/MathUtils';
 import { Assert } from '../common/Assert';
+import { MathUtils } from '../common/MathUtils';
 import { Chromatic } from '../degrees/Chromatic';
 import { Diatonic } from '../degrees/Diatonic';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
-import { IntervalSymbolic } from './Interval';
 import { IntervalDiatonic } from './IntervalDiatonic';
+import { IntervalSymbolic } from './IntervalSymbolic';
 import { Quality } from './Quality';
 
 export class IntervalDiatonicAlt implements IntervalSymbolic {

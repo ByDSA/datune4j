@@ -1,6 +1,6 @@
 import { ImmutablesCache } from '../common/ImmutablesCache';
 import { Diatonic } from '../degrees/Diatonic';
-import { IntervalSymbolic } from './Interval';
+import { IntervalSymbolic } from './IntervalSymbolic';
 
 export class IntervalDiatonic implements IntervalSymbolic {
     public static UNISON;
