@@ -1,7 +1,7 @@
 import { ImmutablesCache } from '../common/ImmutablesCache';
 import { Chromatic } from '../degrees/Chromatic';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
-import { Interval } from '../interval/Interval';
+import { IntervalSymbolic } from '../interval/Interval';
 import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
 import { ConcertPitch } from './ConcertPitch';
 import { SymbolicNote } from './SymbolicNote';
@@ -32,7 +32,7 @@ export class Tuning {
         let symbolicPitch = info.symbolicPitch;
         let symbolicNote: SymbolicNote = symbolicPitch.symbolicNote;
         let symbolicNoteRoot: SymbolicNote = this._concertPitch.symbolicPitch.symbolicNote;
-        let interval: Interval;
+        let interval: IntervalSymbolic;
         if (symbolicNoteRoot instanceof DiatonicAlt && symbolicNote instanceof DiatonicAlt) {
             interval = IntervalDiatonicAlt.betweenDiatonicAlt(symbolicNoteRoot, symbolicNote);
         } else if (symbolicNoteRoot instanceof Chromatic && symbolicNote instanceof Chromatic) {

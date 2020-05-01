@@ -3,11 +3,11 @@ import { Assert } from '../common/Assert';
 import { Chromatic } from '../degrees/Chromatic';
 import { Diatonic } from '../degrees/Diatonic';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
-import { Interval } from './Interval';
+import { IntervalSymbolic } from './Interval';
 import { IntervalDiatonic } from './IntervalDiatonic';
 import { Quality } from './Quality';
 
-export class IntervalDiatonicAlt implements Interval {
+export class IntervalDiatonicAlt implements IntervalSymbolic {
     // precalc
 
     public static PERFECT_UNISON;

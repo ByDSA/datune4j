@@ -1,6 +1,6 @@
 import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
 import { Chromatic } from '../degrees/Chromatic';
-import { Interval } from '../interval/Interval';
+import { IntervalSymbolic } from '../interval/Interval';
 import { Ratio } from './ratios/Ratio';
 import { RatioFrac } from './ratios/RatioFrac';
 import { RatioNumber } from './ratios/RatioNumber';
@@ -9,11 +9,11 @@ export abstract class Temperament {
     public static EQUAL;
     public static FIVE_LIMIT_SYMMETRIC_N1;
 
-    public abstract getRatio(interval: Interval): Ratio;
+    public abstract getRatio(interval: IntervalSymbolic): Ratio;
 
     private static initialize(): void {
         this.EQUAL = new (class extends Temperament {
-            public getRatio(interval: Interval): Ratio {
+            public getRatio(interval: IntervalSymbolic): Ratio {
                 let size: number;
                 let dist: number;
 
@@ -30,7 +30,7 @@ export abstract class Temperament {
         });
 
         this.FIVE_LIMIT_SYMMETRIC_N1 = new (class extends Temperament {
-            public getRatio(interval: Interval): Ratio {
+            public getRatio(interval: IntervalSymbolic): Ratio {
                 if (interval instanceof IntervalDiatonicAlt) {
                     let dist = interval.semis;
                     let size = Chromatic.NUMBER;
