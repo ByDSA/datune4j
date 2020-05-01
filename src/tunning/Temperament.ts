@@ -1,62 +1,85 @@
 import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
-import { Chromatic } from '../degrees/Chromatic';
-import { IntervalSymbolic } from '../interval/Interval';
-import { Ratio } from './ratios/Ratio';
-import { RatioFrac } from './ratios/RatioFrac';
-import { RatioNumber } from './ratios/RatioNumber';
+import { IntervalPitch } from '../interval/IntervalPitch';
+import { IntervalSymbolic } from '../interval/IntervalSymbolic';
 
 export abstract class Temperament {
-    public static EQUAL;
-    public static FIVE_LIMIT_SYMMETRIC_N1;
+    public static ET12;
+    public static LIMIT_5_SYMMETRIC_N1;
+    public static LIMIT_5_SYMMETRIC_N2;
 
-    public abstract getRatio(interval: IntervalSymbolic): Ratio;
+    public abstract getIntervalPitch(interval: IntervalSymbolic): IntervalPitch;
 
     private static initialize(): void {
-        this.EQUAL = new (class extends Temperament {
-            public getRatio(interval: IntervalSymbolic): Ratio {
-                let size: number;
-                let dist: number;
-
+        this.ET12 = new (class extends Temperament {
+            public getIntervalPitch(interval: IntervalSymbolic): IntervalPitch {
                 if (interval instanceof IntervalDiatonicAlt) {
-                    dist = interval.semis;
-                    size = Chromatic.NUMBER;
-                }
-
-                if (size === undefined || dist === undefined)
-                    throw new Error();
-
-                return RatioNumber.from(Math.pow(2, dist / size));
-            }
-        });
-
-        this.FIVE_LIMIT_SYMMETRIC_N1 = new (class extends Temperament {
-            public getRatio(interval: IntervalSymbolic): Ratio {
-                if (interval instanceof IntervalDiatonicAlt) {
-                    let dist = interval.semis;
-                    let size = Chromatic.NUMBER;
-
-                    switch (dist) {
-                        case 0: return RatioFrac.from(1, 1);
-                        case 1: return RatioFrac.from(16, 15);
-                        case 2: return RatioFrac.from(9, 8);
-                        case 3: return RatioFrac.from(6, 5);
-                        case 4: return RatioFrac.from(5, 4);
-                        case 5: return RatioFrac.from(4, 3);
-                        case 7: return RatioFrac.from(3, 2);
-                        case 8: return RatioFrac.from(8, 5);
-                        case 9: return RatioFrac.from(5, 3);
-                        case 10: return RatioFrac.from(16, 9);
-                        case 11: return RatioFrac.from(15, 8);
-                        case 6:
-                            if (interval instanceof IntervalDiatonicAlt && interval.alts < 0)
-                                return RatioFrac.from(64, 45);
-                            else
-                                return RatioFrac.from(45, 32);
+                    switch (interval.semis) {
+                        case 0: return IntervalPitch.UNISON;
+                        case 1: return IntervalPitch.ET12.MINOR_SECOND;
+                        case 2: return IntervalPitch.ET12.MAJOR_SECOND;
+                        case 3: return IntervalPitch.ET12.MINOR_THIRD;
+                        case 4: return IntervalPitch.ET12.MAJOR_THIRD;
+                        case 5: return IntervalPitch.ET12.PERFECT_FOURTH;
+                        case 6: return IntervalPitch.ET12.TRITONE;
+                        case 7: return IntervalPitch.ET12.PERFECT_FIFTH;
+                        case 8: return IntervalPitch.ET12.MINOR_SIXTH;
+                        case 9: return IntervalPitch.ET12.MAJOR_SIXTH;
+                        case 10: return IntervalPitch.ET12.MINOR_SEVENTH;
+                        case 11: return IntervalPitch.ET12.MAJOR_SEVENTH;
                     }
                 }
 
                 throw new Error();
             }
         });
+
+        this.LIMIT_5_SYMMETRIC_N1 = new (class extends Temperament {
+            public getIntervalPitch(interval: IntervalSymbolic): IntervalPitch {
+                if (interval instanceof IntervalDiatonicAlt) {
+                    switch (interval.semis) {
+                        case 0: return IntervalPitch.UNISON;
+                        case 1: return IntervalPitch.JUST.MINOR_SECOND;
+                        case 2: return IntervalPitch.JUST.MAJOR_TONE;
+                        case 3: return IntervalPitch.JUST.MINOR_THIRD;
+                        case 4: return IntervalPitch.JUST.MAJOR_THIRD;
+                        case 5: return IntervalPitch.JUST.PERFECT_FOURTH;
+                        case 7: return IntervalPitch.JUST.PERFECT_FIFTH;;
+                        case 8: return IntervalPitch.JUST.MINOR_SIXTH;
+                        case 9: return IntervalPitch.JUST.MAJOR_SIXTH;
+                        case 10: return IntervalPitch.JUST.MINOR_SEVENTH_SMALL;
+                        case 11: return IntervalPitch.JUST.MAJOR_SEVENTH;
+                        case 6:
+                            if (interval == IntervalDiatonicAlt.DIMINISHED_FIFTH)
+                                return IntervalPitch.JUST.TRITONE;
+                            else if (interval == IntervalDiatonicAlt.AUGMENTED_FOURTH)
+                                return IntervalPitch.JUST.AUGMENTED_FOURTH;
+                    }
+                }
+
+                throw new Error();
+            }
+        });
+
+        this.LIMIT_5_SYMMETRIC_N2 = new (class extends Temperament {
+            public getIntervalPitch(interval: IntervalSymbolic): IntervalPitch {
+                if (interval instanceof IntervalDiatonicAlt) {
+                    switch (interval.semis) {
+                        case 2: return IntervalPitch.JUST.MINOR_TONE;
+                        case 10: return IntervalPitch.JUST.MINOR_SEVENTH_GREATER;
+                        default: return Temperament.LIMIT_5_SYMMETRIC_N1.getIntervalPitch(interval);
+                    }
+                }
+
+                throw new Error();
+            }
+        });
+    }
+
+    public toString(): string {
+        switch(this) {
+            case Temperament.ET12: return "12-ET";
+            case Temperament.LIMIT_5_SYMMETRIC_N1: return "5-LIMIT: SYMMETRIC N1";
+            case Temperament.LIMIT_5_SYMMETRIC_N2: return "5-LIMIT: SYMMETRIC N2";
+        }
     }
 }

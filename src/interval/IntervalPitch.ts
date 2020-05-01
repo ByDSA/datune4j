@@ -37,6 +37,7 @@ export class IntervalPitch {
         this.ET12.SEMITONE = this.from(RatioPow2Frac.fromCents(100));
         this.ET12.MINOR_SECOND = this.ET12.SEMITONE;
         this.ET12.MAJOR_SECOND = this.from(RatioPow2Frac.fromCents(200));
+        this.ET12.TONE = this.ET12.MAJOR_SECOND;
         this.ET12.MINOR_THIRD = this.from(RatioPow2Frac.fromCents(300));
         this.ET12.MAJOR_THIRD = this.from(RatioPow2Frac.fromCents(400));
         this.ET12.PERFECT_FOURTH = this.from(RatioPow2Frac.fromCents(500));
@@ -57,7 +58,8 @@ export class IntervalPitch {
         this.PYTHAGOREAN.PERFECT_FOURTH = this.from(RatioFrac.from(4, 3));
         this.PYTHAGOREAN.AUGMENTED_THIRD = this.from(RatioFrac.from(177147, 131072));
         this.PYTHAGOREAN.AUGMENTED_FOURTH = this.from(RatioFrac.from(729, 512));
-        this.PYTHAGOREAN.TRITONE = this.PYTHAGOREAN.PERFECT_FOURTH;
+        this.PYTHAGOREAN.DIMINISHED_FIFTH = this.from(RatioFrac.from(1024, 729));
+        this.PYTHAGOREAN.TRITONE = this.PYTHAGOREAN.DIMINISHED_FIFTH;
         this.PYTHAGOREAN.DIMINISHED_SIXTH = this.from(RatioFrac.from(262144, 177147));
         this.PYTHAGOREAN.PERFECT_FIFTH = this.from(RatioFrac.from(3, 2));
         this.PYTHAGOREAN.MINOR_SIXTH = this.from(RatioFrac.from(128, 81));
@@ -72,8 +74,10 @@ export class IntervalPitch {
 
         IntervalPitch.JUST.QUARTER_TONE = this.from(RatioFrac.from(246, 239));
         this.JUST.MINOR_SECOND = this.from(RatioFrac.from(16, 15));
+        this.JUST.SEMITONE = this.JUST.MINOR_SECOND;
         this.JUST.DIMINISHED_THIRD = this.from(RatioFrac.from(256, 225));
-        this.JUST.MAJOR_SECOND = this.PYTHAGOREAN.MAJOR_SECOND;
+        this.JUST.MAJOR_TONE = this.PYTHAGOREAN.MAJOR_SECOND;
+        this.JUST.MINOR_TONE = this.from(RatioFrac.from(10, 9));
         this.JUST.AUGMENTED_SECOND = this.from(RatioFrac.from(75, 64));
         this.JUST.MINOR_THIRD = this.from(RatioFrac.from(6, 5));
         this.JUST.MAJOR_THIRD = this.from(RatioFrac.from(5, 4));
@@ -81,6 +85,7 @@ export class IntervalPitch {
         this.JUST.PERFECT_FOURTH = this.PYTHAGOREAN.PERFECT_FOURTH;
         this.JUST.AUGMENTED_FOURTH = this.from(RatioFrac.from(45, 32));
         this.JUST.DIMINISHED_FIFTH = this.from(RatioFrac.from(36, 25));
+        this.JUST.TRITONE = this.from(RatioFrac.from(64, 45));
         this.JUST.PERFECT_FIFTH = this.PYTHAGOREAN.PERFECT_FIFTH;
         this.JUST.AUGMENTED_FIFTH = this.from(RatioFrac.from(25, 16));
         this.JUST.MINOR_SIXTH = this.from(RatioFrac.from(8, 5));
@@ -88,7 +93,8 @@ export class IntervalPitch {
         this.JUST.DIMINISHED_SEVENTH = this.from(RatioFrac.from(128, 75));
         this.JUST.AUGMENTED_SIXTH = this.from(RatioFrac.from(125, 72));
         this.JUST.AUGMENTED_SIXTH2 = this.from(RatioFrac.from(225, 128));
-        this.JUST.MINOR_SEVENTH = this.PYTHAGOREAN.MINOR_SEVENTH;
+        this.JUST.MINOR_SEVENTH_SMALL = this.PYTHAGOREAN.MINOR_SEVENTH;
+        this.JUST.MINOR_SEVENTH_GREATER = this.from(RatioFrac.from(9, 5));
         this.JUST.MAJOR_SEVENTH = this.from(RatioFrac.from(15, 8));
         this.JUST.AUGMENTED_SEVENTH = this.from(RatioFrac.from(125, 64));
         this.JUST.PERFECT_TWELFTH = this.from(RatioFrac.from(3, 1));
@@ -104,8 +110,10 @@ export namespace IntervalPitch {
     export class JUST {
         static QUARTER_TONE: IntervalPitch;
         static MINOR_SECOND: IntervalPitch;
+        static SEMITONE: IntervalPitch;
         static DIMINISHED_THIRD: IntervalPitch;
-        static MAJOR_SECOND: IntervalPitch;
+        static MAJOR_TONE: IntervalPitch;
+        static MINOR_TONE: IntervalPitch;
         static AUGMENTED_SECOND: IntervalPitch;
         static MINOR_THIRD: IntervalPitch;
         static MAJOR_THIRD: IntervalPitch;
@@ -113,6 +121,7 @@ export namespace IntervalPitch {
         static PERFECT_FOURTH: IntervalPitch;
         static AUGMENTED_FOURTH: IntervalPitch;
         static DIMINISHED_FIFTH: IntervalPitch;
+        static TRITONE: IntervalPitch;
         static PERFECT_FIFTH: IntervalPitch;
         static AUGMENTED_FIFTH: IntervalPitch;
         static MINOR_SIXTH: IntervalPitch;
@@ -120,7 +129,8 @@ export namespace IntervalPitch {
         static DIMINISHED_SEVENTH: IntervalPitch;
         static AUGMENTED_SIXTH: IntervalPitch;
         static AUGMENTED_SIXTH2: IntervalPitch;
-        static MINOR_SEVENTH: IntervalPitch;
+        static MINOR_SEVENTH_SMALL: IntervalPitch;
+        static MINOR_SEVENTH_GREATER: IntervalPitch;
         static MAJOR_SEVENTH: IntervalPitch;
         static AUGMENTED_SEVENTH: IntervalPitch;
         static PERFECT_TWELFTH: IntervalPitch;
@@ -131,6 +141,7 @@ export namespace IntervalPitch {
         static SEMITONE: IntervalPitch;
         static MINOR_SECOND: IntervalPitch;
         static MAJOR_SECOND: IntervalPitch;
+        static TONE: IntervalPitch;
         static MINOR_THIRD: IntervalPitch;
         static MAJOR_THIRD: IntervalPitch;
         static PERFECT_FOURTH: IntervalPitch;
@@ -152,6 +163,7 @@ export namespace IntervalPitch {
         static MAJOR_THIRD: IntervalPitch;
         static PERFECT_FOURTH: IntervalPitch;
         static AUGMENTED_THIRD: IntervalPitch;
+        static DIMINISHED_FIFTH: IntervalPitch;
         static TRITONE: IntervalPitch;
         static AUGMENTED_FOURTH: IntervalPitch;
         static DIMINISHED_SIXTH: IntervalPitch;

@@ -1,7 +1,7 @@
 import { ImmutablesCache } from '../common/ImmutablesCache';
 import { Chromatic } from '../degrees/Chromatic';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
-import { IntervalSymbolic } from '../interval/Interval';
+import { IntervalSymbolic } from '../interval/IntervalSymbolic';
 import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
 import { ConcertPitch } from './ConcertPitch';
 import { SymbolicNote } from './SymbolicNote';
@@ -9,9 +9,9 @@ import { SymbolicPitch } from './SymbolicPitch';
 import { Temperament } from './Temperament';
 
 type HashingObject = { concertPitch: ConcertPitch, temperament: Temperament };
-type InfoTunning = { root: SymbolicNote, symbolicPitch: SymbolicPitch }
 export class Tuning {
     public static EQUAL_440;
+    public static LIMIT_5_SYMMETRIC_N1_440;
 
     private static immutablesCache = new ImmutablesCache<Tuning, HashingObject>(
         function (hashingObject: HashingObject): string {
@@ -28,8 +28,7 @@ export class Tuning {
     private constructor(private _concertPitch: ConcertPitch, private _temperament: Temperament) {
     }
 
-    getFrequency(info: InfoTunning): number {
-        let symbolicPitch = info.symbolicPitch;
+    getFrequency(symbolicPitch: SymbolicPitch): number {
         let symbolicNote: SymbolicNote = symbolicPitch.symbolicNote;
         let symbolicNoteRoot: SymbolicNote = this._concertPitch.symbolicPitch.symbolicNote;
         let interval: IntervalSymbolic;
@@ -41,7 +40,7 @@ export class Tuning {
             throw new Error("Cannot calculate the interval: root=" + symbolicNoteRoot + " note=" + symbolicNote);
         }
 
-        let ratioNumber = this._temperament.getRatio(interval).value;
+        let ratioNumber = this._temperament.getIntervalPitch(interval).ratio.value;
 
         if (typeof symbolicNote != typeof symbolicNoteRoot)
             throw new Error();
@@ -70,6 +69,7 @@ export class Tuning {
     }
 
     private static initialize() {
-        this.EQUAL_440 = Tuning.from(ConcertPitch.A440, Temperament.EQUAL);
+        this.EQUAL_440 = Tuning.from(ConcertPitch.A440, Temperament.ET12);
+        this.LIMIT_5_SYMMETRIC_N1_440 = Tuning.from(ConcertPitch.A440, Temperament.LIMIT_5_SYMMETRIC_N1);
     }
 }

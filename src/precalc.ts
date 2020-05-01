@@ -1,5 +1,3 @@
-import { IntervalDiatonic } from './interval/IntervalDiatonic';
-import { IntervalPitch } from './interval/IntervalPitch';
 import { ChromaticChord } from './chords/chromatic/ChromaticChord';
 import { ChromaticChordPattern } from './chords/chromatic/ChromaticChordPattern';
 import { DiatonicChordPattern } from './chords/Diatonic/DiatonicChordPattern';
@@ -11,7 +9,9 @@ import { DiatonicAlt } from './degrees/DiatonicAlt';
 import { DiatonicAltDegree } from './degrees/scale/DiatonicAltDegree';
 import { DiatonicDegree } from './degrees/scale/DiatonicDegree';
 import { DegreeFunction } from './function/DegreeFunction';
+import { IntervalDiatonic } from './interval/IntervalDiatonic';
 import { IntervalDiatonicAlt } from './interval/IntervalDiatonicAlt';
+import { IntervalPitch } from './interval/IntervalPitch';
 import { DefaultSettings } from './settings/DefaultSettings';
 import { Settings } from './settings/Settings';
 import { Scale } from './tonality/Scale';
@@ -202,8 +202,10 @@ export function diatonicAltDegrees() {
 
 // TEMPERAMENTS
 export function temperaments() {
-    if (Temperament.EQUAL)
+    if (Temperament.ET12)
         return;
+
+    intervalPitches();
 
     intervalDiatonicAlts();
 
