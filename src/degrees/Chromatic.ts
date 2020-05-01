@@ -70,6 +70,23 @@ export class Chromatic implements SymbolicNote {
             return 0;
     }
 
+    private get varStr() {
+        switch (this) {
+            case Chromatic.C: return "C";
+            case Chromatic.CC: return "CC";
+            case Chromatic.D: return "D";
+            case Chromatic.DD: return "DD";
+            case Chromatic.E: return "E";
+            case Chromatic.F: return "F";
+            case Chromatic.FF: return "FF";
+            case Chromatic.G: return "G";
+            case Chromatic.GG: return "GG";
+            case Chromatic.A: return "A";
+            case Chromatic.AA: return "AA";
+            case Chromatic.B: return "B";
+        }
+    }
+
     static get all(): Chromatic[] {
         return [
             Chromatic.C,

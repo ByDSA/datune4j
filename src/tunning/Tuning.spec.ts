@@ -1,4 +1,3 @@
-import { Chromatic } from "../degrees/Chromatic";
 import * as precalc from "../precalc";
 import { ChromaticSymbolicPitch } from "./ChromaticSymbolicPitch";
 import { ConcertPitch } from "./ConcertPitch";
@@ -8,6 +7,7 @@ precalc.diatonicAlts();
 precalc.chromaticSymbolicPitches();
 precalc.concertPitches();
 precalc.temperaments();
+precalc.settings();
 precalc.tunings();
 
 test('Tuning - EQUAL_440 - A4 = 440', () => {
@@ -46,7 +46,7 @@ test('Tuning - EQUAL_440 - GG4', () => {
     expect(actual).toBeCloseTo(expected);
 });
 
-test('Tuning - JUST_440 - A4 = 440', () => {
+test('Tuning - LIMIT_5_SYMMETRIC_N1_440 - A4 = 440', () => {
     let symbolicPitch = ConcertPitch.A440.symbolicPitch;
 
     let actual: number = Tuning.LIMIT_5_SYMMETRIC_N1_440.getFrequency(symbolicPitch);
@@ -55,7 +55,7 @@ test('Tuning - JUST_440 - A4 = 440', () => {
     expect(actual).toEqual(expected);
 });
 
-test('Tuning - JUST_440 - E4 = 330', () => {
+test('Tuning - LIMIT_5_SYMMETRIC_N1_440 - E4 = 330', () => {
     let symbolicPitch = ChromaticSymbolicPitch.E4;
 
     let actual: number = Tuning.LIMIT_5_SYMMETRIC_N1_440.getFrequency(symbolicPitch);

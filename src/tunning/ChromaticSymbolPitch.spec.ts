@@ -39,6 +39,18 @@ test('ChromaticSymbolPitch - precalc - C0', () => {
     expect(octave).toBe(expectedOctave);
 });
 
+test('ChromaticSymbolPitch - precalc - C_S1', () => {
+    let chromaticSymbolicPitch = ChromaticSymbolicPitch.C_S1;
+    let chromatic: Chromatic = chromaticSymbolicPitch.chromatic;
+    let octave = chromaticSymbolicPitch.octave;
+
+    let expectedChromatic: Chromatic = Chromatic.C;
+    let expectedOctave: number = -1;
+
+    expect(chromatic).toBe(expectedChromatic);
+    expect(octave).toBe(expectedOctave);
+});
+
 test('ChromaticSymbolPitch - precalc - G8', () => {
     let chromaticSymbolicPitch = ChromaticSymbolicPitch.G8;
     let chromatic: Chromatic = chromaticSymbolicPitch.chromatic;
@@ -46,6 +58,18 @@ test('ChromaticSymbolPitch - precalc - G8', () => {
 
     let expectedChromatic: Chromatic = Chromatic.G;
     let expectedOctave: number = 8;
+
+    expect(chromatic).toBe(expectedChromatic);
+    expect(octave).toBe(expectedOctave);
+});
+
+test('ChromaticSymbolPitch - precalc - G9', () => {
+    let chromaticSymbolicPitch = ChromaticSymbolicPitch.G9;
+    let chromatic: Chromatic = chromaticSymbolicPitch.chromatic;
+    let octave = chromaticSymbolicPitch.octave;
+
+    let expectedChromatic: Chromatic = Chromatic.G;
+    let expectedOctave: number = 9;
 
     expect(chromatic).toBe(expectedChromatic);
     expect(octave).toBe(expectedOctave);

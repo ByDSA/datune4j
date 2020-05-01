@@ -1,12 +1,13 @@
+import { Settings } from '../settings/Settings';
 import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
 import { IntervalPitch } from '../interval/IntervalPitch';
 import { IntervalSymbolic } from '../interval/IntervalSymbolic';
-import { Settings } from 'settings/Settings';
 
 export abstract class Temperament {
     public static ET12;
     public static LIMIT_5_SYMMETRIC_N1;
     public static LIMIT_5_SYMMETRIC_N2;
+    public static PYTHAGOREAN;
 
     public abstract getIntervalPitch(interval: IntervalSymbolic): IntervalPitch;
 
@@ -74,13 +75,57 @@ export abstract class Temperament {
                 throw new Error();
             }
         });
+
+
+        this.PYTHAGOREAN = new (class extends Temperament {
+            public getIntervalPitch(interval: IntervalSymbolic): IntervalPitch {
+                if (interval instanceof IntervalDiatonicAlt) {
+                    switch (interval) {
+                        case IntervalDiatonicAlt.PERFECT_UNISON: return IntervalPitch.UNISON;
+                        case IntervalDiatonicAlt.MINOR_SECOND: return IntervalPitch.PYTHAGOREAN.MINOR_SECOND;
+                        case IntervalDiatonicAlt.DIMINISHED_THIRD: return IntervalPitch.PYTHAGOREAN.DIMINISHED_THIRD;
+                        case IntervalDiatonicAlt.MAJOR_SECOND: return IntervalPitch.PYTHAGOREAN.MAJOR_SECOND;
+                        case IntervalDiatonicAlt.MINOR_THIRD: return IntervalPitch.PYTHAGOREAN.MINOR_THIRD;
+                        case IntervalDiatonicAlt.AUGMENTED_SECOND: return IntervalPitch.PYTHAGOREAN.AUGMENTED_SECOND;
+                        case IntervalDiatonicAlt.DIMINISHED_FOURTH: return IntervalPitch.PYTHAGOREAN.DIMINISHED_FOURTH;
+                        case IntervalDiatonicAlt.MAJOR_THIRD: return IntervalPitch.PYTHAGOREAN.MAJOR_THIRD;
+                        case IntervalDiatonicAlt.PERFECT_FOURTH: return IntervalPitch.PYTHAGOREAN.PERFECT_FOURTH;
+                        case IntervalDiatonicAlt.AUGMENTED_THIRD: return IntervalPitch.PYTHAGOREAN.AUGMENTED_THIRD;
+                        case IntervalDiatonicAlt.DIMINISHED_FIFTH: return IntervalPitch.PYTHAGOREAN.DIMINISHED_FIFTH;
+                        case IntervalDiatonicAlt.AUGMENTED_FOURTH: return IntervalPitch.PYTHAGOREAN.AUGMENTED_FOURTH;
+                        case IntervalDiatonicAlt.DIMINISHED_SIXTH: return IntervalPitch.PYTHAGOREAN.DIMINISHED_SIXTH;
+                        case IntervalDiatonicAlt.PERFECT_FIFTH: return IntervalPitch.PYTHAGOREAN.PERFECT_FIFTH;
+                        case IntervalDiatonicAlt.MINOR_SIXTH: return IntervalPitch.PYTHAGOREAN.MINOR_SIXTH;
+                        case IntervalDiatonicAlt.AUGMENTED_FIFTH: return IntervalPitch.PYTHAGOREAN.AUGMENTED_FIFTH;
+                        case IntervalDiatonicAlt.DIMINISHED_SEVENTH: return IntervalPitch.PYTHAGOREAN.DIMINISHED_SEVENTH;
+                        case IntervalDiatonicAlt.MAJOR_SIXTH: return IntervalPitch.PYTHAGOREAN.MAJOR_SIXTH;
+                        case IntervalDiatonicAlt.MINOR_SEVENTH: return IntervalPitch.PYTHAGOREAN.MINOR_SEVENTH;
+                        case IntervalDiatonicAlt.AUGMENTED_SIXTH: return IntervalPitch.PYTHAGOREAN.AUGMENTED_SIXTH;
+                        case IntervalDiatonicAlt.DIMINISHED_OCTAVE: return IntervalPitch.PYTHAGOREAN.DIMINISHED_OCTAVE;
+                        case IntervalDiatonicAlt.MAJOR_SEVENTH: return IntervalPitch.PYTHAGOREAN.MAJOR_SEVENTH;
+                    }
+                }
+
+                throw new Error();
+            }
+        });
     }
 
     public toString(): string {
-        switch(this) {
+        switch (this) {
             case Temperament.ET12: return Settings.lang.temperaments.ET12;
             case Temperament.LIMIT_5_SYMMETRIC_N1: return Settings.lang.temperaments.LIMIT_5_SYMMETRIC_N1;
-            case Temperament.LIMIT_5_SYMMETRIC_N2: return Settings.lang.temperaments.LIMIT_5_SYMMETRIC_N1;
+            case Temperament.LIMIT_5_SYMMETRIC_N2: return Settings.lang.temperaments.LIMIT_5_SYMMETRIC_N2;
         }
+    }
+
+    public hashCode(): string {
+        switch (this) {
+            case Temperament.ET12: return "ET12";
+            case Temperament.LIMIT_5_SYMMETRIC_N1: return "LIMIT_5_SYMMETRIC_N1";
+            case Temperament.LIMIT_5_SYMMETRIC_N2: return "LIMIT_5_SYMMETRIC_N2";
+        }
+
+        throw new Error();
     }
 }

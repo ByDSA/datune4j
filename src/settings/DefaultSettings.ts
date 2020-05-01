@@ -6,11 +6,11 @@ import { DiatonicAlt } from '../degrees/DiatonicAlt';
 import { Language } from '../lang/Language';
 import { Scale } from '../tonality/Scale';
 import { Tonality } from '../tonality/Tonality';
+import { ConcertPitch } from '../tunning/ConcertPitch';
+import { Temperament } from '../tunning/Temperament';
+import { Tuning } from '../tunning/Tuning';
 import { Settings } from './Settings';
 import { SettingsInterface } from './SettingsInterface';
-import { Temperament } from 'tunning/Temperament';
-import { Tuning } from 'tunning/Tuning';
-import { ConcertPitch } from 'tunning/ConcertPitch';
 
 export const DefaultSettings: SettingsInterface = {
     default: {

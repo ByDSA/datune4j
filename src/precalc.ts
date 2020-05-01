@@ -12,6 +12,7 @@ import { DegreeFunction } from './function/DegreeFunction';
 import { IntervalDiatonic } from './interval/IntervalDiatonic';
 import { IntervalDiatonicAlt } from './interval/IntervalDiatonicAlt';
 import { IntervalPitch } from './interval/IntervalPitch';
+import { MidiNote } from './midi/MidiNote';
 import { DefaultSettings } from './settings/DefaultSettings';
 import { Settings } from './settings/Settings';
 import { Scale } from './tonality/Scale';
@@ -20,7 +21,7 @@ import { Tonality } from './tonality/Tonality';
 import { ChromaticSymbolicPitch } from './tunning/ChromaticSymbolicPitch';
 import { ConcertPitch } from './tunning/ConcertPitch';
 import { Temperament } from './tunning/Temperament';
-import { Tuning as Tuning } from './tunning/Tuning';
+import { Tuning } from './tunning/Tuning';
 
 // DIATONICS
 export function diatonics() {
@@ -246,6 +247,7 @@ export function tunings() {
         return;
 
     concertPitches();
+    temperaments();
 
     (<any>Tuning).initialize();
 }
@@ -256,6 +258,19 @@ export function intervalPitches() {
         return;
 
     (<any>IntervalPitch).initialize();
+}
+
+// PITCH MIDI
+export function midiNotes() {
+    if (MidiNote.C5)
+        return;
+
+    chromaticSymbolicPitches();
+    intervalDiatonicAlts();
+    diatonicAlts();
+    tunings();
+
+    (<any>MidiNote).initialize();
 }
 
 export function all() {
@@ -287,6 +302,7 @@ export function all() {
     tunings();
     intervalPitches();
 
+    midiNotes();
 
     settings();
 }
