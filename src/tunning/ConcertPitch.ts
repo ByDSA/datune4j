@@ -9,7 +9,10 @@ export class ConcertPitch {
 
     private static immutablesCache = new ImmutablesCache<ConcertPitch, HashingObject>(
         function (hashingObject: HashingObject): string {
-            return "" + hashingObject.symbolicPitch + hashingObject.frequency;
+            let symbolicPitchHashCode: string = (<any>hashingObject.symbolicPitch).hashCode();
+            if (!symbolicPitchHashCode)
+                throw new Error();
+            return symbolicPitchHashCode + hashingObject.frequency;
         },
         function (concertPitch: ConcertPitch): HashingObject {
             return { frequency: concertPitch.frequency, symbolicPitch: concertPitch.symbolicPitch };
@@ -35,7 +38,11 @@ export class ConcertPitch {
     }
 
     public toString(): string {
-        return ConcertPitch.immutablesCache.getHash(this);
+        return "" + this.symbolicPitch + this.frequency;
+    }
+
+    public hashCode(): string {
+        return ConcertPitch.immutablesCache.getHash({ frequency: this.frequency, symbolicPitch: this.symbolicPitch });
     }
 
     private static initialize() {
