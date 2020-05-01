@@ -5,6 +5,7 @@ import { SymbolicPitch } from './SymbolicPitch';
 type HashingObject = { frequency: number, symbolicPitch: SymbolicPitch };
 export class ConcertPitch {
     public static A440;
+    public static A432;
 
     private static immutablesCache = new ImmutablesCache<ConcertPitch, HashingObject>(
         function (hashingObject: HashingObject): string {
@@ -39,5 +40,6 @@ export class ConcertPitch {
 
     private static initialize() {
         this.A440 = ConcertPitch.from(440, ChromaticSymbolicPitch.A4);
+        this.A432 = ConcertPitch.from(432, ChromaticSymbolicPitch.A4);
     }
 }
