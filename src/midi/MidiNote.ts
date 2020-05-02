@@ -211,6 +211,19 @@ export class MidiNote {
         this._precalcFrequency = this._precalcFrequencyWithoutDetuned * Math.pow(2, this.cents/1200);
     }
 
+    public toString(): string {
+        return this.chromaticSymbolicPitch.chromatic.toString() + (this.chromaticSymbolicPitch.octave+1) + this.getCentsTxt();
+    }
+
+    private getCentsTxt(): string {
+        if (this.cents > 0)
+          return " (+" + this.cents + ")";
+        else if (this.cents < 0)
+          return " (" + this.cents.toString() + ")";
+        else
+          return "";
+      }
+
     private static initialize() {
         mainLoop: for (let i = 0; i <= 10; i++) {
             for (const chromatic of Chromatic.all) {
