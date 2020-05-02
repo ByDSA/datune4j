@@ -1,4 +1,5 @@
 import { ImmutablesCache } from '../common/ImmutablesCache';
+import { BPM } from './BPM';
 
 type HashingObject = number;
 export class MusicalDuration {
@@ -35,6 +36,14 @@ export class MusicalDuration {
 
     public static from(value: number) {
         return MusicalDuration.immutablesCache.getOrCreate(value);
+    }
+
+    public static fromMillisAndBPM(millis: number, bpm: BPM) {
+        let millisBeat = bpm.getMillis(bpm.beat);
+        let millisWhole = millisBeat / bpm.beat.value;
+        let value = millis / millisWhole;
+        
+        return MusicalDuration.from(value);
     }
 
     get value(): number {

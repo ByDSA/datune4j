@@ -1,6 +1,8 @@
 import * as precalc from "../precalc";
+import { BPM } from "./BPM";
 import { MusicalDuration } from "./MusicalDuration";
 precalc.musicalDurations();
+precalc.bpms();
 
 test('MusicalDuration - precalc - QUARTER', () => {
     let value: number = MusicalDuration.QUARTER.value;
@@ -32,6 +34,14 @@ test('MusicalDuration - precalc - ZERO', () => {
     let expected = 0;
 
     expect(value).toEqual(expected);
+});
+
+test('MusicalDuration - fromMillisAndBPM - 1000ms in QUARTER_120 = HALF', () => {
+    let bpm: BPM = BPM.QUARTER_120;
+    let actual: MusicalDuration = MusicalDuration.fromMillisAndBPM(1000, bpm);
+    let expected = MusicalDuration.HALF;
+
+    expect(actual).toEqual(expected);
 });
 
 test('MusicalDuration - getAdd - QUARTER + QUARTER = HALF', () => {
