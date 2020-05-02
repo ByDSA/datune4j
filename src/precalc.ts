@@ -12,7 +12,7 @@ import { DegreeFunction } from './function/DegreeFunction';
 import { IntervalDiatonic } from './interval/IntervalDiatonic';
 import { IntervalDiatonicAlt } from './interval/IntervalDiatonicAlt';
 import { IntervalPitch } from './interval/IntervalPitch';
-import { MidiNote } from './midi/MidiNote';
+import { MidiPitch } from './midi/MidiPitch';
 import { DefaultSettings } from './settings/DefaultSettings';
 import { Settings } from './settings/Settings';
 import { Scale } from './tonality/Scale';
@@ -264,8 +264,8 @@ export function intervalPitches() {
 }
 
 // PITCH MIDI
-export function midiNotes() {
-    if (MidiNote.C5)
+export function midiPitches() {
+    if (MidiPitch.C5)
         return;
 
     chromaticSymbolicPitches();
@@ -273,7 +273,7 @@ export function midiNotes() {
     diatonicAlts();
     tunings();
 
-    (<any>MidiNote).initialize();
+    (<any>MidiPitch).initialize();
 }
 
 export function all() {
@@ -305,7 +305,7 @@ export function all() {
     tunings();
     intervalPitches();
 
-    midiNotes();
+    midiPitches();
 
     settings();
 }
