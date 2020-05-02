@@ -208,7 +208,7 @@ export class MidiNote {
 
     private precalcFreq() {
         this._precalcFrequencyWithoutDetuned = Tuning.EQUAL_440.getFrequency(this.chromaticSymbolicPitch);
-        this._precalcFrequency = this._precalcFrequencyWithoutDetuned + this.cents;
+        this._precalcFrequency = this._precalcFrequencyWithoutDetuned * Math.pow(2, this.cents/1200);
     }
 
     private static initialize() {

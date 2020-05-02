@@ -1,11 +1,9 @@
 import * as precalc from "../precalc";
 import { ChromaticSymbolicPitch } from "../tunning/ChromaticSymbolicPitch";
-import { MidiNote } from "./MidiNote";
-import { Tuning } from "../tunning/Tuning";
-import { IntervalDiatonicAlt } from "../interval/IntervalDiatonicAlt";
 import { SymbolicPitch } from "../tunning/SymbolicPitch";
+import { Tuning } from "../tunning/Tuning";
+import { MidiNote } from "./MidiNote";
 precalc.midiNotes();
-
 
 test('MidiNote - PRECALC', () => {
     let midiNote = MidiNote.C5;
@@ -53,6 +51,14 @@ test('MidiNote - frequency - C0', () => {
     let midiNote = MidiNote.C0;
     let frequency: number = midiNote.frequency;
     let expected: number = 8.18;
+
+    expect(frequency).toBeCloseTo(expected);
+});
+
+test('MidiNote - frequency - B1', () => {
+    let midiNote = MidiNote.B2;
+    let frequency: number = midiNote.frequency;
+    let expected: number = 61.74;
 
     expect(frequency).toBeCloseTo(expected);
 });
@@ -217,7 +223,7 @@ test('MidiNote - fromFrequency - 440 = A5', () => {
 });
 
 test('MidiNote - fromFrequency - LIMIT_5_SYMMETRIC_N1_440 E5 = E5 + 2 cents', () => {
-    let symbolicPitch : SymbolicPitch = ChromaticSymbolicPitch.E5;
+    let symbolicPitch: SymbolicPitch = ChromaticSymbolicPitch.E5;
     let freq: number = Tuning.LIMIT_5_SYMMETRIC_N1_440.getFrequency(symbolicPitch);
     let midiNote = MidiNote.fromFrequency(freq);
     let expectedDetuned = 2;
@@ -227,11 +233,38 @@ test('MidiNote - fromFrequency - LIMIT_5_SYMMETRIC_N1_440 E5 = E5 + 2 cents', ()
 });
 
 test('MidiNote - fromFrequency - LIMIT_5_SYMMETRIC_N1_440 FF5 = FF5 - 16 cents', () => {
-    let symbolicPitch : SymbolicPitch = ChromaticSymbolicPitch.FF5;
+    let symbolicPitch: SymbolicPitch = ChromaticSymbolicPitch.FF5;
     let freq: number = Tuning.LIMIT_5_SYMMETRIC_N1_440.getFrequency(symbolicPitch);
     let midiNote = MidiNote.fromFrequency(freq);
     let expectedCents = -16;
 
     expect(midiNote.chromaticSymbolicPitch).toEqual(symbolicPitch);
     expect(midiNote.cents).toEqual(expectedCents);
+});
+
+test('MidiNote - fromFrequency - 60 ~ 60 ', () => {
+    let expected: number = 60;
+    let midiNote = MidiNote.fromFrequency(expected);
+    let frequency: number = midiNote.frequency;
+
+    expect(frequency).toBeCloseTo(expected, 0);
+});
+
+test('MidiNote - fromFrequency - 60 = ChromaticSymbolicPitch.B1 - 49 cents', () => {
+    let expected: number = 60;
+    let midiNote = MidiNote.fromFrequency(expected);
+    let chromaticSymbolicPitch: ChromaticSymbolicPitch = midiNote.chromaticSymbolicPitch;
+    let cents: number = midiNote.cents;
+
+    expect(chromaticSymbolicPitch).toEqual(ChromaticSymbolicPitch.B1);
+    expect(cents).toEqual(-49);
+});
+
+test('MidiNote - from - A5 -1200 cents', () => {
+    let midiNote = MidiNote.from(ChromaticSymbolicPitch.A5, -1200);
+    let chromaticSymbolicPitch: ChromaticSymbolicPitch = midiNote.chromaticSymbolicPitch;
+    let cents: number = midiNote.cents;
+
+    expect(chromaticSymbolicPitch).toEqual(ChromaticSymbolicPitch.A5);
+    expect(cents).toEqual(-1200);
 });
