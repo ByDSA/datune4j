@@ -22,6 +22,8 @@ import { ChromaticSymbolicPitch } from './tunning/ChromaticSymbolicPitch';
 import { ConcertPitch } from './tunning/ConcertPitch';
 import { Temperament } from './tunning/Temperament';
 import { Tuning } from './tunning/Tuning';
+import { BPM } from './tempo/BPM';
+import { MusicalDuration } from './tempo/MusicalDuration';
 
 // DIATONICS
 export function diatonics() {
@@ -276,6 +278,24 @@ export function midiPitches() {
     (<any>MidiPitch).initialize();
 }
 
+// Musical Duration
+export function musicalDurations() {
+    if (MusicalDuration.QUARTER)
+        return;
+
+    (<any>MusicalDuration).initialize();
+}
+
+// BPM
+export function bpms() {
+    if (BPM.QUARTER_120)
+        return;
+
+    musicalDurations();
+
+    (<any>BPM).initialize();
+}
+
 export function all() {
     diatonics();
     intervalDiatonics();
@@ -306,6 +326,9 @@ export function all() {
     intervalPitches();
 
     midiPitches();
+
+    musicalDurations();
+    bpms();
 
     settings();
 }
