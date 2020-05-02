@@ -68,6 +68,9 @@ export function intervalDiatonicAlts() {
 export function chromatics() {
     if (Chromatic.C)
         return;
+
+    diatonicAlts(); // For naming
+
     (<any>Chromatic).initialize();
 }
 

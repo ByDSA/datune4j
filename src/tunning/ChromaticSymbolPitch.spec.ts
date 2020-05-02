@@ -1,6 +1,8 @@
 import { Chromatic } from "../degrees/Chromatic";
 import * as precalc from "../precalc";
 import { ChromaticSymbolicPitch } from "./ChromaticSymbolicPitch";
+import { Settings } from "../settings/Settings";
+import { Language } from "../lang/Language";
 precalc.chromaticSymbolicPitches();
 
 test('ChromaticSymbolPitch - precalc - C5', () => {
@@ -108,4 +110,23 @@ test('ChromaticSymbolPitch - from - not cached value', () => {
     expect(actual.octave).toBe(100);
     expect(actual.chromatic).toBe(chromatic);
     expect(actual).toBe(actual2);
+});
+
+test('ChromaticSymbolPitch - toString - ENG - A4', () => {
+    let chromaticSymbolicPitch = ChromaticSymbolicPitch.A4;
+    Settings.lang = Language.ENG;
+    let str: string = chromaticSymbolicPitch.toString();
+    let expected = "A4";
+
+    expect(str).toBe(expected);
+});
+
+
+test('ChromaticSymbolPitch - toString - ESP - A4', () => {
+    let chromaticSymbolicPitch = ChromaticSymbolicPitch.A4;
+    Settings.lang = Language.ESP;
+    let str: string = chromaticSymbolicPitch.toString();
+    let expected = "La4";
+
+    expect(str).toBe(expected);
 });
