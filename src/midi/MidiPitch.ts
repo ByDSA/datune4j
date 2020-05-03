@@ -1,10 +1,11 @@
 import { ImmutablesCache } from '../common/ImmutablesCache';
 import { Chromatic } from "../degrees/Chromatic";
-import { ChromaticSymbolicPitch } from "../tunning/ChromaticSymbolicPitch";
+import { ChromaticSymbolicPitch } from "../pitch/symbolic/ChromaticSymbolicPitch";
+import { Pitch } from "../pitch/Pitch";
 import { Tuning } from "../tunning/Tuning";
 
 type HashingObject = { chromaticSymbolicPitch: ChromaticSymbolicPitch, detuned: number };
-export class MidiPitch {
+export class MidiPitch implements Pitch {
     public static MIN: MidiPitch;
 
     public static C0: MidiPitch;
@@ -208,21 +209,21 @@ export class MidiPitch {
 
     private precalcFreq() {
         this._precalcFrequencyWithoutDetuned = Tuning.EQUAL_440.getFrequency(this.chromaticSymbolicPitch);
-        this._precalcFrequency = this._precalcFrequencyWithoutDetuned * Math.pow(2, this.cents/1200);
+        this._precalcFrequency = this._precalcFrequencyWithoutDetuned * Math.pow(2, this.cents / 1200);
     }
 
     public toString(): string {
-        return this.chromaticSymbolicPitch.chromatic.toString() + (this.chromaticSymbolicPitch.octave+1) + this.getCentsTxt();
+        return this.chromaticSymbolicPitch.chromatic.toString() + (this.chromaticSymbolicPitch.octave + 1) + this.getCentsTxt();
     }
 
     private getCentsTxt(): string {
         if (this.cents > 0)
-          return " (+" + this.cents + ")";
+            return " (+" + this.cents + ")";
         else if (this.cents < 0)
-          return " (" + this.cents.toString() + ")";
+            return " (" + this.cents.toString() + ")";
         else
-          return "";
-      }
+            return "";
+    }
 
     private static initialize() {
         mainLoop: for (let i = 0; i <= 10; i++) {

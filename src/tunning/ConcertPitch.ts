@@ -1,9 +1,10 @@
 import { ImmutablesCache } from '../common/ImmutablesCache';
-import { ChromaticSymbolicPitch } from './ChromaticSymbolicPitch';
-import { SymbolicPitch } from './SymbolicPitch';
+import { ChromaticSymbolicPitch } from '../pitch/symbolic/ChromaticSymbolicPitch';
+import { SymbolicPitch } from '../pitch/symbolic/SymbolicPitch';
+import { Pitch } from '../pitch/Pitch';
 
 type HashingObject = { frequency: number, symbolicPitch: SymbolicPitch };
-export class ConcertPitch {
+export class ConcertPitch implements Pitch {
     public static A440;
     public static A432;
 
