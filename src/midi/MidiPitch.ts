@@ -1,10 +1,10 @@
 import { ImmutablesCache } from '../common/ImmutablesCache';
 import { Chromatic } from "../degrees/Chromatic";
-import { SPN } from "../pitch/symbolic/SPN";
 import { Pitch } from "../pitch/Pitch";
+import { SPN } from "../pitch/symbolic/SPN";
 import { Tuning } from "../tuning/Tuning";
 
-type HashingObject = { chromaticSymbolicPitch: SPN, detuned: number };
+type HashingObject = { spn: SPN, detuned: number };
 export class MidiPitch implements Pitch {
     public static MIN: MidiPitch;
 
@@ -141,21 +141,21 @@ export class MidiPitch implements Pitch {
 
     private static immutablesCache = new ImmutablesCache<MidiPitch, HashingObject>(
         function (hashingObject: HashingObject): string {
-            return hashingObject.chromaticSymbolicPitch.hashCode() + "-" + hashingObject.detuned;
+            return hashingObject.spn.hashCode() + "-" + hashingObject.detuned;
         },
         function (midiNote: MidiPitch): HashingObject {
-            return { chromaticSymbolicPitch: midiNote.spn, detuned: midiNote.cents };
+            return { spn: midiNote.spn, detuned: midiNote.cents };
         },
         function (hashingObject: HashingObject): MidiPitch {
-            return new MidiPitch(hashingObject.chromaticSymbolicPitch, hashingObject.detuned);
+            return new MidiPitch(hashingObject.spn, hashingObject.detuned);
         }
     );
 
     private constructor(private _chromaticSymbolicPitch: SPN, private _cents: number) {
     }
 
-    public static from(chromaticSymbolicPitch: SPN, detuned: number) {
-        return this.immutablesCache.getOrCreate({ chromaticSymbolicPitch: chromaticSymbolicPitch, detuned: detuned });
+    public static from(spn: SPN, detuned: number) {
+        return this.immutablesCache.getOrCreate({ spn: spn, detuned: detuned });
     }
 
     public static fromFrequency(f: number): MidiPitch {
@@ -207,13 +207,17 @@ export class MidiPitch implements Pitch {
         return 69 + 12 * Math.log2(this._precalcFrequencyWithoutDetuned / 440);
     }
 
+    get octave(): number {
+        return this.spn.octave + 1;
+    }
+
     private precalcFreq() {
         this._precalcFrequencyWithoutDetuned = Tuning.EQUAL_440.getFrequency(this.spn);
         this._precalcFrequency = this._precalcFrequencyWithoutDetuned * Math.pow(2, this.cents / 1200);
     }
 
     public toString(): string {
-        return this.spn.chromatic.toString() + (this.spn.octave + 1) + this.getCentsTxt();
+        return this.spn.chromatic.toString() + this.octave + this.getCentsTxt();
     }
 
     private getCentsTxt(): string {
