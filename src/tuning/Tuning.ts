@@ -71,7 +71,7 @@ export class Tuning {
     }
 
     public toString(): string {
-        return Tuning.immutablesCache.getHash(this);
+        return this.concertPitch + " " + this.temperament;
     }
 
     private static initialize() {

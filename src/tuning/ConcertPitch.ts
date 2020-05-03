@@ -1,7 +1,7 @@
 import { ImmutablesCache } from '../common/ImmutablesCache';
+import { Pitch } from '../pitch/Pitch';
 import { SPN } from '../pitch/symbolic/SPN';
 import { SymbolicPitch } from '../pitch/symbolic/SymbolicPitch';
-import { Pitch } from '../pitch/Pitch';
 
 type HashingObject = { frequency: number, symbolicPitch: SymbolicPitch };
 export class ConcertPitch implements Pitch {
@@ -39,7 +39,7 @@ export class ConcertPitch implements Pitch {
     }
 
     public toString(): string {
-        return "" + this.symbolicPitch + this.frequency;
+        return this.symbolicPitch + "-" + this.frequency;
     }
 
     public hashCode(): string {
