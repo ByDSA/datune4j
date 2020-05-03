@@ -1,5 +1,5 @@
 import { ImmutablesCache } from '../common/ImmutablesCache';
-import { ChromaticSymbolicPitch } from '../pitch/symbolic/ChromaticSymbolicPitch';
+import { SPN } from '../pitch/symbolic/SPN';
 import { SymbolicPitch } from '../pitch/symbolic/SymbolicPitch';
 import { Pitch } from '../pitch/Pitch';
 
@@ -47,7 +47,7 @@ export class ConcertPitch implements Pitch {
     }
 
     private static initialize() {
-        this.A440 = ConcertPitch.from(440, ChromaticSymbolicPitch.A4);
-        this.A432 = ConcertPitch.from(432, ChromaticSymbolicPitch.A4);
+        this.A440 = ConcertPitch.from(440, SPN.A4);
+        this.A432 = ConcertPitch.from(432, SPN.A4);
     }
 }

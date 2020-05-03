@@ -11,19 +11,19 @@ import { DiatonicDegree } from './degrees/scale/DiatonicDegree';
 import { DegreeFunction } from './function/DegreeFunction';
 import { IntervalDiatonic } from './interval/IntervalDiatonic';
 import { IntervalDiatonicAlt } from './interval/IntervalDiatonicAlt';
-import { IntervalPitch } from './tuning/IntervalPitch';
 import { MidiPitch } from './midi/MidiPitch';
+import { SPN } from './pitch/symbolic/SPN';
 import { DefaultSettings } from './settings/DefaultSettings';
 import { Settings } from './settings/Settings';
+import { BPM } from './tempo/BPM';
+import { MusicalDuration } from './tempo/MusicalDuration';
 import { Scale } from './tonality/Scale';
 import { SourceScaleUtils } from './tonality/SourceScaleUtils';
 import { Tonality } from './tonality/Tonality';
-import { ChromaticSymbolicPitch } from './pitch/symbolic/ChromaticSymbolicPitch';
 import { ConcertPitch } from './tuning/ConcertPitch';
+import { IntervalPitch } from './tuning/IntervalPitch';
 import { Temperament } from './tuning/Temperament';
 import { Tuning } from './tuning/Tuning';
-import { BPM } from './tempo/BPM';
-import { MusicalDuration } from './tempo/MusicalDuration';
 
 // DIATONICS
 export function diatonics() {
@@ -219,13 +219,13 @@ export function temperaments() {
 }
 
 // CHROMATIC SYMBOLIC PITCHES
-export function chromaticSymbolicPitches() {
-    if (ChromaticSymbolicPitch.A4)
+export function spns() {
+    if (SPN.A4)
         return;
 
     chromatics();
 
-    (<any>ChromaticSymbolicPitch).initialize();
+    (<any>SPN).initialize();
 }
 
 // INTERVAL DIATONIC
@@ -241,7 +241,7 @@ export function concertPitches() {
     if (ConcertPitch.A440)
         return;
 
-    chromaticSymbolicPitches();
+    spns();
 
     (<any>ConcertPitch).initialize();
 }
@@ -270,7 +270,7 @@ export function midiPitches() {
     if (MidiPitch.C5)
         return;
 
-    chromaticSymbolicPitches();
+    spns();
     intervalDiatonicAlts();
     diatonicAlts();
     tunings();
@@ -319,7 +319,7 @@ export function all() {
 
     degreeFunctions();
 
-    chromaticSymbolicPitches();
+    spns();
     concertPitches();
     temperaments();
     tunings();

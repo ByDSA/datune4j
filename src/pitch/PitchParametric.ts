@@ -1,11 +1,15 @@
+import { Tuning } from "../tuning/Tuning";
 import { Pitch } from "./Pitch";
 import { SymbolicPitch } from "./symbolic/SymbolicPitch";
-import { Tuning } from "../tuning/Tuning";
 
 export class PitchParametric implements Pitch {
     private _frequency: number;
 
     private constructor(private _symbolicPitch: SymbolicPitch, private _tuning: Tuning) {
+    }
+
+    public static from(symbolicPitch: SymbolicPitch, tuning: Tuning) {
+        return new PitchParametric(symbolicPitch, tuning);
     }
 
     get symbolicPitch(): SymbolicPitch {

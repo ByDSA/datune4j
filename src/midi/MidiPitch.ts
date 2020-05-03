@@ -1,10 +1,10 @@
 import { ImmutablesCache } from '../common/ImmutablesCache';
 import { Chromatic } from "../degrees/Chromatic";
-import { ChromaticSymbolicPitch } from "../pitch/symbolic/ChromaticSymbolicPitch";
+import { SPN } from "../pitch/symbolic/SPN";
 import { Pitch } from "../pitch/Pitch";
 import { Tuning } from "../tuning/Tuning";
 
-type HashingObject = { chromaticSymbolicPitch: ChromaticSymbolicPitch, detuned: number };
+type HashingObject = { chromaticSymbolicPitch: SPN, detuned: number };
 export class MidiPitch implements Pitch {
     public static MIN: MidiPitch;
 
@@ -144,17 +144,17 @@ export class MidiPitch implements Pitch {
             return hashingObject.chromaticSymbolicPitch.hashCode() + "-" + hashingObject.detuned;
         },
         function (midiNote: MidiPitch): HashingObject {
-            return { chromaticSymbolicPitch: midiNote.chromaticSymbolicPitch, detuned: midiNote.cents };
+            return { chromaticSymbolicPitch: midiNote.spn, detuned: midiNote.cents };
         },
         function (hashingObject: HashingObject): MidiPitch {
             return new MidiPitch(hashingObject.chromaticSymbolicPitch, hashingObject.detuned);
         }
     );
 
-    private constructor(private _chromaticSymbolicPitch: ChromaticSymbolicPitch, private _cents: number) {
+    private constructor(private _chromaticSymbolicPitch: SPN, private _cents: number) {
     }
 
-    public static from(chromaticSymbolicPitch: ChromaticSymbolicPitch, detuned: number) {
+    public static from(chromaticSymbolicPitch: SPN, detuned: number) {
         return this.immutablesCache.getOrCreate({ chromaticSymbolicPitch: chromaticSymbolicPitch, detuned: detuned });
     }
 
@@ -176,12 +176,12 @@ export class MidiPitch implements Pitch {
         let octave = Math.floor(code / Chromatic.NUMBER);
         let chromaticInt = code - Chromatic.NUMBER * octave;
         let chromatic: Chromatic = Chromatic.fromInt(chromaticInt);
-        let chromaticSymbolicPitch: ChromaticSymbolicPitch = ChromaticSymbolicPitch.from(chromatic, octave - 1)
+        let chromaticSymbolicPitch: SPN = SPN.from(chromatic, octave - 1)
 
         return this.from(chromaticSymbolicPitch, cents);
     }
 
-    get chromaticSymbolicPitch(): ChromaticSymbolicPitch {
+    get spn(): SPN {
         return this._chromaticSymbolicPitch;
     }
 
@@ -208,12 +208,12 @@ export class MidiPitch implements Pitch {
     }
 
     private precalcFreq() {
-        this._precalcFrequencyWithoutDetuned = Tuning.EQUAL_440.getFrequency(this.chromaticSymbolicPitch);
+        this._precalcFrequencyWithoutDetuned = Tuning.EQUAL_440.getFrequency(this.spn);
         this._precalcFrequency = this._precalcFrequencyWithoutDetuned * Math.pow(2, this.cents / 1200);
     }
 
     public toString(): string {
-        return this.chromaticSymbolicPitch.chromatic.toString() + (this.chromaticSymbolicPitch.octave + 1) + this.getCentsTxt();
+        return this.spn.chromatic.toString() + (this.spn.octave + 1) + this.getCentsTxt();
     }
 
     private getCentsTxt(): string {
@@ -229,9 +229,9 @@ export class MidiPitch implements Pitch {
         mainLoop: for (let i = 0; i <= 10; i++) {
             for (const chromatic of Chromatic.all) {
                 let varStr: string = (<any>chromatic).varStr + i;
-                let varChromaticSymbolicPitch = this.getVarChromaticSymbolicPitch(chromatic, i);
+                let varSPN = this.getVarSPN(chromatic, i);
 
-                this[varStr] = MidiPitch.from(ChromaticSymbolicPitch[varChromaticSymbolicPitch], 0);
+                this[varStr] = MidiPitch.from(SPN[varSPN], 0);
 
                 if (varStr == "G10")
                     break mainLoop;
@@ -242,13 +242,13 @@ export class MidiPitch implements Pitch {
         this.MAX = this.G10;
     }
 
-    private static getVarChromaticSymbolicPitch(chromatic: Chromatic, octave: number): string {
-        let varChromaticSymbolicPitch = (<any>chromatic).varStr;
+    private static getVarSPN(chromatic: Chromatic, octave: number): string {
+        let varSPN = (<any>chromatic).varStr;
         if (octave > 0)
-            varChromaticSymbolicPitch += octave - 1;
+            varSPN += octave - 1;
         else
-            varChromaticSymbolicPitch += "_S" + (-(octave - 1));
+            varSPN += "_S" + (-(octave - 1));
 
-        return varChromaticSymbolicPitch;
+        return varSPN;
     }
 }

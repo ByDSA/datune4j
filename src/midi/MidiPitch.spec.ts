@@ -1,5 +1,5 @@
 import { Language } from "../lang/Language";
-import { ChromaticSymbolicPitch } from "../pitch/symbolic/ChromaticSymbolicPitch";
+import { SPN } from "../pitch/symbolic/SPN";
 import { SymbolicPitch } from "../pitch/symbolic/SymbolicPitch";
 import * as precalc from "../precalc";
 import { Settings } from "../settings/Settings";
@@ -11,10 +11,10 @@ precalc.settings();
 test('MidiPitch - PRECALC', () => {
     let midiNote = MidiPitch.C5;
 
-    let chromaticSymbolicPitch: ChromaticSymbolicPitch = midiNote.chromaticSymbolicPitch;
+    let spn: SPN = midiNote.spn;
     let cents: number = midiNote.cents;
 
-    expect(chromaticSymbolicPitch).toEqual(ChromaticSymbolicPitch.C4);
+    expect(spn).toEqual(SPN.C4);
     expect(cents).toEqual(0);
 });
 
@@ -74,12 +74,12 @@ test('MidiPitch - code - C0', () => {
     expect(code).toEqual(expected);
 });
 
-test('MidiPitch - chromaticSymbolicPitch - C0', () => {
+test('MidiPitch - spn - C0', () => {
     let midiNote = MidiPitch.C0;
-    let chromaticSymbolicPitch: ChromaticSymbolicPitch = midiNote.chromaticSymbolicPitch;
-    let expected: ChromaticSymbolicPitch = ChromaticSymbolicPitch.C_S1;
+    let spn: SPN = midiNote.spn;
+    let expected: SPN = SPN.C_S1;
 
-    expect(chromaticSymbolicPitch).toEqual(expected);
+    expect(spn).toEqual(expected);
 });
 
 test('MidiPitch - code - B0', () => {
@@ -106,20 +106,20 @@ test('MidiPitch - code - A5', () => {
     expect(code).toBeCloseTo(expected);
 });
 
-test('MidiPitch - chromaticSymbolicPitch - A5', () => {
+test('MidiPitch - spn - A5', () => {
     let midiNote = MidiPitch.A5;
-    let chromaticSymbolicPitch: ChromaticSymbolicPitch = midiNote.chromaticSymbolicPitch;
-    let expected: ChromaticSymbolicPitch = ChromaticSymbolicPitch.A4;
+    let spn: SPN = midiNote.spn;
+    let expected: SPN = SPN.A4;
 
-    expect(chromaticSymbolicPitch).toEqual(expected);
+    expect(spn).toEqual(expected);
 });
 
-test('MidiPitch - chromaticSymbolicPitch - C10', () => {
+test('MidiPitch - spn - C10', () => {
     let midiNote = MidiPitch.C10;
-    let chromaticSymbolicPitch: ChromaticSymbolicPitch = midiNote.chromaticSymbolicPitch;
-    let expected: ChromaticSymbolicPitch = ChromaticSymbolicPitch.C9;
+    let spn: SPN = midiNote.spn;
+    let expected: SPN = SPN.C9;
 
-    expect(chromaticSymbolicPitch).toEqual(expected);
+    expect(spn).toEqual(expected);
 });
 
 test('MidiPitch - code - A4', () => {
@@ -226,22 +226,22 @@ test('MidiPitch - fromFrequency - 440 = A5', () => {
 });
 
 test('MidiPitch - fromFrequency - LIMIT_5_SYMMETRIC_N1_440 E5 = E5 + 2 cents', () => {
-    let symbolicPitch: SymbolicPitch = ChromaticSymbolicPitch.E5;
+    let symbolicPitch: SymbolicPitch = SPN.E5;
     let freq: number = Tuning.LIMIT_5_SYMMETRIC_N1_440.getFrequency(symbolicPitch);
     let midiNote = MidiPitch.fromFrequency(freq);
     let expectedDetuned = 2;
 
-    expect(midiNote.chromaticSymbolicPitch).toEqual(symbolicPitch);
+    expect(midiNote.spn).toEqual(symbolicPitch);
     expect(midiNote.cents).toEqual(expectedDetuned);
 });
 
 test('MidiPitch - fromFrequency - LIMIT_5_SYMMETRIC_N1_440 FF5 = FF5 - 16 cents', () => {
-    let symbolicPitch: SymbolicPitch = ChromaticSymbolicPitch.FF5;
+    let symbolicPitch: SymbolicPitch = SPN.FF5;
     let freq: number = Tuning.LIMIT_5_SYMMETRIC_N1_440.getFrequency(symbolicPitch);
     let midiNote = MidiPitch.fromFrequency(freq);
     let expectedCents = -16;
 
-    expect(midiNote.chromaticSymbolicPitch).toEqual(symbolicPitch);
+    expect(midiNote.spn).toEqual(symbolicPitch);
     expect(midiNote.cents).toEqual(expectedCents);
 });
 
@@ -253,22 +253,22 @@ test('MidiPitch - fromFrequency - 60 ~ 60 ', () => {
     expect(frequency).toBeCloseTo(expected, 0);
 });
 
-test('MidiPitch - fromFrequency - 60 = ChromaticSymbolicPitch.B1 - 49 cents', () => {
+test('MidiPitch - fromFrequency - 60 = SPN.B1 - 49 cents', () => {
     let expected: number = 60;
     let midiNote = MidiPitch.fromFrequency(expected);
-    let chromaticSymbolicPitch: ChromaticSymbolicPitch = midiNote.chromaticSymbolicPitch;
+    let spn: SPN = midiNote.spn;
     let cents: number = midiNote.cents;
 
-    expect(chromaticSymbolicPitch).toEqual(ChromaticSymbolicPitch.B1);
+    expect(spn).toEqual(SPN.B1);
     expect(cents).toEqual(-49);
 });
 
 test('MidiPitch - from - A5 -1200 cents', () => {
-    let midiNote = MidiPitch.from(ChromaticSymbolicPitch.A5, -1200);
-    let chromaticSymbolicPitch: ChromaticSymbolicPitch = midiNote.chromaticSymbolicPitch;
+    let midiNote = MidiPitch.from(SPN.A5, -1200);
+    let spn: SPN = midiNote.spn;
     let cents: number = midiNote.cents;
 
-    expect(chromaticSymbolicPitch).toEqual(ChromaticSymbolicPitch.A5);
+    expect(spn).toEqual(SPN.A5);
     expect(cents).toEqual(-1200);
 });
 
@@ -281,7 +281,7 @@ test('MidiPitch - toString - ENG - 60 Hz', () => {
 });
 
 test('MidiPitch - toString - ENG - A5 -1200 cents', () => {
-    let midiNote = MidiPitch.from(ChromaticSymbolicPitch.A4, -1200);
+    let midiNote = MidiPitch.from(SPN.A4, -1200);
     let expected = "A5 (-1200)";
 
     expect(midiNote.toString()).toEqual(expected);

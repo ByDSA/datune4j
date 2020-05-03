@@ -3,7 +3,7 @@ import { Chromatic } from '../../degrees/Chromatic';
 import { SymbolicPitch } from './SymbolicPitch';
 
 type HashingObject = { chromatic: Chromatic, octave: number };
-export class ChromaticSymbolicPitch implements SymbolicPitch {
+export class SPN implements SymbolicPitch {
     public static C_S1;
     public static CC_S1;
     public static D_S1;
@@ -136,16 +136,28 @@ export class ChromaticSymbolicPitch implements SymbolicPitch {
     public static A9;
     public static AA9;
     public static B9;
+    public static C10;
+    public static CC10;
+    public static D10;
+    public static DD10;
+    public static E10;
+    public static F10;
+    public static FF10;
+    public static G10;
+    public static GG10;
+    public static A10;
+    public static AA10;
+    public static B10;
 
-    private static immutablesCache = new ImmutablesCache<ChromaticSymbolicPitch, HashingObject>(
+    private static immutablesCache = new ImmutablesCache<SPN, HashingObject>(
         function (hashingObject: HashingObject): string {
             return hashingObject.chromatic.hashCode() + hashingObject.octave;
         },
-        function (chromaticSymbolicPitch: ChromaticSymbolicPitch): HashingObject {
-            return { chromatic: chromaticSymbolicPitch.chromatic, octave: chromaticSymbolicPitch.octave };
+        function (spn: SPN): HashingObject {
+            return { chromatic: spn.chromatic, octave: spn.octave };
         },
-        function (hashingObject: HashingObject): ChromaticSymbolicPitch {
-            return new ChromaticSymbolicPitch(hashingObject.chromatic, hashingObject.octave);
+        function (hashingObject: HashingObject): SPN {
+            return new SPN(hashingObject.chromatic, hashingObject.octave);
         }
     );
 
@@ -186,7 +198,7 @@ export class ChromaticSymbolicPitch implements SymbolicPitch {
                 else
                     octaveStr = "_S" + (-octave);
                 let varName = chromaticStr + octaveStr;
-                this[varName] = ChromaticSymbolicPitch.from(chromatic, octave);
+                this[varName] = SPN.from(chromatic, octave);
                 Object.freeze(this[varName]);
             }
     }

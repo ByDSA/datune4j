@@ -1,10 +1,10 @@
-import { ChromaticSymbolicPitch } from "../pitch/symbolic/ChromaticSymbolicPitch";
+import { SPN } from "../pitch/symbolic/SPN";
 import * as precalc from "../precalc";
 import { ConcertPitch } from "./ConcertPitch";
 import { Tuning } from "./Tuning";
 precalc.chromatics();
 precalc.diatonicAlts();
-precalc.chromaticSymbolicPitches();
+precalc.spns();
 precalc.concertPitches();
 precalc.temperaments();
 precalc.settings();
@@ -20,7 +20,7 @@ test('Tuning - EQUAL_440 - A4 = 440', () => {
 });
 
 test('Tuning - EQUAL_440 - C0', () => {
-    let symbolicPitch = ChromaticSymbolicPitch.C0;
+    let symbolicPitch = SPN.C0;
 
     let actual: number = Tuning.EQUAL_440.getFrequency(symbolicPitch);
     let expected: number = 16.35;
@@ -29,7 +29,7 @@ test('Tuning - EQUAL_440 - C0', () => {
 });
 
 test('Tuning - EQUAL_440 - AA4', () => {
-    let symbolicPitch = ChromaticSymbolicPitch.AA4;
+    let symbolicPitch = SPN.AA4;
 
     let actual: number = Tuning.EQUAL_440.getFrequency(symbolicPitch);
     let expected: number = 466.16;
@@ -38,7 +38,7 @@ test('Tuning - EQUAL_440 - AA4', () => {
 });
 
 test('Tuning - EQUAL_440 - GG4', () => {
-    let symbolicPitch = ChromaticSymbolicPitch.GG4;
+    let symbolicPitch = SPN.GG4;
 
     let actual: number = Tuning.EQUAL_440.getFrequency(symbolicPitch);
     let expected: number = 415.30;
@@ -56,7 +56,7 @@ test('Tuning - LIMIT_5_SYMMETRIC_N1_440 - A4 = 440', () => {
 });
 
 test('Tuning - LIMIT_5_SYMMETRIC_N1_440 - E4 = 330', () => {
-    let symbolicPitch = ChromaticSymbolicPitch.E4;
+    let symbolicPitch = SPN.E4;
 
     let actual: number = Tuning.LIMIT_5_SYMMETRIC_N1_440.getFrequency(symbolicPitch);
     let expected: number = 330;
