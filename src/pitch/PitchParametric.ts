@@ -1,6 +1,6 @@
 import { Pitch } from "./Pitch";
 import { SymbolicPitch } from "./symbolic/SymbolicPitch";
-import { Tuning } from "../tunning/Tuning";
+import { Tuning } from "../tuning/Tuning";
 
 export class PitchParametric implements Pitch {
     private _frequency: number;

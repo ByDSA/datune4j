@@ -1,8 +1,8 @@
-import { Chromatic } from "../degrees/Chromatic";
-import * as precalc from "../precalc";
+import { Chromatic } from "../../degrees/Chromatic";
+import { Language } from "../../lang/Language";
+import * as precalc from "../../precalc";
+import { Settings } from "../../settings/Settings";
 import { ChromaticSymbolicPitch } from "./ChromaticSymbolicPitch";
-import { Settings } from "../settings/Settings";
-import { Language } from "../lang/Language";
 precalc.chromaticSymbolicPitches();
 
 test('ChromaticSymbolPitch - precalc - C5', () => {

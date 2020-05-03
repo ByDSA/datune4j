@@ -1,4 +1,3 @@
-import { IntervalDiatonicAlt } from "../interval/IntervalDiatonicAlt";
 import { Language } from "../lang/Language";
 import * as precalc from "../precalc";
 import { Settings } from "../settings/Settings";

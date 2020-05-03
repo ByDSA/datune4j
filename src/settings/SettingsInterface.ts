@@ -6,9 +6,9 @@ import { DiatonicAlt } from '../degrees/DiatonicAlt';
 import { LanguageInterface } from '../lang/LanguageInterface';
 import { Scale } from '../tonality/Scale';
 import { Tonality } from '../tonality/Tonality';
-import { ConcertPitch } from '../tunning/ConcertPitch';
-import { Temperament } from '../tunning/Temperament';
-import { Tuning } from '../tunning/Tuning';
+import { ConcertPitch } from '../tuning/ConcertPitch';
+import { Temperament } from '../tuning/Temperament';
+import { Tuning } from '../tuning/Tuning';
 
 export interface SettingsInterface {
     default: {

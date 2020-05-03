@@ -1,8 +1,8 @@
 import { Chromatic } from "../degrees/Chromatic";
-import { Ratio } from "../tunning/ratios/Ratio";
-import { RatioFrac } from "../tunning/ratios/RatioFrac";
-import { RatioNumber } from "../tunning/ratios/RatioNumber";
-import { RatioPow2Frac } from "../tunning/ratios/RatioPow2Frac";
+import { Ratio } from "./ratios/Ratio";
+import { RatioFrac } from "./ratios/RatioFrac";
+import { RatioNumber } from "./ratios/RatioNumber";
+import { RatioPow2Frac } from "./ratios/RatioPow2Frac";
 
 export class IntervalPitch {
     public static UNISON: IntervalPitch;

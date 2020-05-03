@@ -1,7 +1,6 @@
-import { ImmutablesCache } from '../common/ImmutablesCache';
-import { Chromatic } from '../degrees/Chromatic';
+import { ImmutablesCache } from '../../common/ImmutablesCache';
+import { Chromatic } from '../../degrees/Chromatic';
 import { SymbolicPitch } from './SymbolicPitch';
-import { chromatics } from 'precalc';
 
 type HashingObject = { chromatic: Chromatic, octave: number };
 export class ChromaticSymbolicPitch implements SymbolicPitch {
@@ -161,7 +160,7 @@ export class ChromaticSymbolicPitch implements SymbolicPitch {
         return this._chromatic;
     }
 
-    public get symbolicNote(): Chromatic {
+    public get degree(): Chromatic {
         return this.chromatic;
     }
 

@@ -1,6 +1,6 @@
 import { Settings } from '../settings/Settings';
 import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
-import { IntervalPitch } from '../interval/IntervalPitch';
+import { IntervalPitch } from './IntervalPitch';
 import { IntervalSymbolic } from '../interval/IntervalSymbolic';
 
 export abstract class Temperament {

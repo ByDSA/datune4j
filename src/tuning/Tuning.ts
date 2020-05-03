@@ -1,11 +1,11 @@
 import { ImmutablesCache } from '../common/ImmutablesCache';
 import { Chromatic } from '../degrees/Chromatic';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
+import { Degree } from '../degrees/Degree';
 import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
 import { IntervalSymbolic } from '../interval/IntervalSymbolic';
+import { SymbolicPitch } from '../pitch/symbolic/SymbolicPitch';
 import { ConcertPitch } from './ConcertPitch';
-import { SymbolicNote } from './SymbolicNote';
-import { SymbolicPitch } from './SymbolicPitch';
 import { Temperament } from './Temperament';
 
 type HashingObject = { concertPitch: ConcertPitch, temperament: Temperament };
@@ -35,8 +35,8 @@ export class Tuning {
     }
 
     getFrequency(symbolicPitch: SymbolicPitch): number {
-        let symbolicNote: SymbolicNote = symbolicPitch.symbolicNote;
-        let symbolicNoteRoot: SymbolicNote = this._concertPitch.symbolicPitch.symbolicNote;
+        let symbolicNote: Degree = symbolicPitch.degree;
+        let symbolicNoteRoot: Degree = this._concertPitch.symbolicPitch.degree;
         let interval: IntervalSymbolic;
         if (symbolicNoteRoot instanceof DiatonicAlt && symbolicNote instanceof DiatonicAlt) {
             interval = IntervalDiatonicAlt.betweenDiatonicAlt(symbolicNoteRoot, symbolicNote);
@@ -52,7 +52,7 @@ export class Tuning {
             throw new Error();
 
         let distOctave = symbolicPitch.octave - this._concertPitch.symbolicPitch.octave;
-        if ((<SymbolicNote>symbolicNote).compareTo(<SymbolicNote>symbolicNoteRoot) < 0)
+        if ((<Degree>symbolicNote).compareTo(<Degree>symbolicNoteRoot) < 0)
             distOctave--;
 
         return this._concertPitch.frequency * Math.pow(2, distOctave) * ratioNumber;

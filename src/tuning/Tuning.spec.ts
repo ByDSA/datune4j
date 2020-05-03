@@ -1,5 +1,5 @@
+import { ChromaticSymbolicPitch } from "../pitch/symbolic/ChromaticSymbolicPitch";
 import * as precalc from "../precalc";
-import { ChromaticSymbolicPitch } from "./ChromaticSymbolicPitch";
 import { ConcertPitch } from "./ConcertPitch";
 import { Tuning } from "./Tuning";
 precalc.chromatics();

@@ -2,9 +2,9 @@ import { Hashing } from '../common/Hashing';
 import { Immutables } from '../common/Immutables';
 import { MathUtils } from '../common/MathUtils';
 import { NamingChromatic } from '../lang/naming/NamingChromatic';
-import { SymbolicNote } from '../tunning/SymbolicNote';
+import { Degree } from './Degree';
 
-export class Chromatic implements SymbolicNote {
+export class Chromatic implements Degree {
     public static NUMBER = 12;
 
     // Precalc

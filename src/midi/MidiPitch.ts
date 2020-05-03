@@ -2,7 +2,7 @@ import { ImmutablesCache } from '../common/ImmutablesCache';
 import { Chromatic } from "../degrees/Chromatic";
 import { ChromaticSymbolicPitch } from "../pitch/symbolic/ChromaticSymbolicPitch";
 import { Pitch } from "../pitch/Pitch";
-import { Tuning } from "../tunning/Tuning";
+import { Tuning } from "../tuning/Tuning";
 
 type HashingObject = { chromaticSymbolicPitch: ChromaticSymbolicPitch, detuned: number };
 export class MidiPitch implements Pitch {

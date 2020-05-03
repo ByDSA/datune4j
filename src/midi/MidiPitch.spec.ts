@@ -1,10 +1,10 @@
-import * as precalc from "../precalc";
-import { ChromaticSymbolicPitch } from "../tunning/ChromaticSymbolicPitch";
-import { SymbolicPitch } from "../tunning/SymbolicPitch";
-import { Tuning } from "../tunning/Tuning";
-import { MidiPitch } from "./MidiPitch";
-import { Settings } from "../settings/Settings";
 import { Language } from "../lang/Language";
+import { ChromaticSymbolicPitch } from "../pitch/symbolic/ChromaticSymbolicPitch";
+import { SymbolicPitch } from "../pitch/symbolic/SymbolicPitch";
+import * as precalc from "../precalc";
+import { Settings } from "../settings/Settings";
+import { Tuning } from "../tuning/Tuning";
+import { MidiPitch } from "./MidiPitch";
 precalc.midiPitches();
 precalc.settings();
 
@@ -275,14 +275,14 @@ test('MidiPitch - from - A5 -1200 cents', () => {
 test('MidiPitch - toString - ENG - 60 Hz', () => {
     Settings.lang = Language.ENG;
     let midiNote = MidiPitch.fromFrequency(60);
-    let expected ="B2 (-49)";
+    let expected = "B2 (-49)";
 
     expect(midiNote.toString()).toEqual(expected);
 });
 
 test('MidiPitch - toString - ENG - A5 -1200 cents', () => {
     let midiNote = MidiPitch.from(ChromaticSymbolicPitch.A4, -1200);
-    let expected ="A5 (-1200)";
+    let expected = "A5 (-1200)";
 
     expect(midiNote.toString()).toEqual(expected);
 });
@@ -290,7 +290,7 @@ test('MidiPitch - toString - ENG - A5 -1200 cents', () => {
 test('MidiPitch - toString - ESP - 440 Hz', () => {
     Settings.lang = Language.ESP;
     let midiNote = MidiPitch.fromFrequency(440);
-    let expected ="La5";
+    let expected = "La5";
 
     expect(midiNote.toString()).toEqual(expected);
 });
