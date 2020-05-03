@@ -39,6 +39,10 @@ export class ConcertPitch implements Pitch {
     }
 
     public toString(): string {
+        switch (this) {
+            case ConcertPitch.A440: return "A440";
+            case ConcertPitch.A432: return "A432";
+        }
         return this.symbolicPitch + "-" + this.frequency + " Hz";
     }
 

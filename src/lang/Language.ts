@@ -185,8 +185,8 @@ export class Language {
         },
         temperaments: {
             get ET12(): string { return "12-ET" },
-            get LIMIT_5_SYMMETRIC_N1(): string { return "5-LIMIT: SYMMETRIC N1" },
-            get LIMIT_5_SYMMETRIC_N2(): string { return "5-LIMIT: SYMMETRIC N2" },
+            get LIMIT_5_SYMMETRIC_N1(): string { return "5-LIMIT: SN1" },
+            get LIMIT_5_SYMMETRIC_N2(): string { return "5-LIMIT: SN2" },
         }
     }
 
