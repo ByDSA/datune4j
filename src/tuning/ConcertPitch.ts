@@ -39,7 +39,7 @@ export class ConcertPitch implements Pitch {
     }
 
     public toString(): string {
-        return this.symbolicPitch + "-" + this.frequency;
+        return this.symbolicPitch + "-" + this.frequency + " Hz";
     }
 
     public hashCode(): string {
