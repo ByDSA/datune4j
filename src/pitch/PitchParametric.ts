@@ -30,4 +30,8 @@ export class PitchParametric implements Pitch {
     private precalcFrequency() {
         this._frequency = this.tuning.getFrequency(this.symbolicPitch);
     }
+
+    public toString(): string {
+        return this.symbolicPitch + " " + this.tuning;
+    }
 }
