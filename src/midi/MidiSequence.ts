@@ -15,4 +15,12 @@ export class MidiSequence extends TimeSequence<MidiNote, MidiEvent, MusicalDurat
     public get cellSize(): MusicalDuration {
         return super.cellSize;
     }
+
+    public get events(): MidiEvent[] {
+        return super.events;
+    }
+
+    public get duration(): MusicalDuration {
+        return super.duration;
+    }
 }

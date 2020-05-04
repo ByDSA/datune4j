@@ -14,7 +14,6 @@ test('from - ZERO (C5 QUARTER 90)', () => {
     let midiNote: MidiNote = MidiNote.from(midiPitch, duration, velocity);
 
     let midiEvent: MidiEvent = MidiEvent.from(MusicalDuration.ZERO, midiNote);
-
     expect(midiEvent.from).toEqual(MusicalDuration.ZERO);
     expect(midiEvent.event).toEqual(midiNote);
     expect(midiEvent.to).toEqual(MusicalDuration.QUARTER);
