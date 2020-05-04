@@ -39,4 +39,13 @@ export class RealTime implements Time {
     clone(): RealTime {
         return RealTime.fromMillis(this.millis);
     }
+
+    compareTo(time: RealTime): number {
+        if (this.millis < time.millis)
+            return -1;
+        else if (this.millis > time.millis)
+            return 1;
+        else
+            return 0;
+    }
 }
