@@ -154,7 +154,7 @@ export class MidiPitch implements Pitch {
     private constructor(private _chromaticSymbolicPitch: SPN, private _cents: number) {
     }
 
-    public static from(spn: SPN, detuned: number) {
+    public static from(spn: SPN, detuned: number = 0) {
         return this.immutablesCache.getOrCreate({ spn: spn, detuned: detuned });
     }
 
