@@ -1,8 +1,9 @@
 import { ImmutablesCache } from '../common/ImmutablesCache';
 import { BPM } from './BPM';
+import { Time } from './Time';
 
 type HashingObject = number;
-export class MusicalDuration {
+export class MusicalDuration implements Time {
     public static MAXIMA: MusicalDuration;
     public static LONGA: MusicalDuration;
     public static DOUBLE: MusicalDuration;
@@ -42,7 +43,7 @@ export class MusicalDuration {
         let millisBeat = bpm.getMillis(bpm.beat);
         let millisWhole = millisBeat / bpm.beat.value;
         let value = millis / millisWhole;
-        
+
         return MusicalDuration.from(value);
     }
 
@@ -50,15 +51,15 @@ export class MusicalDuration {
         return this._value;
     }
 
-    public getAdd(musicalDuration: MusicalDuration) {
+    public getAdd(musicalDuration: MusicalDuration): MusicalDuration {
         return MusicalDuration.from(this.value + musicalDuration.value);
     }
 
-    public getSub(musicalDuration: MusicalDuration) {
+    public getSub(musicalDuration: MusicalDuration): MusicalDuration {
         return MusicalDuration.from(this.value - musicalDuration.value);
     }
 
-    public getMult(factor: number) {
+    public getMult(factor: number): MusicalDuration {
         return MusicalDuration.from(this.value * factor);
     }
 
@@ -66,12 +67,25 @@ export class MusicalDuration {
         return Math.floor(this.value / cellSize.value);
     }
 
-    public getDiv(n: number) {
+    public getDiv(n: number): MusicalDuration {
         return MusicalDuration.from(this.value / n);
     }
 
     public isBetween(a: MusicalDuration, b: MusicalDuration): boolean {
         return this.value >= a.value && this.value < b.value;
+    }
+
+    compareTo(time: MusicalDuration): number {
+        if (this.value < time.value)
+            return -1;
+        else if (this.value > time.value)
+            return 1;
+        else
+            return 0;
+    }
+
+    clone(): MusicalDuration {
+        return this;
     }
 
     public get dotted() {

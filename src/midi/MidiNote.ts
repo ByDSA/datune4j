@@ -1,10 +1,14 @@
+import { MusicalDuration } from 'tempo/MusicalDuration';
 import { MidiPitch } from "./MidiPitch";
 
 export class MidiNote {
-    private constructor(private _midiPitch: MidiPitch, private _duration: number, private _velocity: number) {
+    private _velocity: number;
+
+    private constructor(private _midiPitch: MidiPitch, private _duration: MusicalDuration, velocity: number) {
+        this.velocity = velocity;
     }
 
-    public static from(pitch: MidiPitch, duration: number, velocity: number = 100) {
+    public static from(pitch: MidiPitch, duration: MusicalDuration, velocity: number = 100) {
         return new MidiNote(pitch, duration, velocity);
     }
 
@@ -25,7 +29,7 @@ export class MidiNote {
         return this._midiPitch;
     }
 
-    get duration(): number {
+    get duration(): MusicalDuration {
         return this._duration;
     }
 }
