@@ -32,20 +32,11 @@ export class RealTime implements Time {
         return RealTime.fromMillis(this.millis / n);
     }
 
-    isBetween(a: RealTime, b: RealTime): boolean {
-        return this.millis >= a.millis && this.millis < b.millis;
-    }
-
     clone(): RealTime {
         return RealTime.fromMillis(this.millis);
     }
 
-    compareTo(time: RealTime): number {
-        if (this.millis < time.millis)
-            return -1;
-        else if (this.millis > time.millis)
-            return 1;
-        else
-            return 0;
+    public valueOf(): number {
+        return this.millis;
     }
 }

@@ -1,85 +1,99 @@
-import { Time } from 'tempo/Time';
+import { Time } from '../tempo/Time';
 import TreeMap from 'ts-treemap';
+import { Interval } from '../utils/Interval';
 import { DurableEvent } from './DurableEvent';
 import { TimeLayer } from './TimeLayer';
 
-export class TimeSequence<E, C extends DurableEvent<E, T>, T extends Time> implements TimeLayer<E[], T> {
-    private cells: TreeMap<number, C[]>;
-    private cellSize: T;
+export abstract class TimeSequence<E, DurEv extends DurableEvent<E, T>, T extends Time> implements TimeLayer<E[], T> {
+    private cells: TreeMap<number, DurEv[]>;
 
-    protected constructor(cellSize: T) {
-        this.cellSize = cellSize;
+    protected constructor(private _cellSize: T) {
         this.cells = new TreeMap();
     }
 
     private getCellIndex(time: T): number {
-        return time.getDivCell(this.cellSize);
+        return time.getDivCell(this._cellSize);
     }
 
-    private getCellFromTime(time: T): C[] {
+    private getCellFromTime(time: T): DurEv[] {
         let index: number = this.getCellIndex(time);
         return this.getCellFromIndex(index);
     }
 
-    private getCellFromIndex(index: number): C[] {
+    private getCellFromIndex(index: number): DurEv[] {
         let cell = this.cells.get(index);
-        if (!cell)
-            return [];
+        if (!cell) {
+            cell = [];
+            this.cells.set(index, cell);
+        }
+
+        return cell;
     }
 
-    public add(durableEvent: C): void {
-        let posCell: number = this.getCellIndex(durableEvent.ini);
-        let endCell: number = this.getCellIndex(durableEvent.end);
+    public add(durableEvent: DurEv): void {
+        let iniCell: number = this.getCellIndex(durableEvent.from);
+        let endCell: number = this.getCellIndex(durableEvent.to);
 
-        for (let i: number = posCell; i <= endCell; i++) {
-            let cell: C[] = this.getCellFromIndex(i);
+        for (let i: number = iniCell; i <= endCell; i++) {
+            let cell: DurEv[] = this.getCellFromIndex(i);
 
             cell.push(durableEvent);
         }
     }
 
-    public getEvents(time: T): C[] {
-        let ret: C[] = [];
+    public getAtInterval(interval: Interval<T>): DurEv[] {
+        let iniCell: number = this.getCellIndex(interval.from);
+        let endCell: number = this.getCellIndex(interval.to);
 
-        let cell: C[] = this.getCellFromTime(time);
+        let ret: DurEv[] = [];
+        for (let i: number = iniCell; i <= endCell; i++) {
+            let cell: DurEv[] = this.getCellFromIndex(i);
+
+            for (let musicalEvent of cell) {
+                let intervalMusicalEvent = Interval.fromInclusiveToExclusive(musicalEvent.from, musicalEvent.to);
+                if (interval.intersects(intervalMusicalEvent))
+                    ret.push(musicalEvent);
+            }
+        }
+
+        return ret;
+    }
+
+    public getAtTime(time: T): DurEv[] {
+        let ret: DurEv[] = [];
+
+        let cell: DurEv[] = this.getCellFromTime(time);
         for (let musicalEvent of cell) {
-            if (time.isBetween(musicalEvent.ini, musicalEvent.end))
+            if (time >= musicalEvent.from && time <= musicalEvent.to)
                 ret.push(musicalEvent);
         }
 
         return ret;
     }
 
-    public get(time: T): E[] {
-        let ret: E[] = [];
-
-        let cell: C[] = this.getCellFromTime(time);
-        for (let musicalEvent of cell) {
-            if (time.isBetween(musicalEvent.ini, musicalEvent.end))
-                ret.push(musicalEvent.event);
-        }
-
-        return ret;
-    }
-
-    public getLength(): T {
-        let lastCell: C[] = this.cells.lastEntry()[1];
-        let max: T = lastCell[0].end;
+    public get length(): T {
+        let lastCell: DurEv[] = this.cells.lastEntry()[1];
+        let max: T = lastCell[0].to;
         for (let i: number = 1; i < lastCell.length; i++) {
-            let c: C = lastCell[i];
-            if (c.end.compareTo(max) > 0)
-                max = c.end;
+            let c: DurEv = lastCell[i];
+            if (c.to > max)
+                max = c.to;
         }
         return max;
     }
 
-    public remove(time: T): void {
-        let cell: C[] = this.getCellFromTime(time);
+    public removeAtTime(time: T): void {
+        let cell: DurEv[] = this.getCellFromTime(time);
         for (let c of cell) {
-            if (time.isBetween(c.ini, c.end)) {
+            let interval = Interval.fromInclusiveToExclusive(c.from, c.to);
+            if (interval.contains(time)) {
                 let index = cell.indexOf(c);
                 cell.splice(index);
             }
         }
+    }
+
+    public get cellSize(): T {
+        return this._cellSize;
     }
 }

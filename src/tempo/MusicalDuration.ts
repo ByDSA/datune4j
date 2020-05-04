@@ -71,17 +71,8 @@ export class MusicalDuration implements Time {
         return MusicalDuration.from(this.value / n);
     }
 
-    public isBetween(a: MusicalDuration, b: MusicalDuration): boolean {
-        return this.value >= a.value && this.value < b.value;
-    }
-
-    compareTo(time: MusicalDuration): number {
-        if (this.value < time.value)
-            return -1;
-        else if (this.value > time.value)
-            return 1;
-        else
-            return 0;
+    public valueOf(): number {
+        return this.value;
     }
 
     clone(): MusicalDuration {

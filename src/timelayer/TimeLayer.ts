@@ -1,8 +1,7 @@
 import { Time } from 'tempo/Time';
 
-export interface TimeLayer<C, T extends Time> {
-    get(time: T): C;
-    getLength(): T;
+export interface TimeLayer<ARRAY, T extends Time> {
+    length: T;
 
-    remove(time: T): void;
+    removeAtTime(time: T): void;
 }

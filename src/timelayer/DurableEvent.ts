@@ -1,18 +1,20 @@
-import { Time } from 'tempo/Time';
+import { Time } from '../tempo/Time';
+import { Interval } from '../utils/Interval';
 
 export abstract class DurableEvent<E, T extends Time> {
-    private _end: T;
-
-    protected constructor(private _ini: T, private _event: E, length: T) {
-        this._end = <T>_ini.getAdd(length);
+    protected constructor(private _interval: Interval<T>, private _event: E) {
     }
 
-    public get ini(): T {
-        return this._ini;
+    public get from(): T {
+        return this._interval.from;
     }
 
-    public get end(): T {
-        return this._end;
+    public get to(): T {
+        return this._interval.to;
+    }
+
+    public get interval(): Interval<T> {
+        return this._interval;
     }
 
     public get event(): E {
@@ -24,6 +26,6 @@ export abstract class DurableEvent<E, T extends Time> {
     }
 
     public toString(): string {
-        return "[" + this.ini + ", " + this.end + "]: " + this.event;
+        return this._interval + ": " + this.event;
     }
 }

@@ -9,9 +9,7 @@ export interface Time {
 
     getDiv(n: number): Time;
 
-    isBetween(a: Time, b: Time): boolean;
-
-    compareTo(time: Time): number;
+    valueOf(): number;
 
     clone(): Time;
 }

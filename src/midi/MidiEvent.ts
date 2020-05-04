@@ -1,22 +1,28 @@
 import { MusicalDuration } from '../tempo/MusicalDuration';
 import { DurableEvent } from '../timelayer/DurableEvent';
+import { Interval } from '../utils/Interval';
 import { MidiNote } from './MidiNote';
 
 export class MidiEvent extends DurableEvent<MidiNote, MusicalDuration> {
     private constructor(ini: MusicalDuration, midiNote: MidiNote) {
-        super(ini, midiNote, midiNote.duration);
+        let interval = Interval.fromInclusiveToExclusive(ini, ini.getAdd(midiNote.duration));
+        super(interval, midiNote);
     }
 
     public static from(ini: MusicalDuration, midiNote: MidiNote): MidiEvent {
         return new MidiEvent(ini, midiNote);
     }
 
-    get ini(): MusicalDuration {
-        return super.ini;
+    get from(): MusicalDuration {
+        return super.from;
     }
 
-    get end(): MusicalDuration {
-        return super.end;
+    get to(): MusicalDuration {
+        return super.to;
+    }
+
+    get interval(): Interval<MusicalDuration> {
+        return super.interval;
     }
 
     get event(): MidiNote {

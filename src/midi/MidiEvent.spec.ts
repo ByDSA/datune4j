@@ -15,9 +15,9 @@ test('from - ZERO (C5 QUARTER 90)', () => {
 
     let midiEvent: MidiEvent = MidiEvent.from(MusicalDuration.ZERO, midiNote);
 
-    expect(midiEvent.ini).toEqual(MusicalDuration.ZERO);
+    expect(midiEvent.from).toEqual(MusicalDuration.ZERO);
     expect(midiEvent.event).toEqual(midiNote);
-    expect(midiEvent.end).toEqual(MusicalDuration.QUARTER);
+    expect(midiEvent.to).toEqual(MusicalDuration.QUARTER);
 });
 
 test('from - QUARTER (C5 QUARTER 90)', () => {
@@ -29,7 +29,7 @@ test('from - QUARTER (C5 QUARTER 90)', () => {
 
     let midiEvent: MidiEvent = MidiEvent.from(MusicalDuration.QUARTER, midiNote);
 
-    expect(midiEvent.ini).toEqual(MusicalDuration.QUARTER);
+    expect(midiEvent.from).toEqual(MusicalDuration.QUARTER);
     expect(midiEvent.event).toEqual(midiNote);
-    expect(midiEvent.end).toEqual(MusicalDuration.HALF);
+    expect(midiEvent.to).toEqual(MusicalDuration.HALF);
 });

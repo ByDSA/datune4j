@@ -133,8 +133,16 @@ test('MusicalDuration - getDivCell - WHOLE div ZERO', () => {
 });
 
 
-test('MusicalDuration - isBetween - QUARTER < QUARTER.dotted < HALF', () => {
-    let actual: boolean = MusicalDuration.QUARTER.dotted.isBetween(MusicalDuration.QUARTER, MusicalDuration.HALF);
+test('MusicalDuration - interval - QUARTER < QUARTER.dotted', () => {
+    let actual: boolean = MusicalDuration.QUARTER < MusicalDuration.QUARTER.dotted;
+
+    let expected = true;
+
+    expect(actual).toEqual(expected);
+});
+
+test('MusicalDuration - interval - QUARTER.dotted < HALF', () => {
+    let actual: boolean = MusicalDuration.QUARTER.dotted < MusicalDuration.HALF;
 
     let expected = true;
 
