@@ -23,4 +23,16 @@ export class MidiSequence extends TimeSequence<MidiNote, MidiEvent, MusicalDurat
     public get duration(): MusicalDuration {
         return super.duration;
     }
+
+    public addSequenceAt(time: MusicalDuration, midiSequence: MidiSequence): void {
+        let initialDuration = this.duration;
+        for (let eventSource of midiSequence.events) {
+            let event = MidiEvent.from(initialDuration.getAdd(eventSource.from), eventSource.event);
+            this.add(event);
+        }
+    }
+
+    public addSequence(midiSequence: MidiSequence): void {
+        this.addSequenceAt(this.duration, midiSequence)
+    }
 }
