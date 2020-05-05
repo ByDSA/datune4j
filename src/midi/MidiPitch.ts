@@ -151,7 +151,7 @@ export class MidiPitch implements Pitch {
         }
     );
 
-    private constructor(private _chromaticSymbolicPitch: SPN, private _cents: number) {
+    private constructor(private _spn: SPN, private _cents: number) {
     }
 
     public static from(spn: SPN, detuned: number = 0) {
@@ -176,13 +176,13 @@ export class MidiPitch implements Pitch {
         let octave = Math.floor(code / Chromatic.NUMBER);
         let chromaticInt = code - Chromatic.NUMBER * octave;
         let chromatic: Chromatic = Chromatic.fromInt(chromaticInt);
-        let chromaticSymbolicPitch: SPN = SPN.from(chromatic, octave - 1)
+        let spn: SPN = SPN.from(chromatic, octave - 1)
 
-        return this.from(chromaticSymbolicPitch, cents);
+        return this.from(spn, cents);
     }
 
     get spn(): SPN {
-        return this._chromaticSymbolicPitch;
+        return this._spn;
     }
 
     get cents(): number {
