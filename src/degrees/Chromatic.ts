@@ -1,4 +1,3 @@
-import { Hashing } from '../common/Hashing';
 import { Immutables } from '../common/Immutables';
 import { MathUtils } from '../common/MathUtils';
 import { NamingChromatic } from '../lang/naming/NamingChromatic';
@@ -57,8 +56,8 @@ export class Chromatic implements Degree {
         return NamingChromatic.toString(this);
     }
 
-    hashCode() {
-        return Hashing.hash(this.intValue);
+    valueOf(): number {
+        return this.intValue;
     }
 
     compareTo(chromatic: Chromatic): number {

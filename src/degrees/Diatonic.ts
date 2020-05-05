@@ -1,11 +1,11 @@
-import { IntervalDiatonic } from '../interval/IntervalDiatonic';
-import { NamingDiatonic } from '../lang/naming/NamingDiatonic';
-import { Hashing } from '../common/Hashing';
 import { Immutables } from '../common/Immutables';
 import { MathUtils } from '../common/MathUtils';
+import { IntervalDiatonic } from '../interval/IntervalDiatonic';
+import { NamingDiatonic } from '../lang/naming/NamingDiatonic';
 import { Chromatic } from './Chromatic';
+import { Degree } from './Degree';
 
-export class Diatonic {
+export class Diatonic implements Degree {
     static C: Diatonic;
     static D: Diatonic;
     static E: Diatonic;
@@ -52,8 +52,8 @@ export class Diatonic {
         return NamingDiatonic.toString(this);
     }
 
-    hashCode(): string {
-        return Hashing.hash(this.intValue);
+    valueOf(): number {
+        return this.intValue;
     }
 
     get chromatic() {

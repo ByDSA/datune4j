@@ -1,6 +1,5 @@
 import { Chromatic } from '../../degrees/Chromatic';
 import { NamingChromaticChordPattern } from '../../lang/naming/NamingChromaticChordPattern';
-import { Hashing } from '../../common/Hashing';
 import { Immutables } from '../../common/Immutables';
 import { ImmutablesCache } from '../../common/ImmutablesCache';
 
@@ -72,7 +71,7 @@ export class ChromaticChordPattern implements Iterable<number> {
 
     private static immutablesCache = new ImmutablesCache<ChromaticChordPattern, number[]>(
         function (hashingObject: number[]) {
-            return Hashing.hashArray(hashingObject);
+            return hashingObject.toString();
         },
         function (chromaticChordPattern: ChromaticChordPattern) {
             return chromaticChordPattern._values;

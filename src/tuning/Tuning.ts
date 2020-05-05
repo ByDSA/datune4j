@@ -1,7 +1,7 @@
 import { ImmutablesCache } from '../common/ImmutablesCache';
 import { Chromatic } from '../degrees/Chromatic';
-import { DiatonicAlt } from '../degrees/DiatonicAlt';
 import { Degree } from '../degrees/Degree';
+import { DiatonicAlt } from '../degrees/DiatonicAlt';
 import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
 import { IntervalSymbolic } from '../interval/IntervalSymbolic';
 import { SymbolicPitch } from '../pitch/symbolic/SymbolicPitch';
@@ -52,7 +52,7 @@ export class Tuning {
             throw new Error();
 
         let distOctave = symbolicPitch.octave - this._concertPitch.symbolicPitch.octave;
-        if ((<Degree>symbolicNote).compareTo(<Degree>symbolicNoteRoot) < 0)
+        if ((<Degree>symbolicNote) < <Degree>symbolicNoteRoot)
             distOctave--;
 
         return this._concertPitch.frequency * Math.pow(2, distOctave) * ratioNumber;

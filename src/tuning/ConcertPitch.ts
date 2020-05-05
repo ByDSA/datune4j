@@ -10,10 +10,9 @@ export class ConcertPitch implements Pitch {
 
     private static immutablesCache = new ImmutablesCache<ConcertPitch, HashingObject>(
         function (hashingObject: HashingObject): string {
-            let symbolicPitchHashCode: string = (<any>hashingObject.symbolicPitch).hashCode();
-            if (!symbolicPitchHashCode)
-                throw new Error();
-            return symbolicPitchHashCode + hashingObject.frequency;
+            let symbolicPitchHashCode: any = hashingObject.symbolicPitch.valueOf();
+
+            return symbolicPitchHashCode + ":" + hashingObject.frequency;
         },
         function (concertPitch: ConcertPitch): HashingObject {
             return { frequency: concertPitch.frequency, symbolicPitch: concertPitch.symbolicPitch };

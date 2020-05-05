@@ -1,4 +1,3 @@
-import { Hashing } from '../../common/Hashing';
 import { Immutables } from '../../common/Immutables';
 import { ImmutablesCache } from '../../common/ImmutablesCache';
 import { MathUtils } from '../../common/MathUtils';
@@ -18,9 +17,9 @@ export class ChromaticChord {
 
     private static immutablesCache = new ImmutablesCache<ChromaticChord, HashingObjectType>(
         function (hashingObject: HashingObjectType) {
-            let ret = Hashing.hash(hashingObject.rootIndex) + "|";
+            let ret = hashingObject.rootIndex + "|";
             for (const chromatic of hashingObject.chromatics)
-                ret += chromatic.hashCode();
+                ret += chromatic.valueOf();
 
             return ret;
         },

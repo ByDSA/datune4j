@@ -38,8 +38,7 @@ export function diatonicAlts() {
     if (DiatonicAlt.C)
         return;
 
-    if (!Diatonic.C)
-        diatonics();
+    diatonics();
 
     (<any>DiatonicAlt).initialize();
 }

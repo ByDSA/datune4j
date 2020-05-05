@@ -38,7 +38,7 @@ export class Tonality {
 
     private static immutablesCache = new ImmutablesCache<Tonality, HashingObjectType>(
         function (hashingObject: HashingObjectType): string {
-            return hashingObject.scale.hashCode() + hashingObject.root.hashCode();
+            return hashingObject.scale.hashCode() + ":" + hashingObject.root.valueOf();
         },
         function (tonality: Tonality): HashingObjectType {
             return { root: tonality.root, scale: tonality.scale };
@@ -188,7 +188,7 @@ export class Tonality {
     }
 
     public hashCode(): string {
-        return "tonality:" + this.root.hashCode() + "|" + this.scale.hashCode();
+        return "tonality:" + this.root.valueOf() + "|" + this.scale.hashCode();
     }
 
     public toString(): string {

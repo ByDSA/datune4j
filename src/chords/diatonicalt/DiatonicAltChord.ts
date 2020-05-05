@@ -1,6 +1,5 @@
 import { ChromaticChord } from '../../chords/chromatic/ChromaticChord';
 import { Assert } from '../../common/Assert';
-import { Hashing } from '../../common/Hashing';
 import { Immutables } from '../../common/Immutables';
 import { ImmutablesCache } from '../../common/ImmutablesCache';
 import { MathUtils } from '../../common/MathUtils';
@@ -40,9 +39,9 @@ export class DiatonicAltChord {
 
     private static immutablesCache = new ImmutablesCache<DiatonicAltChord, HashingObjectType>(
         function (hashingObject: HashingObjectType) {
-            let ret = Hashing.hash(hashingObject.rootIndex) + "|";
+            let ret = hashingObject.rootIndex + "|";
             for (let diatonicAlt of hashingObject.notes)
-                ret += diatonicAlt.hashCode();
+                ret += "d" + diatonicAlt.valueOf();
 
             return ret;
         },

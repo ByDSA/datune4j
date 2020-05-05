@@ -1,5 +1,4 @@
 import { DiatonicAltChordPattern } from '../chords/diatonicalt/DiatonicAltChordPattern';
-import { Hashable } from '../common/Hashable';
 import { ImmutablesCache } from '../common/ImmutablesCache';
 import { MathUtils } from '../common/MathUtils';
 import { Chromatic } from '../degrees/Chromatic';
@@ -7,13 +6,13 @@ import { Diatonic } from '../degrees/Diatonic';
 import { DiatonicAltDegree } from '../degrees/scale/DiatonicAltDegree';
 import { DiatonicDegree } from '../degrees/scale/DiatonicDegree';
 import { DegreeFunction } from '../function/DegreeFunction';
+import { IntervalDiatonic } from '../interval/IntervalDiatonic';
 import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
 import { NamingScale } from '../lang/naming/NamingScale';
 import { ScaleModeUtils } from './ScaleModeUtils';
-import { IntervalDiatonic } from '../interval/IntervalDiatonic';
 
 type HashingObject = IntervalDiatonicAlt[];
-export class Scale implements Hashable {
+export class Scale {
     static MAJOR: Scale;
     static DORIAN: Scale;
     static PHRYGIAN: Scale;

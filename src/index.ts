@@ -18,5 +18,4 @@ export * from './settings/SettingsInterface';
 export * from './tonality/Scale';
 export * from './tonality/ScaleModeUtils';
 export * from './tonality/Tonality';
-export * from './common/Hashing';
 export * from './common/Utils';

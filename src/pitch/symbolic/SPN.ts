@@ -150,8 +150,8 @@ export class SPN implements SymbolicPitch {
     public static B10;
 
     private static immutablesCache = new ImmutablesCache<SPN, HashingObject>(
-        function (hashingObject: HashingObject): string {
-            return hashingObject.chromatic.hashCode() + hashingObject.octave;
+        function (hashingObject: HashingObject): number {
+            return hashingObject.chromatic.valueOf() + hashingObject.octave * Chromatic.NUMBER;
         },
         function (spn: SPN): HashingObject {
             return { chromatic: spn.chromatic, octave: spn.octave };
@@ -184,8 +184,8 @@ export class SPN implements SymbolicPitch {
         return this.chromatic.toString() + this.octave;
     }
 
-    public hashCode(): string {
-        return this.chromatic.hashCode() + this.octave;
+    public valueOf(): number {
+        return this.chromatic.valueOf() + this.octave * Chromatic.NUMBER;
     }
 
     private static initialize() {

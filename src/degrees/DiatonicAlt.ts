@@ -1,14 +1,13 @@
-import { Hashable } from '../common/Hashable';
-import { Hashing } from '../common/Hashing';
 import { Immutables } from '../common/Immutables';
 import { ImmutablesCache } from '../common/ImmutablesCache';
 import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
 import { NamingDiatonicAlt } from '../lang/naming/NamingDiatonicAlt';
 import { Chromatic } from './Chromatic';
+import { Degree } from './Degree';
 import { Diatonic } from './Diatonic';
 
 type HashingObjectType = { diatonic: Diatonic, alts: number };
-export class DiatonicAlt implements Hashable {
+export class DiatonicAlt implements Degree {
     // Precalc
 
     public static C: DiatonicAlt;
@@ -55,7 +54,7 @@ export class DiatonicAlt implements Hashable {
 
     private static immutablesCache = new ImmutablesCache<DiatonicAlt, HashingObjectType>(
         function (hashingObject: HashingObjectType) {
-            return hashingObject.diatonic.hashCode() + Hashing.hash(Chromatic.NUMBER + hashingObject.alts); // +Chromatic.Number, porque hay problema con hash de números negativos
+            return hashingObject.diatonic.valueOf() + ":" + hashingObject.alts;
         },
         function (diatonicAlt: DiatonicAlt): HashingObjectType {
             return { diatonic: diatonicAlt.diatonic, alts: diatonicAlt.alts };
@@ -147,8 +146,8 @@ export class DiatonicAlt implements Hashable {
         return NamingDiatonicAlt.toString(this);
     }
 
-    hashCode(): string {
-        return this.diatonic.hashCode() + Hashing.hash(this.alts);
+    valueOf(): number {
+        return this.diatonic.intValue * 197 + this.alts * 199;
     }
 
     private static initialize() {

@@ -1,5 +1,3 @@
-import { Hashing } from './Hashing';
-
 export class ImmutablesCache<T, H> {
     private immutablesMap;
 

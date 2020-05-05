@@ -141,7 +141,7 @@ export class MidiPitch implements Pitch {
 
     private static immutablesCache = new ImmutablesCache<MidiPitch, HashingObject>(
         function (hashingObject: HashingObject): string {
-            return hashingObject.spn.hashCode() + "-" + hashingObject.detuned;
+            return hashingObject.spn.valueOf() + "-" + hashingObject.detuned;
         },
         function (midiNote: MidiPitch): HashingObject {
             return { spn: midiNote.spn, detuned: midiNote.cents };
