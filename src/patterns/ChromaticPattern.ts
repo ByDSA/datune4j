@@ -5,7 +5,7 @@ import { Chromatic } from '../degrees/Chromatic';
 import { NamingChromaticChordPattern } from '../lang/naming/NamingChromaticChordPattern';
 
 type Difference = number;
-export class ChromaticPattern implements DegreePattern<Chromatic>, Iterable<number> {
+export class ChromaticPattern implements DegreePattern<Chromatic>, Iterable<Difference> {
     public static POWER_CHORD: ChromaticPattern;
     public static TRIAD_MAJOR: ChromaticPattern;
     public static TRIAD_MINOR: ChromaticPattern;
@@ -95,7 +95,7 @@ export class ChromaticPattern implements DegreePattern<Chromatic>, Iterable<numb
         return this.immutablesCache.getOrCreate(values);
     }
 
-    [Symbol.iterator](): Iterator<number> {
+    [Symbol.iterator](): Iterator<Difference> {
         return this.values[Symbol.iterator]();
     }
 
@@ -103,7 +103,7 @@ export class ChromaticPattern implements DegreePattern<Chromatic>, Iterable<numb
         return this._rootIndex;
     }
 
-    public get values(): number[] {
+    public get values(): Difference[] {
         return Array.from(this._values);
     }
 
