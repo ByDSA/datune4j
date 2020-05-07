@@ -1,8 +1,5 @@
 import { ChromaticChord } from './chords/chromatic/ChromaticChord';
-import { ChromaticChordPattern } from './chords/chromatic/ChromaticChordPattern';
-import { DiatonicChordPattern } from './chords/Diatonic/DiatonicChordPattern';
 import { DiatonicAltChord } from './chords/diatonicalt/DiatonicAltChord';
-import { DiatonicAltChordPattern } from './chords/diatonicalt/DiatonicAltChordPattern';
 import { Chromatic } from './degrees/Chromatic';
 import { Diatonic } from './degrees/Diatonic';
 import { DiatonicAlt } from './degrees/DiatonicAlt';
@@ -12,6 +9,9 @@ import { DegreeFunction } from './function/DegreeFunction';
 import { IntervalDiatonic } from './interval/IntervalDiatonic';
 import { IntervalDiatonicAlt } from './interval/IntervalDiatonicAlt';
 import { MidiPitch } from './midi/MidiPitch';
+import { ChromaticPattern } from './patterns/ChromaticPattern';
+import { DiatonicAltPattern } from './patterns/DiatonicAltPattern';
+import { DiatonicPattern } from './patterns/DiatonicPattern';
 import { SPN } from './pitch/symbolic/SPN';
 import { DefaultSettings } from './settings/DefaultSettings';
 import { Settings } from './settings/Settings';
@@ -48,8 +48,11 @@ export function diatonicAltChords() {
     if (DiatonicAltChord.C)
         return;
 
-    if (!DiatonicAltChordPattern.TRIAD_MAJOR)
-        diatonicAltChordPatterns();
+    diatonicAlts();
+
+    chromatics();
+
+    diatonicAltPatterns();
 
     (<any>DiatonicAltChord).initialize();
 }
@@ -75,38 +78,40 @@ export function chromatics() {
     (<any>Chromatic).initialize();
 }
 
-// DIATONIC ALT CHORD PATTERNS
-export function diatonicChordPatterns() {
-    (<any>DiatonicChordPattern).initialize();
+// DIATONIC PATTERNS
+export function diatonicPatterns() {
+    intervalDiatonics();
+
+    (<any>DiatonicPattern).initialize();
 }
 
-// DIATONIC ALT CHORD PATTERNS
-export function diatonicAltChordPatterns() {
-    if (DiatonicAltChordPattern.TRIAD_MAJOR)
+// DIATONIC ALT PATTERNS
+export function diatonicAltPatterns() {
+    if (DiatonicAltPattern.TRIAD_MAJOR)
         return;
 
-    if (!DiatonicChordPattern.TRIAD)
-        diatonicChordPatterns();
+    intervalDiatonicAlts();
 
-    if (!ChromaticChordPattern.TRIAD_MAJOR)
-        chromaticChordPatterns();
+    diatonicPatterns();
 
-    (<any>DiatonicAltChordPattern).initialize();
+    chromaticPatterns();
+
+    (<any>DiatonicAltPattern).initialize();
 }
 
-// CHROMATIC CHORD PATTERNS
-export function chromaticChordPatterns() {
-    if (ChromaticChordPattern.TRIAD_MAJOR)
+// CHROMATIC PATTERNS
+export function chromaticPatterns() {
+    if (ChromaticPattern.TRIAD_MAJOR)
         return;
-    (<any>ChromaticChordPattern).initialize();
+    (<any>ChromaticPattern).initialize();
 }
 
 // CHROMATIC CHORDS
 export function chromaticChords() {
     if (ChromaticChord.C)
         return;
-    if (!Chromatic.C)
-        chromatics();
+
+    chromatics();
 
     (<any>ChromaticChord).initialize();
 }
@@ -151,7 +156,7 @@ export function tonalities() {
     diatonicAlts();
     chromatics();
     intervalDiatonicAlts();
-    diatonicAltChordPatterns();
+    diatonicAltPatterns();
 
     Tonality.C = Tonality.from(DiatonicAlt.C, Scale.MAJOR);
     Tonality.CC = Tonality.from(DiatonicAlt.CC, Scale.MAJOR);
@@ -232,6 +237,8 @@ export function intervalDiatonics() {
     if (IntervalDiatonic.UNISON)
         return;
 
+    diatonics();
+
     (<any>IntervalDiatonic).initialize();
 }
 
@@ -298,17 +305,17 @@ export function bpms() {
 export function all() {
     diatonics();
     intervalDiatonics();
-    diatonicChordPatterns();
+    diatonicPatterns();
 
     chromatics();
-    chromaticChordPatterns();
+    chromaticPatterns();
     chromaticChords();
 
     diatonicAlts();
     diatonicDegrees();
     diatonicAltDegrees();
     intervalDiatonicAlts();
-    diatonicAltChordPatterns();
+    diatonicAltPatterns();
     diatonicAltChords();
 
     scales();

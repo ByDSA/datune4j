@@ -3,11 +3,12 @@ import { ImmutablesCache } from '../../common/ImmutablesCache';
 import { MathUtils } from '../../common/MathUtils';
 import { Utils } from '../../common/Utils';
 import { Chromatic } from '../../degrees/Chromatic';
-import { NameChromaticChordCalculator } from '../../lang/naming/NameChromaticChordCalculator';
-import { ChromaticChordPattern } from './ChromaticChordPattern';
+import { ChromaticPattern } from '../../patterns/ChromaticPattern';
+import { Chord } from '../Chord';
+import { NameChordCalculator } from '../../lang/naming/NameChordCalculator';
 
-type HashingObjectType = { rootIndex: number, chromatics: Chromatic[] };
-export class ChromaticChord {
+type HashingObjectType = Chromatic[];
+export class ChromaticChord implements Chord<Chromatic> {
     // Precalc
 
     public static C;
@@ -17,55 +18,33 @@ export class ChromaticChord {
 
     private static immutablesCache = new ImmutablesCache<ChromaticChord, HashingObjectType>(
         function (hashingObject: HashingObjectType) {
-            let ret = hashingObject.rootIndex + "|";
-            for (const chromatic of hashingObject.chromatics)
+            let ret = "";
+            for (const chromatic of hashingObject)
                 ret += chromatic.valueOf();
 
             return ret;
         },
         function (chromaticChord: ChromaticChord): HashingObjectType {
-            return { rootIndex: chromaticChord.rootIndex, chromatics: chromaticChord.notesFromRoot };
+            return chromaticChord.notes;
         },
         function (hashingObject: HashingObjectType): ChromaticChord {
-            return new ChromaticChord(hashingObject.rootIndex, hashingObject.chromatics);
+            return new ChromaticChord(hashingObject);
         }
     );
 
-    private constructor(private _rootIndex: number, private _notes: Chromatic[]) {
+    private constructor(private _notes: Chromatic[]) {
     }
 
-    public static fromRootNotes(rootIndex: number, notes: Chromatic[]): ChromaticChord {
-        return this.immutablesCache.getOrCreate({ rootIndex: rootIndex, chromatics: notes });
-    }
-
-    public static fromRootPattern(root: Chromatic, pattern: ChromaticChordPattern, inversion: number = 0): ChromaticChord {
-        let rootPos = this.inversionToRootPos(inversion, pattern.values.length);
-        let notes: Chromatic[] = [root];
-
-        let first = true;
-        for (let semis of pattern) {
-            if (first) {
-                first = false;
-                continue;
-            }
-
-            let chromaticShifted = root.getShift(semis);
-            notes.push(chromaticShifted);
-        }
-
-        return ChromaticChord.fromRootNotes(rootPos, notes);
+    public static from(notes: Chromatic[]): ChromaticChord {
+        return this.immutablesCache.getOrCreate(notes);
     }
 
     public get root(): Chromatic {
         return this.notes[this.rootIndex];
     }
 
-    private static inversionToRootPos(inv: number, length: number): number {
-        return (length - inv) % length;
-    }
-
     public get rootIndex(): number {
-        return this._rootIndex;
+        return this.pattern.rootIndex;
     }
 
     public get inversionNumber(): number {
@@ -73,32 +52,22 @@ export class ChromaticChord {
     }
 
     public get notes(): Chromatic[] {
-        let notes = this.notesFromRoot;
-
-        Utils.arrayRotate(notes, this.rootIndex, true);
-        return notes;
+        return Array.from(this._notes);
     }
 
     public getInv(n: number = 1): ChromaticChord {
         let rootIndex = this.rootIndex - n;
         rootIndex = MathUtils.rotativeTrim(rootIndex, this._notes.length);
-        return ChromaticChord.fromRootNotes(rootIndex, this.notesFromRoot);
-    }
+        let notes = this.notes;
+        notes = Utils.arrayRotateLeft(notes, n);
 
-    public get notesFromRoot(): Chromatic[] {
-        return Array.from(this._notes);
+        return ChromaticChord.from(notes);
     }
     
-    public get pattern(): ChromaticChordPattern {
+    public get pattern(): ChromaticPattern {
         let patternArray = this.getArrayFromChromaticChord();
 
-        return ChromaticChordPattern.from(...patternArray);
-    }
-
-    public get patternFromRoot(): ChromaticChordPattern {
-        let patternArray = this.getArrayFromChromaticChordRoot();
-
-        return ChromaticChordPattern.from(...patternArray);
+        return ChromaticPattern.from(...patternArray);
     }
 
     private getArrayFromChromaticChord(): number[] {
@@ -126,7 +95,7 @@ export class ChromaticChord {
         let patternArray = [0];
         let last: Chromatic;
 
-        let unsortedNotes: Chromatic[] = this.notesFromRoot;
+        let unsortedNotes: Chromatic[] = this.notes;
 
         let first = true;
         unsortedNotes.forEach(current => {
@@ -144,14 +113,14 @@ export class ChromaticChord {
     }
 
     public toString(): string {
-        return new NameChromaticChordCalculator(this).get();
+        return new NameChordCalculator(this).get();
     }
 
     private static initialize() {
-        this.C = ChromaticChord.fromRootNotes(0, [Chromatic.C, Chromatic.E, Chromatic.G]);
-        this.Dm = ChromaticChord.fromRootNotes(0, [Chromatic.D, Chromatic.F, Chromatic.A]);
-        this.C7 = ChromaticChord.fromRootNotes(0, [Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.AA]);
-        this.Dm7 = ChromaticChord.fromRootNotes(0, [Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.AA]);
+        this.C = ChromaticChord.from([Chromatic.C, Chromatic.E, Chromatic.G]);
+        this.Dm = ChromaticChord.from([Chromatic.D, Chromatic.F, Chromatic.A]);
+        this.C7 = ChromaticChord.from([Chromatic.C, Chromatic.E, Chromatic.G, Chromatic.AA]);
+        this.Dm7 = ChromaticChord.from([Chromatic.D, Chromatic.F, Chromatic.A, Chromatic.AA]);
 
         Immutables.lockrIf(ChromaticChord, (obj) => !(obj instanceof ImmutablesCache));
 

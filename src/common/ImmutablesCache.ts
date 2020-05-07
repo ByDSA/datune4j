@@ -1,3 +1,5 @@
+import { Assert } from './Assert';
+
 export class ImmutablesCache<T, H> {
     private immutablesMap;
 
@@ -30,8 +32,9 @@ export class ImmutablesCache<T, H> {
     public getOrCreate(hashingObject: H): T {
         let obj: T | undefined = this.get(hashingObject);
 
-        if (!obj) {
+        if (obj === undefined) {
             obj = this.create(hashingObject);
+            Assert.notNull(obj);
             this.add(obj);
         }
 

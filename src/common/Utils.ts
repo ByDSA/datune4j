@@ -17,14 +17,19 @@ export class Utils {
     return false;
   }
 
-  public static arrayRotate<T>(array: T[], n: number, reverse = false): T[] {
+  public static arrayRotateLeft<T>(array: T[], n: number): T[] {
     Assert.notNull(array);
 
     for (let i = 0; i < n; i++)
-      if (reverse)
-        array.unshift(array.pop());
-      else
-        array.push(array.shift());
+      array.push(array.shift());
+    return array;
+  }
+
+  public static arrayRotateRight<T>(array: T[], n: number): T[] {
+    Assert.notNull(array);
+
+    for (let i = 0; i < n; i++)
+      array.unshift(array.pop());
     return array;
   }
 

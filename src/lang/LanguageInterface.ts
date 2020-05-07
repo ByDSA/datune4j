@@ -129,6 +129,7 @@ export interface LanguageInterface {
         THIRTEENTH_MAJ13: string,
         THIRTEENTH_MAJ13_a5: string,
         THIRTEENTH_MAJ13_a5a9: string,
+        THIRTEENTH_b5a9: string,
     },
     shortPatterns: {
         TRIAD_MAJOR: string,
@@ -175,6 +176,7 @@ export interface LanguageInterface {
         THIRTEENTH_MAJ13: string,
         THIRTEENTH_MAJ13_a5: string,
         THIRTEENTH_MAJ13_a5a9: string,
+        THIRTEENTH_b5a9: string,
     },
     temperaments: {
         ET12: string,

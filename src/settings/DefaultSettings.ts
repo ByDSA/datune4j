@@ -1,5 +1,5 @@
 import { ChromaticChord } from '../chords/chromatic/ChromaticChord';
-import { ChromaticChordPattern } from '../chords/chromatic/ChromaticChordPattern';
+import { ChromaticPattern } from '../patterns/ChromaticPattern';
 import { DiatonicAltChord } from '../chords/diatonicalt/DiatonicAltChord';
 import { Chromatic } from '../degrees/Chromatic';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
@@ -20,7 +20,7 @@ export const DefaultSettings: SettingsInterface = {
         get tonality(): Tonality { return Tonality.C },
         get chromaticChord(): ChromaticChord { return ChromaticChord.C },
         get diatonicAltChord(): DiatonicAltChord { return DiatonicAltChord.C },
-        get pattern(): ChromaticChordPattern { return ChromaticChordPattern.TRIAD_MAJOR },
+        get pattern(): ChromaticPattern { return ChromaticPattern.TRIAD_MAJOR },
         get temperament(): Temperament { return Temperament.ET12 },
         get tuning(): Tuning { return Tuning.EQUAL_440 },
         get concertPitch(): ConcertPitch { return ConcertPitch.A440 },
@@ -152,7 +152,8 @@ export const DefaultSettings: SettingsInterface = {
         get SIXTH_SUS4(): string { return Settings.lang.patterns.SIXTH_SUS4 },
         get THIRTEENTH_MAJ13(): string { return Settings.lang.patterns.THIRTEENTH_MAJ13 },
         get THIRTEENTH_MAJ13_a5(): string { return Settings.lang.patterns.THIRTEENTH_MAJ13_a5 },
-        get THIRTEENTH_MAJ13_a5a9(): string { return Settings.lang.patterns.THIRTEENTH_MAJ13_a5a9 }
+        get THIRTEENTH_MAJ13_a5a9(): string { return Settings.lang.patterns.THIRTEENTH_MAJ13_a5a9 },
+        get THIRTEENTH_b5a9(): string { return Settings.lang.patterns.THIRTEENTH_b5a9 }
     },
     shortPatterns: {
         get TRIAD_MAJOR(): string { return Settings.lang.shortPatterns.TRIAD_MAJOR },
@@ -198,6 +199,7 @@ export const DefaultSettings: SettingsInterface = {
         get SIXTH_SUS4(): string { return Settings.lang.shortPatterns.SIXTH_SUS4 },
         get THIRTEENTH_MAJ13(): string { return Settings.lang.shortPatterns.THIRTEENTH_MAJ13 },
         get THIRTEENTH_MAJ13_a5(): string { return Settings.lang.shortPatterns.THIRTEENTH_MAJ13_a5 },
-        get THIRTEENTH_MAJ13_a5a9(): string { return Settings.lang.patterns.THIRTEENTH_MAJ13_a5a9 }
+        get THIRTEENTH_MAJ13_a5a9(): string { return Settings.lang.shortPatterns.THIRTEENTH_MAJ13_a5a9 },
+        get THIRTEENTH_b5a9(): string { return Settings.lang.shortPatterns.THIRTEENTH_b5a9 },
     }
 }

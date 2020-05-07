@@ -140,7 +140,8 @@ export let Settings: SettingsInterface = {
         get SIXTH_SUS4(): string { return Settings.lang.patterns.SIXTH_SUS4 },
         get THIRTEENTH_MAJ13(): string { return Settings.lang.patterns.THIRTEENTH_MAJ13 },
         get THIRTEENTH_MAJ13_a5(): string { return Settings.lang.patterns.THIRTEENTH_MAJ13_a5 },
-        get THIRTEENTH_MAJ13_a5a9(): string { return Settings.lang.patterns.THIRTEENTH_MAJ13_a5a9 }
+        get THIRTEENTH_MAJ13_a5a9(): string { return Settings.lang.patterns.THIRTEENTH_MAJ13_a5a9 },
+        get THIRTEENTH_b5a9(): string { return Settings.lang.patterns.THIRTEENTH_b5a9 }
     },
     shortPatterns: {
         get TRIAD_MAJOR(): string { return Settings.lang.shortPatterns.TRIAD_MAJOR },
@@ -186,6 +187,7 @@ export let Settings: SettingsInterface = {
         get SIXTH_SUS4(): string { return Settings.lang.shortPatterns.SIXTH_SUS4 },
         get THIRTEENTH_MAJ13(): string { return Settings.lang.shortPatterns.THIRTEENTH_MAJ13 },
         get THIRTEENTH_MAJ13_a5(): string { return Settings.lang.shortPatterns.THIRTEENTH_MAJ13_a5 },
-        get THIRTEENTH_MAJ13_a5a9(): string { return Settings.lang.patterns.THIRTEENTH_MAJ13_a5a9 }
+        get THIRTEENTH_MAJ13_a5a9(): string { return Settings.lang.patterns.THIRTEENTH_MAJ13_a5a9 },
+        get THIRTEENTH_b5a9(): string { return Settings.lang.patterns.THIRTEENTH_b5a9 }
     }
 };

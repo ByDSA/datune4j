@@ -24,9 +24,9 @@ export class ScaleModeUtils {
         let scaleIntervals: IntervalDiatonicAlt[] = sourceScale.intervals;
 
         if (n > 0)
-            Utils.arrayRotate(scaleIntervals, n);
+            Utils.arrayRotateLeft(scaleIntervals, n);
         else if (n < 0)
-            Utils.arrayRotate(scaleIntervals, -n, true);
+            Utils.arrayRotateRight(scaleIntervals, n);
         else
             return sourceScale;
 

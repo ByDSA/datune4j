@@ -7,7 +7,7 @@ precalc.scales();
 precalc.diatonics();
 precalc.chromatics();
 precalc.diatonicAltDegrees();
-precalc.diatonicAltChordPatterns();
+precalc.diatonicAltPatterns();
 precalc.settings();
 precalc.diatonicDegrees();
 precalc.degreeFunctions();

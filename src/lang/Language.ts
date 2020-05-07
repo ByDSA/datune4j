@@ -135,7 +135,8 @@ export class Language {
             SIXTH_SUS4: "SIXTH SUS4",
             THIRTEENTH_MAJ13: "THIRTEENTH MAJ13",
             get THIRTEENTH_MAJ13_a5(): string { return "THIRTEENTH MAJ13 " + Settings.mods.a5; },
-            get THIRTEENTH_MAJ13_a5a9(): string { return "THIRTEENTH MAJ13 " + Settings.mods.a5 + Settings.mods.a9; }
+            get THIRTEENTH_MAJ13_a5a9(): string { return "THIRTEENTH MAJ13 " + Settings.mods.a5 + Settings.mods.a9; },
+            get THIRTEENTH_b5a9(): string { return "THIRTEENTH MAJ13 " + Settings.mods.b5 + Settings.mods.a9; }
         },
         shortPatterns: {
             get TRIAD_MAJOR(): string { return ""; },
@@ -182,6 +183,7 @@ export class Language {
             get THIRTEENTH_MAJ13(): string { return "Maj13"; },
             get THIRTEENTH_MAJ13_a5(): string { return "Maj13" + Settings.mods.a5; },
             get THIRTEENTH_MAJ13_a5a9(): string { return "Maj13" + Settings.mods.a5 + Settings.mods.a9; },
+            get THIRTEENTH_b5a9(): string { return "13" + Settings.mods.b5 + Settings.mods.a9; },
         },
         temperaments: {
             get ET12(): string { return "12-ET" },
@@ -320,7 +322,8 @@ export class Language {
             SIXTH_SUS4: "SEXTA SUS4",
             THIRTEENTH_MAJ13: "TRECEAVA MAJ13",
             get THIRTEENTH_MAJ13_a5(): string { return "TRECEAVA MAJ13 " + Settings.mods.a5; },
-            get THIRTEENTH_MAJ13_a5a9(): string { return "TRECEAVA MAJ13 " + Settings.mods.a5 + Settings.mods.a9; }
+            get THIRTEENTH_MAJ13_a5a9(): string { return "TRECEAVA MAJ13 " + Settings.mods.a5 + Settings.mods.a9; },
+            get THIRTEENTH_b5a9(): string { return "TRECEAVA " + Settings.mods.b5 + Settings.mods.a9; }
         },
         shortPatterns: {
             get TRIAD_MAJOR(): string { return ""; },
@@ -367,6 +370,7 @@ export class Language {
             get THIRTEENTH_MAJ13(): string { return "Maj13"; },
             get THIRTEENTH_MAJ13_a5(): string { return "Maj13" + Settings.mods.a5; },
             get THIRTEENTH_MAJ13_a5a9(): string { return "Maj13" + Settings.mods.a5 + Settings.mods.a9; },
+            get THIRTEENTH_b5a9(): string { return "13" + Settings.mods.b5 + Settings.mods.a9; },
         },
         temperaments: {
             get ET12(): string { return "12-Temperamento Igual" },

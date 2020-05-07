@@ -5,7 +5,6 @@ import { TonalChord } from "./TonalChord";
 precalc.tonalities();
 precalc.degreeFunctions();
 
-
 test('TonalChord - calculateChord: Tonality C, DegreeFunction I = Chord C', () => {
     let tonalChord = TonalChord.from(Tonality.C, DegreeFunction.I);
     expect(tonalChord.tonality).toBe(Tonality.C);

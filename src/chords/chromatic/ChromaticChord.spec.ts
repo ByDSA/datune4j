@@ -1,27 +1,22 @@
 import * as precalc from "../../precalc";
 import { ChromaticChord } from "./ChromaticChord";
-import { ChromaticChordPattern } from "./ChromaticChordPattern";
-precalc.chromaticChordPatterns();
+import { ChromaticPattern } from "../../patterns/ChromaticPattern";
+precalc.chromaticPatterns();
 precalc.chromaticChords();
 
-test('ChromaticChord - patternRoot: ChromaticChord.C', () => {
-    let chromaticChordPattern = ChromaticChord.C.patternFromRoot;
-    expect(chromaticChordPattern).toBe(ChromaticChordPattern.TRIAD_MAJOR);
-});
-
-test('ChromaticChord - patternRoot: ChromaticChord.C/G', () => {
-    let chromaticChordPattern = ChromaticChord.C.getInv(2).patternFromRoot;
-    expect(chromaticChordPattern).toBe(ChromaticChordPattern.TRIAD_MAJOR);
+test('ChromaticChord - pattern: ChromaticChord.C', () => {
+    let chromaticChordPattern = ChromaticChord.C.pattern;
+    expect(chromaticChordPattern).toBe(ChromaticPattern.TRIAD_MAJOR);
 });
 
 test('ChromaticChord - pattern: ChromaticChord.C/G', () => {
     let chromaticChordPattern = ChromaticChord.C.getInv(2).pattern;
-    let expected = ChromaticChordPattern.from(0, 5, 9);
+    let expected = ChromaticPattern.TRIAD_MAJOR.getInv(2);
     expect(chromaticChordPattern).toBe(expected);
 });
 
 test('ChromaticChord - pattern: ChromaticChord.C/E', () => {
     let chromaticChordPattern = ChromaticChord.C.getInv().pattern;
-    let expected = ChromaticChordPattern.from(0, 3, 8);
+    let expected = ChromaticPattern.TRIAD_MAJOR.getInv();
     expect(chromaticChordPattern).toBe(expected);
 });

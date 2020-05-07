@@ -2,6 +2,7 @@ import { ImmutablesCache } from '../common/ImmutablesCache';
 import { Diatonic } from '../degrees/Diatonic';
 import { IntervalSymbolic } from './IntervalSymbolic';
 
+type HashingObject = number;
 export class IntervalDiatonic implements IntervalSymbolic {
     public static UNISON;
     public static SECOND;
@@ -19,14 +20,14 @@ export class IntervalDiatonic implements IntervalSymbolic {
     public static FOURTEENTH;
     public static FIFTEENTH;
 
-    private static immutablesCache = new ImmutablesCache<IntervalDiatonic, number>(
-        function (num: number): string {
+    private static immutablesCache = new ImmutablesCache<IntervalDiatonic, HashingObject>(
+        function (num: HashingObject): string {
             return "" + num;
         },
-        function (intervalDiatonic: IntervalDiatonic): number {
+        function (intervalDiatonic: IntervalDiatonic): HashingObject {
             return intervalDiatonic.number;
         },
-        function (num: number): IntervalDiatonic {
+        function (num: HashingObject): IntervalDiatonic {
             return new IntervalDiatonic(num);
         }
     );
@@ -38,6 +39,14 @@ export class IntervalDiatonic implements IntervalSymbolic {
         if (num < 0)
             num = num % Diatonic.NUMBER + Diatonic.NUMBER;
         return IntervalDiatonic.immutablesCache.getOrCreate(num);
+    }
+
+    public getAdd(interval: IntervalDiatonic): IntervalDiatonic {
+        return IntervalDiatonic.from(this.number + interval.number);
+    }
+
+    public getSub(interval: IntervalDiatonic): IntervalDiatonic {
+        return IntervalDiatonic.from(this.number - interval.number);
     }
 
     get number(): number {

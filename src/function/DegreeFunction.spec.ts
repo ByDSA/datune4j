@@ -1,6 +1,6 @@
 import { DiatonicAltChord } from "../chords/diatonicalt/DiatonicAltChord";
-import { DiatonicAltChordPattern } from "../chords/diatonicalt/DiatonicAltChordPattern";
 import { DiatonicAltDegree } from "../degrees/scale/DiatonicAltDegree";
+import { DiatonicAltPattern } from "../patterns/DiatonicAltPattern";
 import * as precalc from "../precalc";
 import { Tonality } from "../tonality/Tonality";
 import { DegreeFunction } from "./DegreeFunction";
@@ -9,7 +9,7 @@ precalc.diatonics();
 precalc.diatonicAlts();
 precalc.diatonicAltChords();
 precalc.diatonicAltDegrees();
-precalc.diatonicAltChordPatterns();
+precalc.diatonicAltPatterns();
 precalc.intervalDiatonicAlts();
 precalc.scales();
 precalc.tonalities();
@@ -18,12 +18,12 @@ precalc.settings();
 
 test('DegreeFunction - precalc: I', () => {
     expect(DegreeFunction.I.diatonicAltDegree).toBe(DiatonicAltDegree.I);
-    expect(DegreeFunction.I.diatonicAltChordPattern).toBe(DiatonicAltChordPattern.TRIAD_MAJOR);
+    expect(DegreeFunction.I.diatonicAltChordPattern).toBe(DiatonicAltPattern.TRIAD_MAJOR);
 });
 
 test('DegreeFunction - precalc: bIIMaj7', () => {
     expect(DegreeFunction.bIIMaj7.diatonicAltDegree).toBe(DiatonicAltDegree.bII);
-    expect(DegreeFunction.bIIMaj7.diatonicAltChordPattern).toBe(DiatonicAltChordPattern.SEVENTH_MAJ7);
+    expect(DegreeFunction.bIIMaj7.diatonicAltChordPattern).toBe(DiatonicAltPattern.SEVENTH_MAJ7);
 });
 
 test('DegreeFunction - calculateChord: Tonality C, DegreeFunction I = Chord C', () => {
@@ -82,12 +82,12 @@ test('DegreeFunction - degrees: i', () => {
 
 test('DegreeFunction - pattern: i', () => {
     let degreeFunction = DegreeFunction.i;
-    let expected = DiatonicAltChordPattern.TRIAD_MINOR;
+    let expected = DiatonicAltPattern.TRIAD_MINOR;
     expect(degreeFunction.diatonicAltChordPattern).toStrictEqual(expected);
 });
 
 test('DegreeFunction - from: I + TRIAD_MAJOR = I', () => {
-    let degreeFunction = DegreeFunction.from(DiatonicAltDegree.I, DiatonicAltChordPattern.TRIAD_MAJOR);
+    let degreeFunction = DegreeFunction.from(DiatonicAltDegree.I, DiatonicAltPattern.TRIAD_MAJOR);
     let expected = DegreeFunction.I;
     expect(degreeFunction).toEqual(expected);
 });

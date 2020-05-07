@@ -10,3 +10,19 @@ test('IntervalDiatonicAlt - fromRootNotes: get from ImmutableCache', () => {
     let expected = IntervalDiatonicAlt.MAJOR_THIRD;
     expect(intervalDiatonicAlt).toBe(expected);
 });
+
+test('IntervalDiatonicAlt - Gb to D#: DOUBLY DIMINISHED FIFTH', () => {
+    let a = DiatonicAlt.Gb;
+    let b = DiatonicAlt.DD;
+    let intervalDiatonicAlt = IntervalDiatonicAlt.betweenDiatonicAlt(a, b);
+    let expected = IntervalDiatonicAlt.DOUBLY_AUGMENTED_FIFTH;
+    expect(intervalDiatonicAlt).toBe(expected);
+});
+
+test('IntervalDiatonicAlt - D# to Gb: DOUBLY DIMINISHED FIFTH', () => {
+    let a = DiatonicAlt.DD;
+    let b = DiatonicAlt.Gb;
+    let intervalDiatonicAlt = IntervalDiatonicAlt.betweenDiatonicAlt(a, b);
+    let expected = IntervalDiatonicAlt.DOUBLY_DIMINISHED_FOURTH;
+    expect(intervalDiatonicAlt).toBe(expected);
+});

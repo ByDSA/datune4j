@@ -1,5 +1,7 @@
 import * as precalc from "../precalc";
 import { IntervalDiatonic } from "./IntervalDiatonic";
+import { Settings } from "../settings/Settings";
+import { Language } from "../lang/Language";
 precalc.intervalDiatonics();
 
 test('IntervalDiatonic - precalc - UNISON', () => {
@@ -27,6 +29,15 @@ test('IntervalDiatonic - number - OCTAVE', () => {
 test('IntervalDiatonic - from - uncached', () => {
     let actual: IntervalDiatonic = IntervalDiatonic.from(1234);
     let expected = IntervalDiatonic.from(1234);
+
+    expect(actual).toEqual(expected);
+});
+
+test('toString() - ENG', () => {
+    Settings.lang = Language.ENG;
+
+    let actual: string = IntervalDiatonic.UNISON.toString();
+    let expected = "UNISON";
 
     expect(actual).toEqual(expected);
 });

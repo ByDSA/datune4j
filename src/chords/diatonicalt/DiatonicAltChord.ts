@@ -6,12 +6,12 @@ import { MathUtils } from '../../common/MathUtils';
 import { Utils } from '../../common/Utils';
 import { DiatonicAlt } from '../../degrees/DiatonicAlt';
 import { IntervalDiatonicAlt } from '../../interval/IntervalDiatonicAlt';
-import { NameDiatonicAltChordCalculator } from '../../lang/naming/NameDiatonicAltChordCalculator';
-import { DiatonicAltChordPattern } from './DiatonicAltChordPattern';
-import { IntervalDiatonic } from '../../interval/IntervalDiatonic';
+import { NameChordCalculator } from '../../lang/naming/NameChordCalculator';
+import { DiatonicAltPattern } from '../../patterns/DiatonicAltPattern';
+import { Chord } from '../Chord';
 
-type HashingObjectType = { rootIndex: number, notes: DiatonicAlt[] };
-export class DiatonicAltChord {
+type HashingObjectType = DiatonicAlt[];
+export class DiatonicAltChord implements Chord<DiatonicAlt> {
     // Precalc
     public static C: DiatonicAltChord;
     public static D: DiatonicAltChord;
@@ -39,21 +39,21 @@ export class DiatonicAltChord {
 
     private static immutablesCache = new ImmutablesCache<DiatonicAltChord, HashingObjectType>(
         function (hashingObject: HashingObjectType) {
-            let ret = hashingObject.rootIndex + "|";
-            for (let diatonicAlt of hashingObject.notes)
+            let ret = "";
+            for (let diatonicAlt of hashingObject)
                 ret += "d" + diatonicAlt.valueOf();
 
             return ret;
         },
         function (diatonicAltChord: DiatonicAltChord): HashingObjectType {
-            return { rootIndex: diatonicAltChord.rootIndex, notes: diatonicAltChord.notes };
+            return diatonicAltChord.notes;
         },
         function (hashingObject: HashingObjectType): DiatonicAltChord {
-            return new DiatonicAltChord(hashingObject.rootIndex, hashingObject.notes);
+            return new DiatonicAltChord(hashingObject);
         }
     );
 
-    private constructor(private _rootIndex: number, private _notes: DiatonicAlt[]) {
+    private constructor(private _notes: DiatonicAlt[]) {
         Immutables.lockr(this);
     }
 
@@ -62,35 +62,34 @@ export class DiatonicAltChord {
             Assert.notNull(note);
     }
 
-    public static fromRootNotes(rootIndex: number, notes: DiatonicAlt[]): DiatonicAltChord {
+    public static from(notes: DiatonicAlt[]): DiatonicAltChord {
         this.checkValidNotes(notes);
-        return DiatonicAltChord.immutablesCache.getOrCreate(
-            {
-                rootIndex: rootIndex,
-                notes: notes
-            }
-        );
+        return DiatonicAltChord.immutablesCache.getOrCreate(notes);
     }
 
-    public static fromRootPattern(root: DiatonicAlt, pattern: DiatonicAltChordPattern, inversion: number = 0): DiatonicAltChord {
+    public static fromRootPattern(root: DiatonicAlt, pattern: DiatonicAltPattern, inversion: number = 0): DiatonicAltChord {
         let rootPos = this.inversionToRootPos(inversion, pattern.values.length);
         let notes = this.getNotesFromPattern(root, pattern);
 
-        return DiatonicAltChord.fromRootNotes(rootPos, notes);
+        notes = Utils.arrayRotateLeft(notes, rootPos);
+
+        return DiatonicAltChord.from(notes);
     }
 
     public getInv(n: number = 1): DiatonicAltChord {
         let rootIndex = this.rootIndex - n;
         rootIndex = MathUtils.rotativeTrim(rootIndex, this._notes.length);
-        return DiatonicAltChord.fromRootNotes(rootIndex, this.notesFromRoot);
+        let notes = this.notes;
+        notes = Utils.arrayRotateLeft(notes, n);
+        return DiatonicAltChord.from(notes);
     }
 
-    private static getNotesFromPattern(root: DiatonicAlt, pattern: DiatonicAltChordPattern) {
+    private static getNotesFromPattern(root: DiatonicAlt, pattern: DiatonicAltPattern) {
         let notes: DiatonicAlt[] = [root];
 
         for (let i = 1; i < pattern.values.length; i++) {
             let chromatic = root.chromatic.getShift(pattern.values[i].semis);
-            let intervalDiatonic = IntervalDiatonic.from(pattern.values[i].diatonicIntValue);
+            let intervalDiatonic = pattern.values[i].intervalDiatonic;
             let diatonic = root.diatonic.getAdd(intervalDiatonic);
 
             let diatonicAlt = DiatonicAlt.fromChromatic(chromatic, diatonic);
@@ -101,7 +100,7 @@ export class DiatonicAltChord {
     }
 
     public get root(): DiatonicAlt {
-        return this._notes[0];
+        return this._notes[this.rootIndex];
     }
 
     private static inversionToRootPos(inv: number, length: number): number {
@@ -109,44 +108,31 @@ export class DiatonicAltChord {
     }
 
     public get rootIndex(): number {
-        return this._rootIndex;
+        return this.pattern.rootIndex;
     }
 
     public get inversionNumber(): number {
-        return (this.notes.length - this.rootIndex) % this.notes.length;
+        return this.pattern.inversionNumber;
     }
 
     public get notes(): DiatonicAlt[] {
-        let notes = this.notesFromRoot;
-
-        Utils.arrayRotate(notes, this.rootIndex, true);
-        return notes;
+        return Array.from(this._notes);
     }
 
     public get length() {
         return this._notes.length;
     }
 
-    public get notesFromRoot(): DiatonicAlt[] {
-        return Array.from(this._notes);
-    }
-
-    public get pattern(): DiatonicAltChordPattern {
+    public get pattern(): DiatonicAltPattern {
         let intervals: IntervalDiatonicAlt[] = DiatonicAltChord.getIntervalsFromNotes(this.notes);
 
-        return DiatonicAltChordPattern.fromIntervals(intervals);
-    }
-
-    public get patternFromRoot(): DiatonicAltChordPattern {
-        let intervals: IntervalDiatonicAlt[] = DiatonicAltChord.getIntervalsFromNotes(this.notesFromRoot);
-
-        return DiatonicAltChordPattern.fromIntervals(intervals);
+        return DiatonicAltPattern.fromIntervals(intervals);
     }
 
     public get chromaticChord(): ChromaticChord {
         let notesChromatic = this.notes.map((diatonicAlt: DiatonicAlt) => diatonicAlt.chromatic);
 
-        return ChromaticChord.fromRootNotes(this.rootIndex, notesChromatic);
+        return ChromaticChord.from(notesChromatic);
     }
 
     private static getIntervalsFromNotes(notes: DiatonicAlt[]): IntervalDiatonicAlt[] {
@@ -160,7 +146,7 @@ export class DiatonicAltChord {
     }
 
     public toString(): string {
-        return new NameDiatonicAltChordCalculator(this).get();
+        return new NameChordCalculator(this).get();
     }
 
     private static diatonicAlt2Str(diatonicAlt: DiatonicAlt): string {
@@ -188,17 +174,18 @@ export class DiatonicAltChord {
         return null;
     }
 
-    private static diatonicAltChordPattern2Str(diatonicAltChordPattern: DiatonicAltChordPattern): string {
+    private static diatonicAltChordPattern2Str(diatonicAltChordPattern: DiatonicAltPattern): string {
         switch (diatonicAltChordPattern) {
-            case DiatonicAltChordPattern.TRIAD_MAJOR: return "";
-            case DiatonicAltChordPattern.TRIAD_MINOR: return "m";
-            case DiatonicAltChordPattern.TRIAD_AUGMENTED: return "AUG";
-            case DiatonicAltChordPattern.TRIAD_DIMINISHED: return "0";
-            case DiatonicAltChordPattern.TRIAD_SUS4: return "SUS4";
-            case DiatonicAltChordPattern.SEVENTH_MAJ7: return "Maj7";
-            case DiatonicAltChordPattern.SEVENTH: return "7";
-            case DiatonicAltChordPattern.SEVENTH_MINOR: return "m7";
-            case DiatonicAltChordPattern.SEVENTH_MINOR_MAJ7: return "mMaj7";
+            case DiatonicAltPattern.TRIAD_MAJOR: return "";
+            case DiatonicAltPattern.TRIAD_MINOR: return "m";
+            case DiatonicAltPattern.TRIAD_AUGMENTED: return "AUG";
+            case DiatonicAltPattern.TRIAD_DIMINISHED: return "0";
+            case DiatonicAltPattern.TRIAD_SUS4: return "SUS4";
+            case DiatonicAltPattern.SEVENTH_MAJ7: return "Maj7";
+            case DiatonicAltPattern.SEVENTH: return "7";
+            case DiatonicAltPattern.SEVENTH_MINOR: return "m7";
+            case DiatonicAltPattern.SEVENTH_MINOR_MAJ7: return "mMaj7";
+            case DiatonicAltPattern.THIRTEENTH_b5a9: return "13b5a9";
         }
 
         return null;
@@ -227,7 +214,7 @@ export class DiatonicAltChord {
             DiatonicAlt.B,
         ];
 
-        let diatonicAltChordPatterns = DiatonicAltChordPattern.all();
+        let diatonicAltChordPatterns = DiatonicAltPattern.all();
 
         for (const diatonicAlt of diatonicAlts) {
             const diatonicAltStr = this.diatonicAlt2Str(diatonicAlt);

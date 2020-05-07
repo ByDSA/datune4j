@@ -7,7 +7,7 @@ precalc.diatonics();
 precalc.chromatics();
 precalc.diatonicAlts();
 precalc.intervalDiatonicAlts();
-precalc.diatonicAltChordPatterns();
+precalc.diatonicAltPatterns();
 precalc.diatonicAltChords();
 precalc.scales();
 precalc.tonalities();

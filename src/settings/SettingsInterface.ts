@@ -1,5 +1,5 @@
 import { ChromaticChord } from '../chords/chromatic/ChromaticChord';
-import { ChromaticChordPattern } from '../chords/chromatic/ChromaticChordPattern';
+import { ChromaticPattern } from '../patterns/ChromaticPattern';
 import { DiatonicAltChord } from '../chords/diatonicalt/DiatonicAltChord';
 import { Chromatic } from '../degrees/Chromatic';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
@@ -18,7 +18,7 @@ export interface SettingsInterface {
         tonality: Tonality,
         chromaticChord: ChromaticChord,
         diatonicAltChord: DiatonicAltChord,
-        pattern: ChromaticChordPattern,
+        pattern: ChromaticPattern,
         temperament: Temperament,
         tuning: Tuning,
         concertPitch: ConcertPitch
@@ -143,7 +143,8 @@ export interface SettingsInterface {
         SIXTH_SUS4: string,
         THIRTEENTH_MAJ13: string,
         THIRTEENTH_MAJ13_a5: string,
-        THIRTEENTH_MAJ13_a5a9: string
+        THIRTEENTH_MAJ13_a5a9: string,
+        THIRTEENTH_b5a9: string
     },
     shortPatterns: {
         TRIAD_MAJOR: string,
@@ -189,6 +190,7 @@ export interface SettingsInterface {
         SIXTH_SUS4: string,
         THIRTEENTH_MAJ13: string,
         THIRTEENTH_MAJ13_a5: string,
-        THIRTEENTH_MAJ13_a5a9: string
+        THIRTEENTH_MAJ13_a5a9: string,
+        THIRTEENTH_b5a9: string
     }
 }

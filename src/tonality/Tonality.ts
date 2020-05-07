@@ -1,7 +1,7 @@
-import { ChromaticChordPattern } from '../chords/chromatic/ChromaticChordPattern';
-import { DiatonicChordPattern } from '../chords/Diatonic/DiatonicChordPattern';
+import { ChromaticPattern } from '../patterns/ChromaticPattern';
+import { DiatonicPattern } from '../patterns/DiatonicPattern';
 import { DiatonicAltChord } from '../chords/diatonicalt/DiatonicAltChord';
-import { DiatonicAltChordPattern } from '../chords/diatonicalt/DiatonicAltChordPattern';
+import { DiatonicAltPattern } from '../patterns/DiatonicAltPattern';
 import { ImmutablesCache } from '../common/ImmutablesCache';
 import { Chromatic } from '../degrees/Chromatic';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
@@ -89,30 +89,29 @@ export class Tonality {
 
     private calculateRootChord3() {
         let chordRootPatternPriority = [
-            { interval: IntervalDiatonicAlt.PERFECT_UNISON, pattern: DiatonicAltChordPattern.TRIAD_MAJOR },
-            { interval: IntervalDiatonicAlt.PERFECT_UNISON, pattern: DiatonicAltChordPattern.TRIAD_MINOR },
-            { interval: IntervalDiatonicAlt.MAJOR_THIRD, pattern: DiatonicAltChordPattern.TRIAD_MINOR },
-            { interval: IntervalDiatonicAlt.MAJOR_THIRD, pattern: DiatonicAltChordPattern.TRIAD_MAJOR },
-            { interval: IntervalDiatonicAlt.MINOR_THIRD, pattern: DiatonicAltChordPattern.TRIAD_MINOR },
-            { interval: IntervalDiatonicAlt.MINOR_THIRD, pattern: DiatonicAltChordPattern.TRIAD_MAJOR },
-            { interval: IntervalDiatonicAlt.MAJOR_SIXTH, pattern: DiatonicAltChordPattern.TRIAD_MINOR },
-            { interval: IntervalDiatonicAlt.MAJOR_SIXTH, pattern: DiatonicAltChordPattern.TRIAD_MAJOR },
-            { interval: IntervalDiatonicAlt.MINOR_SIXTH, pattern: DiatonicAltChordPattern.TRIAD_MINOR },
-            { interval: IntervalDiatonicAlt.MINOR_SIXTH, pattern: DiatonicAltChordPattern.TRIAD_MAJOR },
-            { interval: IntervalDiatonicAlt.PERFECT_UNISON, pattern: DiatonicAltChordPattern.TRIAD_DIMINISHED },
-            { interval: IntervalDiatonicAlt.PERFECT_UNISON, pattern: DiatonicAltChordPattern.TRIAD_AUGMENTED },
-            { interval: IntervalDiatonicAlt.MAJOR_THIRD, pattern: DiatonicAltChordPattern.TRIAD_DIMINISHED },
-            { interval: IntervalDiatonicAlt.MAJOR_THIRD, pattern: DiatonicAltChordPattern.TRIAD_AUGMENTED },
-            { interval: IntervalDiatonicAlt.MINOR_THIRD, pattern: DiatonicAltChordPattern.TRIAD_DIMINISHED },
-            { interval: IntervalDiatonicAlt.MINOR_THIRD, pattern: DiatonicAltChordPattern.TRIAD_AUGMENTED },
-            { interval: IntervalDiatonicAlt.MAJOR_SIXTH, pattern: DiatonicAltChordPattern.TRIAD_DIMINISHED },
-            { interval: IntervalDiatonicAlt.MAJOR_SIXTH, pattern: DiatonicAltChordPattern.TRIAD_AUGMENTED },
-            { interval: IntervalDiatonicAlt.MINOR_SIXTH, pattern: DiatonicAltChordPattern.TRIAD_DIMINISHED },
-            { interval: IntervalDiatonicAlt.MINOR_SIXTH, pattern: DiatonicAltChordPattern.TRIAD_AUGMENTED },
+            { interval: IntervalDiatonicAlt.PERFECT_UNISON, pattern: DiatonicAltPattern.TRIAD_MAJOR },
+            { interval: IntervalDiatonicAlt.PERFECT_UNISON, pattern: DiatonicAltPattern.TRIAD_MINOR },
+            { interval: IntervalDiatonicAlt.MAJOR_THIRD, pattern: DiatonicAltPattern.TRIAD_MINOR },
+            { interval: IntervalDiatonicAlt.MAJOR_THIRD, pattern: DiatonicAltPattern.TRIAD_MAJOR },
+            { interval: IntervalDiatonicAlt.MINOR_THIRD, pattern: DiatonicAltPattern.TRIAD_MINOR },
+            { interval: IntervalDiatonicAlt.MINOR_THIRD, pattern: DiatonicAltPattern.TRIAD_MAJOR },
+            { interval: IntervalDiatonicAlt.MAJOR_SIXTH, pattern: DiatonicAltPattern.TRIAD_MINOR },
+            { interval: IntervalDiatonicAlt.MAJOR_SIXTH, pattern: DiatonicAltPattern.TRIAD_MAJOR },
+            { interval: IntervalDiatonicAlt.MINOR_SIXTH, pattern: DiatonicAltPattern.TRIAD_MINOR },
+            { interval: IntervalDiatonicAlt.MINOR_SIXTH, pattern: DiatonicAltPattern.TRIAD_MAJOR },
+            { interval: IntervalDiatonicAlt.PERFECT_UNISON, pattern: DiatonicAltPattern.TRIAD_DIMINISHED },
+            { interval: IntervalDiatonicAlt.PERFECT_UNISON, pattern: DiatonicAltPattern.TRIAD_AUGMENTED },
+            { interval: IntervalDiatonicAlt.MAJOR_THIRD, pattern: DiatonicAltPattern.TRIAD_DIMINISHED },
+            { interval: IntervalDiatonicAlt.MAJOR_THIRD, pattern: DiatonicAltPattern.TRIAD_AUGMENTED },
+            { interval: IntervalDiatonicAlt.MINOR_THIRD, pattern: DiatonicAltPattern.TRIAD_DIMINISHED },
+            { interval: IntervalDiatonicAlt.MINOR_THIRD, pattern: DiatonicAltPattern.TRIAD_AUGMENTED },
+            { interval: IntervalDiatonicAlt.MAJOR_SIXTH, pattern: DiatonicAltPattern.TRIAD_DIMINISHED },
+            { interval: IntervalDiatonicAlt.MAJOR_SIXTH, pattern: DiatonicAltPattern.TRIAD_AUGMENTED },
+            { interval: IntervalDiatonicAlt.MINOR_SIXTH, pattern: DiatonicAltPattern.TRIAD_DIMINISHED },
+            { interval: IntervalDiatonicAlt.MINOR_SIXTH, pattern: DiatonicAltPattern.TRIAD_AUGMENTED },
         ];
 
         this._rootChord3 = null;
-        let notesChromatic = this.notes.map(diatonicAlt => diatonicAlt.chromatic);
         for (const pattern of chordRootPatternPriority) {
             let note = this.root.getAdd(pattern.interval);
             let chord = DiatonicAltChord.fromRootPattern(note, pattern.pattern);
@@ -128,14 +127,14 @@ export class Tonality {
 
     private calculateRootChord4() {
         let chordRootPatternPriority = [
-            DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.from(0, 4, 7, 11), DiatonicChordPattern.SEVENTH),
-            DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.from(0, 3, 7, 11), DiatonicChordPattern.SEVENTH),
-            DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.from(0, 4, 7, 10), DiatonicChordPattern.SEVENTH),
-            DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.from(0, 3, 7, 10), DiatonicChordPattern.SEVENTH),
-            DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.from(0, 3, 6, 10), DiatonicChordPattern.SEVENTH),
-            DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.from(0, 3, 6, 11), DiatonicChordPattern.SEVENTH),
-            DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.from(0, 4, 8, 10), DiatonicChordPattern.SEVENTH),
-            DiatonicAltChordPattern.fromPatterns(ChromaticChordPattern.from(0, 4, 8, 11), DiatonicChordPattern.SEVENTH)
+            DiatonicAltPattern.fromPatterns(ChromaticPattern.from(0, 4, 7, 11), DiatonicPattern.SEVENTH),
+            DiatonicAltPattern.fromPatterns(ChromaticPattern.from(0, 3, 7, 11), DiatonicPattern.SEVENTH),
+            DiatonicAltPattern.fromPatterns(ChromaticPattern.from(0, 4, 7, 10), DiatonicPattern.SEVENTH),
+            DiatonicAltPattern.fromPatterns(ChromaticPattern.from(0, 3, 7, 10), DiatonicPattern.SEVENTH),
+            DiatonicAltPattern.fromPatterns(ChromaticPattern.from(0, 3, 6, 10), DiatonicPattern.SEVENTH),
+            DiatonicAltPattern.fromPatterns(ChromaticPattern.from(0, 3, 6, 11), DiatonicPattern.SEVENTH),
+            DiatonicAltPattern.fromPatterns(ChromaticPattern.from(0, 4, 8, 10), DiatonicPattern.SEVENTH),
+            DiatonicAltPattern.fromPatterns(ChromaticPattern.from(0, 4, 8, 11), DiatonicPattern.SEVENTH)
         ];
 
         this._rootChord4 = null;

@@ -1,4 +1,4 @@
-import { DiatonicAltChordPattern } from '../chords/diatonicalt/DiatonicAltChordPattern';
+import { DiatonicAltPattern } from '../patterns/DiatonicAltPattern';
 import { ImmutablesCache } from '../common/ImmutablesCache';
 import { MathUtils } from '../common/MathUtils';
 import { Chromatic } from '../degrees/Chromatic';
@@ -223,8 +223,8 @@ export class Scale {
         return degrees;
     }
 
-    get diatonicAltChordPattern(): DiatonicAltChordPattern {
-        return DiatonicAltChordPattern.fromIntervals(this.intervals);
+    get diatonicAltChordPattern(): DiatonicAltPattern {
+        return DiatonicAltPattern.fromIntervals(this.intervals);
     }
 
     // Modes
@@ -267,7 +267,7 @@ export class Scale {
 
     get degreeFunctions(): DegreeFunction[] {
         let ret: DegreeFunction[] = [];
-        let diatonicAltChordPatterns: DiatonicAltChordPattern[] = DiatonicAltChordPattern.all();
+        let diatonicAltChordPatterns: DiatonicAltPattern[] = DiatonicAltPattern.all();
 
         for (const diatonicAltDegree of this.degrees) {
             for (const diatonicAltChordPattern of diatonicAltChordPatterns) {
