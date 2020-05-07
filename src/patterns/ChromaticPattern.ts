@@ -1,8 +1,8 @@
-import { DegreePattern } from 'patterns/DegreePattern';
 import { Immutables } from '../common/Immutables';
 import { ImmutablesCache } from '../common/ImmutablesCache';
 import { Chromatic } from '../degrees/Chromatic';
 import { NamingChromaticChordPattern } from '../lang/naming/NamingChromaticChordPattern';
+import { DegreePattern } from '../patterns/DegreePattern';
 
 type Difference = number;
 export class ChromaticPattern implements DegreePattern<Chromatic>, Iterable<Difference> {

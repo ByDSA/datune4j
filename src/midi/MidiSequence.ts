@@ -1,4 +1,4 @@
-import { TemporalNode } from 'timelayer/TemporalNode';
+import { TemporalNode } from '../timelayer/TemporalNode';
 import { MusicalDuration } from '../tempo/MusicalDuration';
 import { TimeSequence } from "../timelayer/TimeSequence";
 import { MidiNote } from './MidiNote';

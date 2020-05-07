@@ -1,7 +1,7 @@
-import { MusicalDuration } from 'tempo/MusicalDuration';
+import { MusicalDuration } from '../tempo/MusicalDuration';
 import { MidiPitch } from "./MidiPitch";
 import { TemporalEvent } from '../timelayer/TemporalEvent';
-import { TemporalNode } from 'timelayer/TemporalNode';
+import { TemporalNode } from '../timelayer/TemporalNode';
 
 export type MidiNoteNode = TemporalNode<MidiNote, MusicalDuration>;
 export class MidiNote implements TemporalEvent<MusicalDuration> {
