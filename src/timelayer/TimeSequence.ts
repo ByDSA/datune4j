@@ -1,30 +1,31 @@
 import TreeMap from 'ts-treemap';
 import { Time } from '../tempo/Time';
 import { Interval } from '../utils/Interval';
-import { DurableEvent } from './DurableEvent';
+import { TemporalEvent } from './TemporalEvent';
+import { TemporalNode } from './TemporalNode';
 import { TimeLayer } from './TimeLayer';
 
-export abstract class TimeSequence<E, DurEv extends DurableEvent<E, T>, T extends Time>
-    implements TimeLayer<E[], T> {
+export abstract class TimeSequence<E extends TemporalEvent<T>, T extends Time>
+    implements TimeLayer<E[], T>, TemporalEvent<T> {
 
-    private cells: TreeMap<number, DurEv[]>;
-    private _events: DurEv[];
+    private cells: TreeMap<number, TemporalNode<E, T>[]>;
+    private _nodes: TemporalNode<E, T>[];
 
     protected constructor(private _cellSize: T) {
         this.cells = new TreeMap();
-        this._events = [];
+        this._nodes = [];
     }
 
     private getCellIndex(time: T): number {
         return time.getDivCell(this._cellSize);
     }
 
-    private getCellFromTime(time: T): DurEv[] {
+    private getCellFromTime(time: T): TemporalNode<E, T>[] {
         let index: number = this.getCellIndex(time);
         return this.getCellFromIndex(index);
     }
 
-    private getCellFromIndex(index: number): DurEv[] {
+    private getCellFromIndex(index: number): TemporalNode<E, T>[] {
         let cell = this.cells.get(index);
         if (!cell) {
             cell = [];
@@ -34,7 +35,7 @@ export abstract class TimeSequence<E, DurEv extends DurableEvent<E, T>, T extend
         return cell;
     }
 
-    public add(durableEvent: DurEv): void {
+    public add(durableEvent: TemporalNode<E, T>): void {
         let iniCell: number = this.getCellIndex(durableEvent.from);
         let endCell: number = this.getCellIndex(durableEvent.to);
 
@@ -43,35 +44,52 @@ export abstract class TimeSequence<E, DurEv extends DurableEvent<E, T>, T extend
             endCell--;
 
         for (let i: number = iniCell; i <= endCell; i++) {
-            let cell: DurEv[] = this.getCellFromIndex(i);
+            let cell: TemporalNode<E, T>[] = this.getCellFromIndex(i);
 
             cell.push(durableEvent);
         }
 
-        this._events.push(durableEvent);
+        this._nodes.push(durableEvent);
     }
 
-    public getAtInterval(interval: Interval<T>): DurEv[] {
+    public addSequenceAt(time: T, timeSequence: TimeSequence<E, T>): void {
+        for (let eventSource of timeSequence.nodes) {
+            let event: TemporalNode<E, T> = <TemporalNode<E, T>> TemporalNode.createFrom(time.getAdd(eventSource.from), eventSource.event);
+            this.add(event);
+        }
+    }
+
+    public addAt(time: T, temporalEvent: E): void {
+        let event = TemporalNode.createFrom(time, temporalEvent);
+        this.add(event);
+
+    }
+
+    public addSequence(midiSequence: TimeSequence<E, T>): void {
+        this.addSequenceAt(this.duration, midiSequence)
+    }
+
+    public getAtInterval(interval: Interval<T>): TemporalNode<E, T>[] {
         let iniCell: number = this.getCellIndex(interval.from);
         let endCell: number = this.getCellIndex(interval.to);
 
-        let ret: DurEv[] = [];
+        let ret: TemporalNode<E, T>[] = [];
         for (let i: number = iniCell; i <= endCell; i++) {
-            let cell: DurEv[] = this.getCellFromIndex(i);
+            let cell: TemporalNode<E, T>[] = this.getCellFromIndex(i);
 
-            for (let musicalEvent of cell) {
-                if (interval.intersects(musicalEvent.interval))
-                    ret.push(musicalEvent);
+            for (let node of cell) {
+                if (interval.intersects(node.interval))
+                    ret.push(node);
             }
         }
 
         return ret;
     }
 
-    public getAtTime(time: T): DurEv[] {
-        let ret: DurEv[] = [];
+    public getAtTime(time: T): TemporalNode<E, T>[] {
+        let ret: TemporalNode<E, T>[] = [];
 
-        let cell: DurEv[] = this.getCellFromTime(time);
+        let cell: TemporalNode<E, T>[] = this.getCellFromTime(time);
         for (let musicalEvent of cell) {
             if (time >= musicalEvent.from && time <= musicalEvent.to)
                 ret.push(musicalEvent);
@@ -81,29 +99,29 @@ export abstract class TimeSequence<E, DurEv extends DurableEvent<E, T>, T extend
     }
 
     public get duration(): T {
-        let lastCell: DurEv[] = this.cells.lastEntry()[1];
+        let lastCell: TemporalNode<E, T>[] = this.cells.lastEntry()[1];
         let max: T = lastCell[0].to;
         for (let i: number = 1; i < lastCell.length; i++) {
-            let c: DurEv = lastCell[i];
+            let c: TemporalNode<E, T> = lastCell[i];
             if (c.to > max)
                 max = c.to;
         }
         return max;
     }
 
-    public get events(): DurEv[] {
-        return this._events;
+    public get nodes(): TemporalNode<E, T>[] {
+        return this._nodes;
     }
 
     public removeAtTime(time: T): void {
-        let cell: DurEv[] = this.getCellFromTime(time);
+        let cell: TemporalNode<E, T>[] = this.getCellFromTime(time);
         for (let i = 0; i < cell.length; i++) {
-            let c: DurEv = cell[i];
+            let c: TemporalNode<E, T> = cell[i];
             if (c.interval.contains(time)) {
                 cell.splice(i, 1);
 
-                let indexEvents = this._events.indexOf(c);
-                this._events.splice(indexEvents, 1);
+                let indexEvents = this._nodes.indexOf(c);
+                this._nodes.splice(indexEvents, 1);
                 i--;
             }
         }
