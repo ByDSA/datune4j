@@ -1,5 +1,5 @@
-import { TemporalNode } from '../timelayer/TemporalNode';
 import { MusicalDuration } from '../tempo/MusicalDuration';
+import { TemporalNode } from '../timelayer/TemporalNode';
 import { TimeSequence } from "../timelayer/TimeSequence";
 import { MidiNote } from './MidiNote';
 
@@ -22,5 +22,9 @@ export class MidiSequence extends TimeSequence<MidiNote, MusicalDuration> {
 
     public get duration(): MusicalDuration {
         return super.duration;
+    }
+
+    public get startTime(): MusicalDuration {
+        return MusicalDuration.ZERO;
     }
 }

@@ -54,7 +54,7 @@ export abstract class TimeSequence<E extends TemporalEvent<T>, T extends Time>
 
     public addSequenceAt(time: T, timeSequence: TimeSequence<E, T>): void {
         for (let eventSource of timeSequence.nodes) {
-            let event: TemporalNode<E, T> = <TemporalNode<E, T>> TemporalNode.createFrom(time.getAdd(eventSource.from), eventSource.event);
+            let event: TemporalNode<E, T> = <TemporalNode<E, T>>TemporalNode.createFrom(time.getAdd(eventSource.from), eventSource.event);
             this.add(event);
         }
     }
@@ -99,6 +99,9 @@ export abstract class TimeSequence<E extends TemporalEvent<T>, T extends Time>
     }
 
     public get duration(): T {
+        if (!this.cells || this.cells.size == 0)
+            return this.startTime;
+
         let lastCell: TemporalNode<E, T>[] = this.cells.lastEntry()[1];
         let max: T = lastCell[0].to;
         for (let i: number = 1; i < lastCell.length; i++) {
@@ -108,6 +111,8 @@ export abstract class TimeSequence<E extends TemporalEvent<T>, T extends Time>
         }
         return max;
     }
+
+    public abstract get startTime(): T;
 
     public get nodes(): TemporalNode<E, T>[] {
         return this._nodes;

@@ -110,6 +110,14 @@ test('duration - sampleArp - duration = HALF.dotted', () => {
     expect(duration).toEqual(MusicalDuration.HALF.dotted);
 });
 
+test('addSequence - add sampleArp', () => {
+    let midiSequence: MidiSequence = MidiSequence.create();
+    let sampleArtSequence = generateSampleArp();
+    midiSequence.addSequence(sampleArtSequence);
+    let duration = midiSequence.duration;
+
+    expect(duration).toEqual(sampleArtSequence.duration);
+});
 
 // SAMPLES
 function generateSample(): MidiSequence {
