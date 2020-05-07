@@ -1,8 +1,8 @@
-import { Chromatic } from '../degrees/Chromatic';
-import { NamingChromaticChordPattern } from '../lang/naming/NamingChromaticChordPattern';
+import { DegreePattern } from 'patterns/DegreePattern';
 import { Immutables } from '../common/Immutables';
 import { ImmutablesCache } from '../common/ImmutablesCache';
-import { DegreePattern } from 'patterns/DegreePattern';
+import { Chromatic } from '../degrees/Chromatic';
+import { NamingChromaticChordPattern } from '../lang/naming/NamingChromaticChordPattern';
 
 type Difference = number;
 export class ChromaticPattern implements DegreePattern<Chromatic>, Iterable<number> {
@@ -124,6 +124,10 @@ export class ChromaticPattern implements DegreePattern<Chromatic>, Iterable<numb
 
     public get shortName(): string {
         return NamingChromaticChordPattern.toStringShort(this);
+    }
+
+    public get inversionNumber(): number {
+        return (this.values.length - this.rootIndex) % this.values.length;
     }
 
     private static initialize() {

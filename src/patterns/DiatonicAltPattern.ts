@@ -105,7 +105,7 @@ export class DiatonicAltPattern implements DegreePattern<Difference>, Iterable<D
         }
 
         this._chromaticChordPattern = ChromaticPattern.from(...arrayChromaticChordPattern);
-        this._diatonicChordPattern = DiatonicPattern.fromArray(...arrayDiatonicChordPattern);
+        this._diatonicChordPattern = DiatonicPattern.from(...arrayDiatonicChordPattern);
     }
 
     public static fromPatterns(chromaticChordPattern: ChromaticPattern, diatonicPattern: DiatonicPattern): DiatonicAltPattern {
@@ -141,7 +141,7 @@ export class DiatonicAltPattern implements DegreePattern<Difference>, Iterable<D
         }
 
         let chromaticChordPattern = ChromaticPattern.from(...arrayChromaticChordPattern);
-        let diatonicChordPattern = DiatonicPattern.fromArray(arrayDiatonicChordPattern);
+        let diatonicChordPattern = DiatonicPattern.from(arrayDiatonicChordPattern);
 
         return DiatonicAltPattern.fromPatterns(chromaticChordPattern, diatonicChordPattern);
     }

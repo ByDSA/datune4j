@@ -48,7 +48,7 @@ export class ChromaticChord implements Chord<Chromatic> {
     }
 
     public get inversionNumber(): number {
-        return (this.notes.length - this.rootIndex) % this.notes.length;
+        return this.pattern.inversionNumber;
     }
 
     public get notes(): Chromatic[] {
