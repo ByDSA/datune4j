@@ -1,6 +1,8 @@
 import { DiatonicAltChord } from '../chords/diatonicalt/DiatonicAltChord';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
+import { Language } from '../lang/Language';
 import * as precalc from "../precalc";
+import { Settings } from '../settings/Settings';
 import { Scale } from './Scale';
 import { Tonality } from './Tonality';
 precalc.diatonics();
@@ -72,4 +74,13 @@ test('Tonality - notes: C BLUES MINOR', () => {
             DiatonicAlt.Bb
         ]
     );
+});
+
+test('toString - ENG - C', () => {
+    Settings.lang = Language.ENG;
+    let tonality = Tonality.C;
+    let actual = tonality.toString();
+    let expected = "C MAJOR";
+    
+    expect(actual).toBe(expected);
 });

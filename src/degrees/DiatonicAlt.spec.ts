@@ -125,3 +125,21 @@ test('DiatonicAlt - chromatic: Custom Cbbb ', () => {
 test('DiatonicAlt - chromatic: Custom Ebbbb ', () => {
     expect(DiatonicAlt.from(Diatonic.E, -4).chromatic).toBe(Chromatic.C);
 });
+
+test('toString() - ENG - C', () => {
+    Settings.lang = Language.ENG;
+    let diatonicAlt = DiatonicAlt.C;
+    let actual = diatonicAlt.toString();
+    let expected = "C";
+
+    expect(actual).toBe(expected);
+});
+
+test('toString() - ESP - C', () => {
+    Settings.lang = Language.ESP;
+    let diatonicAlt = DiatonicAlt.C;
+    let actual = diatonicAlt.toString();
+    let expected = "Do";
+
+    expect(actual).toBe(expected);
+});

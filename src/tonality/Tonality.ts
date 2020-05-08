@@ -191,6 +191,6 @@ export class Tonality {
     }
 
     public toString(): string {
-        return this.root + " " + this.scale;
+        return this.root.toString() + " " + this.scale.toString();
     }
 }
