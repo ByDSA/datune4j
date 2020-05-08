@@ -7,6 +7,7 @@ type HashingObject = { frequency: number, symbolicPitch: SymbolicPitch };
 export class ConcertPitch implements Pitch {
     public static A440;
     public static A432;
+    public static A444;
 
     private static immutablesCache = new ImmutablesCache<ConcertPitch, HashingObject>(
         function (hashingObject: HashingObject): string {
@@ -39,8 +40,9 @@ export class ConcertPitch implements Pitch {
 
     public toString(): string {
         switch (this) {
-            case ConcertPitch.A440: return "A440";
-            case ConcertPitch.A432: return "A432";
+            case ConcertPitch.A440:
+            case ConcertPitch.A444:
+            case ConcertPitch.A432: return this.symbolicPitch.degree.toString() + this.frequency;
         }
         return this.symbolicPitch + "-" + this.frequency + " Hz";
     }
@@ -52,5 +54,6 @@ export class ConcertPitch implements Pitch {
     private static initialize() {
         this.A440 = ConcertPitch.from(440, SPN.A4);
         this.A432 = ConcertPitch.from(432, SPN.A4);
+        this.A444 = ConcertPitch.from(444, SPN.A4);
     }
 }
