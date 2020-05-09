@@ -9,6 +9,7 @@ import { Tonality } from '../tonality/Tonality';
 import { ConcertPitch } from '../tuning/ConcertPitch';
 import { Temperament } from '../tuning/Temperament';
 import { Tuning } from '../tuning/Tuning';
+import { DiatonicAltPattern } from 'patterns/DiatonicAltPattern';
 
 export interface SettingsInterface {
     default: {
@@ -18,7 +19,7 @@ export interface SettingsInterface {
         tonality: Tonality,
         chromaticChord: ChromaticChord,
         diatonicAltChord: DiatonicAltChord,
-        pattern: ChromaticPattern,
+        pattern: DiatonicAltPattern,
         temperament: Temperament,
         tuning: Tuning,
         concertPitch: ConcertPitch

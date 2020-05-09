@@ -11,6 +11,7 @@ import { Temperament } from '../tuning/Temperament';
 import { Tuning } from '../tuning/Tuning';
 import { Settings } from './Settings';
 import { SettingsInterface } from './SettingsInterface';
+import { DiatonicAltPattern } from '../patterns/DiatonicAltPattern';
 
 export const DefaultSettings: SettingsInterface = {
     default: {
@@ -20,7 +21,7 @@ export const DefaultSettings: SettingsInterface = {
         get tonality(): Tonality { return Tonality.C },
         get chromaticChord(): ChromaticChord { return ChromaticChord.C },
         get diatonicAltChord(): DiatonicAltChord { return DiatonicAltChord.C },
-        get pattern(): ChromaticPattern { return ChromaticPattern.TRIAD_MAJOR },
+        get pattern(): DiatonicAltPattern { return DiatonicAltPattern.TRIAD_MAJOR },
         get temperament(): Temperament { return Temperament.ET12 },
         get tuning(): Tuning { return Tuning.EQUAL_440 },
         get concertPitch(): ConcertPitch { return ConcertPitch.A440 },
