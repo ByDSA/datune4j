@@ -27,7 +27,6 @@ test('chord - DiatonicAlt C + TRIAD MAJOR = DiatonicAltChord C', () => {
     expect(actual).toBe(DiatonicAltChord.C);
 });
 
-
 /** Chromatic */
 
 test('from - Chromatic C + TRIAD MAJOR', () => {

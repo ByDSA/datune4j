@@ -1,14 +1,14 @@
+import { PatternChord } from '../chords/pattern/PatternChord';
 import { DiatonicAltChord } from '../chords/diatonicalt/DiatonicAltChord';
-import { DiatonicAltPattern } from '../patterns/DiatonicAltPattern';
 import { ImmutablesCache } from '../common/ImmutablesCache';
 import { Chromatic } from '../degrees/Chromatic';
 import { Diatonic } from '../degrees/Diatonic';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
 import { DiatonicAltDegree } from '../degrees/scale/DiatonicAltDegree';
 import { DiatonicDegree } from '../degrees/scale/DiatonicDegree';
+import { DiatonicAltPattern } from '../patterns/DiatonicAltPattern';
 import { Tonality } from '../tonality/Tonality';
 import { HarmonicFunction } from './HarmonicFunction';
-import { Immutables } from '../common/Immutables';
 
 type HashingObjectType = { degree: DiatonicAltDegree, pattern: DiatonicAltPattern };
 export class DegreeFunction extends HarmonicFunction {
@@ -218,7 +218,7 @@ export class DegreeFunction extends HarmonicFunction {
     public calculateChord(tonality: Tonality): DiatonicAltChord {
         let noteBase: DiatonicAlt = DegreeFunction.getNoteBaseFromChromaticFunctionAndTonality(tonality, this);
 
-        return DiatonicAltChord.fromRootPattern(noteBase, this._pattern);
+        return <DiatonicAltChord>PatternChord.from(noteBase, this._pattern).chord;
     }
 
     private static getNoteBaseFromChromaticFunctionAndTonality(tonality: Tonality, degreeFunction: DegreeFunction): DiatonicAlt {

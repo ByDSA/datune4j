@@ -26,27 +26,6 @@ test('DiatonicAltChord - from: get from ImmutableCache', () => {
     expect(diatonicAltChord).toBe(expected);
 });
 
-test('DiatonicAltChord - fromRootPattern - get from ImmutableCache: C7', () => {
-    let diatonicAltChord = DiatonicAltChord.fromRootPattern(DiatonicAlt.C, DiatonicAltPattern.SEVENTH);
-
-    let expected = DiatonicAltChord.C7;
-    expect(diatonicAltChord).toBe(expected);
-});
-
-test('DiatonicAltChord - fromRootPattern - get from ImmutableCache: Am', () => {
-    let diatonicAltChord = DiatonicAltChord.fromRootPattern(DiatonicAlt.A, DiatonicAltPattern.TRIAD_MINOR);
-
-    let expected = DiatonicAltChord.Am;
-    expect(diatonicAltChord).toBe(expected);
-});
-
-test('DiatonicAltChord - fromRootPattern - get from ImmutableCache: CMaj7', () => {
-    let diatonicAltChord = DiatonicAltChord.fromRootPattern(DiatonicAlt.C, DiatonicAltPattern.SEVENTH_MAJ7);
-
-    let expected = DiatonicAltChord.CMaj7;
-    expect(diatonicAltChord).toBe(expected);
-});
-
 test('DiatonicAltChord - toString: C7', () => {
     let str = DiatonicAltChord.C7.toString();
 
@@ -55,9 +34,9 @@ test('DiatonicAltChord - toString: C7', () => {
 });
 
 test('DiatonicAltChord - toString: B##7', () => {
-    let str = DiatonicAltChord.fromRootPattern(
+    let str = PatternChord.from(
         DiatonicAlt.BBB,
-        DiatonicAltPattern.SEVENTH).toString();
+        DiatonicAltPattern.SEVENTH).chord.toString();
 
     let expected = DiatonicAlt.BBB.toString() + "7";
     expect(str).toBe(expected);
@@ -220,4 +199,25 @@ test('root - C + inv = C', () => {
     let expected = DiatonicAlt.C;
 
     expect(actual).toBe(expected);
+});
+
+test('get from ImmutableCache: C7', () => {
+    let diatonicAltChord = PatternChord.from(DiatonicAlt.C, DiatonicAltPattern.SEVENTH).chord;
+
+    let expected = DiatonicAltChord.C7;
+    expect(diatonicAltChord).toBe(expected);
+});
+
+test('get from ImmutableCache: Am', () => {
+    let diatonicAltChord = PatternChord.from(DiatonicAlt.A, DiatonicAltPattern.TRIAD_MINOR).chord;
+
+    let expected = DiatonicAltChord.Am;
+    expect(diatonicAltChord).toBe(expected);
+});
+
+test('get from ImmutableCache: CMaj7', () => {
+    let diatonicAltChord = PatternChord.from(DiatonicAlt.C, DiatonicAltPattern.SEVENTH_MAJ7).chord;
+
+    let expected = DiatonicAltChord.CMaj7;
+    expect(diatonicAltChord).toBe(expected);
 });

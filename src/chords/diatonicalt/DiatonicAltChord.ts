@@ -1,3 +1,4 @@
+import { PatternChord } from '../../chords/pattern/PatternChord';
 import { ChromaticChord } from '../../chords/chromatic/ChromaticChord';
 import { Assert } from '../../common/Assert';
 import { Immutables } from '../../common/Immutables';
@@ -67,15 +68,6 @@ export class DiatonicAltChord implements Chord<DiatonicAlt> {
         return DiatonicAltChord.immutablesCache.getOrCreate(notes);
     }
 
-    public static fromRootPattern(root: DiatonicAlt, pattern: DiatonicAltPattern, inversion: number = 0): DiatonicAltChord {
-        let rootPos = this.inversionToRootPos(inversion, pattern.values.length);
-        let notes = this.getNotesFromPattern(root, pattern);
-
-        notes = Utils.arrayRotateLeft(notes, rootPos);
-
-        return DiatonicAltChord.from(notes);
-    }
-
     public getInv(n: number = 1): DiatonicAltChord {
         let rootIndex = this.rootIndex - n;
         rootIndex = MathUtils.rotativeTrim(rootIndex, this._notes.length);
@@ -101,10 +93,6 @@ export class DiatonicAltChord implements Chord<DiatonicAlt> {
 
     public get root(): DiatonicAlt {
         return this._notes[this.rootIndex];
-    }
-
-    private static inversionToRootPos(inv: number, length: number): number {
-        return (length - inv) % length;
     }
 
     public get rootIndex(): number {
@@ -228,8 +216,7 @@ export class DiatonicAltChord implements Chord<DiatonicAlt> {
 
                 const name = diatonicAltStr + diatonicAltChordPatternStr;
 
-                DiatonicAltChord[name]
-                    = DiatonicAltChord.fromRootPattern(diatonicAlt, diatonicAltChordPattern);
+                DiatonicAltChord[name] = PatternChord.from(diatonicAlt, diatonicAltChordPattern).chord;
             }
         }
 
