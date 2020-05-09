@@ -31,7 +31,7 @@ export const NamingDiatonicAltPattern = {
             case DiatonicAltPattern.SEVENTH_ADD11: return Settings.patterns.SEVENTH_ADD11;
             case DiatonicAltPattern.SEVENTH_ADD13: return Settings.patterns.SEVENTH_ADD13;
             case DiatonicAltPattern.SEVENTH_MAJ7: return Settings.patterns.SEVENTH_MAJ7;
-            case DiatonicAltPattern.SEVENTH_MINOR: return Settings.patterns.NINTH_MINOR;
+            case DiatonicAltPattern.SEVENTH_MINOR: return Settings.patterns.SEVENTH_MINOR;
             case DiatonicAltPattern.SEVENTH_MINOR_MAJ7: return Settings.patterns.SEVENTH_MINOR_MAJ7;
             case DiatonicAltPattern.SEVENTH_MINOR_a5: return Settings.patterns.SEVENTH_MINOR_a5;
             case DiatonicAltPattern.SEVENTH_MINOR_b5: return Settings.patterns.SEVENTH_MINOR_b5;
