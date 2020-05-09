@@ -67,6 +67,6 @@ export class PatternChord<D extends Degree> {
     /* Object */
 
     public toString(): string {
-        return this._degree + " " + this._degreePattern;
+        return this._degree.toString() + " " + this._degreePattern;
     }
 }
