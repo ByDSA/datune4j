@@ -189,3 +189,35 @@ test('DiatonicAltChord - getInv: C7 + 1 inv + 1 inv', () => {
         DiatonicAlt.E
     ]);
 });
+
+test('rootIndex - C = 0', () => {
+    let chord = DiatonicAltChord.C;
+    let actual = chord.rootIndex;
+    let expected = 0;
+
+    expect(actual).toBe(expected);
+});
+
+test('rootIndex - C + inv = 2', () => {
+    let chord = DiatonicAltChord.C.getInv();
+    let actual = chord.rootIndex;
+    let expected = 2;
+
+    expect(actual).toBe(expected);
+});
+
+test('rootIndex - C + 2inv = 1', () => {
+    let chord = DiatonicAltChord.C.getInv(2);
+    let actual = chord.rootIndex;
+    let expected = 1;
+
+    expect(actual).toBe(expected);
+});
+
+test('root - C + inv = C', () => {
+    let chord = DiatonicAltChord.C.getInv();
+    let actual = chord.root;
+    let expected = DiatonicAlt.C;
+
+    expect(actual).toBe(expected);
+});
