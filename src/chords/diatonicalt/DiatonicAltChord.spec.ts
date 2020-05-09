@@ -193,6 +193,23 @@ test('rootIndex - C + 2inv = 1', () => {
     expect(actual).toBe(expected);
 });
 
+test('toString - ENG - Fsus2', () => {
+    let chord = PatternChord.from(DiatonicAlt.F, DiatonicAltPattern.TRIAD_SUS2).chord;
+    let actual = chord.toString();
+    let expected = "Fsus2";
+
+    expect(actual).toBe(expected);
+});
+
+test('toString - ENG - Csus4 + inv = Fsus2', () => {
+    let chord = <DiatonicAltChord>PatternChord.from(DiatonicAlt.C, DiatonicAltPattern.TRIAD_SUS4).chord;
+    chord = chord.getInv();
+    let actual = chord.toString();
+    let expected = "Fsus2";
+
+    expect(actual).toBe(expected);
+});
+
 test('root - C + inv = C', () => {
     let chord = DiatonicAltChord.C.getInv();
     let actual = chord.root;
