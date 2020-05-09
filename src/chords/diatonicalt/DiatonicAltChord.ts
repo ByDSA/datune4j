@@ -168,7 +168,8 @@ export class DiatonicAltChord implements Chord<DiatonicAlt> {
             case DiatonicAltPattern.TRIAD_MINOR: return "m";
             case DiatonicAltPattern.TRIAD_AUGMENTED: return "AUG";
             case DiatonicAltPattern.TRIAD_DIMINISHED: return "0";
-            case DiatonicAltPattern.TRIAD_SUS4: return "SUS4";
+            case DiatonicAltPattern.TRIAD_SUS4: return "sus4";
+            case DiatonicAltPattern.TRIAD_SUS2: return "sus2";
             case DiatonicAltPattern.SEVENTH_MAJ7: return "Maj7";
             case DiatonicAltPattern.SEVENTH: return "7";
             case DiatonicAltPattern.SEVENTH_MINOR: return "m7";
