@@ -1,7 +1,7 @@
-import { NamingDiatonicAltPattern } from '../lang/naming/NamingDiatonicAltPattern';
 import { ImmutablesCache } from '../common/ImmutablesCache';
 import { IntervalDiatonic } from '../interval/IntervalDiatonic';
 import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
+import { NamingDiatonicAltPattern } from '../lang/naming/NamingDiatonicAltPattern';
 import { DegreePattern } from '../patterns/DegreePattern';
 import { ChromaticPattern } from './ChromaticPattern';
 import { DiatonicPattern } from './DiatonicPattern';
@@ -284,6 +284,8 @@ export class DiatonicAltPattern implements DegreePattern<Difference>, Iterable<D
                 this.TRIAD_DIMINISHED,
                 this.TRIAD_AUGMENTED,
                 this.TRIAD_SUS4,
+                this.TRIAD_SUS2,
+                this.TRIAD_QUARTAL,
                 this.SEVENTH,
                 this.SEVENTH_b5,
                 this.SEVENTH_a5,
@@ -344,7 +346,9 @@ export class DiatonicAltPattern implements DegreePattern<Difference>, Iterable<D
 
         for (let pattern of this.all()) {
             for (let i = 1; i < pattern.values.length; i++) {
-                pattern.getInv(i)._rootIndex = pattern.values.length - i;
+                let patternInv = pattern.getInv(i);
+                if (!this.all().includes(patternInv))
+                    patternInv._rootIndex = pattern.values.length - i;
             }
         }
 
