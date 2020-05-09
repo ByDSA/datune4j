@@ -1,3 +1,4 @@
+import { NamingDiatonicAltPattern } from '../lang/naming/NamingDiatonicAltPattern';
 import { ImmutablesCache } from '../common/ImmutablesCache';
 import { IntervalDiatonic } from '../interval/IntervalDiatonic';
 import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
@@ -13,6 +14,8 @@ export class DiatonicAltPattern implements DegreePattern<Difference>, Iterable<D
     public static TRIAD_DIMINISHED: DiatonicAltPattern;
     public static TRIAD_AUGMENTED: DiatonicAltPattern;
     public static TRIAD_SUS4: DiatonicAltPattern;
+    public static TRIAD_SUS2: DiatonicAltPattern;
+    public static TRIAD_QUARTAL: DiatonicAltPattern;
     public static SEVENTH: DiatonicAltPattern;
     public static SEVENTH_b5: DiatonicAltPattern;
     public static SEVENTH_a5: DiatonicAltPattern;
@@ -181,11 +184,11 @@ export class DiatonicAltPattern implements DegreePattern<Difference>, Iterable<D
     }
 
     public toString() {
-        return this._chromaticChordPattern.toString();
+        return NamingDiatonicAltPattern.toString(this);
     }
 
     public get shortName(): string {
-        return this._chromaticChordPattern.shortName;
+        return NamingDiatonicAltPattern.toStringShort(this);
     }
 
     public get rootIndex() {
@@ -215,6 +218,8 @@ export class DiatonicAltPattern implements DegreePattern<Difference>, Iterable<D
         DiatonicAltPattern.TRIAD_DIMINISHED = DiatonicAltPattern.fromPatterns(ChromaticPattern.TRIAD_DIMINISHED, DiatonicPattern.TRIAD);
         DiatonicAltPattern.TRIAD_AUGMENTED = DiatonicAltPattern.fromPatterns(ChromaticPattern.TRIAD_AUGMENTED, DiatonicPattern.TRIAD);
         DiatonicAltPattern.TRIAD_SUS4 = DiatonicAltPattern.fromPatterns(ChromaticPattern.TRIAD_SUS4, DiatonicPattern.SUS4);
+        DiatonicAltPattern.TRIAD_SUS2 = DiatonicAltPattern.TRIAD_SUS4.getInv();
+        DiatonicAltPattern.TRIAD_QUARTAL = DiatonicAltPattern.TRIAD_SUS2.getInv();
         DiatonicAltPattern.SEVENTH = DiatonicAltPattern.fromPatterns(ChromaticPattern.SEVENTH, DiatonicPattern.SEVENTH);
         DiatonicAltPattern.SEVENTH_b5 = DiatonicAltPattern.fromPatterns(ChromaticPattern.SEVENTH_b5, DiatonicPattern.SEVENTH);
         DiatonicAltPattern.SEVENTH_a5 = DiatonicAltPattern.fromPatterns(ChromaticPattern.SEVENTH_a5, DiatonicPattern.SEVENTH);

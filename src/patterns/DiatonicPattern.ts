@@ -21,7 +21,6 @@ export class DiatonicPattern implements DegreePattern<Diatonic> {
 
     private _rootIndex: number;
     private _values: number[];
-    private diatonicChordPattern: DiatonicPattern;
 
     private constructor(first?: number | number[], ...rest: number[]) {
         this._values =
