@@ -116,6 +116,7 @@ export abstract class Temperament {
             case Temperament.ET12: return Settings.lang.temperaments.ET12;
             case Temperament.LIMIT_5_SYMMETRIC_N1: return Settings.lang.temperaments.LIMIT_5_SYMMETRIC_N1;
             case Temperament.LIMIT_5_SYMMETRIC_N2: return Settings.lang.temperaments.LIMIT_5_SYMMETRIC_N2;
+            case Temperament.PYTHAGOREAN: return Settings.lang.temperaments.PYTHAGOREAN;
         }
     }
 
@@ -124,6 +125,7 @@ export abstract class Temperament {
             case Temperament.ET12: return "ET12";
             case Temperament.LIMIT_5_SYMMETRIC_N1: return "LIMIT_5_SYMMETRIC_N1";
             case Temperament.LIMIT_5_SYMMETRIC_N2: return "LIMIT_5_SYMMETRIC_N2";
+            case Temperament.PYTHAGOREAN: return "PYTHAGOREAN";
         }
 
         throw new Error();

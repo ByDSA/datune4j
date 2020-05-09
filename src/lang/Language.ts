@@ -191,6 +191,7 @@ export class Language {
             get ET12(): string { return "12-ET" },
             get LIMIT_5_SYMMETRIC_N1(): string { return "5-LIMIT: SN1" },
             get LIMIT_5_SYMMETRIC_N2(): string { return "5-LIMIT: SN2" },
+            get PYTHAGOREAN(): string { return "Pythagorean" },
         }
     }
 
@@ -380,6 +381,7 @@ export class Language {
             get ET12(): string { return "12-Temperamento Igual" },
             get LIMIT_5_SYMMETRIC_N1(): string { return Language.ENG.temperaments.LIMIT_5_SYMMETRIC_N1 },
             get LIMIT_5_SYMMETRIC_N2(): string { return Language.ENG.temperaments.LIMIT_5_SYMMETRIC_N2 },
+            get PYTHAGOREAN(): string { return "Pitagórico" },
         }
     }
 }
