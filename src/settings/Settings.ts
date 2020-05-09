@@ -7,7 +7,7 @@ export let Settings: SettingsInterface = {
         scale: null,
         tonality: null,
         chromaticChord: null,
-        diatonicAltChord: null,
+        chord: null,
         pattern: null,
         temperament: null,
         concertPitch: null,

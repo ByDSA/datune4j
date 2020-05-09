@@ -20,7 +20,7 @@ export const DefaultSettings: SettingsInterface = {
         get scale(): Scale { return Scale.MAJOR },
         get tonality(): Tonality { return Tonality.C },
         get chromaticChord(): ChromaticChord { return ChromaticChord.C },
-        get diatonicAltChord(): DiatonicAltChord { return DiatonicAltChord.C },
+        get chord(): DiatonicAltChord { return DiatonicAltChord.C },
         get pattern(): DiatonicAltPattern { return DiatonicAltPattern.TRIAD_MAJOR },
         get temperament(): Temperament { return Temperament.ET12 },
         get tuning(): Tuning { return Tuning.EQUAL_440 },

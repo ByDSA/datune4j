@@ -18,7 +18,7 @@ export interface SettingsInterface {
         scale: Scale,
         tonality: Tonality,
         chromaticChord: ChromaticChord,
-        diatonicAltChord: DiatonicAltChord,
+        chord: DiatonicAltChord,
         pattern: DiatonicAltPattern,
         temperament: Temperament,
         tuning: Tuning,
