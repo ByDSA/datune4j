@@ -51,7 +51,7 @@ export const NamingDiatonicAltPattern = {
             case DiatonicAltPattern.THIRTEENTH_MAJ13_a5a9: return Settings.patterns.THIRTEENTH_MAJ13_a5a9;
             case DiatonicAltPattern.THIRTEENTH_b5a9: return Settings.patterns.THIRTEENTH_b5a9;
         }
-        return pattern.values.toString().replace(/,/g, "-");
+        return pattern.values.toString();
     },
     toStringShort: function patternShort(pattern: DiatonicAltPattern): string {
         switch (pattern) {
