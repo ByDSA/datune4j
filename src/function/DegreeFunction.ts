@@ -192,7 +192,7 @@ export class DegreeFunction extends HarmonicFunction {
             return DegreeFunction.hashCodeFunction(hashingObject.degree, hashingObject.pattern);
         },
         function (degreeFunction: DegreeFunction): HashingObjectType {
-            return { degree: degreeFunction.diatonicAltDegree, pattern: degreeFunction.diatonicAltChordPattern };
+            return { degree: degreeFunction.degree, pattern: degreeFunction.pattern };
         },
         function (hashingObject: HashingObjectType): DegreeFunction {
             return new DegreeFunction(hashingObject.degree, hashingObject.pattern);
@@ -207,11 +207,11 @@ export class DegreeFunction extends HarmonicFunction {
         return this.immutablesCache.getOrCreate({ degree: degree, pattern: pattern });
     }
 
-    public get diatonicAltDegree(): DiatonicAltDegree {
+    public get degree(): DiatonicAltDegree {
         return this._degree;
     }
 
-    public get diatonicAltChordPattern(): DiatonicAltPattern {
+    public get pattern(): DiatonicAltPattern {
         return this._pattern;
     }
 
@@ -222,7 +222,7 @@ export class DegreeFunction extends HarmonicFunction {
     }
 
     private static getNoteBaseFromChromaticFunctionAndTonality(tonality: Tonality, degreeFunction: DegreeFunction): DiatonicAlt {
-        return tonality.root.getAdd(degreeFunction.diatonicAltDegree.intervalDiatonicAlt);
+        return tonality.root.getAdd(degreeFunction.degree.intervalDiatonicAlt);
     }
 
     private _degrees: DiatonicAltDegree[];
@@ -230,10 +230,10 @@ export class DegreeFunction extends HarmonicFunction {
     public get degrees(): DiatonicAltDegree[] {
         if (!this._degrees) {
             this._degrees = [];
-            for (let value of this.diatonicAltChordPattern) {
-                let diatonicDegreeInt = this.diatonicAltDegree.diatonicDegree.intValue + value.intervalDiatonic.number;
+            for (let value of this.pattern) {
+                let diatonicDegreeInt = this.degree.diatonicDegree.intValue + value.intervalDiatonic.number;
                 let diatonicDegree = DiatonicDegree.fromInt(diatonicDegreeInt);
-                let alts = (this.diatonicAltDegree.semis + value.semis) - Diatonic.fromInt(diatonicDegree.intValue).chromatic.intValue;
+                let alts = (this.degree.semis + value.semis) - Diatonic.fromInt(diatonicDegree.intValue).chromatic.intValue;
                 alts %= Chromatic.NUMBER;
                 let degree = DiatonicAltDegree.from(diatonicDegree, alts);
                 this._degrees.push(degree);

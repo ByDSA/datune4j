@@ -17,13 +17,13 @@ precalc.degreeFunctions();
 precalc.settings();
 
 test('DegreeFunction - precalc: I', () => {
-    expect(DegreeFunction.I.diatonicAltDegree).toBe(DiatonicAltDegree.I);
-    expect(DegreeFunction.I.diatonicAltChordPattern).toBe(DiatonicAltPattern.TRIAD_MAJOR);
+    expect(DegreeFunction.I.degree).toBe(DiatonicAltDegree.I);
+    expect(DegreeFunction.I.pattern).toBe(DiatonicAltPattern.TRIAD_MAJOR);
 });
 
 test('DegreeFunction - precalc: bIIMaj7', () => {
-    expect(DegreeFunction.bIIMaj7.diatonicAltDegree).toBe(DiatonicAltDegree.bII);
-    expect(DegreeFunction.bIIMaj7.diatonicAltChordPattern).toBe(DiatonicAltPattern.SEVENTH_MAJ7);
+    expect(DegreeFunction.bIIMaj7.degree).toBe(DiatonicAltDegree.bII);
+    expect(DegreeFunction.bIIMaj7.pattern).toBe(DiatonicAltPattern.SEVENTH_MAJ7);
 });
 
 test('DegreeFunction - calculateChord: Tonality C, DegreeFunction I = Chord C', () => {
@@ -83,7 +83,7 @@ test('DegreeFunction - degrees: i', () => {
 test('DegreeFunction - pattern: i', () => {
     let degreeFunction = DegreeFunction.i;
     let expected = DiatonicAltPattern.TRIAD_MINOR;
-    expect(degreeFunction.diatonicAltChordPattern).toStrictEqual(expected);
+    expect(degreeFunction.pattern).toStrictEqual(expected);
 });
 
 test('DegreeFunction - from: I + TRIAD_MAJOR = I', () => {
