@@ -3,11 +3,12 @@ import { DiatonicDegree } from "../degrees/scale/DiatonicDegree";
 import * as precalc from "../precalc";
 import { Scale } from "../tonality/Scale";
 import { ScaleDegreeComparator } from "./ScaleDegreeComparator";
+import { ScaleDegreeEnharmonicComparator } from "./ScaleDegreeEnharmonicComparator";
 precalc.scales();
 precalc.diatonicAltDegrees();
 
 test('ScaleDegreeComparator: Scale.MAJOR and itself nonenharmonic', () => {
-    let scaleComparator = ScaleDegreeComparator.from([Scale.MAJOR, Scale.MAJOR], false);
+    let scaleComparator = ScaleDegreeComparator.from([Scale.MAJOR, Scale.MAJOR]);
     scaleComparator.calculate();
     let common: Set<DiatonicAltDegree> = scaleComparator.common;
 
@@ -26,10 +27,10 @@ test('ScaleDegreeComparator: Scale.MAJOR and itself nonenharmonic', () => {
 });
 
 test('ScaleDegreeComparator: Scale.MAJOR and itself enharmonic', () => {
-    let scaleComparator = ScaleDegreeComparator.from([Scale.MAJOR, Scale.MAJOR], true);
+    let scaleComparator = ScaleDegreeEnharmonicComparator.from([Scale.MAJOR, Scale.MAJOR]);
     scaleComparator.calculate();
     let common: Set<DiatonicAltDegree> = scaleComparator.common;
-    
+
     let expected = [
         DiatonicAltDegree.I,
         DiatonicAltDegree.II,
@@ -45,10 +46,10 @@ test('ScaleDegreeComparator: Scale.MAJOR and itself enharmonic', () => {
 });
 
 test('ScaleDegreeComparator: Scale.MAJOR and Scale.MINOR nonenharmonic', () => {
-    let scaleComparator = ScaleDegreeComparator.from([Scale.MAJOR, Scale.MINOR], false);
+    let scaleComparator = ScaleDegreeComparator.from([Scale.MAJOR, Scale.MINOR]);
     scaleComparator.calculate();
     let common: Set<DiatonicAltDegree> = scaleComparator.common;
-    
+
     let expected = [
         DiatonicAltDegree.I,
         DiatonicAltDegree.II,
@@ -62,10 +63,10 @@ test('ScaleDegreeComparator: Scale.MAJOR and Scale.MINOR nonenharmonic', () => {
 });
 
 test('ScaleDegreeComparator: Scale.LYDIAN and Scale.LOCRIAN nonenharmonic', () => {
-    let scaleComparator = ScaleDegreeComparator.from([Scale.LYDIAN, Scale.LOCRIAN], false);
+    let scaleComparator = ScaleDegreeComparator.from([Scale.LYDIAN, Scale.LOCRIAN]);
     scaleComparator.calculate();
     let common: Set<DiatonicAltDegree> = scaleComparator.common;
-    
+
     let expected = [
         DiatonicAltDegree.I
     ];
@@ -76,10 +77,10 @@ test('ScaleDegreeComparator: Scale.LYDIAN and Scale.LOCRIAN nonenharmonic', () =
 });
 
 test('ScaleDegreeComparator: Scale.LYDIAN and Scale.LOCRIAN enharmonic', () => {
-    let scaleComparator = ScaleDegreeComparator.from([Scale.LYDIAN, Scale.LOCRIAN], true);
+    let scaleComparator = ScaleDegreeEnharmonicComparator.from([Scale.LYDIAN, Scale.LOCRIAN]);
     scaleComparator.calculate();
     let common: Set<DiatonicAltDegree> = scaleComparator.common;
-    
+
     let expected = [
         DiatonicAltDegree.I,
         DiatonicAltDegree.from(DiatonicDegree.IV, 1),
@@ -92,10 +93,10 @@ test('ScaleDegreeComparator: Scale.LYDIAN and Scale.LOCRIAN enharmonic', () => {
 });
 
 test('ScaleDegreeComparator: Scale.BLUES_b5 and Scale.BLUES_a4 enharmonic', () => {
-    let scaleComparator = ScaleDegreeComparator.from([Scale.BLUES_b5, Scale.BLUES_a4], true);
+    let scaleComparator = ScaleDegreeEnharmonicComparator.from([Scale.BLUES_b5, Scale.BLUES_a4]);
     scaleComparator.calculate();
     let common: Set<DiatonicAltDegree> = scaleComparator.common;
-    
+
     let expected = [
         DiatonicAltDegree.I,
         DiatonicAltDegree.bIII,

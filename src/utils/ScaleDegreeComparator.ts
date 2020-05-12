@@ -1,68 +1,19 @@
 import { DiatonicAltDegree } from '../degrees/scale/DiatonicAltDegree';
 import { Scale } from '../tonality/Scale';
+import { SetComparator } from './SetComparator';
 
-export class ScaleDegreeComparator {
-    private _common = new Set<DiatonicAltDegree>();
-    private _different = new Set<DiatonicAltDegree>();
-    private calculated: boolean;
-
-    private constructor(private scales: Scale[], private enharmonic: boolean) {
-        this.calculated = false;
+export class ScaleDegreeComparator extends SetComparator<DiatonicAltDegree> {
+    private constructor(sets: Set<DiatonicAltDegree>[]) {
+        super(sets);
     }
 
-    public static from(scales: Scale[], enharmonic = true): ScaleDegreeComparator {
-        return new ScaleDegreeComparator(scales, enharmonic);
-    }
-
-    public calculate(): void {
-        this.addAllScaleDegreesToCommon();
-        if (this.enharmonic)
-            this.removeNonCommonDegreesEnharmonic();
-        else
-            this.removeNonCommonDegreesNonEnharmonic();
-        this.calculated = true;
-    }
-
-    private addAllScaleDegreesToCommon(): void {
-        for (let scale of this.scales)
-            for (let degree of scale.degrees)
-                this._common.add(degree);
-    }
-
-    private removeNonCommonDegreesEnharmonic(): void {
-        mainFor: for (let degree of this._common)
-            for (let scale of this.scales) {
-                if (!scale.degrees.map(degree => degree.semis).includes(degree.semis)) {
-                    this._common.delete(degree)
-                    this._different.add(degree);
-                    continue mainFor;
-                }
-            }
-    }
-
-    private removeNonCommonDegreesNonEnharmonic(): void {
-        mainFor: for (let degree of this._common)
-            for (let scale of this.scales) {
-                if (!scale.degrees.includes(degree)) {
-                    this._common.delete(degree)
-                    this._different.add(degree);
-                    continue mainFor;
-                }
-            }
-    }
-
-    public get common(): Set<DiatonicAltDegree> {
-        this.errorIfNotCalculated();
-        return this._common;
-    }
-    
-    public get different(): Set<DiatonicAltDegree> {
-        this.errorIfNotCalculated();
-        return this._different;
-    }
-
-    private errorIfNotCalculated() {
-        if (!this.calculated)
-            throw new Error("Not calculated yet");
+    public static from(scales: Scale[]): ScaleDegreeComparator {
+        let sets = scales.map(scale => {
+            let set = new Set<DiatonicAltDegree>();
+            for (let value of scale.degrees)
+                set.add(value);
+            return set;
+        })
+        return new ScaleDegreeComparator(sets);
     }
 }
