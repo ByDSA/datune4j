@@ -6,6 +6,7 @@ export class Language {
     }
 
     static ENG: LanguageInterface = {
+        id: "ENG",
         diatonic: {
             C: "C",
             D: "D",
@@ -196,6 +197,7 @@ export class Language {
     }
 
     static ESP: LanguageInterface = {
+        id: "ESP",
         diatonic: {
             C: "Do",
             D: "Re",

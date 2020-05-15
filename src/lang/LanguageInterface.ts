@@ -1,4 +1,5 @@
 export interface LanguageInterface {
+    id: string,
     diatonic: {
         C: string,
         D: string,
