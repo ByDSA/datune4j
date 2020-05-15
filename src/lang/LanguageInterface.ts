@@ -186,5 +186,17 @@ export interface LanguageInterface {
         LIMIT_5_SYMMETRIC_N1: string,
         LIMIT_5_SYMMETRIC_N2: string,
         PYTHAGOREAN: string,
+    },
+    words: {
+        note: string,
+        chord: string,
+        scale: string,
+        tonality: string,
+        tunning: string,
+        temperament: string,
+        degreeFunction: string,
+        degree: string,
+        pitch: string,
+        pattern: string,
     }
 }

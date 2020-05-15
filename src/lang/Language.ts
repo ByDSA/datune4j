@@ -193,6 +193,18 @@ export class Language {
             get LIMIT_5_SYMMETRIC_N1(): string { return "5-LIMIT: SN1" },
             get LIMIT_5_SYMMETRIC_N2(): string { return "5-LIMIT: SN2" },
             get PYTHAGOREAN(): string { return "Pythagorean" },
+        },
+        words: {
+            note: "note",
+            chord: "chord",
+            scale: "scale",
+            tonality: "tonality",
+            tunning: "tunning",
+            temperament: "temperament",
+            degreeFunction: "degree function",
+            degree: "degree",
+            pitch: "pitch",
+            pattern: "pattern",
         }
     }
 
@@ -384,6 +396,18 @@ export class Language {
             get LIMIT_5_SYMMETRIC_N1(): string { return Language.ENG.temperaments.LIMIT_5_SYMMETRIC_N1 },
             get LIMIT_5_SYMMETRIC_N2(): string { return Language.ENG.temperaments.LIMIT_5_SYMMETRIC_N2 },
             get PYTHAGOREAN(): string { return "Pitagórico" },
+        },
+        words: {
+            note: "nota",
+            chord: "acorde",
+            scale: "escala",
+            tonality: "tonalidad",
+            tunning: "afinación",
+            temperament: "temperamento",
+            degreeFunction: "función tonal",
+            degree: "grado",
+            pitch: "pitch",
+            pattern: "patrón"
         }
     }
 }
