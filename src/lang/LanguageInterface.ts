@@ -198,5 +198,7 @@ export interface LanguageInterface {
         degree: string,
         pitch: string,
         pattern: string,
+        root: string,
+        inversion: string
     }
 }

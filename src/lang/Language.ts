@@ -205,6 +205,8 @@ export class Language {
             degree: "degree",
             pitch: "pitch",
             pattern: "pattern",
+            inversion: "inversion",
+            root: "root",
         }
     }
 
@@ -407,7 +409,9 @@ export class Language {
             degreeFunction: "función tonal",
             degree: "grado",
             pitch: "pitch",
-            pattern: "patrón"
+            pattern: "patrón",
+            inversion: "inversión",
+            root: "raíz",
         }
     }
 }
