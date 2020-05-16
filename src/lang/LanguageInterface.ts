@@ -199,6 +199,9 @@ export interface LanguageInterface {
         pitch: string,
         pattern: string,
         root: string,
-        inversion: string
+        inversion: string,
+        diatonicAlt: string,
+        diatonic: string,
+        chromatic: string,
     }
 }

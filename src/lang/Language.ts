@@ -207,6 +207,9 @@ export class Language {
             pattern: "pattern",
             inversion: "inversion",
             root: "root",
+            diatonicAlt: "altered diatonic note",
+            diatonic: "diatonic note",
+            chromatic: "chromatic note",
         }
     }
 
@@ -412,6 +415,9 @@ export class Language {
             pattern: "patrón",
             inversion: "inversión",
             root: "raíz",
+            diatonicAlt: "nota diatónica alterada",
+            diatonic: "nota diatónica",
+            chromatic: "nota chromática",
         }
     }
 }
