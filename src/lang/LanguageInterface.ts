@@ -192,7 +192,7 @@ export interface LanguageInterface {
         chord: string,
         scale: string,
         tonality: string,
-        tunning: string,
+        tuning: string,
         temperament: string,
         degreeFunction: string,
         degree: string,
