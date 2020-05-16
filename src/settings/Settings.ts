@@ -1,3 +1,4 @@
+import { Language } from 'lang/Language';
 import { SettingsInterface } from './SettingsInterface';
 
 export let Settings: SettingsInterface = {
@@ -14,6 +15,7 @@ export let Settings: SettingsInterface = {
         tuning: null
     },
     lang: null,
+    baseLang: null,
     scales: {
         get MAJOR(): string { return Settings.lang.scales.MAJOR },
         get MINOR(): string { return Settings.lang.scales.MINOR },

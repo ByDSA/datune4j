@@ -87,6 +87,7 @@ export interface SettingsInterface {
         BEBOP_MAJOR: string,
     }
     lang: LanguageInterface,
+    baseLang: LanguageInterface,
     symbols: {
         sharp: string,
         bemol: string,
