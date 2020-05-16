@@ -1,5 +1,5 @@
-import { PatternChord } from '../../chords/pattern/PatternChord';
 import { ChromaticChord } from '../../chords/chromatic/ChromaticChord';
+import { PatternChord } from '../../chords/pattern/PatternChord';
 import { Assert } from '../../common/Assert';
 import { Immutables } from '../../common/Immutables';
 import { ImmutablesCache } from '../../common/ImmutablesCache';
@@ -179,7 +179,6 @@ export class DiatonicAltChord implements Chord<DiatonicAlt> {
 
         return null;
     }
-
 
     private static initialize() {
         let diatonicAlts = [
