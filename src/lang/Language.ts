@@ -277,7 +277,7 @@ export class Language {
             // 5
             PENTATONIC_MINOR: "PENTATÓNICA MENOR",
             PENTATONIC: "PENTATÓNICA",
-            EGYPCIAN: "EGPPCIA",
+            EGYPCIAN: "EGIPCIA",
             BLUES_MINOR: "BLUES MENOR",
             BLUES_MAJOR: "BLUES MENOR",
 
