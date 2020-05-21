@@ -48,7 +48,10 @@ export class IntervalPitch {
         this.ET12.MINOR_SEVENTH = this.from(RatioPow2Frac.fromCents(1000));
         this.ET12.MAJOR_SEVENTH = this.from(RatioPow2Frac.fromCents(1100));
 
+        this.PYTHAGOREAN.DIMINISHED_SECOND = this.from(RatioFrac.from(524288, 531441)); // lower than 1
+        this.PYTHAGOREAN.COMMA = this.from(RatioFrac.from(531441, 524288)); // lower than 1
         this.PYTHAGOREAN.MINOR_SECOND = this.from(RatioFrac.from(256, 243))
+        this.PYTHAGOREAN.AUGMENTED_UNISON = this.from(RatioFrac.from(2187, 2048))
         this.PYTHAGOREAN.DIMINISHED_THIRD = this.from(RatioFrac.from(65536, 59049));
         this.PYTHAGOREAN.MAJOR_SECOND = this.from(RatioFrac.from(9, 8));
         this.PYTHAGOREAN.MINOR_THIRD = this.from(RatioFrac.from(32, 27));
@@ -57,8 +60,8 @@ export class IntervalPitch {
         this.PYTHAGOREAN.MAJOR_THIRD = this.from(RatioFrac.from(81, 64));
         this.PYTHAGOREAN.PERFECT_FOURTH = this.from(RatioFrac.from(4, 3));
         this.PYTHAGOREAN.AUGMENTED_THIRD = this.from(RatioFrac.from(177147, 131072));
-        this.PYTHAGOREAN.AUGMENTED_FOURTH = this.from(RatioFrac.from(729, 512));
         this.PYTHAGOREAN.DIMINISHED_FIFTH = this.from(RatioFrac.from(1024, 729));
+        this.PYTHAGOREAN.AUGMENTED_FOURTH = this.from(RatioFrac.from(729, 512));
         this.PYTHAGOREAN.TRITONE = this.PYTHAGOREAN.DIMINISHED_FIFTH;
         this.PYTHAGOREAN.DIMINISHED_SIXTH = this.from(RatioFrac.from(262144, 177147));
         this.PYTHAGOREAN.PERFECT_FIFTH = this.from(RatioFrac.from(3, 2));
@@ -154,6 +157,9 @@ export namespace IntervalPitch {
     };
 
     export class PYTHAGOREAN {
+        static COMMA: IntervalPitch;
+        static AUGMENTED_UNISON: IntervalPitch;
+        static DIMINISHED_SECOND: IntervalPitch;
         static MINOR_SECOND: IntervalPitch;
         static DIMINISHED_THIRD: IntervalPitch;
         static MAJOR_SECOND: IntervalPitch;

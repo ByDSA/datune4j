@@ -1,7 +1,7 @@
-import { Settings } from '../settings/Settings';
 import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
-import { IntervalPitch } from './IntervalPitch';
 import { IntervalSymbolic } from '../interval/IntervalSymbolic';
+import { Settings } from '../settings/Settings';
+import { IntervalPitch } from './IntervalPitch';
 
 export abstract class Temperament {
     public static ET12;
@@ -58,7 +58,7 @@ export abstract class Temperament {
                     }
                 }
 
-                throw new Error();
+                throw Temperament.generateError(interval);
             }
         });
 
@@ -72,7 +72,7 @@ export abstract class Temperament {
                     }
                 }
 
-                throw new Error();
+                throw Temperament.generateError(interval);
             }
         });
 
@@ -81,7 +81,9 @@ export abstract class Temperament {
             public getIntervalPitch(interval: IntervalSymbolic): IntervalPitch {
                 if (interval instanceof IntervalDiatonicAlt) {
                     switch (interval) {
+                        case IntervalDiatonicAlt.DIMINISHED_SECOND: return IntervalPitch.PYTHAGOREAN.DIMINISHED_SECOND;
                         case IntervalDiatonicAlt.PERFECT_UNISON: return IntervalPitch.UNISON;
+                        case IntervalDiatonicAlt.AUGMENTED_UNISON: return IntervalPitch.PYTHAGOREAN.AUGMENTED_UNISON;
                         case IntervalDiatonicAlt.MINOR_SECOND: return IntervalPitch.PYTHAGOREAN.MINOR_SECOND;
                         case IntervalDiatonicAlt.DIMINISHED_THIRD: return IntervalPitch.PYTHAGOREAN.DIMINISHED_THIRD;
                         case IntervalDiatonicAlt.MAJOR_SECOND: return IntervalPitch.PYTHAGOREAN.MAJOR_SECOND;
@@ -106,9 +108,13 @@ export abstract class Temperament {
                     }
                 }
 
-                throw new Error();
+                throw Temperament.generateError(interval);
             }
         });
+    }
+
+    private static generateError(interval: IntervalSymbolic): Error {
+        return new Error("Cannot convert interval " + interval + ".");
     }
 
     public toString(): string {

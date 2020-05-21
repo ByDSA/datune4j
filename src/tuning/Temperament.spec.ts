@@ -357,3 +357,14 @@ test('Temperament - PYTHAGOREAN - MAJOR SEVENTH - cents', () => {
 
     expect(actual).toBeCloseTo(expected, 0);
 });
+
+test('Pythagorean - A to A#4 - AUGMENTED UNISON', () => {
+    let note = DiatonicAlt.AA;
+    let root = DiatonicAlt.A;
+
+    let intervalDiatonicAlt: IntervalDiatonicAlt = IntervalDiatonicAlt.betweenDiatonicAlt(root, note);
+    let actual: number = Temperament.PYTHAGOREAN.getIntervalPitch(intervalDiatonicAlt).ratio.value;
+    let expected: number = 1.06787109375;
+
+    expect(actual).toBeCloseTo(expected);
+});

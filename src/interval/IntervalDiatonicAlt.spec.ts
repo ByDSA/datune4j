@@ -26,3 +26,11 @@ test('IntervalDiatonicAlt - D# to Gb: DOUBLY DIMINISHED FIFTH', () => {
     let expected = IntervalDiatonicAlt.DOUBLY_DIMINISHED_FOURTH;
     expect(intervalDiatonicAlt).toBe(expected);
 });
+
+test('IntervalDiatonicAlt - A to A#: ', () => {
+    let a = DiatonicAlt.A;
+    let b = DiatonicAlt.AA;
+    let intervalDiatonicAlt = IntervalDiatonicAlt.betweenDiatonicAlt(a, b);
+    let expected = IntervalDiatonicAlt.AUGMENTED_UNISON;
+    expect(intervalDiatonicAlt).toBe(expected);
+});
