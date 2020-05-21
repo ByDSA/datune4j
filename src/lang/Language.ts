@@ -397,7 +397,7 @@ export class Language {
             get THIRTEENTH_b5a9(): string { return "13" + Settings.mods.b5 + Settings.mods.a9; },
         },
         temperaments: {
-            get ET12(): string { return "12-Temperamento Igual" },
+            get ET12(): string { return "T. Igual 12" },
             get LIMIT_5_SYMMETRIC_N1(): string { return Language.ENG.temperaments.LIMIT_5_SYMMETRIC_N1 },
             get LIMIT_5_SYMMETRIC_N2(): string { return Language.ENG.temperaments.LIMIT_5_SYMMETRIC_N2 },
             get PYTHAGOREAN(): string { return "Pitagórico" },
