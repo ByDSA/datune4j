@@ -303,8 +303,8 @@ export class Language {
         patterns: {
             TRIAD_MAJOR: "MAYOR",
             TRIAD_MINOR: "MENOR",
-            TRIAD_AUGMENTED: "AUMENTADA",
-            TRIAD_DIMINISHED: "DISMINUIDA",
+            TRIAD_AUGMENTED: "AUMENTADO",
+            TRIAD_DIMINISHED: "DISMINUIDO",
             TRIAD_SUS4: "SUS4",
             TRIAD_SUS2: "SUS2",
             TRIAD_QUARTAL: "CUARTAL",
