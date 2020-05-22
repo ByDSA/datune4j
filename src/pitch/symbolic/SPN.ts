@@ -136,18 +136,6 @@ export class SPN implements SymbolicPitch {
     public static A9;
     public static AA9;
     public static B9;
-    public static C10;
-    public static CC10;
-    public static D10;
-    public static DD10;
-    public static E10;
-    public static F10;
-    public static FF10;
-    public static G10;
-    public static GG10;
-    public static A10;
-    public static AA10;
-    public static B10;
 
     private static immutablesCache = new ImmutablesCache<SPN, HashingObject>(
         function (hashingObject: HashingObject): number {
@@ -186,6 +174,24 @@ export class SPN implements SymbolicPitch {
 
     public valueOf(): number {
         return this.chromatic.valueOf() + this.octave * Chromatic.NUMBER;
+    }
+
+    public get next(): SPN {
+        let chromatic = this.chromatic.getShift(1);
+        let octave = this.octave;
+        if (chromatic.compareTo(this._chromatic) < 0)
+            octave++;
+
+        return SPN.from(chromatic, octave);
+    }
+
+    public get previous(): SPN {
+        let chromatic = this.chromatic.getShift(-1);
+        let octave = this.octave;
+        if (chromatic.compareTo(this._chromatic) > 0)
+            octave--;
+
+        return SPN.from(chromatic, octave);
     }
 
     private static initialize() {

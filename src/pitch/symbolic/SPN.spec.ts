@@ -130,3 +130,51 @@ test('SPN - toString - ESP - A4', () => {
 
     expect(str).toBe(expected);
 });
+
+test('next - A4 => AA4', () => {
+    let spn = SPN.A4;
+    let actual = spn.next;
+    let expected = SPN.AA4;
+
+    expect(actual).toBe(expected);
+});
+
+test('next - B4 => C5', () => {
+    let spn = SPN.B4;
+    let actual = spn.next;
+    let expected = SPN.C5;
+
+    expect(actual).toBe(expected);
+});
+
+test('next - last: B9 => C10', () => {
+    let spn = SPN.B9;
+    let actual = spn.next;
+    let expected = SPN.from(Chromatic.C, 10);
+
+    expect(actual).toBe(expected);
+});
+
+test('previous - A4 => GG4', () => {
+    let spn = SPN.A4;
+    let actual = spn.previous;
+    let expected = SPN.GG4;
+
+    expect(actual).toBe(expected);
+});
+
+test('next - C5 => B4', () => {
+    let spn = SPN.C5;
+    let actual = spn.previous;
+    let expected = SPN.B4;
+
+    expect(actual).toBe(expected);
+});
+
+test('next - last: C_S1 => C_S2', () => {
+    let spn = SPN.C_S1;
+    let actual = spn.previous;
+    let expected = SPN.from(Chromatic.B, -2);
+
+    expect(actual).toBe(expected);
+});
