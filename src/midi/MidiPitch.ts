@@ -5,7 +5,7 @@ import { SPN } from "../pitch/symbolic/SPN";
 import { Tuning } from "../tuning/Tuning";
 
 type HashingObject = { spn: SPN, detuned: number };
-export class MidiPitch implements Pitch {
+export class MidiPitch extends Pitch {
     public static MIN: MidiPitch;
 
     public static C0: MidiPitch;
@@ -152,6 +152,7 @@ export class MidiPitch implements Pitch {
     );
 
     private constructor(private _spn: SPN, private _cents: number) {
+        super();
     }
 
     public static from(spn: SPN, detuned: number = 0) {

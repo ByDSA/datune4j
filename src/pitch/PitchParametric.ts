@@ -2,10 +2,11 @@ import { Tuning } from "../tuning/Tuning";
 import { Pitch } from "./Pitch";
 import { SymbolicPitch } from "./symbolic/SymbolicPitch";
 
-export class PitchParametric implements Pitch {
+export class PitchParametric extends Pitch {
     private _frequency: number;
 
     private constructor(private _symbolicPitch: SymbolicPitch, private _tuning: Tuning) {
+        super();
     }
 
     public static from(symbolicPitch: SymbolicPitch, tuning: Tuning) {

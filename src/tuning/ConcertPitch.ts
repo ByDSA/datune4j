@@ -4,7 +4,7 @@ import { SPN } from '../pitch/symbolic/SPN';
 import { SymbolicPitch } from '../pitch/symbolic/SymbolicPitch';
 
 type HashingObject = { frequency: number, symbolicPitch: SymbolicPitch };
-export class ConcertPitch implements Pitch {
+export class ConcertPitch extends Pitch {
     public static A440;
     public static A432;
     public static A444;
@@ -24,6 +24,7 @@ export class ConcertPitch implements Pitch {
     );
 
     private constructor(private _frequency: number, private _symbolicPitch: SymbolicPitch) {
+        super();
     }
 
     public static from(frequency: number, symbolicPitch: SymbolicPitch): ConcertPitch {
