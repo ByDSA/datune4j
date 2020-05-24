@@ -1,4 +1,3 @@
-import { DiatonicAltPattern } from '../patterns/DiatonicAltPattern';
 import { ImmutablesCache } from '../common/ImmutablesCache';
 import { MathUtils } from '../common/MathUtils';
 import { Chromatic } from '../degrees/Chromatic';
@@ -9,6 +8,8 @@ import { DegreeFunction } from '../function/DegreeFunction';
 import { IntervalDiatonic } from '../interval/IntervalDiatonic';
 import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
 import { NamingScale } from '../lang/naming/NamingScale';
+import { DiatonicAltPattern } from '../patterns/DiatonicAltPattern';
+import { Settings } from '../settings/Settings';
 import { ScaleModeUtils } from './ScaleModeUtils';
 
 type HashingObject = IntervalDiatonicAlt[];
@@ -189,6 +190,41 @@ export class Scale {
 
     public static fromIntervals(...intervals: IntervalDiatonicAlt[]): Scale {
         return Scale.immutablesCache.getOrCreate(intervals);
+    }
+
+    public static fromString(strValue: string): Scale {
+        strValue = this.normalizeInputString(strValue);
+
+
+        switch (strValue) {
+            case Scale.MAJOR.toString().toLowerCase(): return Scale.MAJOR;
+            case Scale.MINOR.toString().toLowerCase(): return Scale.MINOR;
+            case Scale.DORIAN.toString().toLowerCase(): return Scale.DORIAN;
+            case Scale.PHRYGIAN.toString().toLowerCase(): return Scale.PHRYGIAN;
+            case Scale.LYDIAN.toString().toLowerCase(): return Scale.LYDIAN;
+            case Scale.MIXOLYDIAN.toString().toLowerCase(): return Scale.MIXOLYDIAN;
+            case Scale.LOCRIAN.toString().toLowerCase(): return Scale.LOCRIAN;
+
+            default:
+                for (let scale of Scale.sets.all()) {
+                    if (strValue == this.normalizeInputString(scale.toString()))
+                        return scale;
+                }
+        }
+        throw new Error("Impossible get Scale from string: " + strValue);
+    }
+
+    private static normalizeInputString(strValue: string): string {
+        strValue = strValue.replace(/ /g, '')
+            .replace(/#/g, Settings.symbols.sharp)
+            .replace(/(b)([0-9])/g, Settings.symbols.bemol + "$2")
+            .toLowerCase();
+
+        while (strValue.match("b" + Settings.symbols.bemol)) {
+            strValue = strValue.replace("b" + Settings.symbols.bemol, Settings.symbols.bemol + Settings.symbols.bemol);
+        }
+        
+        return strValue;
     }
 
     private static degrees2Intervals(degrees: DiatonicAltDegree[]): IntervalDiatonicAlt[] {

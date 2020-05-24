@@ -1,7 +1,9 @@
 import { DiatonicAltDegree } from "../degrees/scale/DiatonicAltDegree";
 import { DiatonicDegree } from "../degrees/scale/DiatonicDegree";
 import { DegreeFunction } from "../function/DegreeFunction";
+import { Language } from "../lang/Language";
 import * as precalc from "../precalc";
+import { Settings } from "../settings/Settings";
 import { Scale } from "./Scale";
 precalc.scales();
 precalc.diatonics();
@@ -208,4 +210,104 @@ test('Scale - degreeFunctions: MINOR', () => {
         DegreeFunction.bVII,
     ];
     expect(degreeFunctions).toEqual(expect.arrayContaining(someFunctions));
+});
+
+test('toString - ESP - AEOLIAN_b1 - LIDIA AUMENTADA #2', () => {
+    Settings.lang = Language.ESP;
+    expect(Scale.AEOLIAN_b1.toString()).toEqual("LIDIA AUMENTADA ♯2");
+});
+
+test('fromString - ESP - MAYOR', () => {
+    Settings.lang = Language.ESP;
+    expect(Scale.fromString("MAYOR")).toBe(Scale.MAJOR);
+});
+
+test('fromString - ESP - MAJOR', () => {
+    Settings.lang = Language.ESP;
+    const t = () => {
+        Scale.fromString("MAJOR")
+    };
+    expect(t).toThrow(Error);
+});
+
+test('fromString - ESP - maYor (with spaces)', () => {
+    Settings.lang = Language.ESP;
+    expect(Scale.fromString("  ma Yor  ")).toBe(Scale.MAJOR);
+});
+
+test('fromString - ESP - MENOR', () => {
+    Settings.lang = Language.ESP;
+    expect(Scale.fromString("MENOR")).toBe(Scale.MINOR);
+});
+
+test('fromString - ESP - LiDIA aume Ntada #2', () => {
+    Settings.lang = Language.ESP;
+    expect(Scale.fromString("LiDIA aume Ntada #2")).toBe(Scale.AEOLIAN_b1);
+});
+
+test('fromString - ESP - LiDIA AUMENTada ♯2', () => {
+    Settings.lang = Language.ESP;
+    expect(Scale.fromString("LiDIA AUMENTada ♯2")).toBe(Scale.AEOLIAN_b1);
+});
+
+test('fromString - ESP - LYDIAN b7', () => {
+    Settings.lang = Language.ESP;
+    expect(Scale.fromString("LiDIA b7")).toBe(Scale.LYDIAN_b7);
+});
+
+test('fromString - ENG - SUPERLOCRIA bb7', () => {
+    Settings.lang = Language.ESP;
+    expect(Scale.fromString("SUPERLOCRIA bb7")).toBe(Scale.SUPERLOCRIAN_bb7);
+});
+
+test('toString - ENG - AEOLIAN_b1 - LYDIAN AUGMENTED #2', () => {
+    Settings.lang = Language.ENG;
+    expect(Scale.AEOLIAN_b1.toString()).toEqual("LYDIAN AUGMENTED ♯2");
+});
+test('fromString - ENG - MAYOR', () => {
+    Settings.lang = Language.ENG;
+    expect(Scale.fromString("MAJOR")).toBe(Scale.MAJOR);
+});
+
+test('fromString - ENG - MAYOR', () => {
+    Settings.lang = Language.ENG;
+    const t = () => {
+        Scale.fromString("MAYOR")
+    };
+    expect(t).toThrow(Error);
+});
+
+test('fromString - ENG - maJor (with spaces)', () => {
+    Settings.lang = Language.ENG;
+    expect(Scale.fromString("  ma Jor  ")).toBe(Scale.MAJOR);
+});
+
+test('fromString - ENG - MINOR', () => {
+    Settings.lang = Language.ENG;
+    expect(Scale.fromString("MINOR")).toBe(Scale.MINOR);
+});
+
+test('fromString - ENG - LyDIAN augme Nted #2', () => {
+    Settings.lang = Language.ENG;
+    expect(Scale.fromString("LyDIAN augme Nted #2")).toBe(Scale.AEOLIAN_b1);
+});
+
+test('fromString - ENG - LYDIAN AUGMENTED ♯2', () => {
+    Settings.lang = Language.ENG;
+    expect(Scale.fromString("LYDIAN AUGMENTED ♯2")).toBe(Scale.AEOLIAN_b1);
+});
+
+test('fromString - ENG - LYDIAN b7', () => {
+    Settings.lang = Language.ENG;
+    expect(Scale.fromString("LYDIAN b7")).toBe(Scale.LYDIAN_b7);
+});
+
+test('fromString - ENG - BLUES b5', () => {
+    Settings.lang = Language.ENG;
+    expect(Scale.fromString("blues b5")).toBe(Scale.BLUES_b5);
+});
+
+test('fromString - ENG - SUPERLOCRIAN bb7', () => {
+    Settings.lang = Language.ENG;
+    expect(Scale.fromString("SUPERLOCRIAN bb7")).toBe(Scale.SUPERLOCRIAN_bb7);
 });
