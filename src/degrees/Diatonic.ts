@@ -41,6 +41,26 @@ export class Diatonic implements Degree {
         throw new Error("Impossible get Diatonic from int value: " + intValue);
     }
 
+    static fromString(strValue: string): Diatonic {
+        strValue = this.normalizeInputString(strValue);
+
+        switch (strValue) {
+            case Diatonic.C.toString(): return Diatonic.C;
+            case Diatonic.D.toString(): return Diatonic.D;
+            case Diatonic.E.toString(): return Diatonic.E;
+            case Diatonic.F.toString(): return Diatonic.F;
+            case Diatonic.G.toString(): return Diatonic.G;
+            case Diatonic.A.toString(): return Diatonic.A;
+            case Diatonic.B.toString(): return Diatonic.B;
+        }
+        throw new Error("Impossible get Diatonic from string: " + strValue);
+    }
+
+    private static normalizeInputString(strValue: string): string {
+        strValue = strValue.replace(/ /g, '');
+        return strValue;
+    }
+
     private constructor(private _intValue: number) {
     }
 
