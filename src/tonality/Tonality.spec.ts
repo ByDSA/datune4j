@@ -84,3 +84,18 @@ test('toString - ENG - C', () => {
     
     expect(actual).toBe(expected);
 });
+
+test('fromString - ESP - Do MAYOR', () => {
+    Settings.lang = Language.ESP;
+    expect(Tonality.fromString("Do MAYOR")).toBe(Tonality.C);
+});
+
+test('fromString - ENG - C MAJOR', () => {
+    Settings.lang = Language.ENG;
+    expect(Tonality.fromString("C MAJOR")).toBe(Tonality.C);
+});
+
+test('fromString - ENG - bBBbLuEsB5', () => {
+    Settings.lang = Language.ENG;
+    expect(Tonality.fromString("bBBbLuEsB5")).toBe(Tonality.from(DiatonicAlt.Bbb, Scale.BLUES_b5));
+});

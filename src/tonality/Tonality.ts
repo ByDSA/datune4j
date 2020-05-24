@@ -67,6 +67,33 @@ export class Tonality {
         return this.immutablesCache.getOrCreate({ root: root, scale: scale });
     }
 
+    public static fromString(strValue: string): Tonality {
+        strValue = this.normalizeInputString(strValue);
+
+        let root = null;
+        let scale = null;
+        for (let i = 1; i < strValue.length; i++) {
+            let strRoot = strValue.substr(0, i);
+            try {
+                root = DiatonicAlt.fromString(strRoot);
+                scale = Scale.fromString(strValue.substr(i));
+            } catch (e) {
+                continue;
+            }
+        }
+
+        if (root && scale)
+            return Tonality.from(root, scale);
+
+        throw new Error("Can't get Tonality from string: " + strValue);
+    }
+
+    private static normalizeInputString(strValue: string): string {
+        strValue = strValue.replace(/ /g, '')
+            .toLowerCase();
+        return strValue;
+    }
+
     private calculateNotes(): void {
         this._notes.push(this.root);
         let i = 2;
