@@ -143,3 +143,69 @@ test('toString() - ESP - C', () => {
 
     expect(actual).toBe(expected);
 });
+
+test('fromString - ESP - Do', () => {
+    Settings.lang = Language.ESP;
+    expect(DiatonicAlt.fromString("Do")).toBe(DiatonicAlt.C);
+});
+
+test('fromString - ESP - La#', () => {
+    Settings.lang = Language.ESP;
+    expect(DiatonicAlt.fromString("La#")).toBe(DiatonicAlt.AA);
+});
+
+test('fromString - ESP - La# (spaces)', () => {
+    Settings.lang = Language.ESP;
+    expect(DiatonicAlt.fromString("   La#    ")).toBe(DiatonicAlt.AA);
+});
+
+test('fromString - ESP - La# (spaces middle)', () => {
+    Settings.lang = Language.ESP;
+    expect(DiatonicAlt.fromString("   L a #    ")).toBe(DiatonicAlt.AA);
+});
+
+test('fromString - ESP - Lab', () => {
+    Settings.lang = Language.ESP;
+    expect(DiatonicAlt.fromString("Lab")).toBe(DiatonicAlt.Ab);
+});
+
+test('fromString - ESP - C', () => {
+    Settings.lang = Language.ESP;
+    const t = () => {
+        DiatonicAlt.fromString("C");
+    };
+    expect(t).toThrow(Error);
+});
+
+test('fromString - ENG - C', () => {
+    Settings.lang = Language.ENG;
+    expect(DiatonicAlt.fromString("C")).toBe(DiatonicAlt.C);
+});
+
+test('fromString - ENG - La#', () => {
+    Settings.lang = Language.ENG;
+    expect(DiatonicAlt.fromString("A#")).toBe(DiatonicAlt.AA);
+});
+
+test('fromString - ENG - A# (spaces)', () => {
+    Settings.lang = Language.ENG;
+    expect(DiatonicAlt.fromString("   A#    ")).toBe(DiatonicAlt.AA);
+});
+
+test('fromString - ENG - La# (spaces middle)', () => {
+    Settings.lang = Language.ENG;
+    expect(DiatonicAlt.fromString("   A #    ")).toBe(DiatonicAlt.AA);
+});
+
+test('fromString - ENG - Ab', () => {
+    Settings.lang = Language.ENG;
+    expect(DiatonicAlt.fromString("Ab")).toBe(DiatonicAlt.Ab);
+});
+
+test('fromString - ENG - Do', () => {
+    Settings.lang = Language.ENG;
+    const t = () => {
+        Chromatic.fromString("Do");
+    };
+    expect(t).toThrow(Error);
+});

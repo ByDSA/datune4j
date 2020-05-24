@@ -10,9 +10,7 @@ export class NamingDiatonicAlt {
     }
 
     static get(str: string): DiatonicAlt {
-        str = str
-            .replace(/#/g, Settings.symbols.sharp)
-            .replace(/b/g, Settings.symbols.bemol);
+        str = this.normalizeInputString(str);
 
         switch (str) {
             case DiatonicAlt.C.toString(): return DiatonicAlt.C;
@@ -52,5 +50,11 @@ export class NamingDiatonicAlt {
             case DiatonicAlt.Bbb.toString(): return DiatonicAlt.Bbb;
         }
         throw new Error("Can't convert '" + str + "' to DiatonicAlt.");
+    }
+
+    private static normalizeInputString(strValue: string): string {
+        return strValue.replace(/ /g, '')
+            .replace(/#/g, Settings.symbols.sharp)
+            .replace(/b/g, Settings.symbols.bemol);
     }
 }
