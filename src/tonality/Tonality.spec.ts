@@ -90,9 +90,29 @@ test('fromString - ESP - Do MAYOR', () => {
     expect(Tonality.fromString("Do MAYOR")).toBe(Tonality.C);
 });
 
+test('fromString - ESP - Do ', () => {
+    Settings.lang = Language.ESP;
+    expect(Tonality.fromString("Do ")).toBe(Tonality.C);
+});
+
+test('fromString - ESP - Do m', () => {
+    Settings.lang = Language.ESP;
+    expect(Tonality.fromString("Do m")).toBe(Tonality.Cm);
+});
+
 test('fromString - ENG - C MAJOR', () => {
     Settings.lang = Language.ENG;
     expect(Tonality.fromString("C MAJOR")).toBe(Tonality.C);
+});
+
+test('fromString - ENG - C ', () => {
+    Settings.lang = Language.ENG;
+    expect(Tonality.fromString("C ")).toBe(Tonality.C);
+});
+
+test('fromString - ENG - C m', () => {
+    Settings.lang = Language.ENG;
+    expect(Tonality.fromString("C m")).toBe(Tonality.Cm);
 });
 
 test('fromString - ENG - bBBbLuEsB5', () => {

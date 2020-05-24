@@ -72,11 +72,16 @@ export class Tonality {
 
         let root = null;
         let scale = null;
-        for (let i = 1; i < strValue.length; i++) {
+        for (let i = 1; i <= strValue.length; i++) {
             let strRoot = strValue.substr(0, i);
             try {
                 root = DiatonicAlt.fromString(strRoot);
-                scale = Scale.fromString(strValue.substr(i));
+                let strScale = strValue.substr(i);
+                switch (strScale.toLowerCase()) {
+                    case "": scale = Scale.MAJOR; break;
+                    case "m": scale = Scale.MINOR; break;
+                    default: scale = Scale.fromString(strScale);
+                }
             } catch (e) {
                 continue;
             }
