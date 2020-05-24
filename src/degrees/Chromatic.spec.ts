@@ -150,16 +150,16 @@ test('fromString - ESP - Lab', () => {
     Settings.lang = Language.ESP;
     const t = () => {
         Chromatic.fromString("Lab");
-      };
-      expect(t).toThrow(Error);
+    };
+    expect(t).toThrow(Error);
 });
 
 test('fromString - ESP - C', () => {
     Settings.lang = Language.ESP;
     const t = () => {
         Chromatic.fromString("C");
-      };
-      expect(t).toThrow(Error);
+    };
+    expect(t).toThrow(Error);
 });
 
 test('fromString - ENG - C', () => {
@@ -186,14 +186,14 @@ test('fromString - ENG - Ab', () => {
     Settings.lang = Language.ENG;
     const t = () => {
         Chromatic.fromString("Ab");
-      };
-      expect(t).toThrow(Error);
+    };
+    expect(t).toThrow(Error);
 });
 
 test('fromString - ENG - Do', () => {
     Settings.lang = Language.ENG;
     const t = () => {
         Chromatic.fromString("Do");
-      };
-      expect(t).toThrow(Error);
+    };
+    expect(t).toThrow(Error);
 });
