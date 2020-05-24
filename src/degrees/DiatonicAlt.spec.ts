@@ -182,6 +182,26 @@ test('fromString - ENG - C', () => {
     expect(DiatonicAlt.fromString("C")).toBe(DiatonicAlt.C);
 });
 
+test('fromString - ENG - c (lower)', () => {
+    Settings.lang = Language.ENG;
+    expect(DiatonicAlt.fromString("c")).toBe(DiatonicAlt.C);
+});
+
+test('fromString - ENG - b (lower)', () => {
+    Settings.lang = Language.ENG;
+    expect(DiatonicAlt.fromString("b")).toBe(DiatonicAlt.B);
+});
+
+test('fromString - ENG - bb (lower)', () => {
+    Settings.lang = Language.ENG;
+    expect(DiatonicAlt.fromString("bb")).toBe(DiatonicAlt.Bb);
+});
+
+test('fromString - ENG - bbb (lower)', () => {
+    Settings.lang = Language.ENG;
+    expect(DiatonicAlt.fromString("bbb")).toBe(DiatonicAlt.Bbb);
+});
+
 test('fromString - ENG - La#', () => {
     Settings.lang = Language.ENG;
     expect(DiatonicAlt.fromString("A#")).toBe(DiatonicAlt.AA);
