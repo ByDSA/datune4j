@@ -61,7 +61,7 @@ export class Chromatic implements Degree {
             case Chromatic.AA.toString(): return Chromatic.AA;
             case Chromatic.B.toString(): return Chromatic.B;
         }
-        throw new Error("Impossible get Chromatic from int value: " + strValue);
+        throw new Error("Impossible get Chromatic from string: " + strValue);
     }
 
     private static normalizeInputString(strValue: string): string {
