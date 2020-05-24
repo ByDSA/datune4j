@@ -125,3 +125,75 @@ test('Chromatic - getShift: -27', () => {
     let expected = Chromatic.A;
     expect(chromatic).toBe(expected);
 });
+
+test('fromString - ESP - Do', () => {
+    Settings.lang = Language.ESP;
+    expect(Chromatic.fromString("Do")).toBe(Chromatic.C);
+});
+
+test('fromString - ESP - La#', () => {
+    Settings.lang = Language.ESP;
+    expect(Chromatic.fromString("La#")).toBe(Chromatic.AA);
+});
+
+test('fromString - ESP - La# (spaces)', () => {
+    Settings.lang = Language.ESP;
+    expect(Chromatic.fromString("   La#    ")).toBe(Chromatic.AA);
+});
+
+test('fromString - ESP - La# (spaces middle)', () => {
+    Settings.lang = Language.ESP;
+    expect(Chromatic.fromString("   L a #    ")).toBe(Chromatic.AA);
+});
+
+test('fromString - ESP - Lab', () => {
+    Settings.lang = Language.ESP;
+    const t = () => {
+        Chromatic.fromString("Lab");
+      };
+      expect(t).toThrow(Error);
+});
+
+test('fromString - ESP - C', () => {
+    Settings.lang = Language.ESP;
+    const t = () => {
+        Chromatic.fromString("C");
+      };
+      expect(t).toThrow(Error);
+});
+
+test('fromString - ENG - C', () => {
+    Settings.lang = Language.ENG;
+    expect(Chromatic.fromString("C")).toBe(Chromatic.C);
+});
+
+test('fromString - ENG - La#', () => {
+    Settings.lang = Language.ENG;
+    expect(Chromatic.fromString("A#")).toBe(Chromatic.AA);
+});
+
+test('fromString - ENG - A# (spaces)', () => {
+    Settings.lang = Language.ENG;
+    expect(Chromatic.fromString("   A#    ")).toBe(Chromatic.AA);
+});
+
+test('fromString - ENG - La# (spaces middle)', () => {
+    Settings.lang = Language.ENG;
+    expect(Chromatic.fromString("   A #    ")).toBe(Chromatic.AA);
+});
+
+test('fromString - ENG - Ab', () => {
+    Settings.lang = Language.ENG;
+    const t = () => {
+        Chromatic.fromString("Ab");
+      };
+      expect(t).toThrow(Error);
+});
+
+test('fromString - ENG - Do', () => {
+    Settings.lang = Language.ENG;
+    const t = () => {
+        Chromatic.fromString("Do");
+      };
+      expect(t).toThrow(Error);
+});

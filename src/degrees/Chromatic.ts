@@ -1,6 +1,7 @@
 import { Immutables } from '../common/Immutables';
 import { MathUtils } from '../common/MathUtils';
 import { NamingChromatic } from '../lang/naming/NamingChromatic';
+import { Settings } from '../settings/Settings';
 import { Degree } from './Degree';
 
 export class Chromatic implements Degree {
@@ -41,6 +42,33 @@ export class Chromatic implements Degree {
             case 11: return Chromatic.B;
         }
         throw new Error("Impossible get Chromatic from int value: " + intValue);
+    }
+
+    static fromString(strValue: string): Chromatic {
+        strValue = this.normalizeInputString(strValue);
+
+        switch (strValue) {
+            case Chromatic.C.toString(): return Chromatic.C;
+            case Chromatic.CC.toString(): return Chromatic.CC;
+            case Chromatic.D.toString(): return Chromatic.D;
+            case Chromatic.DD.toString(): return Chromatic.DD;
+            case Chromatic.E.toString(): return Chromatic.E;
+            case Chromatic.F.toString(): return Chromatic.F;
+            case Chromatic.FF.toString(): return Chromatic.FF;
+            case Chromatic.G.toString(): return Chromatic.G;
+            case Chromatic.GG.toString(): return Chromatic.GG;
+            case Chromatic.A.toString(): return Chromatic.A;
+            case Chromatic.AA.toString(): return Chromatic.AA;
+            case Chromatic.B.toString(): return Chromatic.B;
+        }
+        throw new Error("Impossible get Chromatic from int value: " + strValue);
+    }
+
+    private static normalizeInputString(strValue: string): string {
+        strValue = strValue.replace(/ /g, '');
+        strValue = strValue.replace("#", Settings.symbols.sharp);
+        strValue = strValue.replace("b", Settings.symbols.bemol);
+        return strValue;
     }
 
     public getShift(semis: number): Chromatic {
