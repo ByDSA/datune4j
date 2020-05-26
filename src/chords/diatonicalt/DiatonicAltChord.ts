@@ -1,5 +1,5 @@
+import { ParserBottomUp } from '../../Utils/Parser/Parser';
 import { ChromaticChord } from '../../chords/chromatic/ChromaticChord';
-import { RootPatternChord } from '../root-pattern/RootPatternChord';
 import { Assert } from '../../common/Assert';
 import { Immutables } from '../../common/Immutables';
 import { ImmutablesCache } from '../../common/ImmutablesCache';
@@ -10,6 +10,7 @@ import { IntervalDiatonicAlt } from '../../interval/IntervalDiatonicAlt';
 import { NameChordCalculator } from '../../lang/naming/NameChordCalculator';
 import { DiatonicAltPattern } from '../../patterns/DiatonicAltPattern';
 import { Chord } from '../Chord';
+import { RootPatternChord } from '../root-pattern/RootPatternChord';
 
 type HashingObjectType = DiatonicAlt[];
 export class DiatonicAltChord implements Chord<DiatonicAlt> {
@@ -66,6 +67,33 @@ export class DiatonicAltChord implements Chord<DiatonicAlt> {
     public static from(notes: DiatonicAlt[]): DiatonicAltChord {
         this.checkValidNotes(notes);
         return DiatonicAltChord.immutablesCache.getOrCreate(notes);
+    }
+
+    public static fromString(strValue: string): ChromaticChord {
+        strValue = this.normalizeInputString(strValue);
+
+        let parser = new ParserBottomUp()
+            .from(strValue)
+            .expected([DiatonicAlt.name, DiatonicAltPattern.name])
+            .add(DiatonicAlt.name, function (str: string): DiatonicAlt {
+                return DiatonicAlt.fromString(str);
+            })
+            .add(DiatonicAltPattern.name, function (str: string): DiatonicAltPattern {
+                return DiatonicAltPattern.fromString(str);
+            });
+
+        let objects = parser.parse();
+
+        if (objects)
+            return <ChromaticChord>RootPatternChord.from(objects[0], objects[1]).chord;
+
+        throw new Error("Can't get " + this.name + " from string: " + strValue);
+    }
+
+    private static normalizeInputString(strValue: string): string {
+        strValue = strValue.replace(/ /g, '')
+            .toLowerCase();
+        return strValue;
     }
 
     public getInv(n: number = 1): DiatonicAltChord {
