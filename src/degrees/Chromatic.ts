@@ -48,26 +48,27 @@ export class Chromatic implements Degree {
         strValue = this.normalizeInputString(strValue);
 
         switch (strValue) {
-            case Chromatic.C.toString(): return Chromatic.C;
-            case Chromatic.CC.toString(): return Chromatic.CC;
-            case Chromatic.D.toString(): return Chromatic.D;
-            case Chromatic.DD.toString(): return Chromatic.DD;
-            case Chromatic.E.toString(): return Chromatic.E;
-            case Chromatic.F.toString(): return Chromatic.F;
-            case Chromatic.FF.toString(): return Chromatic.FF;
-            case Chromatic.G.toString(): return Chromatic.G;
-            case Chromatic.GG.toString(): return Chromatic.GG;
-            case Chromatic.A.toString(): return Chromatic.A;
-            case Chromatic.AA.toString(): return Chromatic.AA;
-            case Chromatic.B.toString(): return Chromatic.B;
+            case Chromatic.C.toString().toLowerCase(): return Chromatic.C;
+            case Chromatic.CC.toString().toLowerCase(): return Chromatic.CC;
+            case Chromatic.D.toString().toLowerCase(): return Chromatic.D;
+            case Chromatic.DD.toString().toLowerCase(): return Chromatic.DD;
+            case Chromatic.E.toString().toLowerCase(): return Chromatic.E;
+            case Chromatic.F.toString().toLowerCase(): return Chromatic.F;
+            case Chromatic.FF.toString().toLowerCase(): return Chromatic.FF;
+            case Chromatic.G.toString().toLowerCase(): return Chromatic.G;
+            case Chromatic.GG.toString().toLowerCase(): return Chromatic.GG;
+            case Chromatic.A.toString().toLowerCase(): return Chromatic.A;
+            case Chromatic.AA.toString().toLowerCase(): return Chromatic.AA;
+            case Chromatic.B.toString().toLowerCase(): return Chromatic.B;
         }
         throw new Error("Impossible get Chromatic from string: " + strValue);
     }
 
     private static normalizeInputString(strValue: string): string {
-        strValue = strValue.replace(/ /g, '');
-        strValue = strValue.replace("#", Settings.symbols.sharp);
-        strValue = strValue.replace("b", Settings.symbols.bemol);
+        strValue = strValue.replace(/ /g, '')
+            .replace("#", Settings.symbols.sharp)
+            .replace("b", Settings.symbols.bemol)
+            .toLowerCase();
         return strValue;
     }
 
