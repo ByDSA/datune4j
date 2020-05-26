@@ -60,3 +60,33 @@ test('ChromaticChord - toString: 0, 1, 2', () => {
     let expected = "0-1-2";
     expect(str).toBe(expected);
 });
+
+test('fromString - ESP - "m" = TRIAD_MINOR', () => {
+    Settings.lang = Language.ESP;
+    expect(ChromaticPattern.fromString("m")).toBe(ChromaticPattern.TRIAD_MINOR);
+});
+
+test('fromString - ESP - " " = TRIAD_MAJOR', () => {
+    Settings.lang = Language.ESP;
+    expect(ChromaticPattern.fromString(" ")).toBe(ChromaticPattern.TRIAD_MAJOR);
+});
+
+test('fromString - ESP - "MAyOR" = TRIAD_MAJOR', () => {
+    Settings.lang = Language.ESP;
+    expect(ChromaticPattern.fromString("MAyOR")).toBe(ChromaticPattern.TRIAD_MAJOR);
+});
+
+test('fromString - ENG - "m" = TRIAD_MINOR', () => {
+    Settings.lang = Language.ENG;
+    expect(ChromaticPattern.fromString("m")).toBe(ChromaticPattern.TRIAD_MINOR);
+});
+
+test('fromString - ENG - " " = TRIAD_MAJOR', () => {
+    Settings.lang = Language.ENG;
+    expect(ChromaticPattern.fromString(" ")).toBe(ChromaticPattern.TRIAD_MAJOR);
+});
+
+test('fromString - ENG - "MAjOR" = TRIAD_MAJOR', () => {
+    Settings.lang = Language.ENG;
+    expect(ChromaticPattern.fromString("MAjOR")).toBe(ChromaticPattern.TRIAD_MAJOR);
+});

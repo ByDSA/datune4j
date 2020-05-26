@@ -95,6 +95,27 @@ export class ChromaticPattern implements DegreePattern<Chromatic>, Iterable<Diff
         return this.immutablesCache.getOrCreate(values);
     }
 
+    public static fromString(strValue: string): ChromaticPattern {
+        strValue = this.normalizeInputString(strValue);
+
+        for (let chromaticPattern of this.immutablesCache.list) {
+            let normalizedString = this.normalizeInputString(chromaticPattern.toString());
+            let normalizedShortName = this.normalizeInputString(chromaticPattern.shortName);
+
+            if (strValue == normalizedString || strValue == normalizedShortName)
+                return chromaticPattern;
+        }
+
+        throw new Error("Can't get ChromaticPattern from string '" + strValue + "'.");
+    }
+
+    private static normalizeInputString(strValue: string): string {
+        strValue = strValue.replace(/ /g, '')
+            .toLowerCase();
+        return strValue;
+    }
+
+
     [Symbol.iterator](): Iterator<Difference> {
         return this.values[Symbol.iterator]();
     }
