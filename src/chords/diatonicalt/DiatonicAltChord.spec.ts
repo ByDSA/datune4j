@@ -1,6 +1,8 @@
 import { DiatonicAlt } from '../../degrees/DiatonicAlt';
+import { Language } from '../../lang/Language';
 import { DiatonicAltPattern } from '../../patterns/DiatonicAltPattern';
 import * as precalc from "../../precalc";
+import { Settings } from '../../settings/Settings';
 import { RootPatternChord } from '../root-pattern/RootPatternChord';
 import { DiatonicAltChord } from './DiatonicAltChord';
 precalc.chromatics();
@@ -237,4 +239,17 @@ test('get from ImmutableCache: CMaj7', () => {
 
     let expected = DiatonicAltChord.CMaj7;
     expect(diatonicAltChord).toBe(expected);
+});
+
+test('fromString - ENG - " c  " = C MAJOR', () => {
+    Settings.lang = Language.ENG;
+    expect(DiatonicAltChord.fromString(" c  ")).toBe(DiatonicAltChord.C);
+});
+
+test('fromString - ENG - "bb7" = C SEVENTH', () => {
+    Settings.lang = Language.ENG;
+    let expected = DiatonicAltChord.from(
+        [DiatonicAlt.Bb, DiatonicAlt.D, DiatonicAlt.F, DiatonicAlt.Ab]);
+    let actual = DiatonicAltChord.fromString("bb7");
+    expect(actual).toBe(expected);
 });
