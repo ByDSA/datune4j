@@ -197,6 +197,9 @@ export class Scale {
 
 
         switch (strValue) {
+            case "": return Scale.MAJOR;
+            case "m": return Scale.MINOR;
+            
             case Scale.MAJOR.toString().toLowerCase(): return Scale.MAJOR;
             case Scale.MINOR.toString().toLowerCase(): return Scale.MINOR;
             case Scale.DORIAN.toString().toLowerCase(): return Scale.DORIAN;
@@ -223,7 +226,7 @@ export class Scale {
         while (strValue.match("b" + Settings.symbols.bemol)) {
             strValue = strValue.replace("b" + Settings.symbols.bemol, Settings.symbols.bemol + Settings.symbols.bemol);
         }
-        
+
         return strValue;
     }
 

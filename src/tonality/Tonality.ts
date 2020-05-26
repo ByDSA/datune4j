@@ -8,6 +8,8 @@ import { ChromaticPattern } from '../patterns/ChromaticPattern';
 import { DiatonicAltPattern } from '../patterns/DiatonicAltPattern';
 import { DiatonicPattern } from '../patterns/DiatonicPattern';
 import { Scale } from './Scale';
+import { ParserBottomUp } from "../Utils/Parser/Parser";
+import { Diatonic } from 'degrees/Diatonic';
 
 type HashingObjectType = { root: DiatonicAlt, scale: Scale };
 export class Tonality {
@@ -70,25 +72,20 @@ export class Tonality {
     public static fromString(strValue: string): Tonality {
         strValue = this.normalizeInputString(strValue);
 
-        let root = null;
-        let scale = null;
-        for (let i = 1; i <= strValue.length; i++) {
-            let strRoot = strValue.substr(0, i);
-            try {
-                root = DiatonicAlt.fromString(strRoot);
-                let strScale = strValue.substr(i);
-                switch (strScale.toLowerCase()) {
-                    case "": scale = Scale.MAJOR; break;
-                    case "m": scale = Scale.MINOR; break;
-                    default: scale = Scale.fromString(strScale);
-                }
-            } catch (e) {
-                continue;
-            }
-        }
+        let parser = new ParserBottomUp()
+        .from(strValue)
+        .expected([DiatonicAlt.name, Scale.name])
+        .add(DiatonicAlt.name, function(str: string): DiatonicAlt {
+            return DiatonicAlt.fromString(str);
+        })
+        .add(Scale.name, function(str: string): Scale {
+            return Scale.fromString(str);
+        });
 
-        if (root && scale)
-            return Tonality.from(root, scale);
+        let objects = parser.parse();
+
+        if (objects)
+            return Tonality.from(objects[0], objects[1]);
 
         throw new Error("Can't get Tonality from string: " + strValue);
     }
