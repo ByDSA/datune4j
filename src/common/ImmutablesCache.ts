@@ -1,7 +1,7 @@
 import { Assert } from './Assert';
 
 export class ImmutablesCache<T, H> {
-    private immutablesMap;
+    private immutablesMap : Map<string, T>;
 
     public getHash: (H) => string;
     public getHashingObject: (T) => H;
@@ -39,5 +39,9 @@ export class ImmutablesCache<T, H> {
         }
 
         return obj;
+    }
+
+    public get list(): T[] {
+        return Array.from( this.immutablesMap.values() );
     }
 }
