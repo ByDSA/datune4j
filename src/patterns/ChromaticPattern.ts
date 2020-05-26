@@ -106,7 +106,7 @@ export class ChromaticPattern implements DegreePattern<Chromatic>, Iterable<Diff
                 return chromaticPattern;
         }
 
-        throw new Error("Can't get ChromaticPattern from string '" + strValue + "'.");
+        throw new Error("Can't get " + this.name + " from string '" + strValue + "'.");
     }
 
     private static normalizeInputString(strValue: string): string {
