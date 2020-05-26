@@ -1,9 +1,8 @@
+import { IntervalDiatonicAlt } from "../interval/IntervalDiatonicAlt";
 import { Language } from "../lang/Language";
 import * as precalc from "../precalc";
 import { Settings } from "../settings/Settings";
-import { ChromaticPattern } from "./ChromaticPattern";
 import { DiatonicAltPattern } from "./DiatonicAltPattern";
-import { IntervalDiatonicAlt } from "../interval/IntervalDiatonicAlt";
 precalc.diatonicAltPatterns();
 precalc.diatonicAltChords();
 precalc.intervalDiatonicAlts();
@@ -25,41 +24,47 @@ test('getInv: TRIAD MAJOR + 2inv', () => {
     expect(diatonicAltPattern).toBe(expected);
 });
 
-test('ChromaticChord - getInv: TRIAD MAJOR + 3inv = TRIAD MAJOR', () => {
-    let chromaticPattern = ChromaticPattern.TRIAD_MAJOR.getInv(3);
-    let expected = ChromaticPattern.TRIAD_MAJOR;
-    expect(chromaticPattern).toBe(expected);
-});
-
-test('ChromaticChord - getInv: TRIAD MAJOR + inv + inv', () => {
-    let chromaticPattern = ChromaticPattern.TRIAD_MAJOR.getInv().getInv();
-    let expected = ChromaticPattern.from(0, 5, 9);
-    expect(chromaticPattern).toBe(expected);
-});
-
-test('ChromaticChord - getInv: TRIAD MAJOR + inv', () => {
-    let chromaticPattern = ChromaticPattern.TRIAD_MAJOR.getInv();
-    let expected = ChromaticPattern.from(0, 3, 8);
-    expect(chromaticPattern).toBe(expected);
-});
-
-test('ChromaticChord - toString ENG: TRIAD MAJOR', () => {
+test('toString ENG: TRIAD MAJOR', () => {
     Settings.lang = Language.ENG;
-    let str = ChromaticPattern.TRIAD_MAJOR.toString();
+    let str = DiatonicAltPattern.TRIAD_MAJOR.toString();
     let expected = "MAJOR";
     expect(str).toBe(expected);
 });
 
-test('ChromaticChord - toString ESP: TRIAD MAJOR', () => {
+test('toString ESP: TRIAD MAJOR', () => {
     Settings.lang = Language.ESP;
-    let str = ChromaticPattern.TRIAD_MAJOR.toString();
+    let str = DiatonicAltPattern.TRIAD_MAJOR.toString();
     let expected = "MAYOR";
     expect(str).toBe(expected);
 });
 
-test('ChromaticChord - toString: 0, 1, 2', () => {
+
+test('fromString - ESP - "m" = TRIAD_MINOR', () => {
+    Settings.lang = Language.ESP;
+    expect(DiatonicAltPattern.fromString("m")).toBe(DiatonicAltPattern.TRIAD_MINOR);
+});
+
+test('fromString - ESP - " " = TRIAD_MAJOR', () => {
+    Settings.lang = Language.ESP;
+    expect(DiatonicAltPattern.fromString(" ")).toBe(DiatonicAltPattern.TRIAD_MAJOR);
+});
+
+test('fromString - ESP - "MAyOR" = TRIAD_MAJOR', () => {
+    Settings.lang = Language.ESP;
+    expect(DiatonicAltPattern.fromString("MAyOR")).toBe(DiatonicAltPattern.TRIAD_MAJOR);
+});
+
+test('fromString - ENG - "m" = TRIAD_MINOR', () => {
     Settings.lang = Language.ENG;
-    let str = ChromaticPattern.from(0, 1, 2).toString();
-    let expected = "0-1-2";
-    expect(str).toBe(expected);
+    expect(DiatonicAltPattern.fromString("m")).toBe(DiatonicAltPattern.TRIAD_MINOR);
+});
+
+test('fromString - ENG - " " = TRIAD_MAJOR', () => {
+    Settings.lang = Language.ENG;
+    expect(DiatonicAltPattern.fromString(" ")).toBe(DiatonicAltPattern.TRIAD_MAJOR);
+});
+
+test('fromString - ENG - "MAjOR" = TRIAD_MAJOR', () => {
+    Settings.lang = Language.ENG;
+    expect(DiatonicAltPattern.fromString("MAjOR")).toBe(DiatonicAltPattern.TRIAD_MAJOR);
 });

@@ -153,6 +153,26 @@ export class DiatonicAltPattern implements DegreePattern<Difference>, Iterable<D
         return this.immutablesCache.getOrCreate(values);
     }
 
+    public static fromString(strValue: string): DiatonicAltPattern {
+        strValue = this.normalizeInputString(strValue);
+
+        for (let diatonicAltPattern of this.immutablesCache.list) {
+            let normalizedString = this.normalizeInputString(diatonicAltPattern.toString());
+            let normalizedShortName = this.normalizeInputString(diatonicAltPattern.shortName);
+
+            if (strValue == normalizedString || strValue == normalizedShortName)
+                return diatonicAltPattern;
+        }
+
+        throw new Error("Can't get DiatonicAltPattern from string '" + strValue + "'.");
+    }
+
+    private static normalizeInputString(strValue: string): string {
+        strValue = strValue.replace(/ /g, '')
+            .toLowerCase();
+        return strValue;
+    }
+
     [Symbol.iterator](): Iterator<Difference> {
         return this.values[Symbol.iterator]();
     }
