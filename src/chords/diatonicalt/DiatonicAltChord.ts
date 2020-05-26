@@ -1,5 +1,5 @@
 import { ChromaticChord } from '../../chords/chromatic/ChromaticChord';
-import { PatternChord } from '../../chords/pattern/PatternChord';
+import { RootPatternChord } from '../root-pattern/RootPatternChord';
 import { Assert } from '../../common/Assert';
 import { Immutables } from '../../common/Immutables';
 import { ImmutablesCache } from '../../common/ImmutablesCache';
@@ -216,7 +216,7 @@ export class DiatonicAltChord implements Chord<DiatonicAlt> {
 
                 const name = diatonicAltStr + diatonicAltChordPatternStr;
 
-                DiatonicAltChord[name] = PatternChord.from(diatonicAlt, diatonicAltChordPattern).chord;
+                DiatonicAltChord[name] = RootPatternChord.from(diatonicAlt, diatonicAltChordPattern).chord;
             }
         }
 

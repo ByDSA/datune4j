@@ -1,4 +1,4 @@
-import { Chord } from '../../chords/Chord';
+import { Chord } from '../Chord';
 import { Chromatic } from '../../degrees/Chromatic';
 import { Degree } from '../../degrees/Degree';
 import { DiatonicAlt } from '../../degrees/DiatonicAlt';
@@ -8,12 +8,12 @@ import { DiatonicAltPattern } from '../../patterns/DiatonicAltPattern';
 import { ChromaticChord } from '../chromatic/ChromaticChord';
 import { DiatonicAltChord } from '../diatonicalt/DiatonicAltChord';
 
-export class PatternChord<D extends Degree> {
+export class RootPatternChord<D extends Degree> {
     private constructor(private _degree: D, private _degreePattern: DegreePattern<D>) {
     }
 
-    public static from<D extends Degree>(degree: D, pattern: DegreePattern<D>): PatternChord<D> {
-        return new PatternChord(degree, pattern);
+    public static from<D extends Degree>(degree: D, pattern: DegreePattern<D>): RootPatternChord<D> {
+        return new RootPatternChord(degree, pattern);
     }
 
     public get chord(): Chord<Degree> {

@@ -1,5 +1,5 @@
 import { DiatonicAltChord } from '../chords/diatonicalt/DiatonicAltChord';
-import { PatternChord } from '../chords/pattern/PatternChord';
+import { RootPatternChord } from '../chords/root-pattern/RootPatternChord';
 import { ImmutablesCache } from '../common/ImmutablesCache';
 import { Chromatic } from '../degrees/Chromatic';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
@@ -144,7 +144,7 @@ export class Tonality {
         this._rootChord3 = null;
         for (const pattern of chordRootPatternPriority) {
             let note = this.root.getAdd(pattern.interval);
-            let chord = <DiatonicAltChord>PatternChord.from(note, pattern.pattern).chord;
+            let chord = <DiatonicAltChord>RootPatternChord.from(note, pattern.pattern).chord;
 
             if (this.containsChord(chord)) {
                 this._rootChord3 = chord;
@@ -169,7 +169,7 @@ export class Tonality {
 
         this._rootChord4 = null;
         for (const pattern of chordRootPatternPriority) {
-            let chord = <DiatonicAltChord>PatternChord.from(this.root, pattern).chord;
+            let chord = <DiatonicAltChord>RootPatternChord.from(this.root, pattern).chord;
             if (this.containsChord(chord)) {
                 this._rootChord4 = chord;
                 break;

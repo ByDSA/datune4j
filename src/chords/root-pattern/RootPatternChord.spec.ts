@@ -5,7 +5,7 @@ import { DiatonicAltPattern } from "../../patterns/DiatonicAltPattern";
 import * as precalc from "../../precalc";
 import { ChromaticChord } from "../chromatic/ChromaticChord";
 import { DiatonicAltChord } from "../diatonicalt/DiatonicAltChord";
-import { PatternChord } from "./PatternChord";
+import { RootPatternChord } from "./RootPatternChord";
 precalc.chromatics();
 precalc.chromaticChords();
 precalc.chromaticPatterns();
@@ -16,13 +16,13 @@ precalc.diatonicAltChords();
 /** Diatonic Alt */
 
 test('from - DiatonicAlt C + TRIAD MAJOR', () => {
-    let actual: PatternChord<DiatonicAlt> = PatternChord.from(DiatonicAlt.C, DiatonicAltPattern.TRIAD_MAJOR);
+    let actual: RootPatternChord<DiatonicAlt> = RootPatternChord.from(DiatonicAlt.C, DiatonicAltPattern.TRIAD_MAJOR);
     expect(actual.degree).toBe(DiatonicAlt.C);
     expect(actual.pattern).toBe(DiatonicAltPattern.TRIAD_MAJOR);
 });
 
 test('chord - DiatonicAlt C + TRIAD MAJOR = DiatonicAltChord C', () => {
-    let patternChord: PatternChord<DiatonicAlt> = PatternChord.from(DiatonicAlt.C, DiatonicAltPattern.TRIAD_MAJOR);
+    let patternChord: RootPatternChord<DiatonicAlt> = RootPatternChord.from(DiatonicAlt.C, DiatonicAltPattern.TRIAD_MAJOR);
     let actual = patternChord.chord;
     expect(actual).toBe(DiatonicAltChord.C);
 });
@@ -30,13 +30,13 @@ test('chord - DiatonicAlt C + TRIAD MAJOR = DiatonicAltChord C', () => {
 /** Chromatic */
 
 test('from - Chromatic C + TRIAD MAJOR', () => {
-    let actual: PatternChord<Chromatic> = PatternChord.from(Chromatic.C, ChromaticPattern.TRIAD_MAJOR);
+    let actual: RootPatternChord<Chromatic> = RootPatternChord.from(Chromatic.C, ChromaticPattern.TRIAD_MAJOR);
     expect(actual.degree).toBe(Chromatic.C);
     expect(actual.pattern).toBe(ChromaticPattern.TRIAD_MAJOR);
 });
 
 test('chord - Chromatic C + TRIAD MAJOR = Chord C', () => {
-    let patternChord: PatternChord<Chromatic> = PatternChord.from(Chromatic.C, ChromaticPattern.TRIAD_MAJOR);
+    let patternChord: RootPatternChord<Chromatic> = RootPatternChord.from(Chromatic.C, ChromaticPattern.TRIAD_MAJOR);
     let actual = patternChord.chord;
     expect(actual).toBe(ChromaticChord.C);
 });
