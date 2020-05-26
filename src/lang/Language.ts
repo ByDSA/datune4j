@@ -233,7 +233,7 @@ export class Language {
             MIXOLYDIAN: "MIXOLIDIA",
             LOCRIAN: "LOCRIA",
 
-            HARMONIC_MINOR: "HARMÓNICA MENOR",
+            HARMONIC_MINOR: "MENOR HARMÓNICA",
             get LOCRIAN_a6(): string { return "LOCRIA " + Settings.symbols.alts(1) + "6"; },
             get IONIAN_a5(): string { return "JÓNICA " + Settings.symbols.alts(1) + "5"; },
             get DORIAN_a4(): string { return "DÓRICA " + Settings.symbols.alts(1) + "4"; },
