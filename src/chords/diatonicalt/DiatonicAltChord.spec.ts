@@ -5,6 +5,7 @@ import * as precalc from "../../precalc";
 import { Settings } from '../../settings/Settings';
 import { RootPatternChord } from '../root-pattern/RootPatternChord';
 import { DiatonicAltChord } from './DiatonicAltChord';
+import { IntervalDiatonicAlt } from '../../interval/IntervalDiatonicAlt';
 precalc.chromatics();
 precalc.chromaticPatterns();
 precalc.diatonicPatterns();
@@ -251,5 +252,17 @@ test('fromString - ENG - "bb7" = C SEVENTH', () => {
     let expected = DiatonicAltChord.from(
         [DiatonicAlt.Bb, DiatonicAlt.D, DiatonicAlt.F, DiatonicAlt.Ab]);
     let actual = DiatonicAltChord.fromString("bb7");
+    expect(actual).toBe(expected);
+});
+
+test('getAdd - C7 + MAJOR_SECOND = D7', () => {
+    let actual = DiatonicAltChord.C7.getAdd(IntervalDiatonicAlt.MAJOR_SECOND);
+    let expected = RootPatternChord.from(DiatonicAlt.D, DiatonicAltPattern.SEVENTH).chord;
+    expect(actual).toBe(expected);
+});
+
+test('getShift - C7 - MAJOR_SECOND = Bb7', () => {
+    let actual = DiatonicAltChord.C7.getSub(IntervalDiatonicAlt.MAJOR_SECOND);
+    let expected = RootPatternChord.from(DiatonicAlt.Bb, DiatonicAltPattern.SEVENTH).chord;
     expect(actual).toBe(expected);
 });

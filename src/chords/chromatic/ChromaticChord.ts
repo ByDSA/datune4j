@@ -93,6 +93,12 @@ export class ChromaticChord implements Chord<Chromatic> {
         return ChromaticChord.from(notes);
     }
 
+    public getShift(interval: number): ChromaticChord {
+        let notes : Chromatic[] = this.notes.map(note => note.getShift(interval));
+
+        return ChromaticChord.from(notes);
+    }
+
     public get pattern(): ChromaticPattern {
         let patternArray = this.getArrayFromChromaticChord();
 

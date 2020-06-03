@@ -3,6 +3,8 @@ import { ChromaticChord } from "./ChromaticChord";
 import { ChromaticPattern } from "../../patterns/ChromaticPattern";
 import { Language } from "../../lang/Language";
 import { Settings } from "../../settings/Settings";
+import { RootPatternChord } from "../root-pattern/RootPatternChord";
+import { Chromatic } from "../../degrees/Chromatic";
 precalc.chromaticPatterns();
 precalc.chromaticChords();
 
@@ -31,4 +33,16 @@ test('fromString - ENG - " c  " = C MAJOR', () => {
 test('fromString - ENG - "c7" = C SEVENTH', () => {
     Settings.lang = Language.ENG;
     expect(ChromaticChord.fromString("c7")).toBe(ChromaticChord.C7);
+});
+
+test('getShift - C7 + 2 = D7', () => {
+    let actual = ChromaticChord.C7.getShift(2);
+    let expected = RootPatternChord.from(Chromatic.D, ChromaticPattern.SEVENTH).chord;
+    expect(actual).toBe(expected);
+});
+
+test('getShift - C7 - 1 = B7', () => {
+    let actual = ChromaticChord.C7.getShift(-1);
+    let expected = RootPatternChord.from(Chromatic.B, ChromaticPattern.SEVENTH).chord;
+    expect(actual).toBe(expected);
 });

@@ -69,7 +69,7 @@ export class DiatonicAltChord implements Chord<DiatonicAlt> {
         return DiatonicAltChord.immutablesCache.getOrCreate(notes);
     }
 
-    public static fromString(strValue: string): ChromaticChord {
+    public static fromString(strValue: string): DiatonicAltChord {
         strValue = this.normalizeInputString(strValue);
 
         let parser = new ParserBottomUp()
@@ -85,7 +85,7 @@ export class DiatonicAltChord implements Chord<DiatonicAlt> {
         let objects = parser.parse();
 
         if (objects)
-            return <ChromaticChord>RootPatternChord.from(objects[0], objects[1]).chord;
+            return <DiatonicAltChord>RootPatternChord.from(objects[0], objects[1]).chord;
 
         throw new Error("Can't get " + this.name + " from string: " + strValue);
     }
@@ -101,6 +101,18 @@ export class DiatonicAltChord implements Chord<DiatonicAlt> {
         rootIndex = MathUtils.rotativeTrim(rootIndex, this._notes.length);
         let notes = this.notes;
         notes = Utils.arrayRotateLeft(notes, n);
+        return DiatonicAltChord.from(notes);
+    }
+
+    public getAdd(interval: IntervalDiatonicAlt): DiatonicAltChord {
+        let notes : DiatonicAlt[] = this.notes.map(note => note.getAdd(interval));
+
+        return DiatonicAltChord.from(notes);
+    }
+
+    public getSub(interval: IntervalDiatonicAlt): DiatonicAltChord {
+        let notes : DiatonicAlt[] = this.notes.map(note => note.getSub(interval));
+
         return DiatonicAltChord.from(notes);
     }
 
