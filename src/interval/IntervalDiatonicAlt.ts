@@ -7,7 +7,7 @@ import { IntervalDiatonic } from './IntervalDiatonic';
 import { IntervalSymbolic } from './IntervalSymbolic';
 import { Quality } from './Quality';
 
-export class IntervalDiatonicAlt implements IntervalSymbolic {
+export class IntervalDiatonicAlt implements IntervalSymbolic<DiatonicAlt> {
     // precalc
 
     public static PERFECT_UNISON;

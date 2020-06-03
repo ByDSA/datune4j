@@ -3,7 +3,7 @@ import { Diatonic } from '../degrees/Diatonic';
 import { IntervalSymbolic } from './IntervalSymbolic';
 
 type HashingObject = number;
-export class IntervalDiatonic implements IntervalSymbolic {
+export class IntervalDiatonic implements IntervalSymbolic<Diatonic> {
     public static UNISON;
     public static SECOND;
     public static THIRD;
