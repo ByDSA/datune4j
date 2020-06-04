@@ -311,3 +311,19 @@ test('fromString - ENG - SUPERLOCRIAN bb7', () => {
     Settings.lang = Language.ENG;
     expect(Scale.fromString("SUPERLOCRIAN bb7")).toBe(Scale.SUPERLOCRIAN_bb7);
 });
+
+test('fromString - 2-2-1-2-2-2-1 (MAJOR)', () => {
+    expect(Scale.fromString("2-2-1-2-2-2-1")).toBe(Scale.MAJOR);
+});
+
+test('fromString - 2:2-1:2-2:2-1 (MAJOR)', () => {
+    expect(Scale.fromString("2:2-1:2-2:2-1")).toBe(Scale.MAJOR);
+});
+
+test('fromString - 2 2, 1 2-2 2:1 (MAJOR)', () => {
+    expect(Scale.fromString("2 2, 1 2-2 2:1")).toBe(Scale.MAJOR);
+});
+
+test('fromString - M2:M2-m2, M2-M2:M2-m2 (MAJOR)', () => {
+    expect(Scale.fromString("M2:M2-m2, M2-M2:M2-m2")).toBe(Scale.MAJOR);
+});

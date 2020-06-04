@@ -193,6 +193,7 @@ export class Scale {
     }
 
     public static fromString(strValue: string): Scale {
+        let srtValueInput = strValue;
         strValue = this.normalizeInputString(strValue);
 
         let scale: Scale;
@@ -201,15 +202,15 @@ export class Scale {
         if (scale)
             return scale;
 
-        scale = this.fromStringCode(strValue);
+        scale = this.fromStringCode(srtValueInput);
         if (scale)
             return scale;
 
-        scale = this.fromStringIntervals(strValue);
+        scale = this.fromStringIntervals(srtValueInput);
         if (scale)
             return scale;
 
-        throw new Error("Impossible get Scale from string: " + strValue);
+        throw new Error("Impossible get Scale from string: " + srtValueInput);
     }
 
     public static fromStringCode(strValue: string): Scale {
@@ -218,6 +219,10 @@ export class Scale {
             return null;
 
         let splitedNumbers: number[] = splited.map(str => +str);
+        splitedNumbers = splitedNumbers.filter(el => !isNaN(el));
+
+        if (splitedNumbers.length == 0)
+            return null;
 
         return Scale.fromIntCode(...splitedNumbers);
     }
@@ -233,14 +238,12 @@ export class Scale {
     }
 
     private static splitArray(str: string): string[] {
-        let separators = [",", "-", ":"];
-        let splited: string[];
-        for (let char of separators) {
-            splited = str.split(char);
-            if (splited.length > 1) {
-                return splited;
-            }
-        }
+        let splited: string[] = str.split(/\s|,|-|:/);
+
+        splited = splited.filter(el => el != null && el != "");
+
+        if (splited.length > 1)
+            return splited;
 
         return null;
     }
