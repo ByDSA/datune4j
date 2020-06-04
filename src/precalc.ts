@@ -1,3 +1,4 @@
+import { Quality } from './interval/Quality';
 import { ChromaticChord } from './chords/chromatic/ChromaticChord';
 import { DiatonicAltChord } from './chords/diatonicalt/DiatonicAltChord';
 import { Chromatic } from './degrees/Chromatic';
@@ -63,6 +64,7 @@ export function intervalDiatonicAlts() {
     if (IntervalDiatonicAlt.PERFECT_UNISON)
         return;
 
+    qualities();
     intervalDiatonics();
 
     (<any>IntervalDiatonicAlt).initialize();
@@ -302,8 +304,17 @@ export function bpms() {
     (<any>BPM).initialize();
 }
 
+// Quality
+export function qualities() {
+    if (Quality.MAJOR)
+        return;
+
+    (<any>Quality).initialize();
+}
+
 export function all() {
     diatonics();
+    qualities();
     intervalDiatonics();
     diatonicPatterns();
 

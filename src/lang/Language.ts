@@ -210,6 +210,15 @@ export class Language {
             get diatonicAlt(): string { return "altered diatonic note" },
             get diatonic(): string { return "diatonic note" },
             get chromatic(): string { return "chromatic note" },
+        },
+        quality: {
+            perfect: "perfect",
+            major: "major",
+            minor: "minor",
+            augmented: "augmented",
+            diminished: "diminished",
+            doublyDiminished: "doubly diminished",
+            doublyAugmented: "doubly augmented",
         }
     }
 
@@ -418,6 +427,15 @@ export class Language {
             get diatonicAlt(): string { return "nota diatónica alterada" },
             get diatonic(): string { return "nota diatónica" },
             get chromatic(): string { return "nota chromática" },
+        },
+        quality: {
+            perfect: "perfecta",
+            major: "mayor",
+            minor: "menor",
+            augmented: "aumenteda",
+            diminished: "disminuida",
+            doublyDiminished: "doble disminuida",
+            doublyAugmented: "doble aumentada",
         }
     }
 
@@ -626,6 +644,15 @@ export class Language {
             diatonicAlt: null,
             diatonic: null,
             chromatic: null,
+        },
+        quality: {
+            perfect: null,
+            major: null,
+            minor: null,
+            augmented: null,
+            diminished: null,
+            doublyDiminished: null,
+            doublyAugmented: null,
         }
     }
 }

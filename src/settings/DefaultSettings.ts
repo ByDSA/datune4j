@@ -232,6 +232,15 @@ export const DefaultSettings: SettingsInterface = {
             get diatonicAlt(): string { return Language.CUSTOM.words.diatonicAlt || Settings.baseLang.words.diatonicAlt },
             get diatonic(): string { return Language.CUSTOM.words.diatonic || Settings.baseLang.words.diatonic },
             get chromatic(): string { return Language.CUSTOM.words.chromatic || Settings.baseLang.words.chromatic },
+        },
+        quality: {
+            get perfect(): string { return Language.CUSTOM.quality.perfect || Settings.baseLang.quality.perfect },
+            get major(): string { return Language.CUSTOM.quality.major || Settings.baseLang.quality.major },
+            get minor(): string { return Language.CUSTOM.quality.minor || Settings.baseLang.quality.minor },
+            get diminished(): string { return Language.CUSTOM.quality.diminished || Settings.baseLang.quality.diminished },
+            get augmented(): string { return Language.CUSTOM.quality.augmented || Settings.baseLang.quality.augmented },
+            get doublyDiminished(): string { return Language.CUSTOM.quality.doublyDiminished || Settings.baseLang.quality.doublyDiminished },
+            get doublyAugmented(): string { return Language.CUSTOM.quality.doublyAugmented || Settings.baseLang.quality.doublyAugmented },
         }
     },
     scales: {
