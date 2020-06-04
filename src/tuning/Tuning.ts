@@ -37,9 +37,9 @@ export class Tuning {
     getFrequency(symbolicPitch: SymbolicPitch): number {
         let symbolicNote: Degree = symbolicPitch.degree;
         let symbolicNoteRoot: Degree = this._concertPitch.symbolicPitch.degree;
-        let interval: IntervalSymbolic;
+        let interval: IntervalSymbolic<Degree>;
         if (symbolicNoteRoot instanceof DiatonicAlt && symbolicNote instanceof DiatonicAlt) {
-            interval = IntervalDiatonicAlt.betweenDiatonicAlt(symbolicNoteRoot, symbolicNote);
+            interval = IntervalDiatonicAlt.between(symbolicNoteRoot, symbolicNote);
         } else if (symbolicNoteRoot instanceof Chromatic && symbolicNote instanceof Chromatic) {
             interval = IntervalDiatonicAlt.betweenChromatic(symbolicNoteRoot, symbolicNote);
         } else {

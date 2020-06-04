@@ -33,6 +33,13 @@ test('IntervalDiatonic - from - uncached', () => {
     expect(actual).toEqual(expected);
 });
 
+test('IntervalDiatonic - from - unchached 17', () => {
+    let actual: IntervalDiatonic = IntervalDiatonic.from(17);
+    let expected = IntervalDiatonic.from(17);
+
+    expect(actual).toEqual(expected);
+});
+
 test('toString() - ENG', () => {
     Settings.lang = Language.ENG;
 

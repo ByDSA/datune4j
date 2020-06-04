@@ -166,7 +166,7 @@ export class DiatonicAltChord implements Chord<DiatonicAlt> {
     private static getIntervalsFromNotes(notes: DiatonicAlt[]): IntervalDiatonicAlt[] {
         let intervals: IntervalDiatonicAlt[] = [];
         for (let i = 1; i < notes.length; i++) {
-            let interval = IntervalDiatonicAlt.betweenDiatonicAlt(notes[i - 1], notes[i]);
+            let interval = IntervalDiatonicAlt.between(notes[i - 1], notes[i]);
             intervals.push(interval);
         }
 

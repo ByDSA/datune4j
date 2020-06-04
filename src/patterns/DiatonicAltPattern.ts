@@ -118,7 +118,7 @@ export class DiatonicAltPattern implements DegreePattern<Difference>, Iterable<D
             let semis = chromaticChordPattern.values[i];
             let intervalDiatonicNumber: number = diatonicPattern.values[i];
             let intervalDiatonic: IntervalDiatonic = IntervalDiatonic.from(intervalDiatonicNumber);
-            let interval = IntervalDiatonicAlt.from(semis, intervalDiatonic);
+            let interval = IntervalDiatonicAlt.fromSemisInterval(semis, intervalDiatonic);
             values.push(interval);
         }
 

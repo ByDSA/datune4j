@@ -98,6 +98,8 @@ export function diatonicAltPatterns() {
 
     chromaticPatterns();
 
+    intervalDiatonics();
+
     (<any>DiatonicAltPattern).initialize();
 }
 

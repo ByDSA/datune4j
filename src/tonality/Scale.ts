@@ -195,11 +195,61 @@ export class Scale {
     public static fromString(strValue: string): Scale {
         strValue = this.normalizeInputString(strValue);
 
+        let scale: Scale;
 
-        switch (strValue) {
+        scale = this.fromStringName(strValue);
+        if (scale)
+            return scale;
+
+        scale = this.fromStringCode(strValue);
+        if (scale)
+            return scale;
+
+        scale = this.fromStringIntervals(strValue);
+        if (scale)
+            return scale;
+
+        throw new Error("Impossible get Scale from string: " + strValue);
+    }
+
+    public static fromStringCode(strValue: string): Scale {
+        let splited = this.splitArray(strValue);
+        if (!splited)
+            return null;
+
+        let splitedNumbers: number[] = splited.map(str => +str);
+
+        return Scale.fromIntCode(...splitedNumbers);
+    }
+
+    public static fromStringIntervals(strValue: string): Scale {
+        let splited = this.splitArray(strValue);
+        if (!splited)
+            return null;
+
+        let splitedIntervals: IntervalDiatonicAlt[] = splited.map(str => IntervalDiatonicAlt.fromString(str));
+
+        return Scale.fromIntervals(...splitedIntervals);
+    }
+
+    private static splitArray(str: string): string[] {
+        let separators = [",", "-", ":"];
+        let splited: string[];
+        for (let char of separators) {
+            splited = str.split(char);
+            if (splited.length > 1) {
+                return splited;
+            }
+        }
+
+        return null;
+    }
+
+    private static fromStringName(str: string): Scale {
+        switch (str) {
             case "": return Scale.MAJOR;
             case "m": return Scale.MINOR;
-            
+
             case Scale.MAJOR.toString().toLowerCase(): return Scale.MAJOR;
             case Scale.MINOR.toString().toLowerCase(): return Scale.MINOR;
             case Scale.DORIAN.toString().toLowerCase(): return Scale.DORIAN;
@@ -210,11 +260,12 @@ export class Scale {
 
             default:
                 for (let scale of Scale.sets.all()) {
-                    if (strValue == this.normalizeInputString(scale.toString()))
+                    if (str == this.normalizeInputString(scale.toString()))
                         return scale;
                 }
         }
-        throw new Error("Impossible get Scale from string: " + strValue);
+
+        return null;
     }
 
     private static normalizeInputString(strValue: string): string {
@@ -240,7 +291,7 @@ export class Scale {
             let distChromaticInt = degree.semis - prevDegree.semis;
             distChromaticInt = MathUtils.rotativeTrim(distChromaticInt, Chromatic.NUMBER);
             let intervalDiatonic = IntervalDiatonic.from(distDiatonicInt);
-            let interval = IntervalDiatonicAlt.from(distChromaticInt, intervalDiatonic);
+            let interval = IntervalDiatonicAlt.fromSemisInterval(distChromaticInt, intervalDiatonic);
             intervals.push(interval);
         }
 

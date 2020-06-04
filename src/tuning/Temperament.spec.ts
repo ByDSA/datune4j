@@ -23,7 +23,7 @@ test('Temperament - EQUAL - root ratio - Chromatic.C', () => {
 test('Temperament - EQUAL - root ratio - DiatonicAlt.C', () => {
     let note = DiatonicAlt.C;
     let root = DiatonicAlt.C;
-    let intervalDiatonicAlt: IntervalDiatonicAlt = IntervalDiatonicAlt.betweenDiatonicAlt(root, note);
+    let intervalDiatonicAlt: IntervalDiatonicAlt = IntervalDiatonicAlt.between(root, note);
     let actual: number = Temperament.ET12.getIntervalPitch(intervalDiatonicAlt).ratio.value;
     let expected: number = 1;
 
@@ -33,7 +33,7 @@ test('Temperament - EQUAL - root ratio - DiatonicAlt.C', () => {
 test('Temperament - EQUAL - root ratio - DiatonicAlt.G', () => {
     let note = DiatonicAlt.G;
     let root = DiatonicAlt.C;
-    let intervalDiatonicAlt: IntervalDiatonicAlt = IntervalDiatonicAlt.betweenDiatonicAlt(root, note);
+    let intervalDiatonicAlt: IntervalDiatonicAlt = IntervalDiatonicAlt.between(root, note);
     let actual: number = Temperament.ET12.getIntervalPitch(intervalDiatonicAlt).ratio.value;
     let expected: number = 1.498307;
 
@@ -44,7 +44,7 @@ test('Temperament - EQUAL - root ratio - note= DiatonicAlt.C, root = DiatonicAlt
     let note = DiatonicAlt.C;
     let root = DiatonicAlt.G;
 
-    let intervalDiatonicAlt: IntervalDiatonicAlt = IntervalDiatonicAlt.betweenDiatonicAlt(root, note);
+    let intervalDiatonicAlt: IntervalDiatonicAlt = IntervalDiatonicAlt.between(root, note);
     let actual: number = Temperament.ET12.getIntervalPitch(intervalDiatonicAlt).ratio.value;
     let expected: number = 1.334840;
 
@@ -55,7 +55,7 @@ test('Temperament - EQUAL - root ratio - note= DiatonicAlt.CCC, root = DiatonicA
     let note = DiatonicAlt.CCC;
     let root = DiatonicAlt.GGG;
 
-    let intervalDiatonicAlt: IntervalDiatonicAlt = IntervalDiatonicAlt.betweenDiatonicAlt(root, note);
+    let intervalDiatonicAlt: IntervalDiatonicAlt = IntervalDiatonicAlt.between(root, note);
     let actual: number = Temperament.ET12.getIntervalPitch(intervalDiatonicAlt).ratio.value;
     let expected: number = 1.334840;
 
@@ -66,7 +66,7 @@ test('Temperament - LIMIT_5_SYMMETRIC_N1 - P5 = 1.5', () => {
     let note = DiatonicAlt.E;
     let root = DiatonicAlt.A;
 
-    let intervalDiatonicAlt: IntervalDiatonicAlt = IntervalDiatonicAlt.betweenDiatonicAlt(root, note);
+    let intervalDiatonicAlt: IntervalDiatonicAlt = IntervalDiatonicAlt.between(root, note);
     let actual: number = Temperament.LIMIT_5_SYMMETRIC_N1.getIntervalPitch(intervalDiatonicAlt).ratio.value;
     let expected: number = 1.5;
 
@@ -362,7 +362,7 @@ test('Pythagorean - A to A#4 - AUGMENTED UNISON', () => {
     let note = DiatonicAlt.AA;
     let root = DiatonicAlt.A;
 
-    let intervalDiatonicAlt: IntervalDiatonicAlt = IntervalDiatonicAlt.betweenDiatonicAlt(root, note);
+    let intervalDiatonicAlt: IntervalDiatonicAlt = IntervalDiatonicAlt.between(root, note);
     let actual: number = Temperament.PYTHAGOREAN.getIntervalPitch(intervalDiatonicAlt).ratio.value;
     let expected: number = 1.06787109375;
 

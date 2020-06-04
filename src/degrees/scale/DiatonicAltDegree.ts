@@ -66,7 +66,7 @@ export class DiatonicAltDegree {
     public get intervalDiatonicAlt(): IntervalDiatonicAlt {
         let semis = Diatonic.fromInt(this.diatonicDegree.intValue).chromatic.intValue + this.alts;
         let intervalDiatonic = IntervalDiatonic.from(this.diatonicDegree.intValue);
-        return IntervalDiatonicAlt.from(semis, intervalDiatonic);
+        return IntervalDiatonicAlt.fromSemisInterval(semis, intervalDiatonic);
     }
 
     getAdd(interval: IntervalDiatonicAlt) {

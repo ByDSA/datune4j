@@ -33,3 +33,15 @@ test('shortName - MAJOR', () => {
     let expected = "M";
     expect(actual).toBe(expected);
 });
+
+test('fromString - M', () => {
+    let actual = Quality.fromString("M");
+    let expected = Quality.MAJOR;
+    expect(actual).toBe(expected);
+});
+
+test('fromString - m', () => {
+    let actual = Quality.fromString("m");
+    let expected = Quality.MINOR;
+    expect(actual).toBe(expected);
+});

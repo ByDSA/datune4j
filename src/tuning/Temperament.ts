@@ -2,6 +2,8 @@ import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
 import { IntervalSymbolic } from '../interval/IntervalSymbolic';
 import { Settings } from '../settings/Settings';
 import { IntervalPitch } from './IntervalPitch';
+import { Degree } from 'degrees/Degree';
+import { DiatonicAlt } from 'degrees/DiatonicAlt';
 
 export abstract class Temperament {
     public static ET12;
@@ -9,11 +11,11 @@ export abstract class Temperament {
     public static LIMIT_5_SYMMETRIC_N2;
     public static PYTHAGOREAN;
 
-    public abstract getIntervalPitch(interval: IntervalSymbolic): IntervalPitch;
+    public abstract getIntervalPitch(interval: IntervalSymbolic<Degree>): IntervalPitch;
 
     private static initialize(): void {
         this.ET12 = new (class extends Temperament {
-            public getIntervalPitch(interval: IntervalSymbolic): IntervalPitch {
+            public getIntervalPitch(interval: IntervalSymbolic<DiatonicAlt>): IntervalPitch {
                 if (interval instanceof IntervalDiatonicAlt) {
                     switch (interval.semis) {
                         case 0: return IntervalPitch.UNISON;
@@ -36,7 +38,7 @@ export abstract class Temperament {
         });
 
         this.LIMIT_5_SYMMETRIC_N1 = new (class extends Temperament {
-            public getIntervalPitch(interval: IntervalSymbolic): IntervalPitch {
+            public getIntervalPitch(interval: IntervalSymbolic<DiatonicAlt>): IntervalPitch {
                 if (interval instanceof IntervalDiatonicAlt) {
                     switch (interval.semis) {
                         case 0: return IntervalPitch.UNISON;
@@ -63,7 +65,7 @@ export abstract class Temperament {
         });
 
         this.LIMIT_5_SYMMETRIC_N2 = new (class extends Temperament {
-            public getIntervalPitch(interval: IntervalSymbolic): IntervalPitch {
+            public getIntervalPitch(interval: IntervalSymbolic<DiatonicAlt>): IntervalPitch {
                 if (interval instanceof IntervalDiatonicAlt) {
                     switch (interval.semis) {
                         case 2: return IntervalPitch.JUST.MINOR_TONE;
@@ -78,7 +80,7 @@ export abstract class Temperament {
 
 
         this.PYTHAGOREAN = new (class extends Temperament {
-            public getIntervalPitch(interval: IntervalSymbolic): IntervalPitch {
+            public getIntervalPitch(interval: IntervalSymbolic<DiatonicAlt>): IntervalPitch {
                 if (interval instanceof IntervalDiatonicAlt) {
                     switch (interval) {
                         case IntervalDiatonicAlt.DIMINISHED_SECOND: return IntervalPitch.PYTHAGOREAN.DIMINISHED_SECOND;
@@ -113,7 +115,7 @@ export abstract class Temperament {
         });
     }
 
-    private static generateError(interval: IntervalSymbolic): Error {
+    private static generateError(interval: IntervalSymbolic<Degree>): Error {
         return new Error("Cannot convert interval " + interval + ".");
     }
 

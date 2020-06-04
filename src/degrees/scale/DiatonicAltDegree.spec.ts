@@ -12,7 +12,7 @@ precalc.scales();
 test('DiatonicAltDegree- getAdd: bVII + a1 = VII', () => {
     let diatonicAltDegree = DiatonicAltDegree.bVII;
     let intervalDiatonic = IntervalDiatonic.UNISON;
-    let intervalDiatonicAlt = IntervalDiatonicAlt.from(1, intervalDiatonic);
+    let intervalDiatonicAlt = IntervalDiatonicAlt.fromSemisInterval(1, intervalDiatonic);
 
     let sum = diatonicAltDegree.getAdd(intervalDiatonicAlt);
     let expected = DiatonicAltDegree.VII;
