@@ -365,7 +365,7 @@ export class Scale {
         for (const diatonicAltDegree of this.degrees) {
             for (const diatonicAltChordPattern of diatonicAltChordPatterns) {
                 let degreeFunction = DegreeFunction.from(diatonicAltDegree, diatonicAltChordPattern);
-                if (this.hasDegrees(degreeFunction.degrees))
+                if (this.hasEnharmonicDegrees(...degreeFunction.degrees))
                     ret.push(degreeFunction);
             }
         }
@@ -373,7 +373,23 @@ export class Scale {
         return ret;
     }
 
-    private hasDegrees(degrees: DiatonicAltDegree[]): boolean {
+    hasEnharmonicDegrees(...degrees: DiatonicAltDegree[]): boolean {
+        for (let degree of degrees) {
+            let found = false;
+            for (let scaleDegree of this.degrees)
+                if (scaleDegree.semis == degree.semis) {
+                    found = true;
+                    break;
+                }
+
+            if (!found)
+                return false;
+        }
+
+        return true;
+    }
+
+    hasDegrees(...degrees: DiatonicAltDegree[]): boolean {
         for (let degree of degrees) {
             if (!this.degrees.includes(degree))
                 return false;

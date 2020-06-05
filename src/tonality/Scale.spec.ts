@@ -5,6 +5,7 @@ import { Language } from "../lang/Language";
 import * as precalc from "../precalc";
 import { Settings } from "../settings/Settings";
 import { Scale } from "./Scale";
+import { HarmonicFunction } from "../function/HarmonicFunction";
 precalc.scales();
 precalc.diatonics();
 precalc.chromatics();
@@ -326,4 +327,20 @@ test('fromString - 2 2, 1 2-2 2:1 (MAJOR)', () => {
 
 test('fromString - M2:M2-m2, M2-M2:M2-m2 (MAJOR)', () => {
     expect(Scale.fromString("M2:M2-m2, M2-M2:M2-m2")).toBe(Scale.MAJOR);
+});
+
+test('hasEnharmonicDegrees - CHROMATIC - II# and bIII', () => {
+    let degrees: DiatonicAltDegree[] = 
+    [
+        DiatonicAltDegree.from(DiatonicDegree.II, 1),
+        DiatonicAltDegree.bIII,
+    ];
+
+    expect(Scale.CHROMATIC.hasEnharmonicDegrees(...degrees)).toBeTruthy();
+});
+
+test('degreeFunctions - CHROMATIC - I (mayor)', () => {
+    let degreeFunctions = Scale.CHROMATIC.degreeFunctions;
+
+    expect(degreeFunctions.includes(DegreeFunction.I)).toBeTruthy();
 });
