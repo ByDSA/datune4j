@@ -1,9 +1,9 @@
+import { Degree } from '../degrees/Degree';
+import { DiatonicAlt } from '../degrees/DiatonicAlt';
 import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
 import { IntervalSymbolic } from '../interval/IntervalSymbolic';
 import { Settings } from '../settings/Settings';
 import { IntervalPitch } from './IntervalPitch';
-import { Degree } from 'degrees/Degree';
-import { DiatonicAlt } from 'degrees/DiatonicAlt';
 
 export abstract class Temperament {
     public static ET12;
