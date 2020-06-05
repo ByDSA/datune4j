@@ -7,9 +7,8 @@ import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
 import { ChromaticPattern } from '../patterns/ChromaticPattern';
 import { DiatonicAltPattern } from '../patterns/DiatonicAltPattern';
 import { DiatonicPattern } from '../patterns/DiatonicPattern';
-import { Scale } from './Scale';
 import { ParserBottomUp } from "../Utils/Parser/Parser";
-import { Diatonic } from 'degrees/Diatonic';
+import { Scale } from './Scale';
 
 type HashingObjectType = { root: DiatonicAlt, scale: Scale };
 export class Tonality {
@@ -73,14 +72,14 @@ export class Tonality {
         strValue = this.normalizeInputString(strValue);
 
         let parser = new ParserBottomUp()
-        .from(strValue)
-        .expected([DiatonicAlt.name, Scale.name])
-        .add(DiatonicAlt.name, function(str: string): DiatonicAlt {
-            return DiatonicAlt.fromString(str);
-        })
-        .add(Scale.name, function(str: string): Scale {
-            return Scale.fromString(str);
-        });
+            .from(strValue)
+            .expected([DiatonicAlt.name, Scale.name])
+            .add(DiatonicAlt.name, function (str: string): DiatonicAlt {
+                return DiatonicAlt.fromString(str);
+            })
+            .add(Scale.name, function (str: string): Scale {
+                return Scale.fromString(str);
+            });
 
         let objects = parser.parse();
 
