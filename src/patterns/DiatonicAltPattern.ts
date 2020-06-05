@@ -254,8 +254,8 @@ export class DiatonicAltPattern implements DegreePattern<Difference>, Iterable<D
         DiatonicAltPattern.SEVENTH_MINOR_MAJ7 = DiatonicAltPattern.fromPatterns(ChromaticPattern.SEVENTH_MINOR_MAJ7, DiatonicPattern.SEVENTH);
         DiatonicAltPattern.SIXTH_ADD9 = DiatonicAltPattern.fromPatterns(ChromaticPattern.SIXTH_MINOR_ADD9, DiatonicPattern.SIXTH_ADD9);
         DiatonicAltPattern.SIXTH_MINOR_ADD9 = DiatonicAltPattern.fromPatterns(ChromaticPattern.SIXTH_MINOR_ADD9, DiatonicPattern.SIXTH_ADD9);
-        DiatonicAltPattern.SEVENTH_b9 = DiatonicAltPattern.fromPatterns(ChromaticPattern.SEVENTH_b9, DiatonicPattern.SEVENTH);
-        DiatonicAltPattern.SEVENTH_a9 = DiatonicAltPattern.fromPatterns(ChromaticPattern.SEVENTH_a9, DiatonicPattern.SEVENTH);
+        DiatonicAltPattern.SEVENTH_b9 = DiatonicAltPattern.fromPatterns(ChromaticPattern.SEVENTH_b9, DiatonicPattern.NINTH);
+        DiatonicAltPattern.SEVENTH_a9 = DiatonicAltPattern.fromPatterns(ChromaticPattern.SEVENTH_a9, DiatonicPattern.NINTH);
         DiatonicAltPattern.SEVENTH_MINOR_b9 = DiatonicAltPattern.fromPatterns(ChromaticPattern.SEVENTH_MINOR_b9, DiatonicPattern.NINTH);
         DiatonicAltPattern.SEVENTH_ADD11 = DiatonicAltPattern.fromPatterns(ChromaticPattern.SEVENTH_ADD11, DiatonicPattern.SEVENTH_ADD11);
         DiatonicAltPattern.SEVENTH_ADD13 = DiatonicAltPattern.fromPatterns(ChromaticPattern.SEVENTH_ADD13, DiatonicPattern.SEVENTH_ADD13);
