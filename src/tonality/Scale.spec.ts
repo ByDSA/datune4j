@@ -5,7 +5,6 @@ import { Language } from "../lang/Language";
 import * as precalc from "../precalc";
 import { Settings } from "../settings/Settings";
 import { Scale } from "./Scale";
-import { HarmonicFunction } from "../function/HarmonicFunction";
 precalc.scales();
 precalc.diatonics();
 precalc.chromatics();
@@ -198,6 +197,22 @@ test('Scale - degreeFunctions: MAJOR', () => {
     expect(degreeFunctions).toEqual(expect.arrayContaining(someFunctions));
 });
 
+test('Scale - degreeFunctions: MAJOR seventh', () => {
+    let scale = Scale.MAJOR;
+    let degreeFunctions: DegreeFunction[] = scale.degreeFunctions;
+    let someFunctions = [
+        DegreeFunction.IMaj7,
+        DegreeFunction.IIm7,
+        DegreeFunction.IIIm7,
+        DegreeFunction.IVMaj7,
+        DegreeFunction.V7,
+        DegreeFunction.V7SUS4,
+        DegreeFunction.VIm7,
+        DegreeFunction.VIIm7b5,
+    ];
+    expect(degreeFunctions).toEqual(expect.arrayContaining(someFunctions));
+});
+
 test('Scale - degreeFunctions: MINOR', () => {
     let scale = Scale.MINOR;
     let degreeFunctions: DegreeFunction[] = scale.degreeFunctions;
@@ -209,6 +224,22 @@ test('Scale - degreeFunctions: MINOR', () => {
         DegreeFunction.v,
         DegreeFunction.bVI,
         DegreeFunction.bVII,
+    ];
+    expect(degreeFunctions).toEqual(expect.arrayContaining(someFunctions));
+});
+
+test('Scale - degreeFunctions: MINOR seventh', () => {
+    let scale = Scale.MINOR;
+    let degreeFunctions: DegreeFunction[] = scale.degreeFunctions;
+    let someFunctions = [
+        DegreeFunction.Im7,
+        DegreeFunction.IIm7b5,
+        DegreeFunction.bIIIMaj7,
+        DegreeFunction.IVm7,
+        DegreeFunction.Vm7,
+        DegreeFunction.bVIMaj7,
+        DegreeFunction.bVII7,
+        DegreeFunction.bVII7SUS4,
     ];
     expect(degreeFunctions).toEqual(expect.arrayContaining(someFunctions));
 });
@@ -330,11 +361,11 @@ test('fromString - M2:M2-m2, M2-M2:M2-m2 (MAJOR)', () => {
 });
 
 test('hasEnharmonicDegrees - CHROMATIC - II# and bIII', () => {
-    let degrees: DiatonicAltDegree[] = 
-    [
-        DiatonicAltDegree.from(DiatonicDegree.II, 1),
-        DiatonicAltDegree.bIII,
-    ];
+    let degrees: DiatonicAltDegree[] =
+        [
+            DiatonicAltDegree.from(DiatonicDegree.II, 1),
+            DiatonicAltDegree.bIII,
+        ];
 
     expect(Scale.CHROMATIC.hasEnharmonicDegrees(...degrees)).toBeTruthy();
 });

@@ -107,6 +107,19 @@ export class DegreeFunction extends HarmonicFunction {
     public static bVII7: DegreeFunction;
     public static VII7: DegreeFunction;
 
+    public static I7SUS4: DegreeFunction;
+    public static bII7SUS4: DegreeFunction;
+    public static II7SUS4: DegreeFunction;
+    public static bIII7SUS4: DegreeFunction;
+    public static III7SUS4: DegreeFunction;
+    public static IV7SUS4: DegreeFunction;
+    public static bV7SUS4: DegreeFunction;
+    public static V7SUS4: DegreeFunction;
+    public static bVI7SUS4: DegreeFunction;
+    public static VI7SUS4: DegreeFunction;
+    public static bVII7SUS4: DegreeFunction;
+    public static VII7SUS4: DegreeFunction;
+
     public static I6: DegreeFunction;
     public static bII6: DegreeFunction;
     public static II6: DegreeFunction;
@@ -146,31 +159,31 @@ export class DegreeFunction extends HarmonicFunction {
     public static bVIIMaj7: DegreeFunction;
     public static VIIMaj7: DegreeFunction;
 
-    public static i7: DegreeFunction;
-    public static bii7: DegreeFunction;
-    public static ii7: DegreeFunction;
-    public static biii7: DegreeFunction;
-    public static iii7: DegreeFunction;
-    public static iv7: DegreeFunction;
-    public static bv7: DegreeFunction;
-    public static v7: DegreeFunction;
-    public static bvi7: DegreeFunction;
-    public static vi7: DegreeFunction;
-    public static bvii7: DegreeFunction;
-    public static vii7: DegreeFunction;
+    public static Im7: DegreeFunction;
+    public static bIIm7: DegreeFunction;
+    public static IIm7: DegreeFunction;
+    public static bIIIm7: DegreeFunction;
+    public static IIIm7: DegreeFunction;
+    public static IVm7: DegreeFunction;
+    public static bVm7: DegreeFunction;
+    public static Vm7: DegreeFunction;
+    public static bVIm7: DegreeFunction;
+    public static VIm7: DegreeFunction;
+    public static bVIIm7: DegreeFunction;
+    public static VIIm7: DegreeFunction;
 
-    public static i7b5: DegreeFunction;
-    public static bii7b5: DegreeFunction;
-    public static ii7b5: DegreeFunction;
-    public static biii7b5: DegreeFunction;
-    public static iii7b5: DegreeFunction;
-    public static iv7b5: DegreeFunction;
-    public static bv7b5: DegreeFunction;
-    public static v7b5: DegreeFunction;
-    public static bvi7b5: DegreeFunction;
-    public static vi7b5: DegreeFunction;
-    public static bvii7b5: DegreeFunction;
-    public static vii7b5: DegreeFunction;
+    public static Im7b5: DegreeFunction;
+    public static bIIm7b5: DegreeFunction;
+    public static IIm7b5: DegreeFunction;
+    public static bIIIm7b5: DegreeFunction;
+    public static IIIm7b5: DegreeFunction;
+    public static IVm7b5: DegreeFunction;
+    public static bVm7b5: DegreeFunction;
+    public static Vm7b5: DegreeFunction;
+    public static bVIm7b5: DegreeFunction;
+    public static VIm7b5: DegreeFunction;
+    public static bVIIm7b5: DegreeFunction;
+    public static VIIm7b5: DegreeFunction;
 
 
     public static TRIAD_FUNCTIONS: DegreeFunction[];
@@ -353,6 +366,19 @@ export class DegreeFunction extends HarmonicFunction {
         DegreeFunction.bVII7 = DegreeFunction.from(DiatonicAltDegree.bVII, DiatonicAltPattern.SEVENTH);
         DegreeFunction.VII7 = DegreeFunction.from(DiatonicAltDegree.VII, DiatonicAltPattern.SEVENTH);
 
+        DegreeFunction.I7SUS4 = DegreeFunction.from(DiatonicAltDegree.I, DiatonicAltPattern.SEVENTH_SUS4);
+        DegreeFunction.bII7SUS4 = DegreeFunction.from(DiatonicAltDegree.bII, DiatonicAltPattern.SEVENTH_SUS4);
+        DegreeFunction.II7SUS4 = DegreeFunction.from(DiatonicAltDegree.II, DiatonicAltPattern.SEVENTH_SUS4);
+        DegreeFunction.bIII7SUS4 = DegreeFunction.from(DiatonicAltDegree.bIII, DiatonicAltPattern.SEVENTH_SUS4);
+        DegreeFunction.III7SUS4 = DegreeFunction.from(DiatonicAltDegree.III, DiatonicAltPattern.SEVENTH_SUS4);
+        DegreeFunction.IV7SUS4 = DegreeFunction.from(DiatonicAltDegree.IV, DiatonicAltPattern.SEVENTH_SUS4);
+        DegreeFunction.bV7SUS4 = DegreeFunction.from(DiatonicAltDegree.bV, DiatonicAltPattern.SEVENTH_SUS4);
+        DegreeFunction.V7SUS4 = DegreeFunction.from(DiatonicAltDegree.V, DiatonicAltPattern.SEVENTH_SUS4);
+        DegreeFunction.bVI7SUS4 = DegreeFunction.from(DiatonicAltDegree.bVI, DiatonicAltPattern.SEVENTH_SUS4);
+        DegreeFunction.VI7SUS4 = DegreeFunction.from(DiatonicAltDegree.VI, DiatonicAltPattern.SEVENTH_SUS4);
+        DegreeFunction.bVII7SUS4 = DegreeFunction.from(DiatonicAltDegree.bVII, DiatonicAltPattern.SEVENTH_SUS4);
+        DegreeFunction.VII7SUS4 = DegreeFunction.from(DiatonicAltDegree.VII, DiatonicAltPattern.SEVENTH_SUS4);
+
         DegreeFunction.I6 = DegreeFunction.from(DiatonicAltDegree.I, DiatonicAltPattern.SIXTH);
         DegreeFunction.bII6 = DegreeFunction.from(DiatonicAltDegree.bII, DiatonicAltPattern.SIXTH);
         DegreeFunction.II6 = DegreeFunction.from(DiatonicAltDegree.II, DiatonicAltPattern.SIXTH);
@@ -392,31 +418,31 @@ export class DegreeFunction extends HarmonicFunction {
         DegreeFunction.bVIIMaj7 = DegreeFunction.from(DiatonicAltDegree.bVII, DiatonicAltPattern.SEVENTH_MAJ7);
         DegreeFunction.VIIMaj7 = DegreeFunction.from(DiatonicAltDegree.VII, DiatonicAltPattern.SEVENTH_MAJ7);
 
-        DegreeFunction.i7 = DegreeFunction.from(DiatonicAltDegree.I, DiatonicAltPattern.SEVENTH_MINOR);
-        DegreeFunction.bii7 = DegreeFunction.from(DiatonicAltDegree.bII, DiatonicAltPattern.SEVENTH_MINOR);
-        DegreeFunction.ii7 = DegreeFunction.from(DiatonicAltDegree.II, DiatonicAltPattern.SEVENTH_MINOR);
-        DegreeFunction.biii7 = DegreeFunction.from(DiatonicAltDegree.bIII, DiatonicAltPattern.SEVENTH_MINOR);
-        DegreeFunction.iii7 = DegreeFunction.from(DiatonicAltDegree.III, DiatonicAltPattern.SEVENTH_MINOR);
-        DegreeFunction.iv7 = DegreeFunction.from(DiatonicAltDegree.IV, DiatonicAltPattern.SEVENTH_MINOR);
-        DegreeFunction.bv7 = DegreeFunction.from(DiatonicAltDegree.bV, DiatonicAltPattern.SEVENTH_MINOR);
-        DegreeFunction.v7 = DegreeFunction.from(DiatonicAltDegree.V, DiatonicAltPattern.SEVENTH_MINOR);
-        DegreeFunction.bvi7 = DegreeFunction.from(DiatonicAltDegree.bVI, DiatonicAltPattern.SEVENTH_MINOR);
-        DegreeFunction.vi7 = DegreeFunction.from(DiatonicAltDegree.VI, DiatonicAltPattern.SEVENTH_MINOR);
-        DegreeFunction.bvii7 = DegreeFunction.from(DiatonicAltDegree.bVII, DiatonicAltPattern.SEVENTH_MINOR);
-        DegreeFunction.vii7 = DegreeFunction.from(DiatonicAltDegree.VII, DiatonicAltPattern.SEVENTH_MINOR);
+        DegreeFunction.Im7 = DegreeFunction.from(DiatonicAltDegree.I, DiatonicAltPattern.SEVENTH_MINOR);
+        DegreeFunction.bIIm7 = DegreeFunction.from(DiatonicAltDegree.bII, DiatonicAltPattern.SEVENTH_MINOR);
+        DegreeFunction.IIm7 = DegreeFunction.from(DiatonicAltDegree.II, DiatonicAltPattern.SEVENTH_MINOR);
+        DegreeFunction.bIIIm7 = DegreeFunction.from(DiatonicAltDegree.bIII, DiatonicAltPattern.SEVENTH_MINOR);
+        DegreeFunction.IIIm7 = DegreeFunction.from(DiatonicAltDegree.III, DiatonicAltPattern.SEVENTH_MINOR);
+        DegreeFunction.IVm7 = DegreeFunction.from(DiatonicAltDegree.IV, DiatonicAltPattern.SEVENTH_MINOR);
+        DegreeFunction.bVm7 = DegreeFunction.from(DiatonicAltDegree.bV, DiatonicAltPattern.SEVENTH_MINOR);
+        DegreeFunction.Vm7 = DegreeFunction.from(DiatonicAltDegree.V, DiatonicAltPattern.SEVENTH_MINOR);
+        DegreeFunction.bVIm7 = DegreeFunction.from(DiatonicAltDegree.bVI, DiatonicAltPattern.SEVENTH_MINOR);
+        DegreeFunction.VIm7 = DegreeFunction.from(DiatonicAltDegree.VI, DiatonicAltPattern.SEVENTH_MINOR);
+        DegreeFunction.bVIIm7 = DegreeFunction.from(DiatonicAltDegree.bVII, DiatonicAltPattern.SEVENTH_MINOR);
+        DegreeFunction.VIIm7 = DegreeFunction.from(DiatonicAltDegree.VII, DiatonicAltPattern.SEVENTH_MINOR);
 
-        DegreeFunction.i7b5 = DegreeFunction.from(DiatonicAltDegree.I, DiatonicAltPattern.SEVENTH_MINOR_b5);
-        DegreeFunction.bii7b5 = DegreeFunction.from(DiatonicAltDegree.bII, DiatonicAltPattern.SEVENTH_MINOR_b5);
-        DegreeFunction.ii7b5 = DegreeFunction.from(DiatonicAltDegree.II, DiatonicAltPattern.SEVENTH_MINOR_b5);
-        DegreeFunction.biii7b5 = DegreeFunction.from(DiatonicAltDegree.bIII, DiatonicAltPattern.SEVENTH_MINOR_b5);
-        DegreeFunction.iii7b5 = DegreeFunction.from(DiatonicAltDegree.III, DiatonicAltPattern.SEVENTH_MINOR_b5);
-        DegreeFunction.iv7b5 = DegreeFunction.from(DiatonicAltDegree.IV, DiatonicAltPattern.SEVENTH_MINOR_b5);
-        DegreeFunction.bv7b5 = DegreeFunction.from(DiatonicAltDegree.bV, DiatonicAltPattern.SEVENTH_MINOR_b5);
-        DegreeFunction.v7b5 = DegreeFunction.from(DiatonicAltDegree.V, DiatonicAltPattern.SEVENTH_MINOR_b5);
-        DegreeFunction.bvi7b5 = DegreeFunction.from(DiatonicAltDegree.bVI, DiatonicAltPattern.SEVENTH_MINOR_b5);
-        DegreeFunction.vi7b5 = DegreeFunction.from(DiatonicAltDegree.VI, DiatonicAltPattern.SEVENTH_MINOR_b5);
-        DegreeFunction.bvii7b5 = DegreeFunction.from(DiatonicAltDegree.bVII, DiatonicAltPattern.SEVENTH_MINOR_b5);
-        DegreeFunction.vii7b5 = DegreeFunction.from(DiatonicAltDegree.VII, DiatonicAltPattern.SEVENTH_MINOR_b5);
+        DegreeFunction.Im7b5 = DegreeFunction.from(DiatonicAltDegree.I, DiatonicAltPattern.SEVENTH_MINOR_b5);
+        DegreeFunction.bIIm7b5 = DegreeFunction.from(DiatonicAltDegree.bII, DiatonicAltPattern.SEVENTH_MINOR_b5);
+        DegreeFunction.IIm7b5 = DegreeFunction.from(DiatonicAltDegree.II, DiatonicAltPattern.SEVENTH_MINOR_b5);
+        DegreeFunction.bIIIm7b5 = DegreeFunction.from(DiatonicAltDegree.bIII, DiatonicAltPattern.SEVENTH_MINOR_b5);
+        DegreeFunction.IIIm7b5 = DegreeFunction.from(DiatonicAltDegree.III, DiatonicAltPattern.SEVENTH_MINOR_b5);
+        DegreeFunction.IVm7b5 = DegreeFunction.from(DiatonicAltDegree.IV, DiatonicAltPattern.SEVENTH_MINOR_b5);
+        DegreeFunction.bVm7b5 = DegreeFunction.from(DiatonicAltDegree.bV, DiatonicAltPattern.SEVENTH_MINOR_b5);
+        DegreeFunction.Vm7b5 = DegreeFunction.from(DiatonicAltDegree.V, DiatonicAltPattern.SEVENTH_MINOR_b5);
+        DegreeFunction.bVIm7b5 = DegreeFunction.from(DiatonicAltDegree.bVI, DiatonicAltPattern.SEVENTH_MINOR_b5);
+        DegreeFunction.VIm7b5 = DegreeFunction.from(DiatonicAltDegree.VI, DiatonicAltPattern.SEVENTH_MINOR_b5);
+        DegreeFunction.bVIIm7b5 = DegreeFunction.from(DiatonicAltDegree.bVII, DiatonicAltPattern.SEVENTH_MINOR_b5);
+        DegreeFunction.VIIm7b5 = DegreeFunction.from(DiatonicAltDegree.VII, DiatonicAltPattern.SEVENTH_MINOR_b5);
 
         //Immutables.lockrIf(DegreeFunction, (obj) => !(obj instanceof ImmutablesCache));
     }
