@@ -50,6 +50,22 @@ export const NamingDiatonicAltPattern = {
             case DiatonicAltPattern.THIRTEENTH_MAJ13_a5: return Settings.patterns.THIRTEENTH_MAJ13_a5;
             case DiatonicAltPattern.THIRTEENTH_MAJ13_a5a9: return Settings.patterns.THIRTEENTH_MAJ13_a5a9;
             case DiatonicAltPattern.THIRTEENTH_b5a9: return Settings.patterns.THIRTEENTH_b5a9;
+            case DiatonicAltPattern.THIRTEENTH_MAJ13_a5b9: return Settings.patterns.THIRTEENTH_MAJ13_a5b9;
+            case DiatonicAltPattern.THIRTEENTH_MAJ13_a9: return Settings.patterns.THIRTEENTH_MAJ13_a9;
+            case DiatonicAltPattern.THIRTEENTH_MAJ13_b5: return Settings.patterns.THIRTEENTH_MAJ13_b5;
+            case DiatonicAltPattern.THIRTEENTH_MAJ13_b5a9: return Settings.patterns.THIRTEENTH_MAJ13_b5a9;
+            case DiatonicAltPattern.THIRTEENTH_MAJ13_b5b9: return Settings.patterns.THIRTEENTH_MAJ13_b5b9;
+            case DiatonicAltPattern.THIRTEENTH_MAJ13_b9: return Settings.patterns.THIRTEENTH_MAJ13_b9;
+            case DiatonicAltPattern.THIRTEENTH_MINOR: return Settings.patterns.THIRTEENTH_MINOR;
+            case DiatonicAltPattern.THIRTEENTH_MINOR_MAJ13: return Settings.patterns.THIRTEENTH_MINOR_MAJ13;
+            case DiatonicAltPattern.THIRTEENTH_SUS4: return Settings.patterns.THIRTEENTH_SUS4;
+            case DiatonicAltPattern.THIRTEENTH_a5: return Settings.patterns.THIRTEENTH_a5;
+            case DiatonicAltPattern.THIRTEENTH_a5a9: return Settings.patterns.THIRTEENTH_a5a9;
+            case DiatonicAltPattern.THIRTEENTH_a5b9: return Settings.patterns.THIRTEENTH_a5b9;
+            case DiatonicAltPattern.THIRTEENTH_a9: return Settings.patterns.THIRTEENTH_a9;
+            case DiatonicAltPattern.THIRTEENTH_b5: return Settings.patterns.THIRTEENTH_b5;
+            case DiatonicAltPattern.THIRTEENTH_b5b9: return Settings.patterns.THIRTEENTH_b5b9;
+            case DiatonicAltPattern.THIRTEENTH_b9: return Settings.patterns.THIRTEENTH_b9;
         }
         return pattern.values.toString();
     },

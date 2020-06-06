@@ -1,15 +1,14 @@
 import { ChromaticChord } from '../chords/chromatic/ChromaticChord';
-import { ChromaticPattern } from '../patterns/ChromaticPattern';
 import { DiatonicAltChord } from '../chords/diatonicalt/DiatonicAltChord';
 import { Chromatic } from '../degrees/Chromatic';
 import { DiatonicAlt } from '../degrees/DiatonicAlt';
 import { LanguageInterface } from '../lang/LanguageInterface';
+import { DiatonicAltPattern } from '../patterns/DiatonicAltPattern';
 import { Scale } from '../tonality/Scale';
 import { Tonality } from '../tonality/Tonality';
 import { ConcertPitch } from '../tuning/ConcertPitch';
 import { Temperament } from '../tuning/Temperament';
 import { Tuning } from '../tuning/Tuning';
-import { DiatonicAltPattern } from '../patterns/DiatonicAltPattern';
 
 export interface SettingsInterface {
     default: {
@@ -147,7 +146,23 @@ export interface SettingsInterface {
         THIRTEENTH_MAJ13: string,
         THIRTEENTH_MAJ13_a5: string,
         THIRTEENTH_MAJ13_a5a9: string,
-        THIRTEENTH_b5a9: string
+        THIRTEENTH_b5a9: string,
+        THIRTEENTH_MAJ13_a5b9: string,
+        THIRTEENTH_MAJ13_a9: string,
+        THIRTEENTH_MAJ13_b5: string,
+        THIRTEENTH_MAJ13_b5a9: string,
+        THIRTEENTH_MAJ13_b5b9: string,
+        THIRTEENTH_MAJ13_b9: string,
+        THIRTEENTH_MINOR: string,
+        THIRTEENTH_MINOR_MAJ13: string,
+        THIRTEENTH_SUS4: string,
+        THIRTEENTH_a5: string,
+        THIRTEENTH_a5a9: string,
+        THIRTEENTH_a5b9: string,
+        THIRTEENTH_a9: string,
+        THIRTEENTH_b5: string,
+        THIRTEENTH_b5b9: string,
+        THIRTEENTH_b9: string
     },
     shortPatterns: {
         TRIAD_MAJOR: string,
@@ -195,6 +210,22 @@ export interface SettingsInterface {
         THIRTEENTH_MAJ13: string,
         THIRTEENTH_MAJ13_a5: string,
         THIRTEENTH_MAJ13_a5a9: string,
-        THIRTEENTH_b5a9: string
+        THIRTEENTH_b5a9: string,
+        THIRTEENTH_MAJ13_a5b9: string,
+        THIRTEENTH_MAJ13_a9: string,
+        THIRTEENTH_MAJ13_b5: string,
+        THIRTEENTH_MAJ13_b5a9: string,
+        THIRTEENTH_MAJ13_b5b9: string,
+        THIRTEENTH_MAJ13_b9: string,
+        THIRTEENTH_MINOR: string,
+        THIRTEENTH_MINOR_MAJ13: string,
+        THIRTEENTH_SUS4: string,
+        THIRTEENTH_a5: string,
+        THIRTEENTH_a5a9: string,
+        THIRTEENTH_a5b9: string,
+        THIRTEENTH_a9: string,
+        THIRTEENTH_b5: string,
+        THIRTEENTH_b5b9: string,
+        THIRTEENTH_b9: string
     }
 }
