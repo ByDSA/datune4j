@@ -15,6 +15,7 @@ export class ChromaticPattern implements DegreePattern<Chromatic>, Iterable<Diff
     public static TRIAD_QUARTAL: ChromaticPattern;
     public static SEVENTH: ChromaticPattern;
     public static SEVENTH_b5: ChromaticPattern;
+    public static SEVENTH_MAJ7_b5: ChromaticPattern;
     public static SEVENTH_a5: ChromaticPattern;
     public static SEVENTH_SUS4: ChromaticPattern;
     public static SEVENTH_MINOR: ChromaticPattern;
@@ -163,6 +164,7 @@ export class ChromaticPattern implements DegreePattern<Chromatic>, Iterable<Diff
         ChromaticPattern.TRIAD_QUARTAL = ChromaticPattern.from(0, 5, 10);
         ChromaticPattern.SEVENTH = ChromaticPattern.from(0, 4, 7, 10);
         ChromaticPattern.SEVENTH_b5 = ChromaticPattern.from(0, 4, 6, 10);
+        ChromaticPattern.SEVENTH_MAJ7_b5 = ChromaticPattern.from(0, 4, 6, 11);
         ChromaticPattern.SEVENTH_a5 = ChromaticPattern.from(0, 4, 8, 10);
         ChromaticPattern.SEVENTH_SUS4 = ChromaticPattern.from(0, 5, 7, 10);
         ChromaticPattern.SEVENTH_MINOR = ChromaticPattern.from(0, 3, 7, 10);

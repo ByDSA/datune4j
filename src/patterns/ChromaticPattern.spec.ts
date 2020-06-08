@@ -90,3 +90,20 @@ test('fromString - ENG - "MAjOR" = TRIAD_MAJOR', () => {
     Settings.lang = Language.ENG;
     expect(ChromaticPattern.fromString("MAjOR")).toBe(ChromaticPattern.TRIAD_MAJOR);
 });
+
+// TODO
+/*
+test('fromString - "0 4 6 11" = SEVENTH MAJ7 b5', () => {
+    let from = "0 4 6 11";
+    let actual = ChromaticPattern.fromString(from);
+    let expected = ChromaticPattern.SEVENTH_MAJ7_b5;
+
+    expect(actual).toBe(expected);
+});
+*/
+
+test('precalc - SEVENTH MAJ7 b5', () => {
+    let actual = ChromaticPattern.from(0, 4, 6, 11);
+    let expected = ChromaticPattern.SEVENTH_MAJ7_b5;
+    expect(actual).toBe(expected);
+});
