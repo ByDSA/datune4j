@@ -120,6 +120,19 @@ export class DegreeFunction extends HarmonicFunction {
     public static bVII7SUS4: DegreeFunction;
     public static VII7SUS4: DegreeFunction;
 
+    public static I7SUS4b9: DegreeFunction;
+    public static bII7SUS4b9: DegreeFunction;
+    public static II7SUS4b9: DegreeFunction;
+    public static bIII7SUS4b9: DegreeFunction;
+    public static III7SUS4b9: DegreeFunction;
+    public static IV7SUS4b9: DegreeFunction;
+    public static bV7SUS4b9: DegreeFunction;
+    public static V7SUS4b9: DegreeFunction;
+    public static bVI7SUS4b9: DegreeFunction;
+    public static VI7SUS4b9: DegreeFunction;
+    public static bVII7SUS4b9: DegreeFunction;
+    public static VII7SUS4b9: DegreeFunction;
+
     public static I6: DegreeFunction;
     public static bII6: DegreeFunction;
     public static II6: DegreeFunction;
@@ -391,6 +404,19 @@ export class DegreeFunction extends HarmonicFunction {
         DegreeFunction.VI7SUS4 = DegreeFunction.from(DiatonicAltDegree.VI, DiatonicAltPattern.SEVENTH_SUS4);
         DegreeFunction.bVII7SUS4 = DegreeFunction.from(DiatonicAltDegree.bVII, DiatonicAltPattern.SEVENTH_SUS4);
         DegreeFunction.VII7SUS4 = DegreeFunction.from(DiatonicAltDegree.VII, DiatonicAltPattern.SEVENTH_SUS4);
+
+        DegreeFunction.I7SUS4b9 = DegreeFunction.from(DiatonicAltDegree.I, DiatonicAltPattern.SEVENTH_SUS4_b9);
+        DegreeFunction.bII7SUS4b9 = DegreeFunction.from(DiatonicAltDegree.bII, DiatonicAltPattern.SEVENTH_SUS4_b9);
+        DegreeFunction.II7SUS4b9 = DegreeFunction.from(DiatonicAltDegree.II, DiatonicAltPattern.SEVENTH_SUS4_b9);
+        DegreeFunction.bIII7SUS4b9 = DegreeFunction.from(DiatonicAltDegree.bIII, DiatonicAltPattern.SEVENTH_SUS4_b9);
+        DegreeFunction.III7SUS4b9 = DegreeFunction.from(DiatonicAltDegree.III, DiatonicAltPattern.SEVENTH_SUS4_b9);
+        DegreeFunction.IV7SUS4b9 = DegreeFunction.from(DiatonicAltDegree.IV, DiatonicAltPattern.SEVENTH_SUS4_b9);
+        DegreeFunction.bV7SUS4b9 = DegreeFunction.from(DiatonicAltDegree.bV, DiatonicAltPattern.SEVENTH_SUS4_b9);
+        DegreeFunction.V7SUS4b9 = DegreeFunction.from(DiatonicAltDegree.V, DiatonicAltPattern.SEVENTH_SUS4_b9);
+        DegreeFunction.bVI7SUS4b9 = DegreeFunction.from(DiatonicAltDegree.bVI, DiatonicAltPattern.SEVENTH_SUS4_b9);
+        DegreeFunction.VI7SUS4b9 = DegreeFunction.from(DiatonicAltDegree.VI, DiatonicAltPattern.SEVENTH_SUS4_b9);
+        DegreeFunction.bVII7SUS4b9 = DegreeFunction.from(DiatonicAltDegree.bVII, DiatonicAltPattern.SEVENTH_SUS4_b9);
+        DegreeFunction.VII7SUS4b9 = DegreeFunction.from(DiatonicAltDegree.VII, DiatonicAltPattern.SEVENTH_SUS4_b9);
 
         DegreeFunction.I6 = DegreeFunction.from(DiatonicAltDegree.I, DiatonicAltPattern.SIXTH);
         DegreeFunction.bII6 = DegreeFunction.from(DiatonicAltDegree.bII, DiatonicAltPattern.SIXTH);

@@ -237,6 +237,7 @@ test('Scale - degreeFunctions: MINOR seventh', () => {
         DegreeFunction.bIIIMaj7,
         DegreeFunction.IVm7,
         DegreeFunction.Vm7,
+        DegreeFunction.V7SUS4b9,
         DegreeFunction.bVIMaj7,
         DegreeFunction.bVIMaj7b5,
         DegreeFunction.bVII7,
