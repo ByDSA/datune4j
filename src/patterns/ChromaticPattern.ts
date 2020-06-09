@@ -18,6 +18,7 @@ export class ChromaticPattern implements DegreePattern<Chromatic>, Iterable<Diff
     public static SEVENTH_MAJ7_b5: ChromaticPattern;
     public static SEVENTH_a5: ChromaticPattern;
     public static SEVENTH_SUS4: ChromaticPattern;
+    public static SEVENTH_SUS4_b9: ChromaticPattern;
     public static SEVENTH_MINOR: ChromaticPattern;
     public static SEVENTH_MINOR_b5: ChromaticPattern;
     public static SEVENTH_MINOR_a5: ChromaticPattern;
@@ -167,6 +168,7 @@ export class ChromaticPattern implements DegreePattern<Chromatic>, Iterable<Diff
         ChromaticPattern.SEVENTH_MAJ7_b5 = ChromaticPattern.from(0, 4, 6, 11);
         ChromaticPattern.SEVENTH_a5 = ChromaticPattern.from(0, 4, 8, 10);
         ChromaticPattern.SEVENTH_SUS4 = ChromaticPattern.from(0, 5, 7, 10);
+        ChromaticPattern.SEVENTH_SUS4_b9 = ChromaticPattern.from(0, 5, 7, 10, 15);
         ChromaticPattern.SEVENTH_MINOR = ChromaticPattern.from(0, 3, 7, 10);
         ChromaticPattern.SEVENTH_MINOR_b5 = ChromaticPattern.from(0, 3, 6, 10);
         ChromaticPattern.SEVENTH_MINOR_a5 = ChromaticPattern.from(0, 3, 8, 10);
@@ -232,6 +234,7 @@ export class ChromaticPattern implements DegreePattern<Chromatic>, Iterable<Diff
                 this.SEVENTH_b5,
                 this.SEVENTH_a5,
                 this.SEVENTH_SUS4,
+                this.SEVENTH_SUS4_b9,
                 this.SEVENTH_MINOR,
                 this.SEVENTH_MINOR_b5,
                 this.SEVENTH_MINOR_a5,

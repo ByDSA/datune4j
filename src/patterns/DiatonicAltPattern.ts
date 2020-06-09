@@ -21,6 +21,7 @@ export class DiatonicAltPattern implements DegreePattern<Difference>, Iterable<D
     public static SEVENTH_MAJ7_b5: DiatonicAltPattern;
     public static SEVENTH_a5: DiatonicAltPattern;
     public static SEVENTH_SUS4: DiatonicAltPattern;
+    public static SEVENTH_SUS4_b9: DiatonicAltPattern;
     public static SEVENTH_MINOR: DiatonicAltPattern;
     public static SEVENTH_MINOR_b5: DiatonicAltPattern;
     public static SEVENTH_MINOR_a5: DiatonicAltPattern;
@@ -246,6 +247,7 @@ export class DiatonicAltPattern implements DegreePattern<Difference>, Iterable<D
         DiatonicAltPattern.SEVENTH_MAJ7_b5 = DiatonicAltPattern.fromPatterns(ChromaticPattern.SEVENTH_MAJ7_b5, DiatonicPattern.SEVENTH);
         DiatonicAltPattern.SEVENTH_a5 = DiatonicAltPattern.fromPatterns(ChromaticPattern.SEVENTH_a5, DiatonicPattern.SEVENTH);
         DiatonicAltPattern.SEVENTH_SUS4 = DiatonicAltPattern.fromPatterns(ChromaticPattern.SEVENTH_SUS4, DiatonicPattern.SEVENTH_SUS4);
+        DiatonicAltPattern.SEVENTH_SUS4_b9 = DiatonicAltPattern.fromPatterns(ChromaticPattern.SEVENTH_SUS4_b9, DiatonicPattern.NINTH_SUS4);
         DiatonicAltPattern.SEVENTH_MINOR = DiatonicAltPattern.fromPatterns(ChromaticPattern.SEVENTH_MINOR, DiatonicPattern.SEVENTH);
         DiatonicAltPattern.SEVENTH_MINOR_b5 = DiatonicAltPattern.fromPatterns(ChromaticPattern.SEVENTH_MINOR_b5, DiatonicPattern.SEVENTH);
         DiatonicAltPattern.SEVENTH_MINOR_a5 = DiatonicAltPattern.fromPatterns(ChromaticPattern.SEVENTH_MINOR_a5, DiatonicPattern.SEVENTH);
@@ -313,6 +315,7 @@ export class DiatonicAltPattern implements DegreePattern<Difference>, Iterable<D
                 this.SEVENTH_MAJ7_b5,
                 this.SEVENTH_a5,
                 this.SEVENTH_SUS4,
+                this.SEVENTH_SUS4_b9,
                 this.SEVENTH_MINOR,
                 this.SEVENTH_MINOR_b5,
                 this.SEVENTH_MINOR_a5,

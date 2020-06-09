@@ -37,6 +37,7 @@ export const NamingDiatonicAltPattern = {
             case DiatonicAltPattern.SEVENTH_MINOR_b5: return Settings.patterns.SEVENTH_MINOR_b5;
             case DiatonicAltPattern.SEVENTH_MINOR_b9: return Settings.patterns.SEVENTH_MINOR_b9;
             case DiatonicAltPattern.SEVENTH_SUS4: return Settings.patterns.SEVENTH_SUS4;
+            case DiatonicAltPattern.SEVENTH_SUS4_b9: return Settings.patterns.SEVENTH_SUS4_b9;
             case DiatonicAltPattern.SEVENTH_a5: return Settings.patterns.SEVENTH_a5;
             case DiatonicAltPattern.SEVENTH_a9: return Settings.patterns.SEVENTH_a9;
             case DiatonicAltPattern.SEVENTH_b5: return Settings.patterns.SEVENTH_b5;
@@ -105,6 +106,7 @@ export const NamingDiatonicAltPattern = {
             case DiatonicAltPattern.SEVENTH_MINOR_b5: return Settings.shortPatterns.SEVENTH_MINOR_b5;
             case DiatonicAltPattern.SEVENTH_MINOR_b9: return Settings.shortPatterns.SEVENTH_MINOR_b9;
             case DiatonicAltPattern.SEVENTH_SUS4: return Settings.shortPatterns.SEVENTH_SUS4;
+            case DiatonicAltPattern.SEVENTH_SUS4_b9: return Settings.shortPatterns.SEVENTH_SUS4_b9;
             case DiatonicAltPattern.SEVENTH_a5: return Settings.shortPatterns.SEVENTH_a5;
             case DiatonicAltPattern.SEVENTH_a9: return Settings.shortPatterns.SEVENTH_a9;
             case DiatonicAltPattern.SEVENTH_b5: return Settings.shortPatterns.SEVENTH_b5;

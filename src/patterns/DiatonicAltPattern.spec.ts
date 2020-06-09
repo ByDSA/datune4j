@@ -85,11 +85,24 @@ test('shortName - ENG - SEVENTH MAJ7 b5', () => {
     let expected = "Maj7♭5";
     expect(actual).toBe(expected);
 });
+test('shortName - ENG - SEVENTH SUS4 b9', () => {
+    Settings.lang = Language.ENG;
+    let actual = DiatonicAltPattern.SEVENTH_SUS4_b9.shortName;
+    let expected = "7sus4(♭9)";
+    expect(actual).toBe(expected);
+});
 
 test('toString() - ENG - SEVENTH MAJ7 b5', () => {
     Settings.lang = Language.ENG;
     let actual = DiatonicAltPattern.SEVENTH_MAJ7_b5.toString();
     let expected = "SEVENTH MAJ7 ♭5";
+    expect(actual).toBe(expected);
+});
+
+test('toString() - ENG - SEVENTH SUS4 b9', () => {
+    Settings.lang = Language.ENG;
+    let actual = DiatonicAltPattern.SEVENTH_SUS4_b9.toString();
+    let expected = "SEVENTH SUS4 ♭9";
     expect(actual).toBe(expected);
 });
 
@@ -104,5 +117,12 @@ test('toString() - ESP - SEVENTH MAJ7 b5', () => {
     Settings.lang = Language.ESP;
     let actual = DiatonicAltPattern.SEVENTH_MAJ7_b5.toString();
     let expected = "SÉPTIMA MAJ7 ♭5";
+    expect(actual).toBe(expected);
+});
+
+test('toString() - ESP - SEVENTH SUS4 b9', () => {
+    Settings.lang = Language.ESP;
+    let actual = DiatonicAltPattern.SEVENTH_SUS4_b9.toString();
+    let expected = "SÉPTIMA SUS4 ♭9";
     expect(actual).toBe(expected);
 });

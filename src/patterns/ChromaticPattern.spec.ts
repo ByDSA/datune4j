@@ -107,3 +107,9 @@ test('precalc - SEVENTH MAJ7 b5', () => {
     let expected = ChromaticPattern.SEVENTH_MAJ7_b5;
     expect(actual).toBe(expected);
 });
+
+test('precalc - SEVENTH SUS4 b9', () => {
+    let actual = ChromaticPattern.from(0, 5, 7, 10, 15);
+    let expected = ChromaticPattern.SEVENTH_SUS4_b9;
+    expect(actual).toBe(expected);
+});
