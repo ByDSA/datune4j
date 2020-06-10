@@ -1,5 +1,5 @@
-import { Settings } from '../../settings/Settings';
 import { DiatonicAltPattern } from '../../patterns/DiatonicAltPattern';
+import { Settings } from '../../settings/Settings';
 
 export const NamingDiatonicAltPattern = {
     toString: function (pattern: DiatonicAltPattern): string {
@@ -121,6 +121,22 @@ export const NamingDiatonicAltPattern = {
             case DiatonicAltPattern.THIRTEENTH_MAJ13_a5: return Settings.shortPatterns.THIRTEENTH_MAJ13_a5;
             case DiatonicAltPattern.THIRTEENTH_MAJ13_a5a9: return Settings.shortPatterns.THIRTEENTH_MAJ13_a5a9;
             case DiatonicAltPattern.THIRTEENTH_b5a9: return Settings.shortPatterns.THIRTEENTH_b5a9;
+            case DiatonicAltPattern.THIRTEENTH_MINOR: return Settings.shortPatterns.THIRTEENTH_MINOR;
+            case DiatonicAltPattern.THIRTEENTH_SUS4: return Settings.shortPatterns.THIRTEENTH_SUS4;
+            case DiatonicAltPattern.THIRTEENTH_b5: return Settings.shortPatterns.THIRTEENTH_b5;
+            case DiatonicAltPattern.THIRTEENTH_a5: return Settings.shortPatterns.THIRTEENTH_a5;
+            case DiatonicAltPattern.THIRTEENTH_b9: return Settings.shortPatterns.THIRTEENTH_b9;
+            case DiatonicAltPattern.THIRTEENTH_a9: return Settings.shortPatterns.THIRTEENTH_a9;
+            case DiatonicAltPattern.THIRTEENTH_b5b9: return Settings.shortPatterns.THIRTEENTH_b5b9;
+            case DiatonicAltPattern.THIRTEENTH_a5b9: return Settings.shortPatterns.THIRTEENTH_a5b9;
+            case DiatonicAltPattern.THIRTEENTH_a5a9: return Settings.shortPatterns.THIRTEENTH_a5a9;
+            case DiatonicAltPattern.THIRTEENTH_MINOR_MAJ13: return Settings.shortPatterns.THIRTEENTH_MINOR_MAJ13;
+            case DiatonicAltPattern.THIRTEENTH_MAJ13_b5: return Settings.shortPatterns.THIRTEENTH_MAJ13_b5;
+            case DiatonicAltPattern.THIRTEENTH_MAJ13_b9: return Settings.shortPatterns.THIRTEENTH_MAJ13_b9;
+            case DiatonicAltPattern.THIRTEENTH_MAJ13_a9: return Settings.shortPatterns.THIRTEENTH_MAJ13_a9;
+            case DiatonicAltPattern.THIRTEENTH_MAJ13_b5b9: return Settings.shortPatterns.THIRTEENTH_MAJ13_b5b9;
+            case DiatonicAltPattern.THIRTEENTH_MAJ13_b5a9: return Settings.shortPatterns.THIRTEENTH_MAJ13_b5a9;
+            case DiatonicAltPattern.THIRTEENTH_MAJ13_a5b9: return Settings.shortPatterns.THIRTEENTH_MAJ13_a5b9;
         }
 
         return pattern.values.toString();
