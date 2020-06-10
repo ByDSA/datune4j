@@ -13,7 +13,8 @@ export const NamingDiatonicAltPattern = {
             case DiatonicAltPattern.TRIAD_QUARTAL: return Settings.patterns.TRIAD_QUARTAL;
             case DiatonicAltPattern.ELEVENTH: return Settings.patterns.ELEVENTH;
             case DiatonicAltPattern.ELEVENTH_MAJ11: return Settings.patterns.ELEVENTH_MAJ11;
-            case DiatonicAltPattern.ELEVENTH_MINOR_MAJ11: return Settings.patterns.ELEVENTH_MAJ11;
+            case DiatonicAltPattern.ELEVENTH_MINOR_MAJ11: return Settings.patterns.ELEVENTH_MINOR_MAJ11;
+            case DiatonicAltPattern.ELEVENTH_MINOR: return Settings.patterns.ELEVENTH_MINOR;
             case DiatonicAltPattern.ELEVENTH_a9: return Settings.patterns.ELEVENTH_a9;
             case DiatonicAltPattern.ELEVENTH_b9: return Settings.patterns.ELEVENTH_b9;
             case DiatonicAltPattern.NINTH: return Settings.patterns.NINTH;
@@ -82,7 +83,8 @@ export const NamingDiatonicAltPattern = {
             case DiatonicAltPattern.TRIAD_QUARTAL: return Settings.shortPatterns.TRIAD_QUARTAL;
             case DiatonicAltPattern.ELEVENTH: return Settings.shortPatterns.ELEVENTH;
             case DiatonicAltPattern.ELEVENTH_MAJ11: return Settings.shortPatterns.ELEVENTH_MAJ11;
-            case DiatonicAltPattern.ELEVENTH_MINOR_MAJ11: return Settings.shortPatterns.ELEVENTH_MAJ11;
+            case DiatonicAltPattern.ELEVENTH_MINOR_MAJ11: return Settings.shortPatterns.ELEVENTH_MINOR_MAJ11;
+            case DiatonicAltPattern.ELEVENTH_MINOR: return Settings.shortPatterns.ELEVENTH_MINOR;
             case DiatonicAltPattern.ELEVENTH_a9: return Settings.shortPatterns.ELEVENTH_a9;
             case DiatonicAltPattern.ELEVENTH_b9: return Settings.shortPatterns.ELEVENTH_b9;
             case DiatonicAltPattern.NINTH: return Settings.shortPatterns.NINTH;
