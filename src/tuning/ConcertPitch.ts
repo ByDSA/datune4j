@@ -27,7 +27,11 @@ export class ConcertPitch extends Pitch {
         super();
     }
 
-    public static from(frequency: number, symbolicPitch: SymbolicPitch): ConcertPitch {
+    public static fromPitch(pitch: Pitch, symbolicPitch: SymbolicPitch): ConcertPitch {
+        return this.fromFrequency(pitch.frequency, symbolicPitch);
+    }
+
+    public static fromFrequency(frequency: number, symbolicPitch: SymbolicPitch): ConcertPitch {
         return this.immutablesCache.getOrCreate({ frequency: frequency, symbolicPitch: symbolicPitch });
     }
 
@@ -53,8 +57,8 @@ export class ConcertPitch extends Pitch {
     }
 
     private static initialize() {
-        this.A440 = ConcertPitch.from(440, SPN.A4);
-        this.A432 = ConcertPitch.from(432, SPN.A4);
-        this.A444 = ConcertPitch.from(444, SPN.A4);
+        this.A440 = ConcertPitch.fromFrequency(440, SPN.A4);
+        this.A432 = ConcertPitch.fromFrequency(432, SPN.A4);
+        this.A444 = ConcertPitch.fromFrequency(444, SPN.A4);
     }
 }
