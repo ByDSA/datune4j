@@ -11,4 +11,19 @@ export abstract class Pitch {
 
         return ret;
     }
+
+    static from(frequency: number) {
+        return new SimplePitch(frequency);
+    }
+}
+
+class SimplePitch extends Pitch {
+    constructor(private _frequency: number) {
+        super();
+    }
+
+    get frequency(): number {
+        return this._frequency;
+    }
+
 }
