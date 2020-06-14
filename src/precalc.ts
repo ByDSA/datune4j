@@ -1,4 +1,3 @@
-import { Quality } from './interval/Quality';
 import { ChromaticChord } from './chords/chromatic/ChromaticChord';
 import { DiatonicAltChord } from './chords/diatonicalt/DiatonicAltChord';
 import { Chromatic } from './degrees/Chromatic';
@@ -9,6 +8,7 @@ import { DiatonicDegree } from './degrees/scale/DiatonicDegree';
 import { DegreeFunction } from './function/DegreeFunction';
 import { IntervalDiatonic } from './interval/IntervalDiatonic';
 import { IntervalDiatonicAlt } from './interval/IntervalDiatonicAlt';
+import { Quality } from './interval/Quality';
 import { MidiPitch } from './midi/MidiPitch';
 import { ChromaticPattern } from './patterns/ChromaticPattern';
 import { DiatonicAltPattern } from './patterns/DiatonicAltPattern';
@@ -19,6 +19,7 @@ import { Settings } from './settings/Settings';
 import { BPM } from './tempo/BPM';
 import { MusicalDuration } from './tempo/MusicalDuration';
 import { Scale } from './tonality/Scale';
+import { ScalePitch } from './tonality/ScalePitch';
 import { SourceScaleUtils } from './tonality/SourceScaleUtils';
 import { Tonality } from './tonality/Tonality';
 import { ConcertPitch } from './tuning/ConcertPitch';
@@ -130,6 +131,16 @@ export function scales() {
     chromatics();
 
     (<any>Scale).initialize();
+};
+
+// SCALE PITCHES
+export function scalePitches() {
+    if (ScalePitch.MAJOR_ET12)
+        return;
+
+    intervalPitches();
+
+    (<any>ScalePitch).initialize();
 };
 
 // SOURCE SCALES
