@@ -1,8 +1,7 @@
-import { Degree } from '../degrees/Degree';
 import { IntervalSymbolic } from '../interval/IntervalSymbolic';
 import { ScaleModeUtils } from './ScaleModeUtils';
 
-export abstract class ScaleAbstract<I extends IntervalSymbolic<D>, D extends Degree> {
+export abstract class ScaleAbstract<I extends IntervalSymbolic<D>, D> {
     protected _intervals: I[];
     protected _precalcDegrees: D[] = null;
     protected _precalcModes: ScaleAbstract<I, D>[] = null;

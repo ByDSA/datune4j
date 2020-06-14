@@ -1,7 +1,7 @@
-import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
+import { IntervalSymbolic } from 'interval/IntervalSymbolic';
 import { Assert } from '../common/Assert';
 import { Utils } from '../common/Utils';
-import { Degree } from '../degrees/Degree';
+import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
 import { Scale } from './Scale';
 import { ScaleAbstract } from './ScaleInterface';
 
@@ -9,7 +9,7 @@ export class ScaleModeUtils {
     private constructor() {
     }
 
-    public static getMode<S extends ScaleAbstract<I, D>, I, D extends Degree>(sourceScale: S, n: number): S {
+    public static getMode<S extends ScaleAbstract<I, D>, I extends IntervalSymbolic<D>, D>(sourceScale: S, n: number): S {
         Assert.notNull(sourceScale);
 
         if (n > 0)
@@ -20,7 +20,7 @@ export class ScaleModeUtils {
             return sourceScale;
     }
 
-    public static getRotatedScale<S extends ScaleAbstract<I, D>, I, D extends Degree>(sourceScale: S, n: number): S {
+    public static getRotatedScale<S extends ScaleAbstract<I, D>, I extends IntervalSymbolic<D>, D>(sourceScale: S, n: number): S {
         Assert.notNull(sourceScale);
 
         let scaleIntervals: I[] = sourceScale.intervals;

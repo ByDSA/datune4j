@@ -1,4 +1,3 @@
-import { Degree } from '../../degrees/Degree';
 import { ImmutablesCache } from '../../common/ImmutablesCache';
 import { MathUtils } from '../../common/MathUtils';
 import { Chromatic } from '../../degrees/Chromatic';
@@ -11,7 +10,7 @@ import { Scale } from '../../tonality/Scale';
 import { DiatonicDegree } from './DiatonicDegree';
 
 type HashingObjectType = { diatonicDegree: DiatonicDegree, alts: number };
-export class DiatonicAltDegree implements Degree {
+export class DiatonicAltDegree {
     public static I: DiatonicAltDegree;
     public static bII: DiatonicAltDegree;
     public static II: DiatonicAltDegree;
