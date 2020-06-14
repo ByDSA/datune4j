@@ -27,6 +27,10 @@ export class IntervalPitch {
             return 1200 * Math.log2(this._ratio.value);
     }
 
+    hashCode() {
+        return this.ratio.value;
+    }
+
     private static initialize() {
         this.UNISON = this.from(RatioNumber.from(1));
         this.CENT = this.from(RatioPow2Frac.fromCents(1));
