@@ -11,9 +11,11 @@ import { NamingScale } from '../lang/naming/NamingScale';
 import { DiatonicAltPattern } from '../patterns/DiatonicAltPattern';
 import { Settings } from '../settings/Settings';
 import { ScaleModeUtils } from './ScaleModeUtils';
+import { ScaleAbstract } from './ScaleInterface';
+import { DiatonicAlt } from 'degrees/DiatonicAlt';
 
 type HashingObject = IntervalDiatonicAlt[];
-export class Scale {
+export class Scale extends ScaleAbstract<IntervalDiatonicAlt, DiatonicAltDegree> {
     static MAJOR: Scale;
     static DORIAN: Scale;
     static PHRYGIAN: Scale;
@@ -123,33 +125,29 @@ export class Scale {
         }
     );
 
-    private _degrees: DiatonicAltDegree[] = null;
-    private _modes: Scale[] = null;
     reparametrizer: (i, acc) => number;
 
     private constructor(...intervals: IntervalDiatonicAlt[]) {
-        this._intervals = intervals;
-        Object.freeze(this._intervals);
+        super(...intervals);
     }
 
     public static fromIntCodeSeven(d1: number, d2: number, d3: number, d4: number, d5: number, d6: number, d7: number): Scale {
         let degrees = this.distances2Degrees([d1, d2, d3, d4, d5, d6, d7], this.sevenReparam);
         let scale = this.fromDegrees(...degrees);
-        if (!Object.isFrozen(scale._degrees)) {
-            scale._degrees = degrees;
-            Object.freeze(scale._degrees);
+        if (!Object.isFrozen(scale._precalcDegrees)) {
+            scale._precalcDegrees = degrees;
+            Object.freeze(scale._precalcDegrees);
         }
 
         return scale;
     }
 
-
     public static fromIntCode(...ints: number[]): Scale {
         let degrees = this.distances2Degrees(ints);
         let scale = this.fromDegrees(...degrees);
-        if (!Object.isFrozen(scale._degrees)) {
-            scale._degrees = degrees;
-            Object.freeze(scale._degrees);
+        if (!Object.isFrozen(scale._precalcDegrees)) {
+            scale._precalcDegrees = degrees;
+            Object.freeze(scale._precalcDegrees);
         }
 
         return scale;
@@ -180,9 +178,9 @@ export class Scale {
     public static fromDegrees(...degrees: DiatonicAltDegree[]): Scale {
         let intervals = this.degrees2Intervals(degrees);
         let scale = this.fromIntervals(...intervals);
-        if (scale._degrees == null) {
-            scale._degrees = degrees;
-            Object.freeze(scale._degrees);
+        if (scale._precalcDegrees == null) {
+            scale._precalcDegrees = degrees;
+            Object.freeze(scale._precalcDegrees);
         }
 
         return scale;
@@ -320,42 +318,14 @@ export class Scale {
         return DiatonicAltPattern.fromIntervals(this.intervals);
     }
 
-    // Modes
-
-    public get modes(): Scale[] {
-        if (!this._modes)
-            this.calculateModes();
-
-        return this._modes;
-    }
-
-    private calculateModes(): void {
-        let scaleTmp: Scale = this;
-        this._modes = [this];
-        while (true) {
-            scaleTmp = ScaleModeUtils.getRotatedScale(scaleTmp, 1);
-            if (scaleTmp == this)
-                break;
-            this._modes.push(scaleTmp);
-        }
-    }
-
-    // Absolute Intervals
-
-    public get degrees(): DiatonicAltDegree[] {
-        if (this._degrees == null)
-            this.calculateDegrees();
-        return this._degrees;
-    }
-
-    private calculateDegrees() {
-        this._degrees = [DiatonicAltDegree.I];
+    protected calculateDegrees() {
+        this._precalcDegrees = [DiatonicAltDegree.I];
         for (let i = 0; i < this._intervals.length - 1; i++) {
             const interval = this._intervals[i];
-            let diatonicAltDegree = this._degrees[this._degrees.length - 1].getAdd(interval);
-            this._degrees.push(diatonicAltDegree);
+            let diatonicAltDegree = this._precalcDegrees[this._precalcDegrees.length - 1].getAdd(interval);
+            this._precalcDegrees.push(diatonicAltDegree);
         }
-        Object.freeze(this._degrees);
+        Object.freeze(this._precalcDegrees);
     }
 
     get degreeFunctions(): DegreeFunction[] {
@@ -389,29 +359,10 @@ export class Scale {
         return true;
     }
 
-    hasDegrees(...degrees: DiatonicAltDegree[]): boolean {
-        for (let degree of degrees) {
-            if (!this.degrees.includes(degree))
-                return false;
-        }
-
-        return true;
-    }
-
     // General
-
-    public get length(): number {
-        return this._intervals.length;
-    }
 
     public toString(): string {
         return NamingScale.toString(this);
-    }
-
-    public clone(): Scale {
-        let scale = new Scale();
-        scale._degrees = this.degrees;
-        return scale;
     }
 
     hashCode(): string {
@@ -420,11 +371,6 @@ export class Scale {
             ret += "-" + interval.hashCode();
 
         return ret;
-    }
-
-    private _intervals: IntervalDiatonicAlt[];
-    get intervals(): IntervalDiatonicAlt[] {
-        return Array.from(this._intervals);
     }
 
     private static initialize() {

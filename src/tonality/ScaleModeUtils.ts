@@ -1,13 +1,15 @@
-import { IntervalDiatonicAlt } from 'interval/IntervalDiatonicAlt';
+import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
 import { Assert } from '../common/Assert';
 import { Utils } from '../common/Utils';
+import { Degree } from '../degrees/Degree';
 import { Scale } from './Scale';
+import { ScaleAbstract } from './ScaleInterface';
 
 export class ScaleModeUtils {
     private constructor() {
     }
 
-    public static getMode(sourceScale: Scale, n: number): Scale {
+    public static getMode<S extends ScaleAbstract<I, D>, I, D extends Degree>(sourceScale: S, n: number): S {
         Assert.notNull(sourceScale);
 
         if (n > 0)
@@ -18,10 +20,10 @@ export class ScaleModeUtils {
             return sourceScale;
     }
 
-    public static getRotatedScale(sourceScale: Scale, n: number): Scale {
+    public static getRotatedScale<S extends ScaleAbstract<I, D>, I, D extends Degree>(sourceScale: S, n: number): S {
         Assert.notNull(sourceScale);
 
-        let scaleIntervals: IntervalDiatonicAlt[] = sourceScale.intervals;
+        let scaleIntervals: I[] = sourceScale.intervals;
 
         if (n > 0)
             Utils.arrayRotateLeft(scaleIntervals, n);
@@ -30,6 +32,9 @@ export class ScaleModeUtils {
         else
             return sourceScale;
 
-        return Scale.fromIntervals(...scaleIntervals);
+        if (scaleIntervals[0] instanceof IntervalDiatonicAlt)
+            return <S><any>Scale.fromIntervals(...<IntervalDiatonicAlt[]><any>scaleIntervals);
+        else
+            return null;
     }
 }
