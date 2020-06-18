@@ -24,7 +24,7 @@ export class SourceScaleUtils {
 
     private static sourceScaleMapAddModesOf(sourceScale: Scale): void {
         sourceScale.modes.forEach((value, index) => {
-            SourceScaleUtils.sourceScaleMap.set(value, { scale: sourceScale, mode: index + 1 })
+            SourceScaleUtils.sourceScaleMap.set(<Scale>value, { scale: sourceScale, mode: index + 1 })
         });
     }
 
@@ -37,7 +37,7 @@ export class SourceScaleUtils {
             for (const element of scale.modes) {
                 if (Utils.arrayHas(allScales, element)) {
                     let modeNum = (scale.length - i + 1) % scale.length;
-                    ret = { scale: element, mode: modeNum };
+                    ret = { scale: <Scale>element, mode: modeNum };
                 }
                 i++;
             }

@@ -270,9 +270,9 @@ export class DegreeFunction extends HarmonicFunction {
         if (!this._degrees) {
             this._degrees = [];
             for (let value of this.pattern) {
-                let diatonicDegreeInt = this.degree.diatonicDegree.intValue + value.intervalDiatonic.number;
+                let diatonicDegreeInt = this.degree.diatonicDegree.intValue + value.intervalDiatonic.intValue;
                 let diatonicDegree = DiatonicDegree.fromInt(diatonicDegreeInt);
-                let alts = (this.degree.semis + value.semis) - Diatonic.fromInt(diatonicDegree.intValue).chromatic.intValue;
+                let alts = (this.degree.semis + value.intervalChromatic) - Diatonic.fromInt(diatonicDegree.intValue).chromatic.intValue;
                 alts %= Chromatic.NUMBER;
                 let degree = DiatonicAltDegree.from(diatonicDegree, alts);
                 this._degrees.push(degree);

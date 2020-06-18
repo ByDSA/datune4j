@@ -95,7 +95,7 @@ export class IntervalDiatonicAlt implements IntervalSymbolic<DiatonicAlt> {
     public static AUGMENTED_FIFTEENTH;
     public static DOUBLY_AUGMENTED_FIFTEENTH;
 
-    private _semitones: number = null;
+    private _intervalChromatic: number = null;
 
     private static immutablesCache = new ImmutablesCache<IntervalDiatonicAlt, HashingObject>(
         function (hashingObject: HashingObject): string {
@@ -119,10 +119,10 @@ export class IntervalDiatonicAlt implements IntervalSymbolic<DiatonicAlt> {
     public static between(diatonicAlt1: DiatonicAlt, diatonicAlt2: DiatonicAlt) {
         let intervalDiatonic: IntervalDiatonic = IntervalDiatonic.from(diatonicAlt2.diatonic.intValue - diatonicAlt1.diatonic.intValue);
 
-        let semis = diatonicAlt2.chromatic.intValue - diatonicAlt1.chromatic.intValue;
-        semis = MathUtils.rotativeTrim(semis, Chromatic.NUMBER);
+        let intervalChromatic = diatonicAlt2.chromatic.intValue - diatonicAlt1.chromatic.intValue;
+        intervalChromatic = MathUtils.rotativeTrim(intervalChromatic, Chromatic.NUMBER);
 
-        return this.fromSemisInterval(semis, intervalDiatonic);
+        return this.fromIntervals(intervalChromatic, intervalDiatonic);
     }
 
     public static betweenChromatic(chromatic1: Chromatic, chromatic2: Chromatic) {
@@ -133,24 +133,24 @@ export class IntervalDiatonicAlt implements IntervalSymbolic<DiatonicAlt> {
     }
 
     public getAdd(interval: IntervalDiatonicAlt): IntervalDiatonicAlt {
-        return IntervalDiatonicAlt.fromSemisInterval(this.semis + interval.semis, this.intervalDiatonic.getAdd(interval.intervalDiatonic));
+        return IntervalDiatonicAlt.fromIntervals(this.intervalChromatic + interval.intervalChromatic, this.intervalDiatonic.getAdd(interval.intervalDiatonic));
     }
 
     public getSub(interval: IntervalDiatonicAlt): IntervalDiatonicAlt {
-        return IntervalDiatonicAlt.fromSemisInterval(this.semis - interval.semis, this.intervalDiatonic.getSub(interval.intervalDiatonic));
+        return IntervalDiatonicAlt.fromIntervals(this.intervalChromatic - interval.intervalChromatic, this.intervalDiatonic.getSub(interval.intervalDiatonic));
     }
 
-    public static fromSemisInterval(semitones: number, intervalDiatonic: IntervalDiatonic): IntervalDiatonicAlt {
-        Assert.notNull(semitones);
+    public static fromIntervals(intervalChromatic: number, intervalDiatonic: IntervalDiatonic): IntervalDiatonicAlt {
+        Assert.notNull(intervalChromatic);
         Assert.notNull(intervalDiatonic);
 
-        let numInOctave: number = intervalDiatonic.number % Diatonic.NUMBER;
+        let numInOctave: number = intervalDiatonic.intValue % Diatonic.NUMBER;
 
-        let diff = semitones % Chromatic.NUMBER - SemisMajor[numInOctave];
+        let diff = intervalChromatic % Chromatic.NUMBER - SemisMajor[numInOctave];
         switch (numInOctave) {
-            case IntervalDiatonic.UNISON.number:
-            case IntervalDiatonic.FOURTH.number:
-            case IntervalDiatonic.FIFTH.number:
+            case IntervalDiatonic.UNISON.intValue:
+            case IntervalDiatonic.FOURTH.intValue:
+            case IntervalDiatonic.FIFTH.intValue:
                 switch (diff) {
                     case 0:
                         return IntervalDiatonicAlt.from(intervalDiatonic, Quality.PERFECT);
@@ -164,10 +164,10 @@ export class IntervalDiatonicAlt implements IntervalSymbolic<DiatonicAlt> {
                         return IntervalDiatonicAlt.from(intervalDiatonic, Quality.DOUBLY_AUGMENTED);
                 }
                 break;
-            case IntervalDiatonic.SECOND.number:
-            case IntervalDiatonic.THIRD.number:
-            case IntervalDiatonic.SIXTH.number:
-            case IntervalDiatonic.SEVENTH.number:
+            case IntervalDiatonic.SECOND.intValue:
+            case IntervalDiatonic.THIRD.intValue:
+            case IntervalDiatonic.SIXTH.intValue:
+            case IntervalDiatonic.SEVENTH.intValue:
                 switch (diff) {
                     case 0:
                         return IntervalDiatonicAlt.from(intervalDiatonic, Quality.MAJOR);
@@ -182,7 +182,7 @@ export class IntervalDiatonicAlt implements IntervalSymbolic<DiatonicAlt> {
                 }
         }
 
-        throw new Error("Cannot get IntervalDiatonicAlt from semis=" + semitones + ", IntervalDiatonic=" + intervalDiatonic);
+        throw new Error("Cannot get IntervalDiatonicAlt from IntervalChromatic=" + intervalChromatic + ", IntervalDiatonic=" + intervalDiatonic);
     }
 
     static fromString(str: string): IntervalDiatonicAlt {
@@ -227,56 +227,56 @@ export class IntervalDiatonicAlt implements IntervalSymbolic<DiatonicAlt> {
     }
 
     private precalculateSemis() {
-        let numInOctave: number = this.intervalDiatonic.number % Diatonic.NUMBER;
-        let octaves: number = Math.floor(this.intervalDiatonic.number / Diatonic.NUMBER);
+        let rootIntervalDiatonicIntValue: number = this.intervalDiatonic.intValue % Diatonic.NUMBER;
+        let octaves: number = Math.floor(this.intervalDiatonic.intValue / Diatonic.NUMBER);
 
-        let semis = SemisMajor[numInOctave];
-        switch (numInOctave) {
-            case IntervalDiatonic.UNISON.number:
-            case IntervalDiatonic.FOURTH.number:
-            case IntervalDiatonic.FIFTH.number:
+        let rootIntervalChromatic = SemisMajor[rootIntervalDiatonicIntValue];
+        switch (rootIntervalDiatonicIntValue) {
+            case IntervalDiatonic.UNISON.intValue:
+            case IntervalDiatonic.FOURTH.intValue:
+            case IntervalDiatonic.FIFTH.intValue:
                 switch (this.quality) {
                     case Quality.DIMINISHED:
-                        semis--;
+                        rootIntervalChromatic--;
                         break;
                     case Quality.AUGMENTED:
-                        semis++;
+                        rootIntervalChromatic++;
                         break;
                     case Quality.DOUBLY_DIMINISHED:
-                        semis -= 2;
+                        rootIntervalChromatic -= 2;
                         break;
                     case Quality.DOUBLY_AUGMENTED:
-                        semis += 2;
+                        rootIntervalChromatic += 2;
                         break;
                 }
                 break;
-            case IntervalDiatonic.SECOND.number:
-            case IntervalDiatonic.THIRD.number:
-            case IntervalDiatonic.SIXTH.number:
-            case IntervalDiatonic.SEVENTH.number:
+            case IntervalDiatonic.SECOND.intValue:
+            case IntervalDiatonic.THIRD.intValue:
+            case IntervalDiatonic.SIXTH.intValue:
+            case IntervalDiatonic.SEVENTH.intValue:
                 switch (this.quality) {
                     case Quality.MINOR:
-                        semis--;
+                        rootIntervalChromatic--;
                         break;
                     case Quality.DIMINISHED:
-                        semis -= 2;
+                        rootIntervalChromatic -= 2;
                         break;
                     case Quality.AUGMENTED:
-                        semis++;
+                        rootIntervalChromatic++;
                         break;
                 }
         }
 
-        semis += Chromatic.NUMBER * octaves;
+        rootIntervalChromatic += Chromatic.NUMBER * octaves;
 
-        this._semitones = semis;
+        this._intervalChromatic = rootIntervalChromatic;
     }
 
-    get semis(): number {
-        if (this._semitones === null) {
+    get intervalChromatic(): number {
+        if (this._intervalChromatic === null) {
             this.precalculateSemis();
         }
-        return this._semitones;
+        return this._intervalChromatic;
     }
 
     get intervalDiatonic(): IntervalDiatonic {
@@ -284,19 +284,19 @@ export class IntervalDiatonicAlt implements IntervalSymbolic<DiatonicAlt> {
     }
 
     get alts() {
-        return this.semis - Diatonic.fromInt(this.intervalDiatonic.number).chromatic.intValue;
+        return this.intervalChromatic - Diatonic.fromInt(this.intervalDiatonic.intValue).chromatic.intValue;
     }
 
     toString(): string {
         let ret = this.quality.shortName;
 
-        ret += (this.intervalDiatonic.number + 1);
+        ret += (this.intervalDiatonic.intValue + 1);
 
         return ret;
     }
 
     hashCode(): string {
-        return "d:" + this.intervalDiatonic + "s:" + this.semis;
+        return "d:" + this.intervalDiatonic + "s:" + this.intervalChromatic;
     }
 
     private static initialize() {

@@ -1,3 +1,4 @@
+import { DiatonicAltDegree } from 'degrees/scale/DiatonicAltDegree';
 import { ImmutablesCache } from '../common/ImmutablesCache';
 import { IntervalDiatonic } from '../interval/IntervalDiatonic';
 import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
@@ -7,7 +8,9 @@ import { ChromaticPattern } from './ChromaticPattern';
 import { DiatonicPattern } from './DiatonicPattern';
 
 export type Difference = IntervalDiatonicAlt;
-export class DiatonicAltPattern implements DegreePattern<Difference>, Iterable<Difference> {
+type I = Difference;
+type D = DiatonicAltDegree;
+export class DiatonicAltPattern implements DegreePattern<D, I>, Iterable<I> {
     public static POWER_CHORD: DiatonicAltPattern;
     public static TRIAD_MAJOR: DiatonicAltPattern;
     public static TRIAD_MINOR: DiatonicAltPattern;
@@ -80,79 +83,56 @@ export class DiatonicAltPattern implements DegreePattern<Difference>, Iterable<D
         function (values: Difference[]): string {
             let hash = "";
             for (const value of values) {
-                hash += DiatonicAltPattern.hashCodeDiatonicAltPatternValue(value.semis, value.intervalDiatonic);
+                hash += DiatonicAltPattern.hashCodeDiatonicAltPatternValue(value.intervalChromatic, value.intervalDiatonic);
             }
             return hash;
         },
         function (diatonicAltChordPattern: DiatonicAltPattern) {
-            return diatonicAltChordPattern._values;
+            return diatonicAltChordPattern._rootIntervals;
         },
         function (values: Difference[]): DiatonicAltPattern {
             return new DiatonicAltPattern(...values);
         }
     );
 
-    private _values: Difference[];
+    private _rootIntervals: I[];
     private _rootIndex: number;
 
     private _diatonicChordPattern: DiatonicPattern;
     private _chromaticChordPattern: ChromaticPattern;
 
-    private constructor(...values: Difference[]) {
-        this._values = values;
+    private constructor(...values: I[]) {
+        this._rootIntervals = values;
+        Object.freeze(this._rootIntervals);
         this._rootIndex = 0;
+        Object.freeze(this._rootIndex);
 
         let arrayChromaticChordPattern: number[] = [];
         let arrayDiatonicChordPattern: number[] = [];
         for (const value of values) {
-            arrayChromaticChordPattern.push(value.semis);
-            arrayDiatonicChordPattern.push(value.intervalDiatonic.number);
+            arrayChromaticChordPattern.push(value.intervalChromatic);
+            arrayDiatonicChordPattern.push(value.intervalDiatonic.intValue);
         }
 
-        this._chromaticChordPattern = ChromaticPattern.from(...arrayChromaticChordPattern);
-        this._diatonicChordPattern = DiatonicPattern.from(...arrayDiatonicChordPattern);
+        this._chromaticChordPattern = ChromaticPattern.fromRootIntervals(...arrayChromaticChordPattern);
+        this._diatonicChordPattern = DiatonicPattern.fromRootIntervalInts(...arrayDiatonicChordPattern);
     }
 
     public static fromPatterns(chromaticChordPattern: ChromaticPattern, diatonicPattern: DiatonicPattern): DiatonicAltPattern {
-        let values: Difference[] = [];
+        let rootIntervals: I[] = [];
 
-        for (let i = 0; i < chromaticChordPattern.values.length; i++) {
-            let semis = chromaticChordPattern.values[i];
-            let intervalDiatonicNumber: number = diatonicPattern.values[i];
-            let intervalDiatonic: IntervalDiatonic = IntervalDiatonic.from(intervalDiatonicNumber);
-            let interval = IntervalDiatonicAlt.fromSemisInterval(semis, intervalDiatonic);
-            values.push(interval);
+        for (let i = 0; i < chromaticChordPattern.length; i++) {
+            let semisFromRoot = chromaticChordPattern.rootIntervals[i];
+            let intervalDiatonic: IntervalDiatonic = diatonicPattern.rootIntervals[i];
+            let rootInterval = IntervalDiatonicAlt.fromIntervals(semisFromRoot, intervalDiatonic);
+            rootIntervals.push(rootInterval);
         }
 
-        return this.from(...values);
+        return this.fromRootIntervals(...rootIntervals);
     }
 
-    public static from(...values: Difference[]): DiatonicAltPattern {
-        return this.immutablesCache.getOrCreate(values);
-    }
-
-    static fromIntervals(intervals: IntervalDiatonicAlt[]): DiatonicAltPattern {
-        let semisAcc = 0;
-        let diatonicChordPatternAcc = 0;
-        let arrayChromaticChordPattern = [0];
-        let arrayDiatonicChordPattern = [0];
-
-        for (const interval of intervals) {
-            semisAcc += interval.semis;
-            diatonicChordPatternAcc += interval.intervalDiatonic.number;
-
-            arrayChromaticChordPattern.push(semisAcc);
-            arrayDiatonicChordPattern.push(diatonicChordPatternAcc);
-        }
-
-        let chromaticChordPattern = ChromaticPattern.from(...arrayChromaticChordPattern);
-        let diatonicChordPattern = DiatonicPattern.from(arrayDiatonicChordPattern);
-
-        return DiatonicAltPattern.fromPatterns(chromaticChordPattern, diatonicChordPattern);
-    }
-
-    public static fromArray(...values: Difference[]): DiatonicAltPattern {
-        return this.immutablesCache.getOrCreate(values);
+    public static fromRootIntervals(...rootIntervals: I[]): DiatonicAltPattern {
+        return this.immutablesCache.getOrCreate(rootIntervals);
     }
 
     public static fromString(strValue: string): DiatonicAltPattern {
@@ -176,7 +156,7 @@ export class DiatonicAltPattern implements DegreePattern<Difference>, Iterable<D
     }
 
     [Symbol.iterator](): Iterator<Difference> {
-        return this.values[Symbol.iterator]();
+        return this.rootIntervals[Symbol.iterator]();
     }
 
     get diatonicChordPattern(): DiatonicPattern {
@@ -187,22 +167,22 @@ export class DiatonicAltPattern implements DegreePattern<Difference>, Iterable<D
         return this._chromaticChordPattern;
     }
 
-    public get values(): Difference[] {
-        return Array.from(this._values);
+    public get rootIntervals(): Difference[] {
+        return this._rootIntervals;
     }
 
     public getInv(n: number = 1): DiatonicAltPattern {
-        let values: Difference[] = this.values;
+        let rootIntervals: Difference[] = Array.from(this.rootIntervals);
         for (let i = 0; i < n; i++) {
-            let firstValue: Difference = values.shift();
-            while (firstValue.semis < values[values.length - 1].semis)
+            let firstValue: Difference = rootIntervals.shift();
+            while (firstValue.intervalChromatic < rootIntervals[rootIntervals.length - 1].intervalChromatic)
                 firstValue = firstValue.getAdd(IntervalDiatonicAlt.PERFECT_OCTAVE);
-            values.push(firstValue);
-            firstValue = values[0];
-            values = values.map((value: Difference) => value.getSub(firstValue));
+            rootIntervals.push(firstValue);
+            firstValue = rootIntervals[0];
+            rootIntervals = rootIntervals.map((value: Difference) => value.getSub(firstValue));
         }
 
-        return DiatonicAltPattern.fromArray(...values);
+        return DiatonicAltPattern.fromRootIntervals(...rootIntervals);
     }
 
     public toString() {
@@ -218,17 +198,21 @@ export class DiatonicAltPattern implements DegreePattern<Difference>, Iterable<D
     }
 
     public get inversionNumber(): number {
-        return (this.values.length - this.rootIndex) % this.values.length;
+        return (this.length - this.rootIndex) % this.length;
     }
 
     private static hashCodeDiatonicAltPatternValue(semis: number, intervalDiatonic: IntervalDiatonic): string {
         return "s:" + semis + "d:" + intervalDiatonic;
     }
 
+    get length(): number {
+        return this.rootIntervals.length;
+    }
+
     public hashCode(): string {
         let ret = "";
-        for (const value of this.values) {
-            ret += DiatonicAltPattern.hashCodeDiatonicAltPatternValue(value.semis, value.intervalDiatonic);
+        for (const value of this.rootIntervals) {
+            ret += DiatonicAltPattern.hashCodeDiatonicAltPatternValue(value.intervalChromatic, value.intervalDiatonic);
         }
         return ret;
     }
@@ -371,10 +355,18 @@ export class DiatonicAltPattern implements DegreePattern<Difference>, Iterable<D
         }
 
         for (let pattern of this.all()) {
-            for (let i = 1; i < pattern.values.length; i++) {
+            for (let i = 1; i < pattern.length; i++) {
                 let patternInv = pattern.getInv(i);
-                if (!this.all().includes(patternInv))
-                    patternInv._rootIndex = pattern.values.length - i;
+                if (!this.all().includes(patternInv)) {
+                    patternInv._rootIndex = pattern.length - i;
+                }
+            }
+        }
+
+        for (let pattern of this.all()) {
+            for (let i = 0; i < pattern.length; i++) {
+                let patternInv = pattern.getInv(i);
+                Object.freeze(patternInv);
             }
         }
 

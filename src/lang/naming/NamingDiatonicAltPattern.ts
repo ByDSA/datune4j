@@ -70,7 +70,7 @@ export const NamingDiatonicAltPattern = {
             case DiatonicAltPattern.THIRTEENTH_b5b9: return Settings.patterns.THIRTEENTH_b5b9;
             case DiatonicAltPattern.THIRTEENTH_b9: return Settings.patterns.THIRTEENTH_b9;
         }
-        return pattern.values.toString();
+        return pattern.rootIntervals.toString();
     },
     toStringShort: function patternShort(pattern: DiatonicAltPattern): string {
         switch (pattern) {
@@ -141,7 +141,7 @@ export const NamingDiatonicAltPattern = {
             case DiatonicAltPattern.THIRTEENTH_MAJ13_a5b9: return Settings.shortPatterns.THIRTEENTH_MAJ13_a5b9;
         }
 
-        return pattern.values.toString();
+        return pattern.rootIntervals.toString();
     },
     get: function (str: string): DiatonicAltPattern {
         throw new Error("Can't convert '" + str + "' to ChromaticChordPattern.");

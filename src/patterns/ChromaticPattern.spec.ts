@@ -5,20 +5,20 @@ import { ChromaticPattern } from "./ChromaticPattern";
 precalc.chromaticPatterns();
 precalc.chromaticChords();
 
-test('ChromaticPattern - fromArray - immutable: 0, 4, 7', () => {
-    let chromaticPattern = ChromaticPattern.from(0, 4, 7);
+test('ChromaticPattern - fromIC - immutable: 0, 4, 7', () => {
+    let chromaticPattern = ChromaticPattern.fromRootIntervals(0, 4, 7);
     expect(chromaticPattern).toBe(ChromaticPattern.TRIAD_MAJOR);
 });
 
-test('ChromaticPattern - fromArray - immutable new pattern: 0, 1, 2', () => {
-    let chromaticPattern = ChromaticPattern.from(0, 1, 2);
-    let chromaticPattern2 = ChromaticPattern.from(0, 1, 2);
+test('ChromaticPattern - fromIC - immutable new pattern: 0, 1, 2', () => {
+    let chromaticPattern = ChromaticPattern.fromRootIntervals(0, 1, 2);
+    let chromaticPattern2 = ChromaticPattern.fromRootIntervals(0, 1, 2);
     expect(chromaticPattern2).toBe(chromaticPattern);
 });
 
 test('ChromaticChord - getInv: TRIAD MAJOR + 2inv', () => {
     let chromaticPattern = ChromaticPattern.TRIAD_MAJOR.getInv(2);
-    let expected = ChromaticPattern.from(0, 5, 9);
+    let expected = ChromaticPattern.fromRootIntervals(0, 5, 9);
     expect(chromaticPattern).toBe(expected);
 });
 
@@ -30,13 +30,13 @@ test('ChromaticChord - getInv: TRIAD MAJOR + 3inv = TRIAD MAJOR', () => {
 
 test('ChromaticChord - getInv: TRIAD MAJOR + inv + inv', () => {
     let chromaticPattern = ChromaticPattern.TRIAD_MAJOR.getInv().getInv();
-    let expected = ChromaticPattern.from(0, 5, 9);
+    let expected = ChromaticPattern.fromRootIntervals(0, 5, 9);
     expect(chromaticPattern).toBe(expected);
 });
 
 test('ChromaticChord - getInv: TRIAD MAJOR + inv', () => {
     let chromaticPattern = ChromaticPattern.TRIAD_MAJOR.getInv();
-    let expected = ChromaticPattern.from(0, 3, 8);
+    let expected = ChromaticPattern.fromRootIntervals(0, 3, 8);
     expect(chromaticPattern).toBe(expected);
 });
 
@@ -56,7 +56,7 @@ test('ChromaticChord - toString ESP: TRIAD MAJOR', () => {
 
 test('ChromaticChord - toString: 0, 1, 2', () => {
     Settings.lang = Language.ENG;
-    let str = ChromaticPattern.from(0, 1, 2).toString();
+    let str = ChromaticPattern.fromRootIntervals(0, 1, 2).toString();
     let expected = "0-1-2";
     expect(str).toBe(expected);
 });
@@ -103,13 +103,31 @@ test('fromString - "0 4 6 11" = SEVENTH MAJ7 b5', () => {
 */
 
 test('precalc - SEVENTH MAJ7 b5', () => {
-    let actual = ChromaticPattern.from(0, 4, 6, 11);
+    let actual = ChromaticPattern.fromRootIntervals(0, 4, 6, 11);
     let expected = ChromaticPattern.SEVENTH_MAJ7_b5;
     expect(actual).toBe(expected);
 });
 
 test('precalc - SEVENTH SUS4 b9', () => {
-    let actual = ChromaticPattern.from(0, 5, 7, 10, 15);
+    let actual = ChromaticPattern.fromRootIntervals(0, 5, 7, 10, 15);
     let expected = ChromaticPattern.SEVENTH_SUS4_b9;
+    expect(actual).toBe(expected);
+});
+
+test('fromRootIntervals - 0 4 7', () => {
+    let actual = ChromaticPattern.fromRootIntervals(0, 4, 7);
+    let expected = ChromaticPattern.TRIAD_MAJOR;
+    expect(actual).toBe(expected);
+});
+
+test('fromRootIntervals - 1 5 8', () => {
+    let actual = ChromaticPattern.fromRootIntervals(1, 5, 8);
+    let expected = ChromaticPattern.TRIAD_MAJOR;
+    expect(actual).toBe(expected);
+});
+
+test('fromIntraIntervals - 4 3', () => {
+    let actual = ChromaticPattern.fromIntraIntervals(4, 3);
+    let expected = ChromaticPattern.TRIAD_MAJOR;
     expect(actual).toBe(expected);
 });

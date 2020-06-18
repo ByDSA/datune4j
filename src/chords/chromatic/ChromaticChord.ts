@@ -10,7 +10,7 @@ import { Chord } from '../Chord';
 import { RootPatternChord } from '../root-pattern/RootPatternChord';
 
 type HashingObjectType = Chromatic[];
-export class ChromaticChord implements Chord<Chromatic> {
+export class ChromaticChord implements Chord<Chromatic, number> {
     // Precalc
 
     public static C;
@@ -102,7 +102,7 @@ export class ChromaticChord implements Chord<Chromatic> {
     public get pattern(): ChromaticPattern {
         let patternArray = this.getArrayFromChromaticChord();
 
-        return ChromaticPattern.from(...patternArray);
+        return ChromaticPattern.fromRootIntervals(...patternArray);
     }
 
     private getArrayFromChromaticChord(): number[] {

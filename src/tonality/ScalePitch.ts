@@ -1,6 +1,6 @@
 import { ImmutablesCache } from '../common/ImmutablesCache';
 import { IntervalPitch } from '../tuning/IntervalPitch';
-import { ScaleAbstract } from './ScaleInterface';
+import { ScaleAbstract } from './ScaleAbstract';
 
 type HashingObject = IntervalPitch[];
 export class ScalePitch extends ScaleAbstract<IntervalPitch, number> {
@@ -15,7 +15,7 @@ export class ScalePitch extends ScaleAbstract<IntervalPitch, number> {
             return ret;
         },
         function (scale: ScalePitch): HashingObject {
-            return scale.intervals;
+            return scale.intraIntervals;
         },
         function (hashingObject: HashingObject): ScalePitch {
             return new ScalePitch(...hashingObject);
@@ -30,9 +30,14 @@ export class ScalePitch extends ScaleAbstract<IntervalPitch, number> {
         return ScalePitch.immutablesCache.getOrCreate(intervals);
     }
 
+    getMode(n: number): ScalePitch {
+        let intervals = this.getModeIntraIntervals(n);
+        return ScalePitch.fromIntervals(...intervals);
+    }
+
     protected calculateDegrees() {
         this._precalcDegrees = [];
-        for (let i = 0; i < this._intervals.length - 1; i++) {
+        for (let i = 0; i < this._intraIntervals.length - 1; i++) {
             this._precalcDegrees.push(i);
         }
         Object.freeze(this._precalcDegrees);

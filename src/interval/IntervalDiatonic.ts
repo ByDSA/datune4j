@@ -25,7 +25,7 @@ export class IntervalDiatonic implements IntervalSymbolic<Diatonic> {
             return "" + num;
         },
         function (intervalDiatonic: IntervalDiatonic): HashingObject {
-            return intervalDiatonic.number;
+            return intervalDiatonic.intValue;
         },
         function (num: HashingObject): IntervalDiatonic {
             return new IntervalDiatonic(num);
@@ -42,14 +42,14 @@ export class IntervalDiatonic implements IntervalSymbolic<Diatonic> {
     }
 
     public getAdd(interval: IntervalDiatonic): IntervalDiatonic {
-        return IntervalDiatonic.from(this.number + interval.number);
+        return IntervalDiatonic.from(this.intValue + interval.intValue);
     }
 
     public getSub(interval: IntervalDiatonic): IntervalDiatonic {
-        return IntervalDiatonic.from(this.number - interval.number);
+        return IntervalDiatonic.from(this.intValue - interval.intValue);
     }
 
-    get number(): number {
+    get intValue(): number {
         return this._number;
     }
 
@@ -72,7 +72,7 @@ export class IntervalDiatonic implements IntervalSymbolic<Diatonic> {
             case IntervalDiatonic.FIFTEENTH: return "FIFTEENTH";
         }
 
-        return "IntervalDiatonic: " + this.number;
+        return "IntervalDiatonic: " + this.intValue;
     }
 
     private static initialize() {

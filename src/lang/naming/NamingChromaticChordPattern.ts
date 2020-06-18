@@ -50,7 +50,7 @@ export const NamingChromaticChordPattern = {
             case ChromaticPattern.THIRTEENTH_MAJ13_a5a9: return Settings.patterns.THIRTEENTH_MAJ13_a5a9;
             case ChromaticPattern.THIRTEENTH_b5a9: return Settings.patterns.THIRTEENTH_b5a9;
         }
-        return chromaticChordPattern.values.toString().replace(/,/g, "-");
+        return chromaticChordPattern.rootIntervals.toString().replace(/,/g, "-");
     },
     toStringShort: function patternShort(chromaticChordPattern: ChromaticPattern): string {
         switch (chromaticChordPattern) {
@@ -101,7 +101,7 @@ export const NamingChromaticChordPattern = {
             case ChromaticPattern.THIRTEENTH_b5a9: return Settings.shortPatterns.THIRTEENTH_b5a9;
         }
 
-        return chromaticChordPattern.values.toString();
+        return chromaticChordPattern.rootIntervals.toString();
     },
     get: function (str: string): ChromaticPattern {
         throw new Error("Can't convert '" + str + "' to ChromaticChordPattern.");

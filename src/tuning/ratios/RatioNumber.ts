@@ -12,4 +12,8 @@ export class RatioNumber extends Ratio {
     get value(): number {
         return this.num;
     }
+
+    getMult(ratio: Ratio): Ratio {
+        return RatioNumber.from(this.value * ratio.value);
+    }
 }

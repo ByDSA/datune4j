@@ -1,6 +1,7 @@
 import { DiatonicAltDegree } from "../degrees/scale/DiatonicAltDegree";
 import { DiatonicDegree } from "../degrees/scale/DiatonicDegree";
 import { DegreeFunction } from "../function/DegreeFunction";
+import { IntervalDiatonicAlt } from "../interval/IntervalDiatonicAlt";
 import { Language } from "../lang/Language";
 import * as precalc from "../precalc";
 import { Settings } from "../settings/Settings";
@@ -14,14 +15,159 @@ precalc.settings();
 precalc.diatonicDegrees();
 precalc.degreeFunctions();
 
-test('Scale: ', () => {
+test.only('precalc', () => {
     let scale = Scale.MAJOR;
 
+    expect(scale).not.toBeUndefined();
     expect(scale).toBe(Scale.MAJOR);
 });
 
-test('Scale: degrees not null or undefined', () => {
+test('precalc all', () => {
+    expect(Scale.MAJOR).not.toBeUndefined();
+    expect(Scale.DORIAN).not.toBeUndefined();
+    expect(Scale.PHRYGIAN).not.toBeUndefined();
+    expect(Scale.LYDIAN).not.toBeUndefined();
+    expect(Scale.MIXOLYDIAN).not.toBeUndefined();
+    expect(Scale.MINOR).not.toBeUndefined();
+    expect(Scale.LOCRIAN).not.toBeUndefined();
+
+    expect(Scale.HARMONIC_MINOR).not.toBeUndefined();
+    expect(Scale.LOCRIAN_a6).not.toBeUndefined();
+    expect(Scale.IONIAN_a5).not.toBeUndefined();
+    expect(Scale.DORIAN_a4).not.toBeUndefined();
+    expect(Scale.MIXOLYDIAN_b9_b13).not.toBeUndefined();
+    expect(Scale.LYDIAN_a2).not.toBeUndefined();
+    expect(Scale.SUPERLOCRIAN_bb7).not.toBeUndefined();
+
+    expect(Scale.HARMONIC_MAJOR).not.toBeUndefined();
+    expect(Scale.DORIAN_b5).not.toBeUndefined();
+    expect(Scale.PHRYGIAN_b4).not.toBeUndefined();
+    expect(Scale.LYDIAN_b3).not.toBeUndefined();
+    expect(Scale.MIXOLYDIAN_b2).not.toBeUndefined();
+    expect(Scale.AEOLIAN_b1).not.toBeUndefined();
+    expect(Scale.LOCRIAN_bb7).not.toBeUndefined();
+
+    expect(Scale.MELODIC_MINOR).not.toBeUndefined();
+    expect(Scale.DORIAN_b2).not.toBeUndefined();
+    expect(Scale.LYDIAN_a5).not.toBeUndefined();
+    expect(Scale.LYDIAN_b7).not.toBeUndefined();
+    expect(Scale.MIXOLYDIAN_b13).not.toBeUndefined();
+    expect(Scale.LOCRIAN_a2).not.toBeUndefined();
+    expect(Scale.SUPERLOCRIAN).not.toBeUndefined();
+
+    expect(Scale.DOUBLE_HARMONIC).not.toBeUndefined();
+    expect(Scale.LYDIAN_a2_a6).not.toBeUndefined();
+    expect(Scale.ULTRAPHRYGIAN).not.toBeUndefined();
+    expect(Scale.HUNGARIAN_MINOR).not.toBeUndefined();
+    expect(Scale.ORIENTAL).not.toBeUndefined();
+    expect(Scale.IONIAN_AUGMENTED_a2).not.toBeUndefined();
+    expect(Scale.LOCRIAN_bb3_bb7).not.toBeUndefined();
+
+    expect(Scale.NEAPOLITAN_MINOR).not.toBeUndefined();
+    expect(Scale.NEAPOLITAN_MAJOR).not.toBeUndefined();
+
+    // 6
+    expect(Scale.BLUES_b5).not.toBeUndefined();
+    expect(Scale.BLUES_a4).not.toBeUndefined();
+
+    // 5
+    expect(Scale.PENTATONIC_MINOR).not.toBeUndefined();
+    expect(Scale.PENTATONIC).not.toBeUndefined();
+    expect(Scale.EGYPCIAN).not.toBeUndefined();
+    expect(Scale.BLUES_MINOR).not.toBeUndefined();
+    expect(Scale.BLUES_MAJOR).not.toBeUndefined();
+
+    // Symmetric
+    expect(Scale.DOM7b5).not.toBeUndefined();
+    expect(Scale.AUGMENTED_TRIAD).not.toBeUndefined();
+    expect(Scale.DIMINISHED_7th).not.toBeUndefined();
+    expect(Scale.HALF_DIMINISHED).not.toBeUndefined();
+    expect(Scale.CHROMATIC).not.toBeUndefined();
+    expect(Scale.WHOLE_TONE).not.toBeUndefined();
+    expect(Scale.MESSIAEN_V_TRUNCATED).not.toBeUndefined();
+    expect(Scale.MESSIAEN_INV_III_V_TRUNCATED_n2).not.toBeUndefined();
+    expect(Scale.MESSIAEN_V).not.toBeUndefined();
+    expect(Scale.RAGA_INDRUPRIYA_INDIA).not.toBeUndefined();
+    expect(Scale.MESSIAEN_II_TRUNCATED_n3).not.toBeUndefined();
+    expect(Scale.MESSIAEN_III_INV).not.toBeUndefined();
+    expect(Scale.MESSIAEN_IV).not.toBeUndefined();
+    expect(Scale.MESSIAEN_VI).not.toBeUndefined();
+    expect(Scale.MESSIAEN_VII).not.toBeUndefined();
+
+    // Bebop
+    expect(Scale.BEBOP_MAJOR).not.toBeUndefined();
+    expect(Scale.BEBOP_DORIAN).not.toBeUndefined();
+    expect(Scale.BEBOP_DOMINANT).not.toBeUndefined();
+    expect(Scale.BEBOP_MELODIC_MINOR).not.toBeUndefined();
+    expect(Scale.BEBOP_HARMONIC_MINOR).not.toBeUndefined();
+
     for (let scale of Scale.sets.all()) {
+        expect(scale).not.toBeUndefined();
+        expect(scale).not.toBeNull();
+    }
+});
+
+test('getModeIntervals - -III  = MINOR.intervals', () => {
+    let actual: IntervalDiatonicAlt[] = (<any>Scale.MAJOR).getModeIntervals(-3);
+    let expected: IntervalDiatonicAlt[] = [
+        IntervalDiatonicAlt.MAJOR_SECOND,
+        IntervalDiatonicAlt.MINOR_SECOND,
+        IntervalDiatonicAlt.MAJOR_SECOND,
+        IntervalDiatonicAlt.MAJOR_SECOND,
+        IntervalDiatonicAlt.MINOR_SECOND,
+        IntervalDiatonicAlt.MAJOR_SECOND,
+        IntervalDiatonicAlt.MAJOR_SECOND,
+    ];
+
+    expect(actual).toStrictEqual(expected);
+});
+
+test('getModeIntervals - VI  = MINOR.intervals', () => {
+    let actual: IntervalDiatonicAlt[] = (<any>Scale.MAJOR).getModeIntervals(6);
+    let expected: IntervalDiatonicAlt[] = [
+        IntervalDiatonicAlt.MAJOR_SECOND,
+        IntervalDiatonicAlt.MINOR_SECOND,
+        IntervalDiatonicAlt.MAJOR_SECOND,
+        IntervalDiatonicAlt.MAJOR_SECOND,
+        IntervalDiatonicAlt.MINOR_SECOND,
+        IntervalDiatonicAlt.MAJOR_SECOND,
+        IntervalDiatonicAlt.MAJOR_SECOND,
+    ];
+
+    expect(actual).toStrictEqual(expected);
+});
+
+test('getMode - I = MAJOR', () => {
+    let mode = Scale.MAJOR.getMode(1);
+    let expected = Scale.MAJOR;
+
+    expect(mode).toBe(expected);
+});
+
+test('getMode - -I = MAJOR', () => {
+    let mode = Scale.MAJOR.getMode(-1);
+    let expected = Scale.MAJOR;
+
+    expect(mode).toBe(expected);
+});
+
+test('getMode - II = DORIAN', () => {
+    let mode = Scale.MAJOR.getMode(2);
+    let expected = Scale.DORIAN;
+
+    expect(mode).toBe(expected);
+});
+
+test('getMode - -II = LOCRIAN', () => {
+    let mode = Scale.MAJOR.getMode(-2);
+    let expected = Scale.LOCRIAN;
+
+    expect(mode).toBe(expected);
+});
+
+test('degrees not null or undefined', () => {
+    for (let scale of Scale.sets.all()) {
+        expect(scale.degrees).not.toBeUndefined();
         expect(scale.degrees).not.toBeNull();
     }
 });
@@ -344,18 +490,6 @@ test('fromString - ENG - BLUES b5', () => {
 test('fromString - ENG - SUPERLOCRIAN bb7', () => {
     Settings.lang = Language.ENG;
     expect(Scale.fromString("SUPERLOCRIAN bb7")).toBe(Scale.SUPERLOCRIAN_bb7);
-});
-
-test('fromString - 2-2-1-2-2-2-1 (MAJOR)', () => {
-    expect(Scale.fromString("2-2-1-2-2-2-1")).toBe(Scale.MAJOR);
-});
-
-test('fromString - 2:2-1:2-2:2-1 (MAJOR)', () => {
-    expect(Scale.fromString("2:2-1:2-2:2-1")).toBe(Scale.MAJOR);
-});
-
-test('fromString - 2 2, 1 2-2 2:1 (MAJOR)', () => {
-    expect(Scale.fromString("2 2, 1 2-2 2:1")).toBe(Scale.MAJOR);
 });
 
 test('fromString - M2:M2-m2, M2-M2:M2-m2 (MAJOR)', () => {

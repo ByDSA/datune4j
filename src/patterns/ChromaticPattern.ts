@@ -4,8 +4,8 @@ import { Chromatic } from '../degrees/Chromatic';
 import { NamingChromaticChordPattern } from '../lang/naming/NamingChromaticChordPattern';
 import { DegreePattern } from '../patterns/DegreePattern';
 
-type Difference = number;
-export class ChromaticPattern implements DegreePattern<Chromatic>, Iterable<Difference> {
+type I = number;
+export class ChromaticPattern implements DegreePattern<Chromatic, I>, Iterable<I> {
     public static POWER_CHORD: ChromaticPattern;
     public static TRIAD_MAJOR: ChromaticPattern;
     public static TRIAD_MINOR: ChromaticPattern;
@@ -73,28 +73,53 @@ export class ChromaticPattern implements DegreePattern<Chromatic>, Iterable<Diff
 
     public static all: () => ChromaticPattern[];
 
-    private static immutablesCache = new ImmutablesCache<ChromaticPattern, Difference[]>(
-        function (hashingObject: Difference[]) {
+    private static immutablesCache = new ImmutablesCache<ChromaticPattern, I[]>(
+        function (hashingObject: I[]) {
             return hashingObject.toString();
         },
         function (chromaticChordPattern: ChromaticPattern) {
-            return chromaticChordPattern._values;
+            return chromaticChordPattern._rootIntervals;
         },
-        function (values: Difference[]): ChromaticPattern {
+        function (values: I[]): ChromaticPattern {
             return new ChromaticPattern(...values);
         }
     );
 
-    private _values: Difference[];
+    private _rootIntervals: I[];
+    private _precalcIntraIntervals: I[];
     private _rootIndex: number;
 
-    private constructor(...values: Difference[]) {
-        this._values = values;
+    private constructor(...values: I[]) {
+        this._rootIntervals = values;
         this._rootIndex = 0;
+        Object.freeze(this._rootIntervals);
+        Object.freeze(this._rootIndex);
     }
 
-    public static from(...values: Difference[]): ChromaticPattern {
-        return this.immutablesCache.getOrCreate(values);
+    public static fromRootIntervals(...rootIntervals: I[]): ChromaticPattern {
+        if (rootIntervals[0] > 0)
+            rootIntervals = this.getStartFromZero(rootIntervals);
+        return this.immutablesCache.getOrCreate(rootIntervals);
+    }
+
+    private static getStartFromZero(array: number[]) {
+        return array.map((ic, i, a) => ic - a[0]);
+    }
+
+    public static fromIntraIntervals(...intraIntervals: I[]): ChromaticPattern {
+        let baseIntervals: I[] = [0];
+        for (let i = 0; i < intraIntervals.length; i++) {
+            let baseInterval_i = baseIntervals[baseIntervals.length - 1] + intraIntervals[i];
+            baseIntervals.push(baseInterval_i);
+        }
+
+        let ret = this.fromRootIntervals(...baseIntervals);
+        if (!Object.isFrozen(ret._precalcIntraIntervals)) {
+            ret._precalcIntraIntervals = Array.from(intraIntervals);
+            Object.freeze(ret._precalcIntraIntervals);
+        }
+
+        return ret;
     }
 
     public static fromString(strValue: string): ChromaticPattern {
@@ -117,28 +142,31 @@ export class ChromaticPattern implements DegreePattern<Chromatic>, Iterable<Diff
         return strValue;
     }
 
-
-    [Symbol.iterator](): Iterator<Difference> {
-        return this.values[Symbol.iterator]();
+    [Symbol.iterator](): Iterator<I> {
+        return this.rootIntervals[Symbol.iterator]();
     }
 
     public get rootIndex(): number {
         return this._rootIndex;
     }
 
-    public get values(): Difference[] {
-        return Array.from(this._values);
+    public get rootIntervals(): I[] {
+        return this._rootIntervals;
+    }
+
+    get length(): number {
+        return this._rootIntervals.length;
     }
 
     public getInv(n: number = 1): ChromaticPattern {
-        let values = this.values;
+        let values = Array.from(this.rootIntervals);
         for (let i = 0; i < n; i++) {
             let firstValue = values.shift();
             values.push(firstValue + Chromatic.NUMBER);
             values = values.map((value: number) => value - values[0]);
         }
 
-        return ChromaticPattern.from(...values);
+        return ChromaticPattern.fromRootIntervals(...values);
     }
 
     public toString() {
@@ -150,76 +178,76 @@ export class ChromaticPattern implements DegreePattern<Chromatic>, Iterable<Diff
     }
 
     public get inversionNumber(): number {
-        return (this.values.length - this.rootIndex) % this.values.length;
+        return (this.rootIntervals.length - this.rootIndex) % this.rootIntervals.length;
     }
 
     private static initialize() {
-        ChromaticPattern.POWER_CHORD = ChromaticPattern.from(0, 7);
-        ChromaticPattern.TRIAD_MAJOR = ChromaticPattern.from(0, 4, 7);
+        ChromaticPattern.POWER_CHORD = ChromaticPattern.fromRootIntervals(0, 7);
+        ChromaticPattern.TRIAD_MAJOR = ChromaticPattern.fromRootIntervals(0, 4, 7);
         ChromaticPattern.TRIAD_MAJOR.getInv(1)._rootIndex = 2;
         ChromaticPattern.TRIAD_MAJOR.getInv(2)._rootIndex = 1;
-        ChromaticPattern.TRIAD_MINOR = ChromaticPattern.from(0, 3, 7);
-        ChromaticPattern.TRIAD_DIMINISHED = ChromaticPattern.from(0, 3, 6);
-        ChromaticPattern.TRIAD_AUGMENTED = ChromaticPattern.from(0, 4, 8);
-        ChromaticPattern.TRIAD_SUS4 = ChromaticPattern.from(0, 5, 7);
-        ChromaticPattern.TRIAD_QUARTAL = ChromaticPattern.from(0, 5, 10);
-        ChromaticPattern.SEVENTH = ChromaticPattern.from(0, 4, 7, 10);
-        ChromaticPattern.SEVENTH_b5 = ChromaticPattern.from(0, 4, 6, 10);
-        ChromaticPattern.SEVENTH_MAJ7_b5 = ChromaticPattern.from(0, 4, 6, 11);
-        ChromaticPattern.SEVENTH_a5 = ChromaticPattern.from(0, 4, 8, 10);
-        ChromaticPattern.SEVENTH_SUS4 = ChromaticPattern.from(0, 5, 7, 10);
-        ChromaticPattern.SEVENTH_SUS4_b9 = ChromaticPattern.from(0, 5, 7, 10, 15);
-        ChromaticPattern.SEVENTH_MINOR = ChromaticPattern.from(0, 3, 7, 10);
-        ChromaticPattern.SEVENTH_MINOR_b5 = ChromaticPattern.from(0, 3, 6, 10);
-        ChromaticPattern.SEVENTH_MINOR_a5 = ChromaticPattern.from(0, 3, 8, 10);
-        ChromaticPattern.SIXTH = ChromaticPattern.from(0, 4, 7, 9);
-        ChromaticPattern.SIXTH_MINOR = ChromaticPattern.from(0, 3, 7, 9);
-        ChromaticPattern.SIXTH_SUS4 = ChromaticPattern.from(0, 5, 7, 9);
-        ChromaticPattern.SEVENTH_MAJ7 = ChromaticPattern.from(0, 4, 7, 11);
-        ChromaticPattern.SEVENTH_MINOR_MAJ7 = ChromaticPattern.from(0, 3, 7, 11);
-        ChromaticPattern.SIXTH_ADD9 = ChromaticPattern.from(0, 4, 7, 9, 14);
-        ChromaticPattern.SIXTH_MINOR_ADD9 = ChromaticPattern.from(0, 3, 7, 9, 14);
-        ChromaticPattern.SEVENTH_b9 = ChromaticPattern.from(0, 4, 7, 10, 13);
-        ChromaticPattern.SEVENTH_a9 = ChromaticPattern.from(0, 4, 7, 10, 15);
-        ChromaticPattern.SEVENTH_MINOR_b9 = ChromaticPattern.from(0, 3, 7, 10, 13);
-        ChromaticPattern.SEVENTH_ADD11 = ChromaticPattern.from(0, 4, 7, 10, 17);
-        ChromaticPattern.SEVENTH_ADD13 = ChromaticPattern.from(0, 4, 7, 10, 21);
-        ChromaticPattern.NINTH = ChromaticPattern.from(0, 4, 7, 10, 14);
-        ChromaticPattern.NINTH_MINOR = ChromaticPattern.from(0, 3, 7, 10, 14);
-        ChromaticPattern.NINTH_b5 = ChromaticPattern.from(0, 4, 6, 10, 14);
-        ChromaticPattern.NINTH_a5 = ChromaticPattern.from(0, 4, 8, 10, 14);
-        ChromaticPattern.NINTH_SUS4 = ChromaticPattern.from(0, 5, 7, 10, 14);
-        ChromaticPattern.NINTH_MAJ9 = ChromaticPattern.from(0, 4, 7, 11, 14);
-        ChromaticPattern.NINTH_MINOR_MAJ9 = ChromaticPattern.from(0, 3, 7, 11, 14);
-        ChromaticPattern.NINTH_ADD6 = ChromaticPattern.from(0, 4, 7, 9, 10, 14);
-        ChromaticPattern.NINTH_a11 = ChromaticPattern.from(0, 4, 7, 10, 14, 18);
-        ChromaticPattern.NINTH_MAJ9_a11 = ChromaticPattern.from(0, 4, 7, 11, 14, 18);
-        ChromaticPattern.ELEVENTH = ChromaticPattern.from(0, 4, 7, 10, 14, 17);
-        ChromaticPattern.ELEVENTH_MINOR = ChromaticPattern.from(0, 3, 7, 10, 14, 17);
-        ChromaticPattern.ELEVENTH_b9 = ChromaticPattern.from(0, 4, 7, 10, 13, 17);
-        ChromaticPattern.ELEVENTH_a9 = ChromaticPattern.from(0, 4, 7, 10, 15, 17);
-        ChromaticPattern.ELEVENTH_MAJ11 = ChromaticPattern.from(0, 4, 7, 11, 14, 17);
-        ChromaticPattern.ELEVENTH_MINOR_MAJ11 = ChromaticPattern.from(0, 3, 7, 11, 14, 17);
-        ChromaticPattern.THIRTEENTH_MINOR = ChromaticPattern.from(0, 3, 7, 10, 14, 17, 21);
-        ChromaticPattern.THIRTEENTH_SUS4 = ChromaticPattern.from(0, 5, 7, 10, 14, 17, 21);
-        ChromaticPattern.THIRTEENTH_b5 = ChromaticPattern.from(0, 4, 6, 10, 14, 17, 21);
-        ChromaticPattern.THIRTEENTH_a5 = ChromaticPattern.from(0, 4, 8, 10, 14, 17, 21);
-        ChromaticPattern.THIRTEENTH_b9 = ChromaticPattern.from(0, 4, 7, 10, 13, 17, 21);
-        ChromaticPattern.THIRTEENTH_a9 = ChromaticPattern.from(0, 4, 7, 10, 15, 17, 21);
-        ChromaticPattern.THIRTEENTH_b5b9 = ChromaticPattern.from(0, 4, 6, 10, 13, 17, 21);
-        ChromaticPattern.THIRTEENTH_b5a9 = ChromaticPattern.from(0, 4, 6, 10, 15, 17, 21);
-        ChromaticPattern.THIRTEENTH_a5b9 = ChromaticPattern.from(0, 4, 8, 10, 13, 17, 21);
-        ChromaticPattern.THIRTEENTH_a5a9 = ChromaticPattern.from(0, 4, 8, 10, 15, 17, 21);
-        ChromaticPattern.THIRTEENTH_MAJ13 = ChromaticPattern.from(0, 4, 7, 11, 14, 17, 21);
-        ChromaticPattern.THIRTEENTH_MINOR_MAJ13 = ChromaticPattern.from(0, 3, 7, 11, 14, 17, 21);
-        ChromaticPattern.THIRTEENTH_MAJ13_b5 = ChromaticPattern.from(0, 4, 6, 11, 14, 17, 21);
-        ChromaticPattern.THIRTEENTH_MAJ13_a5 = ChromaticPattern.from(0, 4, 8, 11, 14, 17, 21);
-        ChromaticPattern.THIRTEENTH_MAJ13_b9 = ChromaticPattern.from(0, 4, 7, 11, 13, 17, 21);
-        ChromaticPattern.THIRTEENTH_MAJ13_a9 = ChromaticPattern.from(0, 4, 7, 11, 15, 17, 21);
-        ChromaticPattern.THIRTEENTH_MAJ13_b5b9 = ChromaticPattern.from(0, 4, 6, 11, 13, 17, 21);
-        ChromaticPattern.THIRTEENTH_MAJ13_b5a9 = ChromaticPattern.from(0, 4, 6, 11, 15, 17, 21);
-        ChromaticPattern.THIRTEENTH_MAJ13_a5b9 = ChromaticPattern.from(0, 4, 8, 11, 13, 17, 21);
-        ChromaticPattern.THIRTEENTH_MAJ13_a5a9 = ChromaticPattern.from(0, 4, 8, 11, 15, 17, 21);
+        ChromaticPattern.TRIAD_MINOR = ChromaticPattern.fromRootIntervals(0, 3, 7);
+        ChromaticPattern.TRIAD_DIMINISHED = ChromaticPattern.fromRootIntervals(0, 3, 6);
+        ChromaticPattern.TRIAD_AUGMENTED = ChromaticPattern.fromRootIntervals(0, 4, 8);
+        ChromaticPattern.TRIAD_SUS4 = ChromaticPattern.fromRootIntervals(0, 5, 7);
+        ChromaticPattern.TRIAD_QUARTAL = ChromaticPattern.fromRootIntervals(0, 5, 10);
+        ChromaticPattern.SEVENTH = ChromaticPattern.fromRootIntervals(0, 4, 7, 10);
+        ChromaticPattern.SEVENTH_b5 = ChromaticPattern.fromRootIntervals(0, 4, 6, 10);
+        ChromaticPattern.SEVENTH_MAJ7_b5 = ChromaticPattern.fromRootIntervals(0, 4, 6, 11);
+        ChromaticPattern.SEVENTH_a5 = ChromaticPattern.fromRootIntervals(0, 4, 8, 10);
+        ChromaticPattern.SEVENTH_SUS4 = ChromaticPattern.fromRootIntervals(0, 5, 7, 10);
+        ChromaticPattern.SEVENTH_SUS4_b9 = ChromaticPattern.fromRootIntervals(0, 5, 7, 10, 15);
+        ChromaticPattern.SEVENTH_MINOR = ChromaticPattern.fromRootIntervals(0, 3, 7, 10);
+        ChromaticPattern.SEVENTH_MINOR_b5 = ChromaticPattern.fromRootIntervals(0, 3, 6, 10);
+        ChromaticPattern.SEVENTH_MINOR_a5 = ChromaticPattern.fromRootIntervals(0, 3, 8, 10);
+        ChromaticPattern.SIXTH = ChromaticPattern.fromRootIntervals(0, 4, 7, 9);
+        ChromaticPattern.SIXTH_MINOR = ChromaticPattern.fromRootIntervals(0, 3, 7, 9);
+        ChromaticPattern.SIXTH_SUS4 = ChromaticPattern.fromRootIntervals(0, 5, 7, 9);
+        ChromaticPattern.SEVENTH_MAJ7 = ChromaticPattern.fromRootIntervals(0, 4, 7, 11);
+        ChromaticPattern.SEVENTH_MINOR_MAJ7 = ChromaticPattern.fromRootIntervals(0, 3, 7, 11);
+        ChromaticPattern.SIXTH_ADD9 = ChromaticPattern.fromRootIntervals(0, 4, 7, 9, 14);
+        ChromaticPattern.SIXTH_MINOR_ADD9 = ChromaticPattern.fromRootIntervals(0, 3, 7, 9, 14);
+        ChromaticPattern.SEVENTH_b9 = ChromaticPattern.fromRootIntervals(0, 4, 7, 10, 13);
+        ChromaticPattern.SEVENTH_a9 = ChromaticPattern.fromRootIntervals(0, 4, 7, 10, 15);
+        ChromaticPattern.SEVENTH_MINOR_b9 = ChromaticPattern.fromRootIntervals(0, 3, 7, 10, 13);
+        ChromaticPattern.SEVENTH_ADD11 = ChromaticPattern.fromRootIntervals(0, 4, 7, 10, 17);
+        ChromaticPattern.SEVENTH_ADD13 = ChromaticPattern.fromRootIntervals(0, 4, 7, 10, 21);
+        ChromaticPattern.NINTH = ChromaticPattern.fromRootIntervals(0, 4, 7, 10, 14);
+        ChromaticPattern.NINTH_MINOR = ChromaticPattern.fromRootIntervals(0, 3, 7, 10, 14);
+        ChromaticPattern.NINTH_b5 = ChromaticPattern.fromRootIntervals(0, 4, 6, 10, 14);
+        ChromaticPattern.NINTH_a5 = ChromaticPattern.fromRootIntervals(0, 4, 8, 10, 14);
+        ChromaticPattern.NINTH_SUS4 = ChromaticPattern.fromRootIntervals(0, 5, 7, 10, 14);
+        ChromaticPattern.NINTH_MAJ9 = ChromaticPattern.fromRootIntervals(0, 4, 7, 11, 14);
+        ChromaticPattern.NINTH_MINOR_MAJ9 = ChromaticPattern.fromRootIntervals(0, 3, 7, 11, 14);
+        ChromaticPattern.NINTH_ADD6 = ChromaticPattern.fromRootIntervals(0, 4, 7, 9, 10, 14);
+        ChromaticPattern.NINTH_a11 = ChromaticPattern.fromRootIntervals(0, 4, 7, 10, 14, 18);
+        ChromaticPattern.NINTH_MAJ9_a11 = ChromaticPattern.fromRootIntervals(0, 4, 7, 11, 14, 18);
+        ChromaticPattern.ELEVENTH = ChromaticPattern.fromRootIntervals(0, 4, 7, 10, 14, 17);
+        ChromaticPattern.ELEVENTH_MINOR = ChromaticPattern.fromRootIntervals(0, 3, 7, 10, 14, 17);
+        ChromaticPattern.ELEVENTH_b9 = ChromaticPattern.fromRootIntervals(0, 4, 7, 10, 13, 17);
+        ChromaticPattern.ELEVENTH_a9 = ChromaticPattern.fromRootIntervals(0, 4, 7, 10, 15, 17);
+        ChromaticPattern.ELEVENTH_MAJ11 = ChromaticPattern.fromRootIntervals(0, 4, 7, 11, 14, 17);
+        ChromaticPattern.ELEVENTH_MINOR_MAJ11 = ChromaticPattern.fromRootIntervals(0, 3, 7, 11, 14, 17);
+        ChromaticPattern.THIRTEENTH_MINOR = ChromaticPattern.fromRootIntervals(0, 3, 7, 10, 14, 17, 21);
+        ChromaticPattern.THIRTEENTH_SUS4 = ChromaticPattern.fromRootIntervals(0, 5, 7, 10, 14, 17, 21);
+        ChromaticPattern.THIRTEENTH_b5 = ChromaticPattern.fromRootIntervals(0, 4, 6, 10, 14, 17, 21);
+        ChromaticPattern.THIRTEENTH_a5 = ChromaticPattern.fromRootIntervals(0, 4, 8, 10, 14, 17, 21);
+        ChromaticPattern.THIRTEENTH_b9 = ChromaticPattern.fromRootIntervals(0, 4, 7, 10, 13, 17, 21);
+        ChromaticPattern.THIRTEENTH_a9 = ChromaticPattern.fromRootIntervals(0, 4, 7, 10, 15, 17, 21);
+        ChromaticPattern.THIRTEENTH_b5b9 = ChromaticPattern.fromRootIntervals(0, 4, 6, 10, 13, 17, 21);
+        ChromaticPattern.THIRTEENTH_b5a9 = ChromaticPattern.fromRootIntervals(0, 4, 6, 10, 15, 17, 21);
+        ChromaticPattern.THIRTEENTH_a5b9 = ChromaticPattern.fromRootIntervals(0, 4, 8, 10, 13, 17, 21);
+        ChromaticPattern.THIRTEENTH_a5a9 = ChromaticPattern.fromRootIntervals(0, 4, 8, 10, 15, 17, 21);
+        ChromaticPattern.THIRTEENTH_MAJ13 = ChromaticPattern.fromRootIntervals(0, 4, 7, 11, 14, 17, 21);
+        ChromaticPattern.THIRTEENTH_MINOR_MAJ13 = ChromaticPattern.fromRootIntervals(0, 3, 7, 11, 14, 17, 21);
+        ChromaticPattern.THIRTEENTH_MAJ13_b5 = ChromaticPattern.fromRootIntervals(0, 4, 6, 11, 14, 17, 21);
+        ChromaticPattern.THIRTEENTH_MAJ13_a5 = ChromaticPattern.fromRootIntervals(0, 4, 8, 11, 14, 17, 21);
+        ChromaticPattern.THIRTEENTH_MAJ13_b9 = ChromaticPattern.fromRootIntervals(0, 4, 7, 11, 13, 17, 21);
+        ChromaticPattern.THIRTEENTH_MAJ13_a9 = ChromaticPattern.fromRootIntervals(0, 4, 7, 11, 15, 17, 21);
+        ChromaticPattern.THIRTEENTH_MAJ13_b5b9 = ChromaticPattern.fromRootIntervals(0, 4, 6, 11, 13, 17, 21);
+        ChromaticPattern.THIRTEENTH_MAJ13_b5a9 = ChromaticPattern.fromRootIntervals(0, 4, 6, 11, 15, 17, 21);
+        ChromaticPattern.THIRTEENTH_MAJ13_a5b9 = ChromaticPattern.fromRootIntervals(0, 4, 8, 11, 13, 17, 21);
+        ChromaticPattern.THIRTEENTH_MAJ13_a5a9 = ChromaticPattern.fromRootIntervals(0, 4, 8, 11, 15, 17, 21);
 
         ChromaticPattern.all = function () {
             return [

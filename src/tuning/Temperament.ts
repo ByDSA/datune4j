@@ -17,7 +17,7 @@ export abstract class Temperament {
         this.ET12 = new (class extends Temperament {
             public getIntervalPitch(interval: IntervalSymbolic<DiatonicAlt>): IntervalPitch {
                 if (interval instanceof IntervalDiatonicAlt) {
-                    switch (interval.semis) {
+                    switch (interval.intervalChromatic) {
                         case 0: return IntervalPitch.UNISON;
                         case 1: return IntervalPitch.ET12.MINOR_SECOND;
                         case 2: return IntervalPitch.ET12.MAJOR_SECOND;
@@ -40,7 +40,7 @@ export abstract class Temperament {
         this.LIMIT_5_SYMMETRIC_N1 = new (class extends Temperament {
             public getIntervalPitch(interval: IntervalSymbolic<DiatonicAlt>): IntervalPitch {
                 if (interval instanceof IntervalDiatonicAlt) {
-                    switch (interval.semis) {
+                    switch (interval.intervalChromatic) {
                         case 0: return IntervalPitch.UNISON;
                         case 1: return IntervalPitch.JUST.MINOR_SECOND;
                         case 2: return IntervalPitch.JUST.MAJOR_TONE;
@@ -67,7 +67,7 @@ export abstract class Temperament {
         this.LIMIT_5_SYMMETRIC_N2 = new (class extends Temperament {
             public getIntervalPitch(interval: IntervalSymbolic<DiatonicAlt>): IntervalPitch {
                 if (interval instanceof IntervalDiatonicAlt) {
-                    switch (interval.semis) {
+                    switch (interval.intervalChromatic) {
                         case 2: return IntervalPitch.JUST.MINOR_TONE;
                         case 10: return IntervalPitch.JUST.MINOR_SEVENTH_GREATER;
                         default: return Temperament.LIMIT_5_SYMMETRIC_N1.getIntervalPitch(interval);

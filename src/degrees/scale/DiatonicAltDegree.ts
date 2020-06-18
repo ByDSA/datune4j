@@ -9,6 +9,7 @@ import { Settings } from '../../settings/Settings';
 import { Scale } from '../../tonality/Scale';
 import { DiatonicDegree } from './DiatonicDegree';
 
+const ScaleMajor = [0, 2, 4, 5, 7, 9, 11];
 type HashingObjectType = { diatonicDegree: DiatonicDegree, alts: number };
 export class DiatonicAltDegree {
     public static I: DiatonicAltDegree;
@@ -69,22 +70,22 @@ export class DiatonicAltDegree {
     public get intervalDiatonicAlt(): IntervalDiatonicAlt {
         let semis = Diatonic.fromInt(this.diatonicDegree.intValue).chromatic.intValue + this.alts;
         let intervalDiatonic = IntervalDiatonic.from(this.diatonicDegree.intValue);
-        return IntervalDiatonicAlt.fromSemisInterval(semis, intervalDiatonic);
+        return IntervalDiatonicAlt.fromIntervals(semis, intervalDiatonic);
     }
 
     getAdd(interval: IntervalDiatonicAlt) {
-        let semis = this.semis + interval.semis;
-        let diatonicDegreeInt = this.diatonicDegree.intValue + interval.intervalDiatonic.number;
+        let semis = this.semis + interval.intervalChromatic;
+        let diatonicDegreeInt = this.diatonicDegree.intValue + interval.intervalDiatonic.intValue;
         let diatonicDegree = DiatonicDegree.fromInt(diatonicDegreeInt);
-        let alts = semis - Scale.MAJOR.degrees[diatonicDegree.intValue].semis;
+        let alts = semis - ScaleMajor[diatonicDegree.intValue];
         return DiatonicAltDegree.from(diatonicDegree, alts);
     }
 
     getSub(interval: IntervalDiatonicAlt) {
-        let semis = this.semis - interval.semis;
-        let diatonicDegreeInt = this.diatonicDegree.intValue - interval.intervalDiatonic.number;
+        let semis = this.semis - interval.intervalChromatic;
+        let diatonicDegreeInt = this.diatonicDegree.intValue - interval.intervalDiatonic.intValue;
         let diatonicDegree = DiatonicDegree.fromInt(diatonicDegreeInt);
-        let alts = semis - Scale.MAJOR.degrees[diatonicDegree.intValue].semis;
+        let alts = semis - ScaleMajor[diatonicDegree.intValue];
         return DiatonicAltDegree.from(diatonicDegree, alts);
     }
 

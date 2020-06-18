@@ -1,19 +1,18 @@
-import { IntervalSymbolic } from '../interval/IntervalSymbolic';
-import { ScaleModeUtils } from './ScaleModeUtils';
+import { Utils } from '../common/Utils';
 
 export abstract class ScaleAbstract<I, D> {
-    protected _intervals: I[];
+    protected _intraIntervals: I[];
     protected _precalcDegrees: D[] = null;
     protected _precalcModes: ScaleAbstract<I, D>[] = null;
 
-    protected constructor(...intervals: I[]) {
-        this._intervals = intervals;
-        Object.freeze(this._intervals);
+    protected constructor(...intraIntervals: I[]) {
+        this._intraIntervals = intraIntervals;
+        Object.freeze(this._intraIntervals);
     }
 
-     // Modes
+    // Modes
 
-     public get modes(): ScaleAbstract<I, D>[] {
+    public get modes(): ScaleAbstract<I, D>[] {
         if (!this._precalcModes)
             this.calculateModes();
 
@@ -24,11 +23,23 @@ export abstract class ScaleAbstract<I, D> {
         let scaleTmp: ScaleAbstract<I, D> = this;
         this._precalcModes = [this];
         while (true) {
-            scaleTmp = ScaleModeUtils.getRotatedScale(scaleTmp, 1);
+            scaleTmp = scaleTmp.getMode(2);
             if (scaleTmp == this)
                 break;
             this._precalcModes.push(scaleTmp);
         }
+    }
+
+    abstract getMode(n: number): any;
+
+    protected getModeIntraIntervals(n: number): I[] {
+        let intervals: I[] = this.intraIntervals;
+        if (n > 0)
+            Utils.arrayRotateLeft(intervals, n - 1);
+        else if (n < 0)
+            Utils.arrayRotateRight(intervals, -n - 1);
+
+        return intervals;
     }
 
     // Absolute Intervals
@@ -41,12 +52,12 @@ export abstract class ScaleAbstract<I, D> {
 
     protected abstract calculateDegrees();
 
-    get intervals(): I[] {
-        return Array.from(this._intervals);
+    get intraIntervals(): I[] {
+        return Array.from(this._intraIntervals);
     }
 
     public get length(): number {
-        return this._intervals.length;
+        return this._intraIntervals.length;
     }
 
     hasDegrees(...degrees: D[]): boolean {

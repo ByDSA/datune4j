@@ -17,7 +17,7 @@ precalc.diatonicAltChords();
 precalc.settings();
 
 test('DiatonicAltChord - from: get from ImmutableCache', () => {
-    let diatonicAltChord = DiatonicAltChord.from(
+    let diatonicAltChord = DiatonicAltChord.fromDiatonicAlt(
         [
             DiatonicAlt.C,
             DiatonicAlt.E,
@@ -29,6 +29,12 @@ test('DiatonicAltChord - from: get from ImmutableCache', () => {
     expect(diatonicAltChord).toBe(expected);
 });
 
+test('toString: C', () => {
+    let str = DiatonicAltChord.C.toString();
+
+    let expected = "C";
+    expect(str).toBe(expected);
+});
 test('DiatonicAltChord - toString: C7', () => {
     let str = DiatonicAltChord.C7.toString();
 
@@ -79,7 +85,6 @@ test('DiatonicAltChord - precalc: CmMaj7', () => {
     ]);
 });
 
-
 test('C7 = C E G Bb', () => {
     let chord = DiatonicAltChord.C7;
 
@@ -89,39 +94,40 @@ test('C7 = C E G Bb', () => {
     expect(chord.notes[3]).toBe(DiatonicAlt.Bb);
 });
 
-test('DiatonicAltChord - toString: C + inv = C/E', () => {
+test('toString: C + inv = C/E', () => {
     let str = DiatonicAltChord.C.getInv(1).toString();
 
     let expected = "C/E";
     expect(str).toBe(expected);
 });
 
-test('DiatonicAltChord - toString: C + 2inv = C/E', () => {
+test('toString: C + 2inv = C/E', () => {
     let str = DiatonicAltChord.C.getInv(2).toString();
 
     let expected = "C/G";
     expect(str).toBe(expected);
 });
 
-test('DiatonicAltChord - toString: C + 3inv = C', () => {
+test('toString: C + 3inv = C', () => {
     let str = DiatonicAltChord.C.getInv(3).toString();
 
     let expected = "C";
     expect(str).toBe(expected);
 });
 
-test('DiatonicAltChord - toString: C7 + inv = C7/E', () => {
+test('toString: C7 + inv = C7/E', () => {
     let str = DiatonicAltChord.C7.getInv(1).toString();
 
     let expected = "C7/E";
     expect(str).toBe(expected);
 });
 
-test('DiatonicAltChord - toString: C13b5#9/Gb', () => {
+test('toString: C13b5#9/Gb', () => {
     let pattern = DiatonicAltPattern.THIRTEENTH_b5a9;
     let baseChord = RootPatternChord.from(DiatonicAlt.C, pattern);
     let chord: DiatonicAltChord = <DiatonicAltChord>baseChord.chord;
-    let str = chord.getInv(2).toString();
+    let chordInv2 = chord.getInv(2);
+    let str = chordInv2.toString();
 
     let expected = "C13♭5♯9/G♭";
     expect(str).toBe(expected);
@@ -249,7 +255,7 @@ test('fromString - ENG - " c  " = C MAJOR', () => {
 
 test('fromString - ENG - "bb7" = C SEVENTH', () => {
     Settings.lang = Language.ENG;
-    let expected = DiatonicAltChord.from(
+    let expected = DiatonicAltChord.fromDiatonicAlt(
         [DiatonicAlt.Bb, DiatonicAlt.D, DiatonicAlt.F, DiatonicAlt.Ab]);
     let actual = DiatonicAltChord.fromString("bb7");
     expect(actual).toBe(expected);

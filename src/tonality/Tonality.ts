@@ -98,8 +98,8 @@ export class Tonality {
     private calculateNotes(): void {
         this._notes.push(this.root);
         let i = 2;
-        for (let interval of this.scale.intervals) {
-            if (i > this.scale.intervals.length)
+        for (let interval of this.scale.intraIntervals) {
+            if (i > this.scale.intraIntervals.length)
                 break;
             let lastNote = this._notes[this._notes.length - 1];
             let note = lastNote.getAdd(interval);
@@ -156,14 +156,14 @@ export class Tonality {
 
     private calculateRootChord4() {
         let chordRootPatternPriority = [
-            DiatonicAltPattern.fromPatterns(ChromaticPattern.from(0, 4, 7, 11), DiatonicPattern.SEVENTH),
-            DiatonicAltPattern.fromPatterns(ChromaticPattern.from(0, 3, 7, 11), DiatonicPattern.SEVENTH),
-            DiatonicAltPattern.fromPatterns(ChromaticPattern.from(0, 4, 7, 10), DiatonicPattern.SEVENTH),
-            DiatonicAltPattern.fromPatterns(ChromaticPattern.from(0, 3, 7, 10), DiatonicPattern.SEVENTH),
-            DiatonicAltPattern.fromPatterns(ChromaticPattern.from(0, 3, 6, 10), DiatonicPattern.SEVENTH),
-            DiatonicAltPattern.fromPatterns(ChromaticPattern.from(0, 3, 6, 11), DiatonicPattern.SEVENTH),
-            DiatonicAltPattern.fromPatterns(ChromaticPattern.from(0, 4, 8, 10), DiatonicPattern.SEVENTH),
-            DiatonicAltPattern.fromPatterns(ChromaticPattern.from(0, 4, 8, 11), DiatonicPattern.SEVENTH)
+            DiatonicAltPattern.fromPatterns(ChromaticPattern.fromRootIntervals(0, 4, 7, 11), DiatonicPattern.SEVENTH),
+            DiatonicAltPattern.fromPatterns(ChromaticPattern.fromRootIntervals(0, 3, 7, 11), DiatonicPattern.SEVENTH),
+            DiatonicAltPattern.fromPatterns(ChromaticPattern.fromRootIntervals(0, 4, 7, 10), DiatonicPattern.SEVENTH),
+            DiatonicAltPattern.fromPatterns(ChromaticPattern.fromRootIntervals(0, 3, 7, 10), DiatonicPattern.SEVENTH),
+            DiatonicAltPattern.fromPatterns(ChromaticPattern.fromRootIntervals(0, 3, 6, 10), DiatonicPattern.SEVENTH),
+            DiatonicAltPattern.fromPatterns(ChromaticPattern.fromRootIntervals(0, 3, 6, 11), DiatonicPattern.SEVENTH),
+            DiatonicAltPattern.fromPatterns(ChromaticPattern.fromRootIntervals(0, 4, 8, 10), DiatonicPattern.SEVENTH),
+            DiatonicAltPattern.fromPatterns(ChromaticPattern.fromRootIntervals(0, 4, 8, 11), DiatonicPattern.SEVENTH)
         ];
 
         this._rootChord4 = null;

@@ -3,10 +3,10 @@ import { DiatonicAlt } from '../../degrees/DiatonicAlt';
 import { DegreePattern } from '../../patterns/DegreePattern';
 
 export class NameChordCalculator {
-    private pattern: DegreePattern<any>;
+    private pattern: DegreePattern<any, any>;
     private inversion: number;
 
-    constructor(private chord: Chord<any>) {
+    constructor(private chord: Chord<any, any>) {
     }
 
     public get(): string {

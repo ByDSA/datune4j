@@ -1,7 +1,10 @@
 import { Diatonic } from '../degrees/Diatonic';
 import { DegreePattern } from './DegreePattern';
+import { IntervalDiatonic } from '../interval/IntervalDiatonic';
 
-export class DiatonicPattern implements DegreePattern<Diatonic> {
+type D = Diatonic;
+type I = IntervalDiatonic;
+export class DiatonicPattern implements DegreePattern<D, I> {
     public static FIFTH;
     public static TRIAD;
     public static QUARTAL;
@@ -20,10 +23,10 @@ export class DiatonicPattern implements DegreePattern<Diatonic> {
     public static SEVENTH_SUS4;
 
     private _rootIndex: number;
-    private _values: number[];
+    private _rootIntervalInts: number[];
 
     private constructor(first?: number | number[], ...rest: number[]) {
-        this._values =
+        this._rootIntervalInts =
             first === undefined
                 ? []
                 : first instanceof Array
@@ -31,9 +34,11 @@ export class DiatonicPattern implements DegreePattern<Diatonic> {
                     : [first, ...rest];
 
         this._rootIndex = 0;
+        Object.freeze(this._rootIntervalInts);
+        Object.freeze(this._rootIndex);
     }
 
-    public static from(first?: number | number[], ...rest: number[]): DiatonicPattern {
+    public static fromRootIntervalInts(first?: number | number[], ...rest: number[]): DiatonicPattern {
         let patternArray =
             first === undefined
                 ? []
@@ -44,27 +49,39 @@ export class DiatonicPattern implements DegreePattern<Diatonic> {
         return new DiatonicPattern(patternArray);
     }
 
-    public get values(): number[] {
-        return Array.from(this._values);
+    public get rootIntervalInts(): number[] {
+        return this._rootIntervalInts;
+    }
+
+    public get rootIntervals(): I[] {
+        return this._rootIntervalInts.map(ic => IntervalDiatonic.from(ic));
+    }
+
+    public get intraIntervals(): I[] {
+        return this._rootIntervalInts.map((ic, i, a) => IntervalDiatonic.from(ic - i > 0 ? a[i - 1] : 0));
     }
 
     public get inversionNumber(): number {
-        return (this.values.length - this.rootIndex) % this.values.length;
+        return (this.rootIntervalInts.length - this.rootIndex) % this.rootIntervalInts.length;
     }
 
     public get rootIndex(): number {
         return this._rootIndex;
     }
 
+    get length(): number {
+        return this._rootIntervalInts.length;
+    }
+
     public getInv(n: number = 1): DiatonicPattern {
-        let values = this.values;
+        let rootIntervalInts = this.rootIntervalInts;
         for (let i = 0; i < n; i++) {
-            let firstValue = values.shift();
-            values.push(firstValue + Diatonic.NUMBER);
-            values = values.map((value: number) => value - values[0]);
+            let firstValue = rootIntervalInts.shift();
+            rootIntervalInts.push(firstValue + Diatonic.NUMBER);
+            rootIntervalInts = rootIntervalInts.map((value: number) => value - rootIntervalInts[0]);
         }
 
-        return DiatonicPattern.from(...values);
+        return DiatonicPattern.fromRootIntervalInts(...rootIntervalInts);
     }
 
     public get shortName(): string {
@@ -72,25 +89,25 @@ export class DiatonicPattern implements DegreePattern<Diatonic> {
     }
 
     public toString(): string {
-        return this._values.toString();
+        return this._rootIntervalInts.toString();
     }
 
     private static initialize() {
-        this.FIFTH = DiatonicPattern.from(0, 4);
-        this.TRIAD = DiatonicPattern.from(0, 2, 4);
-        this.QUARTAL = DiatonicPattern.from(0, 3, 6);
-        this.SIXTH = DiatonicPattern.from(0, 2, 4, 5);
-        this.SIXTH_ADD9 = DiatonicPattern.from(0, 2, 4, 5, 8);
-        this.SEVENTH = DiatonicPattern.from(0, 2, 4, 6);
-        this.SEVENTH_ADD11 = DiatonicPattern.from(0, 2, 4, 6, 10);
-        this.SEVENTH_ADD13 = DiatonicPattern.from(0, 2, 4, 6, 12);
-        this.NINTH = DiatonicPattern.from(0, 2, 4, 6, 8);
-        this.NINTH_SUS4 = DiatonicPattern.from(0, 3, 4, 6, 8);
-        this.NINTH_ADD6 = DiatonicPattern.from(0, 2, 4, 5, 6, 8);
-        this.ELEVENTH = DiatonicPattern.from(0, 2, 4, 6, 8, 10);
-        this.THIRTEENTH = DiatonicPattern.from(0, 2, 4, 6, 8, 10, 12);
-        this.THIRTEENTH_SUS4 = DiatonicPattern.from(0, 3, 4, 6, 8, 10, 12);
-        this.SUS4 = DiatonicPattern.from(0, 3, 4);
-        this.SEVENTH_SUS4 = DiatonicPattern.from(0, 3, 4, 6);
+        this.FIFTH = DiatonicPattern.fromRootIntervalInts(0, 4);
+        this.TRIAD = DiatonicPattern.fromRootIntervalInts(0, 2, 4);
+        this.QUARTAL = DiatonicPattern.fromRootIntervalInts(0, 3, 6);
+        this.SIXTH = DiatonicPattern.fromRootIntervalInts(0, 2, 4, 5);
+        this.SIXTH_ADD9 = DiatonicPattern.fromRootIntervalInts(0, 2, 4, 5, 8);
+        this.SEVENTH = DiatonicPattern.fromRootIntervalInts(0, 2, 4, 6);
+        this.SEVENTH_ADD11 = DiatonicPattern.fromRootIntervalInts(0, 2, 4, 6, 10);
+        this.SEVENTH_ADD13 = DiatonicPattern.fromRootIntervalInts(0, 2, 4, 6, 12);
+        this.NINTH = DiatonicPattern.fromRootIntervalInts(0, 2, 4, 6, 8);
+        this.NINTH_SUS4 = DiatonicPattern.fromRootIntervalInts(0, 3, 4, 6, 8);
+        this.NINTH_ADD6 = DiatonicPattern.fromRootIntervalInts(0, 2, 4, 5, 6, 8);
+        this.ELEVENTH = DiatonicPattern.fromRootIntervalInts(0, 2, 4, 6, 8, 10);
+        this.THIRTEENTH = DiatonicPattern.fromRootIntervalInts(0, 2, 4, 6, 8, 10, 12);
+        this.THIRTEENTH_SUS4 = DiatonicPattern.fromRootIntervalInts(0, 3, 4, 6, 8, 10, 12);
+        this.SUS4 = DiatonicPattern.fromRootIntervalInts(0, 3, 4);
+        this.SEVENTH_SUS4 = DiatonicPattern.fromRootIntervalInts(0, 3, 4, 6);
     }
 }

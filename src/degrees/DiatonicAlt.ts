@@ -117,13 +117,13 @@ export class DiatonicAlt implements Degree {
 
     getAdd(intervalDiatonicAlt: IntervalDiatonicAlt) {
         let diatonic: Diatonic = this.diatonic.getAdd(intervalDiatonicAlt.intervalDiatonic);
-        let chromatic: Chromatic = this.chromatic.getShift(intervalDiatonicAlt.semis);
+        let chromatic: Chromatic = this.chromatic.getShift(intervalDiatonicAlt.intervalChromatic);
         return DiatonicAlt.fromChromatic(chromatic, diatonic);
     }
 
     getSub(intervalDiatonicAlt: IntervalDiatonicAlt) {
         let diatonic: Diatonic = this.diatonic.getSub(intervalDiatonicAlt.intervalDiatonic);
-        let chromatic: Chromatic = this.chromatic.getShift(-intervalDiatonicAlt.semis);
+        let chromatic: Chromatic = this.chromatic.getShift(-intervalDiatonicAlt.intervalChromatic);
         return DiatonicAlt.fromChromatic(chromatic, diatonic);
     }
 

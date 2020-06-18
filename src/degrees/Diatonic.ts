@@ -17,12 +17,12 @@ export class Diatonic implements Degree {
     public static NUMBER = 7;
 
     public getAdd(intervalDiatonic: IntervalDiatonic): Diatonic {
-        let intValue = this.intValue + intervalDiatonic.number;
+        let intValue = this.intValue + intervalDiatonic.intValue;
         return Diatonic.fromInt(intValue);
     }
 
     public getSub(intervalDiatonic: IntervalDiatonic): Diatonic {
-        let intValue = this.intValue - intervalDiatonic.number;
+        let intValue = this.intValue - intervalDiatonic.intValue;
         return Diatonic.fromInt(intValue);
     }
 

@@ -11,16 +11,15 @@ test('IntervalDiatonic - precalc - UNISON', () => {
     expect(actual).toEqual(expected);
 });
 
-test('IntervalDiatonic - number - UNISON', () => {
-    let actual: IntervalDiatonic = IntervalDiatonic.UNISON.number;
+test('IntervalDiatonic - intValue - UNISON', () => {
+    let actual: IntervalDiatonic = IntervalDiatonic.UNISON.intValue;
     let expected = 0;
 
     expect(actual).toEqual(expected);
 });
 
-
-test('IntervalDiatonic - number - OCTAVE', () => {
-    let actual: IntervalDiatonic = IntervalDiatonic.OCTAVE.number;
+test('IntervalDiatonic - intValue - OCTAVE', () => {
+    let actual: IntervalDiatonic = IntervalDiatonic.OCTAVE.intValue;
     let expected = 7;
 
     expect(actual).toEqual(expected);
@@ -33,7 +32,7 @@ test('IntervalDiatonic - from - uncached', () => {
     expect(actual).toEqual(expected);
 });
 
-test('IntervalDiatonic - from - unchached 17', () => {
+test('IntervalDiatonic - from - uncached 17', () => {
     let actual: IntervalDiatonic = IntervalDiatonic.from(17);
     let expected = IntervalDiatonic.from(17);
 

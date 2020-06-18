@@ -1,9 +1,6 @@
 export * from './chords/chromatic/ChromaticChord';
-export * from './patterns/ChromaticPattern';
-export * from './patterns/DiatonicPattern';
 export * from './chords/diatonicalt/DiatonicAltChord';
-export * from './patterns/DiatonicAltPattern';
-export * from './utils/ScaleDegreeComparator';
+export * from './common/Utils';
 export * from './degrees/Chromatic';
 export * from './degrees/Diatonic';
 export * from './degrees/DiatonicAlt';
@@ -11,11 +8,14 @@ export * from './interval/IntervalDiatonic';
 export * from './interval/IntervalDiatonicAlt';
 export * from './lang/Language';
 export * from './lang/LanguageInterface';
+export * from './patterns/ChromaticPattern';
+export * from './patterns/DiatonicAltPattern';
+export * from './patterns/DiatonicPattern';
 export * from './precalc';
 export * from './settings/DefaultSettings';
 export * from './settings/Settings';
 export * from './settings/SettingsInterface';
 export * from './tonality/Scale';
-export * from './tonality/ScaleModeUtils';
 export * from './tonality/Tonality';
-export * from './common/Utils';
+export * from './utils/ScaleDegreeComparator';
+

@@ -1,4 +1,3 @@
-import { ParserBottomUp } from '../../Utils/Parser/Parser';
 import { ChromaticChord } from '../../chords/chromatic/ChromaticChord';
 import { Assert } from '../../common/Assert';
 import { Immutables } from '../../common/Immutables';
@@ -9,11 +8,12 @@ import { DiatonicAlt } from '../../degrees/DiatonicAlt';
 import { IntervalDiatonicAlt } from '../../interval/IntervalDiatonicAlt';
 import { NameChordCalculator } from '../../lang/naming/NameChordCalculator';
 import { DiatonicAltPattern } from '../../patterns/DiatonicAltPattern';
+import { ParserBottomUp } from '../../Utils/Parser/Parser';
 import { Chord } from '../Chord';
 import { RootPatternChord } from '../root-pattern/RootPatternChord';
 
 type HashingObjectType = DiatonicAlt[];
-export class DiatonicAltChord implements Chord<DiatonicAlt> {
+export class DiatonicAltChord implements Chord<DiatonicAlt, IntervalDiatonicAlt> {
     // Precalc
     public static C: DiatonicAltChord;
     public static D: DiatonicAltChord;
@@ -64,7 +64,7 @@ export class DiatonicAltChord implements Chord<DiatonicAlt> {
             Assert.notNull(note);
     }
 
-    public static from(notes: DiatonicAlt[]): DiatonicAltChord {
+    public static fromDiatonicAlt(notes: DiatonicAlt[]): DiatonicAltChord {
         this.checkValidNotes(notes);
         return DiatonicAltChord.immutablesCache.getOrCreate(notes);
     }
@@ -101,34 +101,19 @@ export class DiatonicAltChord implements Chord<DiatonicAlt> {
         rootIndex = MathUtils.rotativeTrim(rootIndex, this._notes.length);
         let notes = this.notes;
         notes = Utils.arrayRotateLeft(notes, n);
-        return DiatonicAltChord.from(notes);
+        return DiatonicAltChord.fromDiatonicAlt(notes);
     }
 
     public getAdd(interval: IntervalDiatonicAlt): DiatonicAltChord {
-        let notes : DiatonicAlt[] = this.notes.map(note => note.getAdd(interval));
+        let notes: DiatonicAlt[] = this.notes.map(note => note.getAdd(interval));
 
-        return DiatonicAltChord.from(notes);
+        return DiatonicAltChord.fromDiatonicAlt(notes);
     }
 
     public getSub(interval: IntervalDiatonicAlt): DiatonicAltChord {
-        let notes : DiatonicAlt[] = this.notes.map(note => note.getSub(interval));
+        let notes: DiatonicAlt[] = this.notes.map(note => note.getSub(interval));
 
-        return DiatonicAltChord.from(notes);
-    }
-
-    private static getNotesFromPattern(root: DiatonicAlt, pattern: DiatonicAltPattern) {
-        let notes: DiatonicAlt[] = [root];
-
-        for (let i = 1; i < pattern.values.length; i++) {
-            let chromatic = root.chromatic.getShift(pattern.values[i].semis);
-            let intervalDiatonic = pattern.values[i].intervalDiatonic;
-            let diatonic = root.diatonic.getAdd(intervalDiatonic);
-
-            let diatonicAlt = DiatonicAlt.fromChromatic(chromatic, diatonic);
-            notes.push(diatonicAlt);
-        }
-
-        return notes;
+        return DiatonicAltChord.fromDiatonicAlt(notes);
     }
 
     public get root(): DiatonicAlt {
@@ -152,9 +137,9 @@ export class DiatonicAltChord implements Chord<DiatonicAlt> {
     }
 
     public get pattern(): DiatonicAltPattern {
-        let intervals: IntervalDiatonicAlt[] = DiatonicAltChord.getIntervalsFromNotes(this.notes);
+        let rootIntervals: IntervalDiatonicAlt[] = DiatonicAltChord.getRootIntervalsFromNotes(this.notes);
 
-        return DiatonicAltPattern.fromIntervals(intervals);
+        return DiatonicAltPattern.fromRootIntervals(...rootIntervals);
     }
 
     public get chromaticChord(): ChromaticChord {
@@ -163,14 +148,16 @@ export class DiatonicAltChord implements Chord<DiatonicAlt> {
         return ChromaticChord.from(notesChromatic);
     }
 
-    private static getIntervalsFromNotes(notes: DiatonicAlt[]): IntervalDiatonicAlt[] {
-        let intervals: IntervalDiatonicAlt[] = [];
-        for (let i = 1; i < notes.length; i++) {
-            let interval = IntervalDiatonicAlt.between(notes[i - 1], notes[i]);
-            intervals.push(interval);
+    private static getRootIntervalsFromNotes(notes: DiatonicAlt[]): IntervalDiatonicAlt[] {
+        let rootIntervals: IntervalDiatonicAlt[] = [];
+        for (let i = 0; i < notes.length; i++) {
+            let rootInterval = IntervalDiatonicAlt.between(notes[0], notes[i]);
+            while (i > 0 && rootIntervals[i - 1].intervalChromatic >= rootInterval.intervalChromatic)
+                rootInterval = rootInterval.getAdd(IntervalDiatonicAlt.PERFECT_OCTAVE);
+            rootIntervals.push(rootInterval);
         }
 
-        return intervals;
+        return rootIntervals;
     }
 
     public toString(): string {

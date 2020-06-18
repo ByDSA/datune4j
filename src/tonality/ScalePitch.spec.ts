@@ -12,8 +12,8 @@ test('precalc - MAJOR 12-ET', () => {
 
 test('intervals: MAJOR ET-12', () => {
     let scale = ScalePitch.MAJOR_ET12;
-    let intervals = scale.intervals;
-    expect(intervals).toStrictEqual([
+    let intraIntervals = scale.intraIntervals;
+    expect(intraIntervals).toStrictEqual([
         IntervalPitch.UNISON,
         IntervalPitch.ET12.MAJOR_SECOND,
         IntervalPitch.ET12.MAJOR_THIRD,
@@ -26,8 +26,8 @@ test('intervals: MAJOR ET-12', () => {
 
 test('intervals: MAJOR PYTHAGOREAN', () => {
     let scale = ScalePitch.MAJOR_PYTHAGOREAN;
-    let intervals = scale.intervals;
-    expect(intervals).toStrictEqual([
+    let intraIntervals = scale.intraIntervals;
+    expect(intraIntervals).toStrictEqual([
         IntervalPitch.UNISON,
         IntervalPitch.PYTHAGOREAN.MAJOR_SECOND,
         IntervalPitch.PYTHAGOREAN.MAJOR_THIRD,

@@ -19,6 +19,7 @@ import { Settings } from './settings/Settings';
 import { BPM } from './tempo/BPM';
 import { MusicalDuration } from './tempo/MusicalDuration';
 import { Scale } from './tonality/Scale';
+import { ScaleChromatic } from './tonality/ScaleChromatic';
 import { ScalePitch } from './tonality/ScalePitch';
 import { SourceScaleUtils } from './tonality/SourceScaleUtils';
 import { Tonality } from './tonality/Tonality';
@@ -129,8 +130,17 @@ export function scales() {
     diatonicAltDegrees();
     intervalDiatonicAlts();
     chromatics();
+    scaleChromatics();
 
     (<any>Scale).initialize();
+};
+
+// SCALE CHROMATICS
+export function scaleChromatics() {
+    if (ScaleChromatic.MAJOR)
+        return;
+
+    (<any>ScaleChromatic).initialize();
 };
 
 // SCALE PITCHES
@@ -343,6 +353,7 @@ export function all() {
     diatonicAltChords();
 
     scales();
+    scaleChromatics();
     sourceScales();
 
     tonalities();

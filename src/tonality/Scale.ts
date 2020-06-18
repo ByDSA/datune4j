@@ -1,3 +1,4 @@
+import { DiatonicAlt } from 'degrees/DiatonicAlt';
 import { ImmutablesCache } from '../common/ImmutablesCache';
 import { MathUtils } from '../common/MathUtils';
 import { Chromatic } from '../degrees/Chromatic';
@@ -10,12 +11,14 @@ import { IntervalDiatonicAlt } from '../interval/IntervalDiatonicAlt';
 import { NamingScale } from '../lang/naming/NamingScale';
 import { DiatonicAltPattern } from '../patterns/DiatonicAltPattern';
 import { Settings } from '../settings/Settings';
-import { ScaleModeUtils } from './ScaleModeUtils';
-import { ScaleAbstract } from './ScaleInterface';
-import { DiatonicAlt } from 'degrees/DiatonicAlt';
+import { ScaleAbstract } from './ScaleAbstract';
+import { ScaleChromatic } from './ScaleChromatic';
+import { ScaleDiatonicAltConversor } from './ScaleDiatonicAltConversor';
 
-type HashingObject = IntervalDiatonicAlt[];
-export class Scale extends ScaleAbstract<IntervalDiatonicAlt, DiatonicAltDegree> {
+type D = DiatonicAltDegree;
+type I = IntervalDiatonicAlt;
+type HashingObject = I[];
+export class Scale extends ScaleAbstract<I, D> {
     static MAJOR: Scale;
     static DORIAN: Scale;
     static PHRYGIAN: Scale;
@@ -71,14 +74,14 @@ export class Scale extends ScaleAbstract<IntervalDiatonicAlt, DiatonicAltDegree>
     static BLUES_MAJOR: Scale;
 
     // Symmetric
-    static CHROMATIC: Scale;
-    static WHOLE_TONE: Scale;
+    static DOM7b5: Scale;
     static AUGMENTED_TRIAD: Scale;
     static DIMINISHED_7th: Scale;
-    static MESSIAEN_V_TRUNCATED: Scale;
-    static DOM7b5: Scale;
-    static MESSIAEN_INV_III_V_TRUNCATED_n2: Scale;
     static HALF_DIMINISHED: Scale;
+    static CHROMATIC: Scale;
+    static WHOLE_TONE: Scale;
+    static MESSIAEN_V_TRUNCATED: Scale;
+    static MESSIAEN_INV_III_V_TRUNCATED_n2: Scale;
     static MESSIAEN_V: Scale;
     static RAGA_INDRUPRIYA_INDIA: Scale;
     static MESSIAEN_II_TRUNCATED_n3: Scale;
@@ -118,21 +121,19 @@ export class Scale extends ScaleAbstract<IntervalDiatonicAlt, DiatonicAltDegree>
             return ret;
         },
         function (scale: Scale): HashingObject {
-            return scale.intervals;
+            return scale.intraIntervals;
         },
         function (hashingObject: HashingObject): Scale {
             return new Scale(...hashingObject);
         }
     );
 
-    reparametrizer: (i, acc) => number;
-
-    private constructor(...intervals: IntervalDiatonicAlt[]) {
+    private constructor(...intervals: I[]) {
         super(...intervals);
     }
 
-    public static fromIntCodeSeven(d1: number, d2: number, d3: number, d4: number, d5: number, d6: number, d7: number): Scale {
-        let degrees = this.distances2Degrees([d1, d2, d3, d4, d5, d6, d7], this.sevenReparam);
+    public static fromDiatonicAlts(...pitches: DiatonicAlt[]): Scale {
+        let degrees = pitches.map(p => DiatonicAltDegree.from(DiatonicDegree.fromInt(p.diatonic.intValue), p.alts));
         let scale = this.fromDegrees(...degrees);
         if (!Object.isFrozen(scale._precalcDegrees)) {
             scale._precalcDegrees = degrees;
@@ -142,42 +143,9 @@ export class Scale extends ScaleAbstract<IntervalDiatonicAlt, DiatonicAltDegree>
         return scale;
     }
 
-    public static fromIntCode(...ints: number[]): Scale {
-        let degrees = this.distances2Degrees(ints);
-        let scale = this.fromDegrees(...degrees);
-        if (!Object.isFrozen(scale._precalcDegrees)) {
-            scale._precalcDegrees = degrees;
-            Object.freeze(scale._precalcDegrees);
-        }
-
-        return scale;
-    }
-
-    private static sevenReparam(i: number, semis: number): DiatonicAltDegree {
-        let diatonicDegree = DiatonicDegree.fromInt(i - 1);
-        return DiatonicAltDegree.fromSemis(diatonicDegree, semis);
-    }
-
-    private static defaultReparam(i: number, semis: number): DiatonicAltDegree {
-        switch (semis) {
-            case 0: return DiatonicAltDegree.I;
-            case 1: return DiatonicAltDegree.from(DiatonicDegree.I, 1);
-            case 2: return DiatonicAltDegree.II;
-            case 3: return DiatonicAltDegree.from(DiatonicDegree.II, 1);
-            case 4: return DiatonicAltDegree.III;
-            case 5: return DiatonicAltDegree.IV;
-            case 6: return DiatonicAltDegree.from(DiatonicDegree.IV, 1);
-            case 7: return DiatonicAltDegree.V;
-            case 8: return DiatonicAltDegree.from(DiatonicDegree.V, 1);
-            case 9: return DiatonicAltDegree.VI;
-            case 10: return DiatonicAltDegree.from(DiatonicDegree.VI, 1);
-            case 11: return DiatonicAltDegree.VII;
-        }
-    }
-
-    public static fromDegrees(...degrees: DiatonicAltDegree[]): Scale {
+    public static fromDegrees(...degrees: D[]): Scale {
         let intervals = this.degrees2Intervals(degrees);
-        let scale = this.fromIntervals(...intervals);
+        let scale = this.fromIntraIntervals(...intervals);
         if (scale._precalcDegrees == null) {
             scale._precalcDegrees = degrees;
             Object.freeze(scale._precalcDegrees);
@@ -186,8 +154,30 @@ export class Scale extends ScaleAbstract<IntervalDiatonicAlt, DiatonicAltDegree>
         return scale;
     }
 
-    public static fromIntervals(...intervals: IntervalDiatonicAlt[]): Scale {
+    private static degrees2Intervals(degrees: D[]): I[] {
+        let intervals: I[] = [];
+        for (let i = 1; i <= degrees.length; i++) {
+            let degree = degrees[i % degrees.length];
+            let prevDegree = degrees[i - 1];
+            let distDiatonicInt = degree.diatonicDegree.intValue - prevDegree.diatonicDegree.intValue;
+            distDiatonicInt = MathUtils.rotativeTrim(distDiatonicInt, Diatonic.NUMBER);
+            let distChromaticInt = degree.semis - prevDegree.semis;
+            distChromaticInt = MathUtils.rotativeTrim(distChromaticInt, Chromatic.NUMBER);
+            let intervalDiatonic = IntervalDiatonic.from(distDiatonicInt);
+            let interval = IntervalDiatonicAlt.fromIntervals(distChromaticInt, intervalDiatonic);
+            intervals.push(interval);
+        }
+
+        return intervals;
+    }
+
+    public static fromIntraIntervals(...intervals: I[]): Scale {
         return Scale.immutablesCache.getOrCreate(intervals);
+    }
+
+    getMode(n: number): Scale {
+        let intraIntervals = this.getModeIntraIntervals(n);
+        return Scale.fromIntraIntervals(...intraIntervals);
     }
 
     public static fromString(strValue: string): Scale {
@@ -200,29 +190,11 @@ export class Scale extends ScaleAbstract<IntervalDiatonicAlt, DiatonicAltDegree>
         if (scale)
             return scale;
 
-        scale = this.fromStringCode(srtValueInput);
-        if (scale)
-            return scale;
-
         scale = this.fromStringIntervals(srtValueInput);
         if (scale)
             return scale;
 
         throw new Error("Impossible get Scale from string: " + srtValueInput);
-    }
-
-    public static fromStringCode(strValue: string): Scale {
-        let splited = this.splitArray(strValue);
-        if (!splited)
-            return null;
-
-        let splitedNumbers: number[] = splited.map(str => +str);
-        splitedNumbers = splitedNumbers.filter(el => !isNaN(el));
-
-        if (splitedNumbers.length == 0)
-            return null;
-
-        return Scale.fromIntCode(...splitedNumbers);
     }
 
     public static fromStringIntervals(strValue: string): Scale {
@@ -232,7 +204,7 @@ export class Scale extends ScaleAbstract<IntervalDiatonicAlt, DiatonicAltDegree>
 
         let splitedIntervals: IntervalDiatonicAlt[] = splited.map(str => IntervalDiatonicAlt.fromString(str));
 
-        return Scale.fromIntervals(...splitedIntervals);
+        return Scale.fromIntraIntervals(...splitedIntervals);
     }
 
     private static splitArray(str: string): string[] {
@@ -282,46 +254,14 @@ export class Scale extends ScaleAbstract<IntervalDiatonicAlt, DiatonicAltDegree>
         return strValue;
     }
 
-    private static degrees2Intervals(degrees: DiatonicAltDegree[]): IntervalDiatonicAlt[] {
-        let intervals: IntervalDiatonicAlt[] = [];
-        for (let i = 1; i <= degrees.length; i++) {
-            let degree = degrees[i % degrees.length];
-            let prevDegree = degrees[i - 1];
-            let distDiatonicInt = degree.diatonicDegree.intValue - prevDegree.diatonicDegree.intValue;
-            distDiatonicInt = MathUtils.rotativeTrim(distDiatonicInt, Diatonic.NUMBER);
-            let distChromaticInt = degree.semis - prevDegree.semis;
-            distChromaticInt = MathUtils.rotativeTrim(distChromaticInt, Chromatic.NUMBER);
-            let intervalDiatonic = IntervalDiatonic.from(distDiatonicInt);
-            let interval = IntervalDiatonicAlt.fromSemisInterval(distChromaticInt, intervalDiatonic);
-            intervals.push(interval);
-        }
-
-        return intervals;
-    }
-
-    private static distances2Degrees(distances: number[], reparametrizer: (i: number, acc: number) => DiatonicAltDegree = this.defaultReparam): DiatonicAltDegree[] {
-        let degrees: DiatonicAltDegree[] = [DiatonicAltDegree.I];
-        let distancesAcc = 0;
-        for (let i = 2; i <= distances.length; i++) {
-            distancesAcc += distances[i - 2];
-            let iFixed = reparametrizer(i, distancesAcc).diatonicDegree.intValue;
-            let diatonicDegree = DiatonicDegree.fromInt(iFixed);
-            let alts = distancesAcc - Scale.MAJOR.degrees[iFixed].semis;
-            let degree: DiatonicAltDegree = DiatonicAltDegree.from(diatonicDegree, alts);
-            degrees.push(degree);
-        }
-
-        return degrees;
-    }
-
     get diatonicAltChordPattern(): DiatonicAltPattern {
-        return DiatonicAltPattern.fromIntervals(this.intervals);
+        return DiatonicAltPattern.fromRootIntervals(...this.intraIntervals);
     }
 
     protected calculateDegrees() {
         this._precalcDegrees = [DiatonicAltDegree.I];
-        for (let i = 0; i < this._intervals.length - 1; i++) {
-            const interval = this._intervals[i];
+        for (let i = 0; i < this._intraIntervals.length - 1; i++) {
+            const interval = this._intraIntervals[i];
             let diatonicAltDegree = this._precalcDegrees[this._precalcDegrees.length - 1].getAdd(interval);
             this._precalcDegrees.push(diatonicAltDegree);
         }
@@ -367,7 +307,7 @@ export class Scale extends ScaleAbstract<IntervalDiatonicAlt, DiatonicAltDegree>
 
     hashCode(): string {
         let ret = "";
-        for (const interval of this._intervals)
+        for (const interval of this._intraIntervals)
             ret += "-" + interval.hashCode();
 
         return ret;
@@ -384,50 +324,50 @@ export class Scale extends ScaleAbstract<IntervalDiatonicAlt, DiatonicAltDegree>
             DiatonicAltDegree.VII,
         );
 
-        Scale.DORIAN = ScaleModeUtils.getMode(Scale.MAJOR, 2);
-        Scale.PHRYGIAN = ScaleModeUtils.getMode(Scale.MAJOR, 3);
-        Scale.LYDIAN = ScaleModeUtils.getMode(Scale.MAJOR, 4);
-        Scale.MIXOLYDIAN = ScaleModeUtils.getMode(Scale.MAJOR, 5);
-        Scale.MINOR = ScaleModeUtils.getMode(Scale.MAJOR, 6);
-        Scale.LOCRIAN = ScaleModeUtils.getMode(Scale.MAJOR, 7);
+        Scale.DORIAN = Scale.MAJOR.getMode(2);
+        Scale.PHRYGIAN = Scale.MAJOR.getMode(3);
+        Scale.LYDIAN = Scale.MAJOR.getMode(4);
+        Scale.MIXOLYDIAN = Scale.MAJOR.getMode(5);
+        Scale.MINOR = Scale.MAJOR.getMode(6);
+        Scale.LOCRIAN = Scale.MAJOR.getMode(7);
 
-        Scale.HARMONIC_MINOR = Scale.fromIntCodeSeven(2, 1, 2, 2, 1, 3, 1);
-        Scale.LOCRIAN_a6 = ScaleModeUtils.getMode(Scale.HARMONIC_MINOR, 2);
-        Scale.IONIAN_a5 = ScaleModeUtils.getMode(Scale.HARMONIC_MINOR, 3);
-        Scale.DORIAN_a4 = ScaleModeUtils.getMode(Scale.HARMONIC_MINOR, 4);
-        Scale.MIXOLYDIAN_b9_b13 = ScaleModeUtils.getMode(Scale.HARMONIC_MINOR, 5);
-        Scale.LYDIAN_a2 = ScaleModeUtils.getMode(Scale.HARMONIC_MINOR, 6);
-        Scale.SUPERLOCRIAN_bb7 = ScaleModeUtils.getMode(Scale.HARMONIC_MINOR, 7);
+        Scale.HARMONIC_MINOR = ScaleDiatonicAltConversor.from(ScaleChromatic.HARMONIC_MINOR).scaleDiatonicAlt;
+        Scale.LOCRIAN_a6 = Scale.HARMONIC_MINOR.getMode(2);
+        Scale.IONIAN_a5 = Scale.HARMONIC_MINOR.getMode(3);
+        Scale.DORIAN_a4 = Scale.HARMONIC_MINOR.getMode(4);
+        Scale.MIXOLYDIAN_b9_b13 = Scale.HARMONIC_MINOR.getMode(5);
+        Scale.LYDIAN_a2 = Scale.HARMONIC_MINOR.getMode(6);
+        Scale.SUPERLOCRIAN_bb7 = Scale.HARMONIC_MINOR.getMode(7);
 
-        Scale.HARMONIC_MAJOR = Scale.fromIntCodeSeven(2, 2, 1, 2, 1, 3, 1);
-        Scale.DORIAN_b5 = ScaleModeUtils.getMode(Scale.HARMONIC_MAJOR, 2);
-        Scale.PHRYGIAN_b4 = ScaleModeUtils.getMode(Scale.HARMONIC_MAJOR, 3);
-        Scale.LYDIAN_b3 = ScaleModeUtils.getMode(Scale.HARMONIC_MAJOR, 4);
-        Scale.MIXOLYDIAN_b2 = ScaleModeUtils.getMode(Scale.HARMONIC_MAJOR, 5);
-        Scale.AEOLIAN_b1 = ScaleModeUtils.getMode(Scale.HARMONIC_MAJOR, 6);
-        Scale.LOCRIAN_bb7 = ScaleModeUtils.getMode(Scale.HARMONIC_MAJOR, 7);
+        Scale.HARMONIC_MAJOR = ScaleDiatonicAltConversor.from(ScaleChromatic.HARMONIC_MAJOR).scaleDiatonicAlt;
+        Scale.DORIAN_b5 = Scale.HARMONIC_MAJOR.getMode(2);
+        Scale.PHRYGIAN_b4 = Scale.HARMONIC_MAJOR.getMode(3);
+        Scale.LYDIAN_b3 = Scale.HARMONIC_MAJOR.getMode(4);
+        Scale.MIXOLYDIAN_b2 = Scale.HARMONIC_MAJOR.getMode(5);
+        Scale.AEOLIAN_b1 = Scale.HARMONIC_MAJOR.getMode(6);
+        Scale.LOCRIAN_bb7 = Scale.HARMONIC_MAJOR.getMode(7);
 
-        Scale.MELODIC_MINOR = Scale.fromIntCodeSeven(2, 1, 2, 2, 2, 2, 1);
-        Scale.DORIAN_b2 = ScaleModeUtils.getMode(Scale.MELODIC_MINOR, 2);
-        Scale.LYDIAN_a5 = ScaleModeUtils.getMode(Scale.MELODIC_MINOR, 3);
-        Scale.LYDIAN_b7 = ScaleModeUtils.getMode(Scale.MELODIC_MINOR, 4);
-        Scale.MIXOLYDIAN_b13 = ScaleModeUtils.getMode(Scale.MELODIC_MINOR, 5);
-        Scale.LOCRIAN_a2 = ScaleModeUtils.getMode(Scale.MELODIC_MINOR, 6);
-        Scale.SUPERLOCRIAN = ScaleModeUtils.getMode(Scale.MELODIC_MINOR, 7);
+        Scale.MELODIC_MINOR = ScaleDiatonicAltConversor.from(ScaleChromatic.MELODIC_MINOR).scaleDiatonicAlt;
+        Scale.DORIAN_b2 = Scale.MELODIC_MINOR.getMode(2);
+        Scale.LYDIAN_a5 = Scale.MELODIC_MINOR.getMode(3);
+        Scale.LYDIAN_b7 = Scale.MELODIC_MINOR.getMode(4);
+        Scale.MIXOLYDIAN_b13 = Scale.MELODIC_MINOR.getMode(5);
+        Scale.LOCRIAN_a2 = Scale.MELODIC_MINOR.getMode(6);
+        Scale.SUPERLOCRIAN = Scale.MELODIC_MINOR.getMode(7);
 
-        Scale.DOUBLE_HARMONIC = Scale.fromIntCodeSeven(1, 3, 1, 2, 1, 3, 1);
-        Scale.LYDIAN_a2_a6 = ScaleModeUtils.getMode(Scale.DOUBLE_HARMONIC, 2);
-        Scale.ULTRAPHRYGIAN = ScaleModeUtils.getMode(Scale.DOUBLE_HARMONIC, 3);
-        Scale.HUNGARIAN_MINOR = ScaleModeUtils.getMode(Scale.DOUBLE_HARMONIC, 4);
-        Scale.ORIENTAL = ScaleModeUtils.getMode(Scale.DOUBLE_HARMONIC, 5);
-        Scale.IONIAN_AUGMENTED_a2 = ScaleModeUtils.getMode(Scale.DOUBLE_HARMONIC, 6);
-        Scale.LOCRIAN_bb3_bb7 = ScaleModeUtils.getMode(Scale.DOUBLE_HARMONIC, 7);
+        Scale.DOUBLE_HARMONIC = ScaleDiatonicAltConversor.from(ScaleChromatic.DOUBLE_HARMONIC).scaleDiatonicAlt;
+        Scale.LYDIAN_a2_a6 = Scale.DOUBLE_HARMONIC.getMode(2);
+        Scale.ULTRAPHRYGIAN = Scale.DOUBLE_HARMONIC.getMode(3);
+        Scale.HUNGARIAN_MINOR = Scale.DOUBLE_HARMONIC.getMode(4);
+        Scale.ORIENTAL = Scale.DOUBLE_HARMONIC.getMode(5);
+        Scale.IONIAN_AUGMENTED_a2 = Scale.DOUBLE_HARMONIC.getMode(6);
+        Scale.LOCRIAN_bb3_bb7 = Scale.DOUBLE_HARMONIC.getMode(7);
 
-        Scale.NEAPOLITAN_MINOR = Scale.fromIntCodeSeven(1, 2, 2, 2, 1, 3, 1);
-        Scale.NEAPOLITAN_MAJOR = Scale.fromIntCodeSeven(1, 2, 2, 2, 2, 2, 1);
+        Scale.NEAPOLITAN_MINOR = ScaleDiatonicAltConversor.from(ScaleChromatic.NEAPOLITAN_MINOR).scaleDiatonicAlt;
+        Scale.NEAPOLITAN_MAJOR = ScaleDiatonicAltConversor.from(ScaleChromatic.NEAPOLITAN_MAJOR).scaleDiatonicAlt;
 
         // 6
-        Scale.BLUES_b5 = Scale.fromIntervals(
+        Scale.BLUES_b5 = Scale.fromIntraIntervals(
             IntervalDiatonicAlt.MINOR_THIRD,
             IntervalDiatonicAlt.MAJOR_SECOND,
             IntervalDiatonicAlt.MINOR_SECOND,
@@ -436,7 +376,7 @@ export class Scale extends ScaleAbstract<IntervalDiatonicAlt, DiatonicAltDegree>
             IntervalDiatonicAlt.MAJOR_SECOND
         );
 
-        Scale.BLUES_a4 = Scale.fromIntervals(
+        Scale.BLUES_a4 = Scale.fromIntraIntervals(
             IntervalDiatonicAlt.MINOR_THIRD,
             IntervalDiatonicAlt.MAJOR_SECOND,
             IntervalDiatonicAlt.AUGMENTED_UNISON,
@@ -446,17 +386,17 @@ export class Scale extends ScaleAbstract<IntervalDiatonicAlt, DiatonicAltDegree>
         );
 
         // 5
-        Scale.PENTATONIC_MINOR = Scale.fromIntervals(
+        Scale.PENTATONIC_MINOR = Scale.fromIntraIntervals(
             IntervalDiatonicAlt.MINOR_THIRD,
             IntervalDiatonicAlt.MAJOR_SECOND,
             IntervalDiatonicAlt.MAJOR_SECOND,
             IntervalDiatonicAlt.MINOR_THIRD,
             IntervalDiatonicAlt.MAJOR_SECOND
         );
-        Scale.PENTATONIC = ScaleModeUtils.getMode(Scale.PENTATONIC_MINOR, 2);
-        Scale.EGYPCIAN = ScaleModeUtils.getMode(Scale.PENTATONIC_MINOR, 3);
-        Scale.BLUES_MINOR = ScaleModeUtils.getMode(Scale.PENTATONIC_MINOR, 4);
-        Scale.BLUES_MAJOR = ScaleModeUtils.getMode(Scale.PENTATONIC_MINOR, 5);
+        Scale.PENTATONIC = Scale.PENTATONIC_MINOR.getMode(2);
+        Scale.EGYPCIAN = Scale.PENTATONIC_MINOR.getMode(3);
+        Scale.BLUES_MINOR = Scale.PENTATONIC_MINOR.getMode(4);
+        Scale.BLUES_MAJOR = Scale.PENTATONIC_MINOR.getMode(5);
 
         // Symmetric
         Scale.CHROMATIC = Scale.fromDegrees(
@@ -481,33 +421,34 @@ export class Scale extends ScaleAbstract<IntervalDiatonicAlt, DiatonicAltDegree>
             DiatonicAltDegree.bVI,
             DiatonicAltDegree.bVII
         );
-        Scale.AUGMENTED_TRIAD = Scale.fromIntervals(
+        Scale.AUGMENTED_TRIAD = Scale.fromIntraIntervals(
             IntervalDiatonicAlt.MAJOR_THIRD,
             IntervalDiatonicAlt.MAJOR_THIRD,
             IntervalDiatonicAlt.MAJOR_THIRD
         );
-        Scale.DIMINISHED_7th = Scale.fromIntervals(
+        Scale.DIMINISHED_7th = Scale.fromIntraIntervals(
             IntervalDiatonicAlt.MINOR_THIRD,
             IntervalDiatonicAlt.MINOR_THIRD,
             IntervalDiatonicAlt.MINOR_THIRD,
             IntervalDiatonicAlt.MINOR_THIRD
         );
-        Scale.MESSIAEN_V_TRUNCATED = Scale.fromIntCode(1, 5, 1, 5);
         Scale.DOM7b5 = Scale.fromDegrees(
             DiatonicAltDegree.I,
             DiatonicAltDegree.III,
             DiatonicAltDegree.bV,
             DiatonicAltDegree.bVII,
         );
-        Scale.MESSIAEN_INV_III_V_TRUNCATED_n2 = Scale.fromIntCode(1, 3, 1, 3, 1, 3);
-        Scale.HALF_DIMINISHED = Scale.fromIntCode(1, 2, 1, 2, 1, 2, 1, 2);
-        Scale.MESSIAEN_V = Scale.fromIntCode(1, 1, 4, 1, 1, 4);
-        Scale.RAGA_INDRUPRIYA_INDIA = Scale.fromIntCode(1, 3, 2, 3, 1, 2);
-        Scale.MESSIAEN_II_TRUNCATED_n3 = Scale.fromIntCode(3, 1, 2, 3, 1, 2);
-        Scale.MESSIAEN_III_INV = Scale.fromIntCode(2, 1, 1, 2, 1, 1, 2, 1, 1);
-        Scale.MESSIAEN_IV = Scale.fromIntCode(1, 1, 1, 3, 1, 1, 1, 3);
-        Scale.MESSIAEN_VI = Scale.fromIntCode(1, 1, 2, 2, 1, 1, 2, 2);
-        Scale.MESSIAEN_VII = Scale.fromIntCode(1, 1, 1, 1, 2, 1, 1, 1, 1, 2);
+
+        Scale.RAGA_INDRUPRIYA_INDIA = ScaleDiatonicAltConversor.from(ScaleChromatic.RAGA_INDRUPRIYA_INDIA).scaleDiatonicAlt;
+        Scale.HALF_DIMINISHED = ScaleDiatonicAltConversor.from(ScaleChromatic.HALF_DIMINISHED).scaleDiatonicAlt;
+        Scale.MESSIAEN_V_TRUNCATED = ScaleDiatonicAltConversor.from(ScaleChromatic.MESSIAEN_V_TRUNCATED).scaleDiatonicAlt;
+        Scale.MESSIAEN_III_INV = ScaleDiatonicAltConversor.from(ScaleChromatic.MESSIAEN_III_INV).scaleDiatonicAlt;
+        Scale.MESSIAEN_II_TRUNCATED_n3 = ScaleDiatonicAltConversor.from(ScaleChromatic.MESSIAEN_II_TRUNCATED_n3).scaleDiatonicAlt;
+        Scale.MESSIAEN_INV_III_V_TRUNCATED_n2 = ScaleDiatonicAltConversor.from(ScaleChromatic.MESSIAEN_INV_III_V_TRUNCATED_n2).scaleDiatonicAlt;
+        Scale.MESSIAEN_IV = ScaleDiatonicAltConversor.from(ScaleChromatic.MESSIAEN_IV).scaleDiatonicAlt;
+        Scale.MESSIAEN_V = ScaleDiatonicAltConversor.from(ScaleChromatic.MESSIAEN_V).scaleDiatonicAlt;
+        Scale.MESSIAEN_VI = ScaleDiatonicAltConversor.from(ScaleChromatic.MESSIAEN_VI).scaleDiatonicAlt;
+        Scale.MESSIAEN_VII = ScaleDiatonicAltConversor.from(ScaleChromatic.MESSIAEN_VII).scaleDiatonicAlt;
 
         // Bebop
         Scale.BEBOP_MAJOR = Scale.fromDegrees(
